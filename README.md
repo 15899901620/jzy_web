@@ -12,3 +12,21 @@ store  ---------  Store 目录
 .nuxt.config.js   nuxt配置
 package.json  --  包文件
 ````
+
+
+##安装部署
+1，安装  
+npm install  
+&   
+cnpm i
+
+2，进入环境
+
+npm run dev
+
+3, 部署
+npm run build  
+start
+
+
+
