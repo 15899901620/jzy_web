@@ -1,5 +1,6 @@
 <template>
- <v-layout align-center justify-center reverse >
+  <div>
+    <v-layout align-center justify-center reverse >
 
 		<div class="w1200">
 			<div class="mt10">
@@ -191,13 +192,16 @@
 		</div>
 
   </v-layout>
+    <v-footer></v-footer>
+  </div>
 </template>
 
 <script>
+import VFooter from '../components/footer'
 export default {
   name: "spot",
   components: {
-
+    VFooter
   },
   head () {
     return {
