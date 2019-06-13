@@ -1,13 +1,20 @@
 <template>
-  <v-layout align-center justify-center reverse >
-    首页
-  </v-layout>
+  <div>
+    <v-layout align-center justify-center reverse >
+      首页
+    </v-layout>
+    <v-footer></v-footer>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "index"
-    }
+import VFooter from '../components/footer'
+export default {
+  name: "index",
+  components: {
+    VFooter,
+  },
+}
 </script>
 
 <style scoped>
