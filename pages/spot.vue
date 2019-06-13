@@ -180,10 +180,7 @@
 					</li>
 				</ul>
 				<div >
-					<v-pagination
-      v-model="page"
-      :length="6"
-    ></v-pagination>
+					<v-pagination v-model="page"  :length="6"></v-pagination>
 				</div>
 
 			</div>

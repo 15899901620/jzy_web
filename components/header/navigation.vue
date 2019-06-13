@@ -33,6 +33,6 @@ export default {
 .menu{background: #fff; display: flex;align-items: center; padding-left: 7px;}
 .menu li { float: left; position: relative; font-size: 16px; margin: 0 23px;}
 .menu li:last-child{background:none;}
-.menu li a{line-height:33px;}
+.menu li a{line-height:33px; color: #333;}
 .menu li a:hover,.menu li.curr a{color:#007de4;text-decoration:none;  padding-bottom: 7px; border-bottom:2px solid #007de4;}
 </style>

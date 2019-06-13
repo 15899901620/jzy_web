@@ -27,6 +27,7 @@
 				<!--热门服务分类-->
 				<div class="assortment-wrap">
 					<div class="fication_menu">查看服务分类</div>
+          <servicecate></servicecate>
 				</div>
         <navigation></navigation>
 			</div>
@@ -40,13 +41,16 @@ import logo from './header/logo'
 import search from './header/search'
 import navigation from './header/navigation'
 import topnav from './header/topnav'
+import servicecate from './header/servicecate'
+
 export default {
   name: "VHeader",
   components: {
     logo,
     search,
     navigation,
-    topnav
+    topnav,
+    servicecate
   },
    data: () => ({
       items: [
@@ -70,6 +74,7 @@ export default {
 /*热门服务分类*/
 .assortment-wrap {width: 235px; float: left; position: relative; z-index: 4;height: 40px;}
 .fication_menu{height: 40px;background-color: #007de4; line-height: 40px; color: #fff; font-size: 18px;padding-left: 30px;background: url(../assets/img/cate_icon.png)no-repeat 206px 16px #007de4;}
+
 /*导航*/
 
 /*底部*/
