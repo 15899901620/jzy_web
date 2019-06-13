@@ -6,9 +6,11 @@
     <membercener></membercener>
     <Timelimited></Timelimited>
     <Spotsupermarket></Spotsupermarket>
-      <Logisticscar></Logisticscar>
+    <Logisticscar></Logisticscar>
+
+
     </div>
-    <nuxt />
+<!--    <nuxt />-->
   </div>
 </template>
 

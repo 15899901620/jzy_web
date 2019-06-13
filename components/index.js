@@ -3,6 +3,7 @@ import Indexbanner from './Indexbanner'
 import memberCenter from './memberCenter'
 import Timelimited from './Timelimited'
 import Spotsupermarket from './Spotsupermarket'
+import Logisticscar from './Logisticscar'
 
 /**
  * @description 头部导航
@@ -28,4 +29,9 @@ export default Timelimited
  * @description 现货超市
  */
 export default Spotsupermarket
+
+/**
+ * @description 物流找车
+ */
+export default Logisticscar
 

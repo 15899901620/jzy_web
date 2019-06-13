@@ -46,19 +46,12 @@
         <span style="width: 12%;">东莞</span><span style="width: 7%;">20</span>
         <span style="width: 9%;">31分钟前</span><span class="Priceorange" style="width: 11%;">¥10550</span>
         <span style="width: 13%;">
-							<div class="layui-form-item">
-							<form class="layui-form dflex" >
-								<div class="layui-input-block">
-							      <input type="radio" name="sex" value="男" title="自提" checked="">
-							      <input type="radio" name="sex" value="女" title="配送">
-							    </div>
-							</form>
-							 </div>
+
 						</span>
         <span  class="dflex" style="width: 16%; align-items: center;">
 							<div class="NumReduice" style="margin: 0; width: 55%; margin-left: 42px;">
 			        			<span class="gray" style="width: 25%;">-</span>
-			        			<input class="TextNum" type="text" name="" id="" value="">
+			        			<input class="TextNum" type="text" name=""  value="">
 			        			<span class="gray"  style="width: 25%;">+</span>
 		        			</div>
 		        			<div class="Numtip"></div>
@@ -70,18 +63,8 @@
         <span style="width: 12%;">东莞</span><span style="width: 7%;">20</span>
         <span style="width: 9%;">31分钟前</span><span class="Priceorange" style="width: 11%;">¥10550</span>
         <span style="width: 13%;">
-           <Radio-group :model.sync="animal">
-            <Radio value="金斑蝶"></Radio>
-            <Radio value="爪哇犀牛"></Radio>
-           </Radio-group>
-<!--							<div class="layui-form-item">-->
-<!--							<form class="layui-form dflex" >-->
-<!--								<div class="layui-input-block">-->
-<!--							      <input type="radio" name="sex" value="男" title="自提" checked="">-->
-<!--							      <input type="radio" name="sex" value="女" title="配送">-->
-<!--							    </div>-->
-<!--							</form>-->
-<!--							 </div>-->
+
+
 						</span>
         <span  class="dflex" style="width: 16%; align-items: center;">
 							<div class="NumReduice" style="margin: 0; width: 55%; margin-left: 42px;">
@@ -117,7 +100,13 @@
   .indexXhlist li span{text-align: center;}
   .indexXhlist li:hover{background-color: #f2f8fe;}
 
+  .NumReduice{  margin: 0 auto;  height: 30px; border: 1px solid #D2D2D2; background-color: #fff; width: 65%; display: flex;align-items: center;}
+  .NumReduice>span{ cursor: pointer;  font-weight: bold;    height: 100%;  align-items: center; display: flex; justify-content: center;}
+  .NumReduice .TextNum{width: 50%;border: none;height: 100%;text-align: center;}
+
   /*下单按钮*/
   .ListBtn{ cursor: pointer; width: 76px;line-height: 30px;margin:0 auto; color: #007de4; border-radius:3px; border: 1px solid #007de4;background-color: #f2f8fe;}
   .ListBtn:hover{background-color: #007de4; color: #fff;}
+
+
 </style>

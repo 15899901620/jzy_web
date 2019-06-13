@@ -9,7 +9,7 @@
           <li>
 
             <div class="ass-ty2-p 1">
-              <p class="fs16  "><i></i>热门品质:</p>
+              <p class="fs16"><i></i>热门品质:</p>
               <p style="word-wrap:break-word">
                 <a href="#">PP</a>
                 <a href="#">HDPE</a>
@@ -60,7 +60,6 @@
           </li>
         </ul>
       </div>
-
     </div>
     <div class="menu_items" @mouseleave="twoMouseout" @mouseenter="twoMouseOver">
       <div class="menu_items_text">
@@ -69,21 +68,19 @@
 
       <div class="freight_assortment assortment" v-show="seentwo"  >
         <div class="mt20 ml20">
-
             <span class="mr10">装点</span>
             <i-select :model.sync="model1" style="width:32%;height: 32px">
-              <i-option v-for="item in cityList" :value="item.value">{{ item.label }}</i-option>
+              <i-option v-for="(item, index) in cityList" :value="item.value"  :key="index">{{ item.label }}</i-option>
             </i-select>
             <span class="ml5">-</span>
             <span class="ml5 mr5">卸点</span>
               <i-select :model.sync="model1" style="width:32%;height: 32px">
-              <i-option v-for="item in cityList" :value="item.value">{{ item.label }}</i-option>
+              <i-option v-for="(item, index) in cityList" :value="item.value"  :key="index">{{ item.label }}</i-option>
             </i-select>
 
         </div>
         <div class="mt20 ml20 dflexAlem">
-<!--          <form class="layui-form" action="">-->
-            <span class="mr10">货物</span>
+             <span class="mr10">货物</span>
 
           <div class="freeselect">
             <select name="cars">
@@ -92,7 +89,8 @@
           </div>
         </div>
         <div class="mt20 ml20">
-            <span class="mr10">吨位</span><input type="text" style="width: 80%; height: 32px; border: 1px solid #DEDEDE; border-radius: 2px;padding-left: 10px;box-sizing: border-box;" name=""   value="" />
+            <span class="mr10">吨位</span>
+            <input type="text" style="width: 80%; height: 32px; border: 1px solid #DEDEDE; border-radius: 2px;padding-left: 10px;box-sizing: border-box;" name=""   value="" />
         </div>
 
         <div class="freigth_query">查询</div>
@@ -105,7 +103,6 @@
           <div class="dflex" style="flex-direction: column; width: 35%; margin: 0 auto;">
             <div class="SaveTime"><img src="../../assets/img/savefir.png" /><span class="ml5 fs16">省力</span></div>
             <p class="gray mt3">塑料专车 说走就走</p>
-
           </div>
         </div>
       </div>
@@ -116,7 +113,7 @@
       </div>
 
       <div class="assortment qualityBg" v-show="seenthree"  >
-        <form class="layui-form" action="">
+
           <ul class="qualityList">
             <li>
               <span class="quality_title">日期</span>
@@ -133,7 +130,7 @@
             </li>
           </ul>
           <div class="qualityQuality">查 询</div>
-        </form>
+
       </div>
     </div>
     <div class="menu_items">
