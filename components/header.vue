@@ -25,11 +25,11 @@
 			<!--热门服务分类/导航-->
 			<div class="clearfix mt40"  style="display: flex;">
 				<!--热门服务分类-->
-				<div class="assortment-wrap">
+				<div class="assortment-wrap"  @mouseenter="mouseEnter" @mouseleave="mouseLeave">
 					<div class="fication_menu">查看服务分类</div>
-          <servicecate></servicecate>
+          <servicecate  v-show="selectService"></servicecate>
 				</div>
-        <navigation></navigation>
+        <navigation v-on:tidName="tidName"></navigation>
 			</div>
 		</div>
 	</div>
@@ -43,6 +43,7 @@ import navigation from './header/navigation'
 import topnav from './header/topnav'
 import servicecate from './header/servicecate'
 
+
 export default {
   name: "VHeader",
   components: {
@@ -52,14 +53,65 @@ export default {
     topnav,
     servicecate
   },
-   data: () => ({
+  data () {
+
+    return {
+      selectService:false,
+      NavCateL:'',
       items: [
         { title: 'Click Me' },
         { title: 'Click Me' },
         { title: 'Click Me' },
         { title: 'Click Me 2' }
       ]
-    })
+    }
+  },
+  methods:{
+    // 当前页面导航的判断
+    CurrNav:function(){
+      console.log('$router', this.$router)
+      console.log('history', this.$router.history)
+      console.log('current', this.$router.history.current)
+      console.log('name', this.$router.history.current.name)
+
+      let currentPage=this.$router.history.current.name
+      if(currentPage == 'index'){
+        this.selectService=true;
+      }
+    },
+    // 鼠标移入查看服务分类
+    mouseEnter(){
+      let currentPage=this.$router.history.current.name
+      if(currentPage != 'index'){
+        this.selectService=true;
+      }
+    },
+    // 鼠标移出查看服务分类
+    mouseLeave(){
+      let currentPage=this.$router.history.current.name
+      if(currentPage != 'index'){
+        this.selectService=false;
+      }
+    },
+    //点击判断服务分类是否显示
+    tidName:function (data) {
+      this.NavCateL=data
+      this.$emit('headName',this.NavCateL)
+      if(this.NavCateL=='index'){
+        this.selectService=true;
+      }else{
+        this.selectService=false;
+      }
+    }
+  },
+  created(){
+
+  },
+  mounted(){
+    console.log('DetailsBidding',this.$router)
+    this.CurrNav()
+   },
+
 }
 </script>
 

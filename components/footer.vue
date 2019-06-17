@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="footer mt30">
     <slogen></slogen>
     <div class="ensure-wrap">
       <div class="desc">
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
-.footer { background: #fff; margin-top: 15px; overflow: hidden;  clear: both; width:100%;}
+.footer { background: #fff; overflow: hidden;  clear: both; width:100%;}
 .ensure-wrap {border-bottom: 1px solid #dddddd; overflow: hidden;  padding-bottom: 20px;}
 .desc {  width: 1200px;  margin: 0 auto;color: #ccc; clear: both;   padding-top: 20px; display: flex;}
 .qr-code {display: flex; border-right:1px solid #DDDDDD ;}

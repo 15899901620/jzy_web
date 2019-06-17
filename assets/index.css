@@ -1,0 +1,6 @@
+.ListTitle{display: flex;justify-content: space-between;}
+.TitleName{border-left: 2px solid #279eff; padding-left: 10px; margin: 15px 0; font-size: 16px;}
+
+
+.Time-limited_back{left: 0; border-bottom-right-radius: 5px; border-top-right-radius: 5px; }
+.Time-limited_next{right: 0; border-bottom-left-radius: 5px; border-top-left-radius: 5px; }

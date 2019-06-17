@@ -1,18 +1,40 @@
 <template>
   <div>
-    <v-layout align-center justify-center reverse >
-      首页
-    </v-layout>
-    <v-footer></v-footer>
+    <div class="clearfix"  >
+        <Indexbanner></Indexbanner>
+        <membercener></membercener>
+        <Timelimited></Timelimited>
+        <Spotsupermarket></Spotsupermarket>
+        <Logisticscar></Logisticscar>
+        <cooperatbrand></cooperatbrand>
+        <Indexnews></Indexnews>
+    </div>
+
   </div>
 </template>
 
 <script>
-import VFooter from '../components/footer'
+  import Indexbanner from '~/components/Indexbanner'
+  import membercener from '~/components/memberCenter'
+  import Timelimited from '~/components/Timelimited'
+  import Spotsupermarket from '~/components/Spotsupermarket'
+  import cooperatbrand from '~/components/cooperatbrand'
+  import Logisticscar from '~/components/Logisticscar'
+  import Indexnews from '~/components/Indexnews'
+
+
+
 export default {
   name: "index",
   components: {
-    VFooter,
+    Indexbanner,
+    membercener,
+    Timelimited,
+    Spotsupermarket,
+    Logisticscar,
+    cooperatbrand,
+    Indexnews,
+
   },
 }
 </script>

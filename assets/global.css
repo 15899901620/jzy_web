@@ -40,6 +40,9 @@ a{color: inherit;cursor: pointer;}
 .blue,a.blue,a.blue:hover{color:#00a1e9;}
 .cb{vertical-align:middle;margin-top:-1px;margin-bottom:1px;margin-right:5px;}
 .colorblue{color: #36a3ef;}
+.orangeFont{color: #ff6600;}
+.whiteFont{color: #fff;}
+.blackFont{color: #333;}
 
 .orangebg{background-color: #ff6f17;}
 .yellowbg{background: #efbf00;}

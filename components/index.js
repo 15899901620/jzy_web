@@ -4,6 +4,8 @@ import memberCenter from './memberCenter'
 import Timelimited from './Timelimited'
 import Spotsupermarket from './Spotsupermarket'
 import Logisticscar from './Logisticscar'
+import cooperatbrand from './cooperatbrand'
+import Indexnews from './Indexnews'
 
 /**
  * @description 头部导航
@@ -35,3 +37,13 @@ export default Spotsupermarket
  */
 export default Logisticscar
 
+/**
+ * @description 合作品牌
+ */
+export default cooperatbrand
+
+
+/**
+ * @description 行业资讯
+ */
+export default Indexnews
