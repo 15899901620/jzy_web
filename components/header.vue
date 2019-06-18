@@ -75,21 +75,21 @@ export default {
       console.log('name', this.$router.history.current.name)
 
       let currentPage=this.$router.history.current.name
-      if(currentPage == 'index'){
+      if(currentPage == 'user.vue'){
         this.selectService=true;
       }
     },
     // 鼠标移入查看服务分类
     mouseEnter(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'index'){
+      if(currentPage != 'user.vue'){
         this.selectService=true;
       }
     },
     // 鼠标移出查看服务分类
     mouseLeave(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'index'){
+      if(currentPage != 'user.vue'){
         this.selectService=false;
       }
     },
@@ -97,7 +97,7 @@ export default {
     tidName:function (data) {
       this.NavCateL=data
       this.$emit('headName',this.NavCateL)
-      if(this.NavCateL=='index'){
+      if(this.NavCateL=='user.vue'){
         this.selectService=true;
       }else{
         this.selectService=false;

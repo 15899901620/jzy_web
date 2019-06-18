@@ -1,5 +1,6 @@
 <template>
 <div>
+
   <div class="tac fs0">
     <img src="../assets/img/Tenderingbanner.png" />
   </div>
@@ -88,15 +89,19 @@
 </template>
 
 <script>
+  import memheader from '../components/memheader'
     export default {
-        name: "tendering",
+      name: "tendering",
+      layout:'membercenter',
+      components:{
+        memheader
+      },
       data(){
           return{}
       },
       methods:{
         WineBid(){
           this.$router.push({ path:'./trender/WineBid'  })
-
          }
       },
       mounted() {

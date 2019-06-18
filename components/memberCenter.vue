@@ -1,13 +1,14 @@
 <template>
       <div class="memberCenter">
-<headnews></headnews>
+        <headnews></headnews>
       </div>
 </template>
 
 <script>
   import headnews from './header/headnews'
     export default {
-        name: "memberCenter",
+      name: "memberCenter",
+
       components:{
         headnews
       }

@@ -3,11 +3,11 @@
   <!--头部-文字-->
   <div class="IndexTop">
     <div class="w1200 TopPos">
-      <div class="">您好，欢迎来到巨正源化工交易网！<span class="gray" style="border-left:1px solid #ccc; padding-left: 5px;"> <nuxt-link to="/">返回巨正源</nuxt-link></span> </div>
+      <div class="">您好，欢迎来到巨正源化工交易网！<span class="gray" style="border-left:1px solid #ccc; padding-left: 5px;"> <nuxt-link to="/">返回巨正源</nuxt-link></span>  </div>
       <topnav></topnav>
     </div>
   </div>
-  <headerlogo v-on:Toindex="Toindex"></headerlogo>
+  <headerlogo v-on:Toindex="Toindex(ToTitle)" :PageTitle="PageTitle"></headerlogo>
 </div>
 </template>
 
@@ -15,24 +15,34 @@
   import topnav from './header/topnav'
   import headerlogo from './memheader/headerlogo'
   export default {
-        name: "memheader",
+    name: "memheader",
+    props:{
+      PageTitle:String
+    },
     components:{
       topnav,
       headerlogo
     },
     data(){
-          return{}
+          return{
+            ToTitle:''
+          }
     },
     methods:{
-      Toindex:function(){
-        let toindex="index"
+
+      Toindex:function(data){
+        console.log('Toindexdata',data)
+        let toindex=data
         console.log('toindex', toindex)
         this.$emit('Toindex',toindex)
       }
 
+
     },
     mounted() {
           console.log('memberheader',this.$router)
+          console.log('memberheaderToTitle',this.ToTitle)
+
     }
 
   }

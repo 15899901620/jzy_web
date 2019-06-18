@@ -1,18 +1,10 @@
 <template>
+  <div>
+  <memheader :PageTitle="Totile"></memheader>
     <div class="clearfix mb40">
       <div class="w1200 dflex " id="app">
         <!--会员中心列表-->
-        <div class="memberList whitebg mt20 fs14" style="height: 600px;">
-          <ul class="mt25">
-            <h1 class="curr">招标管理 <div class="bodbottom"></div></h1>
-            <router-link to="{path:'./rightinfor', query{param1:'manage'}}"><li class="curr" >招标管理</li></router-link>
-          </ul>
-          <ul class="mt35">
-            <h1 >账户管理 </h1>
-            <router-link to='./rightinfor'><li >完善信息</li></router-link>
-            <router-link :to="{path:'./rightcode', query:{param1:'manage'}}"><li>密码管理</li></router-link>
-          </ul>
-        </div>
+        <Rightmenu></Rightmenu>
 
 
         <!--右边信息-->
@@ -85,32 +77,40 @@
       </div>
 
     </div>
+  </div>
 </template>
 
 <script>
+  import memheader from '../../components/memheader'
+
+  import Rightmenu from './trenderCompontent/Rightmenu'
   import Pagination from '../../components/Pagination'
+
    export default {
       name: "WinBidmember",
+
       components:{
-        Pagination
+        memheader,
+        Pagination,
+        Rightmenu
       },
       data(){
           return{
+            Totile:'',
           }
       },
+     methods:{
+     },
+     mounted(){
+       this.Totile=this.$router.history.current.query.category
+     }
 
 
     }
 </script>
 
 <style scoped>
-  /*左侧菜单*/
-  .memberList{border:1px solid #DEDEDE;border-top: 3px solid #007de4; width: 215px;}
-  .memberList ul{margin-left: 45px;}
-  .memberList ul li{color: #999;margin-top: 10px;}
-  .memberList ul li:hover{color: #007de4;}
-  .memberList ul li.curr{color: #007de4;}
-  .memberList h1{font-size: 18px;margin-bottom: 10px; padding-bottom: 10px; position: relative;}
+
 
   /*右侧内容*/
   .memberInfor{width: 970px;}

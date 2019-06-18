@@ -8,7 +8,7 @@
           <div class="mt20 mb20" style="border-right: 1px solid #D2D2D2; padding-right: 30px;" @click="Index">
             <img src="../../assets/img/logo.png"/>
           </div>
-          <div class="fs20 pl25 gray">{{PageTitle}}</div>
+          <div class="fs20 pl25 gray">{{CurreentTitle}} </div>
         </div>
         <!--电话-->
         <div class="  dflexAlem  NavTel" v-if="NavRight">
@@ -28,19 +28,23 @@
   import Bus from '../Bus'
     export default {
         name: "headerlogo",
+      props:{
+        PageTitle:String
+      },
       data(){
 
           return{
             Title:'',
-            PageTitle:''
-
+           CurreentTitle:'',
+            ToTitle:''
           }
       },
       methods:{
+
         Index(){
-          let toindex='index'
+          let toindex='user.vue'
           this.$emit('Toindex',toindex)
-          this.$router.push({name:'index',params:{to:'index'}})
+          this.$router.push({name:'index',params:{to:'user.vue'}})
         },
         NavRight(){
            if(this.$router.history.current.name == 'tendering'){
@@ -51,22 +55,18 @@
       },
       created() {
 
-      },
+       },
       mounted() {
-        console.log('headerrouter', this.$router)
-        var self=this
-        Bus.$on('val', function(data){
-
-          console.log('headerdata', data)
-
-          self.PageTitle =  data
-          console.log('self.PageTitle', self.PageTitle)
-
-        })
-
-        console.log('self.PageTitle', self.PageTitle)
-
       },
+      watch: {
+        PageTitle: function(newVal, oldVal){
+          console.log('newVal', newVal)
+          if( newVal =='Tendering'){
+            this.CurreentTitle='招标'
+          }
+          console.log('oldVal', oldVal)
+        }
+      }
     }
 </script>
 

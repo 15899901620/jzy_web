@@ -1,7 +1,7 @@
 <template>
   <div class="volume_find">
     <div class="dflex mt25" style="justify-content: center;">
-      <div class="indexHead"><img  src="../../assets/img/index_head.png"/></div>
+      <div class="indexHead" @click="User"><img  src="../../assets/img/index_head.png"/></div>
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
         <p class="gray">欢迎来到巨正源交易网!</p>
@@ -45,7 +45,9 @@
           }
       },
       methods:{
-
+        User(){
+          this.$router.push({path:'./users/user'})
+        },
       }
     }
 </script>

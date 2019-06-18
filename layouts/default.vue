@@ -1,8 +1,6 @@
 <template>
   <div style="background-color:#f5f5f5">
-
-    <v-header v-on:headName="headName" v-if="judgetitle"></v-header>
-    <memheader v-else  v-on:Toindex="Toindex"></memheader>
+    <v-header v-on:headName="headName"   ></v-header>
 
     <nuxt />
     <v-footer v-on:headName="headName" v-if="judgetitle"></v-footer>
@@ -33,7 +31,7 @@ export default {
   methods:{
     Toindex:function(data){
       console.log('data', data)
-      if(data=='index'){
+      if(data=='user.vue'){
         this.judgetitle=true
       }
 
@@ -45,7 +43,7 @@ export default {
     },
     headtitle(){
       console.log('---this.headname---', this.headname)
-       if( this.headname == 'index' || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
+       if( this.headname == 'user.vue'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
       {
             this.judgetitle=true
       }else{
@@ -57,7 +55,7 @@ export default {
     console.log(this.$router)
   },
   mounted() {
-    console.log(this.$router)
+    console.log('headName',this.$router)
     let data=this.$router.history.current.name
     this.headName(data)
      console.log(this.$router.history.current.name)

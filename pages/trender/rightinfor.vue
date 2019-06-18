@@ -1,4 +1,12 @@
 <template>
+  <div>
+    <memheader :PageTitle="Totile"></memheader>
+
+    <div class="clearfix mb40">
+      <div class="w1200 dflex "  >
+
+    <!--会员中心列表-->
+<!--    <Rightmenu></Rightmenu>-->
   <!--右边信息-->
   <div class="memberInfor ml20  whitebg bdccc  mt20">
 
@@ -62,12 +70,31 @@
     </div>
 
 
+
+  </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import memheader from '../../components/memheader'
+  import Rightmenu from './trenderCompontent/Rightmenu'
     export default {
-        name: "rightinfor"
+        name: "rightinfor",
+      components:{
+        memheader,
+        Rightmenu
+      },
+      data(){
+        return{
+          Totile:''
+        }
+      },
+      methods:{},
+      mounted(){
+         this.Totile=this.$router.history.current.query.category
+      },
     }
 </script>
 

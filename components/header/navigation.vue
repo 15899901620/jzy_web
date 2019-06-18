@@ -21,7 +21,7 @@ export default {
       currclass:false,
       navIndex: 0,
       categories: [
-        { router: { name: 'index' }, title: '首页', tid:'index' },
+        { router: { name: 'user.vue' }, title: '首页', tid:'user.vue' },
         { router: { path: '/spot' }, title: '现货超市', tid:'spot' },
         { router: { path: '/advance' }, title: '预售专栏', tid:'advance' },
         { router: { path: '/bidders' }, title: '限时竞拍', tid:'bidders' },

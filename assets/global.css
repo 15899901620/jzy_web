@@ -43,6 +43,9 @@ a{color: inherit;cursor: pointer;}
 .orangeFont{color: #ff6600;}
 .whiteFont{color: #fff;}
 .blackFont{color: #333;}
+.redFont{color:#f70503;}
+.greenFont{color:#009900;}
+.blueFont{color:#00a1e9;}
 
 .orangebg{background-color: #ff6f17;}
 .yellowbg{background: #efbf00;}

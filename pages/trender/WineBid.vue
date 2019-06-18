@@ -1,7 +1,8 @@
 <template>
-    <div class="mb40">
-      <pageRoute></pageRoute>
-     <div class="graybg mt10">
+
+<div class="ovh graybg" >
+     <div class=" mb40">
+       <pageRoute></pageRoute>
         <div class="w1200 dflex">
 <!-- 公告信息-->
            <div class="Notice">
@@ -18,10 +19,7 @@
                  <span class="tac" style="width: 13%">已投</span>
                  <span class="tar gray  pr10" style="width: 17%">2019.3.28-2019.4.10</span>
                </li>
-
-
              </ul>
-
 
              <div class="whitebg ovh"><Pagination></Pagination></div>
 
@@ -50,9 +48,9 @@
 
      </div>
 
+  </div>
 
 
-    </div>
 </template>
 
 <script>
@@ -64,6 +62,7 @@
   import Notice from  './trenderCompontent/Notice'
     export default {
       name: "WineBid",
+      layout:'membercenter',
       components:{
         pageRoute,
         Pagination,

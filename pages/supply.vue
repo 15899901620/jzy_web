@@ -1,7 +1,9 @@
 <template>
-  <div class="clearfix mb30">
 
-    <div class="w1200 dflex ">
+
+  <div class="clearfix" style="background-color: #f5f5f5 ">
+
+    <div class="w1200 dflex " style="margin-bottom: 30px">
       <!--会员中心列表-->
       <div class="memberList whitebg mt20" style="height: 600px;">
         <ul class="mt25">
@@ -141,9 +143,13 @@
 </template>
 
 <script>
+  import memheader from '../components/memheader'
     export default {
-        name: "supply",
-        NameTitle:'',
+      name: "supply",
+      layout:'membercenter',
+      components:{
+        memheader
+      },
       data(){
           return{}
       },
