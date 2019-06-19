@@ -32,6 +32,7 @@
             <span style="width: 15%;">订单操作</span>
           </div>
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
+            <tbody>
             <tr class="Ttitle graybg" >
               <td colspan="7">
                 <span class="ml10">订单编号：<span class="gray">120002132</span></span>
@@ -42,21 +43,23 @@
             </tr>
             <tr class="detailTable">
               <td>PP F08 现货</td>
-              <td><span class="orange">￥1055.00</span>/吨</td>
+              <td><span class="orangeFont">￥1055.00</span>/吨</td>
               <td>102.000</td>
               <td>东莞市</td>
               <td>1,076.10</td>
-              <td><span class="red">待付款</span></td>
+              <td><span class="redFont">待付款</span></td>
               <td class="operate">
                 <div class="">
                   <a class="Paybtn mt15 PayCurr">去付款</a>
                 </div>
-                <a class="mt5">查看详情</a>
+                <a class="mt5 blackFont">查看详情</a>
               </td>
             </tr>
+            </tbody>
           </table>
 
-          <table class="listT" border="" cellspacing="" cellpadding="">
+          <table class="listT mt10" border="" cellspacing="" cellpadding="">
+            <tbody>
             <tr class="Ttitle graybg" >
               <td colspan="7">
                 <span class="ml10">订单编号：<span class="gray">120002132</span></span>
@@ -66,21 +69,26 @@
               </td>
             </tr>
             <tr class="detailTable">
-              <td>PP F08 <span class="blue">现货</span></td>
-              <td><span class="orange">￥1055.00</span>/吨</td>
+              <td>PP F08 <span class="blueFont">现货</span></td>
+              <td><span class="orangeFont">￥1055.00</span>/吨</td>
               <td>102.000</td>
               <td>东莞市</td>
               <td>1,076.10</td>
-              <td><span class="green">已完成</span></td>
+              <td><span class="greenFont">已完成</span></td>
               <td class="operate">
                 <div class="">
-                  <a class="mt15">查看详情</a>
+                  <a class="mt15 blackFont">查看详情</a>
                 </div>
-                <a class="mt5 blue">查看发票</a>
+                <a class="mt5 blueFont">查看发票</a>
               </td>
             </tr>
+
+            </tbody>
+
+
           </table>
-          <table class="listT" border="" cellspacing="" cellpadding="">
+          <table class="listT mt10" border="" cellspacing="" cellpadding="">
+            <tbody>
             <tr class="Ttitle graybg" >
               <td colspan="7">
                 <span class="ml10">订单编号：<span class="gray">120002132</span></span>
@@ -90,20 +98,23 @@
               </td>
             </tr>
             <tr class="detailTable">
-              <td>PP F08 <span class="blue">现货</span></td>
-              <td><span class="orange">￥1055.00</span>/吨</td>
+              <td>PP F08 <span class="blueFont">现货</span></td>
+              <td><span class="orangeFont">￥1055.00</span>/吨</td>
               <td>102.000</td>
               <td>东莞市</td>
               <td>1,076.10</td>
-              <td><span class="blue">已付款</span></td>
+              <td><span class="blueFont">已付款</span></td>
               <td class="operate">
                 <div class="">
-                  <a class="mt15 Paybtn CarCurr">发布找车</a>
+                  <a class="mt15 Paybtn CarCurr fs12">发布找车</a>
                 </div>
 
                 <a class="mt5 break">违约单</a>
               </td>
             </tr>
+
+            </tbody>
+
           </table>
 
           <!--页码-->
@@ -155,15 +166,34 @@
   .titleOrder li.curr{background-color: #007de4; color: #fff;}
 
   .TableTitle{margin: 10px auto; padding: 10px 0; display: flex;}
-  .TableTitle span{text-align: center;}
-  .listT{width: 100%;border: none; }
+  .TableTitle span{text-align: center; font-size: 14px;}
+  .listT{width: 100%;border: none; font-size: 14px;}
   .listT:last-child{margin-bottom: 30px;}
   .listT .Ttitle td{padding: 10px 0;}
   .listT td{width: 15%; }
   .detailTable{height: 80px;}
   .detailTable td{text-align: center;overflow: hidden; padding: 10px 0;}
-  .detailTable .operate .Paybtn{ width: 64%; margin: 0 auto;  padding: 4px 6px; color: #666; border-radius: 3px;display: inherit; }
+  .detailTable .operate .Paybtn{ width: 64%; margin: 0 auto;  padding: 4px 5px; color: #666; border-radius: 3px;display: inherit; }
   .detailTable .operate .PayCurr{background-color: #e93131; color: #fff;}
   .detailTable .operate .CarCurr{background-color: #007de4; color: #fff;}
+
+  .order_operate{display: flex;justify-content: space-between; align-items: center; margin: 20px auto; font-size: 14px}
+  .orderInput{width: 286px; border: 1px solid #DEDEDE; padding-left: 10px;box-sizing: border-box;}
+  .check{ color: #fff; width: 60px;line-height: 32px; background-color: #007de4;text-align: center;margin-left: 5px;border-radius: 3px;}
+
+
+
+  /*页码*/
+  ul.pagination {  display: inline-block;  padding: 0;   margin: 30px auto;display: flex;justify-content: center;}
+  ul.pagination li{display: flex;align-items: center;}
+  ul.pagination li a {background-color: #efefef;padding: 5px 11px;}
+  ul.pagination li a{  color: #333;border: 1px solid #efefef; border-radius: 4px; padding: 8px 10px;
+    text-decoration: none;transition: background-color .3s;  margin: 0 8px;}
+  ul.pagination li a.active{background-color: #007de4; color: #fff;  border: 1px solid #007de4;}
+  ul.pagination li a:hover:not(.active){background-color: #007de4; color: #fff;border: 1px solid #007de4;}
+  ul.pagination .pageText{width: 40px;height: 35px; margin: 0 8px; border-radius:3px;    box-sizing: border-box; border: 1px solid #dededede;
+    background-color: #fff;text-align: center;}
+  ul.pagination .PageNext{border-radius: 2px; color: #666; width: 40px;height: 35px; line-height: 35px; margin: 0 15px; text-align: center;
+    border: 1px solid #dededede;box-sizing: border-box;background-color: #efefef;}
 
 </style>
