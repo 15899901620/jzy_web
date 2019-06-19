@@ -10,7 +10,7 @@ let api = {
   /**
    * @description 会员信息
    */
-  getUserinfo: 'auth/user/verify', //1
+  getUserinfo: '/auth/user/verify', //1
 
   /**
    * @description 校验用户是否存在s
@@ -21,16 +21,17 @@ let api = {
    * @description 资讯管理
    */
   information: {
-    info: 'info',
-    infoadd: 'info/add',
-    infoedit: 'info/edit',
-    infodel: 'info/del',
-    infoup: 'infoup',
-    cateall: 'cate/all',
-    cate: 'cate',
-    cateadd: 'cate/add',
-    cateedit: 'cate/edit',
-    catedel: 'cate/del'
+    info: '/web/article/page',
+    infoadd: '/web/article/add',
+    infoedit: '/web/article/update',
+    infodel: '/info/del',
+    infoup: '/web/article/enable',
+    cateall: '/web/article_cat/page',
+    cate: '/web/article_cat/page',
+    cateadd: '/web/article_cat/add',
+    cateedit: '/web/article_cat/update',
+    catedel: '/cate/del',
+    cateup: '/web/article_cat/enable'
   },
   /**
    * @description 商品
@@ -67,41 +68,54 @@ let api = {
    * @description 系统
    */
   sysconf: {
-    powerall: 'powerall',
-    power: 'power',
-    poweradd: 'power/add',
-    poweredit: 'power/edit',
-    powerdel: 'power/del',
-    roleall: '/user/role/list', //1
-    role: 'role',
-    roleadd: 'role/add',
-    roleedit: 'role/edit',
-    roledel: 'role/del',
-    worker: 'worker',
-    workeradd: 'worker/add',
-    workeredit: 'worker/edit',
-    workerdel: 'worker/del',
-    workerup: 'worker/up',
-    warehouse: 'warehouse',
-    system: 'sysconf',
+    powerall: '/user/permission/list',
+    power: '/user/permission/list/page',
+    poweradd: '/user/permission/save',
+    poweredit: '/user/permission/edit',
+    powerdel: '/user/permission/del',
+    roleall: '/user/role/list',
+    role: '/user/role/list/page',
+    roleadd: '/user/role/save',
+    roleedit: '/user/role/edit',
+    roledel: '/user/role/del',
+    roleAddPower: '/user/role/addPermission',
+    getRoleidPower: '/user/role/rolePermission',
+    getRoleUID: '/user/role/list/userid',
+    worker: '/user/admin/list/page',
+    workeradd: '/user/admin/register',
+    workeredit: '/user/admin/register',
+    workerup: '/user/admin/active',
+    warehouse: '/item/warehouse/list/page',
+    system: '/web/config/list',
     systemedit: 'sysconf/edit',
-    links: 'links',
-    linksadd: 'links/add',
-    linksedit: 'links/edit',
-    linksdel: 'links/del',
-    adsite: 'adsite',
-    ad: 'ad',
-    adadd: 'ad/add',
-    adedit: 'ad/edit',
-    addel: 'ad/del',
-    adup: 'ad/up',
-    plan: 'plan',
-    planedit: 'plan/edit',
-    coded: 'coded',
-    codededit: 'coded/edit'
+    links: '/web/friendlink/page',
+    linksadd: '/web/friendlink/add',
+    linksedit: '/web/friendlink/update',
+    linksdel: '/web/friendlink/delete',
+    adsite: '/web/ad_position/list',
+    ad: '/web/ad/page',
+    adadd: '/web/ad/add',
+    adedit: '/web/ad/update',
+    addel: '/web/ad/delete',
+    adup: '/web/ad/enable',
+    plan: '/web/bill_type/page',
+    planedit: '/web/bill_type/update',
+    coded: '/web/sequence/page',
+    codededit: '/web/sequence/update',
+    cobrand: '/web/coobrand/page',
+    cobrandadd: '/web/coobrand/add',
+    cobrandedit: '/web/coobrand/update',
+    cobranddel: '/web/coobrand/delete',
+    syslog: '/log/log/page',
+    nav: '/web/nav/page',
+    navadd: '/web/nav/add',
+    navedit: '/web/nav/update',
+    navdel: '/web/nav/delete',
+    navup: '/web/nav/enable'
   }
 }
 
 export default {
-  api: api
+  api: api,
+  prefix: '/api',
 }

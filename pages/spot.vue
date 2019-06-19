@@ -198,7 +198,7 @@ export default {
   methods:{
 
     Router(){
-      console.log("Name", this.$router.history.current.name)
+      // console.log("Name", this.$router.history.current.name)
     }
   },
   created () {

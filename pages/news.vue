@@ -5,48 +5,24 @@
     <div class="whitebg " style="width: 85%; height: 100%;">
       <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
         <div class="TitleName" style="border-left: 3px solid #279eff;">资讯列表</div>
-        <a class="mr20 mt15 mb15 gray">共2546条数据 </a>
+        <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
       </div>
       <ul class="NewContentlist">
-        <li>
+        <li v-for="(items, index) in datalist" :key="index">
           <div class="newsImg">
-            <img src="../assets/img/newslist01.png" />
+          <img :src="items.image" :alt="items.title" :id="index">
           </div>
           <div class="News_content">
-            <h2>3.21盐城事件对聚丙烯行业影响</h2>
-            <div class="NewsList_text">3.21日江苏盐城响水化工企业爆炸事件影响不断蔓延，经对江苏地区聚丙烯生产企业整体开工经过深度调查，生产企业整体开工及产品销售是否会有更多后续影响……</div>
+            <h2><nuxt-link :to="{name:'article-detail',params:{newsId:1}}">{{items.title}}</nuxt-link></h2>
+            <div class="NewsList_text">{{items.seoDescription}}</div>
             <div class=" mt20">
-              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">2019-05-16</span></div><div class="gray fl ml30">来源：巨正源</div><a class="blueFont fr">阅读更多</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="newsImg">
-            <img src="../assets/img/newslist01.png" />
-          </div>
-          <div class="News_content">
-            <h2>3.21盐城事件对聚丙烯行业影响</h2>
-            <div class="NewsList_text">3.21日江苏盐城响水化工企业爆炸事件影响不断蔓延，经对江苏地区聚丙烯生产企业整体开工经过深度调查，生产企业整体开工及产品销售是否会有更多后续影响……</div>
-            <div class=" mt20">
-              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">2019-05-16</span></div><div class="gray fl ml30">来源：巨正源</div><a class="blueFont fr">阅读更多</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="newsImg">
-            <img src="../assets/img/newslist01.png" />
-          </div>
-          <div class="News_content">
-            <h2>3.21盐城事件对聚丙烯行业影响</h2>
-            <div class="NewsList_text">3.21日江苏盐城响水化工企业爆炸事件影响不断蔓延，经对江苏地区聚丙烯生产企业整体开工经过深度调查，生产企业整体开工及产品销售是否会有更多后续影响……</div>
-            <div class=" mt20">
-              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">2019-05-16</span></div><div class="gray fl ml30">来源：巨正源</div><a class="blueFont fr">阅读更多</a>
+              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div><a class="blueFont fr">阅读更多</a>
             </div>
           </div>
         </li>
       </ul>
-      <div class="whitebg ovh">
-        <Pagination></Pagination>
+      <div class="whitebg ovh text-xs-center">
+        <Page :total="this.total" show-elevator style="margin-top:15px;" />
       </div>
 
 
@@ -102,30 +78,69 @@
         </ul>
       </div>
     </div>
-
-
-
-
   </div>
 </div>
 </template>
 
 <script>
-  import VFooter from '../components/footer'
-  import Pagination from '../components/Pagination'
-    export default {
-        name: "news",
-      components: {
-        VFooter,
-        Pagination
-      },
+import VFooter from '../components/footer'
+import Pagination from '../components/Pagination'
+import { infolist } from '../api/info'
+import axios from '../plugins/axios'
+export default {
+  name: "news",
+  components: {
+    VFooter,
+    Pagination
+  },
+  data () {
+    return {
+      self: this,
+      loading: false,
+      current_page: 1,
+      total: 0,
+      page_size: 20,
+      total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
+      datalist:[],
+      formSearch: {
+        is_show: 1,
+        title: '',
+        start_time: '',
+        end_time: ''
+      }
     }
+  },
+
+
+  methods: {
+    async sourceData() {
+      let params = {
+        current_page: this.current_page,
+        page_size: this.page_size,
+        ...this.formSearch
+      }
+      const res = await infolist(params)
+      this.datalist = res.items
+      this.total = res.total
+    }
+  },
+  created () {
+
+  },
+  mounted () {
+    this.sourceData()
+  },
+  watch: {
+
+  },
+}
 </script>
 
 <style scoped>
   /*行业资讯--页面*/
   .NewContentlist li{display: flex; border-bottom: 1px solid #D2D2D2; font-size: 14px;}
   .newsImg{width: 169px;height: 137px;border-radius: 5px; margin-top: 20px;margin-left: 20px;margin-bottom: 20px;}
+  .newsImg img { width: 169px;height: 137px;}
   .News_content{ margin-top: 20px; margin-bottom: 20px;margin-left: 20px;margin-right: 20px;}
   .News_content h2{color: #333; font-weight: bold; margin-top: 15px;}
   .News_content .NewsList_text{ color: #999; margin-top: 15px; height: 40px; overflow:hidden;

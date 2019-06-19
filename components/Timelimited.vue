@@ -186,7 +186,7 @@
 
         var that=this
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-        console.log('TL:',TL )
+        // console.log('TL:',TL )
         let TLWidth=TL[0].offsetWidth
         that.TLlength=TL.length*TLWidth
       }

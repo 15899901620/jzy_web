@@ -69,10 +69,10 @@ export default {
   methods:{
     // 当前页面导航的判断
     CurrNav:function(){
-      console.log('$router', this.$router)
-      console.log('history', this.$router.history)
-      console.log('current', this.$router.history.current)
-      console.log('name', this.$router.history.current.name)
+      // console.log('$router', this.$router)
+      // console.log('history', this.$router.history)
+      // console.log('current', this.$router.history.current)
+      // console.log('name', this.$router.history.current.name)
 
       let currentPage=this.$router.history.current.name
       if(currentPage == 'user.vue'){
@@ -108,7 +108,7 @@ export default {
 
   },
   mounted(){
-    console.log('DetailsBidding',this.$router)
+    // console.log('DetailsBidding',this.$router)
     this.CurrNav()
    },
 

@@ -1,17 +1,25 @@
-export default function({ $axios, redirect}){
-  $axios.onRequest(config => {
-    config.data = JSON.stringify(config.data, {
-      allowDots: true
-    });
-    return config
-  })
+import Vue from 'vue'
+import qs from 'qs'
+import { Notice } from 'iview'
 
-  $axios.onResponse(response => {
-    return Promise.resolve(response.data)
-  })
-
-  $axios.onError(error => {
-    return Promise.reject(error)
-  })
+export default function (app) {
+  const axios = app.$axios
+  axios.defaults.timeout = 100000
+  axios.defaults.method = 'get'
+  axios.defaults.method = 'post'
+  axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  }
+  axios.defaults.transformRequest = [
+    function(data) {
+      data = qs.stringify(data)
+      return data
+    }
+  ]
+  // 请求回调
+  axios.onRequest(config => {})
+  // 返回回调
+  axios.onResponse(res => {})
+  // 错误回调
+  axios.onError(error => {})
 }
-

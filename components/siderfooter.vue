@@ -20,7 +20,6 @@
 
       },
       mounted(){
-        console.log('---current---',this.$router)
         let bgColor=this.$router.history.current.name
         if(bgColor == 'tendering' || bgColor =='trender-WineBid'){
           this.Colorbg='#6b6b6b',

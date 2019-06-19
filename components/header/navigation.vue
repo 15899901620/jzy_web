@@ -36,9 +36,7 @@ export default {
 
   methods:{
     getDescribe(tid, index, headtitle) {
-      console.log('tid：', tid)
       this.$emit('tidName', tid)
-      console.log('headtitle', headtitle)
       Bus.$emit('val', headtitle)
       this.navIndex = index;
      },
