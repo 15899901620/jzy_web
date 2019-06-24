@@ -110,8 +110,6 @@ export default {
       }
     }
   },
-
-
   methods: {
     async sourceData() {
       let params = {
