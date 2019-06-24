@@ -14,7 +14,7 @@
 		<div class="w1200" >
       <div class="clearfix" style="display: flex;justify-content: space-between;">
         <!--logo-->
-        <logo></logo>
+        <logo v-on:tidName="tidName"></logo>
         <!--搜索-->
         <search></search>
         <!--电话-->
@@ -69,27 +69,22 @@ export default {
   methods:{
     // 当前页面导航的判断
     CurrNav:function(){
-      // console.log('$router', this.$router)
-      // console.log('history', this.$router.history)
-      // console.log('current', this.$router.history.current)
-      // console.log('name', this.$router.history.current.name)
-
       let currentPage=this.$router.history.current.name
-      if(currentPage == 'user.vue'){
+      if(currentPage == 'index'){
         this.selectService=true;
       }
     },
     // 鼠标移入查看服务分类
     mouseEnter(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'user.vue'){
+      if(currentPage != 'index'){
         this.selectService=true;
       }
     },
     // 鼠标移出查看服务分类
     mouseLeave(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'user.vue'){
+      if(currentPage != 'index'){
         this.selectService=false;
       }
     },
@@ -97,7 +92,7 @@ export default {
     tidName:function (data) {
       this.NavCateL=data
       this.$emit('headName',this.NavCateL)
-      if(this.NavCateL=='user.vue'){
+      if(this.NavCateL=='index'){
         this.selectService=true;
       }else{
         this.selectService=false;
@@ -108,7 +103,6 @@ export default {
 
   },
   mounted(){
-    // console.log('DetailsBidding',this.$router)
     this.CurrNav()
    },
 

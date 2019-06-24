@@ -11,7 +11,9 @@
             <input type="text" class="trendInput mt20" placeholder="手机/用户名">
             <input type="text" class="trendInput mt15" placeholder="密码">
             <div class="trendbtn mt35">登 录</div>
-            <div class="dflexAlem mt40" style="justify-content: space-between"><span>忘记密码</span><span>注册新账号</span></div>
+            <div class="dflexAlem mt40 newsCode" style="justify-content: space-between">
+              <span @click="forCode()">忘记密码</span><span @click="regNewsAccount()">注册新账号</span>
+            </div>
           </div>
       </div>
   </div>
@@ -20,7 +22,7 @@
     <img src="../assets/img/trendFlow.png" />
   </div>
 <!--  公告信息-->
-<div class="graybg">
+<div class="graybg ovh">
   <div class="w1200 " style="margin-bottom: 50px">
     <div class="ListTitle  whitebg mt20">
       <div class="TitleName">公告信息</div>
@@ -97,12 +99,22 @@
         memheader
       },
       data(){
-          return{}
+          return{
+            toIndex:1
+          }
       },
       methods:{
         WineBid(){
           this.$router.push({ path:'./trender/WineBid'  })
-         }
+         },
+        // 忘记密码
+        forCode(){
+
+        },
+        // 注册新账号
+        regNewsAccount(){
+          this.$router.push({path:'./register',query:{toIndex:this.toIndex,pagetitle:'注册'}})
+        },
       },
       mounted() {
 
@@ -123,6 +135,8 @@
 
   .trendlistTitle{    display: flex; }
   .trendlistTitle span{padding: 20px 0; font-size: 16px; }
+  .newsCode span{cursor: pointer;}
+   .newsCode span:hover{color: #007de4}
 
   .trendlist{font-size: 14px;}
   .trendlist li{background-color: #fff;padding:24px 0; display: flex; margin-bottom: 1px;}

@@ -21,8 +21,8 @@
           </div>
         </li>
       </ul>
-      <div class="whitebg ovh text-xs-center">
-        <Page :total="this.total" show-elevator style="margin-top:15px;" />
+      <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
+        <Page :total="this.total" show-elevator   />
       </div>
 
 
@@ -123,6 +123,7 @@ export default {
       this.datalist = res.items
       this.total = res.total
     }
+
   },
   created () {
 

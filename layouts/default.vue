@@ -1,10 +1,10 @@
 <template>
   <div style="background-color:#f5f5f5">
-    <v-header v-on:headName="headName"   ></v-header>
+    <v-header v-on:headName="headName" ></v-header>
 
     <nuxt />
-    <v-footer v-on:headName="headName" v-if="judgetitle"></v-footer>
-    <siderfooter  v-else  v-on:Toindex="Toindex"></siderfooter>
+    <v-footer v-on:headName="headName"  ></v-footer>
+
 
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     },
     headtitle(){
       console.log('---this.headname---', this.headname)
-       if( this.headname == 'user.vue'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
+       if( this.headname == 'Physical'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
       {
             this.judgetitle=true
       }else{

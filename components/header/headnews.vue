@@ -7,29 +7,23 @@
         <p class="gray">欢迎来到巨正源交易网!</p>
       </div>
     </div>
-    <div class="loginReg mt10"><a href="" class="loginbg">登 录</a><a href="" class="registerbg ml10">注 册</a></div>
+    <div class="loginReg mt10"><a  @click="Login" class="loginbg">登 录</a><a @click="register"   class="registerbg ml10">注 册</a></div>
     <ul class="NewsList">
       <li   @click="cur=0" :class="{curr:cur==0}">网站公告</li><li @click="cur=1" :class="{curr:cur==1}">行业资讯</li>
     </ul>
     <ul class="news">
       <li v-show="cur==0">
         <ul class="newscont">
-          <li><span class="newtitle">0热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-
+          <li v-for="(item, index) in aclist" :key="index"><span class="newtitle">{{item.title}}</span>
+            <span class="ml10 Newsdate">{{item.time}}</span>
+          </li>
         </ul>
       </li>
       <li v-show="cur==1">
         <ul class="newscont">
-          <li><span class="newtitle">1热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-          <li><span class="newtitle">热烈庆祝巨正源5周...</span><span class="ml10 Newsdate">05-08</span></li>
-
+          <li  v-for="(item, index) in newslist" :key="index">
+            <span class="newtitle">{{item.title}}</span><span class="ml10 Newsdate">{{item.time}}</span>
+          </li>
         </ul>
       </li>
     </ul>
@@ -37,23 +31,71 @@
 </template>
 
 <script>
+  import { announcement, infolist } from '../../api/info'
     export default {
         name: "headnews",
+      layout:'onHeader',
       data(){
           return{
-            cur:0
+            cur:0,
+            current_page:1,
+            page_size:4,
+            sortBy:false,
+            typeId:'',
+            aclist:[],//公告
+            newslist:[]  //资讯
+
+
+
+
+
           }
       },
       methods:{
         User(){
           this.$router.push({path:'./users/user'})
         },
+        // 登录
+        Login(){
+          this.$router.push({path:'../login'})
+        },
+        // 注册页面
+        register() {
+          this.$router.push({path:'../register', query:{pagetitle:'注册'}})
+       },
+        // 公告接口
+        async sourceData() {
+          let params = {
+            current_page: this.current_page,
+            page_size: this.page_size,
+
+          }
+          const res = await announcement(params)
+          console.log('公告：', res)
+           this.aclist = res.items
+        },
+        // 公告接口
+        async NewsData() {
+          let params = {
+            current_page: this.current_page,
+            page_size: this.page_size,
+
+          }
+          const res = await infolist(params)
+          console.log('资讯：', res)
+          this.newslist = res.items
+        }
+
+      },
+      mounted() {
+           this.sourceData()   //公告
+        this.NewsData()
       }
     }
 </script>
 
 <style scoped>
-  .volume_find{background: #fff;position: absolute;top: -320px; right: 0; width: 240px;}
+  .volume_find{background: #fff;position: absolute;top: -313px; right: 0; width: 240px;}
   .indexHead{ display: flex; justify-content: center; align-items: center; width: 54px;height: 54px;box-shadow: 0px 0px 5px #cccc; border-radius: 50%;}
   .loginReg{display: flex; justify-content: center;}
   .loginReg a{width: 96px;height: 30px;text-align: center;line-height: 30px; box-sizing: border-box; border-radius: 3px;}
@@ -63,12 +105,12 @@
   /*网站公告/行业资讯*/
   .NewsList{display: flex; margin-top: 20px;border-top: 1px solid #DEDEDE;}
   .NewsList li.curr{background-color: #fff; color: #007de4;}
-  .NewsList li{width: 50%; text-align: center;background-color: #f5f5f5; padding: 10px 30px; cursor: pointer;}
+  .NewsList li{width: 50%; text-align: center;background-color: #f5f5f5; padding: 10px 30px; cursor: pointer; font-size: 14px;}
   .news{display: flex; justify-content: center; margin: 7px 0; color: #666;}
   .news ul{list-style-type: disc;}
   .news li{width: 100%;}
-  .newtitle{width: 80%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap;}
+  .newtitle{width: 80%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; color: #333;}
   .newscont{ width: 90%; margin: 0 auto;}
-  .newscont li{display: flex;align-items: center;list-style: disc inside; margin-top: 5px;}
-  .Newsdate{width: 20%;}
+  .newscont li{display: flex;align-items: center;list-style: disc inside; margin-top: 7px; font-size: 14px;}
+  .Newsdate{width: 20%; color: #999}
 </style>

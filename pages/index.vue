@@ -26,6 +26,7 @@
 
 export default {
   name: "index",
+  layout:'default',
   components: {
     Indexbanner,
     membercener,

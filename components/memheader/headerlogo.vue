@@ -11,12 +11,14 @@
           <div class="fs20 pl25 gray">{{CurreentTitle}} </div>
         </div>
         <!--电话-->
-        <div class="  dflexAlem  NavTel" v-if="NavRight">
+        <div class="dflexAlem  NavTel"  v-if="NavTel">
           <i class="telicon"></i><span>4009-000-000</span>
         </div>
         <!--操作-->
         <div class="dflexAlem gray fs14" style="color: #666;" v-else>
-          <span class="bbright pr10 blackFont">东莞市聚福有限公司</span> <a href="#.html" class="blueFont pl10">退出</a>
+
+          <span class="bbright pr10 blackFont" >已有账号？</span> <a href="#.html" class="blueFont pl10">直接登录</a>
+
         </div>
 
 
@@ -32,11 +34,11 @@
         PageTitle:String
       },
       data(){
-
           return{
             Title:'',
-           CurreentTitle:'',
-            ToTitle:''
+            CurreentTitle:'',
+            ToTitle:'',
+            NavTel:false
           }
       },
       methods:{
@@ -47,9 +49,17 @@
           this.$router.push({name:'index',params:{to:'user.vue'}})
         },
         NavRight(){
-           if(this.$router.history.current.name == 'tendering'){
-            return true
+          var that=this
+          console.log('$header-router',this.$router)
+          if(that.$router.history.current.name == 'register'){
+            this.CurreentTitle='注册'
           }
+
+           if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
+             this.NavTel=false
+          }else {
+             this.NavTel=true
+           }
         },
 
       },
@@ -57,8 +67,11 @@
 
        },
       mounted() {
+
+        this.NavRight()
       },
       watch: {
+
         PageTitle: function(newVal, oldVal){
           console.log('newVal', newVal)
           if( newVal =='Tendering'){

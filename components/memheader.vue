@@ -52,6 +52,6 @@
 
   /*头部*/
   .IndexTop{background-color: #f8f8f8;border-bottom: 1px solid #f0f0f0;}
-  .TopPos{color: #333; display: flex; justify-content: space-between; align-items: center; height: 30px;}
+  .TopPos{color: #333; display: flex; justify-content: space-between; align-items: center; height: 30px; font-size: 14px;}
 
 </style>

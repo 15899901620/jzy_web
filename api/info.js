@@ -19,3 +19,19 @@ export const infolist = (data) => {
 }
 
 
+/**
+ * @description 网站公告
+ * @param data
+ * @returns {*|never}
+ */
+export const announcement = (data) => {
+  console.log('网站公告data', data)
+  return axios({
+    url: server.prefix + server.api.information.announcement,
+    method: 'get',
+    data
+  })
+}
+
+
+

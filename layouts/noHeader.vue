@@ -4,15 +4,18 @@
         <!--nuxt 主体内容-->
         <nuxt/>
         <!--尾部组件-->
+      <loginfooter></loginfooter>
     </div>
 </template>
 
 <script>
-import {top} from '../components/header'
+import top from '../components/header/top'
+import loginfooter from '../components/footer/loginfooter'
 export default {
   name: "noHeader",
   components: {
-    top
+    top,
+    loginfooter
   },
 }
 </script>

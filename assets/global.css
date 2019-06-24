@@ -215,7 +215,8 @@ a{color: inherit;cursor: pointer;}
 .bbright{border-right: 1px solid #ddd;}
 .bbleft{border-left: 1px solid #ddd;}
 .hint_icon { background: #db4f2e;border-radius: 50%;width: 14px;height: 14px;padding: 0px 5px;line-height: 14px;font-size: 12px;text-decoration: none;color: #fff;font-family: 'Microsoft YaHei','Microsoft YaHei'; }
-.pr {position:relative; }.pa{position: absolute;}
+.pr{position:relative; }
+.pa{position: absolute;}
 
 
 input:-moz-placeholder { color: #DEDEDE; opacity:1;/* Mozilla Firefox 4 to 18 */}

@@ -58,5 +58,5 @@ export default {
 .footer .tel {margin: 0 35px;}
 .tel p{text-align: center;}
 .footer-brief{background-color: #f0f2f5;text-align: center;padding: 30px 0;color: #666666;}
-.telurl{padding: 5px 20px 5px 36px;margin-top: 5px;border-radius: 5px;background: url(../assets/img/icon.png)no-repeat 15px -74px;overflow: hidden;border: 1px solid #1696ff;color: #1696ff;}
+.telurl{padding: 5px 20px 5px 36px;margin-top: 5px;border-radius: 5px;background: url(../assets/img/icon.png)no-repeat 15px -76px;overflow: hidden;border: 1px solid #1696ff;color: #1696ff;}
 </style>
