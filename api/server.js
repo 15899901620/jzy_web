@@ -27,6 +27,7 @@ let api = {
    */
   information: {
     info: '/web/article/page',
+    infoDetail: '/web/article/detail',
     infoadd: '/web/article/add',
     infoedit: '/web/article/update',
     infodel: '/info/del',

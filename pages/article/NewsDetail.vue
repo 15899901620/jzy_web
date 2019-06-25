@@ -1,25 +1,25 @@
 <template>
   <div class="clearfix graybg" >
     <div class="w1200" style="margin-top: 10px; font-size: 14px; color: #666;">
-      <a>巨正源首页</a>><a>行业资讯</a>><span class="gray">中美贸易持续升级 制品出口企业再次受阻</span>
+      <a>巨正源首页</a>><a>行业资讯</a>><span class="gray">{{NewsData.title}}</span>
     </div>
     <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
 
       <div class="whitebg " style="width: 80%;">
 
-        <div class="NewsDetail">
-          <h3 class="mt30 fs20">中美贸易持续升级 制品出口企业再次受阻</h3>
+        <div class="NewsDetail" >
+          <h3 class="mt30 fs20">{{NewsData.title}}</h3>
           <div class="NewsDetail_tip mt20"  >
             <div class="dflexAlem">
               <a class="blueFont">巨正源</a>
               <div class="time">
-                <img src="../../assets/img/newsTime.png"/><span class="gray ml5">2019-05-16</span>
+                <img src="../../assets/img/newsTime.png"/><span class="gray ml5">{{NewsData.addTime}}</span>
               </div>
             </div>
             <div class="newsShare">分享</div>
           </div>
-          <div class="mt20 mb40 gray fs14">
-            中美征税市场预期更大的冲击在于制成品（纺服、塑料制品等）出口，美国用于电器配件、医疗等方面的塑料制品的市场需求保持较快的增长势头，为满足美国国内市场需求，美国每年需要进口大量的此类塑料制品。中国出口美国的塑料制品多集中在塑料玩具、塑料管、水管和软管、盘子、片材、薄膜、集装箱、塑料袋和包装袋、盖子、到墙壁、天花板和地板覆盖物，以及手套和雨披等。根据数据统计发现，中国聚烯烃制品涉及出口美国的总量预计在300万吨，约占中国聚烯烃制品总量的6%左右，关税实施对中国的出口加工行业来说，将退出美国市场份额，尤其以华东、华南部分出口型塑料制品企业影响明显。贸易战争中没有赢家，全球一体化已密不可分，中美贸易战受影响的不仅仅是中国企业，其实更多的美国公司将面临贸易战带来的巨大冲击。
+          <div class="mt20 mb40 gray fs14" v-html="NewsData.content">
+            {{NewsData.content}}
           </div>
         </div>
 
@@ -87,16 +87,32 @@
 </template>
 
 <script>
+  import { infoDetail } from '../../api/info'
   export default {
     name: "NewsDetail",
     data(){
-        return{}
+        return{
+          NewsData:{},
+          id:''
+        }
     },
     methods:{
+      async NewsDetail(id) {
+        console.log('id', id)
+        let params = {
+          id: id,
+        }
+        const res = await infoDetail(params)
+        console.log('res',res)
+        this.NewsData = res
+        console.log('NewsData', this.NewsData)
+      }
 
     },
     mounted(){
-
+      console.log('$router',this.$router.history.current.query.newsId)
+      this.id=this.$router.history.current.query.newsId
+       this.NewsDetail(this.id)
     }
   }
 </script>

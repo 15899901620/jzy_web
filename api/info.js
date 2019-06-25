@@ -20,6 +20,21 @@ export const infolist = (data) => {
 
 
 /**
+ * @description 资讯详情
+ * @param data
+ * @returns {*|never}
+ */
+export const infoDetail = (data) => {
+  console.log(data)
+  return axios({
+    url: server.prefix + server.api.information.infoDetail,
+    method: 'get',
+    data
+  })
+}
+
+
+/**
  * @description 网站公告
  * @param data
  * @returns {*|never}
