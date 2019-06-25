@@ -57,7 +57,7 @@
       Index(){
         let toindex='user.vue'
         this.$emit('Toindex',toindex)
-        this.$router.push({name:'index'})
+        this.$router.push({name:'help.vue'})
       },
     },
     mounted(){

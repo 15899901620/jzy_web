@@ -71,21 +71,21 @@ export default {
     CurrNav:function(){
       console.log('navhead')
       let currentPage=this.$router.history.current.name
-      if(currentPage == 'index'){
+      if(currentPage == 'help.vue'){
         this.selectService=true;
       }
     },
     // 鼠标移入查看服务分类
     mouseEnter(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'index'){
+      if(currentPage != 'help.vue'){
         this.selectService=true;
       }
     },
     // 鼠标移出查看服务分类
     mouseLeave(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'index'){
+      if(currentPage != 'help.vue'){
         this.selectService=false;
       }
     },
@@ -93,7 +93,7 @@ export default {
     tidName:function (data) {
       this.NavCateL=data
       this.$emit('headName',this.NavCateL)
-      if(this.NavCateL=='index'){
+      if(this.NavCateL=='help.vue'){
         this.selectService=true;
       }else{
         this.selectService=false;

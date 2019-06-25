@@ -57,7 +57,7 @@
               current_page: 1,
               page_size: 14,
             }
-            const res = await cooperativeBrand(params)
+            const res = await cooperativeBrand(this, params)
             console.log('合作品牌-res', res)
             this.brandList = res.items
 
@@ -67,7 +67,7 @@
             current_page: 2,
             page_size: 14,
           }
-          const res = await cooperativeBrand(params)
+          const res = await cooperativeBrand(this, params)
           console.log('合作品牌-res01', res)
           this.brandList01 = res.items
           console.log('brandList01', this.brandList01.length)

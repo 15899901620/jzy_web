@@ -40,7 +40,7 @@
             current_page: 1,
             page_size: 4,
           }
-          const res = await infolist(params)
+          const res = await infolist(this, params)
           this.Newsdatalist = res.items
         },
         // 资讯详情页

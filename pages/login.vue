@@ -86,7 +86,7 @@
   methods:{
     // 点击切换
     tabClick(index,registerName){
-      console.log('index',index)
+      console.log('help.vue',index)
       console.log('registerName',registerName)
       this.registerName=registerName
       this.nowIndex = index
