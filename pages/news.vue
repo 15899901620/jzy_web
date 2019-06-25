@@ -99,7 +99,7 @@ export default {
       loading: false,
       current_page: 1,
       total: 0,
-      page_size: 20,
+      page_size: 8,
       total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
       datalist:[],
       formSearch: {
@@ -118,8 +118,8 @@ export default {
         ...this.formSearch
       }
       const res = await infolist(this, params)
-      this.datalist = res.items
-      this.total = res.total
+      this.datalist = res.data.items
+      this.total = res.data.total
     }
 
   },

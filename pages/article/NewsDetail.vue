@@ -101,8 +101,8 @@
         let params = {
           id: id,
         }
-        const res = await infoDetail(this, params)
-        this.NewsData = res
+        const res = await infodetail(this, params)
+        this.NewsData = res.data
       }
 
     },
