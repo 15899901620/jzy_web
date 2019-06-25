@@ -119,7 +119,6 @@ export default {
       }
       const res = await infolist(this, params)
       this.datalist = res.items
-      console.log('datalist', this.datalist)
       this.total = res.total
     }
 

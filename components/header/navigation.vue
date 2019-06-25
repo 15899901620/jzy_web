@@ -37,13 +37,11 @@ export default {
 
   methods:{
     getDescribe(tid, index, headtitle) {
-      console.log('tid', tid)
       this.$emit('tidName', tid)
       Bus.$emit('val', headtitle)
       this.navIndex = index;
      },
     checkRouterLocal(path) {
-      console.log('path',path)
       // 查找当前路由下标高亮
       this.navIndex = this.categories.findIndex(item => {
           return item.router.path === path

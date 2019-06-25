@@ -156,7 +156,6 @@
       methods:{},
       create(){},
       mounted() {
-          // console.log(this.$router.history.current.meta.Title)
         this.NameTitle=this.$router.history.current.meta.Title
       }
     }

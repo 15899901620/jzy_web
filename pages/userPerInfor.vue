@@ -153,18 +153,15 @@
       },
       methods:{
         imageSuccess(res){
-          console.log('ImgRes', res)
           this.formItem.image.push(res.url)
         },
         // 会员注册提交
         memberReset(data){
-          console.log('register')
           this.$router.push({path:'./RegisterSuccess'})
         },
 
       },
       mounted() {
-        console.log('$router',this.$router)
       }
     }
 </script>

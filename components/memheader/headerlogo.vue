@@ -50,7 +50,6 @@
         },
         NavRight(){
           var that=this
-          console.log('$header-router',this.$router)
           if(that.$router.history.current.name == 'register'){
             this.CurreentTitle='注册'
           }
@@ -77,14 +76,12 @@
        },
       mounted() {
         window.addEventListener('hashchange', () => {
-          console.log('this$router',this.$router)
         })
         this.NavRight()
       },
       watch: {
 
         PageTitle: function(newVal, oldVal){
-          console.log('newVal', newVal)
           if( newVal =='Tendering'){
             this.CurreentTitle='招标'
           }

@@ -30,19 +30,16 @@ export default {
   },
   methods:{
     Toindex:function(data){
-      console.log('data', data)
       if(data=='user.vue'){
         this.judgetitle=true
       }
 
     },
     headName:function (data) {
-      console.log('---data---',data)
       this.headname=data
       this.headtitle()
     },
     headtitle(){
-      console.log('---this.headname---', this.headname)
        if( this.headname == 'Physical'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
       {
             this.judgetitle=true
@@ -52,19 +49,14 @@ export default {
     }
   },
   created(){
-    console.log(this.$router)
   },
   mounted() {
-    console.log('headName',this.$router)
     let data=this.$router.history.current.name
     this.headName(data)
-     console.log(this.$router.history.current.name)
   },
   activated(){
-    console.log('activated', this.$router)
   },
   updated(){
-    console.log('this.$router', this.$router)
   }
 }
 </script>
