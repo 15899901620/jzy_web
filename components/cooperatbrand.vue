@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { cooperativeBrand } from '../api/info'
+  import { cooperativeBrand } from '../api/coobrand'
     export default {
           name: "cooperatbrand",
       data(){

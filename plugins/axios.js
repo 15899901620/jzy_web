@@ -1,6 +1,4 @@
-import Vue from 'vue'
-import qs from 'qs'
-import { Notice } from 'iview'
+import qs from 'qs';
 
 export default function (app) {
   const axios = app.$axios
@@ -17,9 +15,13 @@ export default function (app) {
     }
   ]
   // 请求回调
-  axios.onRequest(config => {})
+  axios.onRequest(config => {
+    console.log(config)
+  })
   // 返回回调
   axios.onResponse(res => {})
   // 错误回调
-  axios.onError(error => {})
+  axios.onError(error => {
+    console.log(error.response)
+  })
 }

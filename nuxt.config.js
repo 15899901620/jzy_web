@@ -42,27 +42,30 @@ export default {
   plugins: [
     '@/plugins/vuetify',
     '@/plugins/iview',
-    '@/plugins/axios'
+    '@/plugins/axios',
   ],
 
   /*
   ** Nuxt.js modules
   */
   modules: [
-    "@nuxtjs/axios",
-    "@nuxtjs/proxy"
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
-
-  proxy: [
-    [
-      '/api',{
-        // target: 'http://localhost:9000',
-        target: 'http://192.168.40.31:10010',
-        changeOrigin: true,
-        pathRewrite: { '^/api' : '/' }
-      }
-    ]
-  ],
+  axios: {
+    proxy: true,
+    prefix: '/api', // baseURL
+    credentials: true,
+  },
+  proxy: {
+    '/api': {
+      target: 'http://192.168.40.31:10010/', // 代理地址
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': '', //将 /api 替换掉
+      },
+    },
+  },
 
   /*
   ** Build configuration

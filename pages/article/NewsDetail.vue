@@ -87,7 +87,7 @@
 </template>
 
 <script>
-  import { infoDetail } from '../../api/info'
+  import { infodetail } from '../../api/info'
   export default {
     name: "NewsDetail",
     data(){

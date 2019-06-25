@@ -2,64 +2,69 @@
  * @description 系统模块资讯内容
  */
 import server from './server'
-import axios from '../libs/axios';
 
 /**
  * @description 资讯列表
+ * @param vm => this
  * @param data
  * @returns {*|never}
  */
-export const infolist = (data) => {
-  console.log(data)
-  return axios({
-    url: server.prefix + server.api.information.info,
-    method: 'get',
-    data
-  })
-}
-
+export const infolist = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.information.info,
+    {
+      params: {...data}
+    })
+};
 
 /**
  * @description 资讯详情
+ * @param vm
  * @param data
- * @returns {*|never}
+ * @returns {*}
  */
-export const infoDetail = (data) => {
-  console.log(data)
-  return axios({
-    url: server.prefix + server.api.information.infoDetail,
-    method: 'get',
-    data
-  })
-}
-
+export const infodetail = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.information.infodetail,
+    {
+      params: {...data}
+    })
+};
 
 /**
- * @description 网站公告
+ * @description 资讯详情点击量（访问量）
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const infoClick = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.information.infoClick,
+    {
+      params: {...data}
+    })
+};
+
+/**
+ * @description 资讯分类树
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const infocate = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.information.infocate,
+    {
+      params: {...data}
+    })
+};
+
+/**
+ * @description 网站首页公告
  * @param data
  * @returns {*|never}
  */
 export const announcement = (data) => {
-  console.log('网站公告data', data)
-  return axios({
-    url: server.prefix + server.api.information.announcement,
-    method: 'get',
-    data
-  })
-}
-
-/**
- * @description 合作品牌
- * @param data
- * @returns {*|never}
- */
-export const cooperativeBrand	 = (data) => {
-  console.log('合作品牌data', data)
-  return axios({
-    url: server.prefix + server.api.information.cooperativeBrand,
-    method: 'get',
-    data
-  })
+  return vm.$axios.get(server.prefix + server.api.information.announcement,
+    {
+      params: {...data}
+    })
 }
 
 

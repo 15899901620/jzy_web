@@ -3,43 +3,48 @@
  */
 let api = {
   /**
-   * @description 登录
-   */
-  login: '/auth/user/accredit', //1
-
-  /**
-   * @description 会员信息
-   */
-  getUserinfo: '/auth/user/verify', //1
-
-  /**
-   * @description 校验用户是否存在s
-   */
-  isCheckUser: '/user/admin/check', //1
-  /**
    * @description 会员
    */
   user:{
-    sendsms: '/user/m/code',
+    manageLogin: '/user/m/login',
+    supplierLogin: '/user/supplier/login',
+
+    manageReg: '/user/m/register',
+    supplierReg: 'user/supplier/m/register',
+
+    userPhoneCheck: '/user/m/check/phone',
+    userCodeCheck: '/user/m/checkCode',
+    userCodeSend: '/user/m/code',
+
+    supplierCheck: '/user/supplier/check',
+    supplierCodeCheck: '/user/supplier/checkCode',
+    supplierCodeSend: '/user/supplier/code',
+
+    userRepassWd: '/user/m/updatePwd',
+    supplierRepssWd: '/user/supplier/updatePwd'
+
   },
   /**
    * @description 资讯管理
    */
   information: {
     info: '/web/article/page',
-    infoDetail: '/web/article/detail',
-    infoadd: '/web/article/add',
-    infoedit: '/web/article/update',
-    infodel: '/info/del',
-    infoup: '/web/article/enable',
+    infodetail: '/web/article/detail',
+    infoClick: '/web/article/click',
     cateall: '/web/article_cat/page',
-    cate: '/web/article_cat/page',
-    cateadd: '/web/article_cat/add',
-    cateedit: '/web/article_cat/update',
-    catedel: '/cate/del',
-    cateup: '/web/article_cat/enable',
-    announcement: '/web/announcement/page',  //网站公告
-    cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
+
+    infocate: '/web/article_cat/tree',
+
+    announcement: '/web/announcement/page'  //网站公告
+  },
+
+  /**
+   * @description 帮助中心
+   */
+  helper: {
+    helpCatTree: '/web/help_cat/tree',
+    helpPage: '/web/help_article/page',
+    helpdetail: 'GET /help_article/detail'
   },
   /**
    * @description 商品
@@ -47,16 +52,22 @@ let api = {
   product: {
 
   },
-
+  /**
+   * @description 导航
+   */
+  navigation: {
+    navlist: '/web/nav/list',
+    navdetail: '/web/nav/detail'
+  },
   /**
    * @description 系统
    */
   sysconf: {
-
+    cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
   }
 }
 
 export default {
   api: api,
-  prefix: '/api',
+  prefix: '/api'
 }

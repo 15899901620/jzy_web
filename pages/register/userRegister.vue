@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import { sendsms } from '../../api/user'
+  import { sendsms } from '../../api/bak/user'
     export default {
         name: "userRegister",
       data() {
