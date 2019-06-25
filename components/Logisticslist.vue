@@ -84,11 +84,11 @@
         mouseEnter(){
           var ul=document.getElementById('log-ul')
           var li=ul.getElementsByTagName('li')
-          if(li.length>=5){
-            this.display = "flex";
-          }else{
-            this.display = "none";
-          }
+          // if(li.length>=5){
+          //   this.display = "flex";
+          // }else{
+          //   this.display = "none";
+          // }
         },
         //   鼠标移除
         mouseLeave(){
@@ -120,7 +120,7 @@
 
           if(chefElement.type){
             clearInterval(chefElement.prevTimer);
-            chefElement.ul.insertBefore(chefElement.li[chefElement.li.length-1],chefElement.li[0]);
+            // chefElement.ul.insertBefore(chefElement.li[chefElement.li.length-1],chefElement.li[0]);
             chefElement.liWidth = chefElement.li[0].offsetWidth;
             chefElement.ul.style.left = '-'+chefElement.liWidth+'px';
             chefElement.prevTimer = setInterval(pre,chefElement.animationSpeed);
@@ -164,7 +164,7 @@
         var  that=this
         let TL=document.getElementsByClassName('logisticList')[0].getElementsByTagName('li')
         let TLWidth=TL[0].offsetWidth
-        that.TLlength=TL.length*TLWidth
+        // that.TLlength=TL.length*TLWidth
       },
       updated() {
 

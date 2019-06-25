@@ -60,7 +60,7 @@ export const infocate = (vm, data) => {
  * @param data
  * @returns {*|never}
  */
-export const announcement = (data) => {
+export const announcement = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.announcement,
     {
       params: {...data}

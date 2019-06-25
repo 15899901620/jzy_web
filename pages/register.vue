@@ -81,8 +81,7 @@
       methods:{
         // 点击切换
         tabClick(index,registerName){
-          console.log('help.vue',index)
-          console.log('registerName',registerName)
+
           this.registerName=registerName
           this.nowIndex = index
           this.mySwiper.slideTo(index,500,false)
@@ -90,7 +89,6 @@
       },
       mounted(){
         var that=this
-        console.log('that.$router',that.$router.history.current.query.toIndex)
         this.RegisterName=this.$router.history.current.query.name
         if(that.$router.history.current.query.toIndex){
           this.nowIndex=that.$router.history.current.query.toIndex
@@ -107,12 +105,10 @@
           observer:true,
           observeParents:true,
           onSlideChangeStart:function(){
-             console.log('activeIndex',that.mySwiper.activeIndex)
             that.nowIndex=that.mySwiper.activeIndex
 
           }
         });
-        console.log('nowIndex',that.nowIndex)
 
 
       },

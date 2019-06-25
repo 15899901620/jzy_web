@@ -98,19 +98,15 @@
     },
     methods:{
       async NewsDetail(id) {
-        console.log('id', id)
         let params = {
           id: id,
         }
         const res = await infoDetail(this, params)
-        console.log('res',res)
         this.NewsData = res
-        console.log('NewsData', this.NewsData)
       }
 
     },
     mounted(){
-      console.log('$router',this.$router.history.current.query.newsId)
       this.id=this.$router.history.current.query.newsId
        this.NewsDetail(this.id)
     }

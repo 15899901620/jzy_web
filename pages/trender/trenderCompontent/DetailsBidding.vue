@@ -11,7 +11,6 @@
           return{}
       },
       mounted() {
-          // console.log('DetailsBidding',this.$router)
       }
     }
 </script>

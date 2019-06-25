@@ -177,12 +177,10 @@
       },
       methods:{
         imageSuccess(res){
-          console.log('ImgRes', res)
           this.formItem.image.push(res.url)
         },
 
         memberReset(){
-          console.log('formSupplyInfor',this.formSupplyInfor)
           this.$router.push({path:'./RegisterSuccess'})
         }
       },

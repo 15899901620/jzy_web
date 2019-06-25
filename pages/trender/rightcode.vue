@@ -78,7 +78,6 @@
       },
       methods:{},
       mounted(){
-          console.log('---router***',this.$router.history.current.query.category )
          this.Totile=this.$router.history.current.query.category
 
       },

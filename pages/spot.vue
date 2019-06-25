@@ -164,7 +164,6 @@
         </div>
 
 
-<!--					<v-pagination v-model="page"  :length="6"></v-pagination>-->
 
 
 
@@ -198,7 +197,6 @@ export default {
   methods:{
 
     Router(){
-      // console.log("Name", this.$router.history.current.name)
     }
   },
   created () {

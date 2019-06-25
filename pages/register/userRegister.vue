@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import { sendsms } from '../../api/bak/user'
+  import { userCodeSend } from '../../api/users'
     export default {
         name: "userRegister",
       data() {
@@ -145,7 +145,6 @@
 
           var mobilecode = this.formCustom.phone//验证码
 
-          console.log('mobilecode',mobilecode)
           //验证验证码是否为空
           if (mobilecode === "") {
             this.$Message.info("手机号不能为空")
@@ -154,8 +153,7 @@
               let params = {
                 mobilecode
               }
-              const res = sendsms(params)
-            console.log('res',res)
+              const res = userCodeSend(this, params)
             if(res){
               this.datalist = res.items
 
@@ -164,7 +162,6 @@
               if (this.isrefreshpic) {
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
                 window.localStorage.setItem("note", sj)
-                console.log(sj)
                 this.auth_time = 60;
                 var timer = setInterval(()=>{
                   this.auth_time--;
@@ -193,8 +190,7 @@
           }
         },
         handleSubmit (name) {
-          console.log('name',name)
-          console.log('this.formCustom',this.formCustom)
+
           this.$router.push({path:'./userPerInfor'})
           // var formCustom=this.formCustom
           // if(formCustom && this.phoneValid && this.passwordValid && this.repasswordValid){
@@ -202,7 +198,6 @@
           // }
 
           // this.$refs[name].validate((valid) => {
-          //   console.log('valid:', valid)
           //   if (valid) {
           //     this.$Message.success('Success!');
           //   } else {

@@ -70,7 +70,7 @@
           const res = await cooperativeBrand(this, params)
           console.log('合作品牌-res01', res)
           this.brandList01 = res.items
-          console.log('brandList01', this.brandList01.length)
+          // console.log('brandList01', this.brandList01.length)
         },
 
 

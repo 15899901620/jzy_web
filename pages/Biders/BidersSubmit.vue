@@ -60,13 +60,13 @@
         </div>
         <div class="lineborder"></div>
         <!--优选服务-->
-        <div class="mt30 fs16 ml15 fwb" id="test1">优选服务</div>
+        <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
         <div class="mt10"  >
           <div class="ml35 fs14 dflexAlem">
             <Checkbox :checked.sync="single">巨融易</Checkbox>
             <div class="ml5">
               <i-select :model.sync="timeDay" style="width:200px">
-                <i-option v-for="item in TimeList" :value="item.value">{{ item.timeSelect }}</i-option>
+                <i-option v-for="(item, index) in TimeList" :value="item.value" :key="index">{{ item.timeSelect }}</i-option>
               </i-select>
             </div>
             <div class="ml20 orangeFont">* 费率=天数*吨数*5元</div>
@@ -208,7 +208,6 @@
         },
         // 显示订单
         showOrder(){
-          console.log('showOrder_pop')
           var  that=this
           that.showOrder_pop=true;
         },
