@@ -70,7 +70,7 @@
             page_size: this.page_size,
 
           }
-          const res = await announcement(params)
+          const res = await announcement(this, params)
           console.log('公告：', res)
            this.aclist = res.items
         },
@@ -81,7 +81,7 @@
             page_size: this.page_size,
 
           }
-          const res = await infolist(params)
+          const res = await infolist(this, params)
           console.log('资讯：', res)
           this.newslist = res.items
         }

@@ -117,7 +117,7 @@ export default {
         page_size: this.page_size,
         ...this.formSearch
       }
-      const res = await infolist(params)
+      const res = await infolist(this, params)
       this.datalist = res.items
       console.log('datalist', this.datalist)
       this.total = res.total
