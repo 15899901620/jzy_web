@@ -16,12 +16,10 @@ export default function (app) {
   ]
   // 请求回调
   axios.onRequest(config => {
-    console.log(config)
   })
   // 返回回调
   axios.onResponse(res => {})
   // 错误回调
   axios.onError(error => {
-    console.log(error.response)
   })
 }
