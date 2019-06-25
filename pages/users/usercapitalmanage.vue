@@ -106,7 +106,7 @@
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%;}
+  .memberInfor{width: 83%;}
 
   .dflexAlem{display:flex;align-items: center;}
 

@@ -3,12 +3,11 @@
     <div class="w1200 dflex " style="margin-bottom: 40px">
       <userright></userright>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
-        <h1 class="fs16 ml25 mt25 bb1 pb10" >密码管理</h1>
         <!--个人信息-->
         <div class="TableList">
           <h1 class="fs16  mt25 bb1 pb10">收货地址</h1>
           <div class="dflexAlem mt20">
-            <div class="Add_address">新增收货地址</div><div class="ml15">您已创建2个收货地址，最多可创建20个</div>
+            <div class="Add_address"  @click="showcancel()">新增收货地址</div><div class="ml15">您已创建2个收货地址，最多可创建20个</div>
           </div>
           <ul class="address_list mt20">
             <li>
@@ -39,23 +38,39 @@
 
 
     </div>
+    <AddressPopup @hidden="hiddenShow" v-show="showcancel_pop"></AddressPopup>
   </div>
 </template>
 
 <script>
   import userright from './userCompontent/userright'
-
+  import AddressPopup from './userCompontent/AddressPopup'
   export default {
         name: "userAddress",
       layout:'membercenter',
       components:{
-        userright
-      }
+        userright,
+        AddressPopup
+      },
+    data(){
+          return{
+            showcancel_pop:false
+          }
+    },
+    methods:{
+      showcancel(){
+        this.showcancel_pop=true
+      },
+      hiddenShow(){
+        let that = this;
+        that.showcancel_pop = false
+      },
+    },
     }
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%}
+  .memberInfor{width: 83%}
 
   .TableList{width: 95%;  margin: 0 auto;}
 

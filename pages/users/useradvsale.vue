@@ -99,7 +99,7 @@
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%;}
+  .memberInfor{width: 83%;}
 
   .memberList h1.curr{border-bottom: 1px solid #DEDEDE;}
   .bodbottom{ position: absolute; bottom: -2px;width: 80%; height: 4px; background-color: #007de4;}

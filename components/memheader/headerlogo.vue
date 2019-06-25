@@ -54,6 +54,15 @@
           if(that.$router.history.current.name == 'register'){
             this.CurreentTitle='注册'
           }
+          if(that.$router.history.current.name == 'users-user'){
+            this.CurreentTitle='会员中心'
+          }
+          if(that.$router.history.current.name == 'users-useradvsale'){
+            this.CurreentTitle='我的预售'
+          }
+          if(that.$router.history.current.name == 'users-usertotalorder'){
+            this.CurreentTitle='全部订单'
+          }
 
            if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
              this.NavTel=false
@@ -67,7 +76,9 @@
 
        },
       mounted() {
-
+        window.addEventListener('hashchange', () => {
+          console.log('this$router',this.$router)
+        })
         this.NavRight()
       },
       watch: {

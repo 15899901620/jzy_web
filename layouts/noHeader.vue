@@ -17,6 +17,16 @@ export default {
     top,
     loginfooter
   },
+  data(){
+    return{}
+  },
+  methods:{
+
+  },
+  mounted() {
+    console.log('noheader_router', this.$router)
+
+  }
 }
 </script>
 

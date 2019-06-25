@@ -95,7 +95,7 @@
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%}
+  .memberInfor{width: 83%}
 
   .inforList{margin-left: 25px; margin-top: 30px;}
   .inforList li{margin-left: 35px;margin-top: 20px; display: flex;align-items: center;}

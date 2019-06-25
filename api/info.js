@@ -33,5 +33,19 @@ export const announcement = (data) => {
   })
 }
 
+/**
+ * @description 合作品牌
+ * @param data
+ * @returns {*|never}
+ */
+export const cooperativeBrand	 = (data) => {
+  console.log('合作品牌data', data)
+  return axios({
+    url: server.prefix + server.api.information.cooperativeBrand,
+    method: 'get',
+    data
+  })
+}
+
 
 

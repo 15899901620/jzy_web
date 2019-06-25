@@ -2,53 +2,55 @@
   <div class="w1200 ">
     <div class="ListTitle  whitebg mt20">
       <div class="TitleName">行业资讯</div>
-      <a class="mr20 mt15 mb15 gray fs14">更多 ></a>
+      <div @click="News()" class="mr20 mt15 mb15 gray fs14" >更多 ></div>
     </div>
 
     <ul class="Indexnews">
-      <li>
-        <div class="ml15 mr15 mt15">
-          <img src="../assets/img/news01.png" />
+      <li v-for="(item, index) in Newsdatalist" :key="index"  >
+        <div class="ml15 mr15 mt15 NewsImage">
+          <img :src="item.image" />
         </div>
-        <div class="newsTile">聚丙烯期货入驻夜盘  我们该或喜或...</div>
+        <div class="newsTile">{{item.title}}</div>
         <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html">【查看全文】</a>
+          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html" @click="NewsDetail()">【查看全文】</a>
         </div>
       </li>
-      <li>
-        <div class="ml15 mr15 mt15">
-          <img src="../assets/img/news02.png" />
-        </div>
-        <div class="newsTile">聚丙烯期货入驻夜盘  我们该或喜或...</div>
-        <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html">【查看全文】</a>
-        </div>
-      </li>
-      <li>
-        <div class="ml15 mr15 mt15">
-          <img src="../assets/img/news03.png" />
-        </div>
-        <div class="newsTile">聚丙烯期货入驻夜盘  我们该或喜或...</div>
-        <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html">【查看全文】</a>
-        </div>
-      </li>
-      <li>
-        <div class="ml15 mr15 mt15">
-          <img src="../assets/img/news04.png" />
-        </div>
-        <div class="newsTile">聚丙烯期货入驻夜盘  我们该或喜或...</div>
-        <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html">【查看全文】</a>
-        </div>
-      </li>
+
+
+
     </ul>
   </div>
 </template>
 
 <script>
+  import { infolist } from '../api/info'
     export default {
-        name: "Indexnews"
+        name: "Indexnews",
+      data(){
+          return{
+            Newsdatalist:[],
+          }
+      },
+      methods:{
+        News(){
+          this.$router.push({path:'./news',})
+        },
+        async sourceData() {
+          let params = {
+            current_page: 1,
+            page_size: 4,
+          }
+          const res = await infolist(params)
+          this.Newsdatalist = res.items
+        },
+        // 资讯详情页
+        NewsDetail(){
+          this.$router.push({path:'../article/_detail', query:{index:''}})
+        }
+      },
+      mounted() {
+          this.sourceData()
+      }
     }
 </script>
 
@@ -64,4 +66,5 @@
   .newsTile{ font-weight: bold;font-size: 16px; margin:  20px auto; width: 270px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;}
   .newsTimeLink{ display: flex; justify-content: space-between; align-items: center; color: #999; margin:  0px auto 20px; width: 270px;}
 
+  .NewsImage{height: 168px;display: flex;align-items: center;justify-content: center;}
 </style>

@@ -165,7 +165,7 @@
 </script>
 
 <style scoped>
-.memberInfor{width: 100%;}
+.memberInfor{width: 83%;}
 
   .TableList{width: 95%;  margin: 0 auto;}
   .titleOrder{ display: flex; justify-content: space-between; align-items: center;  border-bottom: 2px solid #007de4; }

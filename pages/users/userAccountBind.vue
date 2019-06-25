@@ -43,7 +43,7 @@
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%}
+  .memberInfor{width: 83%}
 
   .bindingMobile .titleInfor{color: #333;}
   .bindingMobile li{display: flex;align-items: center; margin-top: 20px;}

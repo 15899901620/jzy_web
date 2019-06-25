@@ -21,7 +21,7 @@
         <span style="width: 7%;">PP</span><span style="width: 7%;">F08</span><span style="width: 7%;">巨正源</span>
         <span style="width: 12%;">东莞</span><span style="width: 7%;">20</span>
         <span style="width: 9%;">31分钟前</span><span class="Priceorange" style="width: 11%;">¥10550</span>
-        <span style="width: 13%;">
+        <span style="width: 13%; font-size: 14px;">
             <RadioGroup v-model="formItem.radio">
                 <Radio label="M">自提</Radio>
                 <Radio label="W">配送</Radio>

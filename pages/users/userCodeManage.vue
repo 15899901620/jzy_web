@@ -42,7 +42,7 @@
 </script>
 
 <style scoped>
-  .memberInfor{width: 100%}
+  .memberInfor{width: 83%}
 
   .code_manange li{display: flex;margin-top: 20px; align-items: center;}
   .ConfirmSubmit{ margin-left: 110px; margin-top: 40px; display: inline-block;padding: 10px 30px; color: #fff; border-radius: 5px; background-color: #007de4;}

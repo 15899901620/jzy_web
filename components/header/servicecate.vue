@@ -186,7 +186,7 @@
   .ass_menu { width: 100%; background-color: #020308; position: absolute;left: 0; top: 40px; height: 320px; z-index: 1;}
   .menu_items{height: 80px;border-bottom: 1px solid #2c2e37; position: relative; box-sizing: border-box;}
   .menu_items.curr{background-color: #007de4;}
-  .menu_items_text{width: 100%; display: flex; height: 100%; padding-left: 30px;font-size: 14px;
+  .menu_items_text{width: 100%; display: flex; height: 100%; padding-left: 30px;font-size: 16px;
     color: #fff;	padding-right: 20px; align-items: center; box-sizing: border-box;}
   .assortment{position: absolute;  left: 235px;background-color: #fff;}
   .product_assortment{width: 345px; top: 0px;}

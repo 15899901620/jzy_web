@@ -37,7 +37,8 @@ let api = {
     cateedit: '/web/article_cat/update',
     catedel: '/cate/del',
     cateup: '/web/article_cat/enable',
-    announcement: '/web/announcement/page'  //网站公告
+    announcement: '/web/announcement/page',  //网站公告
+    cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
   },
   /**
    * @description 商品

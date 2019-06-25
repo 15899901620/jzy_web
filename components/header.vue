@@ -69,6 +69,7 @@ export default {
   methods:{
     // 当前页面导航的判断
     CurrNav:function(){
+      console.log('navhead')
       let currentPage=this.$router.history.current.name
       if(currentPage == 'index'){
         this.selectService=true;

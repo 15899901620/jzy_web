@@ -53,7 +53,7 @@
             <div class="acuOpear">
               <div class="mt10">城市：东莞</div>
               <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
+              <div class="btnStart" @click="BidersDetail()">即将开始</div>
             </div>
           </li>
           <li>
@@ -166,7 +166,15 @@
     export default {
         name: "bidders",
       components: {
-      }
+      },
+      data(){
+          return{}
+      },
+      methods:{
+        BidersDetail(){
+          this.$router.push({path:'./Biders/BidersBegin'})
+        }
+      },
     }
 </script>
 

@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .LinkUrl{display: flex;flex-wrap: wrap; margin-bottom: 25px;}
-.LinkUrl span{padding-right: 16px;}
+.LinkUrl span{padding-right: 16px; font-size: 14px;}
 .LinkUrl a:first-child{margin:5px 0;}
 .LinkUrl a{margin: 5px 10px; color: #666666;}
 .uplist{background: url(../../assets/img/icon.png)no-repeat 0px -105px;width: 28px;height: 20px; cursor: pointer;}

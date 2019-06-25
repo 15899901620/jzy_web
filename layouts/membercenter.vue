@@ -1,6 +1,6 @@
 <template>
 <div>
-  <memheader></memheader>
+  <memheader  ></memheader>
   <nuxt />
   <loginfooter></loginfooter>
 </div>
@@ -14,7 +14,16 @@
        components:{
          memheader,
          loginfooter
-       }
+       },
+    data(){
+         return{
+           currentTitle:''
+         }
+    },
+    mounted(){
+
+    }
+
 
     }
 </script>

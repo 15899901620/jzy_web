@@ -87,6 +87,9 @@
               <span class="Infortitle">数       量</span><input type="text"  class="input" name="" id="" value="" />
             </li>
             <li>
+              <span class="Infortitle">意 向 价</span><input type="text"  class="input" name="" id="" value="" />
+            </li>
+            <li>
               <span class="Infortitle">产品等级</span><select class="input" style="height: 35px; width: 170px;"><option>10</option></select>
             </li>
             <li>

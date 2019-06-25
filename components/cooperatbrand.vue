@@ -9,10 +9,10 @@
     </div>
     <ul class="coorperList" id="Coor-ul">
       <li>
-        <a v-for="(item, index) in brandList" :key="index"><img :src="item.src"/></a>
+        <a v-for="(item, index) in brandList" :key="index"><img :src="item.image"/></a>
       </li>
-      <li>
-        <a v-for="(item, index) in brandList" :key="index"><img :src="item.src"/></a>
+      <li v-if="brandList01.length >=  1">
+        <a v-for="(item, index) in brandList01" :key="index"><img :src="item.image"/></a>
       </li>
     </ul>
 
@@ -25,27 +25,15 @@
 </template>
 
 <script>
+  import { cooperativeBrand } from '../api/info'
     export default {
           name: "cooperatbrand",
       data(){
           return{
             display: "none",
-            brandList:[
-              {src:require('../assets/img/Brand01.png')},
-              {src:require('../assets/img/Brand02.png')},
-              {src:require('../assets/img/Brand03.png')},
-              {src:require('../assets/img/Brand04.png')},
-              {src:require('../assets/img/Brand05.png')},
-              {src:require('../assets/img/Brand06.png')},
-              {src:require('../assets/img/Brand07.png')},
-              {src:require('../assets/img/Brand08.png')},
-              {src:require('../assets/img/Brand09.png')},
-              {src:require('../assets/img/Brand10.png')},
-              {src:require('../assets/img/Brand11.png')},
-              {src:require('../assets/img/Brand12.png')},
-              {src:require('../assets/img/Brand13.png')},
-              {src:require('../assets/img/Brand14.png')}
-            ]
+
+            brandList:[],
+            brandList01:[]
           }
       },
       methods:{
@@ -62,9 +50,35 @@
         //   鼠标移除
         mouseLeave(){
           this.display = "none";
-        }
+        },
+
+          async cooperatbrand() {
+            let params = {
+              current_page: 1,
+              page_size: 14,
+            }
+            const res = await cooperativeBrand(params)
+            console.log('合作品牌-res', res)
+            this.brandList = res.items
+
+          },
+        async cooperatbrand01() {
+          let params = {
+            current_page: 2,
+            page_size: 14,
+          }
+          const res = await cooperativeBrand(params)
+          console.log('合作品牌-res01', res)
+          this.brandList01 = res.items
+          console.log('brandList01', this.brandList01.length)
+        },
+
+
       },
       mounted () {
+            this.cooperatbrand()
+        this.cooperatbrand01()
+
           // *****合作品牌******
           var chefElement = {
             minSpeed: 10,//每次移动的距离
@@ -131,7 +145,7 @@
   .coorperList{display: flex; flex-wrap: wrap; position: relative; width: 2400px;}
   .coorperList li{display: flex; flex-wrap: wrap;width: 1200px;}
   .coorperList li a{ margin-top: 1px; margin-right: 1px; width: 170.4px; height: 85px; background-color: #fff; display: flex;justify-content: center;align-items: center;}
-
+  .coorperList li a img{ height: 65%;}
 
   /*左右箭头切换*/
   .position{cursor: pointer; display: flex; justify-content: center; align-items: center; position: absolute;top: 92px;width: 24px;height: 40px;background: rgba(146,146,146,0.8); opacity: 0.5;z-index: 10;}
