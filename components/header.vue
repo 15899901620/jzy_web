@@ -70,21 +70,21 @@ export default {
     // 当前页面导航的判断
     CurrNav:function(){
       let currentPage=this.$router.history.current.name
-      if(currentPage == 'help.vue'){
+      if(currentPage == 'index'){
         this.selectService=true;
       }
     },
     // 鼠标移入查看服务分类
     mouseEnter(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'help.vue'){
+      if(currentPage != 'index'){
         this.selectService=true;
       }
     },
     // 鼠标移出查看服务分类
     mouseLeave(){
       let currentPage=this.$router.history.current.name
-      if(currentPage != 'help.vue'){
+      if(currentPage != 'index'){
         this.selectService=false;
       }
     },
@@ -92,7 +92,7 @@ export default {
     tidName:function (data) {
       this.NavCateL=data
       this.$emit('headName',this.NavCateL)
-      if(this.NavCateL=='help.vue'){
+      if(this.NavCateL=='index'){
         this.selectService=true;
       }else{
         this.selectService=false;

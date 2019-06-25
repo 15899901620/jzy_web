@@ -16,7 +16,8 @@
             <h2><nuxt-link :to="{name:'article-NewsDetail',query:{newsId:items.id}}">{{items.title}}</nuxt-link></h2>
             <div class="NewsList_text">{{items.seoDescription}}</div>
             <div class=" mt20">
-              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div><a class="blueFont fr">阅读更多</a>
+              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
+              <a class="blueFont fr" @click="NewsDetail(items.id)">阅读更多</a>
             </div>
           </div>
         </li>
@@ -28,56 +29,7 @@
 
     </div>
 
-    <div class="ml20 ovh" style="width: 25%;">
-
-      <!--资讯分类-->
-      <div class="whitebg ovh">
-        <div class="ListTitle  whitebg bb1">
-          <div class="TitleName" style="border-left: 3px solid #279eff;">资讯分类</div>
-        </div>
-        <ul class="newsCate">
-          <li><a href="">行业快讯</a></li>
-          <li><a href="">市场分析</a></li>
-          <li><a href="">行业资讯</a></li>
-          <li><a href="">巨正源公告</a></li>
-          <li><a href="">巨正源百科</a></li>
-          <li><a href="">行情中心</a></li>
-        </ul>
-      </div>
-      <!--一周排行榜-->
-      <div class="whitebg ovh mt20">
-        <div class="ListTitle  whitebg bb1">
-          <div class="TitleName" style="border-left: 3px solid #279eff;">一周排行榜</div>
-        </div>
-
-        <ul class="newsWeek">
-          <li><a href=""><div class="NumNews orangebg">1</div><span class="text">超四十款终端预年内上市百亿</span></a></li>
-          <li><a href=""><div class="NumNews">2</div><span class="text">2019 中国地产智能家居高峰</span></a></li>
-          <li><a href=""><div class="NumNews">3</div><span class="text">捷报！巨正源荣获2018中国</span></a></li>
-          <li><a href=""><div class="NumNews">4</div><span class="text">四川茂县叠溪镇领导一行到访</span></a></li>
-          <li><a href=""><div class="NumNews">5</div><span class="text">国庆物流发货公告</span></a></li>
-          <li><a href=""><div class="NumNews">6</div><span class="text">中秋物流延迟公告</span></a></li>
-          <li><a href=""><div class="NumNews">7</div><span class="text">利用安防监控助力食品安全</span></a></li>
-          <li><a href=""><div class="NumNews">8</div><span class="text">弱电计算机机房工程施工方案</span></a></li>
-        </ul>
-      </div>
-      <!--热点推荐-->
-      <div class="whitebg ovh mt20">
-        <div class="ListTitle  whitebg bb1">
-          <div class="TitleName" style="border-left: 3px solid #279eff;">热点推荐</div>
-        </div>
-        <ul class="newsWeek">
-          <li><a href=""><div class="Recommend_orangebg Recommend_icon">1</div><span class="text">超四十款终端预年内上市百亿</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_iconYellow">2</div><span class="text">2019 中国地产智能家居高峰</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_iconYellow">3</div><span class="text">捷报！巨正源荣获2018中国</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_icongray">4</div><span class="text">四川茂县叠溪镇领导一行到访</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_icongray">5</div><span class="text">国庆物流发货公告</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_icongray">6</div><span class="text">中秋物流延迟公告</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_icongray">7</div><span class="text">利用安防监控助力食品安全</span></a></li>
-          <li><a href=""><div class="Recommend_icon Recommend_icongray">8</div><span class="text">弱电计算机机房工程施工方案</span></a></li>
-        </ul>
-      </div>
-    </div>
+    <NewsRight></NewsRight>
   </div>
 </div>
 </template>
@@ -86,12 +38,14 @@
 import VFooter from '../components/footer'
 import Pagination from '../components/Pagination'
 import { infolist } from '../api/info'
+import  NewsRight  from './article/NewsRight'
 import axios from '../plugins/axios'
 export default {
   name: "news",
   components: {
     VFooter,
-    Pagination
+    Pagination,
+    NewsRight
   },
   data () {
     return {
@@ -118,8 +72,14 @@ export default {
         ...this.formSearch
       }
       const res = await infolist(this, params)
+      console.log(res)
       this.datalist = res.data.items
       this.total = res.data.total
+    },
+    // 详情页
+    NewsDetail(id){
+      console.log('id',id)
+      this.$router.push({path:'./article/NewsDetail',query:{newsId:id}})
     }
 
   },
@@ -140,7 +100,7 @@ export default {
   .NewContentlist li{display: flex; border-bottom: 1px solid #D2D2D2; font-size: 14px;}
   .newsImg{width: 169px;height: 137px;border-radius: 5px; margin-top: 20px;margin-left: 20px;margin-bottom: 20px;}
   .newsImg img { width: 169px;height: 137px;}
-  .News_content{ margin-top: 20px; margin-bottom: 20px;margin-left: 20px;margin-right: 20px;}
+  .News_content{width: 100%; margin-top: 20px; margin-bottom: 20px;margin-left: 20px;margin-right: 20px;}
   .News_content h2{color: #333; font-weight: bold; margin-top: 15px;}
   .News_content .NewsList_text{ color: #999; margin-top: 15px; height: 40px; overflow:hidden;
     text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:2; }

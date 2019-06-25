@@ -43,8 +43,10 @@
        </li>
      </ul>
      <div class="dflexAlem mt15 fs14" style="justify-content: center; width: 537px;">
-       <div style="width: 18px;height: 18px;   margin-right: 10px;margin-top: -4px;">
-         <Checkbox v-model="single"  ></Checkbox>
+       <div style="width: 18px;height: 18px;   margin-right: 10px;margin-top: -16px;">
+         <FormItem prop="single">
+         <Checkbox v-model="formCustom.single"></Checkbox>
+         </FormItem>
        </div>
        <span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源用户服务协议》</a>
      </div>
@@ -74,9 +76,7 @@
               if(!myreg.test(this.formCustom.phone)){
                 callback(new Error('手机号码格式不正确'));
               }else{
-
                 this.phoneValid=true;
-
               }
 
 
@@ -106,6 +106,7 @@
 
           }
         };
+
         return {
           imgSrc:'http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435',
           single: false,
@@ -122,6 +123,7 @@
             phone: '',
             password: '',
             mobilecode:'',
+            single:'',
             repassword: ''
           },
           ruleCustom: {
@@ -144,7 +146,7 @@
          getNoteValue () {
 
           var mobilecode = this.formCustom.phone//验证码
-
+            console.log('mobilecode', mobilecode)
           //验证验证码是否为空
           if (mobilecode === "") {
             this.$Message.info("手机号不能为空")
@@ -153,8 +155,11 @@
               let params = {
                 mobilecode
               }
+            console.log('params', params)
               const res = userCodeSend(this, params)
+            console.log('res', res)
             if(res){
+              console.log('res', res)
               this.datalist = res.items
 
               this.$Message.info("短信发传成功")
@@ -193,6 +198,15 @@
 
           this.$router.push({path:'./userPerInfor'})
           // var formCustom=this.formCustom
+          // console.log('formCustom', formCustom)
+          // if(!formCustom.single){
+          //   this.$Message.info({
+          //     content: '请阅读巨正源用户协议',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }
           // if(formCustom && this.phoneValid && this.passwordValid && this.repasswordValid){
           //   this.$router.push({path:'./userPerInfor',query:{params:formCustom}})
           // }
@@ -208,7 +222,9 @@
         // 图片验证
         refreshpic(){
           var sj = Math.ceil(Math.random() * 100000)
+          console.log('sj',sj)
           this.imgSrc = "http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435" + sj
+          console.log('imgSrc',this.imgSrc)
         },
 
       },
