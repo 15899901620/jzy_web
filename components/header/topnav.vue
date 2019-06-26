@@ -24,7 +24,8 @@ export default {
 </script>
 
 <style scoped>
+  a{color: #333;}
 .UserList{display: flex; flex-direction: row;}
 .UserList li:first-child{border-left:0;}.UserList li:last-child{border-right:0;}
-.UserList li{  border-right:1px solid #ddd8dd;border-left:1px solid #fff;padding: 0 20px;}
+.UserList li{  border-right:1px solid #ddd8dd;border-left:1px solid #fff;padding: 0 20px; color: #333;}
 </style>
