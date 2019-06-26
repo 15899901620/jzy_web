@@ -158,3 +158,16 @@ export const supplierRepssWd = (vm, data) => {
       params: {...data}
     })
 }
+
+/**
+ * @description 会员信息编辑
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const manageEdit = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.manageEdit,
+    {
+      params: {...data}
+    })
+}

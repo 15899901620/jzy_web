@@ -56,7 +56,7 @@ export const infocate = (vm, data) => {
 };
 
 /**
- * @description 网站首页公告
+ * @description 网站公告列表 （可以用于首页）
  * @param data
  * @returns {*|never}
  */
@@ -66,6 +66,20 @@ export const announcement = (vm, data) => {
       params: {...data}
     })
 }
+
+/**
+ * @description 公告详情
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const announcementdetail = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.information.announcementdetail,
+    {
+      params: {...data}
+    })
+}
+
 
 
 

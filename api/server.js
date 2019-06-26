@@ -8,21 +8,17 @@ let api = {
   user:{
     manageLogin: '/user/m/login',
     supplierLogin: '/user/supplier/login',
-
     manageReg: '/user/m/register',
     supplierReg: 'user/supplier/m/register',
-
     userPhoneCheck: '/user/m/check/phone',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
-
     supplierCheck: '/user/supplier/check',
     supplierCodeCheck: '/user/supplier/checkCode',
     supplierCodeSend: '/user/supplier/code',
-
     userRepassWd: '/user/m/updatePwd',
-    supplierRepssWd: '/user/supplier/updatePwd'
-
+    supplierRepssWd: '/user/supplier/updatePwd',
+    manageEdit: '/user/m/edit'
   },
   /**
    * @description 资讯管理
@@ -32,25 +28,23 @@ let api = {
     infodetail: '/web/article/detail',
     infoClick: '/web/article/click',
     cateall: '/web/article_cat/page',
-
     infocate: '/web/article_cat/tree',
-
-    announcement: '/web/announcement/page'  //网站公告
+    announcement: '/web/announcement/page',  //网站列表
+    announcementdetail: '/web/announcement/detail'
   },
-
   /**
    * @description 帮助中心
    */
   helper: {
     helpCatTree: '/web/help_cat/tree',
-    helpPage: '/web/help_article/page',
-    helpdetail: 'GET /help_article/detail'
+    helpPage: '/web/help_article/getHelpArticleByCatId',
   },
   /**
-   * @description 商品
+   * @description 商品(物性表)
    */
   product: {
-
+    productlist: '/item/goods/list/page',
+    productdetail: '/item/goods/sku/info'
   },
   /**
    * @description 导航
@@ -64,6 +58,19 @@ let api = {
    */
   sysconf: {
     cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
+  },
+  /**
+   * @description 广告位管理
+   */
+  ad: {
+    adposition: '/web/ad/list'
+  },
+  /**
+   * @description 资金管理
+   */
+  capital: {
+    capitalinfo: '/web/getFund',
+    capitaldetail: '/web/getFundByCompanyName'
   }
 }
 
