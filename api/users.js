@@ -37,7 +37,7 @@ export const supplierLogin = (vm, data) => {
 export const manageReg = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageReg,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -63,7 +63,7 @@ export const supplierReg = (vm, data) => {
 export const userPhoneCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userPhoneCheck,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -76,7 +76,7 @@ export const userPhoneCheck = (vm, data) => {
 export const userCodeCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userCodeCheck,
     {
-      params: {...data}
+      ...data
     })
 }
 
