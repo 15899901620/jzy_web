@@ -29,67 +29,19 @@
         </div>
 
       </div>
-      <div class="ml20 ovh" style="width: 25%;">
-
-        <!--资讯分类-->
-        <div class="whitebg ovh">
-          <div class="ListTitle  whitebg bb1">
-            <div class="TitleName" style="border-left: 3px solid #279eff;">资讯分类</div>
-          </div>
-          <ul class="newsCate">
-            <li><a href="">行业快讯</a></li>
-            <li><a href="">市场分析</a></li>
-            <li><a href="">行业资讯</a></li>
-            <li><a href="">巨正源公告</a></li>
-            <li><a href="">巨正源百科</a></li>
-            <li><a href="">行情中心</a></li>
-          </ul>
-        </div>
-        <!--一周排行榜-->
-        <div class="whitebg ovh mt20">
-          <div class="ListTitle  whitebg bb1">
-            <div class="TitleName" style="border-left: 3px solid #279eff;">一周排行榜</div>
-          </div>
-
-          <ul class="newsWeek">
-            <li><a href=""><div class="NumNews orangebg">1</div><span class="text">超四十款终端预年内上市百亿</span></a></li>
-            <li><a href=""><div class="NumNews">2</div><span class="text">2019 中国地产智能家居高峰</span></a></li>
-            <li><a href=""><div class="NumNews">3</div><span class="text">捷报！巨正源荣获2018中国</span></a></li>
-            <li><a href=""><div class="NumNews">4</div><span class="text">四川茂县叠溪镇领导一行到访</span></a></li>
-            <li><a href=""><div class="NumNews">5</div><span class="text">国庆物流发货公告</span></a></li>
-            <li><a href=""><div class="NumNews">6</div><span class="text">中秋物流延迟公告</span></a></li>
-            <li><a href=""><div class="NumNews">7</div><span class="text">利用安防监控助力食品安全</span></a></li>
-            <li><a href=""><div class="NumNews">8</div><span class="text">弱电计算机机房工程施工方案</span></a></li>
-          </ul>
-        </div>
-        <!--热点推荐-->
-        <div class="whitebg ovh mt20">
-          <div class="ListTitle  whitebg bb1">
-            <div class="TitleName" style="border-left: 3px solid #279eff;">热点推荐</div>
-          </div>
-          <ul class="newsWeek">
-
-            <li><a href=""><div class="Recommend_orangebg Recommend_icon">1</div><span class="text">超四十款终端预年内上市百亿</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_iconYellow">2</div><span class="text">2019 中国地产智能家居高峰</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_iconYellow">3</div><span class="text">捷报！巨正源荣获2018中国</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_icongray">4</div><span class="text">四川茂县叠溪镇领导一行到访</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_icongray">5</div><span class="text">国庆物流发货公告</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_icongray">6</div><span class="text">中秋物流延迟公告</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_icongray">7</div><span class="text">利用安防监控助力食品安全</span></a></li>
-            <li><a href=""><div class="Recommend_icon Recommend_icongray">8</div><span class="text">弱电计算机机房工程施工方案</span></a></li>
-          </ul>
-        </div>
-
-      </div>
-
+      <news-right></news-right>
     </div>
   </div>
 </template>
 
 <script>
   import { infodetail } from '../../api/info'
+  import  NewsRight  from './NewsRight'
   export default {
     name: "NewsDetail",
+    components:{
+      NewsRight
+    },
     data(){
         return{
           NewsData:{},
@@ -102,6 +54,7 @@
           id: id,
         }
         const res = await infodetail(this, params)
+        console.log('详情', res)
         this.NewsData = res.data
       }
 
@@ -118,7 +71,7 @@
   .NewsDetail{width: 95%; margin:  0 auto;}
   .NewsDetail_tip{padding-bottom: 5px; display: flex; align-items: center;  justify-content: space-between;border-bottom: 1px solid #DEDEDE; font-size: 14px;}
   .NewsDetail_tip .newsShare{ width: 60px;  background: url(../../assets/img/icon.png)no-repeat 0px -409px;padding-left:20px;color: #999;}
-  .NewsDetail_tip .time{display: flex;align-items: center; border-left: 1px solid #dedede; margin-left: 5px; padding-left: 5px;}
+  .NewsDetail_tip .time{display: flex;align-items: center; border-left: 1px solid #dedede; margin-left: 5px; padding-left: 10px;}
   .new_other{ font-size: 14px; border-top: 1px solid #DEDEDE;padding-top: 20px; padding-left:20px; padding-right:20px;display: flex;align-items: center;justify-content: space-between;}
 
   .ListTitle{display: flex;justify-content: space-between;}

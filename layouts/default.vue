@@ -40,9 +40,10 @@ export default {
       this.headtitle()
     },
     headtitle(){
+
        if( this.headname == 'Physical'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics')
       {
-            this.judgetitle=true
+        this.judgetitle=true
       }else{
          this.judgetitle=false
        }

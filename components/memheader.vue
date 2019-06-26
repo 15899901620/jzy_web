@@ -7,7 +7,7 @@
       <topnav></topnav>
     </div>
   </div>
-  <headerlogo v-on:Toindex="Toindex(ToTitle)" :PageTitle="PageTitle"></headerlogo>
+  <headerlogo v-on:Toindex="Toindex(ToTitle)" ></headerlogo>
 </div>
 </template>
 

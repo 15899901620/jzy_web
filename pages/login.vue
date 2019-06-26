@@ -76,6 +76,7 @@
       observer:true,
       observeParents:true,
       onSlideChangeStart:function(){
+        // console.log(that.mySwiper.activeIndex)
         that.nowIndex=that.mySwiper.activeIndex
       }
     });
@@ -85,11 +86,14 @@
   methods:{
     // 点击切换
     tabClick(index,registerName){
+      console.log('help.vue',index)
+      console.log('registerName',registerName)
       this.registerName=registerName
       this.nowIndex = index
       this.mySwiper.slideTo(index,500,false)
     },
     Register(){
+      console.log('Register')
       this.$router.push({path:'/register',query:{name:this.registerName}})
     },
     // 找回密码

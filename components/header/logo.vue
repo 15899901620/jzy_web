@@ -16,7 +16,7 @@ export default {
   },
   methods:{
     toIndex(){
-      var tid='index'
+      var tid='help.vue'
       this.$emit('tidName', tid)
     }
   }

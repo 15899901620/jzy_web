@@ -10,15 +10,15 @@
        </li>
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>验证码</span>
-         <FormItem>
-         <input type="text" class="CarrierImgcode" v-model="formCustom.Imgcode" style="width: 265px;" name="" id="" value="" placeholder="请输入验证码" />
+         <FormItem prop="Imgcode">
+         <Input   class="CarrierImgcode" v-model="formCustom.Imgcode" style="width: 265px; border: none"   placeholder="请输入验证码" ></Input>
          </FormItem>
-         <div class="codeCarrier"><img @click="refreshpic" :src="imgSrc" /></div>
+         <div class="codeCarrier" @click="refreshCode">  <identify  :identifyCode="identifyCode"></identify> </div>
        </li>
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>手机验证码</span>
-         <FormItem>
-           <input type="text" class="CarrierImgcode" v-model="formCustom.mobilecode" style="width: 265px;" name="" id="" value="" placeholder="请输入验证码" />
+         <FormItem prop="mobilecode">
+           <Input  class="CarrierImgcode" v-model="formCustom.mobilecode" style="width: 265px; border: none"  placeholder="请输入验证码" ></Input>
          </FormItem>
          <div class="codeCarrier graybg"  @click="getNoteValue"  >{{this.btnValue}}</div>
 
@@ -43,8 +43,10 @@
        </li>
      </ul>
      <div class="dflexAlem mt15 fs14" style="justify-content: center; width: 537px;">
-       <div style="width: 18px;height: 18px;   margin-right: 10px;margin-top: -4px;">
-         <Checkbox v-model="single"  ></Checkbox>
+       <div style="width: 18px;height: 18px;   margin-right: 10px;margin-top: -16px;">
+         <FormItem prop="single">
+         <Checkbox v-model="formCustom.single"></Checkbox>
+         </FormItem>
        </div>
        <span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源用户服务协议》</a>
      </div>
@@ -59,8 +61,12 @@
 
 <script>
   import { userCodeSend } from '../../api/users'
+  import identify from './identify'
     export default {
         name: "userRegister",
+      components:{
+        identify
+      },
       data() {
         const validatePhone=(rule, value, callback) => {
           if (value === '') {
@@ -74,9 +80,7 @@
               if(!myreg.test(this.formCustom.phone)){
                 callback(new Error('手机号码格式不正确'));
               }else{
-
                 this.phoneValid=true;
-
               }
 
 
@@ -106,7 +110,28 @@
 
           }
         };
+        const validateImgcode=(rule, value, callback)=>{
+           if(value === ''){
+             callback(new Error('验证码不能为空'));
+           }else{
+             if(value === this.identifyCode){
+               callback();
+             }else{
+               callback(new Error('验证码有误'));
+             }
+           }
+        };
+        const validatemobilecode=(rule, value, callback)=>{
+            if(value === ''){
+              callback(new Error('手机验证码不能为空'));
+            }else{
+              callback();
+            }
+        }
         return {
+          // 图形验证码
+          identifyCodes: "1234567890",
+          identifyCode: "",
           imgSrc:'http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435',
           single: false,
           //用来发判断发送验证码
@@ -122,7 +147,10 @@
             phone: '',
             password: '',
             mobilecode:'',
-            repassword: ''
+            single:'',
+            repassword: '',
+            Imgcode:'',
+            mobilecode:''
           },
           ruleCustom: {
             phone: [
@@ -133,6 +161,12 @@
             ],
             repassword: [
               { validator: validaterePass, trigger: 'blur' }
+            ],
+            Imgcode:[
+              { validator: validateImgcode, trigger: 'blur' }
+            ],
+            mobilecode:[
+              { validator: validatemobilecode, trigger: 'blur' }
             ]
           }
 
@@ -143,21 +177,24 @@
         //获取短信验证码
          getNoteValue () {
 
-          var mobilecode = this.formCustom.phone//验证码
-
+          var phone = this.formCustom.phone//验证码
+            console.log('phone', phone)
           //验证验证码是否为空
-          if (mobilecode === "") {
+          if (phone === "") {
             this.$Message.info("手机号不能为空")
             return
           }else{
               let params = {
-                mobilecode
+                phone
               }
+            console.log('params', params)
               const res = userCodeSend(this, params)
+            console.log('res', res)
             if(res){
+              console.log('res', res)
               this.datalist = res.items
 
-              this.$Message.info("短信发传成功")
+              this.$Message.info("短信发送成功")
               this.isrefreshpic = true
               if (this.isrefreshpic) {
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
@@ -193,6 +230,15 @@
 
           this.$router.push({path:'./userPerInfor'})
           // var formCustom=this.formCustom
+          // console.log('formCustom', formCustom)
+          // if(!formCustom.single){
+          //   this.$Message.info({
+          //     content: '请阅读巨正源用户协议',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }
           // if(formCustom && this.phoneValid && this.passwordValid && this.repasswordValid){
           //   this.$router.push({path:'./userPerInfor',query:{params:formCustom}})
           // }
@@ -205,13 +251,30 @@
           //   }
           // })
         },
-        // 图片验证
-        refreshpic(){
-          var sj = Math.ceil(Math.random() * 100000)
-          this.imgSrc = "http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435" + sj
+
+// 图形验证码
+        randomNum(min, max) {
+          return Math.floor(Math.random() * (max - min) + min);
         },
+        refreshCode() {
+          this.identifyCode = "";
+          this.makeCode(this.identifyCodes, 4);
+        },
+        makeCode(o, l) {
+          for (let i = 0; i < l; i++) {
+            this.identifyCode += this.identifyCodes[
+              this.randomNum(0, this.identifyCodes.length)
+              ];
+          }
+          console.log(this.identifyCode);
+        }
 
       },
+      mounted() {
+          // 图形验证码
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+      }
     }
 </script>
 
@@ -227,7 +290,7 @@
     width: 375px;height: 42px;border: none; background-color: #007de4; color: #fff;}
 
 
-  .Carinput li .CarrierImgcode{ height: 42px; padding-left: 10px; font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; border: 1px solid #DEDEDE}
+  .Carinput li .CarrierImgcode{ height: 42px;   font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; border: 1px solid #DEDEDE}
 
   .ivu-form-item{margin-bottom: 0}
   .ivu-input{height: 42px;line-height: 42px; padding: 0px 7px; }

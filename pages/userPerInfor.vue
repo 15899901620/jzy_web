@@ -166,7 +166,7 @@
     }
 </script>
 
-<style scoped>
+<style  >
   /*注册进度*/
   .CarrierPro{position: relative;}
   .CarrierPro.curr .CarrierPro_num{background-color: #007de4; color: #fff;}
@@ -183,6 +183,8 @@
 
   .CarrierTitle{width: 100px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
 
-  .ivu-form-item{margin-bottom: 0px;  }
-  .ivu-upload{height: 33px;}
+  .ivu-form-item{width: 100%; margin-bottom: 0px;  }
+  .ivu-form-item .ivu-form-item-content .ivu-upload{display: flex;height: 33px;}
+  .ivu-upload-list{margin-top: 0px;display: flex;} .ivu-upload-list li{margin-top: 0px; margin-left: 10px;}
+  .ivu-form-item .ivu-form-item-content .ivu-upload .ivu-upload-list .ivu-upload-list-file{padding: 0 6px;}
 </style>

@@ -46,7 +46,7 @@
         Index(){
           let toindex='user.vue'
           this.$emit('Toindex',toindex)
-          this.$router.push({name:'index',params:{to:'user.vue'}})
+          this.$router.push({name:'help.vue',params:{to:'user.vue'}})
         },
         NavRight(){
           var that=this
