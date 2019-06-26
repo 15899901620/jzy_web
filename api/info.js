@@ -38,7 +38,7 @@ export const infodetail = (vm, data) => {
 export const infoClick = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.information.infoClick,
     {
-      params: {...data}
+      ...data
     })
 };
 
