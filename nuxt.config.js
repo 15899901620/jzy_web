@@ -62,7 +62,7 @@ export default {
       target: 'http://192.168.40.31:10010/', // 代理地址
       changeOrigin: true,
       pathRewrite: {
-        '^/api': '', //将 /api 替换掉
+        '^/api': '/', //将 /api 替换掉
       },
     },
   },

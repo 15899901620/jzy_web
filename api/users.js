@@ -85,9 +85,10 @@ export const userCodeCheck = (vm, data) => {
  * @param vm
  * @param data
  * @returns {*}
+ * @ server.prefix + server.api.user.userCodeSend
  */
 export const userCodeSend = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userCodeSend,
+  return vm.$axios.post('http://192.168.40.31:10010/api/user/m/code',
     {
       params: {...data}
     })

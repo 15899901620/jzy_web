@@ -44,7 +44,11 @@ let api = {
    */
   product: {
     productlist: '/item/goods/list/page',
-    productdetail: '/item/goods/sku/info'
+    productdetail: '/item/goods/sku/info',
+    inspectionCheck: '/item/inspection_sheet/list/page',
+    goodsHot: '/item//goods/hotGoods',
+    cateHot: '/category/hotCate',
+    attrlist: '/item/spec/value'
   },
   /**
    * @description 导航
