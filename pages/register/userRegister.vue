@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import { userCodeSend } from '../../api/users'
+  import { userCodeSend, userCodeCheck } from '../../api/users'
   import identify from './identify'
     export default {
         name: "userRegister",
@@ -125,7 +125,20 @@
             if(value === ''){
               callback(new Error('手机验证码不能为空'));
             }else{
-              callback();
+              let params = {
+                phone:this.formCustom.phone,
+                code:value
+              }
+              const res = userCodeCheck(this, params)
+              console.log('res', res)
+              if(res){
+                this.isrefreshpic=true
+                console.log('isrefreshpic', this.isrefreshpic)
+                callback();
+              }else{
+                callback(new Error('手机验证码错误'));
+              }
+
             }
         }
         return {
@@ -189,14 +202,12 @@
               }
             console.log('params', params)
               const res = userCodeSend(this, params)
-            console.log('res', res)
-            if(res === true){
+            console.log('res',res)
+            console.log('res', res.data)
+            if(res.data){
               console.log('res', res)
-              this.datalist = res.items
-
               this.$Message.info("短信发送成功")
-              this.isrefreshpic = true
-              if (this.isrefreshpic) {
+
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
                 window.localStorage.setItem("note", sj)
                 this.auth_time = 60;
@@ -214,13 +225,8 @@
                   }
                 },1000)
 
-
-              }else{
-
-              }
-
             }else {
-              this.$Message.info("短信发传失败")
+              this.$Message.info("短信发送失败")
             }
 
 

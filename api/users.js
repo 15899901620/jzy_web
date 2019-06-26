@@ -76,7 +76,7 @@ export const userPhoneCheck = (vm, data) => {
 export const userCodeCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userCodeCheck,
     {
-      params: {...data}
+      ...data
     })
 }
 
