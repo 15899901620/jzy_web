@@ -27,7 +27,7 @@
           <li>
             <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>公司名称</span>
             <FormItem  prop="companyName">
-            <Input type="text" v-model="formUserInfor.companyName" class="CarrierIput" name="" id="" value="" placeholder="请输入公司名称" />
+            <Input type="text" v-model="formUserInfor.companyName" class="CarrierIput"   placeholder="请输入公司名称" />
             </FormItem>
           </li>
           <li>
@@ -38,26 +38,26 @@
           </li>
           <li>
             <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>开户行</span>
-            <FormItem  prop="username">
+            <FormItem  prop="invBankName">
             <Input type="text" class="CarrierIput" v-model="formUserInfor.invBankName"    placeholder="请输入开户行" />
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>账号</span>
+            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>银行账号</span>
             <FormItem  prop="invBankAccount">
-            <Input type="text" class="CarrierIput" v-model="formUserInfor.invBankAccount"   placeholder="请输入账号" />
+            <Input type="text" class="CarrierIput" v-model="formUserInfor.invBankAccount"   placeholder="请输入银行账号" />
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>地址</span>
+            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>开票地址</span>
             <FormItem  prop="invAddress">
-            <Input type="text" class="CarrierIput" v-model="formUserInfor.invAddress"   placeholder="请输入详细地址" />
+            <Input type="text" class="CarrierIput" v-model="formUserInfor.invAddress"   placeholder="请输入详细开票地址" />
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>电话</span>
+            <span class="CarrierTitle"><i class="orangeFont mr5">*</i>开票电话</span>
             <FormItem  prop="invTelephone">
-            <Input type="text" class="CarrierIput"  v-model="formUserInfor.invTelephone"    placeholder="请输入联系电话" />
+            <Input type="text" class="CarrierIput"  v-model="formUserInfor.invTelephone"    placeholder="请输入开票电话" />
             </FormItem>
           </li>
         </ul>
@@ -80,7 +80,7 @@
                   <Button icon="ios-cloud-upload-outline">上  传</Button>
                 </Upload>
               </FormItem>
-              <div class="uploadimg" v-if="formItem.image"><img :src="formItem.image"></div>
+              <div class="uploadimg" v-if="UploadImg"><img :src="UploadImg.image"></div>
             </div>
           </li>
           <li>
@@ -91,8 +91,9 @@
                 <Row>
                   <FormItem>
                   <Col span="12">
-                    <Upload action="//jsonplaceholder.typicode.com/posts/">
-                      <Button icon="ios-cloud-upload-outline"  >上  传</Button>
+                    <Upload
+                      action="//192.168.40.31:28082/file">
+                      <Button icon="ios-cloud-upload-outline">上  传</Button>
                     </Upload>
 
                   </Col>
@@ -116,52 +117,183 @@
 </template>
 
 <script>
+  import { manageReg } from '../api/users'
     export default {
       name: "userPerInfor",
       layout:'membercenter',
       data(){
-        const validatePass = (rule, value, callback) => {
+        const validateCompanyName = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('Please enter your password'));
+            callback(new Error('请输入公司名称'));
           } else {
-            if (this.formCustom.passwdCheck !== '') {
-              // 对第二个密码框单独验证
-              this.$refs.formCustom.validateField('passwdCheck');
-            }
+            callback();
+          }
+        };
+        const validateTaxId= (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入税号'));
+          } else {
+            callback();
+          }
+        };
+        const validateInvBankName=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入开户行'));
+          } else {
+            callback();
+          }
+        };
+        const validateInvBankAccount=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入账号'));
+          } else {
+            callback();
+          }
+        };
+        const validateInvAddress=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入开票地址'));
+          } else {
+            callback();
+          }
+        };
+        const validateInvTelephone=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入联系电话'));
+          } else {
+            callback();
+          }
+        };
+        const validateContacter=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入联系人'));
+          } else {
             callback();
           }
         };
           return{
-            formItem:{
+            UploadImg:{
               image:[]
             },
             formUserInfor: {
-              username: '',
-              passwdCheck: '',
-              age: ''
+              phone:'',
+              password:'',
+              companyName:'',
+              taxId:'',
+              invBankName:'',
+              invBankAccount:'',
+              invAddress:'',
+              invTelephone:'',
+              contacter:'',
+              business_license:'',
+              authorization_elc:'',
+              code:''
             },
             ruleCustom: {
-              username: [
-                { validator: validatePass, trigger: 'blur' }
+              companyName: [
+                { validator: validateCompanyName, trigger: 'blur' }
               ],
-              passwdCheck: [
-                { validator: validatePass, trigger: 'blur' }
+              taxId: [
+                { validator: validateTaxId, trigger: 'blur' }
               ],
+              invBankName: [
+                { validator: validateInvBankName, trigger: 'blur' }
+              ],
+              invBankAccount: [
+                { validator: validateInvBankAccount, trigger: 'blur' }
+              ],
+              invAddress: [
+                { validator: validateInvAddress, trigger: 'blur' }
+              ],
+              invTelephone: [
+                { validator: validateInvTelephone, trigger: 'blur' }
+              ],
+              contacter: [
+                { validator: validateContacter, trigger: 'blur' }
+              ],
+
 
             }
           }
       },
       methods:{
         imageSuccess(res){
-          this.formItem.image.push(res.url)
+          this.UploadImg.image.push(res.url)
         },
         // 会员注册提交
         memberReset(data){
-          this.$router.push({path:'./RegisterSuccess'})
+
+
+          if(!this.formUserInfor.companyName){
+            this.$Message.info({
+              content: '公司名称不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.taxId){
+            this.$Message.info({
+              content: '税号不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.invBankName){
+            this.$Message.info({
+              content: '开户行不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.invBankAccount){
+            this.$Message.info({
+              content: '银行账号不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.invAddress){
+            this.$Message.info({
+              content: '开票不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.invTelephone){
+            this.$Message.info({
+              content: '开票电话不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.business_license){
+            this.$Message.info({
+              content: '请上传营业执照',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.authorization_elc){
+            this.$Message.info({
+              content: '请上传授权书',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else{
+            console.log('this.formUserInfor', this.formUserInfor)
+            const res = manageReg(this, this.formUserInfor)
+            this.$router.push({path:'./RegisterSuccess'})
+          }
+
+
+
         },
 
       },
       mounted() {
+
+        console.log('this.$router',this.$router)
       }
     }
 </script>

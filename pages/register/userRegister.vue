@@ -25,21 +25,15 @@
        </li>
 
        <li>
-
-           <span class="CarrierTitle"><i class="orangeFont mr5">*</i>登录密码</span>
+         <span class="CarrierTitle"><i class="orangeFont mr5">*</i>登录密码</span>
          <FormItem prop="password">
            <Input  type="password"  v-model="formCustom.password" class="CarrierIput"  placeholder="请输入密码"></Input>
-
-          </FormItem>
-
+         </FormItem>
        <li>
-
-           <span class="CarrierTitle"><i class="orangeFont mr5">*</i>确认密码</span>
-       <FormItem prop="repassword">
+         <span class="CarrierTitle"><i class="orangeFont mr5">*</i>确认密码</span>
+        <FormItem prop="repassword">
          <Input  type="password"  class="CarrierIput"   v-model="formCustom.repassword"   placeholder="请再次输入密码" ></Input>
-       </FormItem>
-
-
+        </FormItem>
        </li>
      </ul>
      <div class="dflexAlem mt15 fs14" style="justify-content: center; width: 537px;">
@@ -60,7 +54,7 @@
 </template>
 
 <script>
-  import { userCodeSend, userCodeCheck } from '../../api/users'
+  import { userCodeSend, userCodeCheck, userPhoneCheck } from '../../api/users'
   import identify from './identify'
     export default {
         name: "userRegister",
@@ -80,12 +74,23 @@
               if(!myreg.test(this.formCustom.phone)){
                 callback(new Error('手机号码格式不正确'));
               }else{
-                this.phoneValid=true;
+                let params = {
+                  phone:value
+                }
+                const res = userPhoneCheck(this, params)
+                console.log('手机号验证res', res)
+                if(res){
+                  callback(new Error('手机号码已注册'));
+                }else{
+                  this.phoneValid=true;
+                  callback()
+                }
+
               }
 
 
             }
-            callback()
+
           }
         };
         const validatePass = (rule, value, callback) => {
@@ -115,6 +120,7 @@
              callback(new Error('验证码不能为空'));
            }else{
              if(value === this.identifyCode){
+               this.identifyImgCode=true
                callback();
              }else{
                callback(new Error('验证码有误'));
@@ -131,7 +137,7 @@
               }
               const res = userCodeCheck(this, params)
               console.log('res', res)
-              if(res){
+              if(res.data){
                 this.isrefreshpic=true
                 console.log('isrefreshpic', this.isrefreshpic)
                 callback();
@@ -144,6 +150,7 @@
         return {
           // 图形验证码
           identifyCodes: "1234567890",
+          identifyImgCode:false,//校验图形验证码
           identifyCode: "",
           imgSrc:'http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435',
           single: false,
@@ -163,7 +170,7 @@
             single:'',
             repassword: '',
             Imgcode:'',
-            mobilecode:''
+
           },
           ruleCustom: {
             phone: [
@@ -200,11 +207,10 @@
               let params = {
                 phone
               }
-            console.log('params', params)
-              const res = userCodeSend(this, params)
+            const res = userCodeSend(this, params)
             console.log('res',res)
-            console.log('res', res.data)
-            if(res.data){
+            console.log('res',res.data)
+            if(res){
               console.log('res', res)
               this.$Message.info("短信发送成功")
 
@@ -232,30 +238,61 @@
 
           }
         },
+        // 下一步验证
         handleSubmit (name) {
+          var userFormData=[]
+          console.log('formCustom', this.formCustom)
+          userFormData.phone=this.formCustom.phone
+          userFormData.password=this.formCustom.password
+          userFormData.code=this.formCustom.mobilecode
+          if(!this.phoneValid){
+            this.$Message.info({
+              content: '手机号有误',
+              duration: 5,
+              closable: true
+            })
+            return
+          } else if(!this.isrefreshpic){
+            this.$Message.info({
+              content: '手机验证码有误',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.identifyImgCode){
+            this.$Message.info({
+              content: '图形验证码有误',
+              duration: 5,
+              closable: true
+            })
+            return
+          } else if(!this.passwordValid){
+            this.$Message.info({
+              content: '密码有误',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.repasswordValid){
+            this.$Message.info({
+              content: '请再次密码有误',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formCustom.single){
+            this.$Message.info({
+              content: '请阅读巨正源用户协议',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else{
 
-          this.$router.push({path:'./userPerInfor'})
-          // var formCustom=this.formCustom
-          // console.log('formCustom', formCustom)
-          // if(!formCustom.single){
-          //   this.$Message.info({
-          //     content: '请阅读巨正源用户协议',
-          //     duration: 5,
-          //     closable: true
-          //   })
-          //   return
-          // }
-          // if(formCustom && this.phoneValid && this.passwordValid && this.repasswordValid){
-          //   this.$router.push({path:'./userPerInfor',query:{params:formCustom}})
-          // }
+            this.$router.push({path:'./userPerInfor',query:{params:userFormData}})
+          }
 
-          // this.$refs[name].validate((valid) => {
-          //   if (valid) {
-          //     this.$Message.success('Success!');
-          //   } else {
-          //     this.$Message.error('Fail!');
-          //   }
-          // })
+
         },
 
 // 图形验证码
