@@ -8,24 +8,20 @@ export default function (app) {
   axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
   }
-  axios.defaults.transformRequest = [
-    function(data) {
-      console.log('啥',data)
-      data = qs.stringify(data)
-      return data
-    }
-  ]
   // 请求回调
-  axios.onRequest(config => {})
+  axios.onRequest(config => {
+    config.data = qs.stringify(config.data, {
+      allowDots: true //Option allowDots can be used to enable dot notation
+    });
+    return config;
+  })
   // 返回回调
   axios.onResponse(res => {
-    const { data, status } = res
-    return Promise.reject({ data, status })
+    const {data, status} = res
+    return {data, status}
   })
   // 错误回调
   axios.onError(error => {
-    let errorInfo = error.response
-      console.log("该请求连接有问题：",error.response)
+    return Promise.reject(error);
   })
-
 }

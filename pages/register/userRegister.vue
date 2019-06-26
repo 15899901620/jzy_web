@@ -175,7 +175,7 @@
       methods:{
 
         //获取短信验证码
-         getNoteValue () {
+         async getNoteValue () {
 
           var phone = this.formCustom.phone//验证码
             console.log('phone', phone)
@@ -188,40 +188,41 @@
                 phone
               }
             console.log('params', params)
-              const res = userCodeSend(this, params)
-            console.log('res', res)
-            if(res === true){
-              console.log('res', res)
-              this.datalist = res.items
+              let res = await userCodeSend(this, params)
 
-              this.$Message.info("短信发送成功")
-              this.isrefreshpic = true
-              if (this.isrefreshpic) {
-                var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                window.localStorage.setItem("note", sj)
-                this.auth_time = 60;
-                var timer = setInterval(()=>{
-                  this.auth_time--;
-                  if(this.auth_time<=0){
-                    clearInterval(timer)
-                    this.btnBoolen = false;
-                    this.btnClassName="btns"
-                    this.btnValue="获取短信验证码"
-                  }else {
-                    this.btnBoolen = true;
-                    this.btnValue=`重新获取(${this.auth_time})S`
-                    this.btnClassName="btn"
-                  }
-                },1000)
-
-
-              }else{
-
-              }
-
-            }else {
-              this.$Message.info("短信发传失败")
-            }
+              console.log(res)
+            // if(res === true){
+            //   console.log('res', res)
+            //   this.datalist = res.items
+            //
+            //   this.$Message.info("短信发送成功")
+            //   this.isrefreshpic = true
+            //   if (this.isrefreshpic) {
+            //     var sj = Math.ceil(Math.random(10 + 1) * 100000)
+            //     window.localStorage.setItem("note", sj)
+            //     this.auth_time = 60;
+            //     var timer = setInterval(()=>{
+            //       this.auth_time--;
+            //       if(this.auth_time<=0){
+            //         clearInterval(timer)
+            //         this.btnBoolen = false;
+            //         this.btnClassName="btns"
+            //         this.btnValue="获取短信验证码"
+            //       }else {
+            //         this.btnBoolen = true;
+            //         this.btnValue=`重新获取(${this.auth_time})S`
+            //         this.btnClassName="btn"
+            //       }
+            //     },1000)
+            //
+            //
+            //   }else{
+            //
+            //   }
+            //
+            // }else {
+            //   this.$Message.info("短信发传失败")
+            // }
 
 
           }

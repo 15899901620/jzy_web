@@ -2,7 +2,7 @@
  * @description 系统模块用户内容
  */
 import server from './server'
-
+import axios from '../libs/axios'
 /**
  * @description 会员登录
  * @param vm
@@ -88,12 +88,11 @@ export const userCodeCheck = (vm, data) => {
  * @
  */
 export const userCodeSend = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userCodeSend,
+   return vm.$axios.post(server.prefix +  server.api.user.userCodeSend,
     {
       ...data
     })
 }
-
 
 /**
  * @description 供应商验证（1，供应商名称，2手机验证）
