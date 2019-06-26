@@ -72,7 +72,7 @@
           }
           const res = await announcement(this, params)
           console.log('公告：', res)
-           this.aclist = res.items
+           this.aclist = res.data.items
         },
         // 公告接口
         async NewsData() {
@@ -83,7 +83,7 @@
           }
           const res = await infolist(this, params)
           console.log('资讯：', res)
-          this.newslist = res.items
+          this.newslist = res.data.items
         }
 
       },

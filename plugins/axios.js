@@ -10,16 +10,23 @@ export default function (app) {
   }
   axios.defaults.transformRequest = [
     function(data) {
+      console.log('啥',data)
       data = qs.stringify(data)
       return data
     }
   ]
   // 请求回调
-  axios.onRequest(config => {
-  })
+  axios.onRequest(config => {})
   // 返回回调
-  axios.onResponse(res => {})
+  axios.onResponse(res => {
+    const { data, status } = res
+    return { data, status }
+  })
   // 错误回调
   axios.onError(error => {
+    let errorInfo = error.response
+      console.log(error.response)
+
   })
+
 }
