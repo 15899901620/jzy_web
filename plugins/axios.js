@@ -25,8 +25,7 @@ export default function (app) {
   // 错误回调
   axios.onError(error => {
     let errorInfo = error.response
-      console.log(error.response)
-
+      console.log("该请求连接有问题：",error.response)
   })
 
 }
