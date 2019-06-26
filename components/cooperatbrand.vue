@@ -19,13 +19,6 @@
             </li>
           </ul>
         </CarouselItem>
-        <CarouselItem>
-          <ul class="coorperList">
-            <li v-if="brandList01 >=  1">
-              <a v-for="(item, index) in brandList01" :key="index"><img :src="item.image"/></a>
-            </li>
-          </ul>
-        </CarouselItem>
       </Carousel>
     </div>
   </div>
@@ -48,19 +41,21 @@ export default {
       },
       display: "none",
       brandList:[],
-      brandList01:[]
     }
   },
   methods: {
     async cooperatbrand() {
       let params = {
         current_page: 1,
-        page_size: 14,
+        page_size: 42,
       }
       const res = await cooperativeBrand(this, params)
-      this.brandList = res.items
+      this.brandList = res.data.items
     },
-  }
+  },
+  mounted () {
+    this.cooperatbrand()
+  },
 }
 </script>
 
