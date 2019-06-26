@@ -90,7 +90,7 @@ export const userCodeCheck = (vm, data) => {
 export const userCodeSend = (vm, data) => {
   return vm.$axios.post('http://192.168.40.31:10010/api/user/m/code',
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -104,7 +104,7 @@ export const userCodeSend = (vm, data) => {
 export const supplierCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCheck,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -117,7 +117,7 @@ export const supplierCheck = (vm, data) => {
 export const supplierCodeCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCodeCheck,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -130,7 +130,7 @@ export const supplierCodeCheck = (vm, data) => {
 export const supplierCodeSend = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCodeSend,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -143,7 +143,7 @@ export const supplierCodeSend = (vm, data) => {
 export const userRepassWd = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userRepassWd,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -156,7 +156,7 @@ export const userRepassWd = (vm, data) => {
 export const supplierRepssWd = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierRepssWd,
     {
-      params: {...data}
+      ...data
     })
 }
 
@@ -169,6 +169,6 @@ export const supplierRepssWd = (vm, data) => {
 export const manageEdit = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageEdit,
     {
-      params: {...data}
+      ...data
     })
 }
