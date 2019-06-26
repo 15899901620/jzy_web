@@ -20,7 +20,7 @@ export default function (app) {
   // 返回回调
   axios.onResponse(res => {
     const { data, status } = res
-    return { data, status }
+    return Promise.reject({ data, status })
   })
   // 错误回调
   axios.onError(error => {
