@@ -25,52 +25,52 @@
       <Form ref="formUserInfor" :model="formUserInfor" :rules="ruleCustom">
         <ul class="dflexAlem Carinput" style=" margin-top: 23px; flex-direction: column;justify-content: center;">
           <li>
-            <FormItem  prop="username">
-              <span class="CarrierTitle" style="margin-left: -29px;"><i class="orangeFont mr5">*</i>公司名称</span>
-            <input type="text" v-model="formUserInfor.username" class="CarrierIput" name="" id="" value="" placeholder="请输入公司名称" />
+            <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>公司名称</span>
+            <FormItem  prop="companyName">
+            <Input type="text" v-model="formUserInfor.companyName" class="CarrierIput" name="" id="" value="" placeholder="请输入公司名称" />
             </FormItem>
           </li>
           <li>
-            <FormItem  prop="username">
-            <span class="CarrierTitle" style="margin-left: -55px;"><i class="orangeFont mr5">*</i>纳税人识别号</span>
-              <input type="text" class="CarrierIput" v-model="formUserInfor.username"  name="" id="" value="" placeholder="请输入纳税人识别号" />
+            <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>纳税人识别号</span>
+            <FormItem  prop="taxId">
+              <Input type="text" class="CarrierIput" v-model="formUserInfor.taxId"   placeholder="请输入纳税人识别号" />
             </FormItem>
           </li>
           <li>
+            <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>开户行</span>
             <FormItem  prop="username">
-            <span class="CarrierTitle" style="margin-left: -14px;"><i class="orangeFont mr5">*</i>开户行</span>
-            <input type="text" class="CarrierIput" v-model="formUserInfor.username" name="" id="" value=""  placeholder="请输入开户行" />
+            <Input type="text" class="CarrierIput" v-model="formUserInfor.invBankName"    placeholder="请输入开户行" />
             </FormItem>
           </li>
           <li>
-            <FormItem  prop="username">
             <span class="CarrierTitle"><i class="orangeFont mr5">*</i>账号</span>
-            <input type="text" class="CarrierIput" v-model="formUserInfor.username" name="" id="" value="" placeholder="请输入账号" />
+            <FormItem  prop="invBankAccount">
+            <Input type="text" class="CarrierIput" v-model="formUserInfor.invBankAccount"   placeholder="请输入账号" />
             </FormItem>
           </li>
           <li>
-            <FormItem  prop="username">
             <span class="CarrierTitle"><i class="orangeFont mr5">*</i>地址</span>
-            <input type="text" class="CarrierIput" v-model="formUserInfor.username"  name="" id="" value="" placeholder="请输入详细地址" />
+            <FormItem  prop="invAddress">
+            <Input type="text" class="CarrierIput" v-model="formUserInfor.invAddress"   placeholder="请输入详细地址" />
             </FormItem>
           </li>
           <li>
-            <FormItem  prop="username">
             <span class="CarrierTitle"><i class="orangeFont mr5">*</i>电话</span>
-            <input type="text" class="CarrierIput"  v-model="formUserInfor.username" name="" id="" value=""  placeholder="请输入联系电话" />
+            <FormItem  prop="invTelephone">
+            <Input type="text" class="CarrierIput"  v-model="formUserInfor.invTelephone"    placeholder="请输入联系电话" />
             </FormItem>
           </li>
         </ul>
         <div class="carrierInfor_title">基本信息</div>
         <ul class="dflexAlem Carinput" style=" margin-top: 23px; flex-direction: column;justify-content: center;">
           <li>
-            <FormItem  prop="username">
-            <span class="CarrierTitle" style="margin-left: -14px;"><i class="orangeFont mr5">*</i>联系人</span>
-              <input type="text" v-model="formUserInfor.username" class="CarrierIput" name="" id="" value="" placeholder="请输入公司名称" />
+            <span class="CarrierTitle"  ><i class="orangeFont mr5">*</i>联系人</span>
+            <FormItem  prop="contacter">
+              <Input type="text" v-model="formUserInfor.contacter" class="CarrierIput"  placeholder="请输入联系人" />
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle" style="margin-left: -66px;"><i class="orangeFont mr5">*</i>营业执照</span>
+            <span class="CarrierTitle" style="margin-left: -50px;"><i class="orangeFont mr5">*</i>营业执照</span>
             <div style="width: 370px; display: flex">
               <FormItem>
                 <Upload
@@ -85,7 +85,7 @@
           </li>
           <li>
 
-            <span class="CarrierTitle" style="margin-left: -64px;"><i class="orangeFont mr5">*</i>授权书</span>
+            <span class="CarrierTitle" style="margin-left: -50px;"><i class="orangeFont mr5">*</i>授权书</span>
 
               <div style="width: 370px;">
                 <Row>
@@ -177,14 +177,18 @@
 
   .carrierInfor_title{display: block; line-height: 50px; font-size: 16px;  padding-left: 125px; margin: 0 90px;height: 50px;background-color: #f8f8f8; margin-top: 80px;}
   .Carinput li{display: flex;align-items: center;margin-top: 20px;}
-  .Carinput li .CarrierIput{font-size: 14px;padding-left: 10px;box-sizing: border-box; width: 375px;border-radius: 3px;border: 1px solid #dddddd; height: 42px;line-height: 42px;}
+  .Carinput li .CarrierIput{font-size: 14px; margin-left: 5px;  box-sizing: border-box; width: 375px;border-radius: 3px;  height: 42px;line-height: 42px;}
   .Carinput li .codeCarrier{margin-left: 20px;width: 90px; height: 42px; border-radius: 5px; display: flex; align-items: center;}
   .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 55px; border-radius:3px;  cursor: pointer;width: 375px;height: 42px;border: none; background-color: #007de4; color: #fff;}
 
-  .CarrierTitle{width: 100px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
+  .CarrierTitle{width: 120px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
 
   .ivu-form-item{width: 100%; margin-bottom: 0px;  }
-  .ivu-form-item .ivu-form-item-content .ivu-upload{display: flex;height: 33px;}
-  .ivu-upload-list{margin-top: 0px;display: flex;} .ivu-upload-list li{margin-top: 0px; margin-left: 10px;}
+  .ivu-form-item .ivu-form-item-content .ivu-upload{display: flex;height: 32px;}
+  .ivu-upload-list{margin-top: 0px;display: flex;}
+  .ivu-upload-list li{margin-top: 0px; margin-left: 10px;}
   .ivu-form-item .ivu-form-item-content .ivu-upload .ivu-upload-list .ivu-upload-list-file{padding: 0 6px;}
+  .Carinput li .ivu-form-item .ivu-form-item-content .ivu-form-item-error-tip{left: 10px;}
+  .Carinput li .ivu-form-item .ivu-form-item-content .CarrierIput .ivu-input{height: 42px; line-height: 42px;}
+  .ivu-form-item .ivu-form-item-content .CarrierIput .ivu-upload{display: flex;height: 42px;}
 </style>
