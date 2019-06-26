@@ -190,7 +190,7 @@
             console.log('params', params)
               const res = userCodeSend(this, params)
             console.log('res', res)
-            if(res){
+            if(res === true){
               console.log('res', res)
               this.datalist = res.items
 

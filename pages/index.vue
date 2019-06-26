@@ -26,7 +26,6 @@
 
 export default {
   name: "index",
-  layout:'default',
   components: {
     Indexbanner,
     membercener,
@@ -37,6 +36,11 @@ export default {
     Indexnews,
 
   },
+   meta: [
+      {name: 'title',content: '巨正源'  },
+      { name: 'keyword', content: '巨正源' },
+      { hid: 'description', name: 'description', content: "巨正源" }
+    ],
 }
 </script>
 
