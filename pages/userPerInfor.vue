@@ -283,7 +283,16 @@
           }else{
             console.log('this.formUserInfor', this.formUserInfor)
             const res = manageReg(this, this.formUserInfor)
-            this.$router.push({path:'./RegisterSuccess'})
+            if(res.data && res.status === 200){
+              this.$router.push({name:'RegisterSuccess'})
+            }else{
+              this.$Message.info({
+                content: '注册失败',
+                duration: 5,
+                closable: true
+              })
+            }
+
           }
 
 

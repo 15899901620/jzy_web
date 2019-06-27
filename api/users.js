@@ -12,7 +12,7 @@ import axios from '../libs/axios'
 export const manageLogin = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-      params: {...data}
+     ...data
     })
 }
 /**
