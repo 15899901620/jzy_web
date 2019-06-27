@@ -11,7 +11,7 @@
         </div>
         <div class="newsTile">{{item.title}}</div>
         <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html" @click="NewsDetail()">【查看全文】</a>
+          <span class="dflexAlem"><img src="../../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html" @click="NewsDetail()">【查看全文】</a>
         </div>
       </li>
     </ul>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { infolist } from '../api/info'
+  import { infolist } from '~/api/info'
   export default {
     name: "Indexnews",
     data(){

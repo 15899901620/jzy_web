@@ -1,17 +1,50 @@
 <template>
   <div class="beginner">
-    <ul>
-      <li><h4>新手指南</h4><a href="#.html" rel="nofollow">购物流程</a><a href="#.html" rel="nofollow">注册 / 登录</a><a href="#.html" rel="nofollow">找回密码</a><a href="#.html" rel="nofollow">用户服务协议</a></li>
-      <li><h4>购物指南</h4><a href="#.html" rel="nofollow">如何卖货</a><a href="#.html" rel="nofollow">如何找货</a><a href="#.html" rel="nofollow">公司转账</a></li>
-      <li><h4>售后服务</h4><a href="#.html" rel="nofollow">发票说明</a><a href="#.html" rel="nofollow">物流配送</a><a href="#.html" rel="nofollow">仓库自提</a></li>
-      <li><h4>联系我们</h4><a href="#.html" rel="nofollow">企业简介</a><a href="#.html" rel="nofollow">社会责任</a><a href="#.html" rel="nofollow">法律声明</a><a href="#.html" rel="nofollow">隐私声明</a></li>
+    <ul v-if="datalist">
+
+      <li v-for="(item, index) in datalist" :key="index">
+        <h4>{{item.title}}</h4>
+        <p v-for="(items, index2) in item.clist" :key="index2">
+           <nuxt-link :to="{name: 'help-id',params:{ id: items.id }}">{{ items.title }}</nuxt-link>
+        </p>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { helpPage, helpCatTree} from '../../../api/helper'
 export default {
   name: "helpnav",
+  data () {
+    return {
+      datalist: [],
+    }
+  },
+  methods: {
+    async sourceData() {
+      let params = {
+        parentId: 0,
+        indexShow: 1
+      }
+      const res = await helpCatTree(this, params)
+      let cateData = res.data
+      for (let k in cateData){
+          let paramst = {
+            catId: cateData[k].id,
+            indexShow: 1
+          }
+          const rest = await helpPage(this, paramst)
+          let restdata = rest.data
+          cateData[k]['clist'] = restdata
+      }
+      this.datalist = cateData
+      console.log('data', cateData)
+    }
+  },
+  mounted () {
+    this.sourceData()
+  }
 }
 </script>
 

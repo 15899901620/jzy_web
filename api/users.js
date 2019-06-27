@@ -2,7 +2,7 @@
  * @description 系统模块用户内容
  */
 import server from './server'
-import axios from '../libs/axios'
+import { Message } from 'iview'
 /**
  * @description 会员登录
  * @param vm
@@ -12,7 +12,13 @@ import axios from '../libs/axios'
 export const manageLogin = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-     ...data
+      ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      if(errorInfo.status == '410'){
+        Message.warning(errorInfo.data.message)
+      }
+      console.log('manageLoginErr', errorInfo)
     })
 }
 /**
@@ -25,6 +31,9 @@ export const supplierLogin = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierLogin,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierLoginErr', errorInfo)
     })
 }
 
@@ -38,10 +47,46 @@ export const manageReg = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageReg,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageRegErr', errorInfo)
     })
+}
+/**
+ *
+ * @description 公司审核
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userValid = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.userValid,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageRegErr', errorInfo)
+  })
+}
+/**
+ *
+ * @description 会员验证
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const memberValid = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.memberValid,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageRegErr', errorInfo)
+  })
 }
 
 /**
+ *
  * @description 供应商注册
  * @param vm
  * @param data
@@ -51,6 +96,9 @@ export const supplierReg = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierReg,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierRegErr', errorInfo)
     })
 }
 
@@ -61,9 +109,12 @@ export const supplierReg = (vm, data) => {
  * @returns {*}
  */
 export const userPhoneCheck = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userPhoneCheck,
+  return vm.$axios.get(server.prefix + server.api.user.userPhoneCheck,
     {
-      ...data
+      params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userPhoneCheckErr', errorInfo)
     })
 }
 
@@ -77,6 +128,9 @@ export const userCodeCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userCodeCheck,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userCodeCheckErr', errorInfo)
     })
 }
 
@@ -91,6 +145,9 @@ export const userCodeSend = (vm, data) => {
    return vm.$axios.post(server.prefix +  server.api.user.userCodeSend,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userCodeSendErr', errorInfo)
     })
 }
 
@@ -104,6 +161,9 @@ export const supplierCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCheck,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierCheckErr', errorInfo)
     })
 }
 
@@ -117,6 +177,9 @@ export const supplierCodeCheck = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCodeCheck,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierCodeCheckErr', errorInfo)
     })
 }
 
@@ -130,6 +193,9 @@ export const supplierCodeSend = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierCodeSend,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierCodeSendErr', errorInfo)
     })
 }
 
@@ -143,6 +209,9 @@ export const userRepassWd = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.userRepassWd,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userRepassWdErr', errorInfo)
     })
 }
 
@@ -156,6 +225,9 @@ export const supplierRepssWd = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierRepssWd,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierRepssWdErr', errorInfo)
     })
 }
 
@@ -169,5 +241,8 @@ export const manageEdit = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageEdit,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
     })
 }

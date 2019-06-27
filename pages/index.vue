@@ -2,45 +2,41 @@
   <div>
     <div class="clearfix"  >
         <Indexbanner></Indexbanner>
-        <membercener></membercener>
+        <member-center></member-center>
         <Timelimited></Timelimited>
         <Spotsupermarket></Spotsupermarket>
         <Logisticscar></Logisticscar>
         <cooperatbrand></cooperatbrand>
         <Indexnews></Indexnews>
     </div>
-
   </div>
 </template>
 
 <script>
-  import Indexbanner from '~/components/Indexbanner'
-  import membercener from '~/components/memberCenter'
-  import Timelimited from '~/components/Timelimited'
-  import Spotsupermarket from '~/components/Spotsupermarket'
-  import cooperatbrand from '~/components/cooperatbrand'
-  import Logisticscar from '~/components/Logisticscar'
-  import Indexnews from '~/components/Indexnews'
-
-
+import Indexbanner from '../components/home/Indexbanner'
+import memberCenter from '../components/home/memberCenter'
+import Timelimited from '../components/home/Timelimited'
+import Spotsupermarket from '../components/home/Spotsupermarket'
+import cooperatbrand from '../components/home/cooperatbrand'
+import Logisticscar from '../components/home/Logisticscar'
+import Indexnews from '../components/home/Indexnews'
 
 export default {
   name: "index",
   components: {
     Indexbanner,
-    membercener,
+    memberCenter,
     Timelimited,
     Spotsupermarket,
     Logisticscar,
     cooperatbrand,
-    Indexnews,
-
+    Indexnews
   },
-   meta: [
-      {name: 'title',content: '巨正源'  },
-      { name: 'keyword', content: '巨正源' },
-      { hid: 'description', name: 'description', content: "巨正源" }
-    ],
+  head () {
+    return {
+      title: '巨正源-化工交易平台'
+    }
+  }
 }
 </script>
 

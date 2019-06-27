@@ -7,10 +7,12 @@ let api = {
    */
   user:{
     manageLogin: '/auth/member/accredit',
-    supplierLogin: '/user/supplier/login',
+    supplierLogin: '/auth/supplier/accredit',
+    memberValid: '/auth/member/verify',
     manageReg: '/user/m/register',
     supplierReg: 'user/supplier/m/register',
     userPhoneCheck: '/user/m/check/phone',
+    userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
     supplierCheck: '/user/supplier/check',
@@ -36,8 +38,9 @@ let api = {
    * @description 帮助中心
    */
   helper: {
-    helpCatTree: '/web/help_cat/tree',
+    helpCatTree: '/web/help_cat/getHelpCatatByParentId',
     helpPage: '/web/help_article/getHelpArticleByCatId',
+    helpdetail: '/web/help_article/detail'
   },
   /**
    * @description 商品(物性表)
@@ -61,7 +64,8 @@ let api = {
    * @description 系统
    */
   sysconf: {
-    cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
+    cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
+    friendlink: '/web/friendlink/list' //友情链接
   },
   /**
    * @description 广告位管理

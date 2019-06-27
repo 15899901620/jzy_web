@@ -28,3 +28,16 @@ export const helpCatTree = (vm, data) => {
       params: {...data}
     })
 }
+
+/**
+ * @description 根据ID获取帮助中心详情内容
+ * @param {*} vm 
+ * @param {*} data 
+ * @returns {*}
+ */
+export const helpdetail = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.helper.helpdetail,
+    {
+      params: {...data}
+    })
+}

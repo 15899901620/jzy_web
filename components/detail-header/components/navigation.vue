@@ -12,10 +12,9 @@
 </template>
 
 <script>
-  import Bus from '../../Bus'
+import { navlist } from '../../../api/navigation'
 export default {
   name: "navigation",
-
   data () {
     return {
       currclass:false,
@@ -34,11 +33,14 @@ export default {
       ],
     }
   },
-
   methods:{
+    asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+
+      return {categories: }
+    },
     getDescribe(tid, index, headtitle) {
       this.$emit('tidName', tid)
-      Bus.$emit('val', headtitle)
+      this.$emit('val', headtitle)
       this.navIndex = index;
      },
     checkRouterLocal(path) {
@@ -46,23 +48,16 @@ export default {
       this.navIndex = this.categories.findIndex(item => {
           return item.router.path === path
       });
-
     }
-
   },
-    created () {
-      let path = this.$route.path;
-      // 检索当前路径
-      this.checkRouterLocal(path);
-    },
+  created () {
+    let path = this.$route.path;
+    // 检索当前路径
+    this.checkRouterLocal(path);
+  },
+  mounted () {
 
-    mounted () {
-
-
-    },
-  watch: {
   }
-
 }
 </script>
 
