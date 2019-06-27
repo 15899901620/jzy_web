@@ -238,60 +238,76 @@
 
           }
         },
+        // 验证手机验证码
+        async userCodeCheck(value, callback){
+          let params = {
+            phone:this.formCustom.phone,
+            code:value
+          }
+          const res = await userCodeCheck(this, params)
+          if(res.data && res.status === 200){
+            this.isrefreshpic=true
+
+            console.log('isrefreshpic', this.isrefreshpic)
+            callback();
+          }else{
+            callback(new Error('手机验证码错误'));
+          }
+        },
         // 下一步验证
         handleSubmit (name) {
-          var userFormData=[]
+          var userFormData={}
           console.log('formCustom', this.formCustom)
           userFormData.phone=this.formCustom.phone
           userFormData.password=this.formCustom.password
           userFormData.code=this.formCustom.mobilecode
-          if(!this.phoneValid){
-            this.$Message.info({
-              content: '手机号有误',
-              duration: 5,
-              closable: true
-            })
-            return
-          } else if(!this.isrefreshpic){
-            this.$Message.info({
-              content: '手机验证码有误',
-              duration: 5,
-              closable: true
-            })
-            return
-          }else if(!this.identifyImgCode){
-            this.$Message.info({
-              content: '图形验证码有误',
-              duration: 5,
-              closable: true
-            })
-            return
-          } else if(!this.passwordValid){
-            this.$Message.info({
-              content: '密码有误',
-              duration: 5,
-              closable: true
-            })
-            return
-          }else if(!this.repasswordValid){
-            this.$Message.info({
-              content: '请再次密码有误',
-              duration: 5,
-              closable: true
-            })
-            return
-          }else if(!this.formCustom.single){
-            this.$Message.info({
-              content: '请阅读巨正源用户协议',
-              duration: 5,
-              closable: true
-            })
-            return
-          }else{
-
-            this.$router.push({path:'./userPerInfor',query:{params:userFormData}})
-          }
-
+          // if(!this.phoneValid){
+          //   this.$Message.info({
+          //     content: '手机号有误',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // } else if(!this.isrefreshpic){
+          //   this.$Message.info({
+          //     content: '手机验证码有误',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }else if(!this.identifyImgCode){
+          //   this.$Message.info({
+          //     content: '图形验证码有误',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // } else if(!this.passwordValid){
+          //   this.$Message.info({
+          //     content: '密码有误',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }else if(!this.repasswordValid){
+          //   this.$Message.info({
+          //     content: '请再次密码有误',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }else if(!this.formCustom.single){
+          //   this.$Message.info({
+          //     content: '请阅读巨正源用户协议',
+          //     duration: 5,
+          //     closable: true
+          //   })
+          //   return
+          // }else{
+          //   this.$router.push({path:'./userPerInfor',query:{params:userFormData}})
+          // }
+          console.log('userFormData', userFormData)
+          this.$router.push({name:'userPerInfor', params:{params:userFormData}})
 
         },
 
@@ -329,13 +345,13 @@
   .Carinput li .codeCarrier{ cursor: pointer; width:102px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
   .Carinput li .codeCarrier img{width: 100%;height: 100%;}
   .Carinput li .codeCarrier button{width: 100%;height: 100%;}
-  .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 38px; border-radius:3px;  cursor: pointer; font-size: 14px;
+  .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 0px; border-radius:3px;  cursor: pointer; font-size: 14px;
     width: 375px;height: 42px;border: none; background-color: #007de4; color: #fff;}
 
 
   .Carinput li .CarrierImgcode{ height: 42px;   font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; border: 1px solid #DEDEDE}
 
-  .ivu-form-item{margin-bottom: 0}
+  .ivu-form-item{ margin-bottom: 0}
   .ivu-input{height: 42px;line-height: 42px; padding: 0px 7px; }
   .ivu-checkbox-inner{width: 18px;height: 18px;}
   .ivu-checkbox-inner:after{width: 6px;height: 10px;top: 1px;left: 5px;}

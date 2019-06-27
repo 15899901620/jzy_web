@@ -24,8 +24,12 @@
         </div>
 
         <div class="new_other">
-          <a>【上一篇】中美贸易对塑料市场影响几何？</a>
-          <a>【下一篇】PE华东地区：市场继续下跌 下游询盘一般 </a>
+          <span v-if="lastPage_id">【上一篇】
+             <nuxt-link :to="{name: 'article-id', params:{ id: lastPage_id }}">{{ lastPage }}</nuxt-link>
+          </span>
+          <span v-if="nextPage_id">【下一篇】
+             <nuxt-link :to="{name: 'article-id', params:{ id: nextPage_id }}">{{ nextPage }}</nuxt-link>
+          </span>
         </div>
 
       </div>
@@ -44,24 +48,33 @@
     },
     data(){
         return{
-          NewsData:{},
-          id:''
+          NewsData:'',
+          id:'',
+          lastPage:'',
+          lastPage_id:'',
+          nextPage:'',
+          nextPage_id:''
         }
     },
     methods:{
-      async NewsDetail(id) {
+      async NewsDetail() {
         let params = {
-          id: id,
+          id: this.$router.history.current.params.id,
         }
         const res = await infodetail(this, params)
-        console.log('详情', res)
         this.NewsData = res.data
+        this.lastPage= this.NewsData.lastPage.title
+        this.lastPage_id=this.NewsData.lastPage.id
+        this.nextPage= this.NewsData.nextPage.title
+        this.nextPage_id=this.NewsData.nextPage.id
+
       }
 
     },
     mounted(){
-      this.id=this.$router.history.current.query.newsId
-       this.NewsDetail(this.id)
+       this.NewsDetail()
+    },
+    watch: {
     }
   }
 </script>
@@ -72,7 +85,7 @@
   .NewsDetail_tip{padding-bottom: 5px; display: flex; align-items: center;  justify-content: space-between;border-bottom: 1px solid #DEDEDE; font-size: 14px;}
   .NewsDetail_tip .newsShare{ width: 60px;  background: url(../../assets/img/icon.png)no-repeat 0px -409px;padding-left:20px;color: #999;}
   .NewsDetail_tip .time{display: flex;align-items: center; border-left: 1px solid #dedede; margin-left: 5px; padding-left: 10px;}
-  .new_other{ font-size: 14px; border-top: 1px solid #DEDEDE;padding-top: 20px; padding-left:20px; padding-right:20px;display: flex;align-items: center;justify-content: space-between;}
+  .new_other{     margin-bottom: 20px;font-size: 14px; border-top: 1px solid #DEDEDE;padding-top: 20px; padding-left:20px; padding-right:20px;display: flex;align-items: center;justify-content: space-between;}
 
   .ListTitle{display: flex;justify-content: space-between;}
   .TitleName{border-left: 2px solid #279eff; padding-left: 10px; margin: 15px 0; font-size: 16px;}

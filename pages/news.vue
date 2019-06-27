@@ -13,7 +13,7 @@
           <img :src="items.image" :alt="items.title" :id="index">
           </div>
           <div class="News_content">
-            <h2><nuxt-link :to="{name:'article-NewsDetail',query:{newsId:items.id}}">{{items.title}}</nuxt-link></h2>
+            <h2><nuxt-link :to="{name:'article-id', params:{id:items.id}}">{{items.title}}</nuxt-link></h2>
             <div class="NewsList_text">{{items.seoDescription}}</div>
             <div class=" mt20">
               <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
@@ -79,7 +79,7 @@ export default {
     // 详情页
     NewsDetail(id){
       console.log('id',id)
-      this.$router.push({path:'./article/NewsDetail',query:{newsId:id}})
+      this.$router.push({name:'article-id',params:{id:id}})
     }
 
   },
