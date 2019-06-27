@@ -1,26 +1,22 @@
 <template>
   <div style="background-color:#f5f5f5">
     <v-header v-on:headName="headName" ></v-header>
-
     <nuxt />
-    <v-footer v-on:headName="headName"  ></v-footer>
-
-
+    <detail-footer v-on:headName="headName"  ></detail-footer>
   </div>
 </template>
 
 <script>
 import VHeader from '~/components/header'
 import memheader from '~/components/memheader'
-import VFooter from '~/components/footer'
+import DetailFooter from '../components/detail-footer'
 import siderfooter from '~/components/siderfooter'
-
 export default {
   components: {
     VHeader,
     memheader,
     siderfooter,
-    VFooter
+    DetailFooter
   },
   data() {
     return {

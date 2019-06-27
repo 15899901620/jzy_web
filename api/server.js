@@ -36,8 +36,9 @@ let api = {
    * @description 帮助中心
    */
   helper: {
-    helpCatTree: '/web/help_cat/tree',
+    helpCatTree: '/web/help_cat/getHelpCatatByParentId',
     helpPage: '/web/help_article/getHelpArticleByCatId',
+    helpdetail: '/web/help_article/detail'
   },
   /**
    * @description 商品(物性表)
@@ -61,7 +62,8 @@ let api = {
    * @description 系统
    */
   sysconf: {
-    cooperativeBrand: '/web/coobrand/page'  //网站合作品牌
+    cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
+    friendlink: '/web/friendlink/list' //友情链接
   },
   /**
    * @description 广告位管理
