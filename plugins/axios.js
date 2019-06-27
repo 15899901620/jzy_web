@@ -1,5 +1,6 @@
 import qs from 'qs';
 import Cookies from 'js-cookie'
+
 const getCookie = name => {
   if (!name) return
   let data = Cookies.get(name)

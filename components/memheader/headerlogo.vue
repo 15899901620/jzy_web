@@ -16,9 +16,8 @@
         </div>
         <!--操作-->
         <div class="dflexAlem gray fs14" style="color: #666;" v-else>
-
-          <span class="bbright pr10 blackFont" >已有账号？</span> <a href="#.html" class="blueFont pl10">直接登录</a>
-
+          <span class="bbright pr10 blackFont" >已有账号？</span>
+          <nuxt-link  class="blueFont pl10" :to="{name:'login'}">直接登录</nuxt-link>
         </div>
 
 
@@ -61,7 +60,7 @@
           if(that.$router.history.current.name == 'users-usertotalorder'){
             this.CurreentTitle='全部订单'
           }
-
+          console.log('this.$router', this.$router.history.current.name)
            if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
              this.NavTel=false
           }else {

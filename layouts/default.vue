@@ -1,19 +1,19 @@
 <template>
-  <div style="background-color:#f5f5f5">
-    <v-header v-on:headName="headName" ></v-header>
+  <div style="background-color:#f0f0f0">
+    <detail-header v-on:headName="headName" ></detail-header>
     <nuxt />
     <detail-footer v-on:headName="headName"  ></detail-footer>
   </div>
 </template>
 
 <script>
-import VHeader from '~/components/header'
+import DetailHeader from '../components/detail-header'
 import memheader from '~/components/memheader'
 import DetailFooter from '../components/detail-footer'
 import siderfooter from '~/components/siderfooter'
 export default {
   components: {
-    VHeader,
+    DetailHeader,
     memheader,
     siderfooter,
     DetailFooter

@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
     <ul>
-      <li v-for="(category, index) in categories" :key="index" :id="category.tid"
+      <li :alt="name" v-for="(category, index) in categories" :key="index" :id="category.tid"
           @click="getDescribe(category.tid, index, category.nameTitle)"
           :class="[ navIndex == index ? 'curr' : ' ']"
       >
@@ -15,8 +15,13 @@
 import { navlist } from '../../../api/navigation'
 export default {
   name: "navigation",
+   asyncData (context) {
+    // called every time before loading the component
+    return { name: 'World' }
+  },
   data () {
     return {
+      self:this,
       currclass:false,
       navIndex: 0,
       categories: [
@@ -34,9 +39,12 @@ export default {
     }
   },
   methods:{
-    asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
-
-      return {categories: }
+    async getNavlist () {      
+      let params = {
+        nav: 'middle'
+      }
+      const res = await navlist(this, params)
+      console.log('nav', res)
     },
     getDescribe(tid, index, headtitle) {
       this.$emit('tidName', tid)
@@ -56,7 +64,7 @@ export default {
     this.checkRouterLocal(path);
   },
   mounted () {
-
+    this.getNavlist()
   }
 }
 </script>

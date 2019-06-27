@@ -5,34 +5,34 @@
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>手机号码</span>
          <FormItem prop="phone">
-           <Input   v-model="formCustom.phone"  class="CarrierIput"   placeholder="请输入手机号"></Input>
+           <Input   v-model="formCustom.phone"  class="CarrierIput"   placeholder="请输入手机号"/>
          </FormItem>
        </li>
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>验证码</span>
          <FormItem prop="Imgcode">
-         <Input   class="CarrierImgcode" v-model="formCustom.Imgcode" style="width: 265px; border: none"   placeholder="请输入验证码" ></Input>
+         <Input   class="CarrierImgcode" v-model="formCustom.Imgcode" style="width: 265px; border: none"   placeholder="请输入验证码" />
          </FormItem>
-         <div class="codeCarrier" @click="refreshCode">  <identify  :identifyCode="identifyCode"></identify> </div>
+         <div class="codeCarrier" @click="refreshCode"><identify  :identifyCode="identifyCode"></identify> </div>
        </li>
-       <li>
+       <li v-show="phoneValid">
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>手机验证码</span>
          <FormItem prop="mobilecode">
-           <Input  class="CarrierImgcode" v-model="formCustom.mobilecode" style="width: 265px; border: none"  placeholder="请输入验证码" ></Input>
+           <Input  class="CarrierImgcode" v-model="formCustom.mobilecode" style="width: 265px; border: none"  placeholder="请输入验证码" />
          </FormItem>
-         <div class="codeCarrier graybg"  @click="getNoteValue"  >{{this.btnValue}}</div>
+         <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
 
        </li>
 
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>登录密码</span>
          <FormItem prop="password">
-           <Input  type="password"  v-model="formCustom.password" class="CarrierIput"  placeholder="请输入密码"></Input>
+           <Input  type="password"  v-model="formCustom.password" class="CarrierIput"  placeholder="请输入密码"/>
          </FormItem>
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>确认密码</span>
         <FormItem prop="repassword">
-         <Input  type="password"  class="CarrierIput"   v-model="formCustom.repassword"   placeholder="请再次输入密码" ></Input>
+         <Input  type="password"  class="CarrierIput"   v-model="formCustom.repassword"   placeholder="请再次输入密码" />
         </FormItem>
        </li>
      </ul>
@@ -74,18 +74,7 @@
               if(!myreg.test(this.formCustom.phone)){
                 callback(new Error('手机号码格式不正确'));
               }else{
-                let params = {
-                  phone:value
-                }
-                const res = userPhoneCheck(this, params)
-                console.log('手机号验证res', res)
-                if(res){
-                  callback(new Error('手机号码已注册'));
-                }else{
-                  this.phoneValid=true;
-                  callback()
-                }
-
+                  this.userPhoneCheck(value, callback)
               }
 
 
@@ -121,6 +110,7 @@
            }else{
              if(value === this.identifyCode){
                this.identifyImgCode=true
+               this.ImgCodeValid=true
                callback();
              }else{
                callback(new Error('验证码有误'));
@@ -131,19 +121,7 @@
             if(value === ''){
               callback(new Error('手机验证码不能为空'));
             }else{
-              let params = {
-                phone:this.formCustom.phone,
-                code:value
-              }
-              const res = userCodeCheck(this, params)
-              console.log('res', res)
-              if(res.data){
-                this.isrefreshpic=true
-                console.log('isrefreshpic', this.isrefreshpic)
-                callback();
-              }else{
-                callback(new Error('手机验证码错误'));
-              }
+              this.userCodeCheck(value, callback)
 
             }
         }
@@ -151,6 +129,7 @@
           // 图形验证码
           identifyCodes: "1234567890",
           identifyImgCode:false,//校验图形验证码
+          ImgCodeValid:false,//校验手机验证码是否合格
           identifyCode: "",
           imgSrc:'http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435',
           single: false,
@@ -160,7 +139,7 @@
           btnBoolen:false,
           btnClassName:"btn",
           btnValue:"获取短信验证码",
-          phoneValid:'',//号码有效
+          phoneValid:false,//号码有效
           passwordValid:'',//密码有效
           repasswordValid:'',//号码有效
           formCustom: {
@@ -193,13 +172,42 @@
         };
       },
       methods:{
+          //验证手机是否存在
+        async userPhoneCheck(value, callback){
+          let params = {
+            phone:value
+          }
+          const res = await userPhoneCheck(this, params)
+          if(res.data && res.status === 200){
+            callback(new Error('手机号码已注册'));
+          }else{
+            this.phoneValid=true;
+            callback()
+          }
 
+        },
         //获取短信验证码
          async getNoteValue () {
 
           var phone = this.formCustom.phone//验证码
             console.log('phone', phone)
           //验证验证码是否为空
+           if(this.Imgcode === ''){
+             this.$Message.info({
+               content: '图形证码不能为空',
+               duration: 5,
+               closable: true
+             })
+             return
+           }
+           if(!this.ImgCodeValid){
+             this.$Message.info({
+               content: '请重新输入图形证码',
+               duration: 5,
+               closable: true
+             })
+              return
+           }
           if (phone === "") {
             this.$Message.info("手机号不能为空")
             return
@@ -207,10 +215,11 @@
               let params = {
                 phone
               }
-            const res = userCodeSend(this, params)
+            const res = await userCodeSend(this, params)
             console.log('res',res)
             console.log('res',res.data)
-            if(res){
+            if(res.data && res.status === 200 ){
+              this.ImgCodeValid=false
               console.log('res', res)
               this.$Message.info("短信发送成功")
 
@@ -224,6 +233,7 @@
                     this.btnBoolen = false;
                     this.btnClassName="btns"
                     this.btnValue="获取短信验证码"
+
                   }else {
                     this.btnBoolen = true;
                     this.btnValue=`重新获取(${this.auth_time})S`
@@ -238,9 +248,25 @@
 
           }
         },
+        // 验证手机验证码
+        async userCodeCheck(value, callback){
+          let params = {
+            phone:this.formCustom.phone,
+            code:value
+          }
+          const res = await userCodeCheck(this, params)
+          if(res.data && res.status === 200){
+            this.isrefreshpic=true
+
+            console.log('isrefreshpic', this.isrefreshpic)
+            callback();
+          }else{
+            callback(new Error('手机验证码错误'));
+          }
+        },
         // 下一步验证
         handleSubmit (name) {
-          var userFormData=[]
+          var userFormData={}
           console.log('formCustom', this.formCustom)
           userFormData.phone=this.formCustom.phone
           userFormData.password=this.formCustom.password
@@ -288,8 +314,7 @@
             })
             return
           }else{
-
-            this.$router.push({path:'./userPerInfor',query:{params:userFormData}})
+            this.$router.push({name:'userPerInfor', params:{params:userFormData}})
           }
 
 
@@ -329,13 +354,13 @@
   .Carinput li .codeCarrier{ cursor: pointer; width:102px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
   .Carinput li .codeCarrier img{width: 100%;height: 100%;}
   .Carinput li .codeCarrier button{width: 100%;height: 100%;}
-  .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 38px; border-radius:3px;  cursor: pointer; font-size: 14px;
+  .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 0px; border-radius:3px;  cursor: pointer; font-size: 14px;
     width: 375px;height: 42px;border: none; background-color: #007de4; color: #fff;}
 
 
   .Carinput li .CarrierImgcode{ height: 42px;   font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; border: 1px solid #DEDEDE}
 
-  .ivu-form-item{margin-bottom: 0}
+  .ivu-form-item{ margin-bottom: 0}
   .ivu-input{height: 42px;line-height: 42px; padding: 0px 7px; }
   .ivu-checkbox-inner{width: 18px;height: 18px;}
   .ivu-checkbox-inner:after{width: 6px;height: 10px;top: 1px;left: 5px;}

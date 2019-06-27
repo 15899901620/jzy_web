@@ -8,9 +8,11 @@ let api = {
   user:{
     manageLogin: '/auth/member/accredit',
     supplierLogin: '/auth/supplier/accredit',
+    memberValid: '/auth/member/verify',
     manageReg: '/user/m/register',
     supplierReg: 'user/supplier/m/register',
     userPhoneCheck: '/user/m/check/phone',
+    userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
     supplierCheck: '/user/supplier/check',

@@ -53,6 +53,4 @@
   .CarrierPro span{position: absolute;bottom: -25px;width: 90px;text-align: center; color: #666; font-size: 14px;}
   .lineProgress{border: 1px dashed #DEDEDE;width: 20%; margin: 0 5px;}
   .CarrierPro_num{ color: #666; width: 41px;height: 41px; line-height: 41px; text-align: center;font-size: 16px;border-radius: 50%;background-color: #f0f2f5;}
-
-
 </style>

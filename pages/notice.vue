@@ -1,10 +1,10 @@
 <template>
 <div>
-  <div class="w1200 fs14" style="margin-top: 10px;"><a>巨正源首页</a>><span class="gray">预售专栏</span></div>
+  <div class="w1200 fs14" style="margin-top: 10px;"><a>巨正源首页</a>><span class="gray">网站公告</span></div>
   <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
     <div class="whitebg " style="width: 85%; height: 100%;">
       <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
-        <div class="TitleName" style="border-left: 3px solid #279eff;">资讯列表</div>
+        <div class="TitleName" style="border-left: 3px solid #279eff;">公告列表</div>
         <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
       </div>
       <ul class="NewContentlist">
@@ -13,7 +13,7 @@
           <img :src="items.image" :alt="items.title" :id="index">
           </div>
           <div class="News_content">
-            <h2><nuxt-link :to="{name:'article-id', params:{id:items.id}}">{{items.title}}</nuxt-link></h2>
+            <h2><nuxt-link :to="{name:'article-NewsDetail',query:{newsId:items.id}}">{{items.title}}</nuxt-link></h2>
             <div class="NewsList_text">{{items.seoDescription}}</div>
             <div class=" mt20">
               <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
@@ -29,23 +29,24 @@
 
     </div>
 
-    <NewsRight></NewsRight>
+    <!-- <NewsRight></NewsRight> -->
   </div>
 </div>
 </template>
 
 <script>
-import VFooter from '../components/footer'
-import Pagination from '../components/Pagination'
-import { infolist } from '../api/info'
-import  NewsRight  from './article/NewsRight'
-import axios from '../plugins/axios'
+import { announcement } from '~/api/info'
 export default {
-  name: "news",
-  components: {
-    VFooter,
-    Pagination,
-    NewsRight
+  name: "notice",
+  async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+      let paramsData = {
+        current_page: 1,
+        page_size: 12,
+      }
+      const resno = await announcement(this, paramsData).then(res=>{
+          console.log('notice', res)
+      })
+      return resno
   },
   data () {
     return {
@@ -71,27 +72,15 @@ export default {
         page_size: this.page_size,
         ...this.formSearch
       }
-      const res = await infolist(this, params)
+      const res = await announcement(this, params)
       console.log(res)
       this.datalist = res.data.items
       this.total = res.data.total
-    },
-    // 详情页
-    NewsDetail(id){
-      console.log('id',id)
-      this.$router.push({name:'article-id',params:{id:id}})
     }
-
   },
   created () {
-
-  },
-  mounted () {
     this.sourceData()
-  },
-  watch: {
-
-  },
+  }
 }
 </script>
 

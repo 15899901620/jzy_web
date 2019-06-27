@@ -31,7 +31,7 @@
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>纳税人识别号</span>
+            <span class="CarrierTitle"  ><i class="orangeFont mr5">*</i>纳税人识别号</span>
             <FormItem  prop="taxId">
               <Input type="text" class="CarrierIput" v-model="formUserInfor.taxId"   placeholder="请输入纳税人识别号" />
             </FormItem>
@@ -70,42 +70,49 @@
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle" style="margin-left: -50px;"><i class="orangeFont mr5">*</i>营业执照</span>
-            <div style="width: 370px; display: flex">
+            <span class="CarrierTitle" style="margin-left: -7px; margin-top: -20px"><i class="orangeFont mr5">*</i>营业执照</span>
+            <div style="width: 370px; display: flex; margin-left: 10px; flex-direction: column">
               <FormItem>
                 <Upload
                   ref="upload"
                   action="//192.168.40.31:28082/image"
-                  :on-success="imageSuccess">
+                  :on-success="imageSuccess"
+                  max-size="2048"
+                  >
                   <Button icon="ios-cloud-upload-outline">上  传</Button>
                 </Upload>
               </FormItem>
-              <div class="uploadimg" v-if="UploadImg"><img :src="UploadImg.image"></div>
+              <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）</div>
             </div>
           </li>
           <li>
 
-            <span class="CarrierTitle" style="margin-left: -50px;"><i class="orangeFont mr5">*</i>授权书</span>
+            <span class="CarrierTitle" style="margin-left: -7px;"><i class="orangeFont mr5">*</i>授权书</span>
 
-              <div style="width: 370px;">
+              <div style="width: 370px; display: flex; margin-left: 10px; flex-direction: column">
                 <Row>
                   <FormItem>
                   <Col span="12">
                     <Upload
-                      action="//192.168.40.31:28082/file">
+                      ref="upLAload"
+                      action="//192.168.40.31:28082/image"
+                      :on-success="handleFileSuccess"
+                      max-size="2048"
+                    >
                       <Button icon="ios-cloud-upload-outline">上  传</Button>
                     </Upload>
 
                   </Col>
                   </FormItem>
                 </Row>
+                <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）</div>
               </div>
 
 
           </li>
         </ul>
         <div class="dflexAlem mt15" style="justify-content: center;">
-          <Button class="CarrierRegister" @click="memberReset('formCustom')">提  交</Button>
+          <Button type="primary" class="CarrierRegister" @click="memberReset('formCustom')">提  交</Button>
         </div>
 
       </Form>
@@ -117,7 +124,7 @@
 </template>
 
 <script>
-  import { manageReg } from '../api/users'
+  import { manageReg, userValid } from '../api/users'
     export default {
       name: "userPerInfor",
       layout:'membercenter',
@@ -126,7 +133,8 @@
           if (value === '') {
             callback(new Error('请输入公司名称'));
           } else {
-            callback();
+            this.compangeValid(value,callback)
+
           }
         };
         const validateTaxId= (rule, value, callback) => {
@@ -175,6 +183,10 @@
             UploadImg:{
               image:[]
             },
+            LAImg:{
+              image:[]
+            },
+            companyValid:false,  //公司校验不通过
             formUserInfor: {
               phone:'',
               password:'',
@@ -217,16 +229,41 @@
           }
       },
       methods:{
+        // 校验公司名称
+        async compangeValid(value, callback){
+          let params = {
+            name:value,
+          }
+          const res = await userValid(this, params)
+          if(res.data && res.status === 200){
+            this.companyValid=true
+            callback(new Error('公司审核成功'));
+            callback()
+          }else{
+            callback(new Error('公司不存在'));
+          }
+        },
         imageSuccess(res){
-          this.UploadImg.image.push(res.url)
+          console.log(res)
+          this.formUserInfor.business_license=res.url
+        },
+        handleFileSuccess(res){
+          console.log(res)
+          this.formUserInfor.authorization_elc=res.url
         },
         // 会员注册提交
-        memberReset(data){
-
+        async memberReset(data){
 
           if(!this.formUserInfor.companyName){
             this.$Message.info({
               content: '公司名称不能为空',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.companyValid){
+            this.$Message.info({
+              content: '公司不存在',
               duration: 5,
               closable: true
             })
@@ -282,8 +319,18 @@
             return
           }else{
             console.log('this.formUserInfor', this.formUserInfor)
-            const res = manageReg(this, this.formUserInfor)
-            this.$router.push({path:'./RegisterSuccess'})
+            const res = await manageReg(this, this.formUserInfor)
+            console.log('res', res)
+            if(res.data && res.status === 200){
+              this.$router.push({name:'RegisterSuccess'})
+            }else{
+              this.$Message.info({
+                content: res.message,
+                duration: 5,
+                closable: true
+              })
+            }
+
           }
 
 
@@ -292,8 +339,20 @@
 
       },
       mounted() {
+        console.log('this.$router.history.current.params',this.$router.history.current.params.params)
+        var Params=this.$router.history.current.params.params
+        console.log('Params', Params)
+        if(Params){
+          this.formUserInfor.phone=this.$router.history.current.params.params.phone
+          this.formUserInfor.password=this.$router.history.current.params.params.password
+          this.formUserInfor.code=this.$router.history.current.params.params.code
+          console.log('this.formUserInfor', this.formUserInfor)
+        }
 
-        console.log('this.$router',this.$router)
+
+      },
+      watch:{
+
       }
     }
 </script>
@@ -315,7 +374,7 @@
 
   .CarrierTitle{width: 120px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
 
-  .ivu-form-item{width: 100%; margin-bottom: 0px;  }
+  .ivu-form-item{ margin-bottom: 0px;  }
   .ivu-form-item .ivu-form-item-content .ivu-upload{display: flex;height: 32px;}
   .ivu-upload-list{margin-top: 0px;display: flex;}
   .ivu-upload-list li{margin-top: 0px; margin-left: 10px;}

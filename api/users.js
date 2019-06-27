@@ -52,8 +52,41 @@ export const manageReg = (vm, data) => {
       console.log('manageRegErr', errorInfo)
     })
 }
+/**
+ *
+ * @description 公司审核
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userValid = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.userValid,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageRegErr', errorInfo)
+  })
+}
+/**
+ *
+ * @description 会员验证
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const memberValid = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.memberValid,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageRegErr', errorInfo)
+  })
+}
 
 /**
+ *
  * @description 供应商注册
  * @param vm
  * @param data
@@ -76,9 +109,9 @@ export const supplierReg = (vm, data) => {
  * @returns {*}
  */
 export const userPhoneCheck = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userPhoneCheck,
+  return vm.$axios.get(server.prefix + server.api.user.userPhoneCheck,
     {
-      ...data
+      params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
       console.log('userPhoneCheckErr', errorInfo)
