@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import headnews from './header/headnews'
+  import headnews from '../detail-header/components/headnews'
     export default {
       name: "memberCenter",
 

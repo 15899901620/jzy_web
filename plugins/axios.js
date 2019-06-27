@@ -1,5 +1,16 @@
 import qs from 'qs';
 
+const getCookie = name => {
+  if (!name) return
+  let data = Cookies.get(name)
+  if (!data) {
+    return false
+  }
+  if (typeof data !== 'string') {
+    return JSON.parse(data)
+  }
+  return data
+}
 const addErrorLog = errorInfo => {
   const { statusText, status, data, request: { responseURL } } = errorInfo
   let info = {
@@ -15,7 +26,8 @@ export default function (app) {
   axios.defaults.method = 'get'
   axios.defaults.method = 'post'
   axios.defaults.headers = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization':  getCookie('token') === false ? '' : getCookie('token')
   }
   // 请求回调
   axios.onRequest(config => {
