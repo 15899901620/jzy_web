@@ -6,8 +6,8 @@ let api = {
    * @description 会员
    */
   user:{
-    manageLogin: '/user/m/login',
-    supplierLogin: '/user/supplier/login',
+    manageLogin: '/auth/member/accredit',
+    supplierLogin: '/auth/supplier/accredit',
     manageReg: '/user/m/register',
     supplierReg: 'user/supplier/m/register',
     userPhoneCheck: '/user/m/check/phone',

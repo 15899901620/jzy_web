@@ -27,7 +27,6 @@
 </template>
 
 <script>
-  import Bus from '../Bus'
     export default {
         name: "headerlogo",
       props:{

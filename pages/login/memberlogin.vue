@@ -1,21 +1,34 @@
 <template>
     <div>
-      <div class="mt25"><input type="text" class="NumInput" name="" id="" value="username" placeholder="手机/用户名" /></div>
-      <div class="mt15"><input type="text" class="NumInput" name="" id="" value="password" placeholder="密码" /></div>
-      <button class="logingAccount">登 录</button>
+      <div class="mt25"><input v-model="username" class="NumInput" placeholder="手机/用户名" /></div>
+      <div class="mt15"><input v-model="password" class="NumInput" value="password" placeholder="密码" /></div>
+      <button class="logingAccount" v-on:click="login">登 录</button>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "memberlogin",
-      data() {
-        return{};
-      },
-      methods:{},
-      mounted() {
+import { manageLogin } from '../../api/users'
+export default {
+  name: "memberlogin",
+  data() {
+    return{
+      username: '',
+      password: ''
+    };
+  },
+  methods:{
+    async login () {
+      let params = {
+        username: this.username,
+        password: this.password,
       }
+      const res = await manageLogin(this, params)
+      console.log(res)
     }
+  },
+  mounted() {
+  }
+}
 </script>
 
 <style scoped>

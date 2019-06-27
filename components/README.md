@@ -9,7 +9,7 @@ _Nuxt.js doesn't supercharge these components._
 
 
 ````
-header.vue --- 头部
+article  --- 新闻
 Indexbanner.vue --- banner
 memberCenter.vue --- 个人中心
 ````

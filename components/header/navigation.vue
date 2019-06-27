@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import Bus from '../Bus'
 export default {
   name: "navigation",
 
@@ -38,7 +37,7 @@ export default {
   methods:{
     getDescribe(tid, index, headtitle) {
       this.$emit('tidName', tid)
-      Bus.$emit('val', headtitle)
+      this.$emit('val', headtitle)
       this.navIndex = index;
      },
     checkRouterLocal(path) {
