@@ -1,29 +1,6 @@
 <template>
   <div class="clearfix graybg" >
-    <div class="w1200" style="margin-top: 10px; font-size: 14px; color: #666;">
-      <a>巨正源首页</a>><a>网站公告</a>><span class="gray">{{this.detail.title}}</span>
-    </div>
-    <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
-
-      <div class="whitebg " style="width: 80%;">
-
-        <div class="NewsDetail" >
-          <h3 class="mt30 fs20">{{this.detail.title}}</h3>
-          <div class="NewsDetail_tip mt20"  >
-            <div class="dflexAlem">
-              <a class="blueFont">巨正源</a>
-              <div class="time">
-                <img src="../../../assets/img/newsTime.png"/><span class="gray ml5">{{this.detail.addTime}}</span>
-              </div>
-            </div>
-            <div class="newsShare">分享</div>
-          </div>
-          <div class="mt20 mb40 gray fs14" v-html="this.detail.content">
-          
-          </div>
-        </div>
-      </div>
-    </div>
+    111
   </div>
 </template>
 
@@ -31,7 +8,7 @@
   import { announcementdetail } from '../../../api/info'
 
   export default {
-
+      name: 'notice-detail-id',
     components:{
       
     },
@@ -52,7 +29,7 @@
         }
     },
     mounted(){
-       this.sourceDetail()
+    //    this.sourceDetail()
     }
   }
 </script>

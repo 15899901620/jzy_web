@@ -9,11 +9,8 @@
       </div>
       <ul class="NewContentlist">
         <li v-for="(items, index) in datalist" :key="index">
-          <div class="newsImg">
-          <img :src="items.image" :alt="items.title" :id="index">
-          </div>
           <div class="News_content">
-            <h2><nuxt-link :to="{name:'article-NewsDetail',query:{newsId:items.id}}">{{items.title}}</nuxt-link></h2>
+            <nuxt-link :to="{name: 'notice-detail-id',params:{ id: items.id }}">{{ items.title }}</nuxt-link>
             <div class="NewsList_text">{{items.seoDescription}}</div>
             <div class=" mt20">
               <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
@@ -38,16 +35,6 @@
 import { announcement } from '~/api/info'
 export default {
   name: "notice",
-  async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
-      let paramsData = {
-        current_page: 1,
-        page_size: 12,
-      }
-      const resno = await announcement(this, paramsData).then(res=>{
-          console.log('notice', res)
-      })
-      return resno
-  },
   data () {
     return {
       self: this,
