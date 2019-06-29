@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        name: "Pagination"
+        name: "pagination"
     }
 </script>
 
@@ -33,5 +33,4 @@
   ul.pagination li a:hover:not(.active){background-color: #007de4; color: #fff;border: 1px solid #007de4;}
   ul.pagination .pageText{width: 40px;height: 35px; margin: 0 8px; border-radius:3px;    box-sizing: border-box;}
   ul.pagination .PageNext{border-radius: 2px; color: #666; width: 40px;height: 35px; line-height: 35px; margin: 0 15px; text-align: center;}
-
 </style>
