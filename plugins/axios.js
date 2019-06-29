@@ -28,7 +28,7 @@ export default function (app) {
   axios.defaults.method = 'post'
   axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    'Authorization':  getCookie('token') === false ? '' : getCookie('token')
+    'Authorization':  getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   // 请求回调
   axios.onRequest(config => {

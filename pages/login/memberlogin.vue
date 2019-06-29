@@ -47,14 +47,22 @@ export default {
         console.log('params', params)
         const res = await manageLogin(this, params)
         console.log('res',res)
+        console.log('res.data',res.data)
+        let authres=res.data
         if(res.data && res.status === 200){
-          Cookies.set('token',  res.data, { expires: 36000000 || 1 })
+
+          console.log('authres',authres)
+
+          Cookies.set('webtoken',  authres, { expires: 36000000 || 1 })
 
           const res = await memberValid(this, {})
+
           console.log('authres', res)
+
           let auth= JSON.stringify(res.data)
+
           if(auth){
-            Cookies.set('token', auth, { expires: 36000000 || 1 })
+            Cookies.set('userinfor', auth, { expires: 36000000 || 1 })
             this.$router.push({name:'users-user'})
           }
 

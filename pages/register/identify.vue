@@ -1,6 +1,6 @@
 <template>
   <div class="s-canvas">
-    <canvas id="s-canvas" :width="contentWidth" :height="contentHeight"></canvas>
+    <canvas :id="this.CodeCate" :width="contentWidth" :height="contentHeight"></canvas>
   </div>
 </template>
 
@@ -8,6 +8,9 @@
     export default {
         name: "identify",
       props: {
+        CodeCate:{
+          type: String,
+        },
         identifyCode: {
           type: String,
           default: '1234'
@@ -74,7 +77,8 @@
           return 'rgb(' + r + ',' + g + ',' + b + ')'
         },
         drawPic () {
-          let canvas = document.getElementById('s-canvas')
+          console.log('this.CodeCate', this.CodeCate)
+          let canvas = document.getElementById(this.CodeCate)
           let ctx = canvas.getContext('2d')
           ctx.textBaseline = 'bottom'
           // 绘制背景
@@ -130,6 +134,7 @@
         }
       },
       mounted () {
+
         this.drawPic()
       }
     }

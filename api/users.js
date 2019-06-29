@@ -103,6 +103,23 @@ export const supplierReg = (vm, data) => {
 }
 
 /**
+ *
+ * @description 供应商验证（手机号/验证名称）
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierdataCheck = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.supplierdataCheck,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierRegErr', errorInfo)
+  })
+}
+
+/**
  * @description 验证手机是否存在
  * @param vm
  * @param data

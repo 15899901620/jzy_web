@@ -16,6 +16,7 @@ let api = {
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
     supplierCheck: '/user/supplier/check',
+    supplierdataCheck: '/user/supplier/check/data',
     supplierCodeCheck: '/user/supplier/checkCode',
     supplierCodeSend: '/user/supplier/code',
     userRepassWd: '/user/m/updatePwd',

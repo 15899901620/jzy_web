@@ -134,7 +134,6 @@
             callback(new Error('请输入公司名称'));
           } else {
             this.compangeValid(value,callback)
-
           }
         };
         const validateTaxId= (rule, value, callback) => {

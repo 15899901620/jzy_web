@@ -13,7 +13,7 @@
          <FormItem prop="Imgcode">
          <Input   class="CarrierImgcode" v-model="formCustom.Imgcode" style="width: 265px; border: none"   placeholder="请输入验证码" />
          </FormItem>
-         <div class="codeCarrier" @click="refreshCode"><identify  :identifyCode="identifyCode"></identify> </div>
+         <div class="codeCarrier" @click="refreshCode"><identify  :CodeCate="CodeCate"  :identifyCode="identifyCode" ></identify></div>
        </li>
        <li v-show="phoneValid">
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>手机验证码</span>
@@ -21,7 +21,6 @@
            <Input  class="CarrierImgcode" v-model="formCustom.mobilecode" style="width: 265px; border: none"  placeholder="请输入验证码" />
          </FormItem>
          <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
-
        </li>
 
        <li>
@@ -29,6 +28,7 @@
          <FormItem prop="password">
            <Input  type="password"  v-model="formCustom.password" class="CarrierIput"  placeholder="请输入密码"/>
          </FormItem>
+       </li>
        <li>
          <span class="CarrierTitle"><i class="orangeFont mr5">*</i>确认密码</span>
         <FormItem prop="repassword">
@@ -44,10 +44,10 @@
        </div>
        <span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源用户服务协议》</a>
      </div>
-     <div class="dflexAlem mt15" style="justify-content: center;">
-       <FormItem >
-       <Button type="primary" class="CarrierRegister" @click="handleSubmit('formCustom')">会员下一步</Button>
-         </FormItem>
+     <div class="dflexAlem mt15" style="justify-content: center; margin-left: 40px">
+       <FormItem>
+            <Button type="primary" class="CarrierRegister" @click="handleSubmit('formCustom')">会员下一步</Button>
+       </FormItem>
      </div>
      </Form>
    </div>
@@ -127,11 +127,11 @@
         }
         return {
           // 图形验证码
+          CodeCate:'CodeuserCate',
           identifyCodes: "1234567890",
           identifyImgCode:false,//校验图形验证码
           ImgCodeValid:false,//校验手机验证码是否合格
           identifyCode: "",
-          imgSrc:'http://vueshop.glbuys.com/api/vcode/chkcode?token=1ec949a15fb709370f&nowtime=1312423435',
           single: false,
           //用来发判断发送验证码
           isrefreshpic:false,
@@ -149,7 +149,6 @@
             single:'',
             repassword: '',
             Imgcode:'',
-
           },
           ruleCustom: {
             phone: [
@@ -257,7 +256,6 @@
           const res = await userCodeCheck(this, params)
           if(res.data && res.status === 200){
             this.isrefreshpic=true
-
             console.log('isrefreshpic', this.isrefreshpic)
             callback();
           }else{

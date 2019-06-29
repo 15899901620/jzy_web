@@ -26,15 +26,15 @@
         <div class="swiper-container swiper_con">
           <div class="swiper-wrapper dflex" style="height: auto">
             <!-- 第一个 swiper -->
-            <div class="swiper-slide" ref="viewBox">
+            <div class="swiper-slide swiper-no-swiping" ref="viewBox">
               <user-register></user-register>
             </div>
             <!-- 第二个 swiper -->
-            <div class="swiper-slide">
+            <div class="swiper-slide swiper-no-swiping">
               <supply-register ></supply-register>
             </div>
             <!-- 第三个 swiper -->
-            <div class="swiper-slide">
+            <div class="swiper-slide swiper-no-swiping">
               <carrier-register></carrier-register>
             </div>
 
@@ -100,6 +100,7 @@
         that.mySwiper = new Swiper('.swiper-container',{
           initialSlide:this.nowIndex,
           autoplay:false,
+          noSwiping : true,
           keyboardControl:true,
           autoHeight:true,
           observer:true,
