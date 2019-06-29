@@ -359,11 +359,11 @@
     }
 </script>
 
-<style scoped>
+<style >
   /*注册进度*/
   .CarrierTitle{width: 90px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
   .Carinput li{display: flex;align-items: center;margin-top: 20px;}
-  .Carinput li .CarrierIput{ font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; }
+  .Carinput li .CarrierIput{ font-size: 14px;  box-sizing: border-box; width: 375px;border-radius: 3px; margin-left: 0;}
   .Carinput li .codeCarrier{ cursor: pointer; width:102px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
   .Carinput li .codeCarrier img{width: 100%;height: 100%;}
   .Carinput li .codeCarrier button{width: 100%;height: 100%;}
@@ -377,5 +377,6 @@
   .ivu-input{height: 42px;line-height: 42px; padding: 0px 7px; }
   .ivu-checkbox-inner{width: 18px;height: 18px;}
   .ivu-checkbox-inner:after{width: 6px;height: 10px;top: 1px;left: 5px;}
+  .Carinput li .ivu-form-item .ivu-form-item-content .ivu-form-item-error-tip{left: 4px;}
   .ivu-checkbox-checked .ivu-checkbox-inner:after{ width: 6px;height: 10px;top: 1px;left: 5px; }
 </style>

@@ -127,7 +127,7 @@
 
 
       .swiper-wrapper{width: 1800px; margin: 0 auto;}
-      .swiper_con{width:50%; margin: 0 auto; position:relative; overflow: hidden;}
+      .swiper_con{width:50%; margin: 0 auto; position:relative; overflow: hidden; margin-bottom: 30px;}
 
       /*注册进度*/
       .CarrierPro{position: relative;}
