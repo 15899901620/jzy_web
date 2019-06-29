@@ -39,7 +39,6 @@ export default {
           cateData[k]['clist'] = restdata
       }
       this.datalist = cateData
-      console.log('data', cateData)
     }
   },
   mounted () {

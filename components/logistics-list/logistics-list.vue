@@ -3,13 +3,13 @@
 <!--      物流找车-->
       <div class="ovh pr" style="width: 900px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave"  >
         <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">
-          <img src="../assets/img/back.png" />
+          <img src="../../assets/img/back.png" />
         </div>
         <ul class="logisticList mt1" :style="{width:TLlength+'px'}"  id='log-ul'>
           <li>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
               <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../assets/img/down.png"/></p>
+              <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
               <p>广东省 东莞市</p>
             </div>
             <div class="logNumTime graybg"  >
@@ -20,7 +20,7 @@
           <li>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
               <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../assets/img/down.png"/></p>
+              <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
               <p>广东省 东莞市</p>
             </div>
             <div class="logNumTime graybg"  >
@@ -31,7 +31,7 @@
           <li>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
               <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../assets/img/down.png"/></p>
+              <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
               <p>广东省 东莞市</p>
             </div>
             <div class="logNumTime graybg "  >
@@ -42,7 +42,7 @@
           <li>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
               <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../assets/img/down.png"/></p>
+              <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
               <p>广东省 东莞市</p>
             </div>
             <div class="logNumTime graybg "  >
@@ -53,7 +53,7 @@
           <li>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
               <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../assets/img/down.png"/></p>
+              <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
               <p>广东省 东莞市</p>
             </div>
             <div class="logNumTime graybg "  >
@@ -64,7 +64,7 @@
         </ul>
 
         <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">
-          <img src="../assets/img/next.png" />
+          <img src="../../assets/img/next.png" />
         </div>
       </div>
 <!--    </div>-->
@@ -72,7 +72,7 @@
 
 <script>
     export default {
-        name: "Logisticslist",
+      name: "LogisticsList",
       data () {
           return {
           display: "flex",
@@ -159,8 +159,7 @@
             chefElement.type = true;
           }
         }
-// *****限时竞拍******
-
+          // *****限时竞拍******
         var  that=this
         let TL=document.getElementsByClassName('logisticList')[0].getElementsByTagName('li')
         let TLWidth=TL[0].offsetWidth

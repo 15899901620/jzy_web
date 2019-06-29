@@ -27,7 +27,7 @@ export default {
         { router: { path: '/bidders' }, title: '限时竞拍', tid:'bidders' },
         { router: { path: '/special' }, title: '专料专场', tid:'special' },
         { router: { path: '/logistics' }, title: '物流找车', tid:'logistics' },
-        { router: { path: '/news' }, title: '行业资讯', tid:'news' },
+        { router: { path: '/article/2' }, title: '行业资讯', tid:'news' },
         { router: { path: '/Physical' }, title: '物性表', tid:'Physical' },
         { router: { path: '/supply' }, title: '承运商', tid:'supply', nameTitle:'承运商管理后台'},
         { router: { path: '/tendering' }, title: '招标中心', tid:'tendering',nameTitle:'招标' }
