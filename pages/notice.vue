@@ -1,40 +1,51 @@
 <template>
-<div>
-  <div class="w1200 fs14" style="margin-top: 10px;"><a>巨正源首页</a>><span class="gray">网站公告</span></div>
-  <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
-    <div class="whitebg " style="width: 85%; height: 100%;">
-      <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
-        <div class="TitleName" style="border-left: 3px solid #279eff;">公告列表</div>
-        <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
-      </div>
-      <ul class="NewContentlist">
-        <li v-for="(items, index) in datalist" :key="index">
-          <div class="News_content">
-            <nuxt-link :to="{name: 'notice-detail-id',params:{ id: items.id }}">{{ items.title }}</nuxt-link>
-            <div class="NewsList_text">{{items.seoDescription}}</div>
-            <div class=" mt20">
-              <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
-              <a class="blueFont fr" @click="NewsDetail(items.id)">阅读更多</a>
+  <div>
+    <div class="w1200 fs14" style="margin-top: 10px;"><a>巨正源首页</a>><span class="gray">网站公告</span></div>
+    <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
+      <div class="whitebg " style="width: 85%; height: 100%;">
+        <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
+          <div class="TitleName" style="border-left: 3px solid #279eff;">公告列表</div>
+          <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
+        </div>
+        <ul class="NewContentlist">
+          <li v-for="(items, index) in datalist" :key="index">
+            <div class="News_content">
+              <nuxt-link :to="{name: 'notice-detail-id',params:{ id: items.id }}">{{ items.title }}</nuxt-link>
+              <div class="NewsList_text">{{items.seoDescription}}</div>
+              <div class=" mt20">
+                <div class="dflexAlem fl"><img src="../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
+                <a class="blueFont fr" @click="NewsDetail(items.id)">阅读更多</a>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
-        <Page :total="this.total" show-elevator   />
+          </li>
+        </ul>
+        <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
+          <Page :total="this.total"  show-elevator   />
+        </div>
       </div>
-
-
+      <!-- <NewsRight></NewsRight> -->
     </div>
-
-    <!-- <NewsRight></NewsRight> -->
   </div>
-</div>
 </template>
 
 <script>
+import axios from '../plugins/axios'
 import { announcement } from '~/api/info'
 export default {
   name: "notice",
+  async asyncData (context) {
+    console.log(context)
+    let params = {
+      current_page: context.current_page,
+      page_size: context.page_size,
+    }
+    console.log('async', params)
+    // const res = await announcement(context, params)
+    // return {
+    //   datalist: res.data.items,
+    //   total:res.data.total
+    // }
+  },
   data () {
     return {
       self: this,
@@ -60,13 +71,12 @@ export default {
         ...this.formSearch
       }
       const res = await announcement(this, params)
-      console.log(res)
       this.datalist = res.data.items
       this.total = res.data.total
     }
   },
   created () {
-    this.sourceData()
+    // this.sourceData()
   }
 }
 </script>

@@ -8,7 +8,7 @@
   import { announcementdetail } from '../../../api/info'
 
   export default {
-      name: 'notice-detail-id',
+      // name: 'notice-detail-id',
     components:{
       
     },
