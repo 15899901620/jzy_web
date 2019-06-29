@@ -59,7 +59,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://192.168.40.31:10010/', // 代理地址
+      target: 'http://127.0.0.1:10010/', // 代理地址
       changeOrigin: true,
       pathRewrite: {
         '^/api': '/', //将 /api 替换掉
