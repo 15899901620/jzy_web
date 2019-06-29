@@ -195,7 +195,7 @@
             callback();
           }
         };
-        const validatTaxId= (rule, value, callback){
+        const validatTaxId= (rule, value, callback) =>{
           if (value === '') {
             callback(new Error('税号不能为空'));
           } else {
@@ -253,7 +253,7 @@
             callback();
           }
         };
-          return{
+        return{
             formItem:{
               image:[]
             },
@@ -307,12 +307,9 @@
               registCapi:[
                 { validator: validateRegistCapi, trigger: 'blur' }
               ]
-
             }
           }
-
       },
-
       methods:{
         // 公司信息加载
         companyData(res){
@@ -321,8 +318,6 @@
           this.formSupplyInfor.contacter=res.data.operName
           this.formSupplyInfor.address=res.data.address
           this.formSupplyInfor.registCapi=res.data.registCapi
-
-
         },
          // 营业执照
         imageSuccess(res){
@@ -351,7 +346,7 @@
             desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
           });
         },
-       //验证企业名称
+        //验证企业名称
         async companyValid(value){
           console.log('value', value)
           let params = {
@@ -372,15 +367,12 @@
             });
           }
         },
-
         memberReset(){
           this.$router.push({path:'./RegisterSuccess'})
         }
       },
-
       mounted() {
         var Params=this.$router.history.current.params.params
-        console.log('Params', Params)
         if(Params){
           this.formSupplyInfor.phone=this.$router.history.current.params.params.phone
           this.formSupplyInfor.password=this.$router.history.current.params.params.password

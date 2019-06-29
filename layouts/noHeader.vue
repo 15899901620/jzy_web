@@ -1,21 +1,21 @@
 <template>
     <div class="main">
-        <top></top>
+        <!-- <top></top> -->
         <!--nuxt 主体内容-->
         <nuxt/>
         <!--尾部组件-->
-      <loginfooter></loginfooter>
+      <!-- <loginfooter></loginfooter> -->
     </div>
 </template>
 
 <script>
-import top from '../components/header/top'
-import loginfooter from '../components/footer/loginfooter'
+// import top from '~/components/detail_header/components/top'
+// import loginfooter from '../components/detail_footer/components/loginfooter'
 export default {
   name: "noHeader",
   components: {
-    top,
-    loginfooter
+    // top,
+    // loginfooter
   },
   data(){
     return{}

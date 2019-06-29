@@ -1,12 +1,15 @@
 <template>
     <div class="clearfix" style="">
-      <div class="w1200" style="margin-top: 10px; font-size: 14px;"><a>巨正源首页</a>><span class="gray">资讯详情</span></div>
+      <div class="w1200" style="margin-top: 10px; font-size: 14px;"><a href="/">巨正源首页</a> > 物性表 > <span class="gray">{{detail.title}}</span></div>
       <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
-
         <div class="whitebg" style="width: 80%;">
           <div class="phyDetailTitle">
-            聚丙烯PPH-E01
+            {{detail.title}}
           </div>
+          <div v-html="detail.description">
+
+          </div>
+
 
         </div>
         <!--右边栏-->
@@ -14,9 +17,7 @@
           <!--热门标签-->
           <div class="whitebg">
             <div class="ListTitle   bb1">
-
               <div class="TitleName" style="border-left: 3px solid #279eff;">热门标签</div>
-
             </div>
             <ul class="phyLabel">
               <li>聚丙烯</li><li>乙二醇</li><li>二甘醇</li><li>苯乙烯</li><li>碳酸盐</li>
@@ -24,7 +25,6 @@
               <li>硫酸盐</li><li>其他无机盐</li>
             </ul>
           </div>
-
           <!--热点推荐-->
           <div class="whitebg ovh mt20">
             <div class="ListTitle  whitebg bb1">
@@ -43,22 +43,48 @@
           </div>
           <div class="mt20">
             <a href="">
-              <img src="../assets/img/phyAdv.png" />
+              <img src="../../../assets/img/phyAdv.png" />
             </a>
           </div>
-
-
         </div>
-
-
       </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "PhysicalDetail"
+import { productdetail } from '../../../api/product'
+export default {
+    name: "physical-detail-id",
+    async asyncData(context) {
+        let params = {
+            id: !context.params.id ? 1 : context.params.id,
+        }
+        const resData = await productdetail(context, params).then(function (res) {
+            console.log('detail', res)
+            return {
+                detail: res.data,
+            }
+            
+        })
+    },
+    data () {
+        return {
+            detail: {}
+        }
+    },
+    methods: {
+        async sourceData() {
+            let params = {
+                id: this.$route.params.id
+            }
+            const res = await productdetail(this, params)
+            this.detail = res.data
+        }
+    },
+    created () {
+        this.sourceData()
     }
+}
 </script>
 
 <style scoped>

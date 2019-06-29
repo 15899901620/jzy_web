@@ -13,6 +13,9 @@ export const infolist = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.info,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('infolistErr', errorInfo)
     })
 };
 
@@ -26,6 +29,9 @@ export const infodetail = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.infodetail,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('infodetailErr', errorInfo)
     })
 };
 
@@ -39,6 +45,9 @@ export const infoClick = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.information.infoClick,
     {
       ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('infoClickErr', errorInfo)
     })
 };
 
@@ -52,6 +61,9 @@ export const infocate = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.infocate,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('infocateErr', errorInfo)
     })
 };
 
@@ -64,6 +76,9 @@ export const announcement = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.announcement,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('announcementErr', errorInfo)
     })
 }
 
@@ -77,6 +92,9 @@ export const announcementdetail = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.information.announcementdetail,
     {
       params: {...data}
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('announcementdetailErr', errorInfo)
     })
 }
 

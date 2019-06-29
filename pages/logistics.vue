@@ -108,7 +108,7 @@
 
 <script>
   Logisticslist
-  import Logisticslist from '../components/Logisticslist'
+  import Logisticslist from '../components/logistics-list/logistics-list'
     export default {
       name: "logistics",
       components:{

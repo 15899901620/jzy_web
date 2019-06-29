@@ -143,13 +143,9 @@
 </template>
 
 <script>
-  import memheader from '../components/memheader'
     export default {
       name: "supply",
       layout:'membercenter',
-      components:{
-        memheader
-      },
       data(){
           return{}
       },

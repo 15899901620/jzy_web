@@ -1,11 +1,10 @@
 <template>
-    <div class="clearfix" style="background-color: #f0f2f5;">
-      <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
-
+    <div class="container">
+<div class="w1200 ovh" style="margin-top: 10px; display: flex;">
         <div class="" style="width: 80%;">
           <div class="ListTitle  whitebg bb1">
             <div class="TitleName" style="border-left: 3px solid #279eff;">物性表</div>
-            <a class="mr20 mt15 mb15 gray">共<span class="orangeFont">2546</span>条数据 </a>
+            <a class="mr20 mt15 mb15 gray">共<span class="orangeFont">{{total}}</span>条数据 </a>
           </div>
 
           <div class="XHsearch whitebg" style="display: flex;">
@@ -15,70 +14,25 @@
             <div class="xhBtn" style="margin-left: 60px;">搜索</div>
           </div>
           <ul class="phyList">
-            <li>
+
+            <li v-for="(items,index) in datalist" :key="index">
               <div class="mt30 ml20 mb30">
-                <h2 class="blueFont fs16">聚丙烯PPH - M17</h2>
+                <h2 class="blueFont fs16"><nuxt-link :to="{name:'physical-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link></h2>
                 <div class="mt10">
-                  用途 : 消费用品、家用品、高厚度品，如草坪和花园用品、玩具、体育器械、家具
+                  用途 :{{items.purposeValue}},{{items.rocessingLevelValue}},{{items.featureValue}}
                 </div>
                 <div class="mt10  gray">
-                  <span>加工方式 :</span><span class="orangeFont ml10">注塑成型</span><span class="ml20">特性 :</span><span class="ml10">高韧性、低气味</span>
+                  <span>分类 :</span><span class="orangeFont ml10">{{items.cname1}}</span><span class="ml10">{{items.cname2}}</span><span class="ml10">{{items.cname3}}</span>
                 </div>
               </div>
               <div class="dflexAlemJust mr20">
-              <a class="phyDetail" @click="NewsDetail()">查看详情</a>
-              </div>
-            </li>
-            <li>
-              <div class="mt30 ml20 mb30">
-                <h2 class="blueFont fs16">聚丙烯PPH - M17</h2>
-                <div class="mt10">
-                  用途 : 消费用品、家用品、高厚度品，如草坪和花园用品、玩具、体育器械、家具
-                </div>
-                <div class="mt10  gray">
-                  <span>加工方式 :</span><span class="orangeFont ml10">注塑成型</span><span class="ml20">特性 :</span><span class="ml10">高韧性、低气味</span>
-                </div>
-              </div>
-              <div class="dflexAlemJust mr20">
-                <a class="phyDetail">查看详情</a>
-              </div>
-            </li>
-            <li>
-              <div class="mt30 ml20 mb30">
-                <h2 class="blueFont fs16">聚丙烯PPH - M17</h2>
-                <div class="mt10">
-                  用途 : 消费用品、家用品、高厚度品，如草坪和花园用品、玩具、体育器械、家具
-                </div>
-                <div class="mt10  gray">
-                  <span>加工方式 :</span><span class="orangeFont ml10">注塑成型</span><span class="ml20">特性 :</span><span class="ml10">高韧性、低气味</span>
-                </div>
-              </div>
-              <div class="dflexAlemJust mr20">
-                <a class="phyDetail">查看详情</a>
+                  <nuxt-link class="phyDetail" :to="{name:'physical-detail-id', params:{id:items.id}}">查看详情</nuxt-link>
               </div>
             </li>
           </ul>
-          <div class="whitebg ovh mt1">
-            <!--页码-->
-            <ul class="pagination">
-              <li><a href="#">首页</a></li>
-              <li><a href="#">上一页</a></li>
-              <li><a href="#">1</a></li>
-              <li><a class="active" href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">下一页</a></li>
-              <li><a href="#">尾页</a></li>
-              <li class="ml10">共40页</li>
-              <div class="ml30">转到第<input type="text" class="pageText bdccc" />页</div>
-              <a class="PageNext graybg">Go</a>
-            </ul>
+          <div class="whitebg" style="text-align:center; padding:15px; ">
+              <Page :total="total"  @on-change="changePage" :page-size="page_size" show-total show-elevator   />
           </div>
-
-
         </div>
 
       <!--右边栏-->
@@ -115,36 +69,73 @@
           </div>
           <div class="mt20">
             <a href="">
-              <img src="../assets/img/phyAdv.png" />
+              <img src="../../assets/img/phyAdv.png" />
             </a>
           </div>
-
-
         </div>
-
-
       </div>
-
-
-
-
-
     </div>
 </template>
-
 <script>
-    export default {
-        name: "Physical",
-      data(){
-          return{}
-      },
-      methods:{
-        NewsDetail(){
-          this.$router.push({path:'./PhysicalDetail'})
+import {productlist} from '../../api/product'
+export default {
+    name: 'physical-id',
+    async asyncData(context) {
+      let params = {
+            current_page: !context.query.page ? 1 : context.query.page,
+            page_size: 8,
+            catId: !context.params.id ? 1 : context.params.id,
         }
-      }
+        const resData = await productlist(context, params).then(function (res) {
+            return {
+                datalist: res.data.items,
+                total: res.data.total
+            }
+            
+        })
+    },
+    data () {
+        return {
+            loading: false,
+            current_page: !this.$route.query.page ? 1 : this.$route.query.page,
+            total: 0,
+            catId: !this.$route.params.id ? 1 : this.$route.params.id,
+            page_size: 8,
+            total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
+            datalist:[],
+            formSearch: {
+                is_show: 1,
+                title: '',
+                start_time: '',
+                end_time: ''
+            }
+        }
+    },
+    methods: {
+        async sourceData() {
+            let params = {
+                current_page: this.current_page,
+                page_size: this.page_size,
+                catId: this.$route.params.id,
+                ...this.formSearch
+            }
+            const res = await productlist(this, params)
+            console.log('physical', res)
+            this.datalist = res.data.items
+            this.total = res.data.total
+        },
+        changePage (row) {
+            this.$router.push({name:'physical-id',params:{id:this.catId},query:{page:row}})
+            this.current_page = row
+            this.sourceData()
+        }
+    },
+    created () {
+        this.sourceData()
     }
+}
 </script>
+
 
 <style scoped>
   .ListTitle {display: flex;justify-content: space-between;}

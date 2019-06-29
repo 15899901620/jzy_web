@@ -7,8 +7,9 @@
         <div class="TitleName" style="border-left: 3px solid #279eff;">资讯分类</div>
       </div>
       <ul class="newsCate">
-        <li v-for="(items, index) in NewsCateData" :key="index"><a href="">{{items.title}}</a></li>
-
+        <li v-for="(items, index) in NewsCateData" :key="index">
+          <nuxt-link :to="{name:'article-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
+        </li>
       </ul>
     </div>
     <!--一周排行榜-->
@@ -18,7 +19,8 @@
       </div>
 
       <ul class="newsWeek">
-        <li v-for="(items, index) in NewsWeekList" :key="index"><a href="">
+        <li v-for="(items, index) in NewsWeekList" :key="index">
+            <nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">
           <template v-if="index==0">
             <div class="NumNews NumNewsorangebg" >{{index+1}}</div>
           </template>
@@ -28,10 +30,7 @@
           <template v-else>
             <div class="NumNews NumNewsbg" >{{index+1}}</div>
           </template>
-
-
-
-          <span class="text">{{items.title}}</span></a>
+          <span class="text">{{items.title}}</span></nuxt-link>
         </li>
       </ul>
     </div>
@@ -41,7 +40,6 @@
         <div class="TitleName" style="border-left: 3px solid #279eff;">热点推荐</div>
       </div>
       <ul class="newsWeek">
-
         <li><a href=""><div class="Recommend_orangebg Recommend_icon">1</div><span class="text">超四十款终端预年内上市百亿</span></a></li>
         <li><a href=""><div class="Recommend_icon Recommend_iconYellow">2</div><span class="text">2019 中国地产智能家居高峰</span></a></li>
         <li><a href=""><div class="Recommend_icon Recommend_iconYellow">3</div><span class="text">捷报！巨正源荣获2018中国</span></a></li>
@@ -58,7 +56,6 @@
 <script>
   import { infocate, infolist } from '../../api/info'
     export default {
-        name: "NewsRight",
       data(){
           return{
             NewsCateData:[],

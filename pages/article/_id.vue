@@ -1,113 +1,116 @@
 <template>
-  <div class="clearfix graybg" >
-    <div class="w1200" style="margin-top: 10px; font-size: 14px; color: #666;">
-      <a>巨正源首页</a>><a>行业资讯</a>><span class="gray">{{NewsData.title}}</span>
-    </div>
+  <div class="container">
+    <div class="w1200 fs14" style="margin-top: 10px;"><a>巨正源首页</a>><span class="gray">资讯列表</span></div>
     <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
-
-      <div class="whitebg " style="width: 80%;">
-
-        <div class="NewsDetail" >
-          <h3 class="mt30 fs20">{{NewsData.title}}</h3>
-          <div class="NewsDetail_tip mt20"  >
-            <div class="dflexAlem">
-              <a class="blueFont">巨正源</a>
-              <div class="time">
-                <img src="../../assets/img/newsTime.png"/><span class="gray ml5">{{NewsData.addTime}}</span>
+      <div class="whitebg " style="width: 85%; height: 100%;">
+        <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
+          <div class="TitleName" style="border-left: 3px solid #279eff;">资讯列表</div>
+          <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
+        </div>
+        <ul class="NewContentlist">
+          <li v-for="(items, index) in datalist" :key="index">
+            <div class="newsImg">
+              <img :src="items.image" :alt="items.title" :id="index">
+            </div>
+            <div class="News_content">
+              <h2><nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link></h2>
+              <div class="NewsList_text">{{items.seoDescription}}</div>
+              <div class=" mt20">
+                <div class="dflexAlem fl"><img src="../../assets/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：{{items.author}}</div>
+                <a class="blueFont fr" @click="NewsDetail(items.id)">阅读更多</a>
               </div>
             </div>
-            <div class="newsShare">分享</div>
-          </div>
-          <div class="mt20 mb40 gray fs14" v-html="NewsData.content">
-            {{NewsData.content}}
-          </div>
+          </li>
+        </ul>
+        <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
+          <Page :total="this.total"  @on-change="changePage" :page-size="page_size"  :current="current_page" show-total show-elevator   />
         </div>
-
-        <div class="new_other">
-          <span v-if="lastPage_id">【上一篇】
-             <nuxt-link :to="{name: 'article-id', params:{ id: lastPage_id }}">{{ lastPage }}</nuxt-link>
-          </span>
-          <span v-if="nextPage_id">【下一篇】
-             <nuxt-link :to="{name: 'article-id', params:{ id: nextPage_id }}">{{ nextPage }}</nuxt-link>
-          </span>
-        </div>
-
       </div>
-      <news-right></news-right>
+      <NewsRight></NewsRight>
     </div>
   </div>
 </template>
 
 <script>
-  import { infodetail } from '../../api/info'
-  import  NewsRight  from './NewsRight'
-  export default {
-    name: "NewsDetail",
-    components:{
-      NewsRight
-    },
-    data(){
-        return{
-          NewsData:'',
-          id:'',
-          lastPage:'',
-          lastPage_id:'',
-          nextPage:'',
-          nextPage_id:''
-        }
-    },
-    methods:{
-      async NewsDetail() {
-        let params = {
-          id: this.$router.history.current.params.id,
-        }
-        const res = await infodetail(this, params)
-        this.NewsData = res.data
-        this.lastPage= this.NewsData.lastPage.title
-        this.lastPage_id=this.NewsData.lastPage.id
-        this.nextPage= this.NewsData.nextPage.title
-        this.nextPage_id=this.NewsData.nextPage.id
-
+import NewsRight from './NewsRight'
+import { infolist } from '../../api/info'
+export default {
+  name:'article-id',
+  components: {
+    NewsRight
+  },
+  data () {
+    return {
+      self: this,
+      loading: false,
+      current_page: !this.$route.query.page ? 1 : this.$route.query.page,
+      total: 0,
+      catId: !this.$route.params.id ? 1 : this.$route.params.id,
+      page_size: 8,
+      total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
+      datalist:[],
+      formSearch: {
+        is_show: 1,
+        title: '',
+        start_time: '',
+        end_time: ''
       }
-
-    },
-    mounted(){
-       this.NewsDetail()
-    },
-    watch: {
     }
-  }
+  },
+  methods: {
+    async sourceData() {
+      let params = {
+        current_page: this.current_page,
+        page_size: this.page_size,
+        catId: this.$route.params.id,
+        ...this.formSearch
+      }
+      const res = await infolist(this, params)
+      this.datalist = res.data.items
+      this.total = res.data.total
+    },
+    changePage (row) {
+      this.$router.push({name:'article-id',params:{id:this.catId},query:{page:row}})
+      this.current_page = row
+      this.sourceData()
+    }
+  },
+  created () {
+    this.sourceData()
+  },
+}
 </script>
-
 <style scoped>
-  a{color: #333;}
-  .NewsDetail{width: 95%; margin:  0 auto;}
-  .NewsDetail_tip{padding-bottom: 5px; display: flex; align-items: center;  justify-content: space-between;border-bottom: 1px solid #DEDEDE; font-size: 14px;}
-  .NewsDetail_tip .newsShare{ width: 60px;  background: url(../../assets/img/icon.png)no-repeat 0px -409px;padding-left:20px;color: #999;}
-  .NewsDetail_tip .time{display: flex;align-items: center; border-left: 1px solid #dedede; margin-left: 5px; padding-left: 10px;}
-  .new_other{     margin-bottom: 20px;font-size: 14px; border-top: 1px solid #DEDEDE;padding-top: 20px; padding-left:20px; padding-right:20px;display: flex;align-items: center;justify-content: space-between;}
+.container {padding: 0px;}
+  /*行业资讯--页面*/
+  .NewContentlist li{display: flex; border-bottom: 1px solid #D2D2D2; font-size: 14px;}
+  .newsImg{width: 169px;height: 137px;border-radius: 5px; margin-top: 20px;margin-left: 20px;margin-bottom: 20px;}
+  .newsImg img { width: 169px;height: 137px;}
+  .News_content{width: 100%; margin-top: 20px; margin-bottom: 20px;margin-left: 20px;margin-right: 20px;}
+  .News_content h2{color: #333; font-weight: bold; margin-top: 15px;}
+  .News_content .NewsList_text{ color: #999; margin-top: 15px; height: 40px; overflow:hidden;
+    text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:2; }
 
-  .ListTitle{display: flex;justify-content: space-between;}
-  .TitleName{border-left: 2px solid #279eff; padding-left: 10px; margin: 15px 0; font-size: 16px;}
-
+  .blueFont{color: #00a1e9}
 
   /*资讯分类*/
   .newsCate{margin-left: 20px;margin-top: 20px; margin-bottom: 20px;}
-  .newsCate li{margin-top: 10px; font-size: 14px;}
+  .newsCate li{margin-top: 10px; }
+  .newsCate li a{color: #333;font-size: 14px;}
   .newsCate li:hover{ color:#ff7300;}
   .newsCate li:first-child{margin-top: 0;}
   .newsCate li::before{content:"●";color:#999; font-size:12px; margin-right: 10px;}
   .newsCate li::before:hover{content:"●";color:#ff7300;}
   /*一周排行*/
   .newsWeek{margin-top: 20px;margin-left: 20px; margin-bottom: 20px;}
-  .newsWeek li{margin-top: 10px; font-size: 14px;}
+  .newsWeek li{margin-top: 10px; }
   .newsWeek li:first-child{margin-top: 0;}
-  .newsWeek li a{display: flex; align-items: center;}
+  .newsWeek li a{display: flex; align-items: center;color: #333;font-size: 14px;}
   .newsWeek li .text{width: 80%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
   .newsWeek li:hover{color: #ff7300; cursor: pointer;}
   .NumNews{ display: flex;justify-content: center; align-items: center; font-size: 12px; margin-right: 10px; width: 18px; height: 18px; border-radius: 25px;background-color: #f0f2f5;}
   /*热点推荐*/
-  .newsWeek li a{display: flex; align-self: center;}
+  .newsWeek li a{display: flex; align-items: center; color: #333;font-size: 14px;}
   .newsWeek li .Recommend_icon{ text-align: center;	width: 16px;  height: 23px;
     background-size: 100% 100%;background-repeat: no-repeat;margin-right: 10px;
     padding-bottom: 2px;}

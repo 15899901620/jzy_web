@@ -81,10 +81,10 @@
 </template>
 
 <script>
-  import memheader from '../../components/memheader'
+  import memheader from '../../components/user-header/memheader'
 
   import Rightmenu from './trenderCompontent/Rightmenu'
-  import Pagination from '../../components/Pagination'
+  import Pagination from '../../components/pagination/pagination'
 
    export default {
       name: "WinBidmember",

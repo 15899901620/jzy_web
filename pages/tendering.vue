@@ -91,13 +91,10 @@
 </template>
 
 <script>
-  import memheader from '../components/memheader'
+
     export default {
       name: "tendering",
       layout:'membercenter',
-      components:{
-        memheader
-      },
       data(){
           return{
             toIndex:1

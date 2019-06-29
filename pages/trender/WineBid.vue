@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import Pagination from '../../components/Pagination'
+  import Pagination from '../../components/pagination/pagination'
   import pageRoute from  './trenderCompontent/pageRoute'
   import membercenter from  './trenderCompontent/membercenter'
   import Commonproblem from  './trenderCompontent/Commonproblem'

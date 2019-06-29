@@ -28,27 +28,22 @@
           <li><i>2</i><p>提交订单</p></li>
           <li><i>3</i><p>支付货款</p></li>
           <li><i>4</i><p>支付完成</p></li>
-
         </ul>
-
       </div>
     </div>
   </div>
-
-
-
   <nuxt />
-  <VFooter></VFooter>
+  <detail-footer></detail-footer>
   </div>
 </template>
 
 <script>
-  import VFooter from '~/components/footer'
+  import DetailFooter from '../components/detail-footer'
 
   export default {
         name: "SumbitOrderHeader",
     components:{
-      VFooter
+      DetailFooter
     },
     data(){
           return{}
