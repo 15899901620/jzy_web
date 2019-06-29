@@ -9,9 +9,11 @@
         <div class="ml15 mr15 mt15 NewsImage">
           <img :src="item.image" />
         </div>
-        <div class="newsTile">{{item.title}}</div>
+        <div class="newsTile">
+          <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">{{item.title}}</nuxt-link></div>
         <div class="newsTimeLink">
-          <span class="dflexAlem"><img src="../../assets/img/time_icon.png" class="mr5"/>2019-05-05</span><a href="#.html" @click="NewsDetail()">【查看全文】</a>
+          <span class="dflexAlem"><img src="../../assets/img/time_icon.png" class="mr5"/>2019-05-05</span>
+           <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">【查看全文】</nuxt-link>
         </div>
       </li>
     </ul>
