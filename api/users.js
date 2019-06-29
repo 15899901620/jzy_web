@@ -30,7 +30,7 @@ export const manageLogin = (vm, data) => {
 export const supplierLogin = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierLogin,
     {
-      params: {...data}
+      ...data
     }).catch((e) => {
       let errorInfo = e.response
       console.log('supplierLoginErr', errorInfo)
@@ -95,7 +95,7 @@ export const memberValid = (vm, data) => {
 export const supplierReg = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.supplierReg,
     {
-      params: {...data}
+      ...data
     }).catch((e) => {
       let errorInfo = e.response
       console.log('supplierRegErr', errorInfo)
@@ -119,6 +119,15 @@ export const supplierdataCheck = (vm, data) => {
   })
 }
 
+export const supplierValid = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.supplierValid,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierRegErr', errorInfo)
+  })
+}
 /**
  * @description 验证手机是否存在
  * @param vm
@@ -214,6 +223,21 @@ export const supplierCodeSend = (vm, data) => {
       let errorInfo = e.response
       console.log('supplierCodeSendErr', errorInfo)
     })
+}
+/**
+ * @description 供应商性质
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierNature = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.user.supplierNature,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierCodeSendErr', errorInfo)
+  })
 }
 
 /**

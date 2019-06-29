@@ -60,6 +60,8 @@
   import Commonproblem from  './trenderCompontent/Commonproblem'
   import Contact from  './trenderCompontent/Contact'
   import Notice from  './trenderCompontent/Notice'
+  import Cookies from 'js-cookie'
+
     export default {
       name: "WineBid",
       layout:'membercenter',
@@ -80,6 +82,8 @@
         },
       },
       mounted() {
+        console.log('supplierinfor', Cookies.get('supplierinfor'))
+
        }
     }
 </script>

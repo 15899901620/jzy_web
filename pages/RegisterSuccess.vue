@@ -25,7 +25,7 @@
           </div>
           <div class="fs30 fwb greenFont tac mt10" >待审核！</div>
           <div class="tac mt25 fs16" style=" color: #666;">您的资料已提交，待巨正源工作人员与您确认并核对信息或</div>
-          <div class="tac fs16 mt5" style="margin-bottom: 115px; color: #666;">联系工作人员：<span class="orangeFont">4000-000-000</span></div>
+          <div class="tac fs16 mt5" style="margin-bottom: 115px; color: #666;">联系工作人员：<span class="orangeFont">4000-000-000</span> <router-link to="/">返回首页</router-link></div>
 
         </div>
     </div>

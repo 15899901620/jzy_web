@@ -27,7 +27,13 @@
           <li>
             <FormItem  prop="username">
               <span class="CarrierTitle" style="margin-left: -29px;"><i class="orangeFont mr5">*</i>公司名称</span>
-              <Input type="text" v-model="formSupplyInfor.username" @on-blur="companyValid(formSupplyInfor.username)"  class="CarrierIput"   placeholder="请输入公司名称" />
+              <Input type="text" v-model="formSupplyInfor.username" @on-blur="companyValidCheck"  class="CarrierIput"   placeholder="请输入公司名称" />
+            </FormItem>
+          </li>
+          <li>
+            <FormItem  prop="corporation">
+              <span class="CarrierTitle" ><i class="orangeFont mr5">*</i>法人</span>
+              <Input type="text" v-model="formSupplyInfor.corporation"    class="CarrierIput"   placeholder="请输入法人" />
             </FormItem>
           </li>
           <li>
@@ -70,19 +76,20 @@
           </li>
           <li>
             <FormItem  prop="contacterMobile">
-              <span class="CarrierTitle"><i class="orangeFont mr5">*</i>电话</span>
+              <span class="CarrierTitle ml5">电话</span>
               <Input type="text" class="CarrierIput"  v-model="formSupplyInfor.contacterMobile"    placeholder="请输入联系电话" />
             </FormItem>
           </li>
           <li>
             <FormItem  prop="contacterEmail">
-              <span class="CarrierTitle"><i class="orangeFont mr5">*</i>邮箱</span>
+              <span class="CarrierTitle ml5">邮箱</span>
               <Input type="text" class="CarrierIput"  v-model="formSupplyInfor.contacterEmail"    placeholder="请输入联系邮箱  " />
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle" style="margin-left: -62px;"><i class="orangeFont mr5">*</i>营业执照</span>
-            <div style="width: 370px;display: flex;">
+
+            <div style="width: 370px;display: flex; align-items: center">
+              <span class="CarrierTitle" style="margin-left: -82px; margin-right: 16px;"><i class="orangeFont mr5">*</i>营业执照</span>
               <FormItem>
                 <Upload
                   ref="upload"
@@ -105,21 +112,21 @@
             </FormItem>
           </li>
           <li>
-            <span class="CarrierTitle" style="margin-left: -26px; width: 69px;"><i class="orangeFont mr5">*</i>公司类型</span>
-             <div class="CarrierIput " style="border: none">
-               <CheckboxGroup v-model="formSupplyInfor.fruit">
-                 <Checkbox label="工厂"></Checkbox>
-                 <Checkbox label="贸易商"></Checkbox>
-                 <Checkbox label="工贸一体"></Checkbox>
-               </CheckboxGroup>
-             </div>
+
+            <FormItem>
+              <span class="CarrierTitle" style="margin-left: -26px; width: 69px;"><i class="orangeFont mr5">*</i>公司性质</span>
+               <Select  class="CarrierIput">
+                <Option @click.native="getItemValue(items)" v-for="(items, index) in supplierNatureList" value="items.value"  :key="index">{{items.value_name}}</Option>
+              </Select>
+             </FormItem>
 
           </li>
           <li>
 
-            <span class="CarrierTitle" style="margin-left: -62px;"><i class="orangeFont mr5">*</i>授权书</span>
 
-            <div style="width: 370px;">
+
+            <div style="width: 370px; display: flex; align-items: center">
+              <span class="CarrierTitle" style="margin-left: -82px;  margin-right: 16px;"><i class="orangeFont mr5">*</i>授权书</span>
               <Row>
                 <FormItem>
                   <Col span="12">
@@ -142,16 +149,17 @@
 
           </li>
           <li>
-            <span class="CarrierTitle" style="margin-left: -62px;"><i class="orangeFont mr5">*</i>其它文件</span>
-            <div style="width: 370px;display: flex;">
+
+            <div style="width: 370px;display: flex; align-items: center">
+              <span class="CarrierTitle" style="margin-left: -82px; margin-right: 16px;"><i class="orangeFont mr5">*</i>其它文件</span>
               <FormItem>
                 <Upload
                   ref="upload"
                   action="//192.168.40.31:28082/image"
-                  :on-success="imageSuccess"
+                  :on-success="handleOtherFile"
                   :format="['jpg','jpeg','png']"
                   :max-size="2048"
-                  :on-format-error="handleOtherFile"
+                  :on-format-error="handleFormatError"
                   :on-exceeded-size="handleMaxSize"
                 >
                   <Button icon="ios-cloud-upload-outline">上  传</Button>
@@ -179,27 +187,23 @@
 
 <script>
 
-  import { manageReg, supplierdataCheck } from '../api/users'
+  import {supplierReg, supplierdataCheck, supplierNature } from '../api/users'
 
   export default {
         name: "supplyPerInfor",
       data(){
-
         // 供应商名称
         const validatename = (rule, value, callback) => {
-          console.log('value', value)
           if (value === '') {
             callback(new Error('供应商名称不能为空'));
           } else {
-
             callback();
           }
         };
-        const validatTaxId= (rule, value, callback) =>{
+        const validatTaxId= (rule, value, callback)=>{
           if (value === '') {
             callback(new Error('税号不能为空'));
           } else {
-           this.TaxIdValid=true
             callback();
           }
         };
@@ -209,42 +213,45 @@
           if (value === '') {
             callback(new Error('联系人名称不能为空'));
           } else {
+
             callback();
           }
         };
-        //联系人电话
-        const validateContacterMobile = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('联系人电话不能为空'));
-          } else {
-            callback();
-          }
-        };
+
         //开户银行
         const validateBankName = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('开户不能为空'));
+            callback(new Error('开户行不能为空'));
           } else {
             this.BankNameValid=true
             callback();
           }
         };
-        //营业执照
-        const validateBusinessLicense= (rule, value, callback) => {
+        //账号
+        const validateBankAccount= (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('营业执照不能为空'));
+            callback(new Error('账号不能为空'));
+          } else {
+            this.BankAccountValid=true
+            callback();
+          }
+        };
+        const validateTelephone=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('公司电话不能为空'));
+          } else {
+            this.TelephoneValid=true
+            callback();
+          }
+        };
+        const validateAddress=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('公司地址不能为空'));
           } else {
             callback();
           }
         };
-        //授权书
-        const validateAuthorizationElc= (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('授权书不能为空'));
-          } else {
-            callback();
-          }
-        };
+
         //注册资金
         const validateRegistCapi=(rule, value, callback) => {
           if (value === '') {
@@ -253,18 +260,19 @@
             callback();
           }
         };
-        return{
-            formItem:{
-              image:[]
-            },
+          return{
+            supplierNatureList:[],
+            usernameValid:false,
             BankNameValid:false,    //开户不能为空
-            TaxIdValid:false,        //税号不能为空
+            BankAccountValid:false,  //账号不能为空
+            TelephoneValid:false,     //公司电话不能空
             formSupplyInfor: {
               code:'',
               username: '',      //供应商名称
               phone: '',          //注册手机号
               password:'',      //密码
               taxId:'',          //纳税人识别号
+              corporation:'',    //法人
               contacter:'',       //联系人
               contacterMobile:'',  //联系人电话
               contacterEmail:'',    //联系人邮箱
@@ -275,9 +283,6 @@
               bankAccount:'',      //银行账号
               address:'',           //公司地址
               telephone:'',         //公司电话
-              propertyName:'',      //供应商属性
-              propertyValue:'',     //供应商属性值
-              supplierLevel:'',      //供应商分级
               natureName:'',        //供应商性质
               natureValue:'',      //供应商性质值
               registCapi: ''         //注册资金
@@ -292,35 +297,45 @@
               contacter: [
                 { validator: validateContacter, trigger: 'blur' }
               ],
-              contacterMobile:[
-                { validator: validateContacterMobile, trigger: 'blur' }
+              bankAccount:[
+                { validator: validateBankAccount, trigger: 'blur' }
               ],
-              businessLicense:[
-                { validator: validateBusinessLicense, trigger: 'blur' }
+              telephone:[
+                { validator: validateTelephone, trigger: 'blur' }
+              ],
+              address:[
+                { validator: validateAddress, trigger: 'blur' }
               ],
               bankName:[
                 {validator: validateBankName, trigger: 'blur' }
               ],
-              authorizationElc:[
-                { validator: validateAuthorizationElc, trigger: 'blur' }
-              ],
               registCapi:[
-                { validator: validateRegistCapi, trigger: 'blur' }
+                {validator: validateRegistCapi, trigger: 'blur' }
               ]
+
             }
           }
+
       },
+
       methods:{
         // 公司信息加载
         companyData(res){
-          console.log('res', res)
+          console.log('公司信息res', res)
           this.formSupplyInfor.taxId=res.data.creditCode
-          this.formSupplyInfor.contacter=res.data.operName
+          this.formSupplyInfor.corporation=res.data.operName
           this.formSupplyInfor.address=res.data.address
           this.formSupplyInfor.registCapi=res.data.registCapi
         },
+        getItemValue(items){
+          console.log('items', items)
+          this.formSupplyInfor.natureName=items.value,           //供应商性质
+          this.formSupplyInfor.natureValue=items.value_name      //供应商性质值
+          console.log('formSupplyInfor', this.formSupplyInfor)
+        },
          // 营业执照
         imageSuccess(res){
+
           this.formSupplyInfor.businessLicense=res.url
           console.log('this.formSupplyInfor.businessLicense', this.formSupplyInfor.businessLicense)
          },
@@ -346,18 +361,18 @@
             desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
           });
         },
-        //验证企业名称
-        async companyValid(value){
-          console.log('value', value)
+       //验证企业名称
+        async companyValidCheck(){
+          console.log('企业名称')
           let params = {
-            data:value,
+            data:this.formSupplyInfor.username,
             type:1,
           }
           console.log('params', params)
           const res = await supplierdataCheck(this, params)
           console.log('res', res)
           if(res.data && res.status === 200){
-            console.log('res', res)
+            console.log('名称res', res)
             this.companyValid=true
             this.companyData(res)   //公司信息加载
           }else{
@@ -367,12 +382,134 @@
             });
           }
         },
-        memberReset(){
-          this.$router.push({path:'./RegisterSuccess'})
+        // 公司性质
+        async companyNature(value){
+
+          const res = await supplierNature(this, {})
+          console.log('res', res)
+          if(res.data && res.status===200){
+            this.supplierNatureList=res.data
+          }else{
+
+          }
+        },
+        async memberReset(){
+          console.log(' this.formSupplyInfor',  this.formSupplyInfor)
+          if(!this.companyValid){
+            this.$Notice.warning({
+              title: '不能为空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.code){
+            this.$Notice.warning({
+              title: '验证码不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.password){
+            this.$Notice.warning({
+              title: '密码不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.phone){
+            this.$Notice.warning({
+              title: '手机号不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.contacter){
+            this.$Notice.warning({
+              title: '联系人不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.businessLicense){
+            this.$Notice.warning({
+              title: '营业执照不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.authorizationElc){
+            this.$Notice.warning({
+              title: '授权书不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.corporation){
+            this.$Notice.warning({
+              title: '法人不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.taxId){
+            this.$Notice.warning({
+              title: '税号不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.corporation){
+            this.$Notice.warning({
+              title: '注册资金不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.BankNameValid){
+            this.$Notice.warning({
+              title: '开户银行不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.BankAccountValid){
+            this.$Notice.warning({
+              title: '银行账号不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.formSupplyInfor.address){
+            this.$Notice.warning({
+              title: '地址不能空',
+              duration: 5
+            });
+            return
+          }else if(!this.TelephoneValid){
+            this.$Notice.warning({
+              title: '公司电话不能空',
+              duration: 5
+            });
+            return
+          }else if(! this.formSupplyInfor.natureName){
+            this.$Notice.warning({
+              title: '公司性质不能空',
+              duration: 5
+            });
+            return
+          }else{
+            console.log('formSupplyInfor', this.formSupplyInfor)
+            const res = await supplierReg(this, this.formSupplyInfor)
+            console.log(res)
+            if(res.data && res.status === 200){
+              this.$router.push({name:'RegisterSuccess'})
+            }else{
+              console.log(res)
+              this.$Message.info({
+                content: '注册未成功',
+                duration: 5,
+                closable: true
+              })
+              return
+            }
+          }
+
+
         }
       },
+
       mounted() {
+        this.companyNature()
         var Params=this.$router.history.current.params.params
+        console.log('Params', Params)
         if(Params){
           this.formSupplyInfor.phone=this.$router.history.current.params.params.phone
           this.formSupplyInfor.password=this.$router.history.current.params.params.password
@@ -397,15 +534,19 @@
   .Carinput li .CarrierIput{font-size: 14px; margin-left: 5px;  box-sizing: border-box; width: 375px;border-radius: 3px;  height: 42px;line-height: 42px;}
   .Carinput li .codeCarrier{margin-left: 20px;width: 90px; height: 42px; border-radius: 5px; display: flex; align-items: center;}
   .CarrierRegister{margin-top: 30px;margin-bottom: 60px;margin-left: 55px; border-radius:3px;  cursor: pointer;width: 375px;height: 42px;border: none; background-color: #007de4; color: #fff;}
-
+  .CarrierRegister:hover{background-color: #007de4; color: #fff;}
   .CarrierTitle{width: 120px;text-align: right; color: #333; margin-right: 10px; font-size: 14px;}
 
   .ivu-form-item{ margin-bottom: 0px;  }
+  .ivu-form-item .ivu-form-item-content .ivu-select-single .ivu-select-selection{height: 42px;}
+  .ivu-form-item .ivu-form-item-content .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{height: 42px; line-height: 42px;}
   .ivu-form-item .ivu-form-item-content .ivu-upload{display: flex;height: 32px;}
   .ivu-upload-list{margin-top: 0px;display: flex;}
   .ivu-upload-list li{margin-top: 0px; margin-left: 10px;}
-  .ivu-form-item .ivu-form-item-content .ivu-upload .ivu-upload-list .ivu-upload-list-file{padding: 0 6px;}
+  .ivu-form-item .ivu-form-item-content .ivu-upload .ivu-upload-list .ivu-upload-list-file{padding: 0 6px;margin-top: 0;}
   .Carinput li .ivu-form-item .ivu-form-item-content .ivu-form-item-error-tip{left: 54px;}
   .Carinput li .ivu-form-item .ivu-form-item-content .CarrierIput .ivu-input{height: 42px; line-height: 42px;}
   .ivu-form-item .ivu-form-item-content .CarrierIput .ivu-upload{display: flex;height: 42px;}
+
+  .ivu-upload-list-file>span{display: flex; align-items: center;}
 </style>
