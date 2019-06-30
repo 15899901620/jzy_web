@@ -53,7 +53,7 @@ export default {
     '@nuxtjs/proxy'
   ],
   axios: {
-    proxy: true,
+    // proxy: true,
     prefix: '/api', // baseURL
     credentials: true,
   },
