@@ -83,3 +83,5 @@ dist
 nuxt.config.js
 # Service worker
 sw.*
+
+nuxt.config.js
