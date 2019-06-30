@@ -54,8 +54,9 @@ export default {
   ],
   axios: {
     // proxy: true,
-    prefix: '/api', // baseURL
-    credentials: true,
+    // prefix: '/api', // baseURL
+    baseURL:'http://127.0.0.1:10010',
+    // credentials: true,
   },
   proxy: {
     '/api': {
@@ -76,6 +77,12 @@ export default {
     loaders: {
       stylus: {
         import: ['~assets/style/variables.styl']
+      },
+      test:/\.(png|jpe?g|gif|svg)$/, 
+      loader:"url-loader", 
+      query:{ 
+          limit:10000, 
+          name:'img/[name].[hash].[ext]' 
       }
     },
     /*
@@ -83,5 +90,6 @@ export default {
     */
     extend(config, ctx) {
     }
+
   }
 }
