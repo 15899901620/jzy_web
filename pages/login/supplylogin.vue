@@ -29,8 +29,6 @@
       },
       methods:{
         async LoginsupplyerForm(){
-          console.log('LoginForm')
-          console.log('this.LoginForm', this.loginsupplierform)
           var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
           if(!myreg.test(this.loginsupplierform.username)){
             this.$Message.info({
@@ -44,23 +42,12 @@
               username:this.loginsupplierform.username,
               password:this.loginsupplierform.password
             }
-            console.log('params', params)
             const res = await supplierLogin(this, params)
-            console.log('res',res)
-            console.log('res.data',res.data)
             let authres=res.data
             if(res.data && res.status === 200){
-
-              console.log('authres',authres)
-
               Cookies.set('websuppliertoken',  authres, { expires: 36000000 || 1 })
-
               const res = await supplierValid(this, {})
-
-              console.log('authres', res)
-
               let auth= JSON.stringify(res.data)
-
               if(auth){
                 Cookies.set('supplierinfor', auth, { expires: 36000000 || 1 })
                 this.$router.push({name:'trender-WineBid'})
