@@ -243,11 +243,11 @@
           }
         },
         imageSuccess(res){
-          console.log(res)
+         
           this.formUserInfor.business_license=res.url
         },
         handleFileSuccess(res){
-          console.log(res)
+         
           this.formUserInfor.authorization_elc=res.url
         },
         // 会员注册提交
@@ -317,9 +317,9 @@
             })
             return
           }else{
-            console.log('this.formUserInfor', this.formUserInfor)
+           
             const res = await manageReg(this, this.formUserInfor)
-            console.log('res', res)
+          
             if(res.data && res.status === 200){
               this.$router.push({name:'RegisterSuccess'})
             }else{
@@ -338,14 +338,14 @@
 
       },
       mounted() {
-        console.log('this.$router.history.current.params',this.$router.history.current.params.params)
+       
         var Params=this.$router.history.current.params.params
-        console.log('Params', Params)
+     
         if(Params){
           this.formUserInfor.phone=this.$router.history.current.params.params.phone
           this.formUserInfor.password=this.$router.history.current.params.params.password
           this.formUserInfor.code=this.$router.history.current.params.params.code
-          console.log('this.formUserInfor', this.formUserInfor)
+     
         }
 
 
