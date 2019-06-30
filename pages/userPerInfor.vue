@@ -77,7 +77,8 @@
                   ref="upload"
                   action="//192.168.40.31:28082/image"
                   :on-success="imageSuccess"
-                  max-size="2048"
+                  :max-size="2048"
+                  :on-exceeded-size="handleMaxSize"
                   >
                   <Button icon="ios-cloud-upload-outline">上  传</Button>
                 </Upload>
@@ -97,7 +98,8 @@
                       ref="upLAload"
                       action="//192.168.40.31:28082/image"
                       :on-success="handleFileSuccess"
-                      max-size="2048"
+                      :max-size="2048"
+                      :on-exceeded-size="handleMaxSize"
                     >
                       <Button icon="ios-cloud-upload-outline">上  传</Button>
                     </Upload>
@@ -133,8 +135,8 @@
           if (value === '') {
             callback(new Error('请输入公司名称'));
           } else {
-            this.compangeValid(value,callback)
-          }
+            this.companyChenckValid(value, callback)
+           }
         };
         const validateTaxId= (rule, value, callback) => {
           if (value === '') {
@@ -229,12 +231,12 @@
       },
       methods:{
         // 校验公司名称
-        async compangeValid(value, callback){
+        async companyChenckValid(value, callback){
           let params = {
             name:value,
           }
           const res = await userValid(this, params)
-          if(res.data && res.status === 200){
+          if(res.data === true && res.status === 200){
             this.companyValid=true
             callback(new Error('公司审核成功'));
             callback()
@@ -243,17 +245,43 @@
           }
         },
         imageSuccess(res){
-         
+
           this.formUserInfor.business_license=res.url
         },
         handleFileSuccess(res){
-         
+
           this.formUserInfor.authorization_elc=res.url
+        },
+       handleMaxSize (file) {
+          this.$Notice.warning({
+            title: '超出文件大小限制',
+            desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+          });
         },
         // 会员注册提交
         async memberReset(data){
-
-          if(!this.formUserInfor.companyName){
+          if(!this.formUserInfor.phone){
+            this.$Message.info({
+              content: '手机号不能为空，请返回重新填写',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.password){
+            this.$Message.info({
+              content: '密码不能为空，请返回重新填写',
+              duration: 5,
+              closable: true
+            })
+            return
+          }else if(!this.formUserInfor.code){
+            this.$Message.info({
+              content: '验证码有误，请返回重新获取',
+              duration: 5,
+              closable: true
+            })
+            return
+          } else if(!this.formUserInfor.companyName){
             this.$Message.info({
               content: '公司名称不能为空',
               duration: 5,
@@ -317,10 +345,10 @@
             })
             return
           }else{
-           
+
             const res = await manageReg(this, this.formUserInfor)
-          
-            if(res.data && res.status === 200){
+            console.log('res', res)
+            if(res.data === true && res.status === 200){
               this.$router.push({name:'RegisterSuccess'})
             }else{
               this.$Message.info({
@@ -338,14 +366,14 @@
 
       },
       mounted() {
-       
+
         var Params=this.$router.history.current.params.params
-     
+
         if(Params){
           this.formUserInfor.phone=this.$router.history.current.params.params.phone
           this.formUserInfor.password=this.$router.history.current.params.params.password
           this.formUserInfor.code=this.$router.history.current.params.params.code
-     
+
         }
 
 

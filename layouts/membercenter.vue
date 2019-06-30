@@ -2,18 +2,18 @@
 <div>
   <memheader  ></memheader>
   <nuxt />
-  <!-- <loginfooter></loginfooter> -->
+ <loginfooter></loginfooter>
 </div>
 </template>
 
 <script>
   import memheader from '../components/user-header/memheader'
-  // import loginfooter from '../components/footer/loginfooter'
+  import loginfooter from '../components/sider-footer/siderfooter'
 
   export default {
        components:{
          memheader,
-        //  loginfooter
+         loginfooter
        },
     data(){
          return{

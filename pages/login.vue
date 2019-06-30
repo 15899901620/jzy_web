@@ -12,23 +12,20 @@
           <div class="swiper-container swiper_con">
             <div class="swiper-wrapper dflex">
               <!-- 第一个swiper -->
-              <div class="swiper-slide" ref="viewBox">
+              <div class="swiper-slide swiper-no-swiping" ref="viewBox">
                 <memberlogin></memberlogin>
               </div>
               <!-- 第二个swiper -->
-              <div class="swiper-slide">
+              <div class="swiper-slide swiper-no-swiping">
                 <supplylogin></supplylogin>
               </div>
               <!-- 第二个swiper -->
-              <div class="swiper-slide">
+              <div class="swiper-slide swiper-no-swiping">
                 <carrierlogin></carrierlogin>
               </div>
             </div>
           </div>
-          <div class="mt40 dflex codeNews" style="justify-content: space-between; color: #666; ">
-            <div  class="cp" @click="ForgotPassword()" >忘记密码</div>
-            <div  class="cp" @click="Register()" >注册新账号</div>
-          </div>
+
         </div>
 
       </div>
@@ -65,6 +62,7 @@
     that.mySwiper = new Swiper('.swiper-container',{
       initialSlide:0,
       autoplay:false,
+      noSwiping : true,
       keyboardControl:true,
       autoHeight:true,
       observer:true,

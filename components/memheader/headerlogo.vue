@@ -44,7 +44,7 @@
         Index(){
           let toindex='user.vue'
           this.$emit('Toindex',toindex)
-          this.$router.push({name:'help.vue',params:{to:'user.vue'}})
+          this.$router.push({name:'index'})
         },
         NavRight(){
           var that=this
@@ -60,11 +60,14 @@
           if(that.$router.history.current.name == 'users-usertotalorder'){
             this.CurreentTitle='全部订单'
           }
-          if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
-             this.NavTel=false
-          } else {
-             this.NavTel=true
+          if(that.$router.history.current.name == 'tendering'){
+            this.CurreentTitle='招标中心'
           }
+           if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
+             this.NavTel=false
+          }else {
+             this.NavTel=true
+           }
         },
 
       },

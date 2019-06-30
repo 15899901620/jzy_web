@@ -226,9 +226,10 @@
               phone
             }
             const res = await supplierCodeSend(this, params)
-           
+
             if(res.data && res.status === 200 ){
-             
+              this.ImgCodeValid=false
+              console.log('res', res)
               this.$Message.info("短信发送成功")
 
               var sj = Math.ceil(Math.random(10 + 1) * 100000)

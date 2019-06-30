@@ -24,12 +24,10 @@ const getCookie = name => {
  * @returns {*}
  */
 export const manageLogin = (vm, data) => {
+
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-      ...data,
-      headers: {
-        'Authorization':  getCookie('webtoken') === false ? '' : getCookie('webtoken')
-      }
+      ...data
     }).catch((e) => {
       let errorInfo = e.response
       if(errorInfo.status == '410'){
@@ -93,6 +91,9 @@ export const userValid = (vm, data) => {
  * @returns {*}
  */
 export const memberValid = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
   return vm.$axios.get(server.prefix + server.api.user.memberValid,
     {
       params: {...data}
@@ -137,6 +138,12 @@ export const supplierdataCheck = (vm, data) => {
 }
 
 export const supplierValid = (vm, data) => {
+
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('websuppliertoken') === false ? '' : getCookie('websuppliertoken')
+  }
+
+
   return vm.$axios.get(server.prefix + server.api.user.supplierValid,
     {
       params: {...data}
@@ -256,7 +263,21 @@ export const supplierNature = (vm, data) => {
     console.log('supplierCodeSendErr', errorInfo)
   })
 }
-
+/**
+ * @description 会员找回密码短信验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userSeekPassword = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.userseekpassword,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('userRepassWdErr', errorInfo)
+  })
+}
 /**
  * @description 会员找回密码
  * @param vm
