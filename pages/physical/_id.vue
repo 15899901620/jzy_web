@@ -120,7 +120,6 @@ export default {
                 ...this.formSearch
             }
             const res = await productlist(this, params)
-            console.log('physical', res)
             this.datalist = res.data.items
             this.total = res.data.total
         },

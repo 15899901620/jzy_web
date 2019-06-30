@@ -77,8 +77,7 @@
             page_size:10
           }
           const res = await infolist(this, params)
-          console.log('资讯',res.data)
-         this.NewsWeekList = res.data.items
+          this.NewsWeekList = res.data.items
         },
 
       },

@@ -77,7 +77,6 @@
           return 'rgb(' + r + ',' + g + ',' + b + ')'
         },
         drawPic () {
-          console.log('this.CodeCate', this.CodeCate)
           let canvas = document.getElementById(this.CodeCate)
           let ctx = canvas.getContext('2d')
           ctx.textBaseline = 'bottom'

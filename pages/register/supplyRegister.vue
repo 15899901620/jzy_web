@@ -183,14 +183,11 @@
             data:value,
             type:type
           }
-          console.log('params', params)
           const res = await supplierdataCheck(this, params)
-          console.log('res', res)
           if(res.data && res.status === 200){
             this.phoneValid=true;
             callback()
           }else{
-            console.log('params', params)
             if(params.type === 2){
               callback(new Error('未能通过验证，手机号码已存在！！！'));
             }else{
@@ -204,7 +201,6 @@
         async getsupplyNoteValue () {
 
           var phone = this.formCustom.phone//验证码
-          console.log('phone', phone)
           //验证验证码是否为空
           if(this.Imgcode === ''){
             this.$Message.info({
@@ -230,11 +226,9 @@
               phone
             }
             const res = await supplierCodeSend(this, params)
-            console.log('res',res)
-            console.log('res',res.data)
+           
             if(res.data && res.status === 200 ){
-              this.ImgCodeValid=false
-              console.log('res', res)
+             
               this.$Message.info("短信发送成功")
 
               var sj = Math.ceil(Math.random(10 + 1) * 100000)
@@ -268,7 +262,6 @@
           const res = await supplierCodeCheck(this, params)
           if(res.data && res.status === 200){
             this.isrefreshpic=true
-            console.log('isrefreshpic', this.isrefreshpic)
             callback();
           }else{
             callback(new Error('手机验证码错误'));
@@ -278,7 +271,6 @@
       // 下一步
         handleSubmit(){
           var suppplyerFormData={}
-          console.log('formCustom', this.formCustom)
           suppplyerFormData.phone=this.formCustom.phone
           suppplyerFormData.password=this.formCustom.password
           suppplyerFormData.code=this.formCustom.mobilecode
@@ -327,8 +319,6 @@
           }else{
             this.$router.push({name:'supplyPerInfor', params:{params:suppplyerFormData}})
           }
-
-
         },
          // 图形验证码
         randomNum(min, max) {
@@ -344,7 +334,6 @@
               this.randomNum(0, this.identifysupplyerImgCodes.length)
               ];
           }
-          console.log(this.identifysupplyCode);
         }
 
       },

@@ -53,9 +53,7 @@ export default {
         }
     },
     methods:{
-     
       async NewsDetail() {
-             console.log('detail', this.$route)
         let params = {
           id: this.$router.history.current.params.id,
         }

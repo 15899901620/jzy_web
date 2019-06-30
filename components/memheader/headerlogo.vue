@@ -60,12 +60,11 @@
           if(that.$router.history.current.name == 'users-usertotalorder'){
             this.CurreentTitle='全部订单'
           }
-          console.log('this.$router', this.$router.history.current.name)
-           if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
+          if(this.$router.history.current.name == 'tendering' || this.$router.history.current.name == 'register'){
              this.NavTel=false
-          }else {
+          } else {
              this.NavTel=true
-           }
+          }
         },
 
       },
@@ -83,7 +82,6 @@
           if( newVal =='Tendering'){
             this.CurreentTitle='招标'
           }
-          console.log('oldVal', oldVal)
         }
       }
     }

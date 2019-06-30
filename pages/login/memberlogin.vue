@@ -29,8 +29,6 @@ export default {
   },
   methods:{
     async LoginForm(){
-      console.log('LoginForm')
-      console.log('this.LoginForm', this.loginform)
       var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
       if(!myreg.test(this.loginform.username)){
         this.$Message.info({
@@ -44,29 +42,16 @@ export default {
           username:this.loginform.username,
           password:this.loginform.password
         }
-        console.log('params', params)
         const res = await manageLogin(this, params)
-        console.log('res',res)
-        console.log('res.data',res.data)
         let authres=res.data
         if(res.data && res.status === 200){
-
-          console.log('authres',authres)
-
           Cookies.set('webtoken',  authres, { expires: 36000000 || 1 })
-
           const res = await memberValid(this, {})
-
-          console.log('authres', res)
-
           let auth= JSON.stringify(res.data)
-
           if(auth){
             Cookies.set('userinfor', auth, { expires: 36000000 || 1 })
             this.$router.push({name:'users-user'})
           }
-
-
         }else{
           this.$Message.info({
             content: res.data.message,

@@ -82,7 +82,7 @@
         },
       },
       mounted() {
-        console.log('supplierinfor', Cookies.get('supplierinfor'))
+        
 
        }
     }

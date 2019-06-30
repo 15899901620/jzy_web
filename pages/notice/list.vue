@@ -65,7 +65,6 @@ export default {
                 page_size: this.page_size
             }
             const res = await announcement(this, params)
-            console.log('tag', res)
             this.datalist = res.data.items
             this.total = res.data.total
         },

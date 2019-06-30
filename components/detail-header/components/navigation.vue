@@ -40,7 +40,6 @@ export default {
         nav: 'middle'
       }
       const res = await navlist(this, params)
-      console.log('nav', res)
     },
     getDescribe(tid, index, headtitle) {
       this.$emit('tidName', tid)

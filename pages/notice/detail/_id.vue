@@ -31,18 +31,7 @@
 import { announcementdetail } from '../../../api/info'
 export default {
   name: 'notice-detail-id',
-  async asyncData(context) {
-    let params = {
-        id: !context.params.id ? 1 : context.params.id,
-    }
-    const resData = await announcementdetail(context, params).then(function (res) {
-        console.log('detail', res)
-        return {
-            detail: res.data,
-        }
-        
-    })
-  },
+ 
   data () {
       return {
           detail: {}
