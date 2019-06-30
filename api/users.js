@@ -3,6 +3,20 @@
  */
 import server from './server'
 import { Message } from 'iview'
+import Cookies from 'js-cookie'
+
+const getCookie = name => {
+  if (!name) return
+  let data = Cookies.get(name)
+  if (!data) {
+    return false
+  }
+  if (typeof data !== 'string') {
+    return JSON.parse(data)
+  }
+  return data
+}
+
 /**
  * @description 会员登录
  * @param vm
@@ -12,7 +26,10 @@ import { Message } from 'iview'
 export const manageLogin = (vm, data) => {
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-      ...data
+      ...data,
+      headers: {
+        'Authorization':  getCookie('webtoken') === false ? '' : getCookie('webtoken')
+      }
     }).catch((e) => {
       let errorInfo = e.response
       if(errorInfo.status == '410'){
