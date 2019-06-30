@@ -1,5 +1,5 @@
 <template>
-  <div class="container clearfix graybg" >
+  <div class="clearfix graybg" >
     <div class="w1200" style="margin-top: 10px; font-size: 14px; color: #666;">
       <a>巨正源首页</a>><a>行业资讯</a>><span class="gray">{{NewsData.title}}</span>
     </div>
