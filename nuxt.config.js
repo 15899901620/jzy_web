@@ -52,21 +52,21 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  // axios: {
-  //   // proxy: true,
-  //   // prefix: '/api', // baseURL
-  //   // baseURL:'http://127.0.0.1:10010',
-  //   // credentials: true,
-  // },
-  // proxy: {
-  //   '/api': {
-  //     target: 'http://127.0.0.1:10010/', // 代理地址
-  //     changeOrigin: true,
-  //     pathRewrite: {
-  //       '^/api': '/', //将 /api 替换掉
-  //     },
-  //   },
-  // },
+  axios: {
+    proxy: true,
+    // prefix: '/api', // baseURL
+    // baseURL:'http://127.0.0.1:10010',
+    credentials: true,
+  },
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:10010/', // 代理地址
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': '/', //将 /api 替换掉
+      },
+    },
+  },
 
   /*
   ** Build configuration
