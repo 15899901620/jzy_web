@@ -60,11 +60,9 @@ export default {
             id: !context.params.id ? 1 : context.params.id,
         }
         const resData = await productdetail(context, params).then(function (res) {
-            console.log('detail', res)
-            return {
-                detail: res.data,
-            }
-            
+          return {
+              detail: res.data,
+          }
         })
     },
     data () {

@@ -78,7 +78,7 @@ export const announcement = (vm, data) => {
       params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
-      console.log('announcementErr', errorInfo)
+      // console.log('announcementErr', errorInfo)
     })
 }
 

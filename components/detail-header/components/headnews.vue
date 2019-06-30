@@ -14,15 +14,20 @@
     <ul class="news">
       <li v-show="cur==0">
         <ul class="newscont">
-          <li v-for="(item, index) in aclist" :key="index"><span class="newtitle">{{item.title}}</span>
-            <span class="ml10 Newsdate">{{item.time}}</span>
+          <li v-for="(item, index) in aclist" :key="index">
+            <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}">
+              <span class="newtitle">{{item.title}}</span>
+              <span class="ml10 Newsdate">{{item.time}}</span>
+            </nuxt-link>
           </li>
         </ul>
       </li>
       <li v-show="cur==1">
         <ul class="newscont">
           <li  v-for="(item, index) in newslist" :key="index">
-            <span class="newtitle">{{item.title}}</span><span class="ml10 Newsdate">{{item.time}}</span>
+            <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">
+              <span class="newtitle">{{item.title}}</span><span class="ml10 Newsdate">{{item.time}}</span>
+            </nuxt-link>
           </li>
         </ul>
       </li>

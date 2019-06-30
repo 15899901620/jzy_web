@@ -31,18 +31,13 @@
     methods:{
 
       Toindex:function(data){
-        console.log('Toindexdata',data)
         let toindex=data
-        console.log('toindex', toindex)
         this.$emit('Toindex',toindex)
       }
 
 
     },
     mounted() {
-          console.log('memberheader',this.$router)
-          console.log('memberheaderToTitle',this.ToTitle)
-      console.log('membercenter_$router', this.$router.history.current.name)
           var PageTitle=this.$router.history.current.name
           if(PageTitle == 'users-user'){
             this.PageTitle='会员中心'

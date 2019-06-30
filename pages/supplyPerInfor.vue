@@ -209,7 +209,7 @@
         };
         //联系人
         const validateContacter = (rule, value, callback) => {
-          console.log('value', value)
+         
           if (value === '') {
             callback(new Error('联系人名称不能为空'));
           } else {
@@ -321,33 +321,33 @@
       methods:{
         // 公司信息加载
         companyData(res){
-          console.log('公司信息res', res)
+          
           this.formSupplyInfor.taxId=res.data.creditCode
           this.formSupplyInfor.corporation=res.data.operName
           this.formSupplyInfor.address=res.data.address
           this.formSupplyInfor.registCapi=res.data.registCapi
         },
         getItemValue(items){
-          console.log('items', items)
+          
           this.formSupplyInfor.natureName=items.value,           //供应商性质
           this.formSupplyInfor.natureValue=items.value_name      //供应商性质值
-          console.log('formSupplyInfor', this.formSupplyInfor)
+         
         },
          // 营业执照
         imageSuccess(res){
 
           this.formSupplyInfor.businessLicense=res.url
-          console.log('this.formSupplyInfor.businessLicense', this.formSupplyInfor.businessLicense)
+          
          },
         // 授权书
         handleFileSuccess(res){
           this.formSupplyInfor.authorizationElc=res.url
-          console.log('this.formSupplyInfor.authorizationElc', this.formSupplyInfor.authorizationElc)
+         
         },
         //其它文件
         handleOtherFile(res){
           this.formSupplyInfor.other_license=res.url
-          console.log('this.formSupplyInfor.other_license', this.formSupplyInfor.other_license)
+        
         },
         handleFormatError (file) {
           this.$Notice.warning({
@@ -363,16 +363,16 @@
         },
        //验证企业名称
         async companyValidCheck(){
-          console.log('企业名称')
+        
           let params = {
             data:this.formSupplyInfor.username,
             type:1,
           }
-          console.log('params', params)
+         
           const res = await supplierdataCheck(this, params)
-          console.log('res', res)
+        
           if(res.data && res.status === 200){
-            console.log('名称res', res)
+           
             this.companyValid=true
             this.companyData(res)   //公司信息加载
           }else{
@@ -386,7 +386,6 @@
         async companyNature(value){
 
           const res = await supplierNature(this, {})
-          console.log('res', res)
           if(res.data && res.status===200){
             this.supplierNatureList=res.data
           }else{
@@ -394,7 +393,7 @@
           }
         },
         async memberReset(){
-          console.log(' this.formSupplyInfor',  this.formSupplyInfor)
+          
           if(!this.companyValid){
             this.$Notice.warning({
               title: '不能为空',
@@ -486,13 +485,13 @@
             });
             return
           }else{
-            console.log('formSupplyInfor', this.formSupplyInfor)
+           
             const res = await supplierReg(this, this.formSupplyInfor)
-            console.log(res)
+           
             if(res.data && res.status === 200){
               this.$router.push({name:'RegisterSuccess'})
             }else{
-              console.log(res)
+             
               this.$Message.info({
                 content: '注册未成功',
                 duration: 5,
@@ -509,12 +508,12 @@
       mounted() {
         this.companyNature()
         var Params=this.$router.history.current.params.params
-        console.log('Params', Params)
+       
         if(Params){
           this.formSupplyInfor.phone=this.$router.history.current.params.params.phone
           this.formSupplyInfor.password=this.$router.history.current.params.params.password
           this.formSupplyInfor.code=this.$router.history.current.params.params.code
-          console.log('this.formUserInfor', this.formSupplyInfor)
+         
         }
       }
     }

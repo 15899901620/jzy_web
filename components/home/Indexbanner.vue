@@ -35,7 +35,6 @@ export default {
           positionId: 2,
         }
         const res = await adposition(this, params)
-        console.log('tag',res)
         this.items = res.data
       },
       // // 资讯详情页

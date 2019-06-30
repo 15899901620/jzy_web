@@ -189,7 +189,6 @@
          async getNoteValue () {
 
           var phone = this.formCustom.phone//验证码
-            console.log('phone', phone)
           //验证验证码是否为空
            if(this.Imgcode === ''){
              this.$Message.info({
@@ -215,11 +214,10 @@
                 phone
               }
             const res = await userCodeSend(this, params)
-            console.log('res',res)
-            console.log('res',res.data)
+      
             if(res.data && res.status === 200 ){
               this.ImgCodeValid=false
-              console.log('res', res)
+           
               this.$Message.info("短信发送成功")
 
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
@@ -256,7 +254,7 @@
           const res = await userCodeCheck(this, params)
           if(res.data && res.status === 200){
             this.isrefreshpic=true
-            console.log('isrefreshpic', this.isrefreshpic)
+            
             callback();
           }else{
             callback(new Error('手机验证码错误'));
@@ -265,7 +263,7 @@
         // 下一步验证
         handleSubmit (name) {
           var userFormData={}
-          console.log('formCustom', this.formCustom)
+        
           userFormData.phone=this.formCustom.phone
           userFormData.password=this.formCustom.password
           userFormData.code=this.formCustom.mobilecode
@@ -332,7 +330,7 @@
               this.randomNum(0, this.identifyCodes.length)
               ];
           }
-          console.log(this.identifyCode);
+          
         }
 
       },
