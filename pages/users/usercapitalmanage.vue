@@ -101,7 +101,20 @@
       layout:'membercenter',
         components:{
         userright
-      }
+      },
+      data(){
+        return{}
+      },
+      methods:{
+        capital(){
+
+        }
+      },
+      created(){},
+      mounted(){
+
+      },
+
     }
 </script>
 
