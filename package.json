@@ -1,7 +1,7 @@
 {
   "name": "jzy_web",
   "version": "1.0.0",
-  "description": "My luminous Nuxt.js project",
+  "description": "巨正源-化工交易平台",
   "author": "hmy",
   "private": true,
   "scripts": {
