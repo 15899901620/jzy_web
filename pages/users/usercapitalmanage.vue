@@ -95,6 +95,7 @@
 </template>
 
 <script>
+  import { capitalinfo } from '../../api/capital'
   import userright from './userCompontent/userright'
     export default {
       name: "usercapitalmanage",
