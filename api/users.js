@@ -27,7 +27,7 @@ export const manageLogin = (vm, data) => {
 
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-      ...data
+       ...data
     }).catch((e) => {
       let errorInfo = e.response
       if(errorInfo.status == '410'){
@@ -324,4 +324,24 @@ export const manageEdit = (vm, data) => {
       let errorInfo = e.response
       console.log('manageEditErr', errorInfo)
     })
+}
+
+
+/**
+ * @description 会员地址列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addressList = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Address.addressList,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
 }

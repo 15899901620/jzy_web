@@ -62,8 +62,8 @@ export default {
       }else{
         this.NameCheck=false
         let params = {
-          username:this.loginform.username,
-          password:this.loginform.password
+          username:this.loginform.username.replace(/^\s+|\s+$/g,""),
+          password:this.loginform.password.replace(/^\s+|\s+$/g,"")
         }
         const res = await manageLogin(this, params)
 

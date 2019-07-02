@@ -20,7 +20,7 @@
             <div class="dflex" style="width: 85%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
               <div class="Av_balance">
                 <span>可用余额：</span>
-                <span class="fs24 fwb orangeFont">1,005,228.90</span>
+                <span class="fs24 fwb orangeFont">{{remain_fund}}</span>
               </div>
               <div class="priceOpera">
                 <a class="orangebg white">充 值</a><a class="pricebtnbg brd1 orangeFont ml15">申请提现</a>
@@ -32,7 +32,7 @@
                 <div class="account_icon "></div>
                 <div class=""style="display: flex; flex-direction: column; margin-left: 15px;">
                   <span>账户余额</span>
-                  <span class="fs18 fwb">1,007,241.90</span>
+                  <span class="fs18 fwb">{{remain_fund+fozen_fund}}</span>
                 </div>
 
               </div>
@@ -40,7 +40,7 @@
                 <div class="Frozen_icon"></div>
                 <div class=""style="display: flex; flex-direction: column; margin-left: 15px;">
                   <span>冻结金额</span>
-                  <span class="fs18 fwb">2,013.00</span>
+                  <span class="fs18 fwb">{{fozen_fund}}</span>
                 </div>
               </div>
             </div>
@@ -168,13 +168,34 @@
 </template>
 
 <script>
+  import { capitalinfo } from '../../api/capital'
   import userright from './userCompontent/userright'
     export default {
       name: "index",
       layout:'membercenter',
        components:{
          userright,
-      }
+      },
+      data() {
+        return {
+          fozen_fund:'',
+          remain_fund:'',
+        }
+      },
+      methods:{
+        async capital(){
+          const res= await capitalinfo(this,{})
+          this.fozen_fund=res.data.fozen_fund
+          this.remain_fund=res.data.remain_fund
+        }
+      },
+      created(){
+        console.log('created')
+        this.capital()
+      },
+      mounted(){
+
+      },
     }
 </script>
 

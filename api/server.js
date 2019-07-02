@@ -23,8 +23,23 @@ let api = {
     supplierCodeSend: '/user/supplier/code',
     userRepassWd: '/user/m/updatePwd',
     supplierRepssWd: '/user/supplier/updatePwd',
-    manageEdit: '/user/m/edit'
+    manageEdit: '/user/m/edit',
+
   },
+
+  /**
+   * @description 会员地址
+   */
+
+  Address:{
+    addressList:'/bill/addresses/list',  //地址列表
+    addressAdd:'/bill/address',       //添加地址信息
+    addressEdit:'/bill/address',      //修改地址信息
+    addressDelete:'/bill/address',    //删除地址列表
+    addressDefault:'/bill/address',   // 设置默认地址
+    addressSigle:'/bill/address/detail',  //获取单条信息
+  },
+
   /**
    * @description 资讯管理
    */
@@ -80,8 +95,8 @@ let api = {
    * @description 资金管理
    */
   capital: {
-    capitalinfo: '/web/getFund',
-    capitaldetail: '/web/getFundByCompanyName'
+    capitalinfo: '/bill/getFund',
+    capitaldetail: '/bill/getFundByCompanyName'
   }
 }
 

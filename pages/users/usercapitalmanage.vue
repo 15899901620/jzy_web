@@ -8,14 +8,14 @@
         <div class="TableList">
           <h1 class="fs16 mt20 bb1 pb10" >资金管理</h1>
           <div class="dflexAlem" style="justify-content: space-between; margin: 25px auto; font-size: 14px ">
-            <div>可用余额<span class="fs24 orangeFont fwb ml10">1,005,228.90</span></div>
+            <div>可用余额<span class="fs24 orangeFont fwb ml10">{{remain_fund}}</span></div>
             <div class="opePrice">
               <a class="orangesbg" >充 值</a>
               <a class="orangeFont CashAdvBg ml15" href="">申请提现</a>
             </div>
           </div>
           <ul class="balancebg mb30">
-            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">1,007,241.90</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">1,007,241.90</span></li>
+            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">{{remain_fund+fozen_fund}}</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">{{fozen_fund}}</span></li>
           </ul>
         </div>
 
@@ -31,7 +31,7 @@
               <div class="check" style="width: 85px;line-height: 38px;">查看</div>
             </div>
             <div class="dflex" style="align-items: center;">
-              一共<span class="orange">15</span>条竞拍
+              一共<span class="orangeFont">15</span>条竞拍
             </div>
           </div>
           <ul class="tradeDetail">
@@ -97,21 +97,30 @@
 <script>
   import { capitalinfo } from '../../api/capital'
   import userright from './userCompontent/userright'
-    export default {
+
+  export default {
       name: "usercapitalmanage",
       layout:'membercenter',
         components:{
         userright
       },
       data(){
-        return{}
-      },
-      methods:{
-        capital(){
-
+        return{
+          fozen_fund:'',
+          remain_fund:'',
         }
       },
-      created(){},
+      methods:{
+        async capital(){
+       const res= await capitalinfo(this,{})
+          this.fozen_fund=res.data.fozen_fund
+          this.remain_fund=res.data.remain_fund
+        }
+      },
+      created(){
+        console.log('created')
+        this.capital()
+      },
       mounted(){
 
       },
@@ -158,7 +167,7 @@
   .tradeDetail_title>span:last-child{border: none;}
   .tradeDetail li{display: flex;align-items: center; color: #333;}
   .tradeDetail li:nth-child(even){background-color: #fcfcfc;}
-  .tradeDetail li>span{margin: 15px 0; width: 20%;text-align: center;}
+  .tradeDetail li>span{margin: 15px 0; width: 20%;text-align: center; font-size: 14px;}
 
   /*页码*/
   ul.pagination {  display: inline-block;  padding: 0;   margin: 30px auto;display: flex;justify-content: center;}

@@ -101,7 +101,28 @@
       layout:'membercenter',
       components:{
         userright
+      },
+      data(){
+          return{
+            counter:100,
+            value:5,
+            list:[
+              {a:1},
+              {b:1},
+              {c:1},
+            ]
+          }
+      },
+      mounted(){
+
+      //  this.$store.commit('increment', {value:5})
+        this.$store.dispatch('increment', {value:5})
+
+      },
+      computed:{
+
       }
+
     }
 </script>
 

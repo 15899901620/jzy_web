@@ -45,6 +45,7 @@
 <script>
   import userright from './userCompontent/userright'
   import AddressPopup from './userCompontent/AddressPopup'
+  import { addressList } from '../../api/users'
   export default {
         name: "userAddress",
       layout:'membercenter',
@@ -58,6 +59,12 @@
           }
     },
     methods:{
+          // 收货地址列表
+      async AddressList(){
+
+        const res=await addressList(this, {})
+        console.log('地址列表_res',res)
+      },
       showcancel(){
         this.showcancel_pop=true
       },
@@ -66,6 +73,14 @@
         that.showcancel_pop = false
       },
     },
+    create(){
+          this.AddressList()
+    },
+    mounted(){
+      this.AddressList()
+          console.log('****dd*****')
+    }
+
     }
 </script>
 

@@ -4,56 +4,61 @@
       <div class="TopPopup">
         <div class="fs14">新增收货地址</div> <div class="PopupClose" @click="Hidden()"></div>
       </div>
-      <form  class="layui-form" action="">
+      <Form    ref="formValidate" :model="formAddress" :rules="ruleValidate" >
         <!--收  货  人-->
         <div class="qg_text clearfix" style="margin-top: 20px;">
-          <span class="addrTitle">收  货  人：</span><input type="text" class="inputText" placeholder="请输入姓名"    name="username"    >
-        </div>
-        <!--身份证号-->
-        <div class="qg_text clearfix"><span class="addrTitle">身份证号：</span><input type="text" class="inputText" placeholder="请输入身份证号"    name="username"    >
+          <span class="addrTitle">收  货  人：</span>
+          <FormItem prop="name">
+            <Input  type="text" class="inputText" v-model="formAddress.name" placeholder="请输入姓名"  />
+          </FormItem>
         </div>
         <!--手机号码-->
-        <div class="qg_text clearfix"><span class="addrTitle">手机号码：</span><input type="text" class="inputText" placeholder="请输入手机号码"    name="username"   >
+        <div class="qg_text clearfix"><span class="addrTitle">手机号码：</span>
+          <FormItem prop="phone">
+            <Input type="text" class="inputText" v-model="formAddress.phone" placeholder="请输入手机号码"  />
+          </FormItem>
+        </div>
+        <!--国家-->
+        <div class="qg_text clearfix"><span class="addrTitle">国家：</span>
+          <div class="inputText" style="padding-left: 0px; border: none ;">
+            <!--请选择省-->
+            <div class="layui-input-inline" style="width: 100%;">
+              <Select v-model="formAddress.Country"  placeholder="请选择国家">
+                <Option  >国家</Option>
+              </Select>
+            </div>
+          </div>
         </div>
         <!--选择地址-->
         <div class="qg_text clearfix"><span class="addrTitle">选择地址：</span>
           <div class="inputText" style="padding-left: 0px; border: none ;">
             <!--请选择省-->
-<!--            <div class="layui-input-inline">-->
-<!--              <select name="quiz1">-->
-<!--                <option value="">请选择省</option>-->
-<!--                <option value="浙江" selected="">浙江省</option>-->
-<!--                <option value="你的工号">江西省</option>-->
-<!--                <option value="你最喜欢的老师">福建省</option>-->
-<!--              </select>-->
-<!--            </div>-->
+            <div class="layui-input-inline">
+              <Select v-model="formAddress.state"  placeholder="请选择省">
+                 <Option>省</Option>
+              </Select>
+            </div>
             <!--请选择市-->
-<!--            <div class="layui-input-inline">-->
-<!--              <select name="quiz2">-->
-<!--                <option value="">请选择市</option>-->
-<!--                <option value="杭州">杭州</option>-->
-<!--                <option value="宁波">宁波</option>-->
-<!--                <option value="温州">温州</option>-->
-<!--                <option value="温州">台州</option>-->
-<!--                <option value="温州">绍兴</option>-->
-<!--              </select>-->
-<!--            </div>-->
+           <div class="layui-input-inline">
+              <Select v-model="formAddress.city"  placeholder="请选择市">
+                 <Option>市</Option>
+              </Select>
+            </div>
             <!-- 请选择县/区-->
-<!--            <div class="layui-input-inline">-->
-<!--              <select name="quiz3">-->
-<!--                <option value="">请选择县/区</option>-->
-<!--                <option value="西湖区">西湖区</option>-->
-<!--                <option value="余杭区">余杭区</option>-->
-<!--                <option value="拱墅区">临安市</option>-->
-<!--              </select>-->
-<!--            </div>-->
+            <div class="layui-input-inline">
+                <Select v-model="formAddress.district"  placeholder="请选择县/区">
+                  <Option>县/区</Option>
+                </Select>
+             </div>
 
           </div>
 
         </div>
         <!--详细地址-->
         <div class="qg_text clearfix"><span class="addrTitle">详细地址：</span>
-          <textarea name="" class="inputText" rows="" cols=""></textarea>
+          <FormItem prop="address">
+             <Input type="text" class="inputText"    v-model="formAddress.address"    />
+          </FormItem>
         </div>
         <div class="graybg mt20" style="display: flex; justify-content: center; align-items: center;">
           <a class="submitPrice">确定</a>
@@ -68,7 +73,18 @@
         name: "AddressPopup",
       data(){
         return{
-          Isshowbd:''
+          Isshowbd:'',
+          formAddress:{
+            province:'', //省
+            city:'',     //市
+            county:'',      //区县
+            detailAddress:'',//详细地址
+          },
+          ruleValidate: {
+
+          },
+
+
         }
       },
       methods:{
@@ -96,7 +112,11 @@
   .qg_text:first-child{margin-top: 10px;}
   .qg_text{width: 85%;margin: 10px auto; display: flex;align-items: center;}
   .addrTitle{width: 25%;text-align: right; font-size: 14px;}
-  .inputText{ line-height: 32px;padding-left: 10px;box-sizing: border-box; width: 90%; border: 1px solid #dddddd;  border-radius: 3px;}
+  .inputText{ line-height: 32px;padding-left: 10px;box-sizing: border-box; width: 90%;    border-radius: 3px;   display: flex; padding-left: 0px;}
 
   .submitPrice{background-color: #007de4; padding: 10px 45px; color: #fff; border-radius: 3px;margin: 15px auto;}
+
+
+  .layui-input-inline{display: flex;margin-left: 5px; width: 33%;}
+  .layui-input-inline:first-child{margin-left: 0px;}
 </style>
