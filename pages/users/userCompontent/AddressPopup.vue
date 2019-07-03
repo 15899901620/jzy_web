@@ -4,7 +4,7 @@
       <div class="TopPopup">
         <div class="fs14">新增收货地址</div> <div class="PopupClose" @click="Hidden()"></div>
       </div>
-      <Form    ref="formValidate" :model="formAddress" :rules="ruleValidate" >
+      <Form ref="formValidate" :model="formAddress" :rules="ruleValidate" >
         <!--收  货  人-->
         <div class="qg_text clearfix" style="margin-top: 20px;">
           <span class="addrTitle">收  货  人：</span>
@@ -15,7 +15,13 @@
         <!--手机号码-->
         <div class="qg_text clearfix"><span class="addrTitle">手机号码：</span>
           <FormItem prop="phone">
-            <Input type="text" class="inputText" v-model="formAddress.phone" placeholder="请输入手机号码"  />
+            <Input type="text" class="inputText" v-model="formAddress.phone" placeholder="请输入手机号码"  @on-blur="addressphoneValid"   />
+          </FormItem>
+        </div>
+        <!--手机号码-->
+        <div class="qg_text clearfix"><span class="addrTitle">身份证：</span>
+          <FormItem prop="idNumber">
+            <Input type="text" class="inputText" v-model="formAddress.idNumber" placeholder="请输入身份证"  />
           </FormItem>
         </div>
         <!--国家-->
@@ -23,8 +29,8 @@
           <div class="inputText" style="padding-left: 0px; border: none ;">
             <!--请选择省-->
             <div class="layui-input-inline" style="width: 100%;">
-              <Select v-model="formAddress.Country"  placeholder="请选择国家">
-                <Option  >国家</Option>
+              <Select v-model="formAddress.countryId"  placeholder="请选择国家"  @on-change="countrySelect">
+                <Option v-for="(item, index) in countryList"   :value="item.id"  :key="item.name"  >{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -34,20 +40,20 @@
           <div class="inputText" style="padding-left: 0px; border: none ;">
             <!--请选择省-->
             <div class="layui-input-inline">
-              <Select v-model="formAddress.state"  placeholder="请选择省">
-                 <Option>省</Option>
+              <Select v-model="formAddress.state"  placeholder="请选择省"   @on-change="provinceSelect" >
+                 <Option v-for="(item, index) in provinceList"  :value="item.regionId"  :key="item.name" >{{item.regionName}}</Option>
               </Select>
             </div>
             <!--请选择市-->
            <div class="layui-input-inline">
-              <Select v-model="formAddress.city"  placeholder="请选择市">
-                 <Option>市</Option>
+              <Select v-model="formAddress.city"  placeholder="请选择市" @on-change="citySelect">
+                 <Option  v-for="(item, index) in cityList"   :value="item.regionId"  :key="item.name" >{{item.regionName}}</Option>
               </Select>
             </div>
             <!-- 请选择县/区-->
             <div class="layui-input-inline">
                 <Select v-model="formAddress.district"  placeholder="请选择县/区">
-                  <Option>县/区</Option>
+                  <Option v-for="(item, index) in distinceList"   :value="item.regionId"  :key="item.name"  >{{item.regionName}}</Option>
                 </Select>
              </div>
 
@@ -60,8 +66,22 @@
              <Input type="text" class="inputText"    v-model="formAddress.address"    />
           </FormItem>
         </div>
+        <!--详细地址-->
+        <div class="qg_text clearfix"><span class="addrTitle">别名：</span>
+          <FormItem  >
+            <Input type="text" class="inputText"    v-model="formAddress.alias"    />
+          </FormItem>
+        </div>
+        <!--默认地址-->
+        <div class="qg_text clearfix"><span class="addrTitle">默认地址：</span>
+          <FormItem>
+              <i-switch @on-change="defaultchange" />
+          </FormItem>
+        </div>
+
+
         <div class="graybg mt20" style="display: flex; justify-content: center; align-items: center;">
-          <a class="submitPrice">确定</a>
+          <div class="submitPrice" @click="submitAddress">确定</div>
         </div>
       </form>
     </div>
@@ -69,19 +89,87 @@
 </template>
 
 <script>
+
+  import { countryData, provinceData, cityregionData, addressAdd  } from '../../../api/users'
+  import Cookies from 'js-cookie'
     export default {
         name: "AddressPopup",
       data(){
+        // 收货人姓名
+        const validatename = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('收货人姓名不能为空'));
+          } else {
+            callback();
+          }
+        };
+        //收货人电话
+        const validatephone = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('收货人电话不能为空'));
+          } else {
+            callback();
+          }
+        };
+        //国家
+        const validatecountryId=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('国家不能为空'));
+          } else {
+            callback();
+          }
+        };
+        //身份证号
+        const validateidNumber=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('身份证号不能为空'));
+          } else {
+            callback();
+          }
+        };
+        const validateaddress=(rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('详细地址不能为空'));
+          } else {
+            callback();
+          }
+        };
         return{
+          PhoneCheck:false,   //校验手机号
+          countryList:'',
+          provinceList:'',
+          cityList:'',
+          distinceList:'',
           Isshowbd:'',
           formAddress:{
-            province:'', //省
-            city:'',     //市
-            county:'',      //区县
-            detailAddress:'',//详细地址
+            memberId: '',
+            name: '',    //收货人姓名
+            phone: '',   //收货人电话
+            idNumber:'',  //身份证
+            countryId:'',   //国家
+            state: '', //省
+            city: '',     //市
+            district: '',      //区县
+            address: '',//详细地址
+            defaultAddress: 0,    //设置默认地址
+            alias:''             //别名
           },
           ruleValidate: {
-
+            name: [
+              { validator: validatename, trigger: 'blur' }
+            ],
+            phone:[
+              { validator: validatephone, trigger: 'blur' }
+            ],
+            countryId:[
+              { validator: validatecountryId, trigger: 'blur' }
+            ],
+            idNumber:[
+              { validator: validateidNumber, trigger: 'blur' }
+            ],
+            address:[
+              { validator: validateaddress, trigger: 'blur' }
+            ],
           },
 
 
@@ -90,12 +178,201 @@
       methods:{
         Hidden(){
           this.$emit('hidden')
+        },
+        //手机号码
+        addressphoneValid(){
+          var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+          if(!myreg.test(this.formAddress.phone)){
+            this.$Notice.warning({
+              title: '手机号码格式不正确',
+              duration: 5,
+              closable: true
+            });
+            this.formAddress.phone=''
+            return
+
+          }
+
+        },
+        async countryData(){
+          const res = await countryData(this, {})
+         // console.log('国家_res', res)
+          if(res.data){
+            this.countryList=res.data
+          }
+         },
+        // 获取省份
+        async countrySelect(id){
+         // console.log('country', id)
+          if(id){
+          let params={
+            countryId:id
+          }
+          const res = await provinceData(this, params)
+         // console.log('res', res)
+          if(res.data){
+            this.provinceList=res.data
+          }
+
+          }
+        },
+
+        //获取市
+        async provinceSelect(id){
+        //  console.log('provinceSelect', id)
+          if(id){
+          let params={
+            parentId:id
+          }
+          const res = await cityregionData(this, params)
+        //  console.log('res', res)
+          if(res.data){
+            this.cityList=res.data
+          }
+            console.log('res', this.formAddress.state)
+          }
+        },
+
+        //获取区
+        async citySelect(id) {
+         // console.log('citySelect_id', id)
+          if (id) {
+          let params = {
+            parentId: id
+          }
+          const res = await cityregionData(this, params)
+         // console.log('res', res)
+          if (res.data) {
+            this.distinceList = res.data
+          }
+        }else{
+            this.formAddress.district=''
+          }
+        },
+        // 默认地址
+        defaultchange (status) {
+           if(status === true){
+            this.formAddress.defaultAddress= 1
+            this.$Notice.warning({
+              title: '设为默认地址',
+              duration: 5,
+              closable: true
+            });
+          }else {
+            this.formAddress.defaultAddress=0
+            this.$Notice.warning({
+              title: '取消默认地址',
+              duration: 5,
+              closable: true
+            });
+          }
+
+
+        },
+
+        //提交地址
+        async submitAddress(){
+          console.log('提交地址formAddress')
+          if(Cookies.get('userinfor')){
+            this.formAddress.memberId=JSON.parse(Cookies.get('userinfor')).id
+          }else{
+            this.$Notice.warning({
+              title: '账号未登录，请先登录',
+              duration: 5,
+              closable: true
+            });
+            return
+          }
+          //设置别名
+          if(!this.formAddress.alias){
+            this.formAddress.alias=this.formAddress.state+''+this.formAddress.city
+          }
+
+          if(!this.formAddress.name){
+            this.$Notice.warning({
+              title: '收货人不能为空',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.phone){
+            this.$Notice.warning({
+              title: '手机号码不能为空',
+              duration: 5,
+              closable: true
+            });
+          return
+          }else if(!this.formAddress.idNumber){
+            this.$Notice.warning({
+              title: '身份证不能为空',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.countryId){
+            this.$Notice.warning({
+              title: '请选择国家',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.state){
+            this.$Notice.warning({
+              title: '请选择省份',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.city){
+            this.$Notice.warning({
+              title: '请选择城市',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.district){
+            this.$Notice.warning({
+              title: '请选择区/县',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else if(!this.formAddress.address){
+            this.$Notice.warning({
+              title: '请填写详细地址',
+              duration: 5,
+              closable: true
+            });
+            return
+          }else {
+            console.log('formAddress', this.formAddress)
+            const res = await addressAdd(this, this.formAddress)
+            console.log('添加res',res)
+            if(res){
+              this.$message.info({content: '添加成功'})
+
+            }else{
+              this.$Notice.warning({
+                title: '添加地址失败，请联系客服',
+                duration: 5,
+                closable: true
+              });
+              return
+            }
+          }
         }
-      }
+      },
+      created(){
+
+       },
+      mounted(){
+        this.countryData()
+
+      },
     }
 </script>
 
-<style scoped>
+<style >
   .Mask{display: flex; justify-content: center; align-items: center; position: fixed;z-index: 10; top: 0; width: 100%; height: 100%;background: rgba(0,0,0,0.5);}
   .Bond_Popup{ width: 415px; background-color: #fff; border-radius: 3px;}
   .Bond_Popup .TopPopup{display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; color: #666;background-color: #f9f9f9;}
@@ -110,13 +387,18 @@
 
 
   .qg_text:first-child{margin-top: 10px;}
-  .qg_text{width: 85%;margin: 10px auto; display: flex;align-items: center;}
+  .qg_text{width: 85%;margin: 20px auto 0; display: flex;align-items: center;}
   .addrTitle{width: 25%;text-align: right; font-size: 14px;}
-  .inputText{ line-height: 32px;padding-left: 10px;box-sizing: border-box; width: 90%;    border-radius: 3px;   display: flex; padding-left: 0px;}
+  .inputText{ line-height: 40px;padding-left: 10px;box-sizing: border-box; width: 100%;    border-radius: 3px;   display: flex; padding-left: 0px;}
 
-  .submitPrice{background-color: #007de4; padding: 10px 45px; color: #fff; border-radius: 3px;margin: 15px auto;}
+  .submitPrice{background-color: #007de4; padding: 10px 45px; color: #fff; border-radius: 3px;margin: 15px auto; cursor: pointer;}
 
-
+  .qg_text .ivu-form-item{width: 100%; margin-bottom: 0;}
   .layui-input-inline{display: flex;margin-left: 5px; width: 33%;}
   .layui-input-inline:first-child{margin-left: 0px;}
+
+  .ivu-input{height: 40px;}
+  .ivu-select-single .ivu-select-selection{height: 40px;}
+  .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{height: 40px; line-height: 40px;}
+
 </style>

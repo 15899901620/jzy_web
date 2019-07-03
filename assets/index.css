@@ -1,5 +1,25 @@
+/*标题*/
 .ListTitle{display: flex;justify-content: space-between;}
 .TitleName{border-left: 2px solid #279eff; padding-left: 10px; margin: 15px 0; font-size: 16px;}
+
+/*质检单--页面*/
+/*质检单批次号*/
+.order_operate{display: flex;justify-content: space-between; align-items: center; margin: 20px auto; font-size: 14px}
+.orderInput{width: 286px; border: 1px solid #DEDEDE; padding-left: 10px;box-sizing: border-box;}
+.check{ color: #fff; width: 60px;line-height: 32px; background-color: #007de4;text-align: center;margin-left: 10px;border-radius: 3px;}
+.qualityTitle{background-color: #f8f8f8; display: flex;}
+.qualityTitle ,.qualityList li span{padding: 15px 0; font-size: 14px;text-align: center}
+.qualityList li{background-color: #fff;margin-top: 1px; display: flex; color: #666;}
+.qualitySeeDetail{border: 1px solid #007de4;color: #007de4;background-color: #f2f8fe;margin: 0px 55px;padding: 2px 0;border-radius: 3px; cursor: pointer;}
+/*质检单--详情页*/
+.qualitytable{border: 1px solid #DEDEDE; width: 100%; margin-top: 10px}
+.qualitytable tr{ line-height: 40px; height: 40px; font-size: 14px;}
+.qualitytable tr td{border: 1px solid #DEDEDE;  }
+.qualitytable tr .qualitytabletitle{background-color: #f8f8f8;text-align: center}
+.qualityImg{display: flex;align-items: center; justify-content: space-between;}
+.qualityImg img{width: 80%;height: 80%;}
+
+
 
 
 .Time-limited_back{left: 0; border-bottom-right-radius: 5px; border-top-right-radius: 5px; }

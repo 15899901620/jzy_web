@@ -3,9 +3,9 @@ import config from './config'
 
 axios.defaults.baseURL = config.BASE_URL.dev;
 axios.defaults.timeout = config.TIMEOUT;
-axios.defaults.headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-};
+// axios.defaults.headers = {
+//   'Content-Type': 'application/x-www-form-urlencoded',
+// };
 
 // 请求拦截器
 axios.interceptors.request.use( request => {

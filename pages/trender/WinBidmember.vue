@@ -1,11 +1,10 @@
 <template>
-  <div>
-  <memheader :PageTitle="Totile"></memheader>
-    <div class="clearfix mb40">
-      <div class="w1200 dflex " id="app">
+
+
+    <div class="clearfix  graybg">
+      <div class="w1200 dflex " id="app" style="margin-bottom: 40px">
         <!--会员中心列表-->
         <Rightmenu></Rightmenu>
-
 
         <!--右边信息-->
         <div class="memberInfor ml20  whitebg bdccc  mt20">
@@ -77,7 +76,7 @@
       </div>
 
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -88,7 +87,7 @@
 
    export default {
       name: "WinBidmember",
-
+     layout:'membercenter',
       components:{
         memheader,
         Pagination,

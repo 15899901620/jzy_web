@@ -50,7 +50,6 @@ export default {
         this.NameText='手机号和用户名不能为空!'
         return
       }
-
       var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
       if(!myreg.test(this.loginform.username)){
         this.$Message.info({
@@ -65,10 +64,13 @@ export default {
           username:this.loginform.username.replace(/^\s+|\s+$/g,""),
           password:this.loginform.password.replace(/^\s+|\s+$/g,"")
         }
+        console.log('params',params)
+        console.log('webtoken',  Cookies.get('webtoken'))
+
         const res = await manageLogin(this, params)
 
-        console.log('res',res.data)
-        console.log('res.data',res.data)
+        console.log('res', res.data)
+        console.log('res.data', res.data)
         if(res.data.data === null && res.status === 200) {
           this.passwordTip=true
           this.passwordName='账号密码错误！'
@@ -76,9 +78,12 @@ export default {
         }else{
           var authres = res.data
 
+
           console.log('authres', res)
         if(authres && res.status === 200){
-          Cookies.set('webtoken',  authres, { expires: 36000000 || 1 })
+
+          let expires = new Date((new Date()).getTime() + 2 * 60 * 60000);
+          Cookies.set('webtoken',  authres, { expires: expires })
 
           const res = await memberValid(this, {})
           console.log('authres', res)

@@ -19,9 +19,9 @@ export default function (app) {
   }
   // 请求回调
   axios.onRequest(config => {
-    config.data = qs.stringify(config.data, {
-      allowDots: true //Option allowDots can be used to enable dot notation
-    });
+    // config.data = qs.stringify(config.data, {
+    //   allowDots: true //Option allowDots can be used to enable dot notation
+    // });
     return config;
   })
   // 返回回调

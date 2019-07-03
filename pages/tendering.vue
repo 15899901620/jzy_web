@@ -22,8 +22,8 @@
           </div>
 
 
-            <div class="membercenter" @click="WinmemberCenter" v-else>
-              <div class="head"></div>
+            <div class="membercenter"  v-else>
+              <div class="head" @click="WinmemberCenter"></div>
               <p class="mt10">Hi,上午好！</p>
               <p class="mb40 mt10">欢迎来到巨正源招标平台</p>
             </div>
@@ -143,17 +143,19 @@
             }
             console.log('params', params )
             const res = await supplierLogin(this, params)
+            var dataLiat=res
             console.log('Loginres' ,res)
-
-
-            var authres=res.data
-            console.log('authres' ,authres)
-            if(authres && res.status === 200){
-
+            if(res.data.data === null && res.status === 200) {
+              this.passwordTip=true
+              this.passwordName='账号密码错误！'
+              return
+            }else{
+              console.log('dataLiat' ,dataLiat)
+             var authres=dataLiat.data
               console.log('authres' ,authres)
               Cookies.set('websuppliertoken',  authres, { expires: 36000000 || 1 })
               const res = await supplierValid(this, {})
-
+               console.log('resValid',res)
               if(res.data  && res.status === 200){
                 let auth= JSON.stringify(res.data)
                 Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
@@ -164,10 +166,6 @@
                 return
               }
 
-            }else{
-              this.passwordTip=true
-              this.passwordName='账号密码错误！'
-              return
             }
 
           }
@@ -188,7 +186,9 @@
           this.$router.push({path:'./register',query:{toIndex:this.toIndex,pagetitle:'注册'}})
         },
 
-        WinmemberCenter(){}
+        WinmemberCenter(){
+          this.$router.push({ name:'trender-WinBidmember'})
+        }
       },
       mounted() {
 

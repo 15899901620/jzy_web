@@ -26,7 +26,8 @@
 </template>
 
 <script>
-    export default {
+  import Cookies from 'js-cookie'
+     export default {
         name: "headerlogo",
       props:{
         PageTitle:String
@@ -75,6 +76,12 @@
 
        },
       mounted() {
+          console.log('Cookies', Cookies.get('supplierInfor'))
+        if(Cookies.get('supplierInfor')){
+          this.NavTel=true
+        }else{
+          this.NavTel=false
+        }
         window.addEventListener('hashchange', () => {
         })
         this.NavRight()

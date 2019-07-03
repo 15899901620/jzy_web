@@ -7,7 +7,7 @@
         <div class="TableList">
           <h1 class="fs16  mt25 bb1 pb10">收货地址</h1>
           <div class="dflexAlem mt20">
-            <div class="Add_address"  @click="showcancel()">新增收货地址</div><div class="ml15">您已创建2个收货地址，最多可创建20个</div>
+            <div class="Add_address"  @click="showcancel()">新增收货地址</div><div class="ml15">您已创建{{this.AddressNum}}个收货地址，最多可创建20个</div>
           </div>
           <ul class="address_list mt20">
             <li>
@@ -55,15 +55,21 @@
       },
     data(){
           return{
-            showcancel_pop:false
+            showcancel_pop:false,
+            AddressNum:0,
+            addressList:[],
           }
     },
     methods:{
           // 收货地址列表
       async AddressList(){
-
         const res=await addressList(this, {})
         console.log('地址列表_res',res)
+        if(res){
+          this.addressList=res.data
+        }else{
+         this.AddressNum=0
+        }
       },
       showcancel(){
         this.showcancel_pop=true
@@ -74,8 +80,7 @@
       },
     },
     create(){
-          this.AddressList()
-    },
+     },
     mounted(){
       this.AddressList()
           console.log('****dd*****')

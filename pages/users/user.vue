@@ -102,6 +102,7 @@
             <span style="width: 15%;">订单操作</span>
           </div>
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
+            <tbody>
             <tr class="Ttitle graybg" >
               <td colspan="7">
                 <span class="ml10">订单编号：<span class="gray">120002132</span></span>
@@ -124,9 +125,11 @@
                 <a class="mt5 blackFont">查看详情</a>
               </td>
             </tr>
+            </tbody>
           </table>
 
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
+            <tbody>
             <tr class="Ttitle graybg" >
               <td colspan="7">
                 <span class="ml10">订单编号：<span class="gray">120002132</span></span>
@@ -149,6 +152,7 @@
                 <a class="mt5 blueFont">查看发票</a>
               </td>
             </tr>
+            </tbody>
           </table>
 
         </div>

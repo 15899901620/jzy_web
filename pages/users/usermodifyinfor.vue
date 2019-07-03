@@ -72,7 +72,7 @@
           </li>
 
         </ul>
-        <button class="saveInfor fs14">修改信息</button>
+        <button class="saveInfor fs14" >修改信息</button>
       </div>
 
 
@@ -84,14 +84,31 @@
 
 <script>
   import userright from './userCompontent/userright'
-
+  import { gainuserInfor } from  '../../api/users'
   export default {
-        name: "usermodifyinfor",
+    name: "usermodifyinfor",
     layout:'membercenter',
     components:{
       userright
+    },
+    data(){
+          return{}
+    },
+    methods:{
+          //获取用户信息
+          async UserInfor(){
+            console.log('UserInfor')
+            const res=await gainuserInfor(this,{})
+            console.log('res', res)
+          }
+    },
+    create(){
+
+    },
+    mounted() {
+      this.UserInfor()
     }
-    }
+  }
 </script>
 
 <style scoped>

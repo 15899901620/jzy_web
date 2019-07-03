@@ -16,13 +16,17 @@ let api = {
     userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
+    gainuserInfor:'/user/m/info',
+
     supplierCheck: '/user/supplier/check',
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',
     supplierCodeCheck: '/user/supplier/checkCode',
     supplierCodeSend: '/user/supplier/code',
+
     userRepassWd: '/user/m/updatePwd',
     supplierRepssWd: '/user/supplier/updatePwd',
+    supplierRECodeSend:'/user/supplier/updatePwd/code',
     manageEdit: '/user/m/edit',
 
   },
@@ -32,12 +36,18 @@ let api = {
    */
 
   Address:{
-    addressList:'/bill/addresses/list',  //地址列表
+    addressList:'/bill/address/list',  //地址列表
     addressAdd:'/bill/address',       //添加地址信息
     addressEdit:'/bill/address',      //修改地址信息
     addressDelete:'/bill/address',    //删除地址列表
     addressDefault:'/bill/address',   // 设置默认地址
     addressSigle:'/bill/address/detail',  //获取单条信息
+
+    countryData:'/item/country/list',        //国家
+    provinceData:'/item/region/country',        //省份
+    cityregionData:'/item/region/region',        //市/区/县
+
+
   },
 
   /**

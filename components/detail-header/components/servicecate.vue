@@ -129,7 +129,7 @@
               <input type="text" class="batchNumber" name=""  value="" />
             </li>
           </ul>
-          <div class="qualityQuality">查 询</div>
+          <div class="qualityQuality" @click="Quality()">查 询</div>
 
       </div>
     </div>
@@ -157,6 +157,7 @@
       created(){
       },
       methods:{
+
         oneMouseout:function(){
           this.seen = false;
         },
@@ -174,6 +175,10 @@
         },
         threeMouseOver:function(){
           this.seenthree = true;
+        },
+         //质检单页面
+        Quality(){
+          this.$router.push({name:'QualityForm'})
         },
 
 

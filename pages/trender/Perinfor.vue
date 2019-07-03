@@ -1,8 +1,4 @@
 <template>
-  <div>
-    <memheader :PageTitle="Totile"></memheader>
-
-
   <div class="clearfix mb40">
     <div class="w1200 dflex "  >
       <!--会员中心列表-->
@@ -68,7 +64,7 @@
 
   </div>
 
-  </div>
+
 </template>
 
 <script>
@@ -77,6 +73,7 @@
 
     export default {
         name: "Perinfor",
+      layout:'membercenter',
       components:{
         memheader,
         Rightmenu

@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <memheader :PageTitle="Totile"></memheader>
 
     <div class="clearfix mb40">
       <div class="w1200 dflex "  >
@@ -74,17 +72,16 @@
   </div>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
-  import memheader from '../../components/user-header/memheader'
-  import Rightmenu from './trenderCompontent/Rightmenu'
+   import Rightmenu from './trenderCompontent/Rightmenu'
     export default {
       name: "rightinfor",
+      layout:'membercenter',
       components:{
-        memheader,
-        Rightmenu
+         Rightmenu
       },
       data(){
         return{

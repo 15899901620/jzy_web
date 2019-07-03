@@ -233,6 +233,9 @@ export const supplierCodeCheck = (vm, data) => {
     })
 }
 
+
+
+
 /**
  * @description 供应商发送短信
  * @param vm
@@ -248,6 +251,22 @@ export const supplierCodeSend = (vm, data) => {
       console.log('supplierCodeSendErr', errorInfo)
     })
 }
+/**
+ * @description 供应商重置密码发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierReCodeSend = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.supplierRECodeSend,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierCodeSendErr', errorInfo)
+  })
+}
+
 /**
  * @description 供应商性质
  * @param vm
@@ -301,14 +320,36 @@ export const userRepassWd = (vm, data) => {
  * @returns {*}
  */
 export const supplierRepssWd = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.supplierRepssWd,
+  return vm.$axios.get(server.prefix + server.api.user.supplierRepssWd,
     {
-      ...data
+      params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
       console.log('supplierRepssWdErr', errorInfo)
     })
 }
+
+/**
+ * @description 获取会员信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+
+export const gainuserInfor = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.gainuserInfor,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
 
 /**
  * @description 会员信息编辑
@@ -324,6 +365,25 @@ export const manageEdit = (vm, data) => {
       let errorInfo = e.response
       console.log('manageEditErr', errorInfo)
     })
+}
+
+/**
+ * @description 添加会员地址
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addressAdd = (vm, data) => {
+  // vm.$axios.defaults.headers = {
+  //   'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  // }
+  return vm.$axios.post(server.prefix + server.api.Address.addressAdd,
+
+      data
+    ).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
 }
 
 
@@ -345,3 +405,35 @@ export const addressList = (vm, data) => {
     console.log('manageEditErr', errorInfo)
   })
 }
+
+export const countryData = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.Address.countryData,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+export const provinceData = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.Address.provinceData,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+export const cityregionData = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.Address.cityregionData,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
