@@ -178,6 +178,7 @@
 <script>
 
 import Pagination from '../components/pagination/pagination'
+import { auctionPage } from '../api/users'
 
 export default {
   name: "spot",
@@ -195,7 +196,11 @@ export default {
     }
   },
   methods:{
-
+      //AuctionList
+    async auctionlist(){
+      const res=await auctionPage(this,{})
+      console.log('res竞拍列表',res)
+    },
     Router(){
     }
   },
@@ -204,7 +209,7 @@ export default {
 
   },
    mounted(){
-
+this.auctionlist()
      this.Router()
    },
   head () {

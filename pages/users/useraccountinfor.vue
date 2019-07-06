@@ -8,80 +8,65 @@
       <!--基本信息-->
         <ul class="inforList">
           <div class="inforTitle">基本信息</div>
-          <li>
-            <span class="titleInfor">企业名称</span><input type="text" class="inforInput" name="" id="" value="" />
-          </li>
+          <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.company_name}}</span> </li>
           <li style="align-items: inherit;">
             <span class="titleInfor mt10" >营业执照</span>
             <div class="dflex" style="flex-direction: column;">
-              <div class="pr dflex">
-                <div class="inputUp" ></div>
-                <div class="upBtn">上传</div>
-                <input type="file" class="fileup" name="" id="" value="" />
+              <div class="dflex licenseImg" style="flex-direction: column;">
+                <img :src="userinfor.business_license"/>
               </div>
-
-              <ul class="inforImg dflex mt20">
-                <li><img src="img/fileImg.png" width="73" height="63"/></li>
-                <li><img src="img/fileImg.png" width="73" height="63"/></li>
-              </ul>
             </div>
 
           </li>
           <li>
             <span class="titleInfor" >企业授权书</span><div class="dflex" style="flex-direction: column;">
-            <div class="pr dflexAlem" >
-              <div class="inputUp" ></div>
-              <div class="upBtn">上传</div>
-              <input type="file" class="fileup cp" name="" id="" value="" />
-              <a href="#.html" class="ml10 blueFont  ">下载授权书模板</a>
+            <div class="dflex licenseImg" style="flex-direction: column;">
+              <img :src="userinfor.authorization_elc"/>
             </div>
-
           </div>
           </li>
         </ul>
         <!--开票信息-->
+        <Form ref="formValidate" :model="userinfor"   :label-width="80">
+
+
         <ul class="inforList">
           <div class="inforTitle">开票信息</div>
           <li>
-            <span class="titleInfor">公司名称</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
           </li>
           <li>
-            <span class="titleInfor">纳税人识别号</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">纳税人识别号</span><Input type="text" v-model="userinfor.taxId" class="inforInput"   />
           </li>
           <li>
-            <span class="titleInfor">开户行</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">开户行</span><Input type="text" class="inforInput" v-model="userinfor.invBankName" />
           </li>
           <li>
-            <span class="titleInfor">账号</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">账号</span><Input type="text" class="inforInput" v-model="userinfor.invBankAccount" />
           </li>
           <li>
-            <span class="titleInfor">地址</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">地址</span><Input type="text" class="inforInput" v-model="userinfor.invAddress" />
           </li>
           <li>
-            <span class="titleInfor">电话</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">电话</span><Input type="text" class="inforInput" v-model="userinfor.invTelephone" />
           </li>
         </ul>
         <!--联系人信息-->
         <ul class="inforList mb30">
           <div class="inforTitle">联系人信息</div>
           <li>
-            <span class="titleInfor">昵称</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">联系人</span><Input type="text" class="inforInput" v-model="userinfor.contacter" />
           </li>
           <li>
-            <span class="titleInfor">联系人</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">电话</span><Input type="text" class="inforInput" v-model="userinfor.contacter_mobile" />
           </li>
           <li>
-            <span class="titleInfor">电话</span><input type="text" class="inforInput" name="" id="" value="" />
-          </li>
-          <li>
-            <span class="titleInfor">座机</span><input type="text" class="inforInput" name="" id="" value="" />
-          </li>
-          <li>
-            <span class="titleInfor">邮箱</span><input type="text" class="inforInput" name="" id="" value="" />
+            <span class="titleInfor">邮箱</span><Input type="text" class="inforInput" v-model="userinfor.contacter_email" />
           </li>
 
         </ul>
-        <button class="saveInfor">保存</button>
+        <Button class="saveInfor" @click="handleSubmit">保存</Button>
+        </Form>
       </div>
 
 
@@ -93,7 +78,7 @@
 
 <script>
   import userright from './userCompontent/userright'
-  import { gainuserInfor } from  '../../api/users'
+  import { gainuserInfor, manageEdit } from  '../../api/users'
 
   export default {
         name: "useraccountinfor",
@@ -102,14 +87,33 @@
         userright
       },
     data() {
-      return {};
+      return {
+        userinfor:{},
+      };
     },
     methods:{
       //获取用户信息
       async UserInfor(){
         console.log('UserInfor')
         const res=await gainuserInfor(this,{})
-        console.log('res', res)
+        console.log('用户信息res', res)
+        this.userinfor=res.data
+        this.userinfor.password='1111111',
+        console.log('userinfor', this.userinfor)
+      },
+      async handleSubmit(){
+        console.log('this', this.userinfor)
+        const res=await manageEdit(this, this.userinfor)
+        console.log('修改信息res', res)
+        if(res.data===true && res.status ===200){
+          this.$Message.info({
+            content: '修改成功',
+            duration: 5,
+            closable: true
+          })
+          this.$router.push({name:'users-usermodifyinfor'})
+          return
+        }
       }
     },
     create(){
@@ -121,15 +125,14 @@
   }
 </script>
 
-<style scoped>
+<style >
   .memberInfor{width: 83%}
 
   .inforList{margin-left: 25px; margin-top: 30px;}
   .inforList li{margin-left: 35px;margin-top: 20px; display: flex;align-items: center;}
   .inforTitle{border-left: 2px solid #007de4;padding-left: 5px; font-weight: bold;color: #007de4;font-size: 14px;}
-  .titleInfor{width: 85px;color:#999; margin-right: 25px; text-align: right; font-size: 14px; }
-  .inforInput{width: 340px;height: 36px;border-radius: 3px;border: 1px solid #DEDEDE; padding-left: 10px;
-    box-sizing: border-box;}
+  .titleInfor{width: 85px;color:#999; margin-right: 20px; text-align: right; font-size: 14px; }
+  .inforInput{width: 340px;height: 40px;border-radius: 3px;   box-sizing: border-box;}
   .fileup{position: absolute;width: 90px;   height: 36px;right: 0;opacity: 0;}
   .upBtn{    width: 90px;   height: 36px; background-color: #007de4; line-height: 36px;
     text-align: center; color: #fff; border-top-right-radius: 3px;border-bottom-right-radius: 3px; }
@@ -139,4 +142,7 @@
   .inforImg li{margin-left: 10px; margin-top: 0;}
 
   .saveInfor{color: #fff;background-color: #007de4;border: none;    padding: 9px 40px;border-radius: 5px;margin-left: 173px;margin-bottom: 40px;}
+  .saveInfor:hover{background-color: #007de4;color: #fff;}
+  .licenseImg{width: 100px;height: 80px;} .licenseImg img{width: 100%; height: 100%;}
+  .inforInput .ivu-input{height: 40px;}
 </style>

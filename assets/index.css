@@ -20,6 +20,24 @@
 .qualityImg img{width: 80%;height: 80%;}
 
 
+/*登录--页面*/
+/*登录组件*/
+.NumInput{ padding-left: 10px; width: 100%;border: 1px solid #dddddd; border-radius: 3px; line-height: 36px;box-sizing: border-box;}
+.logingAccount{text-align: center; width: 100%; cursor: pointer; background-color: #007de4;border: none;line-height: 36px;color: #fff;border-radius: 3px;margin-top: 15px;}
+
+.msg-wrap {min-height: 26px;height: auto!important;height: 26px;}
+.msg-error {position: relative;background: #fff;color: #fa0a0a;border: 1px solid #fa0a0a;padding: 3px 10px 3px 40px;line-height: 18px;
+  min-height: 18px;_height: 18px;}
+.msg-error b{position: absolute;top: 50%;left: 10px;
+  display: block;margin-top: -8px;width: 16px;height: 16px;overflow: hidden;background: url('../assets/img/icon.png') -314px -5px no-repeat;}
+
+.NumInput{ padding-left: 10px; width: 100%;border: 1px solid #dddddd; border-radius: 3px; line-height: 36px;box-sizing: border-box;}
+.logingAccount{text-align: center; width: 100%; cursor: pointer; background-color: #007de4;border: none;line-height: 36px;color: #fff;border-radius: 3px;margin-top: 15px;}
+
+
+
+
+
 
 
 .Time-limited_back{left: 0; border-bottom-right-radius: 5px; border-top-right-radius: 5px; }

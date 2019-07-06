@@ -23,8 +23,11 @@ let api = {
     supplierNature: '/user/dictionary/code/value/supplierNature',
     supplierCodeCheck: '/user/supplier/checkCode',
     supplierCodeSend: '/user/supplier/code',
+    supplierInfor:'/user/supplier/info',
+    supplierEdit: '/user/supplier/edit',
 
     userRepassWd: '/user/m/updatePwd',
+    userRECodeSend:'/user/m/updatePwd/code',
     supplierRepssWd: '/user/supplier/updatePwd',
     supplierRECodeSend:'/user/supplier/updatePwd/code',
     manageEdit: '/user/m/edit',
@@ -49,6 +52,27 @@ let api = {
 
 
   },
+  /**
+   * @description 竞拍管理
+   */
+  Auction:{
+
+    auctionList:'/bill/auction/list',   //竞拍列表--无分页
+
+    auctionPage:'/auction/page',    //竞拍列表--有分页
+
+    auctionDelete:'/bill/auction',  //删除竞拍
+
+    auctionAdd:'/bill/auction',  //添加竞拍
+
+    auctionEdit:'/bill/auction',  //编辑竞拍
+
+    auctionInfor:'/bill/auction/detail',  //获取单条信息
+
+  },
+
+
+
 
   /**
    * @description 资讯管理

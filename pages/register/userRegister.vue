@@ -57,7 +57,7 @@
   import { userCodeSend, userCodeCheck, userPhoneCheck } from '../../api/users'
   import identify from './identify'
     export default {
-        name: "userRegister",
+      name: "userRegister",
       components:{
         identify
       },
@@ -183,7 +183,6 @@
             this.phoneValid=true;
             callback()
           }
-
         },
         //获取短信验证码
          async getNoteValue () {
@@ -214,10 +213,10 @@
                 phone
               }
             const res = await userCodeSend(this, params)
-      
+
             if(res.data && res.status === 200 ){
               this.ImgCodeValid=false
-           
+
               this.$Message.info("短信发送成功")
 
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
@@ -254,7 +253,7 @@
           const res = await userCodeCheck(this, params)
           if(res.data && res.status === 200){
             this.isrefreshpic=true
-            
+
             callback();
           }else{
             callback(new Error('手机验证码错误'));
@@ -263,7 +262,7 @@
         // 下一步验证
         handleSubmit (name) {
           var userFormData={}
-        
+
           userFormData.phone=this.formCustom.phone
           userFormData.password=this.formCustom.password
           userFormData.code=this.formCustom.mobilecode
@@ -330,7 +329,7 @@
               this.randomNum(0, this.identifyCodes.length)
               ];
           }
-          
+
         }
 
       },

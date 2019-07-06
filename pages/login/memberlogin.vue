@@ -5,7 +5,7 @@
         <input type="text" class="NumInput" v-model="loginform.username"  placeholder="手机/用户名" />
       </div>
       <div class="mt15">
-        <input type="password" class="NumInput"  v-model="loginform.password" placeholder="密码" />
+        <input type="password" class="NumInput"  v-model="loginform.password" placeholder="密码" @keyup.enter='LoginForm' />
       </div>
       <div class="msg-wrap" >
         <div class="msg-error" v-show="NameCheck"><b></b><span>{{NameText}}</span></div>
@@ -76,8 +76,9 @@ export default {
           this.passwordName='账号密码错误！'
           return
         }else{
-          var authres = res.data
 
+
+          var authres = res.data
 
           console.log('authres', res)
         if(authres && res.status === 200){
@@ -99,7 +100,16 @@ export default {
         }
         }
       }
-    }
+    },
+    //忘记密码
+    ForgotPassword(){
+      this.$router.push({name:'ForgotPassword-ForgotPassword',query:{params:'Member'}})
+    },
+
+    //跳转注册页面
+    Register(){
+      this.$router.push({name:'register-supplyRegister'})
+    },
   },
   mounted() {
 
@@ -108,12 +118,5 @@ export default {
 </script>
 
 <style scoped>
-  .NumInput{ padding-left: 10px; width: 100%;border: 1px solid #dddddd; border-radius: 3px; line-height: 36px;box-sizing: border-box;}
-  .logingAccount{text-align: center; width: 100%; cursor: pointer; background-color: #007de4;border: none;line-height: 36px;color: #fff;border-radius: 3px;margin-top: 15px;}
 
-  .msg-wrap {min-height: 26px;height: auto!important;height: 26px;}
-  .msg-error {position: relative;background: #fff;color: #fa0a0a;border: 1px solid #fa0a0a;padding: 3px 10px 3px 40px;line-height: 18px;
-    min-height: 18px;_height: 18px;}
-    .msg-error b{position: absolute;top: 50%;left: 10px;
-    display: block;margin-top: -8px;width: 16px;height: 16px;overflow: hidden;background: url('../../assets/img/icon.png') -314px -5px no-repeat;}
 </style>

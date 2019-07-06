@@ -15,7 +15,7 @@
               <div class="msg-error" v-show="NameCheck"><b></b><span>{{NameText}}</span></div>
               <div class="msg-error" v-show="passwordTip"><b></b><span>{{passwordName}}</span></div>
             </div>
-            <div class="trendbtn mt10" @click="LoginsupplyerForm">登 录</div>
+            <div class="trendbtn mt10 cp" @click="LoginsupplyerForm">登 录</div>
             <div class="dflexAlem mt40 newsCode" style="justify-content: space-between">
               <span @click="forCode()">忘记密码</span><span @click="regNewsAccount()">注册新账号</span>
             </div>

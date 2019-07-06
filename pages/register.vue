@@ -43,11 +43,6 @@
 
         </div>
 
-
-
-
-
-
       </div>
 
     </div>
@@ -71,6 +66,7 @@
           return{
             RegisterName:'member',
             nowIndex:0,
+            index:0,
             Registerlist:[
               {name:'会员注册'},
               {name:'供应商注册'},
@@ -90,11 +86,11 @@
       mounted(){
         var that=this
         this.RegisterName=this.$router.history.current.query.name
-        if(that.$router.history.current.query.toIndex){
-          this.nowIndex=that.$router.history.current.query.toIndex
-        }else {
-          this.nowIndex=0
+        console.log('this.$router',this.$router.history.current)
+        if(this.$router.history.current.query.params ==="Supplier"){
+          this.nowIndex=1
         }
+
 
         // 划动--切换
         that.mySwiper = new Swiper('.swiper-container',{

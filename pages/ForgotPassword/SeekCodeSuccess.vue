@@ -23,7 +23,7 @@
         <div class="codeSuccess"></div>
         <div class="ml15 fs16" style="color: #666;">
           <p>新密码设置成功</p>
-          <p>请牢记您设置的新密码  <a class="ml20 blueFont">返回首页</a></p>
+          <p>请牢记您设置的新密码  <nuxt-link class="ml20 blueFont cp" to="/">返回首页</nuxt-link></p>
         </div>
 
       </div>

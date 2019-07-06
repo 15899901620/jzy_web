@@ -24,10 +24,10 @@ const getCookie = name => {
  * @returns {*}
  */
 export const manageLogin = (vm, data) => {
-
+     console.log('data', data)
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
-       ...data
+        ...data
     }).catch((e) => {
       let errorInfo = e.response
       if(errorInfo.status == '410'){
@@ -159,6 +159,7 @@ export const supplierValid = (vm, data) => {
  * @returns {*}
  */
 export const userPhoneCheck = (vm, data) => {
+
   return vm.$axios.get(server.prefix + server.api.user.userPhoneCheck,
     {
       params: {...data}
@@ -258,6 +259,9 @@ export const supplierCodeSend = (vm, data) => {
  * @returns {*}
  */
 export const supplierReCodeSend = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  }
   return vm.$axios.post(server.prefix + server.api.user.supplierRECodeSend,
     {
       ...data
@@ -267,6 +271,44 @@ export const supplierReCodeSend = (vm, data) => {
   })
 }
 
+/**
+ * @description 供应商信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierInfor = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('websuppliertoken') === false ? '' : getCookie('websuppliertoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.supplierInfor,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierCodeSendErr', errorInfo)
+  })
+}
+
+/**
+ * @description 修改供应商信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierEdit = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('websuppliertoken') === false ? '' : getCookie('websuppliertoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.supplierEdit,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierCodeSendErr', errorInfo)
+  })
+}
 /**
  * @description 供应商性质
  * @param vm
@@ -304,13 +346,28 @@ export const userSeekPassword = (vm, data) => {
  * @returns {*}
  */
 export const userRepassWd = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userRepassWd,
+  return vm.$axios.get(server.prefix + server.api.user.userRepassWd,
     {
-      ...data
+      params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
       console.log('userRepassWdErr', errorInfo)
     })
+}
+/**
+ * @description 会员找回密码短信验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userRECodeSend = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.userRECodeSend,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('userRepassWdErr', errorInfo)
+  })
 }
 
 /**
@@ -358,7 +415,11 @@ export const gainuserInfor = (vm, data) => {
  * @returns {*}
  */
 export const manageEdit = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.manageEdit,
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.manageEdit,
     {
       ...data
     }).catch((e) => {
@@ -374,13 +435,14 @@ export const manageEdit = (vm, data) => {
  * @returns {*}
  */
 export const addressAdd = (vm, data) => {
-  // vm.$axios.defaults.headers = {
-  //   'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
-  // }
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
   return vm.$axios.post(server.prefix + server.api.Address.addressAdd,
-
-      data
-    ).catch((e) => {
+    {
+      ...data
+    }).catch((e) => {
     let errorInfo = e.response
     console.log('manageEditErr', errorInfo)
   })
@@ -406,6 +468,78 @@ export const addressList = (vm, data) => {
   })
 }
 
+/**
+ * @description 删除地址
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addressDelete = (vm, data) => {
+  vm.$axios.defaults.headers = {
+   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  console.log('data', data)
+  return vm.$axios.delete(server.prefix + server.api.Address.addressDelete,
+    {
+      params:{...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+/**
+ * @description 获取单条地址信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addressInfor = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  console.log('data', data)
+  return vm.$axios.get(server.prefix + server.api.Address.addressSigle,
+    {
+      params:{...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
+/**
+ * @description 设为默认地址
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addressDefault = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.patch(server.prefix + server.api.Address.addressDefault,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
+
+
+/**
+ * @description 国家、省、市、县/区
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
 export const countryData = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.Address.countryData,
     {
@@ -435,5 +569,21 @@ export const cityregionData = (vm, data) => {
     console.log('manageEditErr', errorInfo)
   })
 }
+/**
+ * @description 竞拍列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const auctionPage = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.Auction.auctionPage,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
 
 

@@ -29,7 +29,7 @@
           <!-- 右边模块 -->
           <div class="rightMode">
           <!--个人中心-->
-           <membercenter></membercenter>
+           <membercenter :webSource="webName"></membercenter>
           <!--通知公告-->
           <Notice></Notice>
 
@@ -74,7 +74,9 @@
         Notice
       },
       data() {
-        return{};
+        return{
+          webName:''
+        };
       },
       methods:{
         WineDetail(){
@@ -82,7 +84,7 @@
         },
       },
       mounted() {
-        
+        this.webName='supplier'
 
        }
     }

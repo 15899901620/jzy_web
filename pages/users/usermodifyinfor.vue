@@ -9,70 +9,60 @@
         <ul class="inforList">
           <div class="inforTitle">基本信息</div>
           <li>
-            <span class="titleInfor">企业名称</span><span class="blackFont fs14">上海塑创电子商务有限公司</span>
+            <span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
           </li>
           <li style="align-items: inherit;">
             <span class="titleInfor mt10" >营业执照</span>
-            <div class="dflex" style="flex-direction: column;">
-              <div class="pr dflex">
-                <div class="inputUp" ></div>
-                <div class="upBtn">上传</div>
-                <input type="file" class="fileup" name="" id="" value="" />
-              </div>
-
-              <ul class="inforImg dflex mt20">
-                <li> </li>
-              </ul>
+            <div class="dflex licenseImg" style="flex-direction: column;">
+             <img :src="userinfor.business_license"/>
             </div>
 
           </li>
           <li>
-            <span class="titleInfor" >企业授权书</span><span class="blackFont fs14">查看授权书.docx</span><a href="#.html" class="ml10 blueFont">删除</a>
+            <span class="titleInfor" >企业授权书</span>
+            <div class="dflex licenseImg" style="flex-direction: column;">
+              <img :src="userinfor.authorization_elc"/>
+            </div>
+<!--            <a href="#.html" class="ml10 blueFont">删除</a>-->
           </li>
         </ul>
         <!--开票信息-->
         <ul class="inforList">
           <div class="inforTitle">开票信息</div>
           <li>
-            <span class="titleInfor">公司名称</span><span class="blackFont fs14">上海塑创电子商务有限公司</span>
+            <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
           </li>
           <li>
-            <span class="titleInfor">纳税人识别号</span><span class="blackFont fs14">1222322522131212125</span>
+            <span class="titleInfor">纳税人识别号</span><span class="blackFont fs14">{{userinfor.taxId}}</span>
           </li>
           <li>
-            <span class="titleInfor">开户行</span><span class="blackFont fs14">中国工商银行</span>
+            <span class="titleInfor">开户行</span><span class="blackFont fs14">{{userinfor.invBankName}}</span>
           </li>
           <li>
-            <span class="titleInfor">账号</span><span class="blackFont fs14">4421215411444</span>
+            <span class="titleInfor">账号</span><span class="blackFont fs14">{{userinfor.invBankAccount}}</span>
           </li>
           <li>
-            <span class="titleInfor">地址</span><span class="blackFont fs14">上海市浦东新区环桥路555弄</span>
+            <span class="titleInfor">地址</span><span class="blackFont fs14">{{userinfor.invAddress}}</span>
           </li>
           <li>
-            <span class="titleInfor">电话</span><span class="blackFont fs14">18238915263@qq.com</span>
+            <span class="titleInfor">电话</span><span class="blackFont fs14">{{userinfor.invTelephone}}</span>
           </li>
         </ul>
         <!--联系人信息-->
         <ul class="inforList mb30">
           <div class="inforTitle">联系人信息</div>
           <li>
-            <span class="titleInfor">昵称</span> <span class="blackFont fs14">dveasd</span>
+            <span class="titleInfor">联系人</span><span class="blackFont fs14">{{userinfor.contacter}}</span>
           </li>
           <li>
-            <span class="titleInfor">联系人</span><span class="blackFont fs14">dveasd</span>
+            <span class="titleInfor">手机</span><span>{{userinfor.contacter_mobile}}</span>
           </li>
           <li>
-            <span class="titleInfor">电话</span><span>021-85632156</span>
-          </li>
-          <li>
-            <span class="titleInfor">座机</span><span class="blackFont fs14">021-85632156</span>
-          </li>
-          <li>
-            <span class="titleInfor">邮箱</span><span class="blackFont fs14">18238915263@qq.com</span>
+            <span class="titleInfor">邮箱</span><span class="blackFont fs14">{{userinfor.contacter_email}}</span>
           </li>
 
         </ul>
-        <button class="saveInfor fs14" >修改信息</button>
+        <button class="saveInfor fs14" @click="modifInfor" >修改信息</button>
       </div>
 
 
@@ -92,15 +82,54 @@
       userright
     },
     data(){
-          return{}
+          return{
+            userinfor:{
+              authorization_elc: "",
+              avatar: null,
+              business_license: "",
+              channel_type_name: "",
+              channel_type_value: "",
+              company_name: "",
+              contacter: "人",
+              contacter_email: null,
+              contacter_mobile: null,
+              corporation: "",
+              created: "",
+              id:'',
+              industry_name: "",
+              industry_value: "",
+              inv_address: "",
+              inv_bank_account: "",
+              inv_bank_name: "",
+              inv_telephone: "",
+              is_active: 1,
+              main_materials_name: "",
+              main_materials_value: "",
+              member_no: "",
+              member_type_name: "",
+              member_type_value: "",
+              password: "",
+              phone: "18750123840",
+              property_name: "",
+              property_value: "",
+              salesman_code: null,
+              salesman_name: null,
+              tax_id: "",
+              username: "",
+            }
+          }
     },
     methods:{
           //获取用户信息
           async UserInfor(){
             console.log('UserInfor')
             const res=await gainuserInfor(this,{})
-            console.log('res', res)
-          }
+            console.log('用户信息res', res)
+            this.userinfor=res.data
+          },
+      modifInfor(){
+            this.$router.push({name:'users-useraccountinfor'})
+      }
     },
     create(){
 
@@ -129,4 +158,6 @@
   .inforImg li{margin-left: 10px; margin-top: 0;}
 
   .saveInfor{color: #fff;background-color: #007de4;border: none;    padding: 9px 40px;border-radius: 5px;margin-left: 173px;margin-bottom: 40px;}
+
+  .licenseImg{width: 100px;height: 80px;} .licenseImg img{width: 100%; height: 100%;}
 </style>

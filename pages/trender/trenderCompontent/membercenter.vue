@@ -1,16 +1,23 @@
 <template>
   <div class="membercenter" @click="WinmemberCenter">
        <div class="head"></div>
-      <p class="mt10">Hi,上午好！</p>
+      <p class="mt10"><span>{{username}}</span></p>
       <p class="mb40 mt10">欢迎来到巨正源招标平台</p>
   </div>
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
     export default {
-        name: "membercenter",
+      name: "membercenter",
+      props:{
+        webSource:String,
+      },
       data(){
-          return{}
+          return{
+            username:'',
+
+          }
       },
 
       methods:{
@@ -19,6 +26,14 @@
         }
 
       },
+      create(){
+
+      },
+      mounted() {
+        console.log('this.$router:', this.$router.history.current)
+        console.log('Cookies', Cookies.get('supplierInfor'))
+        this.username=JSON.parse(Cookies.get('supplierInfor')).username
+      }
 
     }
 </script>

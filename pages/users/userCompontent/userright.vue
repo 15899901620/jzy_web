@@ -31,8 +31,8 @@
         </ul>
         <ul class="mt35 mb40">
           <h1>账号管理</h1>
-          <li><router-link  to="./useraccountinfor">完善信息</router-link></li>
-          <li><router-link  to="./usermodifyinfor">修改信息</router-link></li>
+<!--          <li><router-link  to="./useraccountinfor">完善信息</router-link></li>-->
+          <li><router-link  to="./usermodifyinfor">完善信息</router-link></li>
           <li><router-link  to="./userCodeManage">密码管理</router-link></li>
           <li><router-link  to="./userAccountBind">账号绑定</router-link></li>
           <li><router-link  to="./userAddress">收货地址</router-link></li>
