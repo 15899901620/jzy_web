@@ -24,7 +24,7 @@ const getCookie = name => {
  * @returns {*}
  */
 export const manageLogin = (vm, data) => {
-     console.log('data', data)
+
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
         ...data
@@ -576,6 +576,7 @@ export const cityregionData = (vm, data) => {
  * @returns {*}
  */
 export const auctionPage = (vm, data) => {
+  console.log('data', data)
   return vm.$axios.get(server.prefix + server.api.Auction.auctionPage,
     {
       params: {...data}

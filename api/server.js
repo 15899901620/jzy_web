@@ -59,7 +59,7 @@ let api = {
 
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
 
-    auctionPage:'/auction/page',    //竞拍列表--有分页
+    auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
 
     auctionDelete:'/bill/auction',  //删除竞拍
 

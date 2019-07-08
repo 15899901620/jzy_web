@@ -9,30 +9,16 @@
       <div class="AuctionTime mt35">
 
         <ul>
-          <li class="curr">
+          <li v-for="(items,index) in AuctionTab" @click="AuctionList(items.status,index)" :class="{curr:CurrSelect == index}"   >
             <div class="fs20">
-              5月16日 10:30 场
+              {{items.AuctionName}}
             </div>
-            <div class="AtP">
-              正在竞拍
-            </div>
+<!--            <div class="AtP">-->
+<!--              {{items.AuctionState}}-->
+<!--            </div>-->
           </li>
-          <li class="">
-            <div class="fs20">
-              5月17日 14:00 场
-            </div>
-            <div class="AtP">
-              <span class="Atborder">即将开始</span>
-            </div>
-          </li>
-          <li class="">
-            <div class="fs20">
-              5月12日 14:00 场
-            </div>
-            <div class="AtP"  >
-              <span class="Atborder">竞拍结束</span>
-            </div>
-          </li>
+
+
         </ul>
       </div>
 
@@ -40,97 +26,35 @@
       <!--竞拍列表-->
 
       <div class="acuList">
-        <ul>
-          <li>
+
+        <ul v-for="(m,index) in tabMain" v-show="CurrSelect==index" >
+          <li v-for="(items,index) in Auctionlist" :key="index">
             <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
+              <h1>{{items.skuName}}</h1>
+              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">{{items.minOrder}}{{items.basePrice}}</span></div>
+              <div class="mt10">数    量：{{items.totalNum}}{{items.uomName}}</div>
               <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
+                开始时间：{{items.beginTime}}
               </div>
             </div>
             <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart" @click="BidersDetail()">即将开始</div>
-            </div>
-          </li>
-          <li>
-            <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
-              <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
+              <div style="display: flex; flex-direction: column; justify-content: flex-end">
+                <span class="mt10">城市：{{items.beginTime}}</span>
+                <span class="mt5">竞品厂商：{{items.manufacturer}}</span>
               </div>
-            </div>
-            <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
-            </div>
-          </li>
-          <li>
-            <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
-              <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
-              </div>
-            </div>
-            <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
+              <template v-if="status === 1">
+                <div class="btnStart startauction cp" @click="BidersDetail()">参与竞拍</div>
+              </template>
+              <template v-if="status === 2">
+                <div class="btnStart vcauction" >即将开始</div>
+              </template>
+              <template v-if="status === 3">
+                <div class="btnStart endauction"  >竞拍结束</div>
+              </template>
+
             </div>
           </li>
-          <li>
-            <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
-              <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
-              </div>
-            </div>
-            <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
-            </div>
-          </li>
-          <li>
-            <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
-              <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
-              </div>
-            </div>
-            <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
-            </div>
-          </li>
-          <li>
-            <div class="acuProduct">
-              <h1>巨正源 SGP PPCP （原厂正牌）</h1>
-              <div class="mt10">起拍价：<span class="orangeFont fwb fs16">8800.00元/吨</span></div>
-              <div class="mt10">数    量：100吨</div>
-              <div class="mt30 fs18">
-                开始时间：2019-03-27  09:00
-              </div>
-            </div>
-            <div class="acuOpear">
-              <div class="mt10">城市：东莞</div>
-              <div class="mt5">竞品厂商：巨正源</div>
-              <div class="btnStart">即将开始</div>
-            </div>
-          </li>
+
         </ul>
 
 
@@ -163,17 +87,72 @@
 </template>
 
 <script>
+  import {auctionPage} from '../api/users'
     export default {
         name: "bidders",
       components: {
       },
       data(){
-          return{}
+          return{
+            CurrSelect:0,
+            current_page:'',
+            page_size:'',
+            NowTime:'',
+            Auctionlist:'',
+            AuctionTip:'',
+            tabMain: ['', '', ''],
+            status:1,
+            index:0,
+            AuctionTab:[
+              // {AuctionName:'5月16日 10:30 场', AuctionState:'正在竞拍',},
+              // {AuctionName:'5月17日 14:00 场', AuctionState:'即将开始'},
+              // {AuctionName:'5月16日 10:30 场', AuctionState:'竞拍结束'},
+              {AuctionName:'正在竞拍', status:1},
+              {AuctionName:'即将开始', status:2},
+              {AuctionName:'竞拍结束', status:3},
+            ]
+          }
       },
       methods:{
+         //竞拍列表
+
+         async AuctionList(status,index){
+           console.log('status',status)
+           if(status){
+             this.status=status
+           }
+
+           console.log('index',index)
+           if(index){
+             this.CurrSelect=index
+           }else{
+             this.CurrSelect=this.index
+           }
+
+
+           console.log('this.status', this.status)
+           let params={
+             current_page:1,
+             page_size:6,
+             type:this.status
+           }
+           console.log('params',params)
+           let res=await auctionPage(this,params)
+           console.log('res',res)
+            if(res.data.items){
+              this.Auctionlist=res.data.items
+            }else{
+              this.AuctionTip='暂无竞拍'
+            }
+
+         },
+        //跳转详情页
         BidersDetail(){
           this.$router.push({path:'./Biders/BidersBegin'})
-        }
+        },
+      },
+      mounted(){
+          this.AuctionList()
       },
     }
 </script>
@@ -181,10 +160,11 @@
 <style scoped>
   .paipinacu{color: #333;}
   .AuctionTime ul{display: flex;}
-  .AuctionTime li{background-color: #fff;width: 33.3%; text-align: center;padding: 10px 0;}
+  .AuctionTime li{background-color: #fff;width: 33.3%; text-align: center;padding: 10px 0;cursor: pointer;}
   .AuctionTime li.curr{color: #fff;background-color: #ff6c00; box-shadow: 6px 0px 3px 1px #ff6c00;z-index: 10;position: relative;}
-  .AtP{margin-top: 3px;display: flex; justify-content: center; align-items: center;}
-  .Atborder{ text-align: center; padding: 0px 10px;  border-radius: 15px; border: 1px solid #CCCCCC;  color: #CCCCCC; font-size: 14px; overflow: hidden;}
+  .AuctionTime li.curr  .AtP{border:none;}
+  .AtP{margin: 4px auto 0;display: -webkit-flex;display: flex;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;
+    align-items: center;border: 1px solid #ccc;border-radius: 25px;width: 23%;padding: 2px 0;font-size: 14px;}
 
   .acuList{display: flex;}
   .acuList ul{display: flex;flex-wrap: wrap;width: 100%;}
@@ -192,7 +172,10 @@
   .acuList li:nth-child(even){margin-left: 2%;}
   .acuList li .acuProduct{width: 300px; border-right: 1px solid #ccc; margin: 35px 0; margin-left: 45px;}
   .acuList li .acuOpear{font-size: 18px; width: 245px; margin-top: 35px;display: flex; flex-direction: column; align-items: center;}
-  .acuList li .acuOpear .btnStart{background-color: #26a96d;color: #fff; padding: 10px 50px; border-radius:5px;margin-top:20px;cursor: pointer;}
+  .acuList li .acuOpear .btnStart{ color: #fff; padding: 10px 50px; border-radius:5px;margin-top:20px;}
+  .acuList li .acuOpear .startauction{background-color: #f17b24; color: #fff;}
+  .acuList li .acuOpear .vcauction{background-color: #26a96d; color: #fff; cursor: default}
+  .acuList li .acuOpear .endauction{background-color: #dbdcde; color: #999;}
   .acuList li .acuProduct h1{margin-top: 5px; font-weight: bold; font-size: 16px;}
 
 
