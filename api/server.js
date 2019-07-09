@@ -98,6 +98,12 @@ let api = {
     helpPage: '/web/help_article/getHelpArticleByCatId',
     helpdetail: '/web/help_article/detail'
   },
+    /**
+     * @description 专料
+     */
+    special: {
+        specialList: '/bill/yearlyFeeding/page',
+    },
   /**
    * @description 商品(物性表)
    */
