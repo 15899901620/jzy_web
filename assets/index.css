@@ -8,15 +8,15 @@
 .orderInput{width: 286px; border: 1px solid #DEDEDE; padding-left: 10px;box-sizing: border-box;}
 .check{ color: #fff; width: 60px;line-height: 32px; background-color: #007de4;text-align: center;margin-left: 10px;border-radius: 3px;}
 .qualityTitle{background-color: #f8f8f8; display: flex;}
-.qualityTitle ,.qualityList li span{padding: 15px 0; font-size: 14px;text-align: center}
-.qualityList li{background-color: #fff;margin-top: 1px; display: flex; color: #666;}
+.qualityTitle ,.qualityList li span{padding: 14px 0; font-size: 14px;text-align: center}
+.qualityList li{background-color: #fff;margin-top: 1px; display: flex; color: #666; align-items: center;}
 .qualitySeeDetail{border: 1px solid #007de4;color: #007de4;background-color: #f2f8fe;margin: 0px 55px;padding: 2px 0;border-radius: 3px; cursor: pointer;}
 /*质检单--详情页*/
 .qualitytable{border: 1px solid #DEDEDE; width: 100%; margin-top: 10px}
 .qualitytable tr{ line-height: 40px; height: 40px; font-size: 14px;}
 .qualitytable tr td{border: 1px solid #DEDEDE;  }
 .qualitytable tr .qualitytabletitle{background-color: #f8f8f8;text-align: center}
-.qualityImg{display: flex;align-items: center; justify-content: space-between;}
+.qualityImg{ height: 676px; display: flex;align-items: center; justify-content: center;}
 .qualityImg img{width: 80%;height: 80%;}
 
 
@@ -42,3 +42,28 @@
 
 .Time-limited_back{left: 0; border-bottom-right-radius: 5px; border-top-right-radius: 5px; }
 .Time-limited_next{right: 0; border-bottom-left-radius: 5px; border-top-left-radius: 5px; }
+
+
+
+
+/*缴纳保证金--弹窗*/
+.Mask{display: flex; justify-content: center; align-items: center; position: fixed;z-index: 10; top: 0; width: 100%; height: 100%;background: rgba(0,0,0,0.5);
+font-size: 14px;}
+.Bond_Popup{ width: 415px; background-color: #fff; border-radius: 3px;}
+.Bond_Popup .TopPopup{display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; color: #666;background-color: #f9f9f9;}
+.Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url('../assets/img/icon.png')no-repeat 0px -135px;}
+.LowPrice{ margin-top: 25px;}
+.Bond_Popup_title{margin-left: 80px;color: #333;}
+.unit{position: absolute;right: 10px; line-height: 30px; color: #999; }
+.InputNum{padding-left: 10px;box-sizing: border-box;background-color: #f4f4f4;border: 1px solid #dddddd; line-height: 30px;border-radius: 3px;}
+.Bond_Popup .PricePopup{border-radius: 3px; border: 1px solid #ff7300;margin: 0 30px; background-color: #fffdee; margin-top: 20px;}
+.Bond_Popup .PricePopup .PricePopup_title{width: 120px;text-align: right;}
+.Bond_Popup .PricePopup .PricePopup_btn{ text-decoration: none; padding: 6px 15px;background-color: #ff7300; color: #fff; margin-left: 20px; border-radius: 3px;}
+
+/*输入验证码*/
+.PopupCode{border: 1px solid #ddd;margin: 20px 30px; display: flex; border-radius: 4px; align-items: center;}
+.PopupCode .TextCode{border: none; border-right:1px solid #DEDEDE ;margin: 8px 0; width: 70%; padding-left: 10px; box-sizing: border-box;}
+.PopupCode .AcqCode{width: 40%;text-align: center;}
+/*缴纳保证金*/
+.submitPrice{background-color: #007de4; padding: 10px 45px; color: #fff; border-radius: 3px;margin: 15px auto;}
+.submitPrice:hover{background-color: #007de4;  color: #fff;}

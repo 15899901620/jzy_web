@@ -586,5 +586,79 @@ export const auctionPage = (vm, data) => {
   })
 }
 
+/**
+ * @description 竞拍单条信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const auctionInfor = (vm, data) => {
+   return vm.$axios.get(server.prefix + server.api.Auction.auctionInfor,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+/**
+ * @description 最小竞拍价信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const priceListInfo = (vm, data) => {
+  vm.$axios.defaults.headers = {
+
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.priceListInfo,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+/**
+ * @description 当前价信息
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const NewPrice = (vm, data) => {
+  vm.$axios.defaults.headers = {
+
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.NewPrice,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
+/**
+ * @description 质检单列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const inspectionlistPage = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.inspection.inspectionlistPage,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
+
+
 
 

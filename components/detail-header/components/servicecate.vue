@@ -114,19 +114,24 @@
 
       <div class="assortment qualityBg" v-show="seenthree"  >
 
-          <ul class="qualityList">
+          <ul class="qualityListindex">
             <li>
               <span class="quality_title">日期</span>
               <row>
                 <i-col span="12">
-                  <Date-picker type="date" placeholder="选择日期" style="width: 133px"></Date-picker>
+                  <Date-picker type="date" placeholder="选择日期" style="width: 217px" v-model="qualityForm.qualityDate"  format="yyyy-MM-dd" @on-change="QDate"></Date-picker>
                 </i-col>
               </row>
-              <span class="ml10 mr10">-</span><span>今天</span>
+<!--              <span class="ml10 mr10">-</span><span>今天</span>-->
             </li>
             <li>
-              <span class="quality_title">批次号</span>
-              <input type="text" class="batchNumber" name=""  value="" />
+              <span class="quality_title"  >批次号</span>
+              <div style="display: flex;flex-direction: column; position: relative">
+                <input type="text" class="batchNumber" v-model="qualityForm.qualityNo" name=""  value="" />
+                <i class="redFont fs12" v-show="datePif" style="position: absolute;bottom: -20px">日期和批次号不能为空</i>
+              </div>
+
+
             </li>
           </ul>
           <div class="qualityQuality" @click="Quality()">查 询</div>
@@ -149,8 +154,14 @@
           seen:false,
           seentwo:false,
           seenthree:false,
+          datePif:false,
           cityList:[],
           model1: '',
+
+          qualityForm:{
+            qualityDate:'',
+            qualityNo:'',
+          },
           Addritems: ['Foo', 'Bar', 'Fizz', 'Buzz']
         };
       },
@@ -176,9 +187,25 @@
         threeMouseOver:function(){
           this.seenthree = true;
         },
+
+        QDate(date){
+          this.qualityForm.qualityDate=date
+        },
+
          //质检单页面
         Quality(){
-          this.$router.push({name:'QualityForm'})
+
+          console.log('qualityDate',this.qualityForm.qualityDate)
+          console.log('qualityNo',this.qualityForm. qualityNo)
+          if(this.qualityForm. qualityDate || this.qualityForm. qualityNo){
+            this.$router.push({name:'QualityForm', query:{qualityForm:this.qualityForm}})
+            this.datePif=false
+          }else{
+            this.datePif=true
+          }
+          this.qualityForm.qualityDate=''
+          this.qualityForm.qualityNo=''
+
         },
 
 
@@ -220,9 +247,10 @@
   .qualityBg{ top: -159px;width: 450px;height: 326px;background: url(../../../assets/img/QualityBg.png)no-repeat;}
   .quality_title{width: 56px;margin-right: 15px;text-align: right;}
   .layui-input{height: 32px;}
-  .qualityList{margin-top: 40px;margin-left: 20px;}
-  .qualityList li{display: flex;align-items: center; margin-top: 20px;}
-  .qualityList li .batchNumber{width: 217px;height: 32px;border: 1px solid #DEDEDE; border-radius: 3px;background-color: #fff;padding-left: 10px;box-sizing: border-box;}
+  .qualityListindex{margin-top: 40px;margin-left: 20px;}
+  .qualityListindex li{display: flex;align-items: center; margin-top: 20px; background: none;}
+
+  .qualityListindex li .batchNumber{width: 217px;height: 32px;border: 1px solid #DEDEDE; border-radius: 3px;background-color: #fff;padding-left: 10px;box-sizing: border-box;}
   .qualityQuality{ cursor: pointer;   margin-left: 93px;  margin-top: 30px; border-radius: 3px; text-align: center;line-height: 32px; width: 90px;height: 32px;background-color: #007de4; color: #FFFFFF;}
 
 

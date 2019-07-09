@@ -69,6 +69,10 @@ let api = {
 
     auctionInfor:'/bill/auction/detail',  //获取单条信息
 
+    priceListInfo:'/bill/priceList/info', //查询物料价目信息
+
+    NewPrice:'/bill/auctionBid/getCurrBid',   //获取最新的竞拍价
+
   },
 
 
@@ -105,6 +109,17 @@ let api = {
     cateHot: '/category/hotCate',
     attrlist: '/item/spec/value'
   },
+  /**
+   * @description 质检单(表)
+   */
+  inspection:{
+
+    inspectionlist:'/item/inspection_sheet/list',  //质检单列表
+    inspectionlistPage:'/item/inspection_sheet/list/page',  //质检单列表(分页)
+
+  },
+
+
   /**
    * @description 导航
    */

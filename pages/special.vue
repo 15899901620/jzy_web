@@ -44,7 +44,7 @@
 		        			</div>
 		        			<div class="Numtip"></div>
 						</span>
-           <span style="width: 11%;"><div class="ListBtn">下单</div></span>
+           <span style="width: 11%;"><div class="ListBtn" @click="OrderSubmit">下单</div></span>
          </li>
          <li>
            <span class="dflexAlemJust" style="width: 7%;"><div class="contact contactblue">预</div></span>
@@ -65,7 +65,7 @@
 		        			</div>
 		        			<div class="Numtip"></div>
 						</span>
-           <span style="width: 11%;"><div class="ListBtn">下单</div></span>
+           <span style="width: 11%;"><div class="ListBtn" @click="OrderSubmit">下单</div></span>
          </li>
          <li>
            <span class="dflexAlemJust" style="width: 7%;"><div class="contact contactblue">预</div></span>
@@ -86,7 +86,7 @@
 		        			</div>
 		        			<div class="Numtip"></div>
 						</span>
-           <span style="width: 11%;"><div class="ListBtn">下单</div></span>
+           <span style="width: 11%;"><div class="ListBtn" @click="OrderSubmit">下单</div></span>
          </li>
        </ul>
        <div class="whitebg ovh">
@@ -104,6 +104,12 @@
     components:{
       Pagination,
 
+    },
+    data(){},
+    methods:{
+      OrderSubmit(){
+        this.$router.push({name:'Biders-BidersSubmit'})
+      }
     }
     }
 </script>
@@ -114,6 +120,9 @@
   .indexXhlist li{height: 55px; display: flex; align-items: center; margin-bottom: 1px;background-color: #fff;}
   .indexXhlist li span{text-align: center; font-size: 14px;}
   .orangeFont{color: #ff9800;}
+
+  .ListBtn{width: 55%;padding: 3px 10px;color: #007de4;border-radius: 5px;border: 1px solid #007de4;margin: 0 auto; cursor: pointer}
+  .ListBtn:hover{background-color: #007de4; color: #fff;}
 
   .NumReduice{  margin: 0 auto;  height: 30px; border: 1px solid #D2D2D2; background-color: #fff; width: 65%; display: flex;align-items: center;}
   .NumReduice>span{ cursor: pointer;  font-weight: bold;    height: 100%;  align-items: center; display: flex; justify-content: center;}
