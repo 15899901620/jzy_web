@@ -19,7 +19,7 @@
          <span style="width: 9%;">已提吨数</span>
          <span style="width: 9%;">可提吨数</span>
          <span style="width: 13%;">本次提货吨数</span>
-         <span style="width: 11%;">操作</span>
+         <span style="width: 9%;">操作</span>
        </div>
 
        <ul class="indexXhlist"  >
@@ -41,7 +41,7 @@
 		        			</div>
 		        			<div class="Numtip"></div>
 						</span>
-           <span style="width: 11%;"><div class="ListBtn">下单</div></span>
+           <span style="width: 11%;"><div class="ListBtn" @click="indent">下单</div></span>
          </li>
        </ul>
          <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
@@ -100,6 +100,7 @@
 </script>
 
 <style scoped>
+    .ListBtn{background: #f3f8fe;border: 1px solid #007de4; color: #007de4;width: 100px;margin: 0 auto;cursor: pointer}
   .materials_banner{font-size: 0;}
   .indexXhTitle span{text-align: center;margin: 23px 0; font-size: 14px;}
   .indexXhlist li{height: 55px; display: flex; align-items: center; margin-bottom: 1px;background-color: #fff;}
