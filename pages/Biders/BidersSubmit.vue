@@ -78,8 +78,8 @@
               <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
               <div  style="width: 13%;">{{specialDetail.skuName}}</div>
               <div  style="width: 12%;">{{specialDetail.basePrice}}</div>
-              <div  style="width: 12%;"></div>
-              <div  style="width: 12%;"></div>
+              <div  style="width: 12%;">{{WeekList.weekAlreadyDeliveryNum}}</div>
+              <div  style="width: 12%;">{{WeekList.monthTotalDeliveryNum}}</div>
               <div  style="width: 14%;">
                 <div class="NumReduice">
                   <span class="orangeFont" style="width: 25%;" @click="subtract()">-</span>
@@ -175,9 +175,10 @@
               capitalinfo:[],
               addressList:[],
               AddressNum:'',
+              WeekList:[],
               id:'',
               getWeek:'',
-            companyName:'',
+              companyName:'',
               addrdetail:[],
               maxnumber:'',
               specialDetail:[],
@@ -264,6 +265,7 @@
                   const res2=await  getWeek(this, data)
                   if(res2){
                       console.log('11',res2)
+                      this.WeekList=res2.data
                       this.getWeek =res2.data.monthNum/res2.data.takenRatio
                       this.maxnumber =res2.data.monthNum/res2.data.takenRatio
                   }
@@ -278,6 +280,7 @@
                   const res1=await  specialDetail(this, data)
                   if(res1){
                       this.specialDetail =res1.data
+                      console.log(this.specialDetail)
                       this.amount=res1.data.basePrice * this.getWeek
                       this.amount=this.amount.toFixed(2)
                   }
