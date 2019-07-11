@@ -10,8 +10,8 @@
           <div class="dflexAlem" style="justify-content: space-between; margin: 25px auto; font-size: 14px ">
             <div>可用余额<span class="fs24 orangeFont fwb ml10">{{remain_fund}}</span></div>
             <div class="opePrice">
-              <a class="orangesbg" >充 值</a>
-              <a class="orangeFont CashAdvBg ml15" href="">申请提现</a>
+              <span class="orangesbg" @click="paycheck" >充 值</span>
+              <span class="orangeFont CashAdvBg ml15" href="">申请提现</span>
             </div>
           </div>
           <ul class="balancebg mb30">
@@ -115,6 +115,9 @@
        const res= await capitalinfo(this,{})
           this.fozen_fund=res.data.fozen_fund
           this.remain_fund=res.data.remain_fund
+        },
+        paycheck(){
+          this.$router.push({name: "users-usercapitalpaycheck"})
         }
       },
       created(){
@@ -139,7 +142,7 @@
   .titleOrder li.curr{background-color: #007de4; color: #fff;}
 
   .CashAdvBg{background-color: #fff8f1;}
-  .opePrice a{ font-size: 16px; border-radius:5px; display: inline-block; width: 120px;height: 40px;line-height: 40px;text-align: center;}
+  .opePrice span{ font-size: 16px; border-radius:5px; display: inline-block; width: 120px;height: 40px;line-height: 40px;text-align: center; cursor: pointer;}
   .balancebg{background-color: #fffef8;border: 1px solid #ffe19e; border-radius:2px;}
 
   .balancebg{display: flex;}

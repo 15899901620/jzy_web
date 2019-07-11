@@ -73,6 +73,17 @@ let api = {
 
     NewPrice:'/bill/auctionBid/getCurrBid',   //获取最新的竞拍价
 
+    auctionRecord:'/bill/auctionBid/page',    //获取竞拍记录
+
+    auctionMineRecord:'/bill/auctionBid/list',    //获取竞拍我的出价记录
+
+    AddauctionPrice:'/bill/auctionBid',    //添加我的出价记录
+
+    GainauctionRecord:'/bill/auctionBid/getMyBid',  //获取出价记录
+
+    AddBondRecord:'/bill/auctionDeposit',           //添加保证金记录
+
+    WinningBid:'/bill/auctionPlanned/getWinBid',  //中标信息
   },
 
 

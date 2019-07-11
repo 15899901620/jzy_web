@@ -24,7 +24,9 @@ const getCookie = name => {
  * @returns {*}
  */
 export const manageLogin = (vm, data) => {
-
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  }
   return vm.$axios.post(server.prefix + server.api.user.manageLogin,
     {
         ...data
@@ -562,76 +564,6 @@ export const provinceData = (vm, data) => {
 
 export const cityregionData = (vm, data) => {
   return vm.$axios.get(server.prefix + server.api.Address.cityregionData,
-    {
-      params: {...data}
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-/**
- * @description 竞拍列表
- * @param vm
- * @param data
- * @returns {*}
- */
-export const auctionPage = (vm, data) => {
-  console.log('data', data)
-  return vm.$axios.get(server.prefix + server.api.Auction.auctionPage,
-    {
-      params: {...data}
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-
-/**
- * @description 竞拍单条信息
- * @param vm
- * @param data
- * @returns {*}
- */
-export const auctionInfor = (vm, data) => {
-   return vm.$axios.get(server.prefix + server.api.Auction.auctionInfor,
-    {
-      params: {...data}
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-/**
- * @description 最小竞拍价信息
- * @param vm
- * @param data
- * @returns {*}
- */
-export const priceListInfo = (vm, data) => {
-  vm.$axios.defaults.headers = {
-
-    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
-  }
-  return vm.$axios.get(server.prefix + server.api.Auction.priceListInfo,
-    {
-      params: {...data}
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-/**
- * @description 当前价信息
- * @param vm
- * @param data
- * @returns {*}
- */
-export const NewPrice = (vm, data) => {
-  vm.$axios.defaults.headers = {
-
-    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
-  }
-  return vm.$axios.get(server.prefix + server.api.Auction.NewPrice,
     {
       params: {...data}
     }).catch((e) => {

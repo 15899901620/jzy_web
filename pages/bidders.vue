@@ -81,7 +81,7 @@
 </template>
 
 <script>
-  import {auctionPage} from '../api/users'
+  import {auctionPage} from '../api/auction'
     export default {
         name: "bidders",
       components: {
@@ -160,8 +160,7 @@
     align-items: center;border: 1px solid #ccc;border-radius: 25px;width: 23%;padding: 2px 0;font-size: 14px;}
 
   .acution{display: flex; flex-direction: column;}
-  .acuList{display: flex;}
-  .acuList ul{display: flex;flex-wrap: wrap;width: 100%;}
+  .acuList{display: flex;    flex-wrap: wrap;}
   .acuList li{background-color: #fff;width: 49%; margin-top: 15px; display: flex;}
   .acuList li:nth-child(even){margin-left: 2%;}
   .acuList li .acuProduct{width: 300px; border-right: 1px solid #ccc; margin: 35px 0; margin-left: 45px;}
