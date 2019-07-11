@@ -47,8 +47,8 @@
           <div class="lineborder"></div>
           <div class="mt30 fs16 ml15 fwb">运费</div>
           <ul class="DeliveryMethod ml35">
-              <li v-for="(item, index) in payList" @click="extra(index)" :class="{'curr':index===payIndex}" :key="index">
-                  海运111（111元）
+              <li v-for="(item, index) in extra" @click="extra(index)" :class="{'curr':index===payIndex}" :key="index">
+                  {{item.transportationMode}}({{item.basePrice}}元)
               </li>
           </ul>
 
@@ -126,6 +126,7 @@
   import { specialDetail, getWeek } from '../../api/special'
   import {extra} from '../../api/extra'
   import { capitalinfo} from '../../api/capital'
+  import { gainuserInfor} from '../../api/users'
   import Cookies from 'js-cookie'
     export default {
       name: "BidersSubmit",
@@ -181,6 +182,7 @@
               maxnumber:'',
               specialDetail:[],
               TipAddress:'',
+              extra:[],
               amount:''
           }
       },
@@ -189,8 +191,6 @@
               this.$router.push({path:"/users/usercapitalmanage"})
           },
           SearchInput(){
-                console.log(this.getWeek)
-                console.log(this.maxnumber)
                 if(parseInt(this.getWeek)>parseInt(this.maxnumber)){
                     this.$Notice.open({
                         title: '不能大于提货吨数',
@@ -355,8 +355,13 @@
                       district: addrdetail.district,
                       warehouseId: this.id,
                   }
-                  const res= extra(this, data)
-                  console.log('111',res)
+
+                  const res= extra(this, data).then(res=>{
+                              console.log('111',res)
+                            this.extra =res.data
+                     });
+
+
 
               }else{
                   return
@@ -364,12 +369,24 @@
 
         },
 
+          userinfo(){
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  const res=gainuserInfor(this, {}).then(res=>{
+                              console.log('userinfo',res)
+              });
+
+
+              }else{
+                  return
+              }
+          },
       },
 
       created () {
 
       },
       mounted() {
+            this.userinfo();
           this.specialData();
 
       }
