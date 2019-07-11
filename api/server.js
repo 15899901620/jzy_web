@@ -103,7 +103,22 @@ let api = {
      */
     special: {
         specialList: '/bill/yearlyFeeding/page',
+        specialDetail: '/bill/yearlyFeeding/detail',
     },
+
+
+/**
+ * @description 专料
+ */
+    extra:{
+        extraDetail:'/bill/freightList/getFreightListByAddress',
+    },
+    /**
+     * @description 周计划
+     */
+    week: {
+        getWeek: '/bill/getWeekPlannedByMember',
+},
   /**
    * @description 商品(物性表)
    */

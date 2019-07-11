@@ -18,46 +18,40 @@
         <div class="AddList">
 
           <ul class="addListSelect ovh">
-            <li>
-              <div class="deliver_icon" ><i class="deliver_icon"></i>配送至</div>
-              <div class="fl inform">
-                <input type="radio" id="radio_1" name="radio" checked >
-                <label for="radio_1"></label>
-                <span>小时</span><span>18750963258</span><span>身份证：36541265123661421</span><span>安徽省 合肥市 瑶海区</span><span>总运费：100元</span>
-              </div>
-              <div class="AddOperat fr"><span>[默认地址]</span><span class="blueFont">修改</span><span class="blueFont">删除</span></div>
-            </li>
-            <li>
-              <div class="deliver_icon" ><i class="deliver_icon"></i>配送至</div>
-              <div class="fl inform">
-                <input type="radio" id="radio_2" name="radio"  >
-                <label for="radio_2"></label>
-                <span>小时</span><span>18750963258</span><span>身份证：36541265123661421</span><span>安徽省 合肥市 瑶海区</span><span>总运费：100元</span></div>
-              <div class="AddOperat fr"><span>[默认地址]</span><span class="blueFont">修改</span><span class="blueFont">删除</span></div>
-            </li>
-            <li>
-              <div class="deliver_icon"><i class="deliver_icon"></i>配送至</div>
-              <div class="fl inform">
-                <input type="radio" id="radio_3" name="radio"  >
-                <label for="radio_3"></label>
-                <span>小时</span><span>18750963258</span><span>身份证：36541265123661421</span><span>安徽省 合肥市 瑶海区</span><span>总运费：100元</span></div>
-              <div class="AddOperat fr"><span>[默认地址]</span><span class="blueFont">修改</span><span class="blueFont">删除</span></div>
-            </li>
+            <li v-for="(item,i) in addressList">
+              <div  class ='deliver_icon' ><i class ='deliver_icon'   v-if="isactive  == i"></i><div  style="float: left; display: flex;align-items: center;margin-left: 16px;margin-right: 25px;" v-else></div>配送至</div>
+                <div  @click="Radio(i,item)">
+                <RadioGroup v-model="vertical" vertical >
+                    <Radio :label="i" >
+                         <span style="margin-left: 15px">{{item.phone}}</span><span style="margin-left: 15px">身份证：{{item.idNumber}}</span><span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}}</span>
+                    </Radio>
+                </RadioGroup>
+                </div>
 
+            </li>
           </ul>
 
 
         </div>
+
         <div class="lineborder"></div>
         <div class="mt30 fs16 ml15 fwb">余额支付</div>
         <ul class="DeliveryMethod ml35">
           <li v-for="(item, index) in payList" @click="payaddClass(index)" :class="{'curr':index===payIndex}" :key="index">{{item.payName}}</li>
-          <div class="ml10 fs14">可用余额：<span class="orangeFont">￥10425.00</span>元</div>
-          <div  class="licz" @click="showPay()">立即充值</div>
+          <div class="ml10 fs14">可用余额：<span class="orangeFont">￥{{capitalinfo.remain_fund}}</span>元</div>
+          <div  class="licz" @click="showPay()" style="cursor: pointer">立即充值</div>
         </ul>
         <div class="orderCzTip">
           * 提交订单后当天17：00前完成付款，逾期扣除保证金
         </div>
+          <div class="lineborder"></div>
+          <div class="mt30 fs16 ml15 fwb">运费</div>
+          <ul class="DeliveryMethod ml35">
+              <li v-for="(item, index) in payList" @click="extra(index)" :class="{'curr':index===payIndex}" :key="index">
+                  海运111（111元）
+              </li>
+          </ul>
+
         <div class="lineborder"></div>
         <!--优选服务-->
         <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
@@ -81,58 +75,28 @@
           <ul class="orderPorList">
             <li><h2 style="width: 12%;">编号</h2><h2 style="width: 13%;">货物信息</h2><h2 style="width: 12%;">单价（元/吨）</h2><h2 style="width: 12%;">可提吨数</h2><h2 style="width: 12%;">已提吨数</h2><h2 style="width: 14%;">本次提货吨数</h2><h2 style="width: 12%;">交货地</h2><h2 style="width: 9%;">小计</h2></li>
             <li>
-              <div  style="width: 12%;">SH00001</div>
-              <div  style="width: 13%;">巨正源 T30</div>
-              <div  style="width: 12%;">￥10,625.00</div>
-              <div  style="width: 12%;">20.000</div>
-              <div  style="width: 12%;">25.000</div>
-              <div style="width: 14%;">
+              <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
+              <div  style="width: 13%;">{{specialDetail.skuName}}</div>
+              <div  style="width: 12%;">{{specialDetail.basePrice}}</div>
+              <div  style="width: 12%;"></div>
+              <div  style="width: 12%;"></div>
+              <div  style="width: 14%;">
                 <div class="NumReduice">
-                  <span class="orangeFont" style="width: 25%;">-</span>
-                  <input class="TextNum" type="text" name="" id="" value=""/>
-                  <span class="orangeFont" style="width: 25%;">+</span>	        		</div>
+                  <span class="orangeFont" style="width: 25%;" @click="subtract()">-</span>
+                  <input class="TextNum" type="text" name="" id="" v-model="getWeek" v-on:input="SearchInput"/>
+                  <span class="orangeFont" style="width: 25%;"  @click="add()">+</span>	        		</div>
               </div>
               <div  style="width: 12%;">东莞市</div>
-              <div class="fwb orangeFont" style="width: 9%;">978,085.00</div>
-            </li>
-            <li>
-              <div  style="width: 12%;">SH00001</div>
-              <div  style="width: 13%;">巨正源 T30</div>
-              <div  style="width: 12%;">￥10,625.00</div>
-              <div  style="width: 12%;">20.000</div>
-              <div  style="width: 12%;">25.000</div>
-              <div style="width: 14%;">
-                <div class="NumReduice">
-                  <span class="orangeFont" style="width: 25%;">-</span>
-                  <input class="TextNum" type="text" name="" id="" value=""/>
-                  <span class="orangeFont" style="width: 25%;">+</span>
-                </div>
-              </div>
-              <div  style="width: 12%;">东莞市</div>
-              <div class="fwb orangeFont" style="width: 9%;">978,085.00</div>
-            </li>
-            <li>
-              <div style="width: 12%;">SH00001</div>
-              <div style="width: 13%;">巨正源 T30</div>
-              <div style="width: 12%;">￥10,625.00</div>
-              <div style="width: 12%;">20.000</div>
-              <div style="width: 12%;">25.000</div>
-              <div style="width: 14%;">
-                <div class="NumReduice">
-                  <span id="" style="width: 25%;">-</span><input class="TextNum" type="text" name="" id="" value="25.000"/><span id="" style="width: 25%;">+</span>
-                </div>
-              </div>
-              <div style="width: 12%;">东莞市</div>
-              <div class="fwb orangeFont" style="width: 9%;">978,085.00</div>
+              <div class="fwb orangeFont" style="width: 9%;">{{amount}}</div>
             </li>
           </ul>
           <div class="proInfor">
             <div  style="display: flex; flex-direction: column; width: 300px; " >
               <div class="mt20 tar mr20 dflex " style="align-items: center;">
-                <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥978,085.00</span>
+                <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{amount}}</span>
               </div>
               <div class="mt20 mb20 tar mr20 dflexAlem">
-                <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥978,085.50</span>
+                <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{amount}}</span>
               </div>
             </div>
 
@@ -143,20 +107,26 @@
 
       </div>
       <div class="w1200 whitebg dflexAlem" style="font-size: 14px; margin-top: 30px; margin-bottom:50px;justify-content:flex-end;">
-        <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">978,085.50</span> 元</span></div>
+        <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">{{amount}}</span> 元</span></div>
         <div class="submitOrder" @click="showOrder()">提交订单</div>
 
       </div>
      <order-popup @hidden="hiddenOrder"  v-show="showOrder_pop"></order-popup>
-      <pay-popup @hidden="hiddenPay"  v-show="showPay_pop"></pay-popup>
       <AddressPopup @hidden="hiddenAdd"  v-show="showAdd_pop"></AddressPopup>
+        <router-view v-if="isRouterAlive"></router-view>
     </div>
+
 </template>
 
 <script>
   import OrderPopup from './BidersComponent/OrderPopup'
   import PayPopup from './BidersComponent/PayPopup'
   import AddressPopup from '../users/userCompontent/AddressPopup'
+  import { addressList,addressDelete} from '../../api/users'
+  import { specialDetail,getWeek } from '../../api/special'
+  import {extra} from '../../api/extra'
+  import { capitalinfo} from '../../api/capital'
+  import Cookies from 'js-cookie'
     export default {
       name: "BidersSubmit",
       layout:'SumbitOrderHeader',
@@ -165,13 +135,20 @@
         PayPopup,
         AddressPopup
       },
+        provide () {
+      return {
+          reload: this.reload
+      }
+  },
       data(){
           return{
             showOrder_pop:false,
-            showPay_pop:false,
             showAdd_pop:false,
             timeDay:'',
+            isRouterAlive:false,
+            isactive:0,
             single: false,
+              vertical: 0,
             currentIndex:0,
             payIndex:0,
             methodList:[
@@ -180,7 +157,6 @@
             ],
             payList:[
               {payName:'支付全款'},
-              {payName:'支付保证金'}
             ],
             TimeList:[
               {
@@ -195,17 +171,160 @@
                 value:'1day',
                 timeSelect:'1天'
               }
-            ]
+            ],
+              capitalinfo:[],
+              addressList:[],
+              AddressNum:'',
+              id:'',
+              getWeek:'',
+              addrdetail:[],
+              maxnumber:'',
+              specialDetail:[],
+              TipAddress:'',
+              amount:''
           }
       },
       methods:{
+          showPay(){
+              this.$router.push({path:"/users/usercapitalmanage"})
+          },
+          SearchInput(){
+                console.log(this.getWeek)
+                console.log(this.maxnumber)
+                if(parseInt(this.getWeek)>parseInt(this.maxnumber)){
+                    this.$Notice.open({
+                        title: '不能大于提货吨数',
+                    });
+                    this.getWeek=this.maxnumber
+                }
+              if( parseInt(this.getWeek) <= 0){
+
+                  this.$Notice.open({
+                      title: '不能小于等于0',
+                  });
+                  this.getWeek=1
+              }
+          },
+          add(){
+
+              if(  parseInt(this.getWeek)+ 1 > parseInt(this.maxnumber)){
+                  this.$Notice.open({
+                      title: '不能大于提货吨数',
+                  });
+              }else{
+
+                this.getWeek =    parseInt(this.getWeek) +1
+              }
+
+          },
+          subtract(){
+              if( parseInt(this.getWeek)- 1 <= 0){
+
+                  this.$Notice.open({
+                      title: '不能小于等于0',
+                  });
+              }else{
+                  console.log(this.getWeek)
+                  this.getWeek =  parseInt(this.getWeek) -1
+              }
+          },
+          reload () {
+              this.isRouterAlive = false
+              this.$nextTick(function () {
+                  this.isRouterAlive = true
+              })
+          },
+          Radio(i,item){
+              this.isactive=i;
+              this.addrdetail=item;
+              this.Payextra();
+          },
+          async specialData(){
+              this.id=this.$route.query.id
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  const res=await addressList(this, {})
+                  console.log(res.data)
+                  if(res){
+                      this.addressList=res.data
+                      this.AddressNum=res.data.length
+                      this.addrdetail=res.data[0]
+                      this.Payextra();
+                  }else{
+                      this.TipAddress='暂无收货地址，请新增收货地址'
+                      this.AddressNum=0
+                  }
+              }else{
+                  return
+              }
+
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  let data={
+                      skuId: this.id
+                  }
+                  const res2=await  getWeek(this, data)
+                  if(res2){
+                      console.log('11',res2)
+                      this.getWeek =res2.data.monthNum/res2.data.takenRatio
+                      this.maxnumber =res2.data.monthNum/res2.data.takenRatio
+                  }
+              }else{
+                  return
+              }
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  let data={
+                      id: this.id
+                  }
+                  console.log( this.id)
+                  const res1=await  specialDetail(this, data)
+                  if(res1){
+                      this.specialDetail =res1.data
+                      this.amount=res1.data.basePrice * this.getWeek
+                      this.amount=this.amount.toFixed(2)
+                  }
+              }else{
+                  return
+              }
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  const res3=await  capitalinfo(this, {})
+                  if(res3){
+                      console.log('userinfo',res3)
+                      this.capitalinfo=res3.data
+                  }
+              }else{
+                  return
+              }
+
+          },
+//          del(item){
+//              this.$Modal.confirm({
+//                          title: '确定要删除',
+//                          content: '<p>是否要删除</p>',
+//                          onOk: () => {
+//                              let data={
+//                                  id:item.id
+//                              }
+//                              const res=addressDelete(this, data)
+//                              this.$Message.info('删除成功');
+//                                this.$router.go(0)
+//                            },
+//                          onCancel: () => {
+//                              this.$Message.info('删除失败');
+//                          }
+//          });
+//
+//
+//          },
         addClass(index){
           this.currentIndex = index
+
         },
         // 选中支付
         payaddClass(index){
           this.payIndex = index
         },
+          PayExtra(index){
+              this.payIndex = index
+          },
         // 显示订单
         showOrder(){
           var  that=this
@@ -217,12 +336,7 @@
           that.showOrder_pop=false;
         },
         // 显示支付弹窗
-        showPay(){
-          this.showPay_pop=true;
-        },
-        hiddenPay(){
-          this.showPay_pop=false;
-        },
+
         // 显示地址弹窗
         AddAddress(){
           this.showAdd_pop=true;
@@ -230,11 +344,35 @@
         // 隐藏地址弹窗
         hiddenAdd(){
           this.showAdd_pop=false;
-        }
+        },
+        Payextra(){
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                 var addrdetail =this.addrdetail
+                  let data={
+                      countryId: addrdetail.countryId,
+                      state: addrdetail.state,
+                      city: addrdetail.city,
+                      district: addrdetail.district,
+                      warehouseId: this.id,
+                  }
+                  const res= extra(this, data)
+                  console.log('111',res)
+
+              }else{
+                  return
+              }
+
+        },
 
       },
 
+      created () {
 
+      },
+      mounted() {
+          this.specialData();
+
+      }
     }
 </script>
 

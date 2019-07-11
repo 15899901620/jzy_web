@@ -13,12 +13,10 @@
          <span style="width: 8%;">编号</span>
          <span style="width: 8%;">商品名称</span>
          <span style="width: 8%;">厂商</span>
-         <span style="width: 9%;">交货时间</span>
          <span style="width: 9%;">单价（元/吨）</span>
-         <span style="width: 9%;">会同数量</span>
+         <span style="width: 9%;">合同数量</span>
          <span style="width: 9%;">已提吨数</span>
          <span style="width: 9%;">可提吨数</span>
-         <span style="width: 13%;">本次提货吨数</span>
          <span style="width: 9%;">操作</span>
        </div>
 
@@ -28,20 +26,11 @@
            <span style="width: 8%;">{{special.skuNo}}</span>
            <span style="width: 8%;">{{special.skuName}}</span>
            <span style="width: 8%;">{{special.manufacturer}}</span>
-           <span style="width: 9%;">4月中旬</span>
            <span     class="orangeFont"  style="width: 9%;">{{special.finalPrice}}/{{special.uomName}}</span>
            <span style="width: 9%;">{{special.availableNum}}</span>
            <span style="width: 9%;">20.000</span>
            <span style="width: 9%;">50.000</span>
-           <span  class="dflex" style="width: 13%; align-items: center;">
-							<div class="NumReduice" style="margin: 0; width: 55%; margin-left: 25px;">
-                            		        			<span class="gray" style="width: 25%;">-</span>
-			        			<input class="TextNum" type="text" name="" id="" value="">
-			        			<span class="gray"  style="width: 25%;">+</span>
-		        			</div>
-		        			<div class="Numtip"></div>
-						</span>
-           <span style="width: 11%;"><div class="ListBtn" @click="indent">下单</div></span>
+           <span style="width: 11%;"><div class="ListBtn" @click="indent(special)">下单</div></span>
          </li>
        </ul>
          <div class="whitebg ovh text-xs-center" style="padding: 30px 0">
@@ -66,13 +55,13 @@
           total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
           page_size:10,
           total:0,
+          number:0,
           items:[]
       }
   },
   methods:{
-
-    indent(){
-      this.$router.push({name:'Biders-BidersSubmit'})
+    indent(special){
+      this.$router.push({name:'Biders-BidersSubmit',query:{id:special.id}})
     },
 
       async specialData(){
@@ -82,11 +71,8 @@
               status: 'CO'
           }
           const res = await specialList(this, params)
-
           this.items = res.data.items
-          console.log(this.items)
           this.total = res.data.total
-          console.log(this.items)
 
       },
       changePage (row) {
