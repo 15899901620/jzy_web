@@ -161,10 +161,10 @@
                 <span>东莞</span>
               </div>
               <div class="ml30 mt40 dflex" style="align-items: center" >
-                <template v-if="detailDatabrid.type === 2">
+                <template v-if="bidePrice">
                   <span class="inputTitle">当前价</span><span class="fs18 fwb orangeFont">￥{{bidePrice}} </span>元/吨
                 </template>
-                <template v-if="detailDatabrid.type === 1">
+                <template v-else>
                   <span class="inputTitle">起拍价</span><span class="fs18 fwb orangeFont">￥{{MinPrice}} </span>元/吨
                 </template>
 
@@ -382,10 +382,11 @@
           }
       },
       methods:{
-
+        //查看详情_跳转会员-我的竞拍页
         acuDetailmember(){
           this.$router.push({name:'users-userauction'})
         },
+        //提货_跳转到下单页
         auctionOrder(){
           this.$router.push({name:"Biders-BidersSubmit"})
         },
@@ -615,7 +616,12 @@
           }
           let res=await NewPrice(this,params)
           console.log('获取最新的竞拍价',res)
-          this.bidePrice=res.data.bidPrice
+          if(res.data){
+            this.bidePrice=res.data.bidPrice
+          }else{
+
+          }
+
 
         },
         //倒计时

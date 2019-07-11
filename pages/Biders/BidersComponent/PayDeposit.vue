@@ -30,10 +30,12 @@
       </div>
       </div>
       <!--输入验证码-->
-      <div class="PopupCode">
-        <input type="text" class="TextCode" placeholder="请输入手机验证码" /> <a class="AcqCode">点击获取验证码</a>
+      <div class="PopupCode pr">
+        <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" @blur="userCodeCheck"   />
+        <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'  >{{this.btnValue}}</button>
+        <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
       </div>
-      <div class="graybg" style="display: flex; justify-content: center; align-items: center;">
+      <div class="graybg" style="display: flex; justify-content: center; align-items: center; margin-top: 25px">
         <a class="submitPrice" @click="PayDeposite">缴纳保证金</a>
       </div>
     </div>
@@ -41,9 +43,12 @@
 </template>
 
 <script>
-  import { capitalinfo,AddBondRecord } from '../../../api/capital'
+  import { capitalinfo } from '../../../api/capital'
+
+  import { BondMessSend, BondMessageCode, AddBondRecord } from '../../../api/auction'
+
   import Cookies from 'js-cookie'
-    export default {
+     export default {
       name: "PayDeposit",
       props:{
         DepositeData:{type:Object},
@@ -53,7 +58,19 @@
             NotLogin:'',
             LoginShow:false,
             fozen_fund:'',
-            remain_fund:''
+            remain_fund:'',
+
+            Bonddeposit:{
+              depositAmount:'',
+              bidNum:'',
+              BondCode:'',
+            },
+            TipCode:'',
+            //disabled的初始值
+            btnBoolen:false,
+            btnClassName:"btn",
+            btnValue:"获取短信验证码",
+            codeValid:false,//验证码无效
           }
       },
       methods:{
@@ -70,11 +87,134 @@
         HiddenDeposit(){
           this.$emit('HiddenDep')
         },
-        //缴纳保证金
-        PayDeposite(){
-          console.log('DepositeData:', this.DepositeData)
 
+
+        //获取短信验证码
+        async getNoteValue () {
+
+          if (!Cookies.get('webtoken') && !Cookies.get('userinfor')) {
+            this.$Modal.confirm({
+              title: '登录超时',
+              content: '<p style="font-size: 16px; margin-top: 10px">您尚未登录，或者登录超时，请登录</p>',
+              okText:'去登录',
+              styles:'top:30px;',
+              onOk: () => {
+                this.$router.push({name:'login'});
+              },
+              onCancel: () => {
+
+              }
+            });
+            return
+          }else{
+            let params = {
+              Authorization:Cookies.get('webtoken')
+            }
+            const res = await BondMessSend(this, params)
+
+            if(res.data && res.status === 200 ){
+
+              this.$Message.info("短信发送成功")
+
+              var sj = Math.ceil(Math.random(10 + 1) * 100000)
+              window.localStorage.setItem("note", sj)
+              this.auth_time = 60;
+              var timer = setInterval(()=>{
+                this.auth_time--;
+                if(this.auth_time<=0){
+                  clearInterval(timer)
+                  this.btnBoolen = false;
+                  this.btnClassName="btns"
+                  this.btnValue="获取短信验证码"
+                }else {
+                  this.btnBoolen = true;
+                  this.btnValue=`重新获取(${this.auth_time})S`
+                  this.btnClassName="btn"
+                }
+              },1000)
+
+            }else {
+              this.$Message.info("短信发送失败")
+            }
+
+
+          }
         },
+        // 验证手机验证码
+        async userCodeCheck(){
+          let params = {
+            Authorization:Cookies.get('webtoken'),
+            code:this.Bonddeposit.BondCode
+          }
+          if(!this.Bonddeposit.BondCode){
+            this.TipCode='验证码不能为空'
+            return
+          }
+          const res = await BondMessageCode(this, params)
+          console.log('验证手机验证码',res)
+          if(res.data && res.status === 200){
+            this.codeValid=true
+            this.TipCode=''
+          }else {
+            this.TipCode='验证码有误'
+            return
+          }
+        },
+
+        //缴纳保证金
+        async PayDeposite(){
+          console.log("DepositeData",this.DepositeData)
+          if(!this.Bonddeposit.BondCode){
+            this.TipCode='验证码不能为空'
+            return
+          }
+          if(!this.codeValid){
+            this.TipCode='验证码有误'
+            return
+          }
+
+          this.Bonddeposit.depositAmount=this.DepositeData.MinePrice*this.DepositeData.aucteNum*(this.DepositeData.Bond/100)
+          this.Bonddeposit.bidNum=this.DepositeData.aucteNum
+           if(!this.Bonddeposit.depositAmount){
+            this.TipCode='竞拍保证金不能为空'
+            return
+          }
+          if(!this.Bonddeposit.bidNum){
+            this.TipCode='竞拍数量不能为空'
+            return
+          }
+
+          let params={
+            auctionId:this.DepositeData.auctionId,
+            depositAmount: this.Bonddeposit.depositAmount,
+            bidNum : this.DepositeData.aucteNum,
+            code:this.Bonddeposit.BondCode
+          }
+          let res=await AddBondRecord(this,params)
+          console.log('res:', res)
+          if(res.data && res.status === 200){
+            this.$emit('HiddenDep')
+            this.$Message.info("缴纳保证金成功")
+          }else {
+             this.$Modal.confirm({
+              title: '失败提示',
+              content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+              okText:'确定',
+              styles:'top:30px;',
+              onOk: () => {
+               // this.$router.push({name:'login'});
+              },
+              onCancel: () => {
+
+              }
+            });
+          }
+          console.log('DepositeData:', this.DepositeData)
+        },
+
+
+
+
       },
       created(){
         this.capital()
@@ -92,5 +232,7 @@
 </script>
 
 <style scoped>
-
-</style>
+.AcqCode{border: none; background-color: #fff}
+.AcqCode:hover{background-color: #ffffff;border: none;}
+.AcqCode:active{background-color: #ffffff;border: none;}
+ </style>
