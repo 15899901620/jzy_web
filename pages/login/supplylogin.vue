@@ -64,7 +64,7 @@
               return
             }else{
               console.log('authres' ,authres)
-              let expires = new Date((new Date()).getTime() + 2 * 60 * 60000);
+              let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
               Cookies.set('websuppliertoken',  authres, { expires: expires })
               const res = await supplierValid(this, {})
 

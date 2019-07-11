@@ -83,7 +83,7 @@ export default {
           console.log('authres', res)
         if(authres && res.status === 200){
 
-          let expires = new Date((new Date()).getTime() + 2 * 60 * 60000);
+          let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
           Cookies.set('webtoken',  authres, { expires: expires })
 
           const res = await memberValid(this, {})

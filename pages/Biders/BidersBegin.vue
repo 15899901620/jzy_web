@@ -128,7 +128,7 @@
               <div class="tac whiteFont fs24 mt20">恭喜您中得<span class="ml10 mr10">{{WinBid.skuName}}</span><span class="ml10 mr10">{{WinBid.totalNum}}</span>吨</div>
               <span class="db tac whiteFont">剩余付款时间：{{`${hr}小时 ${min}分钟 ${sec}秒`}}，逾期将扣除保证金</span>
               <div class="dflex mb20">
-                <div class="zb_btn whitebg orangeFont">提 货</div>
+                <div class="zb_btn whitebg orangeFont" @click="auctionOrder">提 货</div>
                 <div class="zb_btn whitebg orangeFont" @click="acuDetailmember">查看详情</div>
               </div>
             </div>
