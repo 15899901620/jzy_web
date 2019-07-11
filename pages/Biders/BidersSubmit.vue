@@ -3,7 +3,7 @@
       <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">
         <!--公司信息-->
         <div class="mt30 fs16 ml15 fwb">公司信息</div>
-        <div class="ml35 mt20 mb20 fs14">上海市信息科技有限公司</div>
+        <div class="ml35 mt20 mb20 fs14">{{companyName}}</div>
         <div class="lineborder"></div>
         <!--交货方式-->
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
@@ -122,11 +122,10 @@
   import OrderPopup from './BidersComponent/OrderPopup'
   import PayPopup from './BidersComponent/PayPopup'
   import AddressPopup from '../users/userCompontent/AddressPopup'
-  import { addressList, addressDelete} from '../../api/users'
+  import { addressList, addressDelete, gainuserInfor} from '../../api/users'
   import { specialDetail, getWeek } from '../../api/special'
   import {extra} from '../../api/extra'
   import { capitalinfo} from '../../api/capital'
-  import { gainuserInfor} from '../../api/users'
   import Cookies from 'js-cookie'
     export default {
       name: "BidersSubmit",
@@ -178,6 +177,7 @@
               AddressNum:'',
               id:'',
               getWeek:'',
+            companyName:'',
               addrdetail:[],
               maxnumber:'',
               specialDetail:[],
@@ -287,7 +287,6 @@
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res3=await  capitalinfo(this, {})
                   if(res3){
-                      console.log('userinfo',res3)
                       this.capitalinfo=res3.data
                   }
               }else{
@@ -369,10 +368,11 @@
 
         },
 
-          userinfo(){
-              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+        async userinfo(){
+             if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res=gainuserInfor(this, {}).then(res=>{
-                              console.log('userinfo',res)
+                    this.companyName=res.data.companyName
+                    console.log('userinfo',res)
               });
 
 
@@ -382,7 +382,7 @@
           },
       },
 
-      created () {
+      created(){
 
       },
       mounted() {

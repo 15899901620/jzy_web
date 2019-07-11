@@ -386,7 +386,9 @@
         acuDetailmember(){
           this.$router.push({name:'users-userauction'})
         },
-
+        auctionOrder(){
+          this.$router.push({name:"Biders-BidersSubmit"})
+        },
         // 竞拍出价
         cutsOffer(){
           console.log('bidIncrement',this.detailDatabrid.bidIncrement)
