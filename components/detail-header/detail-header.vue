@@ -63,13 +63,20 @@ export default {
         { title: 'Click Me' },
         { title: 'Click Me' },
         { title: 'Click Me 2' }
-      ]
+      ],
+
+
+
+
+
+
+
     }
   },
   methods:{
     // 当前页面导航的判断
     CurrNav:function(){
-console.log('this.$router',this.$router)
+      console.log('***this.$router***',this.$router)
       let currentPage=this.$router.history.current.name
       if(currentPage == 'index'){
         this.selectService=true;
@@ -98,11 +105,13 @@ console.log('this.$router',this.$router)
       }else{
         this.selectService=false;
       }
-    }
-  },
-  created(){
+    },
+
+
+
 
   },
+  created(){},
   mounted(){
     this.CurrNav()
    },
@@ -159,6 +168,9 @@ border: 1px solid #1696ff;color: #1696ff;}
 .LinkUrl a:first-child{margin:5px 0;}
 .LinkUrl a{margin: 5px 10px; color: #666666;}
 .uplist{background: url(../../assets/img/icon.png)no-repeat 0px -105px;width: 28px;height: 20px;margin-top: 6px; cursor: pointer;}
+
+
+
 
 
 </style>
