@@ -63,3 +63,17 @@ export const getWeek = (vm, data) => {
         console.log('getWeek', errorInfo)
 })
 };
+
+export const submitOrder = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.post(server.prefix + server.api.special.submitOrder,
+        {
+           ...data
+}).catch((e) => {
+        let errorInfo = e.response
+        console.log('submitOrder', errorInfo)
+})
+};

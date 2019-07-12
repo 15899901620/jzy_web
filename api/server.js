@@ -119,6 +119,7 @@ let api = {
     special: {
         specialList: '/bill/yearlyFeeding/page',
         specialDetail: '/bill/yearlyFeeding/detail',
+        submitOrder:'/bill/orderInfo/feeding/create',
     },
 
 
@@ -127,6 +128,7 @@ let api = {
  */
     extra:{
         extraDetail:'/bill/freightList/getFreightListByAddress',
+
     },
     /**
      * @description 周计划

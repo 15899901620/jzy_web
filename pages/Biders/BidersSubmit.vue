@@ -9,13 +9,13 @@
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
         <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
           <ul class="DeliveryMethod mb20">
-            <li v-for="(item, index) in methodList" @click="addClass(index)" :class="{'curr':index===currentIndex}" :key="index"><div style="background-color: #fff;">{{item.methodName}}</div></li>
+            <li v-for="(item, index) in methodList" @click="addClass(index)" :class="{'curr':index===currentIndex}" :key="index" v-model="methodName"><div style="background-color: #fff;">{{item.methodName}}</div></li>
 
             <div class="gray">（您选择交货方式为配送，提交下单必须满足<span class="orangeFont">25</span>吨的倍数）</div>
           </ul>
           <div class="blueFont mr30 cp fs14" id="newAdd"  @click="AddAddress">新增收货地址</div>
         </div>
-        <div class="AddList">
+        <div class="AddList" v-if="methodName=='配送'">
 
           <ul class="addListSelect ovh">
             <li v-for="(item,i) in addressList">
@@ -27,11 +27,8 @@
                     </Radio>
                 </RadioGroup>
                 </div>
-
             </li>
           </ul>
-
-
         </div>
 
         <div class="lineborder"></div>
@@ -45,9 +42,9 @@
           * 提交订单后当天17：00前完成付款，逾期扣除保证金
         </div>
           <div class="lineborder"></div>
-          <div class="mt30 fs16 ml15 fwb">运费</div>
-          <ul class="DeliveryMethod ml35">
-              <li v-for="(item, index) in extra" @click="extra(index)" :class="{'curr':index===payIndex}" :key="index">
+          <div class="mt30 fs16 ml15 fwb" v-if="methodName=='配送'">运费</div>
+          <ul class="DeliveryMethod ml35" v-if="methodName=='配送'">
+              <li v-for="(item, index) in extra" @click="Extra1(index,item)" :class="{'curr':index===extraIndex}" :key="index">
                   {{item.transportationMode}}({{item.basePrice}}元)
               </li>
           </ul>
@@ -57,7 +54,7 @@
         <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
         <div class="mt10"  >
           <div class="ml35 fs14 dflexAlem">
-            <Checkbox :checked.sync="single">巨融易</Checkbox>
+            <Checkbox v-model="single"  @click.prevent.native="single1">巨融易</Checkbox>
             <div class="ml5">
               <i-select :model.sync="timeDay" style="width:200px">
                 <i-option v-for="(item, index) in TimeList" :value="item.value" :key="index">{{ item.timeSelect }}</i-option>
@@ -73,12 +70,13 @@
           <div class="mt30 fs16 ml15" id="test1"><span class="fwb">商品信息</span> <span class="gray fs14">（ 距离最后全部提货完成时间剩<span class="orangeFont">02天05时30分</span>，逾期增加<span class="orangeFont">0.01%</span>的仓储费 ）</span></div>
 
           <ul class="orderPorList">
-            <li><h2 style="width: 12%;">编号</h2><h2 style="width: 13%;">货物信息</h2><h2 style="width: 12%;">单价（元/吨）</h2><h2 style="width: 12%;">可提吨数</h2><h2 style="width: 12%;">已提吨数</h2><h2 style="width: 14%;">本次提货吨数</h2><h2 style="width: 12%;">交货地</h2><h2 style="width: 9%;">小计</h2></li>
+            <li><h2 style="width: 12%;">编号</h2><h2 style="width: 13%;">货物信息</h2><h2 style="width: 12%;">单价（元/吨）</h2><h2 style="width: 12%;">放料单可提吨数</h2><h2 style="width: 12%;">周计划可提吨数</h2><h2 style="width: 12%;">已提吨数</h2><h2 style="width: 14%;">本次提货吨数</h2><h2 style="width: 12%;">交货地</h2><h2 style="width: 9%;">小计</h2></li>
             <li>
               <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
               <div  style="width: 13%;">{{specialDetail.skuName}}</div>
               <div  style="width: 12%;">{{specialDetail.basePrice}}</div>
-              <div  style="width: 12%;">{{WeekList.weekAlreadyDeliveryNum}}</div>
+              <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
+              <div  style="width: 12%;">{{maxnumber-WeekList.weekAlreadyDeliveryNum}}</div>
               <div  style="width: 12%;">{{WeekList.monthTotalDeliveryNum}}</div>
               <div  style="width: 14%;">
                 <div class="NumReduice">
@@ -108,10 +106,10 @@
       </div>
       <div class="w1200 whitebg dflexAlem" style="font-size: 14px; margin-top: 30px; margin-bottom:50px;justify-content:flex-end;">
         <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">{{amount}}</span> 元</span></div>
-        <div class="submitOrder" @click="showOrder()">提交订单</div>
+        <div class="submitOrder"  style="background-color: #e0dede"   v-if="Order==0">提交订单</div>
+        <div class="submitOrder"  @click="showOrder()" v-else>提交订单</div>
 
       </div>
-     <order-popup @hidden="hiddenOrder"  v-show="showOrder_pop"></order-popup>
       <AddressPopup @hidden="hiddenAdd"  v-show="showAdd_pop"></AddressPopup>
         <router-view v-if="isRouterAlive"></router-view>
     </div>
@@ -122,8 +120,8 @@
   import OrderPopup from './BidersComponent/OrderPopup'
   import PayPopup from './BidersComponent/PayPopup'
   import AddressPopup from '../users/userCompontent/AddressPopup'
-  import { addressList, addressDelete, gainuserInfor} from '../../api/users'
-  import { specialDetail, getWeek } from '../../api/special'
+  import { addressList, gainuserInfor} from '../../api/users'
+  import { specialDetail,getWeek ,submitOrder} from '../../api/special'
   import {extra} from '../../api/extra'
   import { capitalinfo} from '../../api/capital'
   import Cookies from 'js-cookie'
@@ -142,8 +140,10 @@
   },
       data(){
           return{
-            showOrder_pop:false,
+             methodName:'自提',
+              payName:'支付全款',
             showAdd_pop:false,
+            Order:0,
             timeDay:'',
             isRouterAlive:false,
             isactive:0,
@@ -151,6 +151,7 @@
               vertical: 0,
             currentIndex:0,
             payIndex:0,
+              extraIndex:0,
             methodList:[
               {methodName:'自提'},
               {methodName:'配送'}
@@ -180,11 +181,14 @@
               getWeek:'',
               companyName:'',
               addrdetail:[],
+              addr:0,
+              ExtraList:[],
               maxnumber:'',
               specialDetail:[],
               TipAddress:'',
               extra:[],
-              amount:''
+              amount:'',
+              amount1:''
           }
       },
       methods:{
@@ -192,41 +196,156 @@
               this.$router.push({path:"/users/usercapitalmanage"})
           },
           SearchInput(){
-                if(parseInt(this.getWeek)>parseInt(this.maxnumber)){
-                    this.$Notice.open({
-                        title: '不能大于提货吨数',
-                    });
-                    this.getWeek=this.maxnumber
-                }
-              if( parseInt(this.getWeek) <= 0){
-
-                  this.$Notice.open({
-                      title: '不能小于等于0',
-                  });
-                  this.getWeek=1
+              if(this.methodName=='自提'){
+                  if(this.specialDetail.takeTheirDoubly==0){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                          this.getWeek=this.maxnumber
+                      }
+                  }else{
+                      if(  parseFloat(this.getWeek)%parseFloat(this.specialDetail.takeTheirMin) != 0 ||  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) <=0){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                          this.getWeek=this.specialDetail.takeTheirMin
+                      }
+                  }
               }
+              if(this.methodName=='配送'){
+                  if(this.specialDetail.deliveryDoubly==0){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                          this.getWeek=this.maxnumber
+                      }
+                      if( parseFloat(this.getWeek) <= 0){
+
+                          this.$Notice.open({
+                              title: '不能小于等于0',
+                          });
+                          this.getWeek=1
+                      }
+                  }else{
+                      if(  parseFloat(this.getWeek)%parseFloat(this.specialDetail.deliveryMin) != 0 ||  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) <=0){
+                          this.$Notice.open({
+                              title: '请输入正确的数量',
+                          });
+                          this.getWeek=this.specialDetail.deliveryMin
+                      }
+
+                  }
+              }
+
           },
           add(){
 
-              if(  parseInt(this.getWeek)+ 1 > parseInt(this.maxnumber)){
-                  this.$Notice.open({
-                      title: '不能大于提货吨数',
-                  });
-              }else{
-
-                this.getWeek =    parseInt(this.getWeek) +1
+              if(this.methodName=='自提'){
+                  if(this.specialDetail.takeTheirDoubly==0){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) +1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount=this.amount.toFixed(3)
+                          this.amount1=this.amount
+                      }
+                  }else{
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) +parseFloat(this.specialDetail.takeTheirMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount=this.amount.toFixed(3)
+                          this.amount1=this.amount
+                      }
+                  }
               }
+              if(this.methodName=='配送'){
+                  if(this.specialDetail.deliveryDoubly==0 ){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) +1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }else{
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.maxnumber)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) +parseFloat(this.specialDetail.deliveryMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }
+              }
+
 
           },
           subtract(){
-              if( parseInt(this.getWeek)- 1 <= 0){
+              if(this.methodName=='自提'){
+                  if(this.specialDetail.takeTheirDoubly==0){
+                      if(  parseFloat(this.getWeek)- 1 <= parseFloat(this.specialDetail.takeTheirMin)){
+                          this.$Notice.open({
+                              title: '不能小于最小值',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) -1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }else{
 
-                  this.$Notice.open({
-                      title: '不能小于等于0',
-                  });
-              }else{
-                  console.log(this.getWeek)
-                  this.getWeek =  parseInt(this.getWeek) -1
+                      if(  parseFloat(this.getWeek)- parseFloat(this.specialDetail.takeTheirMin) < parseFloat(this.specialDetail.takeTheirMin)){
+                          this.$Notice.open({
+                              title: '不能小于最小值',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) -parseFloat(this.specialDetail.takeTheirMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }
+              }
+              if(this.methodName=='配送'){
+                  if(this.specialDetail.delivery_doubly==0 ){
+                      if( parseFloat(this.getWeek)- 1 <= this.specialDetail.deliveryMin){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) -1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }else{
+                      if( parseFloat(this.getWeek)- parseFloat(this.specialDetail.deliveryMin) < parseFloat(this.specialDetail.deliveryMin)){
+                          this.$Notice.open({
+                              title: '不能大于提货吨数',
+                          });
+                      }else{
+                          this.getWeek =    parseFloat(this.getWeek) -parseFloat(this.specialDetail.deliveryMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
+                          this.amount1=this.amount
+                          this.amount=this.amount.toFixed(3)
+                      }
+                  }
               }
           },
           reload () {
@@ -249,6 +368,11 @@
                       this.addressList=res.data
                       this.AddressNum=res.data.length
                       this.addrdetail=res.data[0]
+                      if(this.addrdetail != ''){
+                          this.addr=1
+                      }else{
+                          this.addr=0
+                      }
                       this.Payextra();
                   }else{
                       this.TipAddress='暂无收货地址，请新增收货地址'
@@ -266,8 +390,9 @@
                   if(res2){
                       console.log('11',res2)
                       this.WeekList=res2.data
-                      this.getWeek =res2.data.monthNum/res2.data.takenRatio
+
                       this.maxnumber =res2.data.monthNum/res2.data.takenRatio
+                      console.log(this.maxnumber)
                   }
               }else{
                   return
@@ -276,13 +401,19 @@
                   let data={
                       id: this.id
                   }
-                  console.log( this.id)
                   const res1=await  specialDetail(this, data)
                   if(res1){
                       this.specialDetail =res1.data
-                      console.log(this.specialDetail)
+                      if(this.methodName=='自提'){
+                          this.getWeek =res1.data.takeTheirMin
+                      }else{
+                          this.getWeek =res1.data.deliveryMin
+                      }
+
+                      console.log('getWeek',res1)
                       this.amount=res1.data.basePrice * this.getWeek
-                      this.amount=this.amount.toFixed(2)
+                      this.amount1=this.amount.toFixed(3)
+                      this.amount=this.amount.toFixed(3)
                   }
               }else{
                   return
@@ -297,47 +428,90 @@
               }
 
           },
-//          del(item){
-//              this.$Modal.confirm({
-//                          title: '确定要删除',
-//                          content: '<p>是否要删除</p>',
-//                          onOk: () => {
-//                              let data={
-//                                  id:item.id
-//                              }
-//                              const res=addressDelete(this, data)
-//                              this.$Message.info('删除成功');
-//                                this.$router.go(0)
-//                            },
-//                          onCancel: () => {
-//                              this.$Message.info('删除失败');
-//                          }
-//          });
-//
-//
-//          },
         addClass(index){
+              console.log()
           this.currentIndex = index
-
+            if(index==1){
+                this.methodName='配送'
+                this.Payextra();
+            }else{
+                this.methodName='自提'
+                this.amount=this.amount1
+            }
+           this.orderstatus()
         },
         // 选中支付
         payaddClass(index){
           this.payIndex = index
         },
-          PayExtra(index){
-              this.payIndex = index
+          Extra1(index,item){
+              this.extraIndex = index
+              this.amount =  parseFloat(this.amount1)+ parseFloat(item.basePrice)
+              this.amount =  this.amount.toFixed(2)
+              this.ExtraList=item
           },
         // 显示订单
         showOrder(){
-          var  that=this
-          that.showOrder_pop=true;
+              console.log(this.single)
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  if(this.methodName == '自提'){
+                      var isDelivery =0
+                  }else{
+                      var isDelivery =1
+                  }
+                  if(this.single == false){
+                      var  isJryService =0
+                  }else{
+                      var  isJryService =1
+                  }
+                  if(this.methodName =='配送'){
+                      var data={
+                          isDelivery:isDelivery,
+                          isJryService:isJryService,
+                          totalAmount:this.amount,
+                          depositAmount:0,
+                          orderType:4,
+                          feedingId:this.id,
+                          orderNum:this.getWeek,
+                          addressId:this.addrdetail.id,
+                          sourceId:this.WeekList.id,
+                          transportationMode:this.ExtraList.transportationMode
+                      }
+                  }else{
+                      var data={
+                          isDelivery:isDelivery,
+                          isJryService:isJryService,
+                          totalAmount:this.amount,
+                          depositAmount:0,
+                          orderType:4,
+                          feedingId:this.id,
+                          orderNum:this.getWeek,
+                          addressId:this.addrdetail.id,
+                          sourceId:this.WeekList.id,
+                      }
+                  }
+
+                  const res=submitOrder(this, data).then(res=>{
+                  console.log('submitOrder',res)
+              });
+              }else{
+                  return
+              }
         },
         // 隐藏订单
         hiddenOrder(){
           var  that=this
           that.showOrder_pop=false;
         },
-        // 显示支付弹窗
+          single1(){
+              if(this.single){
+                  this.single=false
+              }else{
+                  this.single=true
+              }
+              console.log(this.single)
+          },
+
 
         // 显示地址弹窗
         AddAddress(){
@@ -347,6 +521,7 @@
         hiddenAdd(){
           this.showAdd_pop=false;
         },
+          //运费
         Payextra(){
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                  var addrdetail =this.addrdetail
@@ -361,6 +536,10 @@
                   const res= extra(this, data).then(res=>{
                               console.log('111',res)
                             this.extra =res.data
+                            this.amount =  parseFloat(this.amount1)+ parseFloat(res.data[0].basePrice)
+                            this.amount =  this.amount.toFixed(2)
+                            console.log(res.data[0].basePrice)
+                            console.log('amount',this.amount)
                      });
 
 
@@ -370,18 +549,27 @@
               }
 
         },
-
+        orderstatus(){
+              if(this.methodName=='自提' ){
+                  this.Order=1
+              }else{
+                  if(this.ExtraList !='' &&  this.addrdetail !=''){
+                      this.Order=1
+                  }else{
+                      this.Order=0
+                  }
+              }
+          },
         async userinfo(){
              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res=gainuserInfor(this, {}).then(res=>{
                     this.companyName=res.data.companyName
                     console.log('userinfo',res)
               });
-
-
               }else{
                   return
               }
+                this.orderstatus()
           },
       },
 
@@ -390,7 +578,7 @@
       },
       mounted() {
             this.userinfo();
-          this.specialData();
+            this.specialData();
 
       }
     }
