@@ -207,5 +207,43 @@ export const WinningBid = (vm, data) => {
   })
 }
 
+/**
+ * @description 添加竞拍保证金记录发送短信验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const BondMessSend = (vm, data) => {
+
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.BondMessSend,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+/**
+ * @description 竞拍验证手机验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const BondMessageCode = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.BondMessageCode,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
 
 

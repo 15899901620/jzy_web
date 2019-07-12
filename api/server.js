@@ -84,6 +84,10 @@ let api = {
     AddBondRecord:'/bill/auctionDeposit',           //添加保证金记录
 
     WinningBid:'/bill/auctionPlanned/getWinBid',  //中标信息
+
+    BondMessSend:'/bill/auctionDeposit/code',      //添加竞拍保证金记录发送短信验证码
+
+    BondMessageCode:'/bill/auctionDeposit/checkCode'    //验证手机验证码
   },
 
 
