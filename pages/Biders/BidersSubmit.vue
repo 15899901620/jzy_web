@@ -532,7 +532,6 @@
                       district: addrdetail.district,
                       warehouseId: this.id,
                   }
-
                   const res= extra(this, data).then(res=>{
                               console.log('111',res)
                             this.extra =res.data
@@ -541,13 +540,9 @@
                             console.log(res.data[0].basePrice)
                             console.log('amount',this.amount)
                      });
-
-
-
               }else{
                   return
               }
-
         },
         orderstatus(){
               if(this.methodName=='自提' ){
