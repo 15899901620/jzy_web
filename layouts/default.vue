@@ -31,7 +31,7 @@ export default {
       this.headtitle()
     },
     headtitle(){
-      if ( this.headname == 'Physical'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics') {
+       if ( this.headname == 'Physical'  || this.headname =='special' || this.headname == 'news' || this.headname == 'bidders'|| this.headname == 'advance'|| this.headname == 'spot' || this.headname == 'logistics') {
         this.judgetitle=true
       } else {
         this.judgetitle=false
@@ -43,7 +43,7 @@ export default {
     this.headName(data)
   },
   mounted() {
-  
+    console.log('default_this.$router',this.$router)
   },
   activated(){
   },

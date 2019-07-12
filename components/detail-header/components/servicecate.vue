@@ -208,14 +208,15 @@
 
         },
 
-
-
       },
+      mounted(){
+       console.log('$router',this.$router)
+        }
     }
 </script>
 
 <style scoped>
-  .ass_menu { width: 100%; background-color: #020308; position: absolute;left: 0; top: 40px; height: 320px; z-index: 1;}
+  .ass_menu { width: 100%; background-color: #020308; position: absolute;left: 0; top: 40px; height: 320px; z-index: 1;  }
   .menu_items{height: 80px;border-bottom: 1px solid #2c2e37; position: relative; box-sizing: border-box;}
   .menu_items.curr{background-color: #007de4;}
   .menu_items_text{width: 100%; display: flex; height: 100%; padding-left: 30px;font-size: 16px;

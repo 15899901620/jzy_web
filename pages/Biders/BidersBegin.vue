@@ -134,7 +134,7 @@
             </div>
 
         <!-- 竞拍结束&#45;&#45;未中标 -->
-            <div class="Bidders_record_result_list graybg  mt25" v-if="WinBidShow === false && detailDatabrid.type === 3">
+            <div class="Bidders_record_result_list graybg  mt25" v-show="NotWinBidShow && detailDatabrid.type === 3">
               <div class="fontScalend fontScalendbg">
                 <span>未中标</span>
               </div>
@@ -351,6 +351,7 @@
               type:Object
             },
             WinBidShow:false,
+            NotWinBidShow:false,
             WinBid:{
               type:Object
             },
@@ -439,9 +440,11 @@
           }
           let res = await auctionRecord(this,params)
           console.log('竞拍记录res', res)
-          if(res){
+          if(res ){
             this.auctionRd=res.data.items
             console.log('***auctionRd***', this.auctionRd)
+            console.log('***this.detailDatabrid.type***', this.detailDatabrid.type)
+            if(this.detailDatabrid.type===3){
             var newArr = this.auctionRd.filter(item=>{return item.outStatus ===1 || item.outStatus ===2})
             var totalnum=newArr.map(function(v){
                 return v.bidNum
@@ -459,6 +462,7 @@
             this.auctionWin=HighPrice.length,     //中标人数
             this.auctionTotal=totalnum.reduce(function(prev, curr){ return prev + curr; })
              console.log('auctionTotal', this.auctionTotal)
+            }
           }
 
          // console.log('auctionRd', this.auctionRd)
@@ -479,6 +483,8 @@
             this.WinBidShow=true
             this.WinBid=res.data
             this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
+          }else{
+            this.NotWinBidShow=true
           }
 
         },
@@ -651,7 +657,7 @@
         }
       },
       mounted() {
-        console.log('this.$router',this.$router)
+      //  console.log('this.$router',this.$router)
         this.id=this.$router.history.current.query.id
         this.AuctionDetail(this.id)
 
