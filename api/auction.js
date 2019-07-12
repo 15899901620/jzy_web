@@ -175,7 +175,7 @@ export const GainauctionRecord = (vm, data) => {
 export const AddBondRecord = (vm, data) => {
 
   vm.$axios.defaults.headers = {
-
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   return vm.$axios.post(server.prefix + server.api.Auction.AddBondRecord,

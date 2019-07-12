@@ -368,6 +368,7 @@
               type:Object
             },
             DepositData:{
+              auctionId:'',
               MinePrice:0,
               aucteNum:0,
               Bond:0,   //保证金比例
@@ -425,6 +426,7 @@
         //显示追加保证金的弹窗
         PayCost(){
           this.DepositShow=true
+          this.DepositData.auctionId= this.detailDatabrid.id
           this.DepositData.MinePrice= this.MinPrice
           this.DepositData.aucteNum = this.auctionNum
           this.DepositData.Bond = this.auctionBond
@@ -545,13 +547,17 @@
           this.priceInfo(this.detailDatabrid.skuId)
           this.NewPrice(this.detailDatabrid.id)
           this.GainauctionRecord(this.detailDatabrid.id)  //获取我的出价记录
+          this.AuctionRecord()   //竞拍记录
+          this.auctionMineRecord()  //我的出价
         },
 
         //最小起拍价
         async priceInfo(id){
+          console.log('最小起拍价id:', id)
           let params={
             skuId:id
           }
+          console.log('最小起拍价params:', params)
           let res =await priceListInfo(this,params)
           console.log('最小起拍价res',res)
           if(res)
@@ -661,8 +667,7 @@
         this.id=this.$router.history.current.query.id
         this.AuctionDetail(this.id)
 
-        this.AuctionRecord()   //竞拍记录
-        this.auctionMineRecord()  //我的出价
+
 
 
 

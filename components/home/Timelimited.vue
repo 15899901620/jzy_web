@@ -20,7 +20,7 @@
           </div>
           <h3 class="fs16 fwb mt20">{{items.manufacturer}} {{items.skuName}} </h3>
           <div class="limitedPrice">
-            <span class="fs14">起拍价 : </span><span class="fs18" style="color: #ff6600;">{{items.bidPrice}}元/吨</span>
+            <span class="fs14">起拍价 : </span><span class="fs18" style="color: #ff6600;">{{items.startPrice}}元/吨</span>
           </div>
           <div class="NumStore">
             <span>数量 : {{items.totalNum}}吨</span>
