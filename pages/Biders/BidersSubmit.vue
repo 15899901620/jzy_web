@@ -195,6 +195,7 @@
           showPay(){
               this.$router.push({path:"/users/usercapitalmanage"})
           },
+          //输入时
           SearchInput(){
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
@@ -240,6 +241,7 @@
               }
 
           },
+          //加+
           add(){
 
               if(this.methodName=='自提'){
@@ -295,6 +297,7 @@
 
 
           },
+          //减-
           subtract(){
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
@@ -354,16 +357,18 @@
                   this.isRouterAlive = true
               })
           },
+          //单选
           Radio(i,item){
               this.isactive=i;
               this.addrdetail=item;
               this.Payextra();
           },
+          //初始化数据
           async specialData(){
               this.id=this.$route.query.id
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res=await addressList(this, {})
-                  console.log(res.data)
+                  //收货地址
                   if(res){
                       this.addressList=res.data
                       this.AddressNum=res.data.length
@@ -402,6 +407,7 @@
                       id: this.id
                   }
                   const res1=await  specialDetail(this, data)
+                  //周计划
                   if(res1){
                       this.specialDetail =res1.data
                       if(this.methodName=='自提'){
@@ -452,7 +458,6 @@
           },
         // 显示订单
         showOrder(){
-              console.log(this.single)
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   if(this.methodName == '自提'){
                       var isDelivery =0
@@ -475,6 +480,7 @@
                           orderNum:this.getWeek,
                           addressId:this.addrdetail.id,
                           sourceId:this.WeekList.id,
+                          isPerDeposit:0,
                           transportationMode:this.ExtraList.transportationMode
                       }
                   }else{
@@ -488,11 +494,15 @@
                           orderNum:this.getWeek,
                           addressId:this.addrdetail.id,
                           sourceId:this.WeekList.id,
+                          isPerDeposit:0,
+                          transportationMode:'其他',
                       }
                   }
 
                   const res=submitOrder(this, data).then(res=>{
-                  console.log('submitOrder',res)
+                  if(res.data==true){
+                      this.$router.push({name:'Biders-BidersPayCost'})
+                  }
               });
               }else{
                   return
