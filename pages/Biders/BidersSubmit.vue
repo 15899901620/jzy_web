@@ -125,7 +125,7 @@
   import PayPopup from '../Biders/BidersComponent/PayPopup'
   import AddressPopup from '../users/userCompontent/AddressPopup'
   import { addressList, gainuserInfor} from '../../api/users'
-  import { auctionPlanDetail,submitOrder} from '../../api/auction'
+  import { auctionPlanDetail,auctionsubmitOrderL} from '../../api/auction'
   import {extra} from '../../api/extra'
   import { capitalinfo } from '../../api/capital'
   import Cookies from 'js-cookie'
@@ -450,6 +450,7 @@
         addClass(index){
               console.log()
           this.currentIndex = index
+          this.extraIndex=0
             if(index==1){
                 this.methodName='配送'
                 this.Payextra();
@@ -465,7 +466,7 @@
         },
           Extra1(index,item){
               this.extraIndex = index
-              this.amount =  parseFloat(this.amount1)+ parseFloat(item.basePrice)
+              this.amount =  parseFloat(this.amount1)+ (parseFloat(item.basePrice)*this.specialDetail.bidPrice)
               this.amount =  this.amount.toFixed(2)
               this.ExtraList=item
           },
@@ -512,7 +513,7 @@
                       }
                   }
 
-                  const res=submitOrder(this, data).then(res=>{
+                  const res=auctionsubmitOrderL(this, data).then(res=>{
                   if(res.data==true){
                       this.$router.push({name:'Biders-BidersPayCost'})
                   }
@@ -553,12 +554,13 @@
                       state: addrdetail.state,
                       city: addrdetail.city,
                       district: addrdetail.district,
-                      warehouseId: this.id,
+                      warehouseId: this.specialDetail.warehouseId,
                   }
+                  console.log('data:', data)
                   const res= extra(this, data).then(res=>{
                               console.log('111',res)
                             this.extra =res.data
-                            this.amount =  parseFloat(this.amount1)+ parseFloat(res.data[0].basePrice)
+                            this.amount =  parseFloat(this.amount1)+ (parseFloat(res.data[0].basePrice)*this.specialDetail.bidPrice)
                             this.amount =  this.amount.toFixed(2)
                             console.log(res.data[0].basePrice)
                             console.log('amount',this.amount)
@@ -572,6 +574,7 @@
                   this.Order=1
               }else{
                   if(this.ExtraList !='' &&  this.addrdetail !=''){
+                    console.log('Order',this.Order)
                       this.Order=1
                   }else{
                       this.Order=0
