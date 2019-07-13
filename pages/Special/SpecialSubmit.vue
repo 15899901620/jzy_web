@@ -72,20 +72,21 @@
             <span class="gray fs14">（ 距离最后全部提货完成时间剩<span class="orangeFont">02天05时30分</span>，逾期增加<span class="orangeFont">0.01%</span>的仓储费 ）</span>
           </div>
           <ul class="orderPorList">
-            <li><h2 style="width: 12%;">编号</h2><h2 style="width: 13%;">货物信息</h2><h2 style="width: 12%;">单价（元/吨）</h2><h2 style="width: 12%;">可提吨数</h2><h2 style="width: 12%;">已提吨数</h2><h2 style="width: 14%;">本次提货吨数</h2><h2 style="width: 12%;">交货地</h2><h2 style="width: 9%;">小计</h2></li>
+            <li><h2 style="width: 12%;">编号</h2><h2 style="width: 13%;">货物信息</h2><h2 style="width: 12%;">单价（元/吨）</h2><h2 style="width: 12%;">放料单可提吨数</h2><h2 style="width: 12%;">周计划可提吨数</h2><h2 style="width: 12%;">已提吨数</h2><h2 style="width: 14%;">本次提货吨数</h2><h2 style="width: 12%;">交货地</h2><h2 style="width: 9%;">小计</h2></li>
             <li>
               <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
               <div  style="width: 13%;">{{specialDetail.skuName}}</div>
-              <div  style="width: 12%;">{{specialDetail.bidPrice}}</div>
-               <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
-              <div  style="width: 12%;">{{specialDetail.takenNum}}</div>
+              <div  style="width: 12%;">{{specialDetail.basePrice}}</div>
+              <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
+              <div  style="width: 12%;">{{maxnumber-WeekList.weekAlreadyDeliveryNum}}</div>
+              <div  style="width: 12%;">{{WeekList.monthTotalDeliveryNum}}</div>
               <div  style="width: 14%;">
                 <div class="NumReduice">
                   <span class="orangeFont" style="width: 25%;" @click="subtract()">-</span>
-                  <input class="TextNum" type="text" name="" id="" v-model="TakeGoods" v-on:input="SearchInput"/>
+                  <input class="TextNum" type="text" name="" id="" v-model="getWeek" v-on:input="SearchInput"/>
                   <span class="orangeFont" style="width: 25%;"  @click="add()">+</span>	        		</div>
               </div>
-              <div  style="width: 12%;">{{specialDetail.warehouseName}}</div>
+              <div  style="width: 12%;">东莞市</div>
               <div class="fwb orangeFont" style="width: 9%;">{{amount}}</div>
             </li>
           </ul>
@@ -125,9 +126,9 @@
   import PayPopup from '../Biders/BidersComponent/PayPopup'
   import AddressPopup from '../users/userCompontent/AddressPopup'
   import { addressList, gainuserInfor} from '../../api/users'
-  import { auctionPlanDetail,submitOrder} from '../../api/auction'
+  import { specialDetail,getWeek ,submitOrder} from '../../api/special'
   import {extra} from '../../api/extra'
-  import { capitalinfo } from '../../api/capital'
+  import { capitalinfo} from '../../api/capital'
   import Cookies from 'js-cookie'
 
     export default {
@@ -158,7 +159,6 @@
             currentIndex:0,
             payIndex:0,
               extraIndex:0,
-            TakeGoods:0,//提货数量
             methodList:[
               {methodName:'自提'},
               {methodName:'配送'}
@@ -206,42 +206,42 @@
           SearchInput(){
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
-                      if(  parseFloat(this.TakeGoods) > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
                           this.$Notice.open({
-                              title: '不能大于可提吨数',
+                              title: '不能大于提货吨数',
                           });
-                          this.TakeGoods=this.specialDetail.availableNum
+                          this.getWeek=this.maxnumber
                       }
                   }else{
-                      if(  parseFloat(this.TakeGoods)%parseFloat(this.specialDetail.takeTheirMin) != 0 ||  parseFloat(this.TakeGoods) > parseFloat(this.specialDetail.availableNum) || parseFloat(this.TakeGoods) <=0){
+                      if(  parseFloat(this.getWeek)%parseFloat(this.specialDetail.takeTheirMin) != 0 ||  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) <=0){
                           this.$Notice.open({
-                              title: '不能小于提货吨数',
+                              title: '不能大于提货吨数',
                           });
-                          this.TakeGoods=this.specialDetail.takeTheirMin
+                          this.getWeek=this.specialDetail.takeTheirMin
                       }
                   }
               }
               if(this.methodName=='配送'){
                   if(this.specialDetail.deliveryDoubly==0){
-                      if(  parseFloat(this.TakeGoods) > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
-                          this.TakeGoods=this.specialDetail.availableNum
+                          this.getWeek=this.maxnumber
                       }
-                      if( parseFloat(this.TakeGoods) <= 0){
+                      if( parseFloat(this.getWeek) <= 0){
 
                           this.$Notice.open({
                               title: '不能小于等于0',
                           });
-                          this.TakeGoods=this.specialDetail.deliveryMin
+                          this.getWeek=1
                       }
                   }else{
-                      if(  parseFloat(this.TakeGoods)%parseFloat(this.specialDetail.deliveryMin) != 0 ||  parseFloat(this.TakeGoods) > parseFloat(this.specialDetail.availableNum) || parseFloat(this.TakeGoods) <=0){
+                      if(  parseFloat(this.getWeek)%parseFloat(this.specialDetail.deliveryMin) != 0 ||  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) <=0){
                           this.$Notice.open({
                               title: '请输入正确的数量',
                           });
-                          this.TakeGoods=this.specialDetail.deliveryMin
+                          this.getWeek=this.specialDetail.deliveryMin
                       }
 
                   }
@@ -253,24 +253,24 @@
 
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
-                      if(  parseFloat(this.TakeGoods)+ 1 > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) +1
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) +1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount=this.amount.toFixed(3)
                           this.amount1=this.amount
                       }
                   }else{
-                      if(  parseFloat(this.TakeGoods)+ parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.maxnumber)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) +parseFloat(this.specialDetail.takeTheirMin)
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) +parseFloat(this.specialDetail.takeTheirMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount=this.amount.toFixed(3)
                           this.amount1=this.amount
                       }
@@ -278,24 +278,24 @@
               }
               if(this.methodName=='配送'){
                   if(this.specialDetail.deliveryDoubly==0 ){
-                      if(  parseFloat(this.TakeGoods)+ 1 > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) +1
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) +1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
                   }else{
-                      if(  parseFloat(this.TakeGoods)+ parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.maxnumber)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) +parseFloat(this.specialDetail.deliveryMin)
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) +parseFloat(this.specialDetail.deliveryMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
@@ -308,25 +308,25 @@
           subtract(){
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
-                      if(  parseFloat(this.TakeGoods)- 1 <= parseFloat(this.specialDetail.takeTheirMin)){
+                      if(  parseFloat(this.getWeek)- 1 <= parseFloat(this.specialDetail.takeTheirMin)){
                           this.$Notice.open({
                               title: '不能小于最小值',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) -1
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) -1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
                   }else{
 
-                      if(  parseFloat(this.TakeGoods)- parseFloat(this.specialDetail.takeTheirMin) < parseFloat(this.specialDetail.takeTheirMin)){
+                      if(  parseFloat(this.getWeek)- parseFloat(this.specialDetail.takeTheirMin) < parseFloat(this.specialDetail.takeTheirMin)){
                           this.$Notice.open({
                               title: '不能小于最小值',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) -parseFloat(this.specialDetail.takeTheirMin)
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) -parseFloat(this.specialDetail.takeTheirMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
@@ -334,24 +334,24 @@
               }
               if(this.methodName=='配送'){
                   if(this.specialDetail.delivery_doubly==0 ){
-                      if( parseFloat(this.TakeGoods)- 1 <= this.specialDetail.deliveryMin){
+                      if( parseFloat(this.getWeek)- 1 <= this.specialDetail.deliveryMin){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) -1
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) -1
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
                   }else{
-                      if( parseFloat(this.TakeGoods)- parseFloat(this.specialDetail.deliveryMin) < parseFloat(this.specialDetail.deliveryMin)){
+                      if( parseFloat(this.getWeek)- parseFloat(this.specialDetail.deliveryMin) < parseFloat(this.specialDetail.deliveryMin)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) -parseFloat(this.specialDetail.deliveryMin)
-                          this.amount=this.specialDetail.bidPrice * this.TakeGoods
+                          this.getWeek =    parseFloat(this.getWeek) -parseFloat(this.specialDetail.deliveryMin)
+                          this.amount=this.specialDetail.basePrice * this.getWeek
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
                       }
@@ -372,11 +372,9 @@
           },
           //初始化数据
           async specialData(specialId){
-            console.log('specialId',specialId)
               this.id=specialId
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res=await addressList(this, {})
-                console.log('收货地址', res)
                   //收货地址
                   if(res){
                       this.addressList=res.data
@@ -396,49 +394,45 @@
                   return
               }
 
-              // if(Cookies.get('userinfor') && Cookies.get('webtoken')){
-              //     let data={
-              //         skuId: this.id
-              //     }
-              //     const res2=await  getWeek(this, data)
-              //     if(res2){
-              //         console.log('11',res2)
-              //         this.WeekList=res2.data
-              //
-              //         this.maxnumber =res2.data.monthNum/res2.data.takenRatio
-              //         console.log(this.maxnumber)
-              //     }
-              // }else{
-              //     return
-              // }
+              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                  let data={
+                      skuId: this.id
+                  }
+                  const res2=await  getWeek(this, data)
+                  if(res2){
+                      console.log('11',res2)
+                      this.WeekList=res2.data
+
+                      this.maxnumber =res2.data.monthNum/res2.data.takenRatio
+                      console.log(this.maxnumber)
+                  }
+              }else{
+                  return
+              }
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   let data={
                       id: this.id
                   }
-                  const res1=await  auctionPlanDetail(this, data)
-                   //周计划
+                  const res1=await  specialDetail(this, data)
+                  //周计划
                   if(res1){
                       this.specialDetail =res1.data
+                      if(this.methodName=='自提'){
+                          this.getWeek =res1.data.takeTheirMin
+                      }else{
+                          this.getWeek =res1.data.deliveryMin
+                      }
 
-                      // if(this.methodName=='自提'){
-                      //     this.getWeek =res1.data.takeTheirMin
-                      // }else{
-                      //     this.getWeek =res1.data.deliveryMin
-                      // }
-                      this.TakeGoods=res1.data.takenNum
                       console.log('getWeek',res1)
-                      this.amount=res1.data.bidPrice * this.TakeGoods
+                      this.amount=res1.data.basePrice * this.getWeek
                       this.amount1=this.amount.toFixed(3)
                       this.amount=this.amount.toFixed(3)
                   }
               }else{
                   return
               }
-
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
-
                   const res3=await  capitalinfo(this, {})
-                console.log('res3', res3)
                   if(res3){
                       this.capitalinfo=res3.data
                   }

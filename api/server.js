@@ -87,7 +87,12 @@ let api = {
 
     BondMessSend:'/bill/auctionDeposit/code',      //添加竞拍保证金记录发送短信验证码
 
-    BondMessageCode:'/bill/auctionDeposit/checkCode'    //验证手机验证码
+    BondMessageCode:'/bill/auctionDeposit/checkCode',    //验证手机验证码
+
+    auctionPlanDetail:'/bill/auctionPlanned/info'    //根据竞拍计划id获取计划详情
+
+
+
   },
 
 

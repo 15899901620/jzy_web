@@ -390,7 +390,7 @@
         },
         //提货_跳转到下单页
         auctionOrder(){
-          this.$router.push({name:"Biders-BidersSubmit"})
+          this.$router.push({name:"Biders-BidersSubmit",query:{id:this.WinBid.id}})
         },
         // 竞拍出价
         cutsOffer(){
@@ -742,7 +742,7 @@
 
   .gxzb { display: block; font-size: 28px; line-height: 50px;  text-align: center;     color: #fff; margin-top: 30px;}
   .dflex a{text-decoration: none;}
-  .zb_btn { border-radius: 3px; display: block; width: 180px;  margin: 30px auto;  line-height: 43px;  text-align: center;  font-size: 18px;}
+  .zb_btn { border-radius: 3px; display: block; width: 180px;  margin: 30px auto;  line-height: 43px;  text-align: center;  font-size: 18px; cursor: pointer}
 
   .paipin_table {width: 97%;  margin-top: 10px;  border-left: 1px solid #D5D5D5;  border-top: 1px solid #D5D5D5;}
   .paipin_table tr { line-height: 40px; font-size: 14px;}

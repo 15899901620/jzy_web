@@ -1,10 +1,11 @@
 <template>
   <div class="Time-limited">
-    <div class="Time_Banner pr">
+    <div class="Time_Banner pr" >
       <img src="../../assets/img/Time_banner.png" />
+      <div class="bidders_front" @click="biddersList"></div>
     </div>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
-      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">
+      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}" >
         <img src="../../assets/img/back.png" />
       </div>
       <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}"  id='TimeL-ul'>
@@ -59,6 +60,10 @@
 
       },
       methods:{
+         //竞拍列表页
+        biddersList(){
+          this.$router.push({name:"bidders"})
+        },
         //竞拍记录
         async AuctionRecord(){
           let params={
@@ -161,6 +166,13 @@
           this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
         },
 
+
+
+
+
+
+
+
       },
       computed:{
 
@@ -173,24 +185,22 @@
 
 
         // *****限时竞拍******
-       setTimeout(function(){
-         var chefElement = {
-           minSpeed: 10,//每次移动的距离
-           //获取页面元素
-           prev:document.getElementById('prev'),
-           next:document.getElementById('next'),
-           parent:document.getElementById('parent'),
-           ul:document.getElementById('TimeL-ul'),
-           li:document.getElementById('TimeL-ul').getElementsByTagName('li'),
-           liWidth:document.getElementById('TimeL-ul').getElementsByTagName('li')[0].offsetWidth,
-           type:true,
-           nextTimer:null,
-           prevTimer:null,
-           parent_n:null
-         }
-
-
-
+      setTimeout(function(){
+        console.log('****TabBirder****TabBirder')
+        var chefElement = {
+          minSpeed: 10,//每次移动的距离
+          //获取页面元素
+          prev:document.getElementById('prev'),
+          next:document.getElementById('next'),
+          parent:document.getElementById('parent'),
+          ul:document.getElementById('TimeL-ul'),
+          li:document.getElementById('TimeL-ul').getElementsByTagName('li'),
+          liWidth:document.getElementById('TimeL-ul').getElementsByTagName('li')[0].offsetWidth,
+          type:true,
+          nextTimer:null,
+          prevTimer:null,
+          parent_n:null
+        }
 
         chefElement.prev.onclick = function(){
 
@@ -242,7 +252,7 @@
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
         let TLWidth=TL[0].offsetWidth
         that.TLlength=TL.length*TLWidth
-       },1000)
+      },2000)
 
       },
     destoryed () {
@@ -263,6 +273,8 @@
   .Time-limited_list li .limitedPrice{ width: 80%;  margin: 0 auto; padding: 10px 0;}
   .Time-limited_list li .NumStore{display: flex; flex-direction: column;  text-align: left;  padding: 10px 0px 10px 32px; font-size: 13px;
     border-bottom: 1px dashed #dedede; width: 70%;  margin: 0 auto;  border-top: 1px dashed #dedede;  box-sizing: border-box;}
+
+  .bidders_front{width: 24px;height: 24px;position: absolute;   bottom: 34px; left: 21px; cursor: pointer;}
 
   .Time-limited_list li .Timebtn{width: 70%;margin: 17px auto;    padding: 7px 52px; box-sizing: border-box; color: #fff; border-radius:3px; cursor: pointer;}
   .Time-limited_list li .beginbg{background-color: #23aa36}.Time-limited_list li .endbg{background-color: #cfcfcf}
