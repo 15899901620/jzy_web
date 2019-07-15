@@ -71,6 +71,7 @@
               status: 'CO'
           }
           const res = await specialList(this, params)
+          console.log(res)
           this.items = res.data.items
           this.total = res.data.total
 

@@ -204,9 +204,11 @@
           },
           //输入时
           SearchInput(){
+              console.log(this.specialDetail.availableNum)
+              console.log(this.specialDetail.takeTheirDoubly)
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
-                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) > parseFloat(this.specialDetail.availableNum)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -223,7 +225,7 @@
               }
               if(this.methodName=='配送'){
                   if(this.specialDetail.deliveryDoubly==0){
-                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber)){
+                      if(  parseFloat(this.getWeek) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) > parseFloat(this.specialDetail.availableNum)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -253,7 +255,7 @@
 
               if(this.methodName=='自提'){
                   if(this.specialDetail.takeTheirDoubly==0){
-                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber) || parseFloat(this.getWeek) +1 > parseFloat(this.specialDetail.availableNum)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -264,7 +266,7 @@
                           this.amount1=this.amount
                       }
                   }else{
-                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.maxnumber)){
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) + parseFloat(this.specialDetail.takeTheirMin) > parseFloat(this.specialDetail.availableNum)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -277,8 +279,8 @@
                   }
               }
               if(this.methodName=='配送'){
-                  if(this.specialDetail.deliveryDoubly==0 ){
-                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber)){
+                  if(this.specialDetail.deliveryDoubly==0 || parseFloat(this.getWeek) +1 > parseFloat(this.specialDetail.availableNum)){
+                      if(  parseFloat(this.getWeek)+ 1 > parseFloat(this.maxnumber) ){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -289,7 +291,7 @@
                           this.amount=this.amount.toFixed(3)
                       }
                   }else{
-                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.maxnumber)){
+                      if(  parseFloat(this.getWeek)+ parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.maxnumber) || parseFloat(this.getWeek) +parseFloat(this.specialDetail.deliveryMin) > parseFloat(this.specialDetail.availableNum)){
                           this.$Notice.open({
                               title: '不能大于提货吨数',
                           });
@@ -507,8 +509,9 @@
                   }
 
                   const res=submitOrder(this, data).then(res=>{
-                  if(res.data==true){
-                      this.$router.push({name:'Biders-BidersPayCost'})
+                              console.log(res)
+                  if(res.errorCode == ''){
+                      this.$router.push({name:'Biders-BidersPayCost',query:{id:res.id,orderNo:res.orderNo}})
                   }
               });
               }else{

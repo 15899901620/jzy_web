@@ -18,7 +18,7 @@
          <p>联系电话：4009-000-000</p>
        </div>
        <div class="orderbtn">
-         <a class="submitBtn btnBg">继续采购</a><a class="submitBtn btnBorderBg ml30">我的订单</a>
+         <a class="submitBtn btnBg" @click="submitBtn()">继续采购</a><a class="submitBtn btnBorderBg ml30">我的订单</a>
        </div>
      </div>
 
@@ -34,7 +34,12 @@
 
           }
       },
-      methods:{}
+      methods:{
+          submitBtn(){
+              this.$router.push({name:'special'})
+          }
+
+      }
     }
 </script>
 
