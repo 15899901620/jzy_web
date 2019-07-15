@@ -395,7 +395,6 @@
                   if(res2){
                       console.log('11',res2)
                       this.WeekList=res2.data
-
                       this.maxnumber =res2.data.monthNum/res2.data.takenRatio
                       console.log(this.maxnumber)
                   }
@@ -500,7 +499,8 @@
                   }
 
                   const res=submitOrder(this, data).then(res=>{
-                  if(res.data==true){
+                              console.log(res)
+                  if(!res.data.errorCode){
                       this.$router.push({name:'Biders-BidersPayCost'})
                   }
               });
