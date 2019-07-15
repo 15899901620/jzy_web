@@ -266,18 +266,19 @@ export const auctionPlanDetail = (vm, data) => {
 }
 
 /**
- * @description 根据竞拍计划id获取计划详情
+ * @description 客户通过竞拍计划单下单
  * @param vm
  * @param data
  * @returns {*}
  */
 export const auctionsubmitOrderL = (vm, data) => {
   vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
-  return vm.$axios.get(server.prefix + server.api.Auction.auctionsubmitOrderL,
+  return vm.$axios.post(server.prefix + server.api.Auction.auctionsubmitOrderL,
     {
-      params: {...data}
+      ...data
     }).catch((e) => {
     let errorInfo = e.response
     console.log('manageEditErr', errorInfo)

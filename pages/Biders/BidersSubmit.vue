@@ -110,7 +110,7 @@
       </div>
       <div class="w1200 whitebg dflexAlem" style="font-size: 14px; margin-top: 30px; margin-bottom:50px;justify-content:flex-end;">
         <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">{{amount}}</span> 元</span></div>
-        <div class="submitOrder"  style="background-color: #e0dede"   v-if="Order==0">提交订单</div>
+        <div class="submitOrder"  style="background-color: #e0dede"   v-if="Order == 0">提交订单</div>
         <div class="submitOrder"  @click="showOrder()" v-else>提交订单</div>
 
       </div>
@@ -454,21 +454,30 @@
             if(index==1){
                 this.methodName='配送'
                 this.Payextra();
+                this.Order=1
+              console.log('order',this.Order)
+
             }else{
                 this.methodName='自提'
                 this.amount=this.amount1
             }
            this.orderstatus()
-        },
+         },
         // 选中支付
         payaddClass(index){
           this.payIndex = index
         },
           Extra1(index,item){
+            console.log('index:', index)
+            console.log('item:', item)
+
               this.extraIndex = index
               this.amount =  parseFloat(this.amount1)+ (parseFloat(item.basePrice)*this.specialDetail.bidPrice)
               this.amount =  this.amount.toFixed(2)
+
               this.ExtraList=item
+            this.orderstatus()
+            console.log('ExtraList:', this.ExtraList)
           },
         // 显示订单
         showOrder(){
@@ -489,11 +498,11 @@
                           isJryService:isJryService,
                           totalAmount:this.amount,
                           depositAmount:0,
-                          orderType:4,
-                          feedingId:this.id,
-                          orderNum:this.getWeek,
+                          orderType:3,
+                          //feedingId:this.id,
+                          orderNum:this.TakeGoods,
                           addressId:this.addrdetail.id,
-                          sourceId:this.WeekList.id,
+                          sourceId:this.specialDetail.id,
                           isPerDeposit:0,
                           transportationMode:this.ExtraList.transportationMode
                       }
@@ -503,17 +512,18 @@
                           isJryService:isJryService,
                           totalAmount:this.amount,
                           depositAmount:0,
-                          orderType:4,
-                          feedingId:this.id,
-                          orderNum:this.getWeek,
+                          orderType:3,
+                          //feedingId:this.id,
+                          orderNum:this.TakeGoods,
                           addressId:this.addrdetail.id,
-                          sourceId:this.WeekList.id,
+                          sourceId:this.specialDetail.id,
                           isPerDeposit:0,
                           transportationMode:'其他',
                       }
                   }
-
+                 console.log('data',data)
                   const res=auctionsubmitOrderL(this, data).then(res=>{
+                    console.log('res', res)
                   if(res.data==true){
                       this.$router.push({name:'Biders-BidersPayCost'})
                   }
@@ -570,11 +580,11 @@
               }
         },
         orderstatus(){
+            console.log('****orderstatus****orderstatus')
               if(this.methodName=='自提' ){
                   this.Order=1
               }else{
                   if(this.ExtraList !='' &&  this.addrdetail !=''){
-                    console.log('Order',this.Order)
                       this.Order=1
                   }else{
                       this.Order=0
