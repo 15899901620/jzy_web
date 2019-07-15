@@ -175,7 +175,7 @@ export const GainauctionRecord = (vm, data) => {
 export const AddBondRecord = (vm, data) => {
 
   vm.$axios.defaults.headers = {
-
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   return vm.$axios.post(server.prefix + server.api.Auction.AddBondRecord,
@@ -245,5 +245,45 @@ export const BondMessageCode = (vm, data) => {
     console.log('manageEditErr', errorInfo)
   })
 }
+
+/**
+ * @description 根据竞拍计划id获取计划详情
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const auctionPlanDetail = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.auctionPlanDetail,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+/**
+ * @description 客户通过竞拍计划单下单
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const auctionsubmitOrderL = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.post(server.prefix + server.api.Auction.auctionsubmitOrderL,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
 
 

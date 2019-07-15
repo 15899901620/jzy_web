@@ -368,6 +368,7 @@
               type:Object
             },
             DepositData:{
+              auctionId:'',
               MinePrice:0,
               aucteNum:0,
               Bond:0,   //保证金比例
@@ -389,7 +390,7 @@
         },
         //提货_跳转到下单页
         auctionOrder(){
-          this.$router.push({name:"Biders-BidersSubmit"})
+          this.$router.push({name:"Biders-BidersSubmit",query:{id:this.WinBid.id}})
         },
         // 竞拍出价
         cutsOffer(){
@@ -425,6 +426,7 @@
         //显示追加保证金的弹窗
         PayCost(){
           this.DepositShow=true
+          this.DepositData.auctionId= this.detailDatabrid.id
           this.DepositData.MinePrice= this.MinPrice
           this.DepositData.aucteNum = this.auctionNum
           this.DepositData.Bond = this.auctionBond
@@ -545,13 +547,17 @@
           this.priceInfo(this.detailDatabrid.skuId)
           this.NewPrice(this.detailDatabrid.id)
           this.GainauctionRecord(this.detailDatabrid.id)  //获取我的出价记录
+          this.AuctionRecord()   //竞拍记录
+          this.auctionMineRecord()  //我的出价
         },
 
         //最小起拍价
         async priceInfo(id){
+          console.log('最小起拍价id:', id)
           let params={
             skuId:id
           }
+          console.log('最小起拍价params:', params)
           let res =await priceListInfo(this,params)
           console.log('最小起拍价res',res)
           if(res)
@@ -661,8 +667,7 @@
         this.id=this.$router.history.current.query.id
         this.AuctionDetail(this.id)
 
-        this.AuctionRecord()   //竞拍记录
-        this.auctionMineRecord()  //我的出价
+
 
 
 
@@ -737,7 +742,7 @@
 
   .gxzb { display: block; font-size: 28px; line-height: 50px;  text-align: center;     color: #fff; margin-top: 30px;}
   .dflex a{text-decoration: none;}
-  .zb_btn { border-radius: 3px; display: block; width: 180px;  margin: 30px auto;  line-height: 43px;  text-align: center;  font-size: 18px;}
+  .zb_btn { border-radius: 3px; display: block; width: 180px;  margin: 30px auto;  line-height: 43px;  text-align: center;  font-size: 18px; cursor: pointer}
 
   .paipin_table {width: 97%;  margin-top: 10px;  border-left: 1px solid #D5D5D5;  border-top: 1px solid #D5D5D5;}
   .paipin_table tr { line-height: 40px; font-size: 14px;}

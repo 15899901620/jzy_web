@@ -87,7 +87,12 @@ let api = {
 
     BondMessSend:'/bill/auctionDeposit/code',      //添加竞拍保证金记录发送短信验证码
 
-    BondMessageCode:'/bill/auctionDeposit/checkCode'    //验证手机验证码
+    BondMessageCode:'/bill/auctionDeposit/checkCode',    //验证手机验证码
+
+    auctionPlanDetail:'/bill/auctionPlanned/info',    //根据竞拍计划id获取计划详情
+
+    auctionsubmitOrderL:'/bill/orderInfo/auction/create'    //客户通过竞拍计划单下单
+
   },
 
 
@@ -127,7 +132,7 @@ let api = {
  * @description 专料
  */
     extra:{
-        extraDetail:'/bill/freightList/getFreightListByAddress',
+          extraDetail:'/bill/freightList/getFreightListByAddress',
 
     },
     /**

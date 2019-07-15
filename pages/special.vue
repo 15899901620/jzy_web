@@ -61,7 +61,7 @@
   },
   methods:{
     indent(special){
-      this.$router.push({name:'Biders-BidersSubmit',query:{id:special.id}})
+      this.$router.push({name:'Special-SpecialSubmit',query:{id:special.id}})
     },
 
       async specialData(){

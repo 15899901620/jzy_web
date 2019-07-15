@@ -31,12 +31,12 @@
       </div>
       <!--输入验证码-->
       <div class="PopupCode pr">
-        <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" @blur="userCodeCheck"   />
+        <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码"  @blur="userCodeCheck" />
         <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'  >{{this.btnValue}}</button>
         <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
       </div>
       <div class="graybg" style="display: flex; justify-content: center; align-items: center; margin-top: 25px">
-        <a class="submitPrice" @click="PayDeposite">缴纳保证金</a>
+        <div class="submitPrice cp" @click="PayDeposite">缴纳保证金</div>
       </div>
     </div>
   </div>
@@ -86,6 +86,8 @@
         },
         HiddenDeposit(){
           this.$emit('HiddenDep')
+          this.Bonddeposit.BondCode=''
+
         },
 
 
@@ -126,6 +128,7 @@
                   this.btnBoolen = false;
                   this.btnClassName="btns"
                   this.btnValue="获取短信验证码"
+                 this.Bonddeposit.BondCode=''
                 }else {
                   this.btnBoolen = true;
                   this.btnValue=`重新获取(${this.auth_time})S`
@@ -162,54 +165,65 @@
         },
 
         //缴纳保证金
-        async PayDeposite(){
-          console.log("DepositeData",this.DepositeData)
-          if(!this.Bonddeposit.BondCode){
-            this.TipCode='验证码不能为空'
-            return
-          }
-          if(!this.codeValid){
-            this.TipCode='验证码有误'
-            return
-          }
+       async PayDeposite(){
+         this.auth_time=0
+         if(!this.Bonddeposit.BondCode){
+             this.TipCode='验证码不能为空'
+             return
+           }
+         let paramCodes = {
+               Authorization:Cookies.get('webtoken'),
+               code:this.Bonddeposit.BondCode
+             }
+         console.log('paramCodes', paramCodes)
+         const CodeData = await BondMessageCode(this, paramCodes)
 
-          this.Bonddeposit.depositAmount=this.DepositeData.MinePrice*this.DepositeData.aucteNum*(this.DepositeData.Bond/100)
-          this.Bonddeposit.bidNum=this.DepositeData.aucteNum
-           if(!this.Bonddeposit.depositAmount){
-            this.TipCode='竞拍保证金不能为空'
-            return
-          }
-          if(!this.Bonddeposit.bidNum){
-            this.TipCode='竞拍数量不能为空'
-            return
-          }
+         if(CodeData.data && CodeData.status === 200) {
+           this.codeValid = true
+           this.TipCode = ''
+           this.Bonddeposit.depositAmount = this.DepositeData.MinePrice * this.DepositeData.aucteNum * (this.DepositeData.Bond / 100)
+           this.Bonddeposit.bidNum = this.DepositeData.aucteNum
+           console.log('竞拍保证金', this.Bonddeposit.depositAmount)
+           console.log('竞拍数量', this.Bonddeposit.bidNum)
+           if (!this.Bonddeposit.bidNum) {
+             this.TipCode = '竞拍数量不能为空'
+             return
+           }
+         console.log('BondCode',this.Bonddeposit.BondCode)
+           let params = {
+             auctionId: this.DepositeData.auctionId,
+             depositAmount: this.Bonddeposit.depositAmount,
+             bidNum: this.DepositeData.aucteNum,
+             code: this.Bonddeposit.BondCode
+           }
+           console.log('params', params)
+           let res = await AddBondRecord(this, params)
 
-          let params={
-            auctionId:this.DepositeData.auctionId,
-            depositAmount: this.Bonddeposit.depositAmount,
-            bidNum : this.DepositeData.aucteNum,
-            code:this.Bonddeposit.BondCode
-          }
-          let res=await AddBondRecord(this,params)
-          console.log('res:', res)
-          if(res.data && res.status === 200){
-            this.$emit('HiddenDep')
-            this.$Message.info("缴纳保证金成功")
-          }else {
+           console.log('res:', res)
+           if (!res.data.errorcode && res.status === 200 && res.data) {
+             this.$emit('HiddenDep')
+             this.Bonddeposit.BondCode = ''
+             this.$Message.info("缴纳保证金成功")
+           } else {
              this.$Modal.confirm({
-              title: '失败提示',
-              content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
-              okText:'确定',
-              styles:'top:30px;',
-              onOk: () => {
-               // this.$router.push({name:'login'});
-              },
-              onCancel: () => {
+               title: '失败提示',
+               content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+               okText: '确定',
+               styles: 'top:30px;',
+               onOk: () => {
+                 // this.$router.push({name:'login'});
+               },
+               onCancel: () => {
 
-              }
-            });
-          }
-          console.log('DepositeData:', this.DepositeData)
+               }
+             });
+           }
+         }else{
+             this.TipCode = '验证码有误'
+             return
+           }
+
+
         },
 
 

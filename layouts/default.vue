@@ -10,6 +10,9 @@
 import DetailHeader from '../components/detail-header'
 import DetailFooter from '../components/detail-footer'
 export default {
+  validate({params}){
+    console.log('params', params)
+  },
   components: {
     DetailHeader,
     DetailFooter
