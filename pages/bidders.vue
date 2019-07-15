@@ -27,34 +27,39 @@
 
       <div class="acution" v-for="(m,index) in tabMain" v-show="CurrSelect==index" >
 
-        <ul class="acuList" >
-          <li v-for="(items,index) in Auctionlist" :key="index">
-            <div class="acuProduct">
-              <h1>{{items.skuName}}</h1>
-              <div class="mt10 fs14 ">起拍价：<span class="orangeFont fwb fs16">{{items.minOrder}}{{items.basePrice}}</span></div>
-              <div class="mt10 fs14">数    量：{{items.totalNum}}{{items.uomName}}</div>
-              <div class="mt30 fs18">
-                开始时间：{{items.beginTime}}
-              </div>
-            </div>
-            <div class="acuOpear">
-              <div style="display: flex; flex-direction: column; justify-content: flex-end">
-                <span class="mt10 ">城市：{{items.warehouseName}}</span>
-                <span class="mt5">竞拍厂商：{{items.manufacturer}}</span>
-              </div>
+        <ul class="acuList" v-if="Auctionlist.length >0">
 
-              <template v-if="items.type === 1">
-                <div class="btnStart startauction" @click="BidersDetail(items.id)">参与竞拍</div>
-              </template>
-              <template v-if="items.type === 2">
-                <div class="btnStart vcauction" @click="BidersDetail(items.id)">即将开始</div>
-              </template>
-              <template v-if="items.type === 3">
-                <div class="btnStart endauction" @click="BidersDetail(items.id)" >竞拍结束</div>
-              </template>
+            <li v-for="(items,index) in Auctionlist" :key="index">
+              <div class="acuProduct">
+                <h1>{{items.skuName}}</h1>
+                <div class="mt10 fs14 ">起拍价：<span class="orangeFont fwb fs16">{{items.minOrder}}{{items.basePrice}}</span></div>
+                <div class="mt10 fs14">数    量：{{items.totalNum}}{{items.uomName}}</div>
+                <div class="mt30 fs18">
+                  开始时间：{{items.beginTime}}
+                </div>
+              </div>
+              <div class="acuOpear">
+                <div style="display: flex; flex-direction: column; justify-content: flex-end">
+                  <span class="mt10 ">城市：{{items.warehouseName}}</span>
+                  <span class="mt5">竞拍厂商：{{items.manufacturer}}</span>
+                </div>
 
-            </div>
-          </li>
+                <template v-if="items.type === 2">
+                  <div class="btnStart startauction" @click="BidersDetail(items.id)">参与竞拍</div>
+                </template>
+                <template v-if="items.type === 1">
+                  <div class="btnStart vcauction" @click="BidersDetail(items.id)">即将开始</div>
+                </template>
+                <template v-if="items.type === 3">
+                  <div class="btnStart endauction" @click="BidersDetail(items.id)" >竞拍结束</div>
+                </template>
+
+              </div>
+            </li>
+
+        </ul>
+        <ul class="acuList" v-else>
+          <li style="background: none; font-size: 20px;">{{AuctionTip}}</li>
         </ul>
               <div class="w1200">
                 <ul class="pagination">
@@ -82,6 +87,7 @@
 
 <script>
   import {auctionPage} from '../api/auction'
+  import Cookies from 'js-cookie'
     export default {
         name: "bidders",
       components: {
@@ -93,7 +99,7 @@
             page_size:'',
             NowTime:'',
             Auctionlist:'',
-            AuctionTip:'',
+            AuctionTip:'暂无竞拍数据',
             tabMain: ['', '', ''],
             status:1,
             index:0,
@@ -101,8 +107,8 @@
               // {AuctionName:'5月16日 10:30 场', AuctionState:'正在竞拍',},
               // {AuctionName:'5月17日 14:00 场', AuctionState:'即将开始'},
               // {AuctionName:'5月16日 10:30 场', AuctionState:'竞拍结束'},
-              {AuctionName:'正在竞拍', status:1},
-              {AuctionName:'即将开始', status:2},
+              {AuctionName:'正在竞拍', status:2},
+              {AuctionName:'即将开始', status:1},
               {AuctionName:'竞拍结束', status:3},
             ]
           }
@@ -132,16 +138,30 @@
            }
            let res=await auctionPage(this,params)
            console.log('res',res)
+           console.log('items', res.data.items.length)
             if(res.data.items){
               this.Auctionlist=res.data.items
             }else{
-              this.AuctionTip='暂无竞拍'
+              this.AuctionTip='暂无竞拍数据'
             }
 
          },
         //跳转详情页
         BidersDetail(id){
-          this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
+          if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+             this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
+           }else {
+            this.$Modal.confirm({
+              title: '提示',
+              content: '<p>您的登录已超时，请重新登录</p>',
+              okText:'去登录',
+              onOk: () => {
+                this.$router.push({name:'login'});
+              },
+
+            });
+           }
+
         },
       },
       mounted(){
