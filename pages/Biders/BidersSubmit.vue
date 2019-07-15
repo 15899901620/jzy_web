@@ -329,7 +329,7 @@
                           this.amount=this.specialDetail.bidPrice * this.TakeGoods
                           this.amount1=this.amount
                           this.amount=this.amount.toFixed(3)
-                      }
+                          }
                   }
               }
               if(this.methodName=='配送'){
@@ -372,7 +372,6 @@
           },
           //初始化数据
           async specialData(specialId){
-            console.log('specialId',specialId)
               this.id=specialId
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   const res=await addressList(this, {})
@@ -397,6 +396,7 @@
               }
 
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+
                   let data={
                       skuId: this.id
                   }
