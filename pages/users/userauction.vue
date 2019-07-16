@@ -12,7 +12,7 @@
 
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" />
+              <input type="text" placeholder="输入竞拍计划编号查询"  v-model="auctionNoSearch" ref="searchval" class="orderInput"  @keyup="auctionOrderList" />
               <div class="check">查看</div>
             </div>
             <div class="dflex" style="align-items: center;">
@@ -25,36 +25,58 @@
             <span style="width: 15%;">竞拍数量(吨)</span>
             <span style="width: 15%;">冻结金额</span>
             <span style="width: 15%;">库区</span>
-            <span style="width: 15%;">交货方式</span>
+            <span style="width: 15%;">产品等级</span>
             <span style="width: 15%;">状态</span>
             <span style="width: 15%;">操作</span>
           </div>
 
-          <table class="listT mt10" border="" cellspacing="" cellpadding="">
+          <table class="listT mt10" border="" cellspacing="" cellpadding="" v-for="(item, index) in AuctionOrder" :key="index">
             <tbody>
-            <tr class="Ttitle graybg" >
+            <tr class="Ttitle graybg"   >
               <td colspan="8">
-                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
-                <span class="ml15">竞拍时间：<span class="gray">2019-04-02  12:00:00</span></span>
-                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span><span class="orangeFont">02</span>小时<span class="orangeFont">30</span>分<span class="orangeFont">25</span>秒</span>
+                <span class="ml10">计划编号：<span class="gray">{{item.auctionNo}}</span></span>
+                <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
+                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>
+                   {{countDownList[index].day}}天{{countDownList[index].hou}}时{{countDownList[index].min}}分{{countDownList[index].sec}}秒</span>
+<!--                  <span class="orangeFont">02</span>小时<span class="orangeFont">30</span>分<span class="orangeFont">25</span>秒</span>-->
               </td>
             </tr>
             <tr class="detailTable">
-              <td>PP F08 现货</td>
-              <td><span class="orangeFont">￥1055.00</span>/吨</td>
+              <td>{{item.skuName}}</td>
+              <td><span class="orangeFont">￥{{item.bidPrice}}元</span>/{{item.uomName}}</td>
               <td>
-                <p>总数：100.000吨</p>
-                <p>已提：25.000吨</p>
-                <p>未提：75.000吨</p>
+                 <p>总数：{{item.totalNum}}{{item.uomName}}</p>
+                <p>已提：{{item.takenNum}}{{item.uomName}}</p>
+                <p>未提：{{item.availableNum}}{{item.uomName}}</p>
               </td>
-              <td>1,076.10</td>
-              <td>东莞市</td>
-              <td>自提</td>
-              <td><span class="gray">已取消</span></td>
+              <td>
+                <span v-if="item.isUnfreeze ===0">{{item.depositAmount}}</span>
+                <span v-if="item.isUnfreeze ===1">0</span>
+              </td>
+              <td>{{item.warehouseName}}</td>
+              <td>
+                <span v-if="item.productGrade ===1">优等品</span>
+                <span v-if="item.productGrade ===2">一等品</span>
+                <span v-if="item.productGrade ===3">合格品</span>
+              </td>
+              <td>
+                <span class="gray" v-if="item.status === 0">已取消</span>
+                <span class="gray" v-if="item.status === 1">待转订单</span>
+                <span class="gray" v-if="item.status === 2">已完成</span>
+
+
+              </td>
               <td class="operate">
-                <div class="">
+                <div v-if="item.status === 0">
+                  <a class="Paybtn mt15 CarCurr">已取消</a>
+                </div>
+                <div v-if="item.status === 1">
                   <a class="Paybtn mt15 CarCurr">去提货</a>
                 </div>
+                <div v-if="item.status === 2">
+                  <a class="Paybtn mt15 CarCurr">已完成</a>
+                </div>
+
                 <a class="mt5">查看详情</a>
               </td>
             </tr>
@@ -96,7 +118,10 @@
 
 <script>
   import userright from './userCompontent/userright'
-    export default {
+  import { auctionOrderList } from '../../api/auction'
+  import Cookies from 'js-cookie'
+
+  export default {
         name: "userauction",
       layout:'membercenter',
       components:{
@@ -106,6 +131,15 @@
           return{
             counter:100,
             value:5,
+            auctionNoSearch:'',   //竞拍计划编号
+            skuNo:'',    //商品编码
+            auctionId:'',   //竞拍活动ID
+            status:'',       //状态 0-已取消 1-待转订单 2-已完成
+            currentPage:1,
+            pageSize:5,
+            orderType:3,
+            AuctionOrder:{},
+            actEndTimeList: [],
             list:[
               {a:1},
               {b:1},
@@ -113,12 +147,116 @@
             ]
           }
       },
-      mounted(){
 
+      methods:{
+          async auctionOrderList(){
+            console.log('searchval',  this.$refs.searchval.value)
+            this.auctionNoSearch=this.$refs.searchval.value
+            console.log('auctionNoSearch', this.auctionNoSearch)
+            if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+              let params={
+                planNo: this.auctionNoSearch,       //订单编号
+                skuName:this.skuName,                  //商品名称
+                //    status:'',                       //状态: 0-已取消 1-待付保证金 2-待付货款 3-已付款
+                //    orderType:,                      //订单类型: 1-现货订单 2-预售订单 3-竞拍订单 4-专用料订单
+                //    companyName:'',                  //会员公司名称
+                current_page:this.currentPage,        //当前页
+                orderType:this.orderType,
+                page_size:this.pageSize,           //每页显示的条数
+              }
+              let res = await  auctionOrderList(this,params)
+              console.log('res',res)
+              this.AuctionOrder=res.data.items
+              var arrayData=[]
+              for (var i=0;i<this.AuctionOrder.length;i++){
+                if(i<this.pageSize){
+                  arrayData.push(this.AuctionOrder[i])
+                }
+
+              }
+              console.log('arrayData',arrayData)
+              var TimeArray= arrayData.map(function(v){
+                return v.lastDeliveryTime
+              })
+              console.log('TimeArray',TimeArray)
+              this.actEndTimeList =TimeArray
+              console.log('actEndTimeList',this.actEndTimeList)
+              this.countDown();
+            }else{
+              this.$Modal.confirm({
+                title: '提示',
+                content: '<p>您尚未登录，请先登录</p>',
+                okText:'去登录',
+                onOk: () => {
+                  this.$router.push({name:'login'});
+                },
+
+              });
+            }
+
+          },
+
+
+        timeFormat(param) {
+          return param < 10 ? '0' + param : param;
+        },
+
+
+        countDown(it) {
+
+          // 获取当前时间，同时得到活动结束时间数组
+          let newTime = new Date().getTime();
+            // console.log('newTime', newTime)
+          let endTimeList = this.actEndTimeList;
+            //console.log('endTimeList', endTimeList)
+          let countDownArr = [];
+          // 对结束时间进行处理渲染到页面
+          endTimeList.forEach(o => {
+            let endTime = new Date(o).getTime();
+
+            let obj = null;
+            // 如果活动未结束，对时间进行处理
+            if (endTime - newTime > 0) {
+
+              let time = (endTime - newTime) / 1000;
+
+              // 获取天、时、分、秒
+              let day = parseInt(time / (60 * 60 * 24));
+              let hou = parseInt(time % (60 * 60 * 24) / 3600);
+              let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+              let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+              obj = {
+                day: this.timeFormat(day),
+                hou: this.timeFormat(hou),
+                min: this.timeFormat(min),
+                sec: this.timeFormat(sec)
+              };
+              console.log('obj',obj)
+            } else { // 活动已结束，全部设置为'00'
+              obj = {
+                day: '00',
+                hou: '00',
+                min: '00',
+                sec: '00'
+              };
+            }
+            countDownArr.push(obj);
+          });
+          this.countDownList = countDownArr;
+          setTimeout(this.countDown, 1000);
+
+        },
+
+      },
+      mounted(){
+       this.auctionOrderList()
       //  this.$store.commit('increment', {value:5})
         this.$store.dispatch('increment', {value:5})
 
       },
+    destoryed () {
+      clearTimeout()
+    },
       computed:{
 
       }

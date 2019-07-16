@@ -156,7 +156,7 @@
             </ul>
 
         <!--正在竞拍-->
-            <div class="Bidders_record_result_list graybg  mt25" v-show="detailDatabrid.type === 2">
+            <div class="Bidders_record_result_list graybg  mt25" v-show="detailDatabrid.type === 2 ||  detailDatabrid.type === 1">
               <div class="fontScale fontScalebg">
                 <span>东莞</span>
               </div>
@@ -364,6 +364,7 @@
             auctionWin:0,     //中标人数
             auctionTotal:0,  //竞拍结束—竞拍总数量
             auctionBond:'',   //保证金比例
+            OfferRecordTip:'',   //出价记录提示
             auctionRd:{       //竞拍记录
               type:Object
             },
@@ -479,20 +480,34 @@
           let params={
             auctionId:id
           }
-          let res =await WinningBid(this,params)
-          console.log('WinningBidres', res)
-          if(res.data && res.status === 200){
-            this.WinBidShow=true
-            this.WinBid=res.data
-            this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
+          console.log('params:',params)
+          if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+            let res =await WinningBid(this,params)
+            console.log('WinningBidres', res)
+            if(res.data && res.status === 200){
+              this.WinBidShow=true
+              this.WinBid=res.data
+              this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
+            }else{
+              this.NotWinBidShow=true
+            }
           }else{
-            this.NotWinBidShow=true
+            this.$Modal.confirm({
+              title: '提示',
+              content: '<p>您尚未登录，请先登录</p>',
+              okText:'去登录',
+              onOk: () => {
+                this.$router.push({name:'login'});
+              },
+
+            });
           }
+
 
         },
         //我的出价
         async auctionMineRecord(){
-          if(Cookies.get('userinfor')){
+          if(Cookies.get('userinfor') && Cookies.get('webtoken')){
             let id=JSON.parse(Cookies.get('userinfor')).id
             let params={
               memberId:id,
@@ -513,11 +528,16 @@
           let params={
             auctionId:id
           }
-          let res =await GainauctionRecord(this,params)
-          console.log('获取我的出价记录:',res)
-          if(res){
-            this.MineOfferRecord=res.data
+          if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+            let res =await GainauctionRecord(this,params)
+            console.log('获取我的出价记录:',res)
+            if(res.data){
+              this.MineOfferRecord=res.data
+            }
+          }else{
+            this.OfferRecordTip=''
           }
+
         },
         // 竞拍详情
         async AuctionDetail(id){

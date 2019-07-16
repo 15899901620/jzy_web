@@ -30,6 +30,16 @@
             </li>
           </ul>
         </div>
+        <div v-if="methodName=='配送'">
+          <div class="mt30 fs16 ml15 fwb" >运输方式</div>
+          <ul class="DeliveryMethod ml35 mb20" >
+            <li v-for="(item, index) in extra" @click="Extra1(index,item)" :class="{'curr':index===extraIndex}" :key="index">
+              {{item.transportationMode}}({{item.basePrice}}元)
+            </li>
+            <i class="redFont ml10 fs14" >{{TransportTips}}</i>
+          </ul>
+
+        </div>
 
         <div class="lineborder"></div>
         <div class="mt30 fs16 ml15 fwb">余额支付</div>
@@ -42,12 +52,6 @@
           * 提交订单后当天17：00前完成付款，逾期扣除保证金
         </div>
           <div class="lineborder"></div>
-          <div class="mt30 fs16 ml15 fwb" v-if="methodName=='配送'">运费</div>
-          <ul class="DeliveryMethod ml35" v-if="methodName=='配送'">
-              <li v-for="(item, index) in extra" @click="Extra1(index,item)" :class="{'curr':index===extraIndex}" :key="index">
-                  {{item.transportationMode}}({{item.basePrice}}元)
-              </li>
-          </ul>
 
         <div class="lineborder"></div>
         <!--优选服务-->
@@ -110,8 +114,9 @@
       </div>
       <div class="w1200 whitebg dflexAlem" style="font-size: 14px; margin-top: 30px; margin-bottom:50px;justify-content:flex-end;">
         <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">{{amount}}</span> 元</span></div>
-        <div class="submitOrder"  style="background-color: #e0dede"   v-if="Order == 0">提交订单</div>
+        <div class="submitOrder"  style="background-color: #e0dede"   v-if="Order == 0" @click="OrderErrorTip">提交订单</div>
         <div class="submitOrder"  @click="showOrder()" v-else>提交订单</div>
+
 
       </div>
       <AddressPopup @hidden="hiddenAdd"  v-show="showAdd_pop"></AddressPopup>
@@ -146,9 +151,10 @@
        },
       data(){
           return{
-             methodName:'自提',
-              payName:'支付全款',
+            methodName:'自提',
+            payName:'支付全款',
             showAdd_pop:false,
+            TransportTips:'',  //运输方式提示
             Order:0,
             timeDay:'',
             isRouterAlive:false,
@@ -157,7 +163,7 @@
               vertical: 0,
             currentIndex:0,
             payIndex:0,
-              extraIndex:0,
+            extraIndex:'',
             TakeGoods:0,//提货数量
             methodList:[
               {methodName:'自提'},
@@ -258,7 +264,7 @@
                               title: '不能大于提货吨数',
                           });
                       }else{
-                          this.TakeGoods =    parseFloat(this.TakeGoods) +1
+                          this.TakeGoods = parseFloat(this.TakeGoods) +1
                           this.amount=this.specialDetail.bidPrice * this.TakeGoods
                           this.amount=this.amount.toFixed(3)
                           this.amount1=this.amount
@@ -386,7 +392,7 @@
                       }else{
                           this.addr=0
                       }
-                      this.Payextra();
+                     // this.Payextra();
                   }else{
                       this.TipAddress='暂无收货地址，请新增收货地址'
                       this.AddressNum=0
@@ -419,14 +425,11 @@
                    //周计划
                   if(res1){
                       this.specialDetail =res1.data
+                    if(this.methodName=='自提'){
+                      this.TakeGoods=this.specialDetail.takeTheirMin
+                    }
 
-                      // if(this.methodName=='自提'){
-                      //     this.getWeek =res1.data.takeTheirMin
-                      // }else{
-                      //     this.getWeek =res1.data.deliveryMin
-                      // }
-                      this.TakeGoods=res1.data.takenNum
-                      console.log('getWeek',res1)
+                      console.log('specialDetail',res1)
                       this.amount=res1.data.bidPrice * this.TakeGoods
                       this.amount1=this.amount.toFixed(3)
                       this.amount=this.amount.toFixed(3)
@@ -448,18 +451,16 @@
 
           },
         addClass(index){
-              console.log()
+
           this.currentIndex = index
-          this.extraIndex=0
             if(index==1){
                 this.methodName='配送'
                 this.Payextra();
-                this.Order=1
-              console.log('order',this.Order)
-
+                this.TakeGoods=this.specialDetail.deliveryMin
             }else{
                 this.methodName='自提'
                 this.amount=this.amount1
+              this.TakeGoods=this.specialDetail.takeTheirMin
             }
            this.orderstatus()
          },
@@ -467,18 +468,20 @@
         payaddClass(index){
           this.payIndex = index
         },
-          Extra1(index,item){
-            console.log('index:', index)
-            console.log('item:', item)
-
+        // 选择运费
+        Extra1(index,item){
               this.extraIndex = index
               this.amount =  parseFloat(this.amount1)+ (parseFloat(item.basePrice)*this.specialDetail.bidPrice)
               this.amount =  this.amount.toFixed(2)
-
               this.ExtraList=item
+              this.TransportTips=''
             this.orderstatus()
-            console.log('ExtraList:', this.ExtraList)
-          },
+
+        },
+        //无法提交订单
+        OrderErrorTip(){
+            this.TransportTips='请选择运输方式'
+        },
         // 显示订单
         showOrder(){
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
@@ -524,8 +527,17 @@
                  console.log('data',data)
                   const res=auctionsubmitOrderL(this, data).then(res=>{
                     console.log('res', res)
-                  if(res.data==true){
+                  if(!res.data.errorcode && res.status ===200){
                       this.$router.push({name:'Biders-BidersPayCost'})
+                  }else {
+                    this.$Modal.confirm({
+                      title: '提示',
+                      content: '<p>'+res.data.message+'</p>',
+                      okText:'确定',
+                      onOk: () => {
+                       },
+
+                    });
                   }
               });
               }else{
@@ -537,15 +549,14 @@
           var  that=this
           that.showOrder_pop=false;
         },
-          single1(){
-              if(this.single){
-                  this.single=false
-              }else{
-                  this.single=true
-              }
-              console.log(this.single)
-          },
-
+        single1(){
+          if(this.single){
+              this.single=false
+          }else{
+              this.single=true
+          }
+          console.log(this.single)
+        },
 
         // 显示地址弹窗
         AddAddress(){
@@ -555,7 +566,7 @@
         hiddenAdd(){
           this.showAdd_pop=false;
         },
-          //运费
+        //运费
         Payextra(){
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                  var addrdetail =this.addrdetail
@@ -584,6 +595,8 @@
               if(this.methodName=='自提' ){
                   this.Order=1
               }else{
+                console.log('ExtraList:', this.ExtraList)
+                console.log('addrdetail:', this.addrdetail)
                   if(this.ExtraList !='' &&  this.addrdetail !=''){
                       this.Order=1
                   }else{

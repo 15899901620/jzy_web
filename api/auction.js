@@ -285,5 +285,26 @@ export const auctionsubmitOrderL = (vm, data) => {
   })
 }
 
+/**
+ * @description 客户通过竞拍计划单下单
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const auctionOrderList = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.auctionOrderList,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
+
+
 
 
