@@ -55,7 +55,7 @@ export default {
       LoginStatus:false,
       typeId:'',
       aclist:[],//公告
-      MemberInfro:{},  //获取当前信息
+      MemberInfro:'',  //获取当前信息
       newslist:[]  //资讯
     }
   },
@@ -96,8 +96,7 @@ export default {
     async LoginInfor(){
       console.log('***获取当前登录信息***')
       let res=await gainuserInfor(this, {})
-      console.log('登录信息res', res)
-      if(res.data){
+      if(!res.data.errorcode && res.status ===200 ){
         this.LoginStatus=false
         this.MemberInfro=res.data
       }else {

@@ -4,7 +4,7 @@
     <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
       <div class="whitebg " style="width: 85%; height: 100%;">
         <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
-          <div class="TitleName" style="border-left: 3px solid #279eff;">{{ $store.state.menu.listTitle }}</div>
+          <div class="TitleName" style="border-left: 3px solid #279eff;">{{ $store.state.Menu.listTitle }}</div>
           <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
         </div>
         <ul class="NewContentlist">

@@ -8,6 +8,7 @@
       </div>
       <ul class="newsCate">
         <li v-for="(items, index) in NewsCateData" :key="index" :class="{orangeFont:ActiveName === items.title}" @click="selected(items.title)">
+
           <nuxt-link :to="{name:'article-id', params:{id:items.id}}" >{{items.title}}</nuxt-link>
         </li>
       </ul>
@@ -55,7 +56,7 @@
 
 <script>
   import { infocate, infolist } from '../../api/info'
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapGetters  } from 'vuex'
     export default {
       data(){
           return{
@@ -69,9 +70,12 @@
         selected(name){
            console.log('name', name)
           //this.changeNewsTitle()
-          //this.$store.commit('menu/changeNewsTitle', name);
+          console.log('store',this.$store.dispatch)
+         // this.$store.commit('changeNewsTitle',name);
+         // this.$store.commit('Menu/changeNewsTitle', name);
+         // this.$store.dispatch("Menu/changeNews",name);
         },
-        ...mapMutations({selected:'menu/changeNewsTitle'}),
+        ...mapMutations({selected:'Menu/changeNewsTitle'}),
          async NewsCate() {
           let params = {
             parentId: 0

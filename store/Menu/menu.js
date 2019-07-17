@@ -5,7 +5,6 @@ export  const state =()=> {
   }
 }
 export  const mutations={
-
   changeNewsTitle(state,value){
       console.log('state:',state)
       console.log('value:',value)
@@ -19,6 +18,9 @@ export  const actions={
     commit('changeNewsTitle')
   }
 }
+
+export  const getters={}
+
 
 
 
