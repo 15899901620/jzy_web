@@ -4,7 +4,7 @@
     <div class="w1200 ovh" style="margin-top: 10px; display: flex;">
       <div class="whitebg " style="width: 85%; height: 100%;">
         <div class="ListTitle fs14  whitebg bb1" style="align-items: center">
-          <div class="TitleName" style="border-left: 3px solid #279eff;">资讯列表</div>
+          <div class="TitleName" style="border-left: 3px solid #279eff;">{{ $store.state.menu.listTitle }}</div>
           <a class="mr20 mt15 mb15 gray">共{{this.total}}条数据 </a>
         </div>
         <ul class="NewContentlist">
@@ -49,6 +49,7 @@ export default {
       page_size: 8,
       total_page: (this.total/this.page_size) < 1 ? 1 : parseInt(this.total/this.page_size),
       datalist:[],
+      //listTitle:this.$store.state.listTitle,
       formSearch: {
         is_show: 1,
         title: '',
@@ -74,6 +75,19 @@ export default {
       this.current_page = row
       this.sourceData()
     }
+  },
+  mounted(){
+    console.log('store',this.$store.state)
+    console.log('router:', this.$router.history.current.params.id)
+    // if(this.$router.history.current.params.id === 11){
+    //   this.listTitle='行情中心'
+    // }
+    // if(this.$router.history.current.params.id === 10){
+    //   this.listTitle='市场分析'
+    // }
+    // if(this.$router.history.current.params.id === 2){
+    //   this.listTitle='行业资讯'
+    // }
   },
   created () {
     this.sourceData()

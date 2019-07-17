@@ -189,14 +189,14 @@
               capitalinfo:[],
               addressList:[],
               AddressNum:'',
-              WeekList:[],
+
               id:'',
-              getWeek:'',
+
               companyName:'',
               addrdetail:[],
               addr:0,
               ExtraList:[],
-              maxnumber:'',
+
               specialDetail:[],
               TipAddress:'',
               extra:[],
@@ -401,21 +401,6 @@
                   return
               }
 
-              if(Cookies.get('userinfor') && Cookies.get('webtoken')){
-
-                  let data={
-                      skuId: this.id
-                  }
-                  const res2=await  getWeek(this, data)
-                  if(res2){
-                      console.log('11',res2)
-                      this.WeekList=res2.data
-                      this.maxnumber =res2.data.monthNum/res2.data.takenRatio
-                      console.log(this.maxnumber)
-                  }
-              }else{
-                  return
-              }
 
               if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                   let data={

@@ -42,6 +42,7 @@
 
 <script>
   import { auctionPage } from '../../api/auction'
+  import Cookies from 'js-cookie'
   export default {
         name: "Timelimited",
       data() {
@@ -55,9 +56,6 @@
         }
       },
       created () {
-
-
-
       },
       methods:{
          //竞拍列表页
@@ -163,7 +161,20 @@
 
      //跳转详情页
         acutionDetail(id){
-          this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
+          if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+            this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
+          }else {
+            this.$Modal.confirm({
+              title: '提示',
+              content: '<p>您尚未登录，请先登录</p>',
+              okText:'去登录',
+              onOk: () => {
+                this.$router.push({name:'login'});
+              },
+
+            });
+          }
+
         },
 
 

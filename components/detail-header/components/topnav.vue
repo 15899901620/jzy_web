@@ -2,14 +2,16 @@
   <div>
     <ul class="UserList">
       <li v-for="(category, index) in topnav" :key="index" :id="category.tid">
-        <nuxt-link :to="category.router">{{ category.title }}</nuxt-link>
+        <div class="cp"  @click="TopInfor(category.tid)">{{ category.title }}</div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {
+  import Cookies from 'js-cookie'
+
+  export default {
   name: "topnav",
   data () {
     return {
@@ -20,6 +22,43 @@ export default {
       ],
     }
   },
+  methods:{
+    TopInfor(Link){
+      if(Link === 'user'){
+        if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+          this.$router.push({name:'users-user'})
+        }else {
+          if(Cookies.get('userinfor') && !Cookies.get('webtoken')){
+          this.$Modal.confirm({
+            title: '提示',
+            content: '<p>您登录超时，请重新登录</p>',
+            okText:'去登录',
+            onOk: () => {
+              this.$router.push({name:'login'});
+            },
+          });
+          }else{
+            this.$Modal.confirm({
+              title: '提示',
+              content: '<p>您尚未登录，请登录</p>',
+              okText:'去登录',
+              onOk: () => {
+                this.$router.push({name:'login'});
+              },
+            });
+          }
+
+        }
+      }
+      if(Link === 'about'){
+        this.$router.push({ name: "about"})
+      }
+      if(Link === 'help'){
+        this.$router.push({ name: "help-help"})
+      }
+
+    }
+  }
 }
 </script>
 

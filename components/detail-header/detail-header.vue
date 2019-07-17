@@ -121,7 +121,7 @@ export default {
 
 <style scoped>
 /*头部*/
-.IndexTop{background-color: #f8f8f8;border-bottom: 1px solid #f0f0f0;}
+.IndexTop{background-color: #f8f8f8;border-bottom: 1px solid #f0f0f0; font-size: 14px;}
 .TopPos{color: #333; display: flex; justify-content: space-between; align-items: center; height: 30px;}
 /*个人信息*/
 

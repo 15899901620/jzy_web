@@ -71,7 +71,7 @@
                   <a class="Paybtn mt15 CarCurr">已取消</a>
                 </div>
                 <div v-if="item.status === 1">
-                  <a class="Paybtn mt15 CarCurr">去提货</a>
+                  <a class="Paybtn mt15 CarCurr" @click="qrOrder(item.id)">去提货</a>
                 </div>
                 <div v-if="item.status === 2">
                   <a class="Paybtn mt15 CarCurr">已完成</a>
@@ -149,6 +149,10 @@
       },
 
       methods:{
+        //提货_跳转到下单页
+        qrOrder(id){
+          this.$router.push({name:"Biders-BidersSubmit",query:{id:id}})
+        },
           async auctionOrderList(){
             console.log('searchval',  this.$refs.searchval.value)
             this.auctionNoSearch=this.$refs.searchval.value
@@ -157,9 +161,6 @@
               let params={
                 planNo: this.auctionNoSearch,       //订单编号
                 skuName:this.skuName,                  //商品名称
-                //    status:'',                       //状态: 0-已取消 1-待付保证金 2-待付货款 3-已付款
-                //    orderType:,                      //订单类型: 1-现货订单 2-预售订单 3-竞拍订单 4-专用料订单
-                //    companyName:'',                  //会员公司名称
                 current_page:this.currentPage,        //当前页
                 orderType:this.orderType,
                 page_size:this.pageSize,           //每页显示的条数
@@ -251,7 +252,7 @@
       mounted(){
        this.auctionOrderList()
       //  this.$store.commit('increment', {value:5})
-        this.$store.dispatch('increment', {value:5})
+      //  this.$store.dispatch('increment', {value:5})
 
       },
     destoryed () {

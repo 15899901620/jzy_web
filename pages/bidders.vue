@@ -99,7 +99,7 @@
             page_size:'',
             NowTime:'',
             Auctionlist:'',
-            AuctionTip:'暂无竞拍数据',
+            AuctionTip:'暂无竞拍活动',
             tabMain: ['', '', ''],
             status:1,
             index:0,
@@ -142,7 +142,7 @@
             if(res.data.items){
               this.Auctionlist=res.data.items
             }else{
-              this.AuctionTip='暂无竞拍数据'
+              this.AuctionTip='暂无竞拍活动'
             }
 
          },
