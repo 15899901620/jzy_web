@@ -5,7 +5,7 @@
        <div class="submit"></div>
        <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>
        <div class="tac fs14">
-         <span>订单号：<span>201905150001</span></span><a class="blueFont ml15">查看详情</a>
+         <span>订单号：<span>{{orderNo}}</span></span><a class="blueFont ml15">查看详情</a>
        </div>
        <div class="OrderTime" >
          请于<span class="orangeFont ml10 mr10">2019-06-01 17:00</span>前提货，逾期收取仓储费
@@ -31,15 +31,29 @@
       layout:'SumbitOrderHeader',
       data(){
           return{
-
+                data:{
+                    id:'',
+                    orderNo:'',
+                }
           }
       },
       methods:{
           submitBtn(){
               this.$router.push({name:'special'})
+          },
+          async Datas(){
+              this.orderNo=this.$route.query.orderNo
+              this.id=this.$route.query.id
           }
 
-      }
+      },
+    created(){
+
+    },
+    mounted() {
+        this.Datas();
+
+    }
     }
 </script>
 
