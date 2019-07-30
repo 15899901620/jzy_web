@@ -1,0 +1,39 @@
+@import "../../../assets/style/default";
+
+// default theme
+.@{ant-prefix}-cobrands {
+    position: relative;
+    overflow: hidden;
+
+    .coorperList{
+        display: flex; 
+        flex-wrap: wrap; 
+        position: relative; 
+        
+        > li {
+            display: flex; 
+            flex-wrap: wrap;
+        
+            
+            & a {
+                margin-top: 1px; 
+                margin-right: 1px; 
+                width: 170.4px; 
+                height: 85px; 
+                background-color: #fff; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom:1px solid #ddd;
+                border-right:1px solid #ddd;
+                &:hover {
+                    background: rgba(102, 102, 102, 0.397);
+                }
+                & img{ 
+                    height: 65%;
+                }
+            }
+        }
+    
+    }
+}

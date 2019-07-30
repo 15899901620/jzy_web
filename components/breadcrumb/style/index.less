@@ -1,0 +1,43 @@
+@ant-prefix             : hmy;
+@blue-6: #108ee9;
+@primary-color          : @blue-6;
+@text-color             : fade(#000, 65%);
+@border-color-base      : #d9d9d9;        // base border outline a component
+@text-color-secondary   : fade(#000, 43%);
+@font-size-base         : 12px;
+@breadcrumb-prefix-cls: ~"@{ant-prefix}-breadcrumb";
+@iconfont-css-prefix    : anticon;
+@icon-url               : "https://at.alicdn.com/t/font_zck90zmlh7hf47vi";
+
+.@{breadcrumb-prefix-cls} {
+  color: @text-color-secondary;
+  font-size: @font-size-base;
+
+  a {
+    color: @text-color;
+    transition: color .3s;
+    &:hover {
+      color: #000;
+    }
+  }
+
+  & > span:last-child {
+    font-weight: bold;
+    color: @text-color;
+  }
+
+  & > span:last-child &-separator {
+    display: none;
+  }
+
+  &-separator {
+    margin: 0 8px;
+    color: @border-color-base;
+  }
+
+  &-link {
+    > .@{iconfont-css-prefix} + span {
+      margin-left: 4px;
+    }
+  }
+}

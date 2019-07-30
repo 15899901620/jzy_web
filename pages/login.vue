@@ -1,0 +1,115 @@
+<template>
+  <div class="body">
+      <Header-small title="交易平台登录">
+        <div slot="headerother">
+          <div data-v-7b07b57b="" class="dflexAlem fs20 gray" style="color: rgb(102, 102, 102);margin-top: 44px;">服务热线 : {{systeminfo.SERVICEHOTLINE}}</div>
+        </div>
+      </Header-small>
+      <div class="container" title="内容区块">
+        <div class="Loginbg"> 
+
+          <div class="w1200" style="display: flex; justify-content: flex-end;">
+            <div class="LoginInput">
+              <div class="LoginCenter">
+                <ul class="dflexAlem loginMethod">
+                  <li v-for="(item,index) in loginList" :class="{'curr':nowIndex === index}" @click="tabClick(index,item.registerName)" v-bind:key="index">
+                    {{item.name}}
+                  </li>
+                </ul>
+                <div class="swiper-container swiper_con">
+                  <div class="swiper-wrapper dflex">
+                    <div class="swiper-slide swiper-no-swiping" ref="viewBox">
+                      <login></login>
+                    </div>
+                    <!-- 第二个swiper -->
+                    <div class="swiper-slide swiper-no-swiping">
+                      <login-supply></login-supply>
+                    </div>
+                    <!-- 第二个swiper -->
+                    <div class="swiper-slide swiper-no-swiping">
+                      <login-carrier></login-carrier>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
+  </div>
+</template>
+
+<script>
+import Header from '../components/header'
+import Footer from '../components/footer'
+import { mapState } from 'vuex'
+import Swiper from 'swiper';
+import login from '../components/login-form'
+
+
+export default {
+  name: "tendering",
+  data(){
+    return{
+      loginList:[
+        {name:'会员登录',registerName:'member'},
+        {name:'供应商登录',registerName:'supply'},
+        {name:'承运商登录',registerName:'carrier'}
+      ],
+      nowIndex:0,
+      registerName:'member'
+    }
+  },
+  components: {
+    Header,
+    HeaderSmall: Header.small,
+    Footer,
+    login,
+    loginSupply: login.supply,
+    loginCarrier: login.carrier
+  },
+  fetch({ store, params }) {
+    return Promise.all([
+      store.dispatch('menu/getMenuList'),
+      store.dispatch('system/getSystemCnf'),             
+    ])
+  },
+  computed: {
+    ...mapState({
+      systeminfo: state => state.system.systeminfo
+    })
+  },
+  mounted(){
+    var that=this
+    that.mySwiper = new Swiper('.swiper-container',{
+      initialSlide:0,
+      autoplay:false,
+      noSwiping : true,
+      keyboardControl:true,
+      autoHeight:true,
+      observer:true,
+      observeParents:false,
+      onSlideChangeStart:function(){
+        that.nowIndex=that.mySwiper.activeIndex
+      }
+    });
+  },
+  methods:{
+    // 点击切换
+    tabClick(index,registerName){
+      this.registerName=registerName
+      this.nowIndex = index
+      this.mySwiper.slideTo(index,500,false)
+    },
+    Register(){
+      this.$router.push({path:'/register',query:{name:this.registerName}})
+    },
+    // 找回密码
+    ForgotPassword(){
+      this.$router.push({path:'./ForgotPassword/ForgotPassword'})
+    },
+  }
+}
+</script>

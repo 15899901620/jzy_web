@@ -1,0 +1,72 @@
+@import "../../../assets/style/default";
+
+@shortcut-prefix-cls: ~"@{ant-prefix}-shortcut";
+
+// default theme
+.@{shortcut-prefix-cls} {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #f0f0f0;
+    .TopPos{
+        width: @screen-lg;
+        margin: 0px auto;
+        color: #333; 
+        display: flex; 
+       
+        justify-content: space-between; 
+        align-items: center; 
+        height: 30px; 
+        font-size: 14px;
+        .slogens {
+            font-family: 14px; 
+            color: #666;
+            line-height: 28px;
+            & span {
+                font-size: 11pt;
+                color: #999;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            & a {
+                color:#999;
+                font-size: 12px;
+                &:hover {
+                    color:@blue-1;
+                }
+            }
+
+        }
+        .topnavlist{
+            display: flex; 
+            flex-direction: row;
+            & li {
+                border-right:1px solid #ddd8dd;
+                border-left:1px solid #fff;
+                padding: 0 12px;
+                line-height: 14px;
+                
+                & span {
+                    cursor: pointer;
+                    font-size: 14px;
+                    color: #999;
+                    &:hover {
+                        color: #000;
+                    }
+                   
+                }
+                & a {
+                    color: #666;
+                    &:hover {
+                        color:@blue-1;
+                    }
+                }
+            }
+            > li:first-child {
+                border-left:0;
+            }
+            > li:last-child {
+                padding-right: 0;
+                border-right:0px;
+            }
+            
+        }
+    }
+}

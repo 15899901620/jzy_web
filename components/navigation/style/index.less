@@ -1,0 +1,35 @@
+@import "../../../assets/style/default";
+
+@menu-prefix-cls: ~"@{ant-prefix}-navigation";
+
+// default theme
+.@{menu-prefix-cls} {
+  background: #fff; 
+  display: flex;
+  align-items: center;  
+  
+  & li {
+    float: left; 
+    position: relative; 
+    font-size: 16px; 
+    margin: 0 22px;
+    > a {
+      line-height:33px; 
+      color: #333;
+      &:hover {
+        color: @blue-1
+      }
+    }
+  }
+  & .curr {
+    a {
+      color:#007de4;
+      text-decoration:none;  
+      padding-bottom: 7px; 
+      border-bottom:2px solid #007de4;
+    }
+  }
+  & li:last-child {
+    background:none;
+  }
+}

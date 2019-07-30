@@ -1,0 +1,109 @@
+@import "../../../assets/style/default";
+
+.@{ant-prefix}-header {
+    background: #fff;
+    .searchLogo {
+        width: @screen-lg;
+        margin: 0px auto;
+        color: #333; 
+        height: 125px;
+        display: flex; 
+        justify-content: space-between;
+
+        .Logo {
+            margin-top:30px; 
+            width: 230px;
+        }
+
+        .topother{
+            margin-top: 45px; 
+            height: 30px; 
+            align-items: center; 
+            padding-left: 37px;
+            font-size: 20px;
+            font-weight: bold;
+          
+        }
+        .TopTel{
+            margin-top: 45px; 
+            height: 30px; 
+            align-items: center; 
+            background: url(../../../assets/img/icon.png) no-repeat 0px -33px;
+            padding-left: 37px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff7300;
+        }
+        
+        .TopSearch{
+            width: 530px; 
+            margin: 35px auto 0;
+            .HotTip {
+                & span {
+                    margin-right: 20px; 
+                    cursor: pointer;
+                }
+                & span:first-child {
+                    cursor: default;
+                    margin-right:5px;
+                }
+            }
+            .search-text { 
+                padding-left: 35px; 
+                float: left; 
+                width: 420px; 
+                height: 40px;
+                line-height: 40px; 
+                border: 2px solid #007de4; 
+                box-sizing: border-box; 
+                z-index: 0; 
+                background: url(../../../assets/img/search-icon.png) no-repeat 6px 8px #fff; 
+                border-right: 0 none;
+            }
+
+            .search-btn {
+                position: relative;
+                z-index: 1;
+                float: left; 
+                border: 0 none; 
+                border-top-right-radius: 2px; 
+                border-bottom-right-radius: 2px; 
+                background: none; font-size: 16px;
+                width: 80px; 
+                height: 40px;  
+                color: #fff; 
+                cursor: pointer; 
+                background: #007de4;
+                transition: all 0.3s linear 0s;
+            }
+        }
+    }
+    .navigation {
+        width: @screen-lg;
+        margin: 0px auto 0px;
+        color: #333; 
+        display: flex; 
+        justify-content: space-between;
+
+        .assortment-wrap {
+            width: 235px; 
+            float: left; 
+            position: relative;
+            z-index: 4;
+            height: 40px;
+
+            .fication_menu{
+                height: 40px;
+                background-color: #007de4; 
+                line-height: 40px; 
+                color: #fff; 
+                font-size: 18px;
+                padding-left: 30px;
+                background: url(../../../assets/img/cate_icon.png)no-repeat 206px 16px #007de4;
+                cursor: pointer;
+            }
+
+        }
+
+    }
+}

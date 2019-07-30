@@ -1,0 +1,133 @@
+@import "../../../assets/style/default";
+
+.@{ant-prefix}-footer {
+    background: #fff;
+    .ensure-wrap {
+        border-bottom: 1px solid #dddddd; 
+        overflow: hidden;  
+        padding-bottom: 20px;
+        .slogen {
+            width: @screen-lg; 
+            margin: 0 auto;  
+            padding-top: 25px; 
+            overflow: hidden; 
+            
+            > ul {
+                display: flex;
+                justify-content: space-between;
+                
+                > li {
+                    width: 245px;
+                    padding-left: 20px;
+
+                    > h4 {
+                        font-size: 16px;
+                        color: #333;
+                        line-height: 28px;
+                    }
+                    > p {
+                        font-size: 12px; 
+                        color: #999;
+                    }
+                    & .ensure-icon {
+                        width: 46px;
+                        height: 51px;
+                        float: left; 
+                        margin-right: 10px;
+                    }
+                    & .ensure-icon1 {
+                        background: url(../../../assets/img/ensure-icon.png) no-repeat 0px 0;
+                    }
+                    & .ensure-icon2 {
+                        background: url(../../../assets/img/ensure-icon.png) no-repeat -58px 0;}
+                    & .ensure-icon3 {
+                        background: url(../../../assets/img/ensure-icon.png) no-repeat -114px 0;
+                    }
+                    & .ensure-icon4 {
+                        background: url(../../../assets/img/ensure-icon.png) no-repeat -171px 0;
+                    }
+                }
+            }
+        }
+        .sundry {
+            width: @screen-lg; 
+            margin: 0 auto;
+            color: #ccc; 
+            clear: both;   
+            padding-top: 20px; 
+            display: flex;
+            .qr-code {
+                display: flex; 
+                border-right:1px solid #DDDDDD ;
+                ul{
+                    display: flex;
+                    li { 
+                        text-align: center; 
+                        margin: 0 10px;
+                        width: 120px; 
+                        color: #333;
+                        & img {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+            .tel {
+                margin: 0 35px;
+                & p {
+                    text-align: center;
+                }
+                .telurl{
+                    padding: 5px 20px 5px 36px;
+                    margin-top: 5px;
+                    border-radius: 5px;
+                    background: url(../../../assets/img/icon.png)no-repeat 15px -76px;
+                    overflow: hidden;
+                    border: 1px solid #1696ff;
+                    color: #1696ff;
+                }
+            }
+        }
+        .links {
+            margin: 0 auto;
+            width: @screen-lg; 
+
+            > h4 {
+                display: block
+            }
+            .list {
+                display: flex;
+                flex-wrap: wrap; 
+
+                > span {
+                    padding-right: 16px; 
+                    font-size: 14px;
+                    & a {
+                        margin: 5px 10px; 
+                        color: #666;
+                        &:first-child {
+                            margin:5px 0;
+                        }
+                        &:hover {
+                            color: #1696ff;
+                        }
+                    }
+                }
+            }
+            .uplist{
+                background: url(../../../assets/img/icon.png) no-repeat 0px -105px;
+                width: 28px;
+                height: 20px; 
+                cursor: pointer;
+            }
+        }
+        .copyright {
+            width: @screen-lg;
+            margin: 0px auto;
+            text-align: center;
+            padding: 30px 0;
+            color: #666666; 
+            font-size: 14px;
+        }
+    }
+}
