@@ -71,13 +71,12 @@ export const auctionRecord = (vm, data) => {
  */
 export const priceListInfo = (vm, data) => {
   vm.$axios.defaults.headers = {
-
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   return vm.$axios.get(server.prefix + server.api.Auction.priceListInfo,
-    {
-      params: {...data}
-    }).catch((e) => {
+  {
+    params: {...data}
+  }).catch((e) => {
     let errorInfo = e.response
     console.log('manageEditErr', errorInfo)
   })
@@ -90,9 +89,8 @@ export const priceListInfo = (vm, data) => {
  * @param data
  * @returns {*}
  */
-export const NewPrice = (vm, data) => {
+export const newprice = (vm, data) => {
   vm.$axios.defaults.headers = {
-
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   return vm.$axios.get(server.prefix + server.api.Auction.NewPrice,
@@ -147,13 +145,13 @@ export const auctionMineRecord = (vm, data) => {
  * @param data
  * @returns {*}
  */
-export const GainauctionRecord = (vm, data) => {
+export const gainauctionrecord = (vm, data) => {
 
   vm.$axios.defaults.headers = {
 
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
-  return vm.$axios.get(server.prefix + server.api.Auction.GainauctionRecord,
+  return vm.$axios.get(server.prefix + server.api.Auction.gainauctionrecord,
     {
       params: {...data}
     }).catch((e) => {

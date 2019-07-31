@@ -57,6 +57,17 @@ let api = {
     auctionInfor:'/bill/auction/detail',  //获取单条信息
     priceListInfo:'/bill/priceList/info', //查询物料价目信息
     NewPrice:'/bill/auctionBid/getCurrBid',   //获取最新的竞拍价
+    auctionRecord:'/bill/auctionBid/page',    //获取竞拍记录
+    auctionMineRecord:'/bill/auctionBid/list',    //获取竞拍我的出价记录
+    AddauctionPrice:'/bill/auctionBid',    //添加我的出价记录
+    gainauctionrecord:'/bill/auctionBid/getMyBid',  //获取出价记录
+    AddBondRecord:'/bill/auctionDeposit',           //添加保证金记录
+    WinningBid:'/bill/auctionPlanned/getWinBid',  //中标信息
+    BondMessSend:'/bill/auctionDeposit/code',      //添加竞拍保证金记录发送短信验证码
+    BondMessageCode:'/bill/auctionDeposit/checkCode',    //验证手机验证码
+    auctionPlanDetail:'/bill/auctionPlanned/info',    //根据竞拍计划id获取计划详情
+    auctionsubmitOrderL:'/bill/orderInfo/auction/create',    //客户通过竞拍计划单下单
+    auctionOrderList:'/bill/auctionPlanned/page',        //客户通过竞拍订单列表
   },
   /**
    * @description 资讯管理

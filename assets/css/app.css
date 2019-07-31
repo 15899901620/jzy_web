@@ -62,7 +62,6 @@
 .Time-limited_next{right: 0; border-bottom-left-radius: 5px; border-top-left-radius: 5px; }
 
 /*缴纳保证金--弹窗*/
-.Mask{display: flex; justify-content: center; align-items: center; position: fixed;z-index: 10; top: 0; width: 100%; height: 100%;background: rgba(0,0,0,0.5);font-size: 14px;}
 .Bond_Popup{ width: 415px; background-color: #fff; border-radius: 3px;}
 .Bond_Popup .TopPopup{display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; color: #666;background-color: #f9f9f9;}
 .Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url('../img/icon.png')no-repeat 0px -135px;}
@@ -229,3 +228,130 @@ color: #1792f7;
 .lineProgress{border: 1px dashed #DEDEDE;width: 20%; margin: 0 5px;}
 .CarrierPro_num{ color: #666; width: 41px;height: 41px; line-height: 41px; text-align: center;font-size: 16px;border-radius: 50%;background-color: #f0f2f5;}
 
+.paipinacu{color: #333;}
+.AuctionTime ul{display: flex;}
+.AuctionTime li{background-color: #fff;width: 33.3%; text-align: center;padding: 10px 0;cursor: pointer;}
+.AuctionTime li.curr{color: #fff;background-color: #ff6c00; box-shadow: 6px 0px 3px 1px #ff6c00;z-index: 10;position: relative;}
+.AuctionTime li.curr .AtP{border:none;}
+.AtP{margin: 4px auto 0;display: -webkit-flex;display: flex;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;
+align-items: center;border: 1px solid #ccc;border-radius: 25px;width: 23%;padding: 2px 0;font-size: 14px;}
+
+.acution{display: flex; flex-direction: column;}
+.acuList{display: flex;    flex-wrap: wrap;}
+.acuList li{background-color: #fff;width: 49%; margin-top: 15px; display: flex;}
+.acuList li:nth-child(even){margin-left: 2%;}
+.acuList li .acuProduct{width: 300px; border-right: 1px solid #ccc; margin: 35px 0; margin-left: 45px;}
+.acuList li .acuOpear{font-size: 18px; width: 245px; margin-top: 35px;display: flex; flex-direction: column; align-items: center;}
+.acuList li .acuOpear .btnStart{ color: #fff; padding: 10px 50px; border-radius:5px;margin-top:20px; cursor: pointer;}
+.acuList li .acuOpear .startauction{background-color: #f17b24; color: #fff;}
+.acuList li .acuOpear .vcauction{background-color: #26a96d; color: #fff; cursor: default}
+.acuList li .acuOpear .endauction{background-color: #dbdcde; color: #999;}
+.acuList li .acuProduct h1{margin-top: 5px; font-weight: bold; font-size: 16px;}
+
+.biddersRecord {
+    background: #fff;
+    padding: 22px;
+    width: 1200px;
+    margin: 18px auto 0;
+    
+}
+
+.Bidders_record{width: 575px;  }
+  .Bidders_record .Bidders_record_title { line-height: 50px;border-left: 1px solid #ddd; border-right:1px solid #eee;  }
+  .Bidders_record_title th {width: 144px;text-align: center; font-size: 14px}
+  .Bidders_record_tab{ display: flex; }
+  .Bidders_record_tab li{width: 50%; text-align: center; padding: 15px 0; font-size: 14px; cursor: pointer; background: #eee;}
+  .Bidders_record_tab li.curr{background-color: #ff7300; color: #fff;  font-weight: bold;}
+  .Bidders_record .Bidders_record_list {overflow-y: auto; height: 315px;   border: 2px solid #ff7701;  box-sizing: border-box;}
+  .Bidders_record_list table {width: 100%;}
+  .Bidders_record_list tr {height: 40px;}
+  .Bidders_record_list tr td {width: 114px;text-align: center; font-size: 14px;}
+  .Bidders_record_list tr:nth-child(odd) {background: #f7f7f7;}
+  .Bidders_record span {display: inline-block;}
+  .Bidders_record_curr {padding:1px 10px;  text-align: center; background: #fe7601;color: #fff; border-radius: 15px;}
+
+  /*起拍单价*/
+  .Bidders_record_detail { overflow: hidden; width: 575px; margin-top: 15px;}
+  .Bidders_record_table{width: 100%; }
+  .Bidders_record_table tr td{border: 1px solid #DEDEDE; font-size: 12px; line-height: 30px; padding-left: 10px; box-sizing: border-box;}
+  .Bidders_record_table .Bidderstitle{  background: #f5f5f5; width: 20%;    font-size: 14px;}
+  .Bidders_record_con{display: flex;flex-wrap: wrap; background: #f5f5f5;    padding: 10px 20px;}
+  .Bidders_record_con li{width: 33%;   font-size: 14px;     line-height: 25px;  overflow: hidden;
+    -ms-text-overflow: ellipsis; white-space:nowrap;
+    text-overflow: ellipsis;}
+  .news_items{height: 367px;overflow: hidden;}
+  /*内容*/
+  .Bidders_record_result{overflow: hidden;margin-left: 14px; margin-top: 10px;}
+  .Bidders_record_result h1{font-size: 20px;     line-height: 36px;
+    height: 36px;}
+  .Bidders_record_result_overbluebg { background: url(../img/Bidders_icon02.png)no-repeat center;}
+  .Bidders_record_result_overorangebg{background: url(../img/Bidders_icon03.png)no-repeat center;}
+  .Bidders_record_result_over {  width: 70px; line-height: 25px; text-align: center; color: #fff; font-size: 12px;}
+  .Bidders_record_Time{display: flex;align-items: center;margin-top: 8px;}
+  .Bidders_record_result_list{width: 546px;position: relative; overflow: hidden;}
+  .fontScalebg{border-color:transparent transparent transparent #a3cf3c;}
+  .fontScaleTipbg{border-color:transparent transparent transparent #dddddd;}
+
+  .fontScale{font-size: 16px;color: #fff; font-weight: bold;width:0;height:0; border-width:0 0 55px 55px;
+    border-style:solid; position:absolute; top: 0;left: 0; display: flex;}
+  .fontScale>span{transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);/* Firefox 旋转属性，参数表示角度(deg表示角度)，负数逆时针，正数顺时针 */
+    -webkit-transform: rotate(-45deg);/* Safari和Chrome */
+    -ms-transform: rotate(-45deg);/* IE 9 */
+    -o-transform: rotate(-45deg);/* Opera */
+    margin-left: -60px; margin-top: 10px;}
+  .inputTitle{width: 80px;display: flex; align-items: center; margin-right:20px; font-size: 14px;}
+  .bodeRed{font-size:16px;box-sizing: border-box;width: 28px;height: 40px; border: 1px solid #dddddd; display: flex;align-items: center;justify-content: center;}
+  .textInput{height: 40px; box-sizing: border-box; border:none;border-bottom: 1px solid #DDDDDD;border-top: 1px solid #DDDDDD;text-align: center; background-color: #fff;}
+  .MustSee{ background: url(../img/icon.png)no-repeat -65px -1px; width: 150px; margin-left: 130px;margin-top: 10px; padding-left: 25px;position: relative;}
+  .acuBtn{ margin-top: 30px; margin-bottom: 50px; margin-left: 130px;display:flex;}
+  .acuBtn a{ border-radius: 3px; color: #fff; width: 165px;height: 40px;text-align: center; line-height: 40px; font-size: 18px;}
+  .acuBtn .startbg{background-color: #23aa36;}
+  .acuBtn .oncebg{background-color: #ff7300;}
+  .acuBtn .Paybg{background-color: #007de4;}
+  .HandIn{background-color: #007de4; color: #fff; padding: 3px 15px; border-radius:3px ;}
+
+  /*首页-竞拍时间*/
+  .paipinacu{color: #333;}
+  .AuctionTime ul{display: flex;}
+  .AuctionTime li{background-color: #fff;width: 33.3%; text-align: center;padding: 10px 0;}
+  .AuctionTime li.curr{color: #fff;background-color: #ff6c00; box-shadow: 6px 0px 3px 1px #ff6c00;z-index: 10;position: relative;}
+  .AtP{margin-top: 3px;display: flex; justify-content: center; align-items: center;}
+  .Atborder{ text-align: center; padding: 0px 10px;  border-radius: 15px; border: 1px solid #CCCCCC;  color: #CCCCCC; font-size: 14px; overflow: hidden;}
+
+
+  .gxzb { display: block; font-size: 28px; line-height: 50px;  text-align: center;     color: #fff; margin-top: 30px;}
+  .dflex a{text-decoration: none;}
+  .zb_btn { border-radius: 3px; display: block; width: 180px;  margin: 30px auto;  line-height: 43px;  text-align: center;  font-size: 18px; cursor: pointer}
+
+  .paipin_table {width: 100%;  margin-top: 10px;  border-left: 1px solid #D5D5D5;  border-top: 1px solid #D5D5D5;}
+  .paipin_table tr { line-height: 40px; font-size: 14px;}
+  .paipin_table tr th { color: #999999;  background: #f5f5f5;  width: 137px;  border-right: 1px solid #D5D5D5;  border-bottom: 1px solid #D5D5D5;}
+  .paipin_table tr td { color: #666; text-align: center;  border-right: 1px solid #D5D5D5;  border-bottom: 1px solid #D5D5D5;}
+
+  /*合同模板*/
+  .dflex>a{ text-decoration:underline;  }
+  .dflex .contract{background-color: #ff7300; color: #fff; padding: 0 3px;border-radius: 3px; box-sizing: border-box; margin-right: 5px;}
+
+
+
+
+  /*未中标*/
+
+  .fontScalendbg{border-color:transparent transparent transparent #E2E2E2;}
+  .fontScalendTipbg{border-color:transparent transparent transparent #dddddd;}
+
+  .fontScalend{font-size: 16px;color: #fff; font-weight: bold;width:0;height:0; border-width:0 0 70px 72px;
+    border-style:solid; position:absolute; top: 0;left: 0; display: flex;}
+  .fontScalend>span{transform: rotate(-46deg);
+    -moz-transform: rotate(-46deg);/* Firefox 旋转属性，参数表示角度(deg表示角度)，负数逆时针，正数顺时针 */
+    -webkit-transform: rotate(-46deg);/* Safari和Chrome */
+    -ms-transform: rotate(-46deg);/* IE 9 */
+    -o-transform: rotate(-46deg);/* Opera */
+    margin-left: -78px; margin-top: 16px;}
+
+
+  .filurbg{ width: 90px; height: 90px; background: url('../img/Tipbg.png')no-repeat; }
+  .LoserList{text-align: center; font-size: 16px;margin-top: 15px;display: flex;align-items: center;color: #333;}
+  .LoserList .failureTitle{width: 110px;text-align: right; margin-left: 110px;}
+  .Bidders_record_result_icon { position: absolute;  right: 80px; bottom: 0px; width: 136px;  height: 100%; background: url('../img/Acution_icon.png')no-repeat center;  background-size: contain;}

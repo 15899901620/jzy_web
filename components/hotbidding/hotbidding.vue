@@ -139,7 +139,7 @@ export default {
          this.display = "none";
         },
         acutionDetail(id){
-          this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
+          this.$router.push({name:'bidders-detail-id', params:{id:id}})
         }
     },
     mounted () {
@@ -162,7 +162,6 @@ export default {
         }
 
         chefElement.prev.onclick = function(){
-
           if(chefElement.type){
             clearInterval(chefElement.prevTimer);
             chefElement.ul.insertBefore(chefElement.li[chefElement.li.length-1],chefElement.li[0]);
