@@ -2,7 +2,7 @@
   <div class="clearfix graybg">
 
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
 
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
@@ -83,15 +83,21 @@
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-    export default {
-        name: "userSpecmatdetail",
-      layout:'membercenter',
-      components:{
-        userright,
+import Navigation from '../../components/navigation'
 
-      },
-    }
+export default {
+  name: "userSpecmatdetail",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  }
+}
 </script>
 
 <style scoped>

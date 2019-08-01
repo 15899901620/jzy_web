@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="" style="width: 100%">
         <div class="memberInfor ml20  whitebg bdccc  mt20">
 
@@ -47,30 +47,27 @@
             <p class="mt5 fs12">注:请上传JPG,PNG等图片格式，大小10M以内</p>
             <div class="submitImg">提交</div>
           </div>
-
-
-
         </div>
       </div>
-
-
-
-
-
     </div>
-
     </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-    export default {
-        name: "usercapitalpaycheck",
-      layout:'membercenter',
-      components:{
-        userright
-      },
-    }
+import Navigation from '../../components/navigation'
+export default {
+  name: "usercapitalpaycheck",
+  layout:'membercenter',
+  components:{
+     usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+}
 </script>
 
 <style scoped>

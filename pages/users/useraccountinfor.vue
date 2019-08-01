@@ -1,11 +1,10 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
-
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <h1 class="fs16 ml25 mt25 bb1 pb10" >完善信息</h1>
-      <!--基本信息-->
+        <!--基本信息-->
         <ul class="inforList">
           <div class="inforTitle">基本信息</div>
           <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.company_name}}</span> </li>
@@ -16,7 +15,6 @@
                 <img :src="userinfor.business_license"/>
               </div>
             </div>
-
           </li>
           <li>
             <span class="titleInfor" >企业授权书</span><div class="dflex" style="flex-direction: column;">
@@ -28,8 +26,6 @@
         </ul>
         <!--开票信息-->
         <Form ref="formValidate" :model="userinfor"   :label-width="80">
-
-
         <ul class="inforList">
           <div class="inforTitle">开票信息</div>
           <li>
@@ -68,61 +64,57 @@
         <Button class="saveInfor" @click="handleSubmit">保存</Button>
         </Form>
       </div>
-
-
-
-
     </div>
   </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import { gainuserInfor, manageEdit } from  '../../api/users'
+import { gainuserInfor, manageEdit } from  '../../api/users'
+import Navigation from '../../components/navigation'
 
-  export default {
-        name: "useraccountinfor",
-      layout:'membercenter',
-      components:{
-        userright
-      },
-    data() {
-      return {
-        userinfor:{},
-      };
+export default {
+  name: "useraccountinfor",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data() {
+    return {
+      userinfor:{},
+    };
+  },
+  methods:{
+    //获取用户信息
+    async UserInfor(){
+      const res=await gainuserInfor(this,{})
+      this.userinfor=res.data
     },
-    methods:{
-      //获取用户信息
-      async UserInfor(){
-        console.log('UserInfor')
-        const res=await gainuserInfor(this,{})
-        console.log('用户信息res', res)
-        this.userinfor=res.data
-        this.userinfor.password='1111111',
-        console.log('userinfor', this.userinfor)
-      },
-      async handleSubmit(){
-        console.log('this', this.userinfor)
-        const res=await manageEdit(this, this.userinfor)
-        console.log('修改信息res', res)
-        if(res.data===true && res.status ===200){
-          this.$Message.info({
-            content: '修改成功',
-            duration: 5,
-            closable: true
-          })
-          this.$router.push({name:'users-usermodifyinfor'})
-          return
-        }
+    async handleSubmit(){
+      const res=await manageEdit(this, this.userinfor)
+      if(res.data===true && res.status ===200){
+        this.$Message.info({
+          content: '修改成功',
+          duration: 5,
+          closable: true
+        })
+        this.$router.push({name:'users-usermodifyinfor'})
+        return
       }
-    },
-    create(){
-
-    },
-    mounted() {
-      this.UserInfor()
     }
+  },
+  create(){
+
+  },
+  mounted() {
+    this.UserInfor()
   }
+}
 </script>
 
 <style >

@@ -14,7 +14,7 @@
                     </ul>
                 </div>
                 <div class="detailInfo">
-                    <h3>{{helpDetail.title}}</h3>
+                    <h3 class="title">{{helpDetail.title}}</h3>
                     <div v-html="helpDetail.content"></div>
                 </div>
             </div>
@@ -60,6 +60,11 @@ export default {
             helpCatList: state => state.helper.helpCatList,
             helpDetail: state => state.helper.helpDetail
         })
+    },
+    watch: {
+        '$route' (to, from) {
+            this.$router.go(0);
+        },
     }
 }
 </script>

@@ -1,8 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
-
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
         <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >我的专料
@@ -52,7 +51,6 @@
                   <div class="mt5 cp" @click="spcSee()">查看详情</div>
                   <div @click="showcancel()" class="fs14 cp mt5">取消订单</div>
                 </div>
-
               </td>
             </tr>
             </tbody>
@@ -88,35 +86,40 @@
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import cancelorder from './userCompontent/cancelorder'
-    export default {
-        name: "userSpecmat",
-   layout:'membercenter',
-     components:{
-        userright,
-       cancelorder
+import Navigation from '../../components/navigation'
+import cancelorder from './userCompontent/cancelorder'
+export default {
+  name: "userSpecmat",
+  layout:'membercenter',
+  components:{
+      usernav: Navigation.user,
+      cancelorder
   },
-      data() {
-        return {
-          showcancel_pop:false
-        };
-      },
-      methods:{
-        showcancel(){
-          this.showcancel_pop=true
-        },
-        hiddenShow(){
-          let that = this;
-          that.showcancel_pop = false
-        },
-        // 查看详情
-        spcSee(){
-          this.$router.push({path:'./userSpecmatdetail'})
-        }
-
-      }
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data() {
+    return {
+      showcancel_pop:false
+    };
+  },
+  methods:{
+    showcancel(){
+      this.showcancel_pop=true
+    },
+    hiddenShow(){
+      let that = this;
+      that.showcancel_pop = false
+    },
+    // 查看详情
+    spcSee(){
+      this.$router.push({path:'./userSpecmatdetail'})
     }
+  }
+}
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
 
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <h1 class="fs16 ml25 mt25 bb1 pb10" >完善信息</h1>
@@ -64,80 +64,82 @@
         </ul>
         <button class="saveInfor fs14" @click="modifInfor" >修改信息</button>
       </div>
-
-
-
-
     </div>
   </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import { gainuserInfor } from  '../../api/users'
-  export default {
-    name: "usermodifyinfor",
-    layout:'membercenter',
-    components:{
-      userright
-    },
-    data(){
-          return{
-            userinfor:{
-              authorization_elc: "",
-              avatar: null,
-              business_license: "",
-              channel_type_name: "",
-              channel_type_value: "",
-              company_name: "",
-              contacter: "人",
-              contacter_email: null,
-              contacter_mobile: null,
-              corporation: "",
-              created: "",
-              id:'',
-              industry_name: "",
-              industry_value: "",
-              inv_address: "",
-              inv_bank_account: "",
-              inv_bank_name: "",
-              inv_telephone: "",
-              is_active: 1,
-              main_materials_name: "",
-              main_materials_value: "",
-              member_no: "",
-              member_type_name: "",
-              member_type_value: "",
-              password: "",
-              phone: "18750123840",
-              property_name: "",
-              property_value: "",
-              salesman_code: null,
-              salesman_name: null,
-              tax_id: "",
-              username: "",
-            }
+import Navigation from '../../components/navigation'
+import { gainuserInfor } from  '../../api/users'
+export default {
+  name: "usermodifyinfor",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data(){
+        return{
+          userinfor:{
+            authorization_elc: "",
+            avatar: null,
+            business_license: "",
+            channel_type_name: "",
+            channel_type_value: "",
+            company_name: "",
+            contacter: "人",
+            contacter_email: null,
+            contacter_mobile: null,
+            corporation: "",
+            created: "",
+            id:'',
+            industry_name: "",
+            industry_value: "",
+            inv_address: "",
+            inv_bank_account: "",
+            inv_bank_name: "",
+            inv_telephone: "",
+            is_active: 1,
+            main_materials_name: "",
+            main_materials_value: "",
+            member_no: "",
+            member_type_name: "",
+            member_type_value: "",
+            password: "",
+            phone: "18750123840",
+            property_name: "",
+            property_value: "",
+            salesman_code: null,
+            salesman_name: null,
+            tax_id: "",
+            username: "",
           }
-    },
-    methods:{
-          //获取用户信息
-          async UserInfor(){
-            console.log('UserInfor')
-            const res=await gainuserInfor(this,{})
-            console.log('用户信息res', res)
-            this.userinfor=res.data
-          },
-      modifInfor(){
-            this.$router.push({name:'users-useraccountinfor'})
-      }
-    },
-    create(){
-
-    },
-    mounted() {
-      this.UserInfor()
+        }
+  },
+  methods:{
+        //获取用户信息
+        async UserInfor(){
+          console.log('UserInfor')
+          const res=await gainuserInfor(this,{})
+          console.log('用户信息res', res)
+          this.userinfor=res.data
+        },
+    modifInfor(){
+          this.$router.push({name:'users-useraccountinfor'})
     }
+  },
+  create(){
+
+  },
+  mounted() {
+    this.UserInfor()
   }
+}
 </script>
 
 <style scoped>

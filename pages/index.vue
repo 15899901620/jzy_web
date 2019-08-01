@@ -92,7 +92,10 @@ export default {
     ...mapState({
       bannerinfo: state => state.system.bannerinfo,
       topmenu: state => state.menu.topMenu
-    })
+    }),
+    database(){
+      return 11;
+    }
   }
 }
 </script>

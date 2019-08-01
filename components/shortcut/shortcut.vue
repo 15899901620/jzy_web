@@ -4,11 +4,11 @@
         <div class="slogens">您好，欢迎光临巨正源化工交易网！ <span>|</span>  <nuxt-link to="/">巨正源首页</nuxt-link></div>
         <ul class="topnavlist" v-if="showNav">
             <template v-if="userinfo">
-                <li><span style="color:#999">你好! </span>{{userinfo.realname}} <span @click="logout">[ 退出 ]</span></li>
+                <li :key="98"><span style="color:#999">你好! </span>{{userinfo.realname}} <span @click="logout">[ 退出 ]</span></li>
             </template>
             <template v-else>
-                <li><nuxt-link to="/login">登录</nuxt-link></li>
-                <li><nuxt-link to="/register">注册</nuxt-link></li>
+                <li :key="99"><nuxt-link to="/login" >登录</nuxt-link></li>
+                <li :key="97"><nuxt-link to="/register" >注册</nuxt-link></li>
             </template>
             <li v-for="(item, index) in topmenu" :key="index">
                 <nuxt-link :to="item.url">{{ item.name }}</nuxt-link>

@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
 
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <h1 class="fs16 ml25 mt25 bb1 pb10" >密码管理</h1>
@@ -35,133 +35,138 @@
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import { userSeekPassword, userRepassWd, userCodeCheck } from '../../api/users'
-  import Cookies from 'js-cookie'
-    export default {
-        name: "userCodeManage",
-      layout:'membercenter',
-      components:{
-        userright
-      },
-      data() {
-        return{
-          showpassword:false,
-          isCodeValid:false,
-          //disabled的初始值
-          btnBoolen:false,
-          btnClassName:"btn",
-          btnValue:"获取短信验证码",
-          phone:'',
-          code:'',
-          newspassword:'',
-          repassword:'',
-          password:'',
+import Navigation from '../../components/navigation'
+import { userSeekPassword, userRepassWd, userCodeCheck } from '../../api/users'
+import Cookies from 'js-cookie'
+export default {
+  name: "userCodeManage",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data() {
+    return{
+      showpassword:false,
+      isCodeValid:false,
+      //disabled的初始值
+      btnBoolen:false,
+      btnClassName:"btn",
+      btnValue:"获取短信验证码",
+      phone:'',
+      code:'',
+      newspassword:'',
+      repassword:'',
+      password:'',
+    }
+  },
+  methods:{
+    //获取短信验证码
+    async getsupplyNoteValue () {
+
+      var phone = this.phone//验证码
+      console.log('phone', phone)
+      //验证验证码是否为空
+      if (phone === "") {
+        this.$Message.info("手机号不能为空")
+        return
+      }else{
+        let params = {
+          phone
         }
-      },
-      methods:{
+        const res = await userSeekPassword(this, params)
+        console.log('res',res)
+        console.log('res',res.data)
+        if(res.data && res.status === 200 ){
+          console.log('res', res)
+          this.$Message.info("短信发送成功")
 
-        //获取短信验证码
-        async getsupplyNoteValue () {
-
-          var phone = this.phone//验证码
-          console.log('phone', phone)
-          //验证验证码是否为空
-          if (phone === "") {
-            this.$Message.info("手机号不能为空")
-            return
-          }else{
-            let params = {
-              phone
-            }
-            const res = await userSeekPassword(this, params)
-            console.log('res',res)
-            console.log('res',res.data)
-            if(res.data && res.status === 200 ){
-              console.log('res', res)
-              this.$Message.info("短信发送成功")
-
-              var sj = Math.ceil(Math.random(10 + 1) * 100000)
-              window.localStorage.setItem("note", sj)
-              this.auth_time = 60;
-              var timer = setInterval(()=>{
-                this.auth_time--;
-                if(this.auth_time<=0){
-                  clearInterval(timer)
-                  this.btnBoolen = false;
-                  this.btnClassName="btns"
-                  this.btnValue="获取短信验证码"
-
-                }else {
-                  this.btnBoolen = true;
-                  this.btnValue=`重新获取(${this.auth_time})S`
-                  this.btnClassName="btn"
-
-                }
-              },1000)
+          var sj = Math.ceil(Math.random(10 + 1) * 100000)
+          window.localStorage.setItem("note", sj)
+          this.auth_time = 60;
+          var timer = setInterval(()=>{
+            this.auth_time--;
+            if(this.auth_time<=0){
+              clearInterval(timer)
+              this.btnBoolen = false;
+              this.btnClassName="btns"
+              this.btnValue="获取短信验证码"
 
             }else {
-              this.$Message.info("短信发送失败")
+              this.btnBoolen = true;
+              this.btnValue=`重新获取(${this.auth_time})S`
+              this.btnClassName="btn"
+
             }
-          }
-        },
+          },1000)
 
-        repasswordCheck(){
-          if(!this.newspassword){
-            this.$Notice.warning({
-              title: '新密码不能空',
-              duration: 5
-            });
-            return
-          }
-          if(this.newspassword === this.repassword){
-              this.password = this.newspassword
-          }else{
-            this.showpassword=true
-          }
-        },
-        // 验证手机验证码
-        async passwordCodeCheck(){
-          let params = {
-            phone:this.phone,
-            code:this.code
-          }
-          const res = await userCodeCheck(this, params)
-          if(res.data && res.status === 200){
-            this.isCodeValid=true
-          }else{
-            this.$Notice.warning({
-              title: '验证有误',
-              duration: 5
-            });
-          }
-        },
-
-        async passwordmodif(){
-
-          let params = {
-            phone:this.phone,
-            password:this.password,
-            code:this.code
-          }
-          console.log('params', params)
-          const res = await userRepassWd(this, params)
-          console.log('res', res)
-          if(res.data && res.status ===200){
-            this.$Message.info({content: '修改密码成功'})
-
-          }else{
-            this.$Notice.warning({
-              title: '修改密码失败',
-              duration: 5
-            });
-          }
-        },
-      },
-      mounted(){
-          this.phone=JSON.parse(Cookies.get('userinfor')).realname
+        }else {
+          this.$Message.info("短信发送失败")
+        }
       }
-    }
+    },
+
+    repasswordCheck(){
+      if(!this.newspassword){
+        this.$Notice.warning({
+          title: '新密码不能空',
+          duration: 5
+        });
+        return
+      }
+      if(this.newspassword === this.repassword){
+          this.password = this.newspassword
+      }else{
+        this.showpassword=true
+      }
+    },
+    // 验证手机验证码
+    async passwordCodeCheck(){
+      let params = {
+        phone:this.phone,
+        code:this.code
+      }
+      const res = await userCodeCheck(this, params)
+      if(res.data && res.status === 200){
+        this.isCodeValid=true
+      }else{
+        this.$Notice.warning({
+          title: '验证有误',
+          duration: 5
+        });
+      }
+    },
+
+    async passwordmodif(){
+
+      let params = {
+        phone:this.phone,
+        password:this.password,
+        code:this.code
+      }
+      console.log('params', params)
+      const res = await userRepassWd(this, params)
+      console.log('res', res)
+      if(res.data && res.status ===200){
+        this.$Message.info({content: '修改密码成功'})
+
+      }else{
+        this.$Notice.warning({
+          title: '修改密码失败',
+          duration: 5
+        });
+      }
+    },
+  },
+  mounted(){
+      this.phone=JSON.parse(Cookies.get('userinfor')).realname
+  }
+}
 </script>
 
 <style  >

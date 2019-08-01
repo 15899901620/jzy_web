@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <h1 class="fs16 ml25 mt25 bb1 pb10" >账号绑定</h1>
         <ul class="bindingMobile mt20 ml20">
@@ -22,24 +22,26 @@
         </ul>
         <div class="ConfirmSubmit">提交绑定</div>
       </div>
-
-
-
-
-
     </div>
   </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-    export default {
-        name: "userAccountBind",
-      layout:'membercenter',
-      components:{
-        userright
-      }
-    }
+import userright from './userCompontent/userright'
+import Navigation from '../../components/navigation'
+export default {
+  name: "userAccountBind",
+  layout:'membercenter',
+  components:{   
+    usernav: Navigation.user,
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  }
+}
 </script>
 
 <style scoped>

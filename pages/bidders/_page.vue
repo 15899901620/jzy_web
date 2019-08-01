@@ -72,7 +72,7 @@ export default {
             Auctionlist:'',
             AuctionTip:'暂无竞拍活动',
             tabMain: ['', '', ''],
-            status:1,
+            status: 2,
             index:0,
             AuctionTab:[
               {AuctionName:'正在竞拍', status:2},
@@ -102,7 +102,7 @@ export default {
         //竞拍列表
         async AuctionList(status,index){
             if(status){
-                this.status=status
+                this.status = status
             }
             if(index){
                 this.CurrSelect=index
@@ -113,8 +113,10 @@ export default {
             let params={
                 current_page:1,
                 page_size:6,
-                type:this.status
+                type: this.status
             }
+            console.log('status', params)
+
             let res=await auctionPage(this,params)
       
             if(res.data.items){

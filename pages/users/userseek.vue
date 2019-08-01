@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
         <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >求购信息
@@ -94,15 +94,20 @@
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-
-  export default {
-        name: "userseek",
-      layout:'membercenter',
-      components:{
-        userright
-      }
-    }
+import Navigation from '../../components/navigation'
+export default {
+  name: "userseek",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  }
+}
 </script>
 
 <style scoped>

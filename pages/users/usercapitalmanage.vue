@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="" style="width: 100%">
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--资金管理-->
@@ -78,57 +78,51 @@
             <a class="PageNext graybg">Go</a>
           </ul>
         </div>
-
       </div>
-
       </div>
-
-
-
     </div>
-
-
-
-
-
   </div>
 </template>
 
 <script>
-  import { capitalinfo } from '../../api/capital'
-  import userright from './userCompontent/userright'
-
-  export default {
-      name: "usercapitalmanage",
-      layout:'membercenter',
-        components:{
-        userright
-      },
-      data(){
-        return{
-          fozen_fund:'',
-          remain_fund:'',
-        }
-      },
-      methods:{
-        async capital(){
-       const res= await capitalinfo(this,{})
-          this.fozen_fund=res.data.fozen_fund
-          this.remain_fund=res.data.remain_fund
-        },
-        paycheck(){
-          this.$router.push({name: "users-usercapitalpaycheck"})
-        }
-      },
-      created(){
-        console.log('created')
-        this.capital()
-      },
-      mounted(){
-
-      },
-
+import { capitalinfo } from '../../api/capital'
+import Navigation from '../../components/navigation'
+export default {
+  name: "usercapitalmanage",
+  layout:'membercenter',
+  components:{
+     usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data(){
+    return{
+      fozen_fund:'',
+      remain_fund:'',
     }
+  },
+  methods:{
+    async capital(){
+    const res= await capitalinfo(this,{})
+      this.fozen_fund=res.data.fozen_fund
+      this.remain_fund=res.data.remain_fund
+    },
+    paycheck(){
+      this.$router.push({name: "users-usercapitalpaycheck"})
+    }
+  },
+  created(){
+    console.log('created')
+    this.capital()
+  },
+  mounted(){
+
+  }
+}
 </script>
 
 <style scoped>

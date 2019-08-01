@@ -4,7 +4,7 @@
         <div class="container" title="内容区块">
             <div class="breadcrumb">
                 <breadcrumb>
-                    <breadcrumb-item><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
+                    <breadcrumb-item><nuxt-link to="/" class="HomeIcon">巨正源</nuxt-link></breadcrumb-item>
                     <breadcrumb-item><nuxt-link :to="{name:'bidders-page'}" >限时竞拍</nuxt-link></breadcrumb-item>
                     <breadcrumb-item> {{detailDatabrid.skuName}}</breadcrumb-item>
                 </breadcrumb>
@@ -190,7 +190,7 @@
                                 <span class="">{{detailDatabrid.marginRatio}}% </span>
                             </div>
                             <!--竞拍必看-->
-                            <div class="MustSee">竞拍必看</div>
+                            <div class="MustSee"><a href="/help/17" target="_blank" >竞拍必看</a></div>
                             <div class="acuBtn" v-if="detailDatabrid.type === 2">
                                 <a class="oncebg" @click="AddauctionPrice()">立即出价</a>
                                 <a class="Paybg ml15" @click="PayCost()">追加保证金</a>
@@ -533,6 +533,15 @@ export default {
             }
         },
     },
+    head () {
+        return {
+            title: this.detailDatabrid.skuName + '限时竞拍-巨正源',
+            meta: [
+                { hid: 'keywords', name: 'keywords', content:'物性表,巨正源' },
+                { hid: 'description', name: 'description', content: '物性表-巨正源' }
+            ]
+        }
+    },
     created () {
 
     },
@@ -547,7 +556,6 @@ export default {
         '$route' (to, from) {
             this.$router.go(0);
         },
- 
     }
 }
 </script>

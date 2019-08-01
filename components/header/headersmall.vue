@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             selectService: false,
-            showNav:false
+            showNav:true
         }
     },
     props: {
@@ -40,12 +40,6 @@ export default {
         // servicecate
     },
     computed: {
-        ...mapState({
-            userinfo: state => state.login.userinfo,
-            topmenu: state => state.menu.topMenu,
-            middleMenu: state => state.menu.middleMenu,
-            systeminfo: state => state.system.systeminfo
-        }),
         classes() {
             return [
                 `${prefixCls}`,

@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
 
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
@@ -30,7 +30,6 @@
             <span style="width: 12%;">状态</span>
             <span style="width: 13%;">操作</span>
           </div>
-
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
             <tbody>
             <tr class="Ttitle graybg" >
@@ -57,8 +56,6 @@
               </td>
             </tr>
             </tbody>
-
-
           </table>
           <!--页码-->
           <ul class="pagination">
@@ -77,25 +74,27 @@
             <div class="ml30">转到第<input type="text" class="pageText bdccc" />页</div>
             <a class="PageNext graybg">Go</a>
           </ul>
-
         </div>
-
-
-
       </div>
     </div>
 </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-    export default {
-        name: "useradvsale",
-      layout:'membercenter',
-      components:{
-        userright
-      }
-    }
+import Navigation from '../../components/navigation'
+export default {
+  name: "useradvsale",
+  layout:'membercenter',
+  components:{
+     usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+}
 </script>
 
 <style scoped>

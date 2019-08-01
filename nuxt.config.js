@@ -36,7 +36,7 @@ export default {
   plugins: [
     '@/plugins/axios',
     '@/plugins/storage',
-    '@/plugins/iview.js'
+    {src: '~/plugins/iview.js', ssr: true}
   ],
   /*
   ** Nuxt.js modules

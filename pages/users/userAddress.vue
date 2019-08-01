@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
         <div class="TableList">
@@ -27,185 +27,180 @@
             </li>
           </ul>
           <div class="fs18 mt20" v-else>{{TipAddress}}</div>
-
-
         </div>
       </div>
-
-
     </div>
     <AddressPopup @hidden="hiddenShow"   v-show="showcancel_pop"></AddressPopup>
-
     <EditAddress  @hidden="Hiddenedit"  :formAddress="formEditAddress"  v-show="showEditpop"></EditAddress>
-
-
   </div>
-
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import AddressPopup from './userCompontent/AddressPopup'
-  import EditAddress from './userCompontent/EditAddress'
-  import { addressList, addressDefault, addressDelete, addressInfor  } from '../../api/users'
-  import Cookies from 'js-cookie'
-  export default {
-      name: "userAddress",
-      layout:'membercenter',
-      components:{
-        userright,
-         AddressPopup,
-        EditAddress
-      },
-    data(){
-          return{
+import Navigation from '../../components/navigation'
+import AddressPopup from './userCompontent/AddressPopup'
+import EditAddress from './userCompontent/EditAddress'
+import { addressList, addressDefault, addressDelete, addressInfor  } from '../../api/users'
+import Cookies from 'js-cookie'
+export default {
+  name: "userAddress",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user,
+    AddressPopup,
+    EditAddress
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data(){
+    return{
 
-            showcancel_pop:false,
-            showEditpop:false,
-            TipAddress:'',
-            AddressNum:0,
-            addressList:[],
-            addressDefault:false,
-            addressId:0,
+      showcancel_pop:false,
+      showEditpop:false,
+      TipAddress:'',
+      AddressNum:0,
+      addressList:[],
+      addressDefault:false,
+      addressId:0,
 
-            formAddress:{
-              id:0,
-              memberId: '',
-              name: '',    //收货人姓名
-              phone: '',   //收货人电话
-              idNumber:'',  //身份证
-              countryId:'',   //国家
-              state: '', //省
-              city: '',     //市
-              district: '',      //区县
-              address: '',//详细地址
-              defaultAddress: 0,    //设置默认地址
-              alias:''             //别名
-            },
-            formEditAddress:{},
-          }
-    },
-    methods:{
-
-          // 收货地址列表
-      async AddressList(){
-        console.log('地址列表')
-        if(Cookies.get('userinfor') && Cookies.get('webtoken')){
-          const res=await addressList(this, {})
-          console.log('地址列表_res',res)
-          if(res){
-            this.addressList=res.data
-            this.AddressNum=res.data.length
-          }else{
-            this.TipAddress='暂无收货地址，请新增收货地址'
-            this.AddressNum=0
-          }
-        }else{
-          return
-        }
-
+      formAddress:{
+        id:0,
+        memberId: '',
+        name: '',    //收货人姓名
+        phone: '',   //收货人电话
+        idNumber:'',  //身份证
+        countryId:'',   //国家
+        state: '', //省
+        city: '',     //市
+        district: '',      //区县
+        address: '',//详细地址
+        defaultAddress: 0,    //设置默认地址
+        alias:''             //别名
       },
-      showcancel(){
-         this.showcancel_pop=true
-      },
-      //获取单条地址信息
-      //地址详细
-      async addressDetail(id){
-        console.log('addressId', this.addressId)
-        let params={
-          id:id
-        }
-        const res= await addressInfor(this,params)
-        console.log('单条地址信息res',res)
-         this.formEditAddress=res.data
-        console.log('单条地址信息res',this.formEditAddress)
-
-      },
-      hiddenShow(){
-        let that = this;
-        that.showcancel_pop = false
-        console.log('showcancel_pop',  this.showcancel_pop)
-        this.AddressList()
-      },
-      showEdit(id){
-        this.showEditpop=true
-        console.log('showEdit_pop',  this.showEditpop)
-        if(id){
-          this.formAddress.id=id
-        }
-        this.addressDetail(id)
-      },
-
-      Hiddenedit(){
-        console.log('hiddenEditShow')
-        let that = this;
-        that.showEditpop = false
-        console.log('showEditpop',  that.showEditpop)
-       },
-
-// 设为默认地址
-      async addressdefault(id){
-        let memberId=JSON.parse(Cookies.get('userinfor')).id
-        let params={
-          memberId:memberId,
-          id:id
-        }
-       const res= await  addressDefault(this,params)
-        console.log('默认地址res',res)
-        if(res.data===true && res.status ===200){
-          this.$Message.info({
-            content: '设置成功',
-            duration: 3,
-            closable: true
-          })
-          this.AddressList()
-          return
-        }else {
-          this.$Notice.warning({
-            title: '设置默认地址失败，请联系客服',
-            duration: 5,
-            closable: true
-          });
-          return
-        }
-      },
-      //删除地址
-      async Deleteadress(id){
-        console.log('删除地址',id)
-        let params={
-          id:id
-        }
-        const res= await addressDelete(this,params)
-        console.log('res', res)
-       if(res.data===true && res.status === 200){
-         this.$Message.info({
-           content: '删除成功',
-           duration: 3,
-           closable: true
-         });
-         this.AddressList()
-       }
-      },
-      confirm (id) {
-        this.$Modal.confirm({
-          title: '删除地址',
-          content: '<p style="color: #db4f2e; font-size: 16px;">确认要删除本条地址!!!</p>',
-          onOk: () => {
-            console.log('delete_id',id)
-             this.Deleteadress(id)
-          },
-          onCancel: () => { }
-        });
-      },
-
-    },
-    create(){
-     },
-    mounted(){
-      this.AddressList()
-     }
-
+      formEditAddress:{},
     }
+  },
+  methods:{
+        // 收货地址列表
+    async AddressList(){
+      console.log('地址列表')
+      if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+        const res=await addressList(this, {})
+        console.log('地址列表_res',res)
+        if(res){
+          this.addressList=res.data
+          this.AddressNum=res.data.length
+        }else{
+          this.TipAddress='暂无收货地址，请新增收货地址'
+          this.AddressNum=0
+        }
+      }else{
+        return
+      }
+
+    },
+    showcancel(){
+        this.showcancel_pop=true
+    },
+    //获取单条地址信息
+    //地址详细
+    async addressDetail(id){
+      console.log('addressId', this.addressId)
+      let params={
+        id:id
+      }
+      const res= await addressInfor(this,params)
+      console.log('单条地址信息res',res)
+        this.formEditAddress=res.data
+      console.log('单条地址信息res',this.formEditAddress)
+
+    },
+    hiddenShow(){
+      let that = this;
+      that.showcancel_pop = false
+      console.log('showcancel_pop',  this.showcancel_pop)
+      this.AddressList()
+    },
+    showEdit(id){
+      this.showEditpop=true
+      console.log('showEdit_pop',  this.showEditpop)
+      if(id){
+        this.formAddress.id=id
+      }
+      this.addressDetail(id)
+    },
+
+    Hiddenedit(){
+      console.log('hiddenEditShow')
+      let that = this;
+      that.showEditpop = false
+      console.log('showEditpop',  that.showEditpop)
+      },
+
+  // 设为默认地址
+    async addressdefault(id){
+      let memberId=JSON.parse(Cookies.get('userinfor')).id
+      let params={
+        memberId:memberId,
+        id:id
+      }
+      const res= await  addressDefault(this,params)
+      console.log('默认地址res',res)
+      if(res.data===true && res.status ===200){
+        this.$Message.info({
+          content: '设置成功',
+          duration: 3,
+          closable: true
+        })
+        this.AddressList()
+        return
+      }else {
+        this.$Notice.warning({
+          title: '设置默认地址失败，请联系客服',
+          duration: 5,
+          closable: true
+        });
+        return
+      }
+    },
+    //删除地址
+    async Deleteadress(id){
+      console.log('删除地址',id)
+      let params={
+        id:id
+      }
+      const res= await addressDelete(this,params)
+      console.log('res', res)
+      if(res.data===true && res.status === 200){
+        this.$Message.info({
+          content: '删除成功',
+          duration: 3,
+          closable: true
+        });
+        this.AddressList()
+      }
+    },
+    confirm (id) {
+      this.$Modal.confirm({
+        title: '删除地址',
+        content: '<p style="color: #db4f2e; font-size: 16px;">确认要删除本条地址!!!</p>',
+        onOk: () => {
+          console.log('delete_id',id)
+            this.Deleteadress(id)
+        },
+        onCancel: () => { }
+      });
+    },
+  },
+  create(){
+  },
+  mounted(){
+    this.AddressList()
+  }
+}
 </script>
 
 <style scoped>

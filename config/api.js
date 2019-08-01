@@ -30,7 +30,13 @@ let api = {
     supplierRECodeSend:'/user/supplier/updatePwd/code',
     manageEdit: '/user/m/edit',
   },
-
+  /**
+   * @description 订单管理
+   */
+  order: {
+    orderlist: '/bill/orderInfo/list',
+    orderpage: '/bill/orderInfo/page'
+  },
   /**
    * @description 会员地址
    */

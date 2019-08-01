@@ -6,7 +6,7 @@
       <div class="w1200 TopPos">
         <div class="">您好，欢迎来到巨正源化工交易网！</div>
         <ul class="UserList">
-          <li>巨正源首页</li><li>登录</li><li>注册</li><li>会员中心</li><li>关于我们</li><li>帮助中心</li>
+          <li>巨正源首页</li>
         </ul>
 
       </div>

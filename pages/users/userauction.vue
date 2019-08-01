@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix graybg">
     <div class="w1200 dflex " style="margin-bottom: 40px">
-      <userright></userright>
+      <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--个人信息-->
         <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >我的竞拍
@@ -99,170 +99,163 @@
             <div class="ml30">转到第<input type="text" class="pageText bdccc" />页</div>
             <a class="PageNext graybg">Go</a>
           </ul>
-
-
         </div>
-
-
-
-
       </div>
-
-
-
-
-
     </div>
   </div>
 </template>
 
 <script>
-  import userright from './userCompontent/userright'
-  import { auctionOrderList } from '../../api/auction'
-  import Cookies from 'js-cookie'
+import Navigation from '../../components/navigation'
+import { auctionOrderList } from '../../api/auction'
+import Cookies from 'js-cookie'
 
-  export default {
-        name: "userauction",
-      layout:'membercenter',
-      components:{
-        userright
-      },
-      data(){
-          return{
-            counter:100,
-            value:5,
-            auctionNoSearch:'',   //竞拍计划编号
-            skuNo:'',    //商品编码
-            auctionId:'',   //竞拍活动ID
-            status:'',       //状态 0-已取消 1-待转订单 2-已完成
-            currentPage:1,
-            pageSize:5,
-            orderType:3,
-            AuctionOrder:{},
-            actEndTimeList: [],
-            list:[
-              {a:1},
-              {b:1},
-              {c:1},
-            ]
-          }
-      },
-
-      methods:{
-        //提货_跳转到下单页
-        qrOrder(id){
-          this.$router.push({name:"Biders-BidersSubmit",query:{id:id}})
-        },
-          async auctionOrderList(){
-            console.log('searchval',  this.$refs.searchval.value)
-            this.auctionNoSearch=this.$refs.searchval.value
-            console.log('auctionNoSearch', this.auctionNoSearch)
-            if(Cookies.get('userinfor') && Cookies.get('webtoken')){
-              let params={
-                planNo: this.auctionNoSearch,       //订单编号
-                skuName:this.skuName,                  //商品名称
-                current_page:this.currentPage,        //当前页
-                orderType:this.orderType,
-                page_size:this.pageSize,           //每页显示的条数
-              }
-              let res = await  auctionOrderList(this,params)
-              console.log('res',res)
-              this.AuctionOrder=res.data.items
-              var arrayData=[]
-              for (var i=0;i<this.AuctionOrder.length;i++){
-                if(i<this.pageSize){
-                  arrayData.push(this.AuctionOrder[i])
-                }
-
-              }
-              console.log('arrayData',arrayData)
-              var TimeArray= arrayData.map(function(v){
-                return v.lastDeliveryTime
-              })
-              console.log('TimeArray',TimeArray)
-              this.actEndTimeList =TimeArray
-              console.log('actEndTimeList',this.actEndTimeList)
-              this.countDown();
-            }else{
-              this.$Modal.confirm({
-                title: '提示',
-                content: '<p>您尚未登录，请先登录</p>',
-                okText:'去登录',
-                onOk: () => {
-                  this.$router.push({name:'login'});
-                },
-
-              });
-            }
-
-          },
-
-
-        timeFormat(param) {
-          return param < 10 ? '0' + param : param;
-        },
-
-
-        countDown(it) {
-
-          // 获取当前时间，同时得到活动结束时间数组
-          let newTime = new Date().getTime();
-            // console.log('newTime', newTime)
-          let endTimeList = this.actEndTimeList;
-            //console.log('endTimeList', endTimeList)
-          let countDownArr = [];
-          // 对结束时间进行处理渲染到页面
-          endTimeList.forEach(o => {
-            let endTime = new Date(o).getTime();
-
-            let obj = null;
-            // 如果活动未结束，对时间进行处理
-            if (endTime - newTime > 0) {
-
-              let time = (endTime - newTime) / 1000;
-
-              // 获取天、时、分、秒
-              let day = parseInt(time / (60 * 60 * 24));
-              let hou = parseInt(time % (60 * 60 * 24) / 3600);
-              let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
-              let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
-              obj = {
-                day: this.timeFormat(day),
-                hou: this.timeFormat(hou),
-                min: this.timeFormat(min),
-                sec: this.timeFormat(sec)
-              };
-              console.log('obj',obj)
-            } else { // 活动已结束，全部设置为'00'
-              obj = {
-                day: '00',
-                hou: '00',
-                min: '00',
-                sec: '00'
-              };
-            }
-            countDownArr.push(obj);
-          });
-          this.countDownList = countDownArr;
-          setTimeout(this.countDown, 1000);
-
-        },
-
-      },
-      mounted(){
-       this.auctionOrderList()
-      //  this.$store.commit('increment', {value:5})
-      //  this.$store.dispatch('increment', {value:5})
-
-      },
-    destoryed () {
-      clearTimeout()
-    },
-      computed:{
-
-      }
-
+export default {
+  name: "userauction",
+  layout:'membercenter',
+  components:{
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('system/getSystemCnf'),
+      store.dispatch('menu/getMenuList')
+    ])
+  },
+  data(){
+    return{
+      counter:100,
+      value:5,
+      auctionNoSearch:'',   //竞拍计划编号
+      skuNo:'',    //商品编码
+      auctionId:'',   //竞拍活动ID
+      status:'',       //状态 0-已取消 1-待转订单 2-已完成
+      currentPage:1,
+      pageSize:5,
+      orderType:3,
+      AuctionOrder:{},
+      actEndTimeList: [],
+      list:[
+        {a:1},
+        {b:1},
+        {c:1},
+      ]
     }
+  },
+  methods:{
+    //提货_跳转到下单页
+    qrOrder(id){
+      this.$router.push({name:"Biders-BidersSubmit",query:{id:id}})
+    },
+      async auctionOrderList(){
+        console.log('searchval',  this.$refs.searchval.value)
+        this.auctionNoSearch=this.$refs.searchval.value
+        console.log('auctionNoSearch', this.auctionNoSearch)
+        if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+          let params={
+            planNo: this.auctionNoSearch,       //订单编号
+            skuName:this.skuName,                  //商品名称
+            current_page:this.currentPage,        //当前页
+            orderType:this.orderType,
+            page_size:this.pageSize,           //每页显示的条数
+          }
+          let res = await  auctionOrderList(this,params)
+          console.log('res',res)
+          this.AuctionOrder=res.data.items
+          var arrayData=[]
+          for (var i=0;i<this.AuctionOrder.length;i++){
+            if(i<this.pageSize){
+              arrayData.push(this.AuctionOrder[i])
+            }
+
+          }
+          console.log('arrayData',arrayData)
+          var TimeArray= arrayData.map(function(v){
+            return v.lastDeliveryTime
+          })
+          console.log('TimeArray',TimeArray)
+          this.actEndTimeList =TimeArray
+          console.log('actEndTimeList',this.actEndTimeList)
+          this.countDown();
+        }else{
+          this.$Modal.confirm({
+            title: '提示',
+            content: '<p>您尚未登录，请先登录</p>',
+            okText:'去登录',
+            onOk: () => {
+              this.$router.push({name:'login'});
+            },
+
+          });
+        }
+
+      },
+
+
+    timeFormat(param) {
+      return param < 10 ? '0' + param : param;
+    },
+
+
+    countDown(it) {
+
+      // 获取当前时间，同时得到活动结束时间数组
+      let newTime = new Date().getTime();
+        // console.log('newTime', newTime)
+      let endTimeList = this.actEndTimeList;
+        //console.log('endTimeList', endTimeList)
+      let countDownArr = [];
+      // 对结束时间进行处理渲染到页面
+      endTimeList.forEach(o => {
+        let endTime = new Date(o).getTime();
+
+        let obj = null;
+        // 如果活动未结束，对时间进行处理
+        if (endTime - newTime > 0) {
+
+          let time = (endTime - newTime) / 1000;
+
+          // 获取天、时、分、秒
+          let day = parseInt(time / (60 * 60 * 24));
+          let hou = parseInt(time % (60 * 60 * 24) / 3600);
+          let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+          let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+          obj = {
+            day: this.timeFormat(day),
+            hou: this.timeFormat(hou),
+            min: this.timeFormat(min),
+            sec: this.timeFormat(sec)
+          };
+          console.log('obj',obj)
+        } else { // 活动已结束，全部设置为'00'
+          obj = {
+            day: '00',
+            hou: '00',
+            min: '00',
+            sec: '00'
+          };
+        }
+        countDownArr.push(obj);
+      });
+      this.countDownList = countDownArr;
+      setTimeout(this.countDown, 1000);
+
+    },
+  },
+  mounted(){
+    this.auctionOrderList()
+  //  this.$store.commit('increment', {value:5})
+  //  this.$store.dispatch('increment', {value:5})
+
+  },
+  destoryed () {
+    clearTimeout()
+  },
+  computed:{
+
+  }
+
+}
 </script>
 
 <style scoped>
