@@ -2,6 +2,7 @@
   <div class="body">
     <Header title="头部"></Header>
     <div class="container" title="内容区块">
+
       <!--内容-->
       <Banner title="广告" :bannerData="this.bannerinfo" :heightNum="this.heightNum" style="height: 320px; overflow: hidden;"></Banner>
       <div class="memberCenter">
@@ -30,6 +31,7 @@
           </div>
         </outpacking>
       </div>
+      <sidebar></sidebar>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
@@ -46,6 +48,7 @@ import hotbidding from '../components/hotbidding'
 import outpacking from '../components/outpacking'
 import cobrands from '../components/cobrands'
 import hottrade from '../components/hottrade'
+import sidebar from '../components/sidebar'
 
 export default {
   async asyncData ({app}) {
@@ -75,7 +78,8 @@ export default {
     hotbidding,
     outpacking,
     cobrands,
-    hottrade
+    hottrade,
+    sidebar
   },
   data() {
     return {
