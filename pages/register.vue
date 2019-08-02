@@ -18,7 +18,7 @@
               </div>
               <!-- 第二个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
-               
+                <supplier-register></supplier-register>
               </div>
               <!-- 第三个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
@@ -46,7 +46,8 @@ export default {
     Header,
     HeaderSmall: Header.small,
     Footer,
-    UserRegister
+    UserRegister,
+    SupplierRegister: UserRegister.supplier 
   },
   fetch({ store, params }) {
     return Promise.all([

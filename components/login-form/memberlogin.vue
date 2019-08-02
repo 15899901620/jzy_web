@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { manageLogin, memberValid } from '../../api/users'
+import { manageLogin, getGainuserInfor } from '../../api/users'
 import Cookies from 'js-cookie'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import { parse, stringify } from 'qs'
@@ -72,7 +72,7 @@ export default {
           if(authres && res.status === 200){
             let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
             Cookies.set('webtoken',  authres, { expires: expires })
-            const res = await memberValid(this, {})
+            const res = await getGainuserInfor(this, {})
             if(res.data  && res.status === 200){
               let auth= stringify(res.data)
               Cookies.set('userinfor', auth, { expires: 36000000 || 1 })

@@ -3,7 +3,7 @@
  */
 import server from '../config/api'
 import Cookies from 'js-cookie'
-
+import { stringify } from 'qs'
 const getCookie = name => {
   if (!name) return
   let data = Cookies.get(name)
@@ -119,6 +119,24 @@ export const supplierReg = (vm, data) => {
 }
 
 /**
+ * @description 获取会员信息
+ * @param {*} vm 
+ * @param {*} data 
+ */
+export const getGainuserInfor = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.gainuserInfor,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierRegErr', errorInfo)
+  })
+}
+
+/**
  *
  * @description 供应商验证（手机号/验证名称）
  * @param vm
@@ -194,7 +212,8 @@ export const userCodeSend = (vm, data) => {
    return vm.$axios.post(server.prefix +  server.api.user.userCodeSend,
     {
       ...data
-    }).catch((e) => {
+    }
+    ).catch((e) => {
       let errorInfo = e.response
       console.log('userCodeSendErr', errorInfo)
     })
@@ -383,27 +402,6 @@ export const supplierRepssWd = (vm, data) => {
       console.log('supplierRepssWdErr', errorInfo)
     })
 }
-
-/**
- * @description 获取会员信息
- * @param vm
- * @param data
- * @returns {*}
- */
-
-export const gainuserInfor = (vm, data) => {
-  vm.$axios.defaults.headers = {
-    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
-  }
-  return vm.$axios.put(server.prefix + server.api.user.gainuserInfor,
-    {
-      ...data
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-
 
 
 /**

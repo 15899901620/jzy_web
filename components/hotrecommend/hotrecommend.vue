@@ -10,7 +10,7 @@
         <div class="dflex mt25" style="justify-content: center;" v-else>
             <div class="indexHead" @click="User"><img :src="!userinfo.avatar ? '~/assets/img/index_head.png': userinfo.avatar"/></div>
             <div class="ml10">
-                <p class="mt5">HI {{userinfo.realname}},上午好！</p>
+                <p class="mt5">HI {{userinfo.phone}},上午好！</p>
                 <p class="gray">欢迎来到巨正源交易网!</p>
             </div>
         </div>

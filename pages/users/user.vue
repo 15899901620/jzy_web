@@ -8,10 +8,11 @@
           <div class="dflex">
             <div class="headInfor">
               <div class="head">
-                <img src="../../assets/img/head.png" />
+                <img :src="!userinfo.avatar ? '~/assets/img/head.png': userinfo.avatar"/>
+                
                 <div class="headClick">上传</div>
               </div>
-              <span>{{showtimeVal}}好，{{userinfo.realname}}</span>
+              <span>{{showtimeVal}}好，{{userinfo.phone}}</span>
               <span>欢迎来到巨正源化工交易网！</span>
               <div class="gray mt20 mb10 fs12">上次登录时间：2019年4月1日  09时07分</div>
             </div>
