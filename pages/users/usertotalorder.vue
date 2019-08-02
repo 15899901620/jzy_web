@@ -15,9 +15,9 @@
             <div class="dflex">
               <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" /><div class="check">查看</div>
             </div>
-            <div class="dflexAlem">
+            <!-- <div class="dflexAlem">
               <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
-            </div>
+            </div> -->
           </div>
           <div class="TableTitle graybg">
             <span style="width: 15%;">商品信息</span>
@@ -64,92 +64,9 @@
               </tbody>
             </table>
           </template>
-          <!-- <table class="listT mt10" border="" cellspacing="" cellpadding="">
-            <tbody>
-            <tr class="Ttitle graybg" >
-              <td colspan="7">
-                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
-                <span class="ml15">订单类型：现货</span>
-                <span class="ml15">下单时间：<span class="gray">2019-04-02  12:00:00</span></span>
-                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>02小时30分25秒</span>
-              </td>
-            </tr>
-            <tr class="detailTable">
-              <td>PP F08 现货</td>
-              <td><span class="orangeFont">￥1055.00</span>/吨</td>
-              <td>102.000</td>
-              <td>东莞市</td>
-              <td>1,076.10</td>
-              <td><span class="redFont">待付款</span></td>
-              <td class="operate">
-                <div class="">
-                  <a class="Paybtn mt15 PayCurr">去付款</a>
-                </div>
-                <a class="mt5 blackFont">查看详情</a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-
-          <table class="listT mt10" border="" cellspacing="" cellpadding="">
-            <tbody>
-            <tr class="Ttitle graybg" >
-              <td colspan="7">
-                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
-                <span class="ml15">订单类型：现货</span>
-                <span class="ml15">下单时间：<span class="gray">2019-04-02  12:00:00</span></span>
-                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>02小时30分25秒</span>
-              </td>
-            </tr>
-            <tr class="detailTable">
-              <td>PP F08 <span class="blueFont">现货</span></td>
-              <td><span class="orangeFont">￥1055.00</span>/吨</td>
-              <td>102.000</td>
-              <td>东莞市</td>
-              <td>1,076.10</td>
-              <td><span class="greenFont">已完成</span></td>
-              <td class="operate">
-                <div class="">
-                  <a class="mt15 blackFont">查看详情</a>
-                </div>
-                <a class="mt5 blueFont">查看发票</a>
-              </td>
-            </tr>
-
-            </tbody>
-
-
-          </table>
-          <table class="listT mt10" border="" cellspacing="" cellpadding="">
-            <tbody>
-            <tr class="Ttitle graybg" >
-              <td colspan="7">
-                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
-                <span class="ml15">订单类型：现货</span>
-                <span class="ml15">下单时间：<span class="gray">2019-04-02  12:00:00</span></span>
-                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>02小时30分25秒</span>
-              </td>
-            </tr>
-            <tr class="detailTable">
-              <td>PP F08 <span class="blueFont">现货</span></td>
-              <td><span class="orangeFont">￥1055.00</span>/吨</td>
-              <td>102.000</td>
-              <td>东莞市</td>
-              <td>1,076.10</td>
-              <td><span class="blueFont">已付款</span></td>
-              <td class="operate">
-                <div class="">
-                  <a class="mt15 Paybtn CarCurr fs12">发布找车</a>
-                </div>
-
-                <a class="mt5 break">违约单</a>
-              </td>
-            </tr>
-
-            </tbody>
-
-          </table> -->
-
+          <template v-else>
+            <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
+          </template>
           <!--页码-->
           <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages>
         </div>

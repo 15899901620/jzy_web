@@ -1,7 +1,7 @@
 <template>
     <div class="memberList whitebg mt20">
         <div class="theads"><Icon type="md-contact" /><router-link to="/users/user">会员中心</router-link></div>
-        <ul class="mt25" v-for="(item, index) in nav" :key="index">
+        <ul class="mt25" v-for="(item, index) in nav" :key="index" style="margin-bottom:18px;">
             <h1>{{item.name}}</h1>
             <li v-for="(items,k) in item.children" :key="k" :class="[ item.url  == selected ? 'curr' : ' ']">
                 <router-link :to="items.path">{{items.name}}</router-link>
@@ -91,10 +91,6 @@ export default {
                         {
                             path: './userCodeManage',
                             name: '密码管理'
-                        },
-                        {
-                            path: './userAccountBind',
-                            name: '账号绑定'
                         },
                         {
                             path: './userAddress',

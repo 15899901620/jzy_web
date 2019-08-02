@@ -3,6 +3,13 @@
  */
 let api = {
   /**
+   * @description 求购
+   */
+  buy: {
+    buylist: '/bill/goodsDemand/page',
+    addbuy: '/bill/goodsDemand'
+  },
+  /**
    * @description 会员
    */
   user:{

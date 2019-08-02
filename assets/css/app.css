@@ -1557,6 +1557,7 @@ a {
 	padding-bottom:10px;
 	position:relative;
 }
+.memberList h1.curr{border-bottom: 1px solid #DEDEDE;}
 .memberInfor {
 	width:970px;
 }
@@ -1771,3 +1772,4 @@ a {
 .blueFont {
 	color:#2b85e4
 }
+.bodbottom{ position: absolute; bottom: -2px;width: 80%; height: 4px; background-color: #007de4;}

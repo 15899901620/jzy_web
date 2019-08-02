@@ -21,7 +21,7 @@
 
         </div>
 
-      <div class="memberInfor  ml20  whitebg bdccc  mt20">
+      <div class="memberInfor  ml20  whitebg bdccc  mt20" style="display:none">
         <div class="TableList">
           <!--个人信息-->
           <h1 class="fs16 mt25 bb1 pb10" >交易明细</h1>
