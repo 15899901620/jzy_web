@@ -533,12 +533,14 @@ export default {
                 return
             } else {
                 this.current = 1
+                this.$emit('currData', true)
             //this.$router.push({name:'userPerInfor', params:{params:userFormData}})
             }
         },
         //触发上一步
         handleUp () {
             this.current = 0
+            this.$emit('currData', false)
         },
         //图片成功
         imageSuccess(res){
@@ -658,6 +660,7 @@ export default {
                 const res = await manageReg(this, this.formCustom)
                 if(res.data === true && res.status === 200){
                     this.current = 2
+                    this.$emit('currData', false)
                 }else{
                     this.$Message.info({
                         content: res.message,

@@ -70,7 +70,7 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import { gainuserInfor } from  '../../api/users'
+import { getGainuserInfor } from  '../../api/users'
 export default {
   name: "usermodifyinfor",
   layout:'membercenter',
@@ -125,7 +125,7 @@ export default {
         //获取用户信息
         async UserInfor(){
           console.log('UserInfor')
-          const res=await gainuserInfor(this,{})
+          const res=await getGainuserInfor(this,{})
           console.log('用户信息res', res)
           this.userinfor=res.data
         },

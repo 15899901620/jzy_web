@@ -192,7 +192,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="其它文件：">
+                            <FormItem label="道路运输许可证：">
                                 <Upload
                                     ref="upload"
                                     action="//192.168.40.31:28082/image"
@@ -234,10 +234,10 @@
 const prefixCls = 'ant-user-register'
 import {steps,step} from '../steps'
 import captcha from '../captcha'
-import {  supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg } from '../../api/users'
+import {  supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg, carrierRegister, carrierCodes } from '../../api/users'
 
 export default {
-    name: 'SupplierRegister',
+    name: 'CarrierRegister',
     data() {
         const validatePhone=(rule, value, callback) => {
             if (value === '') {
@@ -374,7 +374,7 @@ export default {
           }
         };
         return {
-            CodeCate:'Codeuserspplier',
+            CodeCate:'Codeusercarrier',
             identifyCodes: "1234567890",
             identifyImgCode:false,//校验图形验证码
             ImgCodeValid:false,//校验手机验证码是否合格
@@ -411,7 +411,8 @@ export default {
                 contacterEmail:'',    //联系人邮箱
                 businessLicense:'',     //营业执照
                 authorizationElc:'',    //授权书
-                other_license:'',      //其他证件
+                transportLicense: '',
+                // other_license:'',      //其他证件
                 bankName:'',           //开户银行
                 bankAccount:'',      //银行账号
                 address:'',           //公司地址
@@ -540,7 +541,7 @@ export default {
                 let params = {
                     phone: phone
                 }
-                const res = await supplierCodeSend(this, params)
+                const res = await carrierCodes(this, params)
                 if(res.data && res.status === 200 ){
                     this.ImgCodeValid=false
 
@@ -659,7 +660,7 @@ export default {
         },
          //其它文件
         handleOtherFile(res){
-          this.formCustom.other_license=res.url
+          this.formCustom.transportLicense=res.url
         
         },
         handleFormatError (file) {
@@ -784,7 +785,7 @@ export default {
                 });
                 return
             }else{
-                const res = await supplierReg(this, this.formCustom)
+                const res = await carrierRegister(this, this.formCustom)
                 if(res.data && res.status === 200){
                     this.current = 2
                     this.$emit('currData', false)

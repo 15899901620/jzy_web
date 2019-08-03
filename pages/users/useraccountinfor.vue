@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { gainuserInfor, manageEdit } from  '../../api/users'
+import { getGainuserInfor, manageEdit } from  '../../api/users'
 import Navigation from '../../components/navigation'
 
 export default {
@@ -92,7 +92,7 @@ export default {
   methods:{
     //获取用户信息
     async UserInfor(){
-      const res=await gainuserInfor(this,{})
+      const res=await getGainuserInfor(this,{})
       this.userinfor=res.data
     },
     async handleSubmit(){

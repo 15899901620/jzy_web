@@ -13,6 +13,9 @@ let api = {
    * @description 会员
    */
   user:{
+    carriercode: '/user/supplier/c/code',
+    carrierreg: '/user/supplier/c/register',
+    carrierreCode: '/user/supplier/c/updatePwd/code',
     manageLogin: '/auth/member/accredit',
     supplierLogin: '/auth/supplier/accredit',
     memberValid: '/auth/member/verify',

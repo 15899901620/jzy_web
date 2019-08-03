@@ -75,7 +75,7 @@ export default {
             const res = await getGainuserInfor(this, {})
             if(res.data  && res.status === 200){
               let auth= stringify(res.data)
-              Cookies.set('userinfor', auth, { expires: 36000000 || 1 })
+              Cookies.set('userinfor', auth, { expires: expires })
                this.updateUserInfof(res.data)
               this.$router.push({name:'index'})
             }else{

@@ -10,19 +10,19 @@
           <ul class="registerTab">
             <li v-for="(item, index) in Registerlist" :class="{'curr':nowIndex === index}"  @click="tabClick(index,item.name)" v-bind:key="index">{{item.name}}</li>
           </ul>
-          <div class="swiper-container swiper_con">
+          <div class="swiper-container swiper_con" :style="{height:(!this.current ? 'auto' : '1180px')}">
             <div class="swiper-wrapper dflex" >
               <!-- 第一个 swiper -->
               <div class="swiper-slide swiper-no-swiping" ref="viewBox">
-                <user-register></user-register>
+                <user-register @currData="currData"></user-register>
               </div>
               <!-- 第二个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
-                <supplier-register></supplier-register>
+                <supplier-register @currData="currData"></supplier-register>
               </div>
               <!-- 第三个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
-               
+                <carrier-register @currData="currData"></carrier-register>
               </div>
             </div>
           </div>
@@ -47,7 +47,8 @@ export default {
     HeaderSmall: Header.small,
     Footer,
     UserRegister,
-    SupplierRegister: UserRegister.supplier 
+    SupplierRegister: UserRegister.supplier,
+    CarrierRegister: UserRegister.carrier
   },
   fetch({ store, params }) {
     return Promise.all([
@@ -65,6 +66,7 @@ export default {
         RegisterName:'member',
         nowIndex:0,
         index:0,
+        current: false,
         Registerlist:[
           { name: '会员注册' },
           { name: '供应商注册' },
@@ -73,6 +75,9 @@ export default {
       }
   },
   methods:{
+    currData (res) {
+      this.current = res
+    },
     // 点击切换
     tabClick(index,registerName) {
       this.registerName=registerName
@@ -115,6 +120,6 @@ export default {
 </script>
 <style scoped>
 .swiper-wrapper{width: 3600px; margin: 0 auto;}
-.swiper_con{width:100%; margin: 0 auto; position:relative; overflow: hidden; margin-bottom: 30px; height:780px;}
+.swiper_con{width:100%; margin: 0 auto; position:relative; overflow: hidden; margin-bottom: 30px;}
 .swiper-slide { width: 100%; margin: 0PX auto;}
 </style>

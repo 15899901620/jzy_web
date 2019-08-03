@@ -34,6 +34,23 @@ export const manageLogin = (vm, data) => {
       console.log('manageLoginErr', errorInfo)
     })
 }
+
+/**
+ * @description 承运注册
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const carrierRegister = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.carrierreg,
+    {
+      ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('supplierLoginErr', errorInfo)
+    })
+}
+
 /**
  * @description 供应商登录
  * @param vm
@@ -47,6 +64,20 @@ export const supplierLogin = (vm, data) => {
     }).catch((e) => {
       let errorInfo = e.response
       console.log('supplierLoginErr', errorInfo)
+    })
+}
+
+
+
+
+
+export const carrierCodes = (vm, data) => {
+  return vm.$axios.post(server.prefix + server.api.user.carriercode,
+    {
+      ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageRegErr', errorInfo)
     })
 }
 
@@ -158,8 +189,6 @@ export const supplierValid = (vm, data) => {
   vm.$axios.defaults.headers = {
     'Authorization': getCookie('websuppliertoken') === false ? '' : getCookie('websuppliertoken')
   }
-
-
   return vm.$axios.get(server.prefix + server.api.user.supplierValid,
     {
       params: {...data}
