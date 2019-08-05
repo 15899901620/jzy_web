@@ -14,15 +14,12 @@
             <div class="swiper-wrapper dflex" >
               <!-- 第一个 swiper -->
               <div class="swiper-slide swiper-no-swiping" ref="viewBox">
-                <user-register @currData="currData"></user-register>
               </div>
               <!-- 第二个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
-                <supplier-register @currData="currData"></supplier-register>
               </div>
               <!-- 第三个 swiper -->
               <div class="swiper-slide swiper-no-swiping">
-                <carrier-register @currData="currData"></carrier-register>
               </div>
             </div>
           </div>
@@ -38,17 +35,13 @@ import Footer from '../components/footer'
 import { mapState } from 'vuex'
 import Swiper from 'swiper';
 import {steps,step} from '../components/steps'
-import UserRegister from '../components/register-form'
 
 export default {
   name: "register",
   components:{
     Header,
     HeaderSmall: Header.small,
-    Footer,
-    UserRegister,
-    SupplierRegister: UserRegister.supplier,
-    CarrierRegister: UserRegister.carrier
+    Footer
   },
   fetch({ store, params }) {
     return Promise.all([
@@ -68,8 +61,8 @@ export default {
         index:0,
         current: false,
         Registerlist:[
-          { name: '会员注册' },
-          { name: '供应商注册' },
+          { name: '会员密码找回' },
+          { name: '供应商密码找回' },
           { name: '承运商注册' }
         ]
       }

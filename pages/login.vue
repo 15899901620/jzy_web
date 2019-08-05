@@ -108,7 +108,7 @@ export default {
     },
     // 找回密码
     ForgotPassword(){
-      this.$router.push({path:'./ForgotPassword/ForgotPassword'})
+      this.$router.push({path:'./forgotpwdssword/ForgotPassword'})
     },
   }
 }
