@@ -7,8 +7,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>巨正源移动端</h2><img src="~/assets/img/code.png" ></li>
-                            <li><h2>巨正源公众号</h2><img src="~/assets/img/code.png"> </li>
+                            <li><h2>巨正源移动端</h2><img src="~/static/img/code.png" ></li>
+                            <li><h2>巨正源公众号</h2><img src="~/static/img/code.png"> </li>
                         </ul>
                     </div>
                     <div class="tel">
@@ -35,8 +35,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>巨正源移动端</h2><img src="~/assets/img/code.png" ></li>
-                            <li><h2>巨正源公众号</h2><img src="~/assets/img/code.png"> </li>
+                            <li><h2>巨正源移动端</h2><img src="~/static/img/code.png" ></li>
+                            <li><h2>巨正源公众号</h2><img src="~/static/img/code.png"> </li>
                         </ul>
                     </div>
                     <div class="tel">

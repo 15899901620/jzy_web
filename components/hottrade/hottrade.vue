@@ -8,7 +8,7 @@
                 <div class="newsTile">
                     <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">{{item.title}}</nuxt-link></div>
                 <div class="newsTimeLink">
-                    <span class="dflexAlem"><img src="../../assets/img/time_icon.png" class="mr5"/>{{item.addTime}}</span>
+                    <span class="dflexAlem"><img src="../../static/img/time_icon.png" class="mr5"/>{{item.addTime}}</span>
                     <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">【查看全文】</nuxt-link>
                 </div>
             </li>

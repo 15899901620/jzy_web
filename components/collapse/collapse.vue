@@ -94,12 +94,12 @@
                 <div class="freigth_query">查询</div>
                 <div class="dflexAlem" style="height: 80px;background-color: #fbfbfb;">
                 <div class="dflex" style="flex-direction: column; width: 47%;">
-                    <div class="SaveTime ml20"><img src="../../assets/img/savetime.png" /><span class="ml5 fs16">省时</span></div>
+                    <div class="SaveTime ml20"><img src="../../static/img/savetime.png" /><span class="ml5 fs16">省时</span></div>
                     <p class="ml20 gray mt3">当天下单 当天派车</p>
                 </div>
                 <div class="linefreig"></div>
                 <div class="dflex" style="flex-direction: column; width: 35%; margin: 0 auto;">
-                    <div class="SaveTime"><img src="../../assets/img/savefir.png" /><span class="ml5 fs16">省力</span></div>
+                    <div class="SaveTime"><img src="../../static/img/savefir.png" /><span class="ml5 fs16">省力</span></div>
                     <p class="gray mt3">塑料专车 说走就走</p>
                 </div>
                 </div>

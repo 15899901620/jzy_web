@@ -3,7 +3,7 @@
       <Header title="头部"></Header>
       <div class="container" title="内容区块">
     <div class="tac">
-      <img src="../assets/img/logisticsBanner.png" />
+      <img src="../static/img/logisticsBanner.png" />
     </div>
     <!--询价找车-->
     <div class="inquirybg">
@@ -68,32 +68,32 @@
         </div>
         <ul class="ServicePro">
           <li>
-            <div class="serivceImg"><img src="../assets/img/service_01.png"/></div>
+            <div class="serivceImg"><img src="../static/img/service_01.png"/></div>
             <div class="tac fs16 fwb">平台支撑</div>
             <div class='lineService'></div>
             <div class="tac mb30 gray fs14">拥有专业的团队</div>
           </li>
           <li>
-            <div class="serivceImg"><img src="../assets/img/service_02.png"/></div>
+            <div class="serivceImg"><img src="../static/img/service_02.png"/></div>
             <div class="tac fs16 fwb">利益保障</div>
             <div class='lineService'></div>
             <div class="tac mb30 gray fs14">降低运输成本</div>
           </li>
           <li>
-            <div class="serivceImg"><img src="../assets/img/service_03.png"/></div>
+            <div class="serivceImg"><img src="../static/img/service_03.png"/></div>
             <div class="tac fs16 fwb">快捷省时</div>
             <div class='lineService'></div>
             <div class="tac mb30 gray fs14">下单方便省时省心</div>
           </li>
 
           <li>
-            <div class="serivceImg"><img src="../assets/img/service_04.png"/></div>
+            <div class="serivceImg"><img src="../static/img/service_04.png"/></div>
             <div class="tac fs16 fwb">提升效率</div>
             <div class='lineService'></div>
             <div class="tac mb30 gray fs14">实时物流资源在线</div>
           </li>
           <li>
-            <div class="serivceImg"><img src="../assets/img/service_05.png"/></div>
+            <div class="serivceImg"><img src="../static/img/service_05.png"/></div>
             <div class="tac fs16 fwb">客服验证</div>
             <div class='lineService'></div>
             <div class="tac mb30 gray fs14" >巨正源实名认证车队</div>
@@ -144,10 +144,10 @@ export default {
   .inquiryList{margin-top: 20px; margin-left: 20px;}
   .inquiryList li{display: flex; align-items: center; margin-top: 15px;}
   .inquiryTitle{padding-left: 30px; margin-right: 15px;}
-  .iconbg01{background: url(../assets/img/car_icon.png)no-repeat 0px 0px;}
-  .iconbg02{background: url(../assets/img/car_icon.png)no-repeat 0px -21px;}
-  .iconbg03{background: url(../assets/img/car_icon.png)no-repeat 0px -43px;}
-  .iconbg04{background: url(../assets/img/car_icon.png)no-repeat 0px -67px;}
+  .iconbg01{background: url(../static/img/car_icon.png)no-repeat 0px 0px;}
+  .iconbg02{background: url(../static/img/car_icon.png)no-repeat 0px -21px;}
+  .iconbg03{background: url(../static/img/car_icon.png)no-repeat 0px -43px;}
+  .iconbg04{background: url(../static/img/car_icon.png)no-repeat 0px -67px;}
   .inquiryText{border-radius: 3px;border: 1px solid #DEDEDE; height: 30px;width: 170px;}
   .inquiryFree{background-color: #007de4; border-radius:3px;width: 85%;margin: 10px auto 30px; padding: 10px 0;text-align: center;color: #fff;}
 

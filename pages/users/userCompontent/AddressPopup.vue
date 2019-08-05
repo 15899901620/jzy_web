@@ -411,7 +411,7 @@
   .Mask{display: flex; justify-content: center; align-items: center; position: fixed;z-index: 10; top: 0; width: 100%; height: 100%;background: rgba(0,0,0,0.5);}
   .Bond_Popup{ width: 415px; background-color: #fff; border-radius: 3px;}
   .Bond_Popup .TopPopup{display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; color: #666;background-color: #f9f9f9;}
-  .Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url(../../../assets/img/icon.png)no-repeat 0px -135px;}
+  .Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url(../../../static/img/icon.png)no-repeat 0px -135px;}
   .LowPrice{ margin-top: 25px;}
   .Bond_Popup_title{margin-left: 80px;color: #333;}
   .unit{position: absolute;right: 10px; line-height: 30px; color: #999; }

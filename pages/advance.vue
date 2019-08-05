@@ -200,12 +200,12 @@ import Footer from '../components/footer'
   .purInfor li{margin: 15px auto;display: flex; align-items: center;}
   .purInfor li .Infortitle{color: #999;width: 60px; font-size: 14px}
   .purInfor li .input{ padding-left: 10px;box-sizing: border-box; width: 168px; line-height: 30px; border: 1px solid #DDDDDD; border-radius: 3px; margin-left: 10px;}
-  .date_icon{position: absolute; right:8px;top:7px;width: 25px;height: 25px;background: url(../assets/img/icon.png)no-repeat 0px -282px;}
+  .date_icon{position: absolute; right:8px;top:7px;width: 25px;height: 25px;background: url(../static/img/icon.png)no-repeat 0px -282px;}
   .DateTIME{width: 168px;margin-left: 12px;position: relative; cursor: pointer;}
   .purinfobtn{ cursor: pointer;   background-color: #007de4;display: inline-block; color: #fff;  padding: 9px 20px; border-radius: 3px; margin-left: 73px; margin-bottom: 20px;  margin-top: 10px;}
   .redFont{color: #f70503;}
   /*最近交易*/
-  .fresh{display: inline-block;width: 17px;height: 17px;background: url(../assets/img/icon.png)no-repeat -2px -317px;    margin-right: 6px;}
+  .fresh{display: inline-block;width: 17px;height: 17px;background: url(../static/img/icon.png)no-repeat -2px -317px;    margin-right: 6px;}
   .currdate{margin: 18px 20px;  overflow:hidden;}
   .currdate li{border-bottom: 1px dotted #DDDDDD;display: flex;flex-direction: column; margin-top: 10px; font-size: 14px;}
   .currdate li:last-child{margin-bottom: 30px;}

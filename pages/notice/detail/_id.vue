@@ -17,7 +17,7 @@
                 <div class="dflexAlem">
                   <a href="/" class="blueFont">巨正源</a>
                   <div class="time">
-                    <img src="../../../assets/img/newsTime.png"/><span class="gray ml5">{{this.noticedetailinfo.addTime}}</span>
+                    <img src="../../../static/img/newsTime.png"/><span class="gray ml5">{{this.noticedetailinfo.addTime}}</span>
                   </div>
                 </div>
                 <div class="newsShare">分享</div>

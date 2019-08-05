@@ -7,13 +7,13 @@
 
     <div class="logistic dflex">
       <div class="logistic_banner">
-        <img src="../../assets/img/logistics_banner.png" />
+        <img src="../../static/img/logistics_banner.png" />
       </div>
       <ul class="logisticList mt1 dflex">
         <li>
           <div class="dflexAlem mt35" style="justify-content: center; flex-direction: column;">
             <p>广东省 东莞市</p>
-            <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
+            <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
             <p>广东省 东莞市</p>
           </div>
           <div class="logNumTime graybg"  >
@@ -24,7 +24,7 @@
         <li>
           <div class="dflexAlem mt35" style="justify-content: center; flex-direction: column;">
             <p>广东省 东莞市</p>
-            <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
+            <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
             <p>广东省 东莞市</p>
           </div>
           <div class="logNumTime graybg"  >
@@ -35,7 +35,7 @@
         <li>
           <div class="dflexAlem mt35" style="justify-content: center; flex-direction: column;">
             <p>广东省 东莞市</p>
-            <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
+            <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
             <p>广东省 东莞市</p>
           </div>
           <div class="logNumTime graybg"  >
@@ -46,7 +46,7 @@
         <li>
           <div class="dflexAlem mt35" style="justify-content: center; flex-direction: column;">
             <p>广东省 东莞市</p>
-            <p class="mt10 mb10"><img src="../../assets/img/down.png"/></p>
+            <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
             <p>广东省 东莞市</p>
           </div>
           <div class="logNumTime graybg"  >

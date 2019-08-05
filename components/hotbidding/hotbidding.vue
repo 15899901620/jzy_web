@@ -1,7 +1,7 @@
 <template>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="Time-limited_back position prve" id='prev' :style="{'display':display}" >
-            <img src="../../assets/img/back.png" />
+            <img src="../../static/img/back.png" />
         </div>
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}"  id='TimeL-ul'>
             <li   ref="elememt" v-for="(items, index) in indexAuction" :key="index">
@@ -28,7 +28,7 @@
             </li>
         </ul>
         <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">
-            <img src="../../assets/img/next.png" />
+            <img src="../../static/img/next.png" />
         </div>
     </div>
 </template>

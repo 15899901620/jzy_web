@@ -219,7 +219,7 @@
                 <div v-else-if="current == 2">
                      <!--审核成功-->
                     <div class="dflexAlemJust" style="margin-top: 60px;">
-                        <img src="../../assets/img/exam_icon.png" />
+                        <img src="../../static/img/exam_icon.png" />
                     </div>
                     <div class="fs30 fwb greenFont tac mt10" >待审核！</div>
                     <div class="tac mt25 fs16" style=" color: #666;">您的资料已提交，待巨正源工作人员与您确认并核对信息，</div>

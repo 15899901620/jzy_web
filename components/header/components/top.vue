@@ -21,7 +21,7 @@
       <div class="dflexAlem"  >
         <!--logo-->
         <div class="mt20 mb20" style="border-right: 1px solid #D2D2D2; padding-right: 30px;">
-          <img src="../../../assets/img/logo.png"/>
+          <img src="../../../static/img/logo.png"/>
         </div>
         <div class="fs20 pl25 gray">交易平台登录</div>
       </div>

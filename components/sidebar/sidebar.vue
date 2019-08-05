@@ -3,12 +3,12 @@
         <!--关注官方微信-->
         <div class="cndns-right-meau ">
             <div class="cndns-right-btn ">
-                <img src="../../assets/img/siderbar_01.png" />
+                <img src="../../static/img/siderbar_01.png" />
             </div>
             <div class="cndns-right-box">
                 <div class="box-border">
                     <div class="sev-t">
-                        <img src="../../assets/img/erweima.png" />
+                        <img src="../../static/img/erweima.png" />
                         <p><i>巨正源交易平台</i>
                             <i>微信扫码下单</i></p>
                     </div>
@@ -19,7 +19,7 @@
         <!--电话-->
         <div class="cndns-right-meau meau-tel">
             <div class="cndns-right-btn">
-                <img src="../../assets/img/siderbar_02.png" />
+                <img src="../../static/img/siderbar_02.png" />
             </div>
             <div class="cndns-right-box">
                 <div class="box-border">
@@ -34,7 +34,7 @@
         <div class="cndns-right-meau meau-acution">
             <nuxt-link to="/bidders">
                 <div class="cndns-right-btn">
-                    <img src="../../assets/img/siderbar_03.png" />
+                    <img src="../../static/img/siderbar_03.png" />
                 </div>
             </nuxt-link>
 
@@ -42,7 +42,7 @@
         <!--置顶-->
         <div class="cndns-right-meau meau-top" v-show="totop"  id="to-top-btn" @click="back">
             <a class="cndns-right-btn">
-                <img src="../../assets/img/siderbar_04.png" />
+                <img src="../../static/img/siderbar_04.png" />
             </a>
         </div>
 

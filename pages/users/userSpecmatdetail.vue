@@ -13,16 +13,16 @@
 
           <ul class="order_cat_title_list">
             <li class="curr">
-              <i><img src="../../assets/img/progress_icon01.png"/></i>
+              <i><img src="../../static/img/progress_icon01.png"/></i>
               <span>
 							<p>冻结保证金</p>
 							<p class="gray">12月18日 17:00</p>
 						</span>
             </li>
-            <li><i><img src="../../assets/img/progress_icon02.png"/></i><span>提交订单</span></li>
-            <li><i><img src="../../assets/img/progress_icon03.png"/></i><span>支付货款</span></li>
-            <li><i><img src="../../assets/img/progress_icon04.png"/></i><span>支付完成</span></li>
-            <li><i><img src="../../assets/img/progress_icon05.png"/></i><span style="left: -61px;width: 77px;">支付完成</span></li>
+            <li><i><img src="../../static/img/progress_icon02.png"/></i><span>提交订单</span></li>
+            <li><i><img src="../../static/img/progress_icon03.png"/></i><span>支付货款</span></li>
+            <li><i><img src="../../static/img/progress_icon04.png"/></i><span>支付完成</span></li>
+            <li><i><img src="../../static/img/progress_icon05.png"/></i><span style="left: -61px;width: 77px;">支付完成</span></li>
 
           </ul>
 
@@ -56,16 +56,16 @@
           <h1 class="fs16 fwb">发票信息</h1>
           <ul class="invoiceList">
             <li>
-              <img src="../../assets/img/incve.png"/>
-              <a class="See">查看<img src="../../assets/img/See_icon.png" /></a>
+              <img src="../../static/img/incve.png"/>
+              <a class="See">查看<img src="../../static/img/See_icon.png" /></a>
             </li>
             <li>
-              <img src="../../assets/img/incve.png"/>
-              <a class="See">查看<img src="../../assets/img/See_icon.png" /></a>
+              <img src="../../static/img/incve.png"/>
+              <a class="See">查看<img src="../../static/img/See_icon.png" /></a>
             </li>
             <li>
-              <img src="../../assets/img/incve.png"/>
-              <a class="See">查看<img src="../../assets/img/See_icon.png" /></a>
+              <img src="../../static/img/incve.png"/>
+              <a class="See">查看<img src="../../static/img/See_icon.png" /></a>
             </li>
           </ul>
         </div>

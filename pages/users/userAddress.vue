@@ -214,7 +214,7 @@ export default {
   .address_list li{border: 1px solid #DDDDDD; margin-top: 20px;}
   .address_content{display: flex;flex-wrap: wrap;width: 95%;margin: 0px auto;margin-bottom: 20px;}
   .address_content li{ display: flex; width: 33%;border: none; margin-top: 20px; font-size: 14px;}
-  .address_content li .Add_close{ width: 16px; height: 16px; cursor: pointer; background: url(../../assets/img/icon.png)no-repeat -2px -389px;}
+  .address_content li .Add_close{ width: 16px; height: 16px; cursor: pointer; background: url(../../static/img/icon.png)no-repeat -2px -389px;}
   .address_content li .address_title{color: #999; width: 75px;}
 
   .defaultAdress:hover{color: #007de4}

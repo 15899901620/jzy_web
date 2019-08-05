@@ -8,7 +8,7 @@
           <div class="dflex">
             <div class="headInfor">
               <div class="head">
-                <img :src="!userinfo.avatar ? '~/assets/img/head.png': userinfo.avatar"/>
+                <img :src="!userinfo.avatar ? '~/static/img/head.png': userinfo.avatar"/>
                 
                 <div class="headClick">上传</div>
               </div>
@@ -77,7 +77,7 @@
         </div>
         <!--广告图-->
         <div class="pr mt20 mb20">
-          <img src="../../assets/img/member_index.png" />
+          <img src="../../static/img/member_index.png" />
           <a href="#.html" class="seeRight">
             立即查看
           </a>

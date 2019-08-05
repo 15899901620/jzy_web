@@ -1,14 +1,14 @@
 <template>
     <div :class="classes">
         <div class="dflex mt25" style="justify-content: center;" v-if="!userinfo">
-            <div class="indexHead" @click="User"><img  src="../../assets/img/index_head.png"/></div>
+            <div class="indexHead" @click="User"><img  src="../../static/img/index_head.png"/></div>
             <div class="ml10">
                 <p class="mt5">HI,上午好！</p>
                 <p class="gray">欢迎来到巨正源交易网!</p>
             </div>
         </div>
         <div class="dflex mt25" style="justify-content: center;" v-else>
-            <div class="indexHead" @click="User"><img :src="!userinfo.avatar ? '~/assets/img/index_head.png': userinfo.avatar"/></div>
+            <div class="indexHead" @click="User"><img :src="!userinfo.avatar ? '~/static/img/index_head.png': userinfo.avatar"/></div>
             <div class="ml10">
                 <p class="mt5">HI {{userinfo.phone}},上午好！</p>
                 <p class="gray">欢迎来到巨正源交易网!</p>

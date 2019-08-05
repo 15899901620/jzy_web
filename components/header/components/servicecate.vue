@@ -96,12 +96,12 @@
         <div class="freigth_query">查询</div>
         <div class="dflexAlem" style="height: 80px;background-color: #fbfbfb;">
           <div class="dflex" style="flex-direction: column; width: 47%;">
-            <div class="SaveTime ml20"><img src="../../../assets/img/savetime.png" /><span class="ml5 fs16">省时</span></div>
+            <div class="SaveTime ml20"><img src="../../../static/img/savetime.png" /><span class="ml5 fs16">省时</span></div>
             <p class="ml20 gray mt3">当天下单 当天派车</p>
           </div>
           <div class="linefreig"></div>
           <div class="dflex" style="flex-direction: column; width: 35%; margin: 0 auto;">
-            <div class="SaveTime"><img src="../../../assets/img/savefir.png" /><span class="ml5 fs16">省力</span></div>
+            <div class="SaveTime"><img src="../../../static/img/savefir.png" /><span class="ml5 fs16">省力</span></div>
             <p class="gray mt3">塑料专车 说走就走</p>
           </div>
         </div>
@@ -227,11 +227,11 @@
   .product_assortment .AssProduct li:last-child{border-bottom: none;}
   .level a{border: 1px solid #D2D2D2; border-radius: 3px; padding: 2px 10px; color: #666; font-size: 12px;}
   .freight_assortment{width: 388px;top: -79px;}
-  .see_icon{width: 20px;height: 15px;background: url(../../../assets/img/icon.png)no-repeat -100px -2px;}
-  .capital_icon{width: 16px;height: 18px;background: url(../../../assets/img/icon.png)no-repeat -197px -3px;}
-  .Text_icon{width: 16px;height: 17px;background: url(../../../assets/img/icon.png)no-repeat -164px -3px;}
-  .freight_icon{width: 20px;height: 16px;background: url(../../../assets/img/icon.png)no-repeat -131px -3px;}
-  .next{ width: 8px; height: 13px; background: url(../../../assets/img/icon.png)no-repeat -227px -5px; }
+  .see_icon{width: 20px;height: 15px;background: url(../../../static/img/icon.png)no-repeat -100px -2px;}
+  .capital_icon{width: 16px;height: 18px;background: url(../../../static/img/icon.png)no-repeat -197px -3px;}
+  .Text_icon{width: 16px;height: 17px;background: url(../../../static/img/icon.png)no-repeat -164px -3px;}
+  .freight_icon{width: 20px;height: 16px;background: url(../../../static/img/icon.png)no-repeat -131px -3px;}
+  .next{ width: 8px; height: 13px; background: url(../../../static/img/icon.png)no-repeat -227px -5px; }
   /*热门品质*/
   .ass-ty2-p{ line-height: 30px;overflow: hidden;   clear: both; padding-bottom: 5px;}
   .ass-ty2-p a { padding-right: 10px; color: #666;}
@@ -244,7 +244,7 @@
   .SaveTime{display: flex; align-items: center;}
   .linefreig{width: 1px;height: 18px;background-color: #dfdfdf;}
   /*查质检单*/
-  .qualityBg{ top: -159px;width: 450px;height: 326px;background: url(../../../assets/img/QualityBg.png)no-repeat;}
+  .qualityBg{ top: -159px;width: 450px;height: 326px;background: url(../../../static/img/QualityBg.png)no-repeat;}
   .quality_title{width: 56px;margin-right: 15px;text-align: right;}
   .layui-input{height: 32px;}
   .qualityListindex{margin-top: 40px;margin-left: 20px;}
