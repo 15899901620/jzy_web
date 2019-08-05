@@ -115,7 +115,6 @@ export default {
                 page_size:6,
                 type: this.status
             }
-            console.log('status', params)
 
             let res=await auctionPage(this,params)
       

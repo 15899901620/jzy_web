@@ -6,24 +6,15 @@
         </div>
       </Header-small>
       <div class="container" title="内容区块">
-        <div  class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
-          <ul class="registerTab">
-            <li v-for="(item, index) in Registerlist" :class="{'curr':nowIndex === index}"  @click="tabClick(index,item.name)" v-bind:key="index">{{item.name}}</li>
-          </ul>
-          <div class="swiper-container swiper_con" :style="{height:(!this.current ? 'auto' : '1180px')}">
-            <div class="swiper-wrapper dflex" >
-              <!-- 第一个 swiper -->
-              <div class="swiper-slide swiper-no-swiping" ref="viewBox">
-              </div>
-              <!-- 第二个 swiper -->
-              <div class="swiper-slide swiper-no-swiping">
-              </div>
-              <!-- 第三个 swiper -->
-              <div class="swiper-slide swiper-no-swiping">
-              </div>
-            </div>
-          </div>
+        <div class="dflexAlem stepsItem">
+            <steps :current="current" >
+              <step title="第一步" description="填写注册基础信息" ></step>
+              <step title="第二步" description="完善公司信息" ></step>
+              <step title="第三步" description="信息提交成功，待审核" ></step>
+            </steps>
         </div>
+
+        
       </div>
       <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
   </div>
@@ -59,12 +50,7 @@ export default {
         RegisterName:'member',
         nowIndex:0,
         index:0,
-        current: false,
-        Registerlist:[
-          { name: '会员密码找回' },
-          { name: '供应商密码找回' },
-          { name: '承运商注册' }
-        ]
+        current: 0,
       }
   },
   methods:{

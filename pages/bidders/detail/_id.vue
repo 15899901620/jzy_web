@@ -215,7 +215,6 @@
                     </tbody>
                     </table>
                 </div>
-
                 <!--竞拍流程-->
                 <div class=" mt30">
                     <h1 class="paipinacu fs20">竞拍流程</h1>
@@ -293,9 +292,7 @@
                 </div>
             </div>
         </div>
-
         <!-- <paydeposit v-show="DepositShow"  @HiddenDep="hiddenDepositShow"  :DepositeData="DepositData"></paydeposit> -->
-
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
 </template>

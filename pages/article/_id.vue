@@ -82,7 +82,6 @@ export default {
             store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 10, catId: !params.id ? 1 : params.id}),
             store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10}),
             store.dispatch('article/getArticleCatList',  {parentId: 0}),
-
         ])
     },
     components: {
@@ -109,8 +108,6 @@ export default {
         changePage (row) {
             let id = this.$route.params.id
             this.$router.push({name:'article-id',params:{id:id},query:{page:row}})
-            // this.$router.go(0)
-            // window.location.reload(true)
         }
     },
     computed:{
