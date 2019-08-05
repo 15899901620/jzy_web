@@ -3,7 +3,7 @@
     <Header title="头部"></Header>
     <div class="container" title="内容区块">
         <div class="materials_banner">
-            <img src="../../static/img/auctionBanner.png" />
+            <img src="/img/auctionBanner.png" />
         </div>
         <div class="w1200" style="margin-top: 20px">
             <div class="AuctionTime mt35">

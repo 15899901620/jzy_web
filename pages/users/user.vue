@@ -77,7 +77,7 @@
         </div>
         <!--广告图-->
         <div class="pr mt20 mb20">
-          <img src="../../static/img/member_index.png" />
+          <img src="/img/member_index.png" />
           <a href="#.html" class="seeRight">
             立即查看
           </a>

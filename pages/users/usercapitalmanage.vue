@@ -142,10 +142,10 @@ export default {
   .balancebg{display: flex;}
   .balancebg li{ font-size: 14px; display: flex;justify-content: center;align-items: center; width: 48%;border-right: 1px dashed #eac6b8;text-align: center;margin: 20px auto;}
   .balancebg li:last-child{border: none;}
-  .pribg{width: 40px;height: 26px;background: url(../../static/img/icon.png)no-repeat -761px -196px; margin-right: 10px;}
+  .pribg{width: 40px;height: 26px;background: url(/img/icon.png)no-repeat -761px -196px; margin-right: 10px;}
   .orangesbg{background-color: #ff6f17;
     color: #fff;}
-  .Frozenbg{width: 40px;height: 26px;background: url(../../static/img/icon.png)no-repeat -758px -159px; margin-right: 10px;   }
+  .Frozenbg{width: 40px;height: 26px;background: url(/img/icon.png)no-repeat -758px -159px; margin-right: 10px;   }
 
   .TableList{width: 95%;  margin: 0 auto;}
   .titleOrder{ display: flex; justify-content: space-between; align-items: center;  border-bottom: 2px solid #007de4; }

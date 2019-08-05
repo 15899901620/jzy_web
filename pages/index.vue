@@ -12,7 +12,7 @@
 			</div>
 			<div class="hotbidding">
 				<div class="Time_Banner pr">
-					<img src="../static/img/Time_banner.png" />
+					<img src="/img/Time_banner.png" />
 					<a class="bidders_front" href="/bidders"></a>
 				</div>
 				<hotbidding title="热门竞拍"></hotbidding>

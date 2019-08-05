@@ -218,7 +218,7 @@
                 <!--竞拍流程-->
                 <div class=" mt30">
                     <h1 class="paipinacu fs20">竞拍流程</h1>
-                    <img src="../../../static/img/flow.png"  class="mt20 ml30"/>
+                    <img src="/img/flow.png"  class="mt20 ml30"/>
                 </div>
                 <!--交易信息-->
                 <div class=" mt30">
@@ -254,7 +254,7 @@
                     <h1 class="paipinacu fs20">真货保障</h1>
                     <p class="mt10" style="color: #666; width: 97%;">巨正源自上线以来，一直努力为会员提供优质的塑料在线交易服务。 为了更好的服务巨正源会员，推出了竞拍活动，巨正源竞拍活动的货品来自全国生产商和大贸易商， 质量值得信赖，
                     目前我们正与其他供应商洽谈合作，加大货物品类及范围。</p>
-                    <img src="../../../static/img/serve.png"  class="mt30"/>
+                    <img src="/img/serve.png"  class="mt30"/>
                 </div>
                 <!--合同模板-->
                 <div class=" mt30">

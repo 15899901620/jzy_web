@@ -60,7 +60,7 @@
                     </outpacking>
                     <div class="mt20">
                         <a href="">
-                        <img src="../../static/img/phyAdv.png" />
+                        <img src="/img/phyAdv.png" />
                         </a>
                     </div>
                 </div>

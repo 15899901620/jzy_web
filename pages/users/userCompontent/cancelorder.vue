@@ -42,7 +42,7 @@
   .Mask{display: flex; justify-content: center; align-items: center; position: fixed;z-index: 10; top: 0; width: 100%; height: 100%;background: rgba(0,0,0,0.5);}
   .Bond_Popup{ width: 415px; background-color: #fff; border-radius: 3px; font-size: 14px;}
   .Bond_Popup .TopPopup{display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; color: #666;background-color: #f9f9f9;}
-  .Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url(../../../static/img/icon.png)no-repeat 0px -135px;}
+  .Bond_Popup .TopPopup .PopupClose{ width: 13px;height: 13px; background: url(/img/icon.png)no-repeat 0px -135px;}
   /*输入验证码*/
   .PopupCode{border: 1px solid #ddd;margin: 20px 30px; display: flex; border-radius: 4px; align-items: center;}
   .PopupCode .TextCode{border: none; border-right:1px solid #DEDEDE ;margin: 8px 0; width: 70%; padding-left: 10px; box-sizing: border-box;}

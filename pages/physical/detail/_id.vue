@@ -17,7 +17,7 @@
                 <div class="dflexAlem">
                   <a href="/" class="blueFont">巨正源</a>
                   <div class="time">
-                    <img src="../../../static/img/newsTime.png"/><span class="gray ml5">{{this.physicaldetailinfo.createTime}}</span>
+                    <img src="/img/newsTime.png"/><span class="gray ml5">{{this.physicaldetailinfo.createTime}}</span>
                   </div>
                 </div>
                 <div class="newsShare">分享</div>
@@ -44,7 +44,7 @@
               </outpacking>
               <div class="mt20">
                 <a href="">
-                  <img src="../../../static/img/phyAdv.png" />
+                  <img src=" /img/phyAdv.png" />
                 </a>
               </div>
           </div>

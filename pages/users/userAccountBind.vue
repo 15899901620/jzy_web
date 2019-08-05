@@ -13,7 +13,7 @@
           </li>
           <li>
             <span class="titleInfor">图文验证</span><input type="text" class="BindInput" style="width: 130px;" name="" id="" value="" />
-            <div class="ml10 dflexAlem"><img src="../../static/img/code_message.png" /></div>
+            <div class="ml10 dflexAlem"><img src="/img/code_message.png" /></div>
           </li>
           <li>
             <span class="titleInfor">短信验证</span><input type="text" class="BindInput" style="width: 130px;" name="" id="" value="" />

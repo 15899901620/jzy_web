@@ -2,7 +2,7 @@
 	background:#f1f1f1;
 }
 .HomeIcon {
-	background:url('../../static/img/car_icon.png')no-repeat 0px -5px;
+	background:url('/img/car_icon.png')no-repeat 0px -5px;
 	padding-left:18px;
 }
 .memberCenter {
@@ -262,7 +262,7 @@
 	width:16px;
 	height:16px;
 	overflow:hidden;
-	background:url('../../static/img/icon.png') -314px -5px no-repeat;
+	background:url('/img/icon.png') -314px -5px no-repeat;
 }
 .NumInput {
 	padding-left:10px;
@@ -310,7 +310,7 @@
 .Bond_Popup .TopPopup .PopupClose {
 	width:13px;
 	height:13px;
-	background:url('../../static/img/icon.png')no-repeat 0px -135px;
+	background:url('/img/icon.png')no-repeat 0px -135px;
 }
 .LowPrice {
 	margin-top:25px;
@@ -401,7 +401,7 @@ a {
 }
 .NewsDetail_tip .newsShare {
 	width:60px;
-	background:url(../../static/img/icon.png)no-repeat 0px -409px;
+	background:url(/img/icon.png)no-repeat 0px -409px;
 	padding-left:20px;
 	color:#999;
 }
@@ -780,7 +780,7 @@ a {
 	line-height:30px;
 	border:1px solid #DEDEDE;
 	cursor:default;
-	background:url(../../static/img/icon.png)no-repeat 42px -174px;
+	background:url(/img/icon.png)no-repeat 42px -174px;
 	padding-left:8px;
 	box-sizing:border-box;
 	color:#666;
@@ -836,7 +836,7 @@ a {
 	color:#007de4;
 }
 .Numtip {
-	background:url(../../static/img/icon.png)no-repeat 0px -212px;
+	background:url(/img/icon.png)no-repeat 0px -212px;
 	width:20px;
 	height:18px;
 	margin-left:10px;
@@ -906,14 +906,14 @@ a {
 	text-align:center;
 }
 .Numtip {
-	background:url(../../static/img/icon.png)no-repeat 0px -212px;
+	background:url(/img/icon.png)no-repeat 0px -212px;
 	width:20px;
 	height:18px;
 	margin-left:10px;
 	cursor:pointer;
 }
 .Loginbg {
-	background:url(../../static/img/LoginBg.jpg)no-repeat center;
+	background:url(/img/LoginBg.jpg)no-repeat center;
 	height:401px;
 }
 .LoginInput {
@@ -1247,10 +1247,10 @@ a {
 	height:36px;
 }
 .Bidders_record_result_overbluebg {
-	background:url(../../static/img/Bidders_icon02.png)no-repeat center;
+	background:url(/img/Bidders_icon02.png)no-repeat center;
 }
 .Bidders_record_result_overorangebg {
-	background:url(../../static/img/Bidders_icon03.png)no-repeat center;
+	background:url(/img/Bidders_icon03.png)no-repeat center;
 }
 .Bidders_record_result_over {
 	width:70px;
@@ -1328,7 +1328,7 @@ a {
 	background-color:#fff;
 }
 .MustSee {
-	background:url(../../static/img/icon.png)no-repeat -65px -1px;
+	background:url(/img/icon.png)no-repeat -65px -1px;
 	width:150px;
 	margin-left:130px;
 	margin-top:10px;
@@ -1492,7 +1492,7 @@ a {
 .filurbg {
 	width:90px;
 	height:90px;
-	background:url('../../static/img/Tipbg.png')no-repeat;
+	background:url('/img/Tipbg.png')no-repeat;
 }
 .LoserList {
 	text-align:center;
@@ -1513,7 +1513,7 @@ a {
 	bottom:0px;
 	width:136px;
 	height:100%;
-	background:url('../../static/img/Acution_icon.png')no-repeat center;
+	background:url('/img/Acution_icon.png')no-repeat center;
 	background-size:contain;
 }
 .memberList {
@@ -1590,7 +1590,7 @@ a {
 }
 .pricebg {
 	width:600px;
-	background:url(../../static/img/pricebg.png)no-repeat;
+	background:url(/img/pricebg.png)no-repeat;
 	margin-left:60px;
 	margin-top:25px;
 	font-size:14px;
@@ -1636,13 +1636,13 @@ a {
 .account_icon {
 	width:32px;
 	height:32px;
-	background:url(../../static/img/icon.png)no-repeat -764px -83px;
+	background:url(/img/icon.png)no-repeat -764px -83px;
 }
 .Frozen_icon {
 	margin-left:50px;
 	width:44px;
 	height:44px;
-	background:url(../../static/img/icon.png)no-repeat -754px -38px;
+	background:url(/img/icon.png)no-repeat -754px -38px;
 }
 /*订单操作列表*/
   .orderlist {
@@ -1668,32 +1668,32 @@ a {
 .listIcon01 {
 	width:30px;
 	height:30px;
-	background:url(../../static/img/member_icon.png)no-repeat -4px -3px;
+	background:url(/img/member_icon.png)no-repeat -4px -3px;
 }
 .listIcon02 {
 	width:30px;
 	height:30px;
-	background:url(../../static/img/member_icon.png)no-repeat  -44px -3px;
+	background:url(/img/member_icon.png)no-repeat  -44px -3px;
 }
 .listIcon03 {
 	width:32px;
 	height:30px;
-	background:url(../../static/img/member_icon.png)no-repeat -82px -3px;
+	background:url(/img/member_icon.png)no-repeat -82px -3px;
 }
 .listIcon04 {
 	width:32px;
 	height:32px;
-	background:url(../../static/img/member_icon.png)no-repeat -122px -3px;
+	background:url(/img/member_icon.png)no-repeat -122px -3px;
 }
 .listIcon05 {
 	width:37px;
 	height:30px;
-	background:url(../../static/img/member_icon.png)no-repeat -158px -3px;
+	background:url(/img/member_icon.png)no-repeat -158px -3px;
 }
 .listIcon06 {
 	width:38px;
 	height:34px;
-	background:url(../../static/img/member_icon.png)no-repeat -196px -1px;
+	background:url(/img/member_icon.png)no-repeat -196px -1px;
 }
 .seeRight {
 	opacity:0;

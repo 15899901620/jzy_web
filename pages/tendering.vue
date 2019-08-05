@@ -7,7 +7,7 @@
       </Header-small>
       <div class="container" title="内容区块">
          <div class="tac fs0">
-    <img src="../static/img/Tenderingbanner.png" />
+    <img src="/img/Tenderingbanner.png" />
   </div>
   <div class="trenderCenter">
       <div class="trendLogin fs14">
@@ -39,7 +39,7 @@
   </div>
 <!--  招标流程-->
   <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
-    <img src="../static/img/trendFlow.png" />
+    <img src="/img/trendFlow.png" />
   </div>
 <!--  公告信息-->
 <div class="graybg ovh">
@@ -260,6 +260,6 @@ export default {
   .msg-error {position: relative;background: #fff;color: #fa0a0a;border: 1px solid #fa0a0a;padding: 3px 10px 3px 40px;line-height: 18px;
     min-height: 18px;_height: 18px;}
   .msg-error b{position: absolute;top: 50%;left: 10px;
-    display: block;margin-top: -8px;width: 16px;height: 16px;overflow: hidden;background: url('../static/img/icon.png') -314px -5px no-repeat;}
+    display: block;margin-top: -8px;width: 16px;height: 16px;overflow: hidden;background: url('/img/icon.png') -314px -5px no-repeat;}
 
 </style>
