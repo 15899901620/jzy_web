@@ -132,7 +132,7 @@
         </div>
         <div class="menu_items">
             <div class="menu_items_text">
-                <i class="capital_icon"></i><span class="ml10" style="width: 80%;">查资金</span><i class="next"></i>
+                <i class="capital_icon"></i><span class="ml10" style="width: 80%;"><router-link to='/users/usercapitalmanage' style="color:#fff;">查资金</router-link></span><i class="next"></i>
             </div>
         </div>
     </div>
@@ -200,8 +200,8 @@ export default {
         },
          //质检单页面
         Quality(){
-          if(this.qualityForm. qualityDate || this.qualityForm. qualityNo){
-            this.$router.push({name:'QualityForm', query:{qualityForm:this.qualityForm}})
+          if(!this.qualityForm.qualityDate && !this.qualityForm.qualityNo){
+            this.$router.push({name:'quality', query:{batchNo:this.qualityForm.qualityNo, productionDate:this.qualityForm.qualityDate}})
             this.datePif=false
           }else{
             this.datePif=true

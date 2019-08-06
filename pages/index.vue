@@ -38,93 +38,81 @@
 </template>
 
 <script>
-	import api from '../config/api'
-	import {
-		mapState
-	} from 'vuex'
-	import Header from '../components/header'
-	import Footer from '../components/footer'
-	import Banner from '../components/banner'
-	import hotrecommend from '../components/hotrecommend'
-	import hotbidding from '../components/hotbidding'
-	import outpacking from '../components/outpacking'
-	import cobrands from '../components/cobrands'
-	import hottrade from '../components/hottrade'
-	import sidebar from '../components/sidebar'
+import api from '../config/api'
+import { mapState } from 'vuex'
+import Header from '../components/header'
+import Footer from '../components/footer'
+import Banner from '../components/banner'
+import hotrecommend from '../components/hotrecommend'
+import hotbidding from '../components/hotbidding'
+import outpacking from '../components/outpacking'
+import cobrands from '../components/cobrands'
+import hottrade from '../components/hottrade'
+import sidebar from '../components/sidebar'
 
-	export default {
-		async asyncData({
-			app
-		}) {
-			return await app.$axios.get(api.prefix + api.api.information.info)
-				.then((res) => {
-					return {
-						datalist: res.data.items
-					}
-				})
-		},
-		fetch({
-			store
-		}) {
-			return Promise.all([
-				store.dispatch('menu/getMenuList'),
-				store.dispatch('system/getSystemCnf'),
-				store.dispatch('helper/getHelpCate', {
-					parentId: 0,
-					indexShow: 1
-				}),
-				store.dispatch('system/getLinksInfo'),
-				store.dispatch('system/getBannerInfo', {
-					positionId: 2
-				}),
-				store.dispatch('article/getHomeNotice', {
-					current_page: 1,
-					page_size: 8
-				}),
-				store.dispatch('article/getHomeArticle', {
-					current_page: 1,
-					page_size: 8
-				}),
-				store.dispatch('article/getHotArticle', {
-					current_page: 1,
-					page_size: 4
-				})
-			])
-		},
-		components: {
-			Header,
-			Footer,
-			Banner,
-			hotrecommend,
-			hotinfo: hotrecommend.hotinfo,
-			hotbidding,
-			outpacking,
-			cobrands,
-			hottrade,
-			sidebar
-		},
-		data() {
-			return {
-				moreData: {
-					title: '更多...',
-					url: '/article/2'
-				},
-				heightNum: 320
-			}
-		},
-		methods: {
-			itemclick(res) {
-				// window.localStorage.setItem('menu',res)
-			}
-		},
-		computed: {
-			...mapState({
-				bannerinfo: state => state.system.bannerinfo,
-				topmenu: state => state.menu.topMenu
-			}),
-			database() {
-				return 11;
-			}
-		}
-	}
+export default {
+    async asyncData({ app }) {
+        return await app.$axios.get(api.prefix + api.api.information.info)
+            .then((res) => {
+                return {
+                    datalist: res.data.items
+                }
+            })
+    },
+    fetch({ store }) {
+        return Promise.all([
+            store.dispatch('menu/getMenuList'),
+            store.dispatch('system/getSystemCnf'),
+            store.dispatch('helper/getHelpCate', {
+                parentId: 0,
+                indexShow: 1
+            }),
+            store.dispatch('system/getLinksInfo'),
+            store.dispatch('system/getBannerInfo', {
+                positionId: 2
+            }),
+            store.dispatch('article/getHomeNotice', {
+                current_page: 1,
+                page_size: 8
+            }),
+            store.dispatch('article/getHomeArticle', {
+                current_page: 1,
+                page_size: 8
+            }),
+            store.dispatch('article/getHotArticle', {
+                current_page: 1,
+                page_size: 4
+            })
+        ])
+    },
+    components: {
+        Header,
+        Footer,
+        Banner,
+        hotrecommend,
+        hotinfo: hotrecommend.hotinfo,
+        hotbidding,
+        outpacking,
+        cobrands,
+        hottrade,
+        sidebar
+    },
+    data() {
+        return {
+            moreData: {
+                title: '更多...',
+                url: '/article/2'
+            },
+            heightNum: 320
+        }
+    },
+    methods: {
+       
+    },
+    computed: {
+        ...mapState({
+            bannerinfo: state => state.system.bannerinfo,
+        })
+    }
+}
 </script>
