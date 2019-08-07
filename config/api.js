@@ -9,6 +9,10 @@ let api = {
     buylist: '/bill/goodsDemand/page',
     addbuy: '/bill/goodsDemand'
   },
+  search: {
+    hotsearch: '/web/hotSearch/list',
+    addsearch: '/web/hotSearch/add'
+  },
   /**
    * @description 会员
    */

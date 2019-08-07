@@ -5,11 +5,13 @@
  */
 import api from '../config/api'
 import { adposition } from '../api/adposition'
+import { setCookies, getCookies } from '../config/storage'
 export const state = () => {
     return {
       systeminfo: [],
       linksinfo: [],
-      bannerinfo: []
+      bannerinfo: [],
+      hotsearch: []
     }
 }
 export const mutations = {
@@ -21,6 +23,9 @@ export const mutations = {
     },
     updateBannerInfo(state, data) {
         state.bannerinfo = data
+    },
+    updateHotSearch(state, data) {
+        state.hotsearch = data
     }
 }
   
@@ -29,6 +34,16 @@ export const actions = {
         return await this.$axios.$get(api.prefix + api.api.sysconf.systemcof, { params })
         .then(response => {
             commit('updateSystemCnf', response)
+        })
+        .catch(error => {
+            console.log('err', error)
+        })
+    },
+    async getHotSearch({ commit },  params = {}) {
+        console.log('tag', '')
+        return await this.$axios.$get(api.prefix + api.api.search.hotsearch, { params })
+        .then(response => {
+            commit('updateHotSearch', response)
         })
         .catch(error => {
             console.log('err', error)
@@ -51,4 +66,6 @@ export const actions = {
             console.log('err', error)
         })
     }
+
+    
 }

@@ -5,12 +5,13 @@
       <input class="search-btn" id="search_submit" type="button" value="搜  索">
     </div>
     <div class="HotTip mt5 fs12">
-      <span>热门搜索 :</span> <span v-for="(item, index) in hotsearch"><nuxt-link to="/">{{ item }}</nuxt-link></span>
+      <span>热门搜索 :</span> <span v-for="(item, index) in hotsearch" :key="index"><nuxt-link to="/">{{ item.searchKey }}</nuxt-link></span>
     </div>
   </div>
 </template>
 
 <script>
+import api from '../../../config/api'
 export default {
   name: "search",
   data () {

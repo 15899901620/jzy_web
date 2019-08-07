@@ -83,6 +83,7 @@ export const actions = {
         commit('updateCurrPage', parseInt(params.current_page))
         return await this.$axios.$get(api.prefix + api.api.information.info, { params })
         .then(response => {
+            console.log('res', response)
             commit('updateArticleList', response)
         })
         .catch(error => {
