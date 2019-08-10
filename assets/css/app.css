@@ -745,13 +745,13 @@ a {
 .screenibre {
 	border-bottom:1px solid #DEDEDE;
 	overflow:hidden;
-	align-items:center;
+	/*align-items:center;*/
 	display:flex;
 	justify-content:space-between;
 }
 .filter_item {
 	display:flex;
-	align-items:center;
+	/*align-items:center;*/
 	width:90%;
 }
 .scTitle {
@@ -763,6 +763,7 @@ a {
 }
 .pro_brand_list {
 	margin-left:15px;
+	width: 1000px;
 }
 .pro_brand_list a {
 	line-height:50px;
@@ -785,6 +786,7 @@ a {
 	box-sizing:border-box;
 	color:#666;
 	margin-right:20px;
+	margin-top: 10px;
 }
 .XHsearch {
 	padding:20px;

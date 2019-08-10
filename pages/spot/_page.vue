@@ -24,8 +24,59 @@
 				</div>
 				<!--加工级别-->
 				<div class="screenibre">
-					<dl class="fl filter_item"><dt class="scTitle">加工级别：</dt>
+					<dl class="fl filter_item">
+						<dt class="scTitle">加工级别：</dt>
 						<dd class="pro_brand_list ">
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
+							<a>注塑级</a>
+							<a>挤压级</a>
+							<a>吹塑级</a>
 							<a>注塑级</a>
 							<a>挤压级</a>
 							<a>吹塑级</a>
@@ -42,9 +93,7 @@
 							<a>吹塑级</a>
 						</dd>
 					</dl>
-					<div class="fr pro_m_select">
-						更多
-					</div>
+					<div class="fr pro_m_select">更多</div>
 				</div>
 				<!--用途-->
 				<div class="screenibre">
@@ -181,8 +230,8 @@
 
 // import Pagination from '../components/pagination/pagination'
 import { mapState } from 'vuex'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Header from '../../components/header'
+import Footer from '../../components/footer'
 export default {
   name: "spot",
   fetch({ store, params }) {
@@ -191,7 +240,7 @@ export default {
       store.dispatch('system/getSystemCnf'),
       store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
       store.dispatch('system/getLinksInfo'),
-      
+
     ])
   },
   components: {
