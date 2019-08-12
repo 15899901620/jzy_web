@@ -23,24 +23,25 @@
                         <li v-for="(item, index) in methodList" @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index"><div style="background-color: #fff;">{{item.name}}</div></li>
                         <div class="gray">（您选择交货方式为配送，提交下单必须满足<span class="orangeFont">25</span>吨的倍数）</div>
                     </ul>
-                    <div class="blueFont mr30 cp fs14" v-show="currentIndex" id="newAdd"  @click="Addaddress">新增收货地址</div>
+                    <div class="blueFont mr30 cp fs14" v-show="currentIndex" id="newAdd"  @click="addNewAddress">新增收货地址</div>
                 </div>
                 <div class="AddList" v-if="this.orderinfo.isDelivery == 1">
                     <template v-if="addressList.length > 0">
                         <ul class="addListSelect ovh" >
-                            <li v-for="(item,i) in addressList" :key="i" :class="item.defaultAddress == 1 ? 'curr' : ''">
-                                <div class ='deliver_icon' v-if="item.defaultAddress == 1" >
+                            <li v-for="(item,i) in addressList" :key="i" :class="item.id === orderinfo.addressId ? 'curr' : ''" @click="setAddress(i,item)">
+                                <div class ='deliver_icon' v-if="item.id === orderinfo.addressId" >
                                     <i class ='deliver_icon'></i>
-                                    配送至
+                                配送至
                                 </div>
                                 <div v-else class="deliver_icon"> <span style="margin-left:79px;">&nbsp;</span></div>
-                                <div  @click="Radio(i,item)">
-                                    <RadioGroup v-model="vertical" >
-                                        <Radio :label="item.id" >
-                                            <span style="margin-left: 15px">{{item.name}}</span><span style="margin-left: 15px">{{item.phone}}</span><span style="margin-left: 15px">身份证：{{item.idNumber}}</span><span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}}</span>
-                                        </Radio>
-                                    </RadioGroup>
-                                </div>
+                                <RadioGroup v-model="orderinfo.addressId" >
+                                    <Radio :label="item.id" >
+                                        <span style="margin-left: 15px">{{item.name}}</span>
+                                        <span style="margin-left: 15px">{{item.phone}}</span>
+                                        <span style="margin-left: 15px">身份证：{{item.idNumber}}</span>
+                                        <span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}} {{item.address}}</span>                                    
+                                    </Radio>
+                                </RadioGroup>
                             </li>
                         </ul>
                     </template>
@@ -58,10 +59,15 @@
                 </div>
                 <div class="lineborder"></div>
                 <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-                <ul class="DeliveryMethod ml35" v-if="this.orderinfo.isDelivery == 1">
-                    <li v-for="(item, index) in extra" @click="Extra1(index,item)" :class="{'curr':index===extraIndex}" :key="index">
-                        {{item.transportationMode}}({{item.basePrice}}元)
-                    </li>
+                <ul class="DeliveryMethod ml35 mb20" v-if="this.orderinfo.isDelivery == 1">
+                    <template v-if="logisticsfreight.length > 0">
+                        <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)" :class="{'curr':index === currfreight}" :key="index">
+                            {{item.transportationMode}}({{item.basePrice}}元)
+                        </li>
+                    </template>
+                    <template v-else>
+                        <p>暂无任何运费数据！</p>
+                    </template>
                 </ul>
                 <div class="lineborder"></div>
                 <!--优选服务-->
@@ -104,28 +110,27 @@
                         <div  style="width: 12%;">{{specialDetail.weekCanDeliveryNum}}</div>
                         <div  style="width: 12%;">{{specialDetail.alreadyDeliveryNum}}</div>
                         <div  style="width: 14%;">
-                            <input-special :min="10" :max="1000" :step="10" v-model="orderinfo.orderNum" ></input-special>
+                            <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>
                         <div  style="width: 12%;">东莞市</div>
-                        <div class="fwb orangeFont" style="width: 9%;">{{this.totalAmount}}</div>
+                        <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmount }}</div>
                     </li>
                 </ul>
 
                 <div class="proInfor">
                     <div  style="display: flex; flex-direction: column; width: 300px; " >
                         <div class="mt20 tar mr20 dflex " style="align-items: center;">
-                            <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.totalAmount}}</span>
+                            <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.orderinfo.totalAmount}}</span>
                         </div>
                         <div class="mt20 mb20 tar mr20 dflexAlem">
-                            <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.totalAmount}}</span>
+                            <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.orderinfo.totalAmount}}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="w1200 whitebg dflexAlem" style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-                    <!-- <div class="mr15">待付金额：<span class="orangeFont"><span class="fwb fs18">{{this.totalAmount}}</span> 元</span></div> -->
                     <!-- <div class="submitOrder" style="background-color: #e0dede" v-if="Order==0">提交订单</div> -->
-                    <div class="submitOrder">提交订单</div>
+                    <div class="submitOrder" @click='createOrder'>提交订单</div>
                 </div>
             </div>
 		</div>
@@ -137,12 +142,11 @@
 import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import { mapState} from 'vuex'
-import { specialDetail, getWeek, submitOrder } from '../../../api/special'
+import { specialDetail, getWeek, submitOrder, devDetail } from '../../../api/special'
 import { capitalinfo } from '../../../api/capital'
 import InputSpecial from '../../../components/input-special'
 import { getCookies } from '../../../config/storage'
 import { addressList, gainuserInfor } from '../../../api/users'
-import { async } from 'q';
 
 export default {
     name: "special-order-id",
@@ -167,28 +171,32 @@ export default {
                 isDelivery: 0,
                 isPerDeposit: 0,
                 isJryService: false,
-                jryDays: 0,
+                jryDays: '',
                 jryCost: '0.00',
                 totalAmount: '0.00',
-                depositAmount: '0.00',
+                depositAmount: 0,
                 orderType: 4,
                 sourceId: 0,
                 feedingId: 0,
-                transportationMode: '公路运输',
-                orderNum: 10,
+                transportationMode: '',
+                orderNum: 0,
                 addressId: 0
             },
+            createInfo:false,
+            currMin: 0,
+            currMax: 0,
+            currsetp: 1,
             ServiceTimeList:[
                 {
-                    value:'5day',
+                    value:'5',
                     timeSelect:'5天'
                 },
                 {
-                    value:'3day',
+                    value:'3',
                     timeSelect:'3天'
                 },
                 {
-                    value:'1day',
+                    value:'1',
                     timeSelect:'1天'
                 }
             ],
@@ -197,8 +205,13 @@ export default {
                 {value:2, name:'配送'}
             ],
             payList:[
-              {value:1, name:'支付全款'},
+                {value:1, name:'支付全款'},
             ],
+            currfreight: 0,
+            currfreightdata: {},
+            defaultAdd:{},
+            logisticsfreight: {},
+            curraddress: 0,
             userinfo: !getCookies('userinfor') ? '' : getCookies('userinfor'),
             capitalinfo: {},
             specialDetail: {},
@@ -213,78 +226,188 @@ export default {
         }
     },
     methods: {
+        //判断是否登录，没有跳转登录
         inLogin () {
             let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
             if (!userinfo) {
                 this.$router.push('/login')
             }
         },
-            //单选
-        Radio(i,item){
-            this.isactive= i;
-            this.addrdetail= item;
-            // this.Payextra();
+        //添加新的地址
+        addNewAddress () {
+         
         },
-        Addaddress() {},
+        //选择运费
+        setFreight(i, row){
+            this.currfreight = i
+            if(row){
+                this.currfreightdata =row
+                this.orderinfo.transportationMode = this.currfreightdata.transportationMode
+                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+            }else{
+                this.currfreightdata = {}
+                this.orderinfo.transportationMode = ''
+                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+            }
+        },
+        //单选
+        setAddress(i,row){
+            this.orderinfo.addressId = row.id
+            this.defaultAdd = row
+            this.getFreight();
+        },
+        //选择提货或者配置
         chooseDelieryType (index) {
             this.currentIndex = index
             if(index==1){
                 this.orderinfo.isDelivery = index
-                // this.Payextra();
+                this.getFreight();
             }else{
                 this.orderinfo.isDelivery = 0
-                // this.methodName='自提'
-                // this.amount=this.amount1
             }
-        //    this.orderstatus()
+            this.setCosting();
         },
+        //资金
         async getMyCapital () {
             const res3=await capitalinfo(this, {})
-            console.log('tag', '')
             if(res3){
                 this.capitalinfo = res3.data
             }
         },
+        //基础数据
         async getSourceData() {
             let params = {
                 id: this.specialId
             }
             const res = await specialDetail(this, params)
             this.specialDetail = res.data
-            console.log(this.specialDetail)
+            this.setCosting()
         },
         //创建订单
         async createOrder() {
             let params = {
-                ...this.orderinfo
+                isDelivery: this.orderinfo.isDelivery,
+                isPerDeposit: this.orderinfo.isPerDeposit,
+                isJryService: this.orderinfo.isJryService == false ? 0 : 1,
+                jryDays: this.orderinfo.jryDays,
+                jryCost: this.orderinfo.jryCost,
+                totalAmount: this.orderinfo.totalAmount,
+                depositAmount: this.orderinfo.depositAmount,
+                orderType: this.orderinfo.orderType,
+                sourceId: this.orderinfo.sourceId,
+                feedingId: this.orderinfo.feedingId,
+                transportationMode: this.orderinfo.transportationMode,
+                orderNum: this.orderinfo.orderNum,
+                addressId: this.orderinfo.addressId
             }
+
+           
             const res = await submitOrder(this, params)
-            if (res){
-                //创建成功！
+            
+            if (res.data.errorcode != ''){
+                this.$Modal.warning({
+                    title: '提示',
+                    content: res.data.message
+                });
+            }else{
+                this.$Modal.success({
+                    title: '提示',
+                    content: res.data.message
+                });
+                this.$router.push({name:'order-success'})
             }
         },
         //获取地址
         async getMyAddress () {
             const res=await addressList(this, {})
-            console.log('res', res)
             if(res){
-                this.addressList=res.data
-            //     this.AddressNum=res.data.length
-            //     this.addrdetail=res.data[0]
-            //     if(this.addrdetail != ''){
-            //         this.addr=1
-            //     }else{
-            //         this.addr=0
-            //     }
-            //     // this.Payextra();
-            // }else{
-            //     this.TipAddress='暂无收货地址，请新增收货地址'
-            //     this.AddressNum=0
+                this.addressList = res.data
+                this.addressList.forEach(element => {
+                    if(element.defaultAddress ===1) {
+                        this.orderinfo.addressId = element.id
+                        this.defaultAdd = element
+                    }
+                });
+            }
+        },
+        //获取物流费用
+        async getFreight () {
+            let data={
+                countryId: this.defaultAdd.countryId,
+                state: this.defaultAdd.state,
+                city: this.defaultAdd.city,
+                district: this.defaultAdd.district,
+                warehouseId: this.specialDetail.warehouseId,
+            }
+            const res= await devDetail(this, data)
+            if(res.data){
+                this.logisticsfreight = res.data
+                this.currfreightdata = res.data[this.currfreight]
+                if(this.currfreightdata){
+                    this.orderinfo.transportationMode = this.currfreightdata.transportationMode
+                    this.orderinfo.totalAmount = (this.specialDetail.finalPrice * this.orderinfo.orderNum) + this.currfreightdata.basePrice
+                }else{
+                    this.orderinfo.transportationMode = ''
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                }
+            }
+        },
+        //计算费用
+        setCosting () {
+            if( this.orderinfo.isDelivery  === 1){
+                //配送选择物流
+                this.currMin = this.specialDetail.deliveryMin
+                this.orderinfo.orderNum = this.specialDetail.deliveryMin
+                this.currMax = this.specialDetail.maxCanDeliveryNum
+                if(this.specialDetail.deliveryDoubly > 0) {
+                    this.currsetp = this.specialDetail.deliveryMin
+                }else{
+                    this.currsetp =  1
+                }
+                if(this.currfreightdata){
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+                }else{
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                }
+                this.orderinfo.transportationMode = this.currfreightdata.transportationMode
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+            }else{
+                //自提
+                this.currMin = this.specialDetail.takeTheirMin
+                this.currMax = this.specialDetail.maxCanDeliveryNum
+                this.orderinfo.orderNum = this.specialDetail.takeTheirMin
+                if(this.specialDetail.takeTheirDoubly > 0) {
+                    this.currsetp = this.specialDetail.takeTheirMin
+                }else{
+                    this.currsetp = 1
+                }
+                this.orderinfo.transportationMode = ''
+                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+            }
+        },
+        //选择订单数量
+        changeNum(row){
+            this.orderinfo.orderNum = row
+            if( this.orderinfo.isDelivery  === 1){
+                //配送选择物流
+                if(this.currfreightdata){
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
+                }else{
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                }  
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+            }else{
+                //自提
+                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
             }
         }
-
     },
     mounted() {  
+     
+    },
+    created() {
         this.inLogin()
         this.getSourceData()
         this.getMyCapital()   

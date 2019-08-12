@@ -15,6 +15,25 @@
             <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">
                
 
+            <div class="submit"></div>
+            <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>
+            <div class="tac fs14">
+                <span>订单号：<span>{{orderNo}}</span></span><a class="blueFont ml15">查看详情</a>
+            </div>
+            <div class="OrderTime" >
+                请前提货，逾期收取仓储费
+            </div>
+            <div class="OrderTime" style="display: none;">
+                我们将按照您指定的地址帮您安排发货
+            </div>
+            <div class="tac gray">
+                <p>如有疑问您可以通过一下联系方式与我们取得联系</p>
+                <p>联系电话：{{systeminfo.SERVICEHOTLINE}}</p>
+            </div>
+            <div class="orderbtn">
+                <a class="submitBtn btnBg" @click="submitBtn()">继续采购</a><a class="submitBtn btnBorderBg ml30">我的订单</a>
+            </div>
+        
 
             </div>
 		</div>
@@ -27,11 +46,10 @@ import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import { mapState} from 'vuex'
 import { specialDetail, getWeek, submitOrder } from '../../../api/special'
-import { async } from 'q';
 
 
 export default {
-    name: "special-order-id",
+    name: "order-success",
     components: {
         HeaderSmall: Header.small,
         Footer,
@@ -48,53 +66,35 @@ export default {
     
     data() {
         return {
-            orderinfo: {
-                isDelivery: 0,
-                isPerDeposit: 0,
-                isJryService: 0,
-                jryDays: 0,
-                jryCost: '0.00',
-                totalAmount: '0.00',
-                depositAmount: '0.00',
-                orderType: 4,
-                sourceId: 0,
-                feedingId: 0,
-                transportationMode: '公路运输',
-                orderNum: 0,
-                addressId: 0
-            },
-            RegisterName: 'member',
-            nowIndex: 0,
-            index: 0,
-            specialId: !this.$route.params.id ? 0 : this.$route.params.id
+            orderNo:'',
+            id:''
         }
     },
     methods: {
-       async getSourceData() {
-            let params = {
-                id: this.specialId
-            }
-            const res = await specialDetail(this, params)
-            this.orderinfo = res.data
-            console.log('data00', res)
+        submitBtn(){
+            this.$router.push({name:'special'})
         },
-        //创建订单
-        async createOrder() {
-            let params = {
-                ...this.orderinfo
-            }
-            const res = await submitOrder(this, params)
-            if (res){
-                //创建成功！
-            }
+        async Datas(){
+            this.orderNo=this.$route.query.orderNo
+            this.id=this.$route.query.id
         }
     },
+    computed: {
+        ...mapState({
+            systeminfo: state => state.system.systeminfo,
+        }),
+        classes() {
+            return [
+                `${prefixCls}`,
+                { [`${prefixCls}-footer`]: this.vertical },
+            ];
+        },
+    },
     mounted() {
-      this.getSourceData()
     },
     head() {
         return {
-            title: '会员注册-巨正源',
+            title: '订单创建成功-巨正源',
             page: 10,
             meta: [{
                     name: 'viewport',

@@ -76,3 +76,22 @@ export const submitOrder = (vm, data) => {
         console.log('submitOrder', errorInfo)
     })
 };
+
+/**
+ * @description 运费
+ * @param data
+ * @returns {*|never}
+ */
+export const  devDetail = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.extra.extraDetail,
+    {
+        params: {...data}
+    }).catch((e) => {
+            let errorInfo = e.response
+            console.log('specialListErr', errorInfo)
+    })
+};

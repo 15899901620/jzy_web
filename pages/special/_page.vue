@@ -18,7 +18,7 @@
 					<span style="width: 11%;">单价（元/吨）</span>
 					<span style="width: 10%;">合同数量</span>
 					<span style="width: 10%;">已提吨数</span>
-					<span style="width: 10%;">可提吨数</span>
+					<span style="width: 10%;">最大可提吨数</span>
 					<span style="width: 9%;">操作</span>
 				</div>
 				<ul class="indexXhlist">
@@ -42,7 +42,7 @@
 								<span class="orangeFont" style="width:11%;">{{items.finalPriceFormat}}</span>
 								<span style="width: 10%;">{{items.availableNum}}</span>
 								<span style="width: 10%;">{{items.tokenNum}}</span>
-								<span style="width: 10%;">{{items.weekCanDeliveryNum}}</span>
+								<span style="width: 10%;">{{items.maxCanDeliveryNum}}</span>
 								<span style="width: 9%;">
 									<div class="ListBtn" @click="addOrder(items)">下单</div>
 								</span>
@@ -165,7 +165,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .ivu-tag {
-padding: 0px 4px;
-font-size: 12px;
+    padding: 0px 4px;
+    font-size: 12px;
 }
 </style>

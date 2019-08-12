@@ -1798,7 +1798,7 @@ a {
 
 
 .AddList{width: 95%;margin: 0 auto;background-color: #fffdf6; margin-bottom: 20px;}
-.addListSelect li{line-height: 35px;overflow: hidden;border: 1px solid #fffdf6; font-size: 14px;}
+.addListSelect li{line-height: 35px;overflow: hidden;border: 1px solid #fffdf6; font-size: 14px; margin:4px 0px;}
 .addListSelect li:hover{border: 1px solid #ff7300; background-color: #fff3ed;}
 .addListSelect .curr{border: 1px solid #ff7300; background-color: #fff3ed;}
 
