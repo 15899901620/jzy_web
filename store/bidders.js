@@ -3,24 +3,26 @@
  * @module store/bidders
  * @author hmymingyu <fgf67@163.com>
  */
-import { auctionInfor } from '../api/auction'
+import { auctionInfor, auctionPage } from '../api/auction'
 import api from '../config/api'
 
 export const state = () => {
     return {
-        biddersDetail: {},
+        biddersbeingData: {},
+        bidderssoonData: {},
+        biddersendData: {}
     }
 }
   
 export const mutations = {
-    updatebidderDetail(state, data) {
-        state.biddersDetail = data
+    updatebeingData(state, data) {
+        state.biddersbeingData = data
     },
-    updateHelperCatList(state, data) {
-        state.helpCatList = data
+    updatesoonData(state, data) {
+        state.bidderssoonData = data
     },
-    updatehelpDetail(state, data) {
-        state.helpDetail = data
+    updateendData(state, data) {
+        state.biddersendData = data
     }
 
 }
@@ -41,4 +43,26 @@ export const actions = {
             console.log('err', error)
         })
     },
+
+    async getBiddersList({ commit },  params) {
+        let res = await auctionPage(this, params)
+        let datalist = res.data.items;
+        let beingData = []
+        let soonData = []
+        let endData = []
+        datalist.forEach((item,index) => {
+            if (item.type == 2) {
+                beingData.push(item)
+            }
+            if (item.type == 1) {
+                soonData.push(item)
+            }
+            if (item.type == 3) {
+                endData.push(item)
+            }
+        });
+        commit('updatebeingData', beingData)
+        commit('updatesoonData', soonData)
+        commit('updateendData', endData)
+    }
 }

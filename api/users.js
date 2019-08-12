@@ -613,7 +613,7 @@ export const inspectionlistPage = (vm, data) => {
   })
 }
 
-
+  
 
 
 

@@ -4,7 +4,7 @@
         <div class="container" title="内容区块">
             <div class="breadcrumb">
                 <breadcrumb>
-                    <breadcrumb-item><nuxt-link to="/" class="HomeIcon">巨正源</nuxt-link></breadcrumb-item>
+                    <breadcrumb-item><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
                     <breadcrumb-item><nuxt-link :to="{name:'bidders-page'}" >限时竞拍</nuxt-link></breadcrumb-item>
                     <breadcrumb-item> {{detailDatabrid.skuName}}</breadcrumb-item>
                 </breadcrumb>
@@ -260,8 +260,8 @@
                 <div class=" mt30">
                     <h1 class="paipinacu fs20">合同模板</h1>
                     <div class="dflex ml10 mt10">
-                        <span class="contract">提</span><a>自提合同模板</a>
-                        <span class="contract ml15">送</span><a>配送合同模板</a>
+                        <span class="contract">提</span><a :href="systeminfo.CARRYCONTRAT" target="_blank">自提合同模板</a>
+                        <span class="contract ml15">送</span><a :href="systeminfo.DELIVERYCONTRAT" target="_blank">配送合同模板</a>
                     </div>
                 </div>
                 <!--联系方式-->
@@ -273,7 +273,7 @@
                             <tr>
                                 <td>
                                     <div style="display: flex;justify-content: center; margin: 10px auto;">
-                                        <div class="contactTime contactTable1"></div>工作日（9:00-18:00）
+                                        <div class="contactTime contactTable1"></div>工作日（{{systeminfo.OPENING_TIME}}-{{systeminfo.CLOSED_TIME}}）
                                     </div>
                                 </td>
                                 <td>
@@ -283,7 +283,7 @@
                                 </td>
                                 <td>
                                     <div style="display: flex;justify-content: center; margin: 10px auto;">
-                                        <div class="contactTime contactTable3"></div>4009-000-000
+                                        <div class="contactTime contactTable3"></div>{{systeminfo.SERVICEHOTLINE}}
                                     </div>
                                 </td>
                             </tr>
@@ -355,7 +355,7 @@ export default {
             DepositShow:false,
             detailDatabrid: {},
             DatabridTip:'',
-            countTime:'',    //倒计时
+            countTime: 0,    //倒计时
             MinPrice:'',     //最小起拍价
             bidePrice:'',     //当前价
             day: 0, 
@@ -371,10 +371,12 @@ export default {
         },
         //倒计时
         countdown() {
-            const end=Date.parse(new Date(this.countTime))
+            // const end=Date.parse(new Date(this.countTime))
+            console.log('end', this.countTime)
             const now = Date.parse(new Date())
-            if(end>now){
-                const msec = end - now
+            //    console.log('now', now)
+            if(this.countTime>now){
+                const msec = this.countTime - now
                 let day = parseInt(msec / 1000 / 60 / 60 / 24)
                 let hr = parseInt(msec / 1000 / 60 / 60 % 24)
                 let min = parseInt(msec / 1000 / 60 % 60)
@@ -478,6 +480,7 @@ export default {
             if(this.detailDatabrid.type===2){    //正在竞拍
                 this.countTime = Date.parse(new Date(this.detailDatabrid.reservationEndTime))
             }
+            // console.log('time', this.countTime)
             if(this.detailDatabrid.type === 3) {
                 this.getwinningbid()
             }
@@ -548,6 +551,11 @@ export default {
         this.getauctionDetail()
         this.countdown()
         this.getNewPrice()
+    },
+    computed: {
+        ...mapState({
+            systeminfo: state => state.system.systeminfo,
+        })
     },
     watch: {
         '$route' (to, from) {

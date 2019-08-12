@@ -114,7 +114,9 @@ let api = {
    * @description 专料
    */
   special: {
-      specialList: '/bill/yearlyFeeding/page',
+      specialList: '/bill/yearlyFeeding/web/page',
+      specialDetail: '/bill/yearlyFeeding/detail',
+      submitOrder:'/bill/orderInfo/feeding/create',
   },
   /**
    * @description 商品(物性表)

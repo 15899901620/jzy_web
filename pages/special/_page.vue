@@ -10,15 +10,15 @@
 					<div class="TitleName" style="border-left: 3px solid #279eff;">专料列表</div>
 				</div>
 				<div class="indexXhTitle   dflexAlem graybg">
-					<span style="width: 9%;">合同类型</span>
+					<span style="width: 8%;">合同类型</span>
 					<span style="width: 10%;">编号</span>
 					<span style="width: 10%;">商品名称</span>
 					<span style="width: 10%;">厂商</span>
-					<span style="width: 8%;">交货地</span>
-					<span style="width: 10%;">单价（元/吨）</span>
-					<span style="width: 11%;">合同数量</span>
-					<span style="width: 11%;">已提吨数</span>
-					<span style="width: 11%;">可提吨数</span>
+					<span style="width: 10%;">交货地</span>
+					<span style="width: 11%;">单价（元/吨）</span>
+					<span style="width: 10%;">合同数量</span>
+					<span style="width: 10%;">已提吨数</span>
+					<span style="width: 10%;">可提吨数</span>
 					<span style="width: 9%;">操作</span>
 				</div>
 				<ul class="indexXhlist">
@@ -31,19 +31,20 @@
 					<template v-else>
 						<template v-if="speciallist">
 							<li v-for="(items, index) in speciallist" :key="index">
-								<span class="dflexAlemJust" style="width: 9%;">
-									<div class="contact contactblue">预</div>
+								<span class="dflexAlemJust" style="width: 8%;">
+                                    <Tag color="primary" v-if="items.feedingType === '放'">{{items.feedingType}}</Tag>
+                                    <Tag color="warning" v-else>{{items.feedingType}}</Tag>
 								</span>
 								<span style="width: 10%;">{{items.skuNo}}</span>
 								<span style="width: 10%;">{{items.skuName}}</span>
 								<span style="width: 10%;">{{items.manufacturer}}</span>
 								<span style="width: 10%;">{{items.warehouseName}}</span>
-								<span class="orangeFont" style="width:10%;">{{items.finalPrice}}/{{items.uomName}}</span>
-								<span style="width: 11%;">{{items.availableNum}}</span>
-								<span style="width: 11%;">20.000</span>
-								<span style="width: 11%;">50.000</span>
+								<span class="orangeFont" style="width:11%;">{{items.finalPriceFormat}}</span>
+								<span style="width: 10%;">{{items.availableNum}}</span>
+								<span style="width: 10%;">{{items.tokenNum}}</span>
+								<span style="width: 10%;">{{items.weekCanDeliveryNum}}</span>
 								<span style="width: 9%;">
-									<div class="ListBtn" @click="indent()">下单</div>
+									<div class="ListBtn" @click="addOrder(items)">下单</div>
 								</span>
 							</li>
 						</template>
@@ -65,12 +66,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import Header from '../components/header'
-import Footer from '../components/footer'
-import Banner from '../components/banner'
-import { getCookies } from '../config/storage'
-import pagination from '../components/pagination'
-import { specialList } from '../api/special'
+import Header from '../../components/header'
+import Footer from '../../components/footer'
+import Banner from '../../components/banner'
+import { getCookies } from '../../config/storage'
+import pagination from '../../components/pagination'
+import { specialList } from '../../api/special'
 
 export default {
     name: "special",
@@ -121,11 +122,11 @@ export default {
         showTotal(total) {
             return `全部 ${total} 条`;
         },
-        indent(special) {
+        addOrder(row) {
             this.$router.push({
-                name: 'Special-SpecialSubmit',
-                query: {
-                    id: special.id
+                name: 'special-order-id',
+                params: {
+                    id: row.id
                 }
             })
         },
@@ -162,3 +163,9 @@ export default {
     }
 }
 </script>
+<style lang="less" scoped>
+.ivu-tag {
+padding: 0px 4px;
+font-size: 12px;
+}
+</style>

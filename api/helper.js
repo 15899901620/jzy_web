@@ -41,3 +41,16 @@ export const helpdetail = (vm, data) => {
       params: {...data}
     })
 }
+
+
+/**
+ * @description 热门搜索显示
+ * @param {*} vm 
+ * @param {*} data 
+ */
+export const gethotsearch = (vm, data) => {
+    return vm.$axios.get(server.prefix + server.api.search.hotsearch).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }

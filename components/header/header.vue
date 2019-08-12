@@ -30,7 +30,6 @@ import Logo from './components/logo'
 import Search from './components/search'
 import Navigation from '../navigation'
 import coolapse from '../collapse'
-// import servicecate from './components/servicecate'
 
 export default {
     name: 'Header',
@@ -52,7 +51,7 @@ export default {
             userinfof: state => state.login.userinfof,
             topmenu: state => state.menu.topMenu,
             middleMenu: state => state.menu.middleMenu,
-            systeminfo: state => state.system.systeminfo
+            systeminfo: state => state.system.systeminfo,
         }),
         classes() {
             return [

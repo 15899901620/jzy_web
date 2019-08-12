@@ -1,0 +1,212 @@
+@import "../../../assets/style/default";
+@import "../../../assets/style/mixins/iconfont.less";
+
+@inputspecial-prefix-cls: ~"@{ant-prefix}-inputspecial";
+@input-affix-width: 17px;
+
+
+.disabled() {
+    background-color: @input-disabled-bg;
+    opacity: 1;
+    cursor: not-allowed;
+    color: @disabled-color;
+    &:hover {
+        border-color:#c7c7c7;
+    }
+}
+
+  
+.handler-disabled() {
+    opacity: 0.72;
+    color: #ccc !important;
+    cursor: not-allowed;
+}
+  
+.@{inputspecial-prefix-cls} {
+    position: relative;
+    padding: 4px 7px;
+    width: 100%;
+    line-height: 1.5;
+    color: rgba(0,0,0,.65);
+    background-color: #fff;
+    background-image: none;
+    transition: all .3s;
+    margin: 0;
+    padding: 0;
+    font-size: @font-size-base;
+    height: @input-height-base;
+    display: inline-block;
+    border: @border-width-base @border-style-base @border-color-base;
+    border-radius: @border-radius-base;
+    width: 90px;
+    
+  
+    &-handler {
+        text-align: center;
+        line-height: 0;
+        height: 50%;
+        overflow: hidden;
+        color: @text-color-secondary;
+        position: relative;
+        transition: all 0.1s linear;
+        display: block;
+        width: 100%;
+        font-weight: bold;
+
+        &:active {
+            background: #f4f4f4;
+        }
+        &:hover &-up-inner,
+        &:hover &-down-inner {
+            color: @primary-5;
+        }
+    }
+  
+    &-handler-up-inner,
+    &-handler-down-inner {
+      .iconfont-mixin();
+      line-height: 12px;
+      user-select: none;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      transition: all 0.1s linear;
+
+      display: inline-block;
+      font-size: 12px;
+      font-size: 7px\9;
+      transform: scale(.58333333) rotate(0deg);
+      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+      zoom: 1;
+      right: 4px;
+      color: @text-color-secondary;
+    }
+  
+    &:hover {
+        border-color: #d9d9d9;
+    }
+  
+    &-focused {
+        border-color: #d9d9d9;;
+        outline: 0;
+        box-shadow: 0 0 @outline-blur-size @outline-width fade(#d9d9d9, 20%);
+    }
+  
+    &-disabled {
+        .disabled() 
+    }
+  
+    &-input {
+      width: 100%;
+      text-align: left;
+      outline: 0;
+      -moz-appearance: textfield;
+      height: @input-height-base - 2px;
+      transition: all 0.3s linear;
+      color: @input-color;
+      background-color: @input-bg;
+      border: 0;
+      border-radius: @border-radius-base;
+      padding: 0 7px;
+      display: block;
+      .placeholder();
+  
+      &[disabled] {
+        .disabled() 
+        
+      }
+    }
+  
+    &-lg {
+      padding: 0;
+  
+      input {
+        height: @input-height-lg - 2px;
+      }
+    }
+  
+    &-sm {
+      padding: 0;
+  
+      input {
+        height: @input-height-sm - 2px;
+      }
+    }
+  
+    &-handler-wrap {
+      border-left: @border-width-base @border-style-base @border-color-base;
+      width: 22px;
+      height: 100%;
+      background: @component-background;
+      position: absolute;
+      top: 0;
+      right: 0;
+      opacity: 0;
+      border-radius: 0 @border-radius-base @border-radius-base 0;
+      transition: opacity 0.24s linear 0.1s;
+      z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
+    }
+  
+    &-handler-wrap:hover &-handler {
+      height: 40%;
+    }
+  
+    &:hover &-handler-wrap {
+      opacity: 1;
+    }
+  
+    &-handler-up {
+      cursor: pointer;
+      &-inner {
+        top: 50%;
+        margin-top: -6px;
+        &:before {
+          text-align: center;
+          content: "\e61e";
+        }
+      }
+      &:hover {
+        height: 60% !important;
+      }
+    }
+  
+    &-handler-down {
+      border-top: @border-width-base @border-style-base @border-color-base;
+      top: -1px;
+      cursor: pointer;
+      &-inner {
+        top: 50%;
+        margin-top: -6px;
+        &:before {
+          text-align: center;
+          content: "\e61d";
+        }
+      }
+      &:hover {
+        height: 60% !important;
+      }
+    }
+  
+    &-handler-down-disabled,
+    &-handler-up-disabled,
+    &-disabled {
+      .@{inputspecial-prefix-cls}-handler-down-inner,
+      .@{inputspecial-prefix-cls}-handler-up-inner {
+        .handler-disabled();
+      }
+    }
+  
+    &-disabled {
+      .@{inputspecial-prefix-cls}-input {
+        opacity: 0.72;
+        cursor: not-allowed;
+        background-color: @disabled-bg;
+      }
+      .@{inputspecial-prefix-cls}-handler-wrap {
+        display: none;
+      }
+      .@{inputspecial-prefix-cls}-handler {
+        .handler-disabled();
+      }
+    }
+  }

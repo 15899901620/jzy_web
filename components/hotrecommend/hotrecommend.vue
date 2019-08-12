@@ -1,6 +1,6 @@
 <template>
     <div :class="classes">
-        <div class="dflex mt25" style="justify-content: center;" v-if="!userinfo">
+        <div class="dflex mt25" style="justify-content: center;" v-if="!userinfor">
             <div class="indexHead" @click="User"><img  src="../../static/img/index_head.png"/></div>
             <div class="ml10">
                 <p class="mt5">HI,上午好！</p>
@@ -14,7 +14,7 @@
                 <p class="gray">欢迎来到巨正源交易网!</p>
             </div>
         </div>
-        <div class="loginReg mt10" v-if="!userinfo">
+        <div class="loginReg mt10" v-if="!userinfor">
             <router-link to="/login" class="loginbg">登 录</router-link>
             <router-link to="/register" class="registerbg ml10">注 册</router-link>
         </div>
