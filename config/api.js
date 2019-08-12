@@ -66,6 +66,12 @@ let api = {
     cityregionData:'/item/region/region',        //市/区/县
   },
   /**
+   * @description 现货超市
+   */
+  spot: {
+
+  },
+  /**
    * @description 竞拍管理
    */
   Auction:{
