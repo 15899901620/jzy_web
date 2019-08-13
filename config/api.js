@@ -69,7 +69,7 @@ let api = {
    * @description 现货超市
    */
   spot: {
-    spotList: '/item/spot/goods/list/page'
+
   },
   /**
    * @description 竞拍管理
