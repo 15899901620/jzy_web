@@ -108,12 +108,14 @@
                         </template>
                         <template v-else>
                             <template v-if="spotlist">
-                                <li>
-                                    <span style="width: 7%;">PP</span><span style="width: 7%;">F08</span><span
-                                        style="width: 7%;">巨正源</span>
-                                    <span style="width: 12%;">东莞</span><span style="width: 7%;">20</span>
-                                    <span style="width: 9%;">31分钟前</span>
-                                    <span class="orangeFont" style="width: 11%;">¥10550</span>
+                                <li v-for="(item, index) in spotlist" :key="index">
+                                    <span style="width: 7%;">{{item.category_name}}</span>
+                                    <span style="width: 7%;">{{item.sku_no}}</span>
+                                    <span style="width: 7%;">{{item.manufactory}}</span>
+                                    <span style="width: 12%;">{{item.delivery_place}}</span>
+                                    <span style="width: 7%;">{{item.quantity}}</span>
+                                    <span style="width: 9%;">{{item.refresh_time}}</span>
+                                    <span class="orangeFont" style="width: 11%;">¥{{item.unit_price}}</span>
                                     <span style="width: 13%;">
                                          <RadioGroup v-model="formItem.radio">
                                             <Radio label="M">自提</Radio>
