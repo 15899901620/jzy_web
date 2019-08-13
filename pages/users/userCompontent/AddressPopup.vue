@@ -210,20 +210,17 @@
         },
         async countryData(){
           const res = await countryData(this, {})
-          console.log('国家_res', res)
           if(res.data){
             this.countryList=res.data
           }
          },
         // 获取省份
         async countrySelect(id){
-          console.log('country', id)
           if(id){
           let params={
             countryId:id
           }
           const res = await provinceData(this, params)
-          console.log('res', res)
           if(res.data){
             this.provinceList=res.data
           }
@@ -233,29 +230,24 @@
 
         //获取市
         async provinceSelect(id){
-          console.log('provinceSelect', id)
           if(id){
           let params={
             parentId:id
           }
           const res = await cityregionData(this, params)
-         console.log('res', res)
           if(res.data){
             this.cityList=res.data
           }
-            console.log('res', this.formAddress.state)
           }
         },
 
         //获取区
         async citySelect(id) {
-          console.log('citySelect_id', id)
           if (id) {
           let params = {
             parentId: id
           }
           const res = await cityregionData(this, params)
-         // console.log('res', res)
           if (res.data) {
             this.distinceList = res.data
           }
@@ -284,8 +276,7 @@
 
         //提交地址
         async submitAddress(){
-          console.log('提交地址addressId', this.addressId)
-          console.log('提交地址formAddress')
+        
           if(Cookies.get('userinfor') && Cookies.get('webtoken')){
             this.formAddress.memberId=JSON.parse(Cookies.get('userinfor')).id
           }else{
@@ -357,9 +348,7 @@
             });
             return
           }else {
-            console.log('formAddress', this.formAddress)
             const res = await addressAdd(this, this.formAddress)
-            console.log('添加res',res)
             if(res){
               this.$Message.info({
                 content: '添加成功',

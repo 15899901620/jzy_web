@@ -179,7 +179,6 @@ export default {
   methods:{
     inLogin () {
         let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-        console.log('2222222', userinfo)
         if (!userinfo) {
           this.$router.push('/login')
         }
@@ -210,7 +209,6 @@ export default {
     async getOrderList () {
       const res= await orderlist(this,{})
       this.hotorderinfo = res.data
-      console.log('orderinfo', this.hotorderinfo)
     }
   },
   created(){

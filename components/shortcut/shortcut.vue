@@ -3,7 +3,7 @@
       <div class="TopPos" style="display: flex;">
         <div class="slogens">您好，欢迎光临巨正源化工交易网！ <span>|</span>  <nuxt-link to="/">巨正源首页</nuxt-link></div>
         <ul class="topnavlist" v-if="showNav">
-            <template v-if="userinfor">
+            <template v-if="userinfo">
                 <li :key="98"><span style="color:#999">你好! </span>{{userinfo.phone}} <span @click="logout">[ 退出 ]</span></li>
             </template>
             <template v-else>

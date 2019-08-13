@@ -124,9 +124,7 @@ export default {
   methods:{
         //获取用户信息
         async UserInfor(){
-          console.log('UserInfor')
           const res=await getGainuserInfor(this,{})
-          console.log('用户信息res', res)
           this.userinfor=res.data
         },
     modifInfor(){

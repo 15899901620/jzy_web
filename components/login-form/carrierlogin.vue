@@ -53,16 +53,13 @@
               username:this.loginform.username,
               password:this.loginform.password
             }
-            console.log('params', params)
             const res = await supplierLogin(this, params)
-            console.log('Loginres' ,res)
             let authres=res.data
             if(res.data.data===null && res.status === 200){
               this.passwordTip=true
               this.passwordName='账号密码错误！'
               return
             }else{
-              console.log('authres' ,authres)
               let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
               Cookies.set('websuppliertoken',  authres, { expires: expires })
               const res = await supplierValid(this, {})

@@ -68,7 +68,6 @@ export default {
                     if(k<a) {
                         this.currlist[b] =  Object.assign({}, cobrand[k])
                     }else{
-                        // console.log('in', this.currlist)
                         this.brandList.push(this.currlist)
                         this.currlist = []
                         i = i+1
