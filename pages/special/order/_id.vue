@@ -208,6 +208,7 @@ export default {
                 {value:1, name:'支付全款'},
             ],
             currfreight: 0,
+            WeekList: {},
             currfreightdata: {},
             defaultAdd:{},
             logisticsfreight: {},
@@ -282,6 +283,18 @@ export default {
             const res = await specialDetail(this, params)
             this.specialDetail = res.data
             this.setCosting()
+            this.getWeekDetail()
+        },
+        //获取周计划详情
+        async getWeekDetail() {
+            let data={
+                skuId: this.specialDetail.skuId
+            }
+            const res = await getWeek(this, data)
+            console.log('tag', res)
+            if(res){
+                this.WeekList = res.data
+            }
         },
         //创建订单
         async createOrder() {
@@ -294,27 +307,25 @@ export default {
                 totalAmount: this.orderinfo.totalAmount,
                 depositAmount: this.orderinfo.depositAmount,
                 orderType: this.orderinfo.orderType,
-                sourceId: this.orderinfo.sourceId,
-                feedingId: this.orderinfo.feedingId,
+                sourceId: this.WeekList.id,
+                feedingId: this.specialDetail.id,
                 transportationMode: this.orderinfo.transportationMode,
                 orderNum: this.orderinfo.orderNum,
                 addressId: this.orderinfo.addressId
             }
-
-           
             const res = await submitOrder(this, params)
-            
-            if (res.data.errorcode != ''){
+            if (res.data.errorcode){
                 this.$Modal.warning({
                     title: '提示',
                     content: res.data.message
                 });
             }else{
-                this.$Modal.success({
-                    title: '提示',
-                    content: res.data.message
-                });
-                this.$router.push({name:'order-success'})
+                // this.$Modal.success({
+                //     title: '提示',
+                //     content: "专料放料订单提交成功！"
+                // });
+
+                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
             }
         },
         //获取地址
