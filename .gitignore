@@ -84,5 +84,7 @@ dist
 # Service worker
 sw.*
 
+config/app.config
+
 # Mac OSX
 .DS_Store
