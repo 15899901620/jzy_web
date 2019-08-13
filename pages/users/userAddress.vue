@@ -86,10 +86,8 @@ export default {
   methods:{
         // 收货地址列表
     async AddressList(){
-      console.log('地址列表')
       if(Cookies.get('userinfor') && Cookies.get('webtoken')){
         const res=await addressList(this, {})
-        console.log('地址列表_res',res)
         if(res){
           this.addressList=res.data
           this.AddressNum=res.data.length
@@ -108,25 +106,20 @@ export default {
     //获取单条地址信息
     //地址详细
     async addressDetail(id){
-      console.log('addressId', this.addressId)
       let params={
         id:id
       }
       const res= await addressInfor(this,params)
-      console.log('单条地址信息res',res)
         this.formEditAddress=res.data
-      console.log('单条地址信息res',this.formEditAddress)
 
     },
     hiddenShow(){
       let that = this;
       that.showcancel_pop = false
-      console.log('showcancel_pop',  this.showcancel_pop)
       this.AddressList()
     },
     showEdit(id){
       this.showEditpop=true
-      console.log('showEdit_pop',  this.showEditpop)
       if(id){
         this.formAddress.id=id
       }
@@ -134,10 +127,8 @@ export default {
     },
 
     Hiddenedit(){
-      console.log('hiddenEditShow')
       let that = this;
       that.showEditpop = false
-      console.log('showEditpop',  that.showEditpop)
       },
 
   // 设为默认地址
@@ -148,7 +139,6 @@ export default {
         id:id
       }
       const res= await  addressDefault(this,params)
-      console.log('默认地址res',res)
       if(res.data===true && res.status ===200){
         this.$Message.info({
           content: '设置成功',
@@ -168,12 +158,10 @@ export default {
     },
     //删除地址
     async Deleteadress(id){
-      console.log('删除地址',id)
       let params={
         id:id
       }
       const res= await addressDelete(this,params)
-      console.log('res', res)
       if(res.data===true && res.status === 200){
         this.$Message.info({
           content: '删除成功',
@@ -188,7 +176,6 @@ export default {
         title: '删除地址',
         content: '<p style="color: #db4f2e; font-size: 16px;">确认要删除本条地址!!!</p>',
         onOk: () => {
-          console.log('delete_id',id)
             this.Deleteadress(id)
         },
         onCancel: () => { }

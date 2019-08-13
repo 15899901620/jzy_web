@@ -42,7 +42,7 @@
 								<span class="orangeFont" style="width:11%;">{{items.finalPriceFormat}}</span>
 								<span style="width: 10%;">{{items.availableNum}}</span>
 								<span style="width: 10%;">{{items.tokenNum}}</span>
-								<span style="width: 10%;">{{items.maxCanDeliveryNum}}</span>
+								<span style="width: 10%;">{{getIntput(items.maxCanDeliveryNum)}}</span>
 								<span style="width: 9%;">
 									<div class="ListBtn" @click="addOrder(items)">下单</div>
 								</span>
@@ -115,6 +115,9 @@ export default {
         }
     },
     methods: {
+        getIntput(row) {
+            return parseInt(row)
+        },
         getUserInfo() {
             let data = getCookies('userinfor')
             this.userinfo = data

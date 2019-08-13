@@ -291,7 +291,6 @@ export default {
                 skuId: this.specialDetail.skuId
             }
             const res = await getWeek(this, data)
-            console.log('tag', res)
             if(res){
                 this.WeekList = res.data
             }
@@ -314,18 +313,13 @@ export default {
                 addressId: this.orderinfo.addressId
             }
             const res = await submitOrder(this, params)
-            if (res.data.errorcode){
+            if (typeof res.data.errorcode == "undefined"){
+                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+            }else{
                 this.$Modal.warning({
                     title: '提示',
                     content: res.data.message
                 });
-            }else{
-                // this.$Modal.success({
-                //     title: '提示',
-                //     content: "专料放料订单提交成功！"
-                // });
-
-                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
             }
         },
         //获取地址

@@ -125,6 +125,12 @@ let api = {
         submitOrder:'/bill/orderInfo/feeding/create'
     },
     /**
+     * @description 周计划
+     */
+    week: {
+        getWeek: '/bill/getWeekPlannedByMember',
+    },
+    /**
      * @description 商品(物性表)
      */
     product: {
@@ -176,6 +182,7 @@ let api = {
     extra:{
         extraDetail:'/bill/freightList/getFreightListByAddress',
     },
+    
 }
 
 export default {

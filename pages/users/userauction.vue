@@ -139,7 +139,6 @@ export default {
         ...this.formSearch
       }
       const res= await auctionOrderList(this, params)
-      console.log('res',res)
       this.datalist = res.data.items
       this.total = res.data.total
     }

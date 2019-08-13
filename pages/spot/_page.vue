@@ -211,7 +211,6 @@
                     page_size: this.page_size
                 }
                 const res = await spotList(this, params)
-                console.log(res)
                 this.spotlist = res.data.items
                 this.total = res.data.total
             },

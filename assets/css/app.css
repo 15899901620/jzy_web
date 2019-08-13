@@ -1050,7 +1050,7 @@ a {
 	background-color:#fff;
 	width:33.3%;
 	text-align:center;
-	padding:10px 0;
+	padding:15px 0;
 	cursor:pointer;
 }
 .AuctionTime li.curr {
@@ -1265,7 +1265,8 @@ a {
 .Bidders_record_Time {
 	display:flex;
 	align-items:center;
-	margin-top:8px;
+    margin-top:8px;
+    color: #666;
 }
 .Bidders_record_result_list {
 	width:570px;

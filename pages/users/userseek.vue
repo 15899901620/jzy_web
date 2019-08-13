@@ -115,7 +115,6 @@ export default {
         // ...this.formSearch
       }
       const res= await getbuylist(this, params)
-      console.log(res)
       this.datalist = res.data.items
       this.total = res.data.total
     }

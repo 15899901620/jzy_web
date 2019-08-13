@@ -70,7 +70,6 @@ export default {
     async getsupplyNoteValue () {
 
       var phone = this.phone//验证码
-      console.log('phone', phone)
       //验证验证码是否为空
       if (phone === "") {
         this.$Message.info("手机号不能为空")
@@ -80,12 +79,8 @@ export default {
           phone
         }
         const res = await userSeekPassword(this, params)
-        console.log('res',res)
-        console.log('res',res.data)
         if(res.data && res.status === 200 ){
-          console.log('res', res)
           this.$Message.info("短信发送成功")
-
           var sj = Math.ceil(Math.random(10 + 1) * 100000)
           window.localStorage.setItem("note", sj)
           this.auth_time = 60;
@@ -149,9 +144,9 @@ export default {
         password:this.password,
         code:this.code
       }
-      console.log('params', params)
+     
       const res = await userRepassWd(this, params)
-      console.log('res', res)
+      
       if(res.data && res.status ===200){
         this.$Message.info({content: '修改密码成功'})
 

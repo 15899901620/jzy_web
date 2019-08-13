@@ -199,7 +199,6 @@
 
         async countryData(){
           const res = await countryData(this, {})
-          console.log('国家_res', res)
           if(res.data){
             this.countryList=res.data
           }
@@ -207,13 +206,11 @@
 
         // 获取省份
         async countrySelectEdit(id){
-          console.log('country', id)
           if(id){
             let params={
               countryId:id
             }
             const res = await provinceData(this, params)
-            console.log('res', res)
             if(res.data){
               this.provinceList=res.data
             }
@@ -223,28 +220,23 @@
 
         //获取市
         async provinceSelect(id){
-          console.log('provinceSelect', id)
           if(id){
             let params={
               parentId:id
             }
             const res = await cityregionData(this, params)
-            console.log('res', res)
             if(res.data){
               this.cityList=res.data
             }
-            console.log('res', this.formAddress.state)
           }
         },
         //获取区
         async citySelect(id) {
-          console.log('citySelect_id', id)
           if (id) {
             let params = {
               parentId: id
             }
             const res = await cityregionData(this, params)
-            // console.log('res', res)
             if (res.data) {
               this.distinceList = res.data
             }

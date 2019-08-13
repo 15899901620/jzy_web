@@ -192,7 +192,7 @@
                             <!--竞拍必看-->
                             <div class="MustSee"><a href="/help/17" target="_blank" >竞拍必看</a></div>
                             <div class="acuBtn" v-if="detailDatabrid.type === 2">
-                                <a class="oncebg" @click="AddauctionPrice()">立即出价</a>
+                                <a class="oncebg" @click="addauctionPrice()">立即出价</a>
                                 <a class="Paybg ml15" @click="PayCost()">追加保证金</a>
                             </div>
                             <div class="acuBtn" v-if="detailDatabrid.type === 1">
@@ -292,6 +292,23 @@
                 </div>
             </div>
         </div>
+
+        <!--出价提示-->
+        <Modal
+            title="出价提示"
+            v-model="bidersloading"
+            ok-text="确认出价"
+            @on-ok="addBidding"
+            class-name="vertical-center-modal">
+            <p slot="header" style="color:#666; text-align:left; font-size:14px;">
+                <Icon type="md-chatboxes" style="font-size:18px;" />
+                <span>出价提示</span>
+            </p>
+            <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{this.detailDatabrid.manufacturer}} {{this.detailDatabrid.warehouseName}} {{this.detailDatabrid.skuName}} {{this.detailDatabrid.totalNum}} {{this.detailDatabrid.uomName}} </p>
+            <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}}(吨)</p>
+            <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>￥{{this.auctionOffer}}</p>
+        </Modal>
+
         <!-- <paydeposit v-show="DepositShow"  @HiddenDep="hiddenDepositShow"  :DepositeData="DepositData"></paydeposit> -->
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
@@ -358,6 +375,7 @@ export default {
             countTime: 0,    //倒计时
             MinPrice:'',     //最小起拍价
             bidePrice:'',     //当前价
+            bidersloading: false,
             day: 0, 
             hr: 0, 
             min: 0, 
@@ -372,9 +390,7 @@ export default {
         //倒计时
         countdown() {
             // const end=Date.parse(new Date(this.countTime))
-            console.log('end', this.countTime)
             const now = Date.parse(new Date())
-            //    console.log('now', now)
             if(this.countTime>now){
                 const msec = this.countTime - now
                 let day = parseInt(msec / 1000 / 60 / 60 / 24)
@@ -393,7 +409,7 @@ export default {
         },
         //查看详情_跳转会员-我的竞拍页
         acuDetailmember(){
-          this.$router.push({name:'users-userauction'})
+            this.$router.push({name:'users-userauction'})
         },
         //提货_跳转到下单页
         auctionOrder(){
@@ -401,7 +417,7 @@ export default {
         },
         // 竞拍出价
         cutsOffer(){
-            if(this.auctionOffer>this.MinPrice){
+            if(this.auctionOffer > this.MinPrice){
                 this.auctionOffer=Number(this.auctionOffer)-Number(this.detailDatabrid.bidIncrement)
             }else {
                 this.auctionOffer=this.MinPrice
@@ -442,7 +458,9 @@ export default {
                 isActive: 1,
                 auctionId:this.auctionId
             }
+            console.log('1', params)
             let res = await auctionRecord(this, params)
+            console.log('suoyou', res)
             if(res){
                 this.auctionRd=res.data.items
             }
@@ -480,11 +498,11 @@ export default {
             if(this.detailDatabrid.type===2){    //正在竞拍
                 this.countTime = Date.parse(new Date(this.detailDatabrid.reservationEndTime))
             }
-            // console.log('time', this.countTime)
             if(this.detailDatabrid.type === 3) {
                 this.getwinningbid()
             }
             this.getpriceInfo(this.detailDatabrid.skuId)
+            this.countdown()
         },
         //中标信息
         async getwinningbid() {
@@ -532,6 +550,46 @@ export default {
                 this.bidePrice = res.data.bidPrice
             }
         },
+        //提交出价
+        async addBidding() {
+            let params={
+                auctionId:this.detailDatabrid.id,
+                bidNum:this.auctionNum,
+                bidPrice:this.auctionOffer,
+            }
+            let res =await AddauctionPrice(this,params)
+            if(res.data.data===null && res.status === 200){
+                this.$Modal.warning({
+                    title: '提示',
+                    content:  res.data.message+'!!! '+'请联系客服。',
+                    duration: 5
+                });
+            }else{
+                 this.$Modal.success({
+                    title: '提示',
+                    content:  '出价成功！',
+                    duration: 5
+                });
+                // this.GainauctionRecord()
+                // this.AuctionRecord()
+                // this.auctionMineRecord()
+            }
+        },
+        addauctionPrice(){
+            let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+            if (userinfo) {
+                this.bidersloading = true
+            } else {
+                this.$Modal.confirm({
+                    title: '提示',
+                    content: '<p>您尚未登录，请先登录</p>',
+                    okText:'去登录',
+                    onOk: () => {
+                        this.$router.push({name:'login'});
+                    },
+                });
+            }
+        },
     },
     head () {
         return {
@@ -564,3 +622,14 @@ export default {
     }
 }
 </script>
+<style lang="less">
+    .vertical-center-modal{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .ivu-modal{
+            top: 0;
+        }
+    }
+</style>
