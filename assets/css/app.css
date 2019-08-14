@@ -1865,3 +1865,21 @@ a {
 .AcqCode{border: none; background-color: #fff}
 .AcqCode:hover{background-color: #ffffff;border: none;}
 .AcqCode:active{background-color: #ffffff;border: none;}
+.memberInfor{width: 83%}
+
+.inforList{margin-left: 25px; margin-top: 30px;}
+.inforList li{margin-left: 35px;margin-top: 20px; display: flex;align-items: center;}
+.inforTitle{border-left: 2px solid #007de4;padding-left: 5px; font-weight: bold;color: #007de4;font-size: 14px;}
+.titleInfor{width: 85px;color:#999; margin-right: 20px; text-align: right; font-size: 14px; }
+.inforInput{width: 340px;height: 40px;border-radius: 3px;   box-sizing: border-box;}
+.fileup{position: absolute;width: 90px;   height: 36px;right: 0;opacity: 0;}
+.upBtn{width: 90px;   height: 36px; background-color: #007de4; line-height: 36px; text-align: center; color: #fff; border-top-right-radius: 3px;border-bottom-right-radius: 3px; }
+.inputUp{    border-bottom-right-radius: 0; border-top-right-radius: 0;box-sizing: border-box; width: 253px; height: 36px;border-radius: 3px;border: 1px solid #DEDEDE;}
+/*营业执照*/
+.inforImg li:first-child{margin-left: 0;}
+.inforImg li{margin-left: 10px; margin-top: 0;}
+
+.saveInfor{color: #fff;background-color: #007de4;border: none;    padding: 9px 40px;border-radius: 5px;margin-left: 173px;margin-bottom: 40px;}
+.saveInfor:hover{background-color: #007de4;color: #fff;}
+.licenseImg{width: 100px;height: 80px;} .licenseImg img{width: 100%; height: 100%;}
+.inforInput .ivu-input{height: 40px;}

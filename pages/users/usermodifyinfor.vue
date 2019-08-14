@@ -1,91 +1,88 @@
 <template>
-  <div class="clearfix graybg">
-    <div class="w1200 dflex " style="margin-bottom: 40px">
-      <usernav></usernav>
+    <div class="clearfix graybg">
+        <div class="w1200 dflex " style="margin-bottom: 40px">
+            <usernav></usernav>
+            <div class="memberInfor ml20  whitebg bdccc  mt20">
+                <h1 class="fs16 ml25 mt25 bb1 pb10" >完善信息</h1>
+                <!--基本信息-->
+                <ul class="inforList">
+                    <div class="inforTitle">基本信息</div>
+                    <li>
+                        <span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.username}}</span>
+                    </li>
+                    <li style="align-items: inherit;">
+                        <span class="titleInfor mt10" >营业执照</span>
+                        <div class="dflex licenseImg" style="flex-direction: column;">
+                            <img :src="userinfor.business_license"/>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="titleInfor" >企业授权书</span>
+                        <div class="dflex licenseImg" style="flex-direction: column;">
+                            <img :src="userinfor.authorization_elc"/>
+                        </div>
+                    </li>
+                </ul>
+                <!--开票信息-->
+                <ul class="inforList">
+                    <div class="inforTitle">开票信息</div>
+                    <li>
+                    <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.username}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">纳税人识别号</span><span class="blackFont fs14">{{userinfor.taxId}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">开户行</span><span class="blackFont fs14">{{userinfor.invBankName}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">账号</span><span class="blackFont fs14">{{userinfor.invBankAccount}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">地址</span><span class="blackFont fs14">{{userinfor.invAddress}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">电话</span><span class="blackFont fs14">{{userinfor.invTelephone}}</span>
+                    </li>
+                </ul>
+                <!--联系人信息-->
+                <ul class="inforList mb30">
+                    <div class="inforTitle">联系人信息</div>
+                    <li>
+                    <span class="titleInfor">联系人</span><span class="blackFont fs14">{{userinfor.contacter}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">手机</span><span>{{userinfor.contacter_mobile}}</span>
+                    </li>
+                    <li>
+                    <span class="titleInfor">邮箱</span><span class="blackFont fs14">{{userinfor.contacter_email}}</span>
+                    </li>
 
-      <div class="memberInfor ml20  whitebg bdccc  mt20">
-        <h1 class="fs16 ml25 mt25 bb1 pb10" >完善信息</h1>
-        <!--基本信息-->
-        <ul class="inforList">
-          <div class="inforTitle">基本信息</div>
-          <li>
-            <span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
-          </li>
-          <li style="align-items: inherit;">
-            <span class="titleInfor mt10" >营业执照</span>
-            <div class="dflex licenseImg" style="flex-direction: column;">
-             <img :src="userinfor.business_license"/>
+                </ul>
+                <button class="saveInfor fs14" @click="modifInfor" >修改信息</button>
             </div>
-
-          </li>
-          <li>
-            <span class="titleInfor" >企业授权书</span>
-            <div class="dflex licenseImg" style="flex-direction: column;">
-              <img :src="userinfor.authorization_elc"/>
-            </div>
-<!--            <a href="#.html" class="ml10 blueFont">删除</a>-->
-          </li>
-        </ul>
-        <!--开票信息-->
-        <ul class="inforList">
-          <div class="inforTitle">开票信息</div>
-          <li>
-            <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">纳税人识别号</span><span class="blackFont fs14">{{userinfor.taxId}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">开户行</span><span class="blackFont fs14">{{userinfor.invBankName}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">账号</span><span class="blackFont fs14">{{userinfor.invBankAccount}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">地址</span><span class="blackFont fs14">{{userinfor.invAddress}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">电话</span><span class="blackFont fs14">{{userinfor.invTelephone}}</span>
-          </li>
-        </ul>
-        <!--联系人信息-->
-        <ul class="inforList mb30">
-          <div class="inforTitle">联系人信息</div>
-          <li>
-            <span class="titleInfor">联系人</span><span class="blackFont fs14">{{userinfor.contacter}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">手机</span><span>{{userinfor.contacter_mobile}}</span>
-          </li>
-          <li>
-            <span class="titleInfor">邮箱</span><span class="blackFont fs14">{{userinfor.contacter_email}}</span>
-          </li>
-
-        </ul>
-        <button class="saveInfor fs14" @click="modifInfor" >修改信息</button>
-      </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 import Navigation from '../../components/navigation'
 import { getGainuserInfor } from  '../../api/users'
 export default {
-  name: "usermodifyinfor",
-  layout:'membercenter',
-  components:{
-    usernav: Navigation.user
-  },
-  fetch({ store }) {
-    return Promise.all([
-      store.dispatch('system/getSystemCnf'),
-      store.dispatch('menu/getMenuList')
-    ])
-  },
-  data(){
+    name: "usermodifyinfor",
+    layout:'membercenter',
+    components:{
+        usernav: Navigation.user
+    },
+    fetch({ store }) {
+        return Promise.all([
+            store.dispatch('system/getSystemCnf'),
+            store.dispatch('menu/getMenuList')
+        ])
+    },
+    data(){
         return{
-          userinfor:{
+            userinfor:{
             authorization_elc: "",
             avatar: null,
             business_license: "",
@@ -118,25 +115,26 @@ export default {
             salesman_name: null,
             tax_id: "",
             username: "",
-          }
+            }
         }
-  },
-  methods:{
+    },
+    methods:{
         //获取用户信息
         async UserInfor(){
-          const res=await getGainuserInfor(this,{})
-          this.userinfor=res.data
+            const res=await getGainuserInfor(this,{})
+            console.log(res)
+            this.userinfor=res.data
         },
-    modifInfor(){
-          this.$router.push({name:'users-useraccountinfor'})
-    }
-  },
-  create(){
+        modifInfor(){
+            this.$router.push({name:'users-useraccountinfor'})
+        }
+    },
+    create(){
 
-  },
-  mounted() {
-    this.UserInfor()
-  }
+    },
+    mounted() {
+        this.UserInfor()
+    }
 }
 </script>
 
