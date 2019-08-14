@@ -304,11 +304,11 @@
                 <span>出价提示</span>
             </p>
             <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{this.detailDatabrid.manufacturer}} {{this.detailDatabrid.warehouseName}} {{this.detailDatabrid.skuName}} {{this.detailDatabrid.totalNum}} {{this.detailDatabrid.uomName}} </p>
-            <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}}(吨)</p>
+            <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}} <span style="color:#999;">(吨)</span></p>
             <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>￥{{this.auctionOffer}}</p>
         </Modal>
 
-        <!-- <paydeposit v-show="DepositShow"  @HiddenDep="hiddenDepositShow"  :DepositeData="DepositData"></paydeposit> -->
+        <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
 </template>
@@ -442,13 +442,16 @@ export default {
 
         //显示追加保证金的弹窗
         PayCost(){
-            this.DepositShow=true
+            this.DepositShow = true
+            console.log('tag', this.DepositShow)
             this.DepositData.auctionId= this.detailDatabrid.id
             this.DepositData.MinePrice= this.MinPrice
             this.DepositData.aucteNum = this.auctionNum
             this.DepositData.Bond = this.auctionBond
          },
-
+        unDepositShow (row) {
+            this.DepositShow = row
+        },
          //所有竞拍记录
         async getAuctionRecord(){
             let params={
@@ -628,6 +631,20 @@ export default {
 
         .ivu-modal{
             top: 0;
+            .ivu-modal-content {
+                .ivu-modal-header {
+                    border-top-left-radius: 6px;
+                    border-top-right-radius: 6px;
+                    background-color: #f9f9f9;
+                }
+                // .ivu-modal-body {
+                //     // p {
+                //     //     text-align: left;
+                //     //     font-size: 14px;
+                //     // }
+                   
+                // }
+            }
         }
     }
 </style>

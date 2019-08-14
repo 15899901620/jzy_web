@@ -296,7 +296,7 @@
 }
 /*缴纳保证金--弹窗*/
 .Bond_Popup {
-	width:415px;
+	width:100%;
 	background-color:#fff;
 	border-radius:3px;
 }
@@ -317,8 +317,9 @@
 	margin-top:25px;
 }
 .Bond_Popup_title {
-	margin-left:80px;
-	color:#333;
+	margin-left:28px;
+    color:#333;
+    font-size:14px;
 }
 .unit {
 	position:absolute;
@@ -1861,3 +1862,6 @@ a {
 .ordercon li{width: 48%; margin-top:15px;}
 
 .proInfor{width: 98%; margin: 20px auto;background-color: #f2f7ff;display: flex;justify-content: flex-end; font-size: 14px;}
+.AcqCode{border: none; background-color: #fff}
+.AcqCode:hover{background-color: #ffffff;border: none;}
+.AcqCode:active{background-color: #ffffff;border: none;}
