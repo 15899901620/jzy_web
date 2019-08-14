@@ -54,6 +54,9 @@ export const auctionInfor = (vm, data) => {
  * @returns {*}
  */
 export const auctionRecord = (vm, data) => {
+vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+    }
   return vm.$axios.get(server.prefix + server.api.Auction.auctionRecord,
     {
       params: {...data}

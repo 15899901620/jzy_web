@@ -21,11 +21,11 @@
                                 <table class="Bidders_record_title">
                                     <tbody>
                                         <tr>
-                                            <th>当前状态</th>
+                                            <th style="width: 160px">出价时间</th>
                                             <th>竞拍人</th>
                                             <th>出价金额</th>
                                             <th>数量（吨）</th>
-                                            <th style="width: 160px">出价时间</th>
+                                            <th>当前状态</th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -35,15 +35,15 @@
                                     <table v-if="auctionRd.length > 0">
                                         <tbody>
                                             <tr class="Bidders_record_tr " v-for="(item,index) in auctionRd" :key="index" :class="{orangeFont:item.outStatus===1 || item.outStatus===2}">
+                                                <td style="width: 120px"><span>{{ subtime(item.createTime, 11, 19)}}</span></td>
+                                                <td><span>{{item.nickName}}</span></td>
+                                                <td><span>{{item.bidPrice}}</span></td>
+                                                <td><span>{{item.bidNum}}</span></td>
                                                 <td>
                                                     <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>
                                                     <span class="Bidders_record_curr" v-if="item.outStatus===2">入围</span>
                                                     <span class="tac gray" v-if="item.outStatus===3">出局</span>
                                                 </td>
-                                                <td><span>{{item.nickName}}</span></td>
-                                                <td><span>{{item.bidPrice}}</span></td>
-                                                <td><span>{{item.bidNum}}</span></td>
-                                                <td style="width: 120px"><span>{{ subtime(item.createTime, 11, 19)}}</span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -55,11 +55,10 @@
                                 <table class="Bidders_record_title">
                                     <tbody>
                                         <tr>
-                                            <th>当前状态</th>
-                                            <th>竞拍人</th>
+                                            <th style="width: 160px">出价时间</th>
                                             <th>出价金额</th>
                                             <th>数量（吨）</th>
-                                            <th style="width: 160px">出价时间</th>
+                                            <th>当前状态</th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -69,15 +68,15 @@
                                     <table v-if="MineOfferRecord.length > 0">
                                         <tbody>
                                             <tr class="Bidders_record_tr"  v-for="(items,index) in MineOfferRecord" :key="index" :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">
-                                                <td>
-                                                <span class="Bidders_record_curr" v-if="items.outStatus===1">领先</span>
-                                                <span class="Bidders_record_curr" v-if="items.outStatus===2">入围</span>
-                                                <span class="tac gray" v-if="items.outStatus===3">出局</span>
-                                                </td>
-                                                <td><span>{{items.nickName}}</span></td>
+                                                <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>
+                                                
                                                 <td><span>{{items.bidPrice}}</span></td>
                                                 <td><span>{{items.bidNum}}</span></td>
-                                                <td style="width: 120px"><span>{{items.createTime}}</span></td>
+                                                <td>
+                                                <span class="Bidders_record_curr" v-if="items.outStatus===1 && items.isActive === 1">领先</span>
+                                                <span class="Bidders_record_curr" v-if="items.outStatus===2 && items.isActive === 1">入围</span>
+                                                <span class="tac gray" v-if="items.outStatus===3 && items.isActive === 1">出局</span>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -458,9 +457,7 @@ export default {
                 isActive: 1,
                 auctionId:this.auctionId
             }
-            console.log('1', params)
             let res = await auctionRecord(this, params)
-            console.log('suoyou', res)
             if(res){
                 this.auctionRd=res.data.items
             }
@@ -562,7 +559,8 @@ export default {
                 this.$Modal.warning({
                     title: '提示',
                     content:  res.data.message+'!!! '+'请联系客服。',
-                    duration: 5
+                    duration: 5,
+                    styles:'top:300px'
                 });
             }else{
                  this.$Modal.success({
