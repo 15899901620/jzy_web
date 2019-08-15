@@ -83,7 +83,7 @@ export default {
                 return
             }
             let params = {
-                phone
+                phone: phone
             }
             const res = await userSeekPassword(this, params)
             if(res.data && res.status === 200 ){
@@ -130,8 +130,8 @@ export default {
         // 验证手机验证码
         async passwordCodeCheck(){
             let params = {
-            phone:this.phone,
-            code:this.code
+                phone: this.userinfo.phone, //验证码
+                code: this.code
             }
             const res = await userCodeCheck(this, params)
             if(res.data && res.status === 200){
@@ -147,7 +147,7 @@ export default {
         async passwordmodif(){
 
             let params = {
-            phone:this.phone,
+            phone: this.userinfo.phone,
             password:this.password,
             code:this.code
             }
@@ -155,8 +155,8 @@ export default {
             const res = await userRepassWd(this, params)
             
             if(res.data && res.status ===200){
-            this.$Message.info({content: '修改密码成功'})
-
+                this.$Message.info({content: '修改密码成功'})
+                this.$router.push('/users/user')
             }else{
             this.$Notice.warning({
                 title: '修改密码失败',

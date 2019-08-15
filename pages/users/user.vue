@@ -165,11 +165,12 @@ export default {
     },
     data() {
         return {
+
             hotorderinfo: [],
             fozen_fund:'',
             remain_fund:'',
             showtimeVal: '',
-            userinfo: getCookies('userinfor')
+            userinfo: {}
         }
     },
     methods:{
@@ -178,6 +179,7 @@ export default {
             if (!userinfo) {
                 this.$router.push('/login')
             }
+            this.userinfo = userinfo
         },
         //订单类型
         getOrderType(typeId) {

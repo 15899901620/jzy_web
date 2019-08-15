@@ -54,3 +54,42 @@ export const gethotsearch = (vm, data) => {
       console.log('manageEditErr', errorInfo)
     })
   }
+
+
+
+/**
+ * @description 获取国家列表
+ * @param data
+ * @returns {*|never}
+ */
+export const countryList = (vm, data) => {
+    return vm.$axios.get(server.prefix + server.api.Address.countryList,{params: {...data}}).catch((e) => {
+        let errorInfo = e.response
+        console.log('manageEditErr', errorInfo)
+    })
+}
+  
+/**
+ * @description 获取省列表
+ * @param data
+ * @returns {*|never}
+ */
+export const countryRegion = (vm, data) => {
+    return vm.$axios.get(server.prefix + server.api.Address.countryRegion,{params: {...data}}).catch((e) => {
+        let errorInfo = e.response
+        console.log('manageEditErr', errorInfo)
+    })
+}
+  
+  
+/**
+ * @description 获取父及ID获取子集内容
+ * @param data
+ * @returns {*|never}
+ */
+export const getRegion = (vm, data) => {
+    return vm.$axios.get(server.prefix + server.api.Address.getregion,{params: {...data}}).catch((e) => {
+        let errorInfo = e.response
+        console.log('manageEditErr', errorInfo)
+    })
+}

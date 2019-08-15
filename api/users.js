@@ -378,7 +378,7 @@ export const supplierNature = (vm, data) => {
  * @returns {*}
  */
 export const userSeekPassword = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.userseekpassword,
+  return vm.$axios.post(server.prefix + server.api.user.userRECodeSend,
     {
       ...data
     }).catch((e) => {

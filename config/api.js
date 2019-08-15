@@ -64,6 +64,9 @@ let api = {
     countryData:'/item/country/list',        //国家
     provinceData:'/item/region/country',        //省份
     cityregionData:'/item/region/region',        //市/区/县
+    countryList: '/item/country/list',
+    countryRegion: '/item/region/country',
+    getregion: '/item/region/region'
   },
   /**
    * @description 现货超市
