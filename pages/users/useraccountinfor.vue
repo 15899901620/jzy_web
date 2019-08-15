@@ -7,7 +7,7 @@
                 <!--基本信息-->
                 <ul class="inforList">
                     <div class="inforTitle">基本信息</div>
-                    <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.company_name}}</span></li>
+                    <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.username}}</span></li>
                     <li style="align-items: inherit;">
                         <span class="titleInfor mt10" >营业执照</span>
                         <div class="dflex" style="flex-direction: column;">
@@ -26,11 +26,11 @@
                     </li>
                 </ul>
                 <!--开票信息-->
-                <Form ref="formValidate" :model="userinfor"   :label-width="80">
+                <Form ref="formValidate" :model="userinfor" :label-width="80">
                     <ul class="inforList">
                         <div class="inforTitle">开票信息</div>
                         <li>
-                            <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.companyName}}</span>
+                            <span class="titleInfor">公司名称</span><span class="blackFont fs14">{{userinfor.username}}</span>
                         </li>
                         <li>
                             <span class="titleInfor">纳税人识别号</span><Input type="text" v-model="userinfor.taxId" class="inforInput"   />
@@ -71,6 +71,7 @@
 <script>
 import { getGainuserInfor, manageEdit } from  '../../api/users'
 import Navigation from '../../components/navigation'
+import { getCookies } from '../../config/storage'
 
 export default {
     name: "useraccountinfor",
@@ -90,6 +91,12 @@ export default {
         };
     },
     methods:{
+        inLogin () {
+            let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+            if (!userinfo) {
+                this.$router.push('/login')
+            }
+        },
         //获取用户信息
         async UserInfor(){
              console.log(111);
@@ -98,7 +105,21 @@ export default {
             this.userinfor=res.data
         },
         async handleSubmit(){
-            const res=await manageEdit(this, this.userinfor)
+            let data = {
+                phone: this.userinfor.phone,
+                companyName: this.userinfor.username,
+                business_license:  this.userinfor.business_license,
+                authorization_elc:  this.userinfor.authorization_elc,
+                taxId: this.userinfor.taxId,
+                invBankName: this.userinfor.invBankName,
+                invBankAccount: this.userinfor.invBankAccount,
+                invAddress: this.userinfor.invAddress,
+                invTelephone: this.userinfor.invTelephone,
+                contacter: this.userinfor.contacter,
+                contacter_mobile: this.userinfor.contacter_mobile,
+                contacter_email: this.userinfor.contacter_email,
+            }
+            const res=await manageEdit(this, data)
             if(res.data===true && res.status ===200){
                 this.$Message.info({
                     content: '修改成功',
@@ -111,11 +132,11 @@ export default {
         }
     },
     create(){
-        console.log("!")
-        this.UserInfor()
+        this.inLogin()
     },
     mounted() {
-        
+         this.UserInfor()
+        console.log("UserInfor")
     }
 }
 </script>
