@@ -109,7 +109,7 @@
                                     <span class="dflex" style="width: 16%; align-items: center;">
                                         <div class="NumReduice" style="margin: 0; width: 55%; margin-left: 42px;">
                                             <span class="gray" style="width: 25%;">-</span>
-                                            <input class="TextNum" type="text" name="">
+                                            <input class="TextNum" type="text" name="" value="0">
                                             <span class="gray" style="width: 25%;">+</span>
                                         </div>
                                         <div class="Numtip"></div>
