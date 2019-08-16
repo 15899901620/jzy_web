@@ -8,14 +8,14 @@
         <div class="TableList">
           <h1 class="fs16 mt20 bb1 pb10" >资金管理</h1>
           <div class="dflexAlem" style="justify-content: space-between; margin: 25px auto; font-size: 14px ">
-            <div>可用余额<span class="fs24 orangeFont fwb ml10">{{remain_fund}}</span></div>
+            <div>可用余额<span class="fs24 orangeFont fwb ml10">{{this.total_fund-this.userinfo.freezeAmount}}</span></div>
             <div class="opePrice">
-              <span class="orangesbg" @click="paycheck" >充 值</span>
-              <span class="orangeFont CashAdvBg ml15" href="">申请提现</span>
+              <a class="orangesbg" href="/help/9" target="_blank" style="padding: 10px 15px; border-radius: 3px;">查看充值方式</a>
+              <!-- <span class="orangeFont CashAdvBg ml15" href="">申请提现</span> -->
             </div>
           </div>
           <ul class="balancebg mb30">
-            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">{{remain_fund+fozen_fund}}</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">{{fozen_fund}}</span></li>
+            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">{{this.total_fund - this.userinfo.freezeAmount}}</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">{{this.userinfo.freezeAmount}}</span></li>
           </ul>
         </div>
 
@@ -87,40 +87,49 @@
 <script>
 import { capitalinfo } from '../../api/capital'
 import Navigation from '../../components/navigation'
-export default {
-  name: "usercapitalmanage",
-  layout:'membercenter',
-  components:{
-     usernav: Navigation.user
-  },
-  fetch({ store }) {
-    return Promise.all([
-      store.dispatch('system/getSystemCnf'),
-      store.dispatch('menu/getMenuList')
-    ])
-  },
-  data(){
-    return{
-      fozen_fund:'',
-      remain_fund:'',
-    }
-  },
-  methods:{
-    async capital(){
-    const res= await capitalinfo(this,{})
-      this.fozen_fund=res.data.fozen_fund
-      this.remain_fund=res.data.remain_fund
-    },
-    paycheck(){
-      this.$router.push({name: "users-usercapitalpaycheck"})
-    }
-  },
-  created(){
-    this.capital()
-  },
-  mounted(){
+import { getCookies } from '../../config/storage'
 
-  }
+export default {
+    name: "usercapitalmanage",
+    layout:'membercenter',
+    components:{
+        usernav: Navigation.user
+    },
+    fetch({ store }) {
+        return Promise.all([
+            store.dispatch('system/getSystemCnf'),
+            store.dispatch('menu/getMenuList')
+        ])
+    },
+    data(){
+        return{
+            total_fund:'',
+            userinfo: {}
+        }
+    },
+    methods:{
+        inLogin () {
+            let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+            if (!userinfo) {
+                this.$router.push('/login')
+            }
+            this.userinfo = userinfo
+        },
+        async capital(){
+            const res= await capitalinfo(this,{})
+            this.total_fund=res.data.total_fund
+        },
+        paycheck(){
+            this.$router.push({name: "users-usercapitalpaycheck"})
+        }
+    },
+    created(){
+        this.inLogin()
+        this.capital()
+    },
+    mounted(){
+
+    }
 }
 </script>
 

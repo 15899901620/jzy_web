@@ -475,6 +475,20 @@ export const addressAdd = (vm, data) => {
 }
 
 
+export const addressEdit = (vm, data) => {
+    vm.$axios.defaults.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+    }
+    return vm.$axios.post(server.prefix + server.api.Address.addressEdit,
+      {
+        ...data
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }
+
 /**
  * @description 会员地址列表
  * @param vm

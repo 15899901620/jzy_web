@@ -29,34 +29,33 @@ import { countryList, countryRegion, getRegion } from '../../api/helper'
 export default {
     name: 'AddressFrom',
     props: {
-      country:{
-        type:Number,
-        default:1
-      },
-      province:{
-        type:Number,
-        default:1
-      },
-      city:{
-        type:Number,
-        default:1
-      },
-      area:{
-        type:Number,
-      },
-      street:{
-        type:Number,
-      }
-
+        country: {
+            type: Number
+        },
+        province: {
+            type: Number,
+            default:1
+        },
+        city: {
+            type: Number,
+            default:1
+        },
+        area: {
+            type: Number,
+        },
+        street:{
+            type: Number,
+        }
     },
     data() {
         return {
+            datainRow:{},
             countryData:[],
             provinceData:[],
             cityData: [],
             areaData: [],
             streetData: [],
-            countryId: 0,
+            countryId: 1,
             provinceId: 0,
             cityId:0,
             areaId:0,
@@ -91,42 +90,46 @@ export default {
         }
     },
     created () {
-      this.getCountryData()
+        this.getCountryData()
     },
     mounted () {
-
+        this.getCountryData()
     },
     watch: {
-      country (newval, oldval) {
-        this.countryId=newval
-        this.getProvinceData()
-      },
-      province (newval, oldval) {
-        this.provinceId=newval
-        this.getCityData()
-      },
-      city (newval, oldval) {
-        this.cityId=newval
-        this.getAreaData()
-      },
-      area (newval, oldval) {
-        this.areaId=newval
-      },
-      countryId (newval, oldval) {
-        this.getProvinceData()
-        this.$emit('SelectCountry', newval)
-      },
-      provinceId (newval, oldval) {
-        this.getCityData()
-        this.$emit('SelectProvince', newval)
-      },
-      cityId (newval, oldval) {
-        this.getAreaData()
-        this.$emit('SelectCity', newval)
-      },
-      areaId (newval, oldval) {
-        this.$emit('SelectArea', newval)
-      },
+        country(newval, oldval) {
+            console.log('country', newval)
+            this.countryId=newval
+            this.getProvinceData()
+        },
+        province(newval, oldval) {
+            console.log('province', newval)
+            this.provinceId=newval
+            this.getCityData()
+        },
+        city (newval, oldval) {
+              console.log('city', newval)
+            this.cityId=newval
+            this.getAreaData()
+        },
+        area (newval, oldval) {
+              console.log('area', newval)
+            this.areaId=newval
+        },
+        countryId (newval, oldval) {
+            this.getProvinceData()
+            this.$emit('SelectCountry', newval)
+        },
+        provinceId (newval, oldval) {
+            this.getCityData()
+            this.$emit('SelectProvince', newval)
+        },
+        cityId (newval, oldval) {
+            this.getAreaData()
+            this.$emit('SelectCity', newval)
+        },
+        areaId (newval, oldval) {
+            this.$emit('SelectArea', newval)
+        },
     },
     destroyed: function () {
 

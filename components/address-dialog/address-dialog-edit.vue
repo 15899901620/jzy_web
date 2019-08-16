@@ -1,14 +1,14 @@
 <template>
     <!--出价提示-->
     <Modal
-        title="新增地址"
+        title="编辑地址"
         v-model="loading"
         @on-cancel="AddressCancel"
         :width='700'
         class-name="vertical-center-modal">
         <p slot="header" style="color:#666; text-align:left; font-size:14px;">
             <Icon type="ios-create" style="font-size:18px;" />
-            <span>新增地址</span>
+            <span>编辑地址</span>
         </p>
         <div class="">
             <Form ref="formAddress" :model="formAddress" :label-width="100"  :rules="ruleValidate">
@@ -44,6 +44,10 @@
                     <Col>
                         <FormItem label="地址" prop="pickupMode">
                             <address-from
+                                :country="this.formAddress.countryId"
+                                :province="this.formAddress.state"
+                                :city="this.formAddress.city"
+                                :area="this.formAddress.district"
                                 @SelectCountry="getCountry"
                                 @SelectProvince="getProvince"
                                 @SelectCity="getCity"
@@ -69,7 +73,7 @@
             </Form>
         </div>
         <p slot="footer" style="text-align:center">
-            <Button type="primary" @click="AddressOk">新增地址</Button>
+            <Button type="primary" @click="AddressOk">编辑地址</Button>
         </p>
     </Modal>
 </template>
@@ -77,9 +81,9 @@
 <script>
 import AddressFrom from "../address-from";
 import { getCookies } from '../../config/storage'
-import { addressAdd } from '../../api/users'
+import { addressEdit, addressInfor } from '../../api/users'
 export default {
-    name: 'AddressDialog',
+    name: 'AddressDialogEdit',
     components:{
         AddressFrom
     },
@@ -126,17 +130,18 @@ export default {
         return {
             loading: false,
             formAddress:{
+                id: 0,
                 memberId: '',
                 name: '',    //收货人姓名
-                phone: '',   //收货人电话
-                idNumber:'',  //身份证
-                countryId:'',   //国家
-                state: '', //省
-                city: '',     //市
-                district: '',      //区县
+                phone: 0,   //收货人电话
+                idNumber: 0,  //身份证
+                countryId: 0,   //国家
+                state: 0, //省
+                city: 0,     //市
+                district: 0,      //区县
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
-                alias:''             //别名
+                alias: ''             //别名
             },
             ruleValidate: {
                 name: [
@@ -158,12 +163,34 @@ export default {
         }
     },
     props:{
+        datalist: {
+            type:Object
+        },
         isshow: {
             type: Boolean,
             default: false
         }
     },
     methods:{
+        async getAddressDetail(){
+            let params= {
+                id: this.formAddress.id
+            }
+            let res = await addressInfor(this, params)
+            this.formAddress.id = res.data.id
+            this.formAddress.memberId = res.data.memberId
+            this.formAddress.name = res.data.name
+            this.formAddress.phone = res.data.phone
+            this.formAddress.idNumber = res.data.idNumber
+            this.formAddress.countryId = res.data.countryId
+            this.formAddress.state = res.data.state
+            this.formAddress.city = res.data.city
+            this.formAddress.district = res.data.district
+            this.formAddress.address = res.data.address
+            this.formAddress.defaultAddress = res.data.defaultAddress == 1 ? true : false
+            this.formAddress.alias = res.data.alias
+            console.log("gt",this.formAddress)
+        },
         getCountry(res){
             this.formAddress.countryId = res
         },
@@ -257,11 +284,11 @@ export default {
                     defaultAddress: this.formAddress.defaultAddress === false ? 0 : 1,    //设置默认地址
                     alias:this.formAddress.alias
                 }
-                const res = await addressAdd(this, params)
+                const res = await addressEdit(this, params)
                 if(res) {
                     this.$Modal.success({
                         title: '提示',
-                        content: '添加成功',
+                        content: '编辑成功',
                         duration: 5,
                         closable: true
                     })
@@ -270,7 +297,7 @@ export default {
                 }else{
                     this.$Modal.warning({
                         title: '提示',
-                        title: '添加地址失败，请联系客服',
+                        title: '编辑地址失败，请联系客服',
                         duration: 5,
                         closable: true
                     });
@@ -280,9 +307,16 @@ export default {
         }
     },
     watch: {
+        datalist: {
+            handler (newValue, oldValue) {
+                this.formAddress.id = newValue.id
+                console.log(this.formAddress)
+            }
+        },
         isshow: function (e) {
             if (e === true) {
                 this.loading = true
+                this.getAddressDetail()
             } else {
                 this.loading = false
             }

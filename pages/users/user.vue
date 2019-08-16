@@ -20,7 +20,7 @@
                     <div class="dflex" style="width: 85%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
                         <div class="Av_balance">
                         <span>可用余额：</span>
-                        <span class="fs24 fwb orangeFont">{{remain_fund}}</span>
+                        <span class="fs24 fwb orangeFont">{{total_fund-userinfo.freezeAmount}}</span>
                         </div>
                         <div class="priceOpera">
                             <a href="/users/usercapitalpaycheck" class="pricebtnbg brd1 orangeFont ml15">查看我的资金</a>
@@ -32,7 +32,7 @@
                         <div class="account_icon "></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>账户余额</span>
-                            <span class="fs18 fwb">{{remain_fund+fozen_fund}}</span>
+                            <span class="fs18 fwb">{{total_fund-userinfo.freezeAmount}}</span>
                         </div>
 
                         </div>
@@ -40,7 +40,7 @@
                         <div class="Frozen_icon"></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>冻结金额</span>
-                            <span class="fs18 fwb">{{fozen_fund}}</span>
+                            <span class="fs18 fwb">{{userinfo.freezeAmount}}</span>
                         </div>
                         </div>
                     </div>
@@ -167,8 +167,7 @@ export default {
         return {
 
             hotorderinfo: [],
-            fozen_fund:'',
-            remain_fund:'',
+            total_fund:'',
             showtimeVal: '',
             userinfo: {}
         }
@@ -193,8 +192,7 @@ export default {
         },
         async capital(){
             const res= await capitalinfo(this,{})
-            this.fozen_fund=res.data.fozen_fund
-            this.remain_fund=res.data.remain_fund
+            this.total_fund=res.data.total_fund
         },
         showtime () {
             var now = new Date();

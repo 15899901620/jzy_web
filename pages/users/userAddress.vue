@@ -21,7 +21,7 @@
                                 <span class="gray mr15" v-if="items.defaultAddress === 1" style="color: #00a1e9">默认地址</span>
                                 <span class="gray mr15 cp defaultAdress" @click="addressdefault(items.id)" v-else>设为默认</span>
 
-                                <span class="blueFont cp" @click="showEdit(items.id)">编辑</span>
+                                <span class="blueFont cp" @click="showEdit(items)">编辑</span>
                             </li>
                         </ul>
                     </li>
@@ -31,8 +31,8 @@
             </div>
         </div>
         <address-dialog :isshow="addloading" @unChange="unaddChange"></address-dialog>
-        <AddressPopup @hidden="hiddenShow" v-show="showcancel_pop"></AddressPopup>
-        <EditAddress @hidden="Hiddenedit" :formAddress="formEditAddress" v-show="showEditpop"></EditAddress>
+        <address-dialog-edit :isshow="editloading" :datalist="formAddress"  @unChange="uneditChange"></address-dialog-edit>
+
     </div>
 </template>
 
@@ -51,7 +51,8 @@ export default {
         usernav: Navigation.user,
         AddressPopup,
         EditAddress,
-        AddressDialog
+        AddressDialog,
+        AddressDialogEdit: AddressDialog.edit
     },
     fetch({ store }) {
         return Promise.all([
@@ -76,10 +77,10 @@ export default {
                 name: '',    //收货人姓名
                 phone: '',   //收货人电话
                 idNumber:'',  //身份证
-                countryId:'',   //国家
-                state: '', //省
-                city: '',     //市
-                district: '',      //区县
+                countryId: 0,   //国家
+                state: 0, //省
+                city: 0,     //市
+                district: 0,      //区县
                 address: '',//详细地址
                 defaultAddress: 0,    //设置默认地址
                 alias:''             //别名
@@ -100,6 +101,9 @@ export default {
         },
         unaddChange(res) {
             this.addloading = res
+        },
+        uneditChange(res) {
+            this.editloading = res
         },
         // 收货地址列表
         async AddressList(){
@@ -128,12 +132,11 @@ export default {
             this.showcancel_pop = false
             this.AddressList()
         },
-        showEdit(id){
-            this.showEditpop=true
-            if(id){
-                this.formAddress.id=id
-            }
-            this.addressDetail(id)
+        showEdit(row){
+            this.editloading = true
+            this.formAddress = row
+            console.log(row)
+            // this.addressDetail(id)
         },
 
         Hiddenedit(){
@@ -191,7 +194,7 @@ export default {
             });
         }
     },
-    create(){
+    created(){
         this.inLogin()
     },
     mounted(){
