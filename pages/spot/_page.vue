@@ -13,65 +13,49 @@
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">原料分类：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>PP</a>
-                                <a>HDPE</a>
-                                <a>LDPE</a>
+                            <dd class="pro_brand_list" :class="categoryMore ? 'h50' : ''">
+                                <a v-for="(item, index) in category" :key="index">
+                                    {{item.name}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="categoryMore ? '' : 'arrow-up'" @click="categoryOpen">{{categoryMoreVal}}</div>
                     </div>
                     <!--加工级别-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">加工级别：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
+                            <dd class="pro_brand_list" :class="processMore ? 'h50' : ''">
+                                <a v-for="(item, index) in process" :key="index">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">更多</div>
+                        <div class="fr pro_m_select" :class="processMore ? '' : 'arrow-up'" @click="processOpen">{{processMoreVal}}</div>
                     </div>
                     <!--用途-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">用途：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>包装容器</a>
-                                <a>塑料包装</a>
-                                <a>塑料袋</a>
+                            <dd class="pro_brand_list" :class="purposeMore ? 'h50' : ''">
+                                <a v-for="(item, index) in purpose" :key="index">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="purposeMore ? '' : 'arrow-up'" @click="purposeOpen">{{purposeMoreVal}}</div>
                     </div>
                     <!--特性-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">特性：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>包装容器</a>
-                                <a>塑料包装</a>
-
+                            <dd class="pro_brand_list" :class="featureMore ? 'h50' : ''">
+                                <a v-for="(item, index) in feature" :key="index">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="featureMore ? '' : 'arrow-up'" @click="featureOpen">{{featureMoreVal}}</div>
                     </div>
 
                     <div class="XHsearch" style="display: flex;">
@@ -159,7 +143,7 @@
     import Footer from '../../components/footer'
     import pagination from '../../components/pagination'
     import { getCookies } from '../../config/storage'
-    import { spotList } from '../../api/spot'
+    import { spotList, cateList } from '../../api/spot'
 
     export default {
         name: "spot",
@@ -189,9 +173,53 @@
                 page_size: 10,
                 spotlist: [],
                 total: 0,
+                category: [],
+                process: [],
+                purpose: [],
+                feature: [],
+                categoryMore: true,
+                processMore: true,
+                purposeMore: true,
+                featureMore: true,
+                categoryMoreVal: '更多',
+                processMoreVal: '更多',
+                purposeMoreVal: '更多',
+                featureMoreVal: '更多'
             }
         },
         methods: {
+            categoryOpen() {
+                this.categoryMore = !this.categoryMore
+                if (this.categoryMore) {
+                    this.categoryMoreVal = "更多"
+                } else {
+                    this.categoryMoreVal = "收回"
+                }
+            },
+            processOpen() {
+                this.processMore = !this.processMore
+                if (this.processMore) {
+                    this.processMoreVal = "更多"
+                } else {
+                    this.processMoreVal = "收回"
+                }
+            },
+            purposeOpen() {
+                this.purposeMore = !this.purposeMore
+                if (this.purposeMore) {
+                    this.purposeMoreVal = "更多"
+                } else {
+                    this.purposeMoreVal = "收回"
+                }
+            },
+            featureOpen() {
+                this.featureMore = !this.featureMore
+                if (this.featureMore) {
+                    this.featureMoreVal = "更多"
+                } else {
+                    this.featureMoreVal = "收回"
+                }
+            },
             getUserInfo() {
                 let data = getCookies('userinfor')
                 this.userinfo = data
@@ -216,12 +244,21 @@
                 this.spotlist = res.data.items
                 this.total = res.data.total
             },
+            async cateData() {
+                let params = {};
+                const res = await cateList(this, params);
+                this.category = res.data.category;
+                this.process = res.data.process;
+                this.purpose = res.data.purpose;
+                this.feature = res.data.feature;
+            }
         },
         created() {
         },
         mounted() {
-            this.getUserInfo()
-            this.spotData()
+            this.getUserInfo();
+            this.cateData();
+            this.spotData();
         },
         watch: {
             '$route'(to, from) {
@@ -248,5 +285,13 @@
         align-items: center;
         margin-bottom: 1px;
         background-color: #fff;
+    }
+
+    .h50 {
+        height: 50px;
+    }
+
+    .arrow-up {
+        background: url(/img/icon.png) no-repeat 42px -147px;
     }
 </style>
