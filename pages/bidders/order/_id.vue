@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header-small title="专料下单">
+		<Header-small title="竞拍下单">
 			<div slot="headerother">
 				 <ul class="sp_cat_title_list">
                     <li class="curr"><i>1</i><p>编辑详细信息</p></li>
@@ -51,7 +51,7 @@
                 <div class="mt30 fs16 ml15 fwb">余额支付</div>
                 <ul class="DeliveryMethod ml35">
                     <li v-for="(item, index) in payList" :class="{'curr':index === payIndex}" :key="index">{{item.name}}</li>
-                    <div class="ml10 fs14">可用余额：<span class="orangeFont">￥{{capitalinfo.remain_fund}}</span>元</div>
+                    <div class="ml10 fs14">可用余额：<span class="orangeFont">￥{{capitalinfo.total_fund - this.userinfo.freezeAmount}}</span>元</div>
                     <a  class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
                 </ul>
                 <div class="orderCzTip">
@@ -95,8 +95,7 @@
                         <span class="title" style="width: 12%;">编号</span>
                         <span class="title" style="width: 13%;">货物信息</span>
                         <span class="title" style="width: 12%;">单价（元/吨）</span>
-                        <span class="title" style="width: 12%;">放料单可提吨数</span>
-                        <span class="title" style="width: 12%;">周计划可提吨数</span>
+                        <span class="title" style="width: 12%;">可提吨数</span>
                         <span class="title" style="width: 12%;">已提吨数</span>
                         <span class="title" style="width: 14%;">本次提货吨数</span>
                         <span class="title" style="width: 12%;">交货地</span>
@@ -105,10 +104,9 @@
                     <li>
                         <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
                         <div  style="width: 13%;">{{specialDetail.skuName}}</div>
-                        <div  style="width: 12%;">{{specialDetail.finalPriceFormat}}</div>
+                        <div  style="width: 12%;">￥{{specialDetail.bidPrice}}</div>
                         <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
-                        <div  style="width: 12%;">{{specialDetail.weekCanDeliveryNum}}</div>
-                        <div  style="width: 12%;">{{specialDetail.alreadyDeliveryNum}}</div>
+                        <div  style="width: 12%;">{{specialDetail.takenNum}}</div>
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>
@@ -143,13 +141,15 @@ import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import { mapState} from 'vuex'
 import { specialDetail, getWeek, submitOrder, devDetail } from '../../../api/special'
+import { auctionPlanDetail,auctionsubmitOrderL} from '../../../api/auction'
+
 import { capitalinfo } from '../../../api/capital'
 import InputSpecial from '../../../components/input-special'
 import { getCookies } from '../../../config/storage'
 import { addressList, gainuserInfor } from '../../../api/users'
 
 export default {
-    name: "special-order-id",
+    name: "bidders-order-id",
     components: {
         HeaderSmall: Header.small,
         Footer,
@@ -175,7 +175,7 @@ export default {
                 jryCost: '0.00',
                 totalAmount: '0.00',
                 depositAmount: 0,
-                orderType: 4,
+                orderType: 3,
                 sourceId: 0,
                 feedingId: 0,
                 transportationMode: '',
@@ -213,7 +213,7 @@ export default {
             defaultAdd:{},
             logisticsfreight: {},
             curraddress: 0,
-            userinfo: !getCookies('userinfor') ? '' : getCookies('userinfor'),
+            userinfo: {},
             capitalinfo: {},
             specialDetail: {},
             addressList:[],
@@ -233,6 +233,7 @@ export default {
             if (!userinfo) {
                 this.$router.push('/login')
             }
+            this.userinfo = userinfo
         },
         //添加新的地址
         addNewAddress () {
@@ -244,11 +245,11 @@ export default {
             if(row){
                 this.currfreightdata =row
                 this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+                this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
             }else{
                 this.currfreightdata = {}
                 this.orderinfo.transportationMode = ''
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
             }
         },
         //单选
@@ -280,7 +281,7 @@ export default {
             let params = {
                 id: this.specialId
             }
-            const res = await specialDetail(this, params)
+            const res = await auctionPlanDetail(this, params)
             this.specialDetail = res.data
             this.setCosting()
             this.getWeekDetail()
@@ -306,15 +307,15 @@ export default {
                 totalAmount: this.orderinfo.totalAmount,
                 depositAmount: this.orderinfo.depositAmount,
                 orderType: this.orderinfo.orderType,
-                sourceId: this.WeekList.id,
-                feedingId: this.specialDetail.id,
+                sourceId: this.specialDetail.id,
+                // feedingId: this.specialDetail.id,
                 transportationMode: this.orderinfo.transportationMode,
                 orderNum: this.orderinfo.orderNum,
                 addressId: this.orderinfo.addressId
             }
-            const res = await submitOrder(this, params)
+            const res = await auctionsubmitOrderL(this, params)
             if (typeof res.data.errorcode == "undefined"){
-                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+                this.$router.push({name:'bidders-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
             }else{
                 this.$Modal.warning({
                     title: '提示',
@@ -350,10 +351,10 @@ export default {
                 this.currfreightdata = res.data[this.currfreight]
                 if(this.currfreightdata){
                     this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                    this.orderinfo.totalAmount = (this.specialDetail.finalPrice * this.orderinfo.orderNum) + this.currfreightdata.basePrice
+                    this.orderinfo.totalAmount = (this.specialDetail.bidPrice * this.orderinfo.orderNum) + this.currfreightdata.basePrice
                 }else{
                     this.orderinfo.transportationMode = ''
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                    this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum 
                 }
             }
         },
@@ -363,23 +364,23 @@ export default {
                 //配送选择物流
                 this.currMin = this.specialDetail.deliveryMin
                 this.orderinfo.orderNum = this.specialDetail.deliveryMin
-                this.currMax = this.specialDetail.maxCanDeliveryNum
+                this.currMax = this.specialDetail.availableNum
                 if(this.specialDetail.deliveryDoubly > 0) {
                     this.currsetp = this.specialDetail.deliveryMin
                 }else{
                     this.currsetp =  1
                 }
                 if(this.currfreightdata){
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+                    this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
                 }else{
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                    this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
                 }
                 this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                this.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum 
             }else{
                 //自提
                 this.currMin = this.specialDetail.takeTheirMin
-                this.currMax = this.specialDetail.maxCanDeliveryNum
+                this.currMax = this.specialDetail.availableNum
                 this.orderinfo.orderNum = this.specialDetail.takeTheirMin
                 if(this.specialDetail.takeTheirDoubly > 0) {
                     this.currsetp = this.specialDetail.takeTheirMin
@@ -387,8 +388,8 @@ export default {
                     this.currsetp = 1
                 }
                 this.orderinfo.transportationMode = ''
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
+                this.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
             }
         },
         //选择订单数量
@@ -397,15 +398,15 @@ export default {
             if( this.orderinfo.isDelivery  === 1){
                 //配送选择物流
                 if(this.currfreightdata){
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
+                    this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
                 }else{
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                    this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
                 }  
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                this.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum 
             }else{
                 //自提
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.orderinfo.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
+                this.totalAmount = this.specialDetail.bidPrice * this.orderinfo.orderNum
             }
         }
     },

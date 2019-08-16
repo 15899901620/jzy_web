@@ -84,7 +84,7 @@ let api = {
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍
     auctionInfor:'/bill/auction/detail',  //获取单条信息
-    priceListInfo:'/bill/priceList/info', //查询物料价目信息
+    priceListInfo:'/bill/priceList/getPrice', //查询物料价目信息
     NewPrice:'/bill/auctionBid/getCurrBid',   //获取最新的竞拍价
     auctionRecord:'/bill/auctionBid/page',    //获取竞拍记录
     auctionMineRecord:'/bill/auctionBid/list',    //获取竞拍我的出价记录

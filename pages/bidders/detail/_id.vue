@@ -87,12 +87,12 @@
                     </div>
                     <div class="Bidders_record_detail">
                         <ul class="Bidders_record_con">
-                            <li><span class="orangeFont">竞拍编号：</span><span>{{detailDatabrid.billNo}}</span></li>
-                            <li><span class="orangeFont">品种：</span><span>{{detailDatabrid.skuCategoryName3}}</span></li>
-                            <li><span class="orangeFont">牌号：</span><span>{{detailDatabrid.skuName}}</span></li>
-                            <li><span class="orangeFont">竞拍数量：</span><span>{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">厂商：</span><span>{{detailDatabrid.manufacturer}}</span></li>
-                            <li><span class="orangeFont">仓库：</span><span>{{detailDatabrid.warehouseName}}</span></li>
+                            <li><span class="orangeFont">竞拍编号：</span><span class="gray">{{detailDatabrid.billNo}}</span></li>
+                            <li><span class="orangeFont">品种：</span><span class="gray">{{detailDatabrid.skuCategoryName3}}</span></li>
+                            <li><span class="orangeFont">牌号：</span><span class="gray">{{detailDatabrid.skuName}}</span></li>
+                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
+                            <li><span class="orangeFont">厂商：</span><span class="gray">{{detailDatabrid.manufacturer}}</span></li>
+                            <li><span class="orangeFont">仓库：</span><span class="gray">{{detailDatabrid.warehouseName}}</span></li>
                         </ul>
                     </div>
                     <!----出价记录---->
@@ -125,15 +125,15 @@
                         <!--恭喜中标-->
                         <div class="Bidders_record_result_list orangebg  mt10" v-show="WinBidShow">
                             <span class="gxzb">恭喜中标</span>
-                            <div class="tac whiteFont fs24 mt20">恭喜您中得<span class="ml10 mr10">{{WinBid.skuName}}</span><span class="ml10 mr10">{{WinBid.totalNum}}</span>吨</div>
-                            <span class="db tac whiteFont">剩余付款时间：{{`${hr}小时 ${min}分钟 ${sec}秒`}}，逾期将扣除保证金</span>
+                            <div class="tac whiteFont fs24 mt20">恭喜您拍得：<span class="ml10 mr10">{{WinBid.skuName}}</span>，<span class="ml10 mr10">{{WinBid.totalNum}}</span>吨</div>
+                            <span class="db tac whiteFont">截止提货时间：{{this.detailDatabrid.lastDeliveryTime}}，逾期将扣除保证金</span>
                             <div class="dflex mb20">
                                 <div class="zb_btn whitebg orangeFont" @click="auctionOrder">提 货</div>
-                                <div class="zb_btn whitebg orangeFont" @click="acuDetailmember">查看详情</div>
+                                <!-- <div class="zb_btn whitebg orangeFont" @click="acuDetailmember">查看详情</div> -->
                             </div>
                         </div>
                         <!-- 竞拍结束 未中标 -->
-                        <div class="Bidders_record_result_list graybg  mt25" v-show="NotWinBidShow && detailDatabrid.type === 3">
+                        <div class="Bidders_record_result_list graybg  mt30" v-show="NotWinBidShow && detailDatabrid.type === 3">
                             <div class="fontScalend fontScalendbg">
                                 <span>未中标</span>
                             </div>
@@ -144,12 +144,12 @@
                                 <div class="LoserList"><span class="failureTitle">中标人数：</span><span class="fs20 ml15 orangeFont fwb mr5">{{auctionWin}}</span>人</div>
                             </div>
                         </div>
-                        <ul class="Bidders_record_con graybg" style="margin-top: 17px; width: 546px;" v-show="detailDatabrid.type === 3">
-                            <li><span class="orangeFont">起拍单价：</span><span>￥{{MinPrice}}元/吨</span></li>
-                            <li><span class="orangeFont">保证金比例：</span><span>{{detailDatabrid.marginRatio}}%</span></li>
-                            <li><span class="orangeFont">加价幅度：</span><span>{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">竞拍数量：</span><span>{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">数量幅度：</span><span>1吨起</span></li>
+                        <ul class="Bidders_record_con graybg" style="margin-top: 17px; width: 564px;" v-show="detailDatabrid.type === 3">
+                            <li><span class="orangeFont">起拍单价：</span><span class="gray">￥{{MinPrice}}元/吨</span></li>
+                            <li><span class="orangeFont">保证金比例：</span><span class="gray">{{detailDatabrid.marginRatio}}%</span></li>
+                            <li><span class="orangeFont">加价幅度：</span><span class="gray">{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span></li>
+                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
+                            <li><span class="orangeFont">数量幅度：</span><span class="gray">1吨起</span></li>
                         </ul>
                         <!--正在竞拍-->
                         <div class="Bidders_record_result_list graybg  mt25" v-show="detailDatabrid.type === 2 ||  detailDatabrid.type === 1">
@@ -412,7 +412,7 @@ export default {
         },
         //提货_跳转到下单页
         auctionOrder(){
-          this.$router.push({name:"Biders-BidersSubmit",query:{id:this.WinBid.id}})
+          this.$router.push({name:"bidders-order-id",params:{id:this.WinBid.id}})
         },
         // 竞拍出价
         cutsOffer(){
@@ -443,7 +443,6 @@ export default {
         //显示追加保证金的弹窗
         PayCost(){
             this.DepositShow = true
-            console.log('tag', this.DepositShow)
             this.DepositData.auctionId= this.detailDatabrid.id
             this.DepositData.MinePrice= this.MinPrice
             this.DepositData.aucteNum = this.auctionNum
@@ -486,10 +485,14 @@ export default {
             let params={
                 id: this.auctionId
             }
+            
             let res =await auctionInfor(this, params)
+             console.log('op',res)
             if(!res.data.errorcode && res.status === 200){
                 this.detailDatabrid = res.data
             }
+            console.log('1', this.detailDatabrid)
+
             this.auctionNum=this.detailDatabrid.minOrder
             this.auctionBond=this.detailDatabrid.marginRatio
             if(this.detailDatabrid.type===1){    //即将开始
@@ -501,6 +504,7 @@ export default {
             if(this.detailDatabrid.type === 3) {
                 this.getwinningbid()
             }
+           
             this.getpriceInfo(this.detailDatabrid.skuId)
             this.countdown()
         },
@@ -514,6 +518,7 @@ export default {
                 if(res.data && res.status === 200){
                     this.WinBidShow=true
                     this.WinBid=res.data
+                    console.log(this.WinBid)
                     this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
                 }else{
                     this.NotWinBidShow=true
@@ -532,9 +537,12 @@ export default {
         //最小起拍价
         async getpriceInfo(skuid){
             let params={
-                skuId: skuid
+                skuId: skuid,
+                type:2
             }
+            console.log(params)
             let res =await priceListInfo(this, params)
+            console.log(res)
             if(res){
                 this.MinPrice = res.data.minSellingPrice
                 this.auctionOffer = this.MinPrice
@@ -546,12 +554,22 @@ export default {
                 auctionId: this.auctionId
             }
             let res=await newprice(this,params)
+            console.log(res)
             if(res.data){
                 this.bidePrice = res.data.bidPrice
             }
         },
         //提交出价
         async addBidding() {
+            if(!this.auctionOffer){
+                this.$Modal.warning({
+                    title: '提示',
+                    content:  '价格不能为空！',
+                    duration: 5,
+                    styles:'top:300px'
+                });
+            }
+
             let params={
                 auctionId:this.detailDatabrid.id,
                 bidNum:this.auctionNum,

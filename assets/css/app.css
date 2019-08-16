@@ -1235,6 +1235,9 @@ a {
 	white-space:nowrap;
 	text-overflow:ellipsis;
 }
+.Bidders_record_con li span {
+    font-size: 12px;
+}
 .news_items {
 	height:362px;
 	overflow:hidden;

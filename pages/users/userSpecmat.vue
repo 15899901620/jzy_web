@@ -131,16 +131,15 @@ export default {
             } 
             this.loading = false
         },
-        onSearch (res) {
+        onSearch () {
             this.current_page = 1
             this.page_size = 20
             this.sourceData()
         },
         
-        closeSearch (res) {
+        closeSearch () {
             this.current_page = 1
             this.page_size = 20
-            this.formSearch = res
             this.sourceData()
         },
         changePage (row) {
