@@ -13,65 +13,49 @@
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">原料分类：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>PP</a>
-                                <a>HDPE</a>
-                                <a>LDPE</a>
+                            <dd class="pro_brand_list" :class="categoryMore ? 'h50' : ''">
+                                <a v-for="(item, index) in category" :key="index" @click="categoryClick(item.id)">
+                                    {{item.name}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="categoryMore ? '' : 'arrow-up'" @click="categoryOpen">{{categoryMoreVal}}</div>
                     </div>
                     <!--加工级别-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">加工级别：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
-                                <a>吹塑级</a>
-                                <a>注塑级</a>
-                                <a>挤压级</a>
+                            <dd class="pro_brand_list" :class="processMore ? 'h50' : ''">
+                                <a v-for="(item, index) in process" :key="index" @click="processClick(item.id)">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">更多</div>
+                        <div class="fr pro_m_select" :class="processMore ? '' : 'arrow-up'" @click="processOpen">{{processMoreVal}}</div>
                     </div>
                     <!--用途-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">用途：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>包装容器</a>
-                                <a>塑料包装</a>
-                                <a>塑料袋</a>
+                            <dd class="pro_brand_list" :class="purposeMore ? 'h50' : ''">
+                                <a v-for="(item, index) in purpose" :key="index" @click="purposeClick(item.id)">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="purposeMore ? '' : 'arrow-up'" @click="purposeOpen">{{purposeMoreVal}}</div>
                     </div>
                     <!--特性-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">特性：</dt>
-                            <dd class="pro_brand_list ">
-                                <a>包装容器</a>
-                                <a>塑料包装</a>
-
+                            <dd class="pro_brand_list" :class="featureMore ? 'h50' : ''">
+                                <a v-for="(item, index) in feature" :key="index" @click="featureClick(item.id)">
+                                    {{item.value}}
+                                </a>
                             </dd>
                         </dl>
-                        <div class="fr pro_m_select">
-                            更多
-                        </div>
+                        <div class="fr pro_m_select" :class="featureMore ? '' : 'arrow-up'" @click="featureOpen">{{featureMoreVal}}</div>
                     </div>
 
                     <div class="XHsearch" style="display: flex;">
@@ -88,16 +72,14 @@
                 <!--现货列表-->
                 <div class="mt20">
                     <div class="XhlistTitle">
-                        <h1 style="width: 7%;">品种</h1>
-                        <h1 style="width: 7%;">牌号</h1>
-                        <h1 style="width: 7%;">厂商</h1>
-                        <h1 style="width: 12%;">交货地</h1>
-                        <h1 style="width: 7%;">数量</h1>
-                        <h1 style="width: 9%;">更新时间</h1>
-                        <h1 style="width: 11%;">单价（元/吨）</h1>
-                        <h1 style="width: 13%;">交货方式</h1>
-                        <h1 style="width: 16%;">数量</h1>
-                        <h1 style="width: 11%;">操作</h1>
+                        <h1 style="width: 10%;">品种</h1>
+                        <h1 style="width: 10%;">牌号</h1>
+                        <h1 style="width: 10%;">厂商</h1>
+                        <h1 style="width: 15%;">交货地</h1>
+                        <h1 style="width: 10%;">数量</h1>
+                        <h1 style="width: 15%;">更新时间</h1>
+                        <h1 style="width: 15%;">单价（元/吨）</h1>
+                        <h1 style="width: 15%;">操作</h1>
                     </div>
                     <ul class="Xhlist">
                         <template v-if="!userinfo">
@@ -109,28 +91,14 @@
                         <template v-else>
                             <template v-if="spotlist">
                                 <li v-for="(item, index) in spotlist" :key="index">
-                                    <span style="width: 7%;">{{item.category_name}}</span>
-                                    <span style="width: 7%;">{{item.sku_no}}</span>
-                                    <span style="width: 7%;">{{item.manufactory}}</span>
-                                    <span style="width: 12%;">{{item.delivery_place}}</span>
-                                    <span style="width: 7%;">{{item.quantity}}</span>
-                                    <span style="width: 9%;">{{item.refresh_time}}</span>
-                                    <span class="orangeFont" style="width: 11%;">¥{{item.unit_price}}</span>
-                                    <span style="width: 13%;">
-                                         <RadioGroup v-model="formItem.radio">
-                                            <Radio label="M">自提</Radio>
-                                            <Radio label="W">配送</Radio>
-                                        </RadioGroup>
-							        </span>
-                                    <span class="dflex" style="width: 16%; align-items: center;">
-                                        <div class="NumReduice" style="margin: 0; width: 55%; margin-left: 42px;">
-                                            <span class="gray" style="width: 25%;">-</span>
-                                            <input class="TextNum" type="text" name="">
-                                            <span class="gray" style="width: 25%;">+</span>
-                                        </div>
-                                        <div class="Numtip"></div>
-							        </span>
-                                    <span style="width: 11%;"><div class="ListBtn">下单</div></span>
+                                    <span style="width: 10%;">{{item.category_name}}</span>
+                                    <span style="width: 10%;">{{item.sku_no}}</span>
+                                    <span style="width: 10%;">{{item.manufactory}}</span>
+                                    <span style="width: 15%;">{{item.delivery_place}}</span>
+                                    <span style="width: 10%;">{{item.quantity}}</span>
+                                    <span style="width: 15%;">{{item.refresh_time}}</span>
+                                    <span class="orangeFont" style="width: 15%;">¥{{item.unit_price}}</span>
+                                    <span style="width: 15%;"><div class="ListBtn" @click="addOrder(item.quotation_id)">下单</div></span>
                                 </li>
                             </template>
                             <template v-else>
@@ -159,7 +127,7 @@
     import Footer from '../../components/footer'
     import pagination from '../../components/pagination'
     import { getCookies } from '../../config/storage'
-    import { spotList } from '../../api/spot'
+    import { spotList, cateList } from '../../api/spot'
 
     export default {
         name: "spot",
@@ -189,9 +157,81 @@
                 page_size: 10,
                 spotlist: [],
                 total: 0,
+                category: [],
+                process: [],
+                purpose: [],
+                feature: [],
+                categoryId: 0,
+                processId: 0,
+                purposeId: 0,
+                featureId: 0,
+                categoryMore: true,
+                processMore: true,
+                purposeMore: true,
+                featureMore: true,
+                categoryMoreVal: '更多',
+                processMoreVal: '更多',
+                purposeMoreVal: '更多',
+                featureMoreVal: '更多'
             }
         },
         methods: {
+            addOrder(id) {
+                this.$router.push({
+                    name: 'spot-order-id',
+                    params: {
+                        id
+                    }
+                })
+            },
+            categoryClick(id) {
+                this.categoryId = id;
+                this.spotData();
+            },
+            processClick(id) {
+                this.processId = id;
+                this.spotData();
+            },
+            purposeClick(id) {
+                this.purposeId = id;
+                this.spotData();
+            },
+            featureClick(id) {
+                this.featureId = id;
+                this.spotData();
+            },
+            categoryOpen() {
+                this.categoryMore = !this.categoryMore;
+                if (this.categoryMore) {
+                    this.categoryMoreVal = "更多"
+                } else {
+                    this.categoryMoreVal = "收回"
+                }
+            },
+            processOpen() {
+                this.processMore = !this.processMore
+                if (this.processMore) {
+                    this.processMoreVal = "更多"
+                } else {
+                    this.processMoreVal = "收回"
+                }
+            },
+            purposeOpen() {
+                this.purposeMore = !this.purposeMore
+                if (this.purposeMore) {
+                    this.purposeMoreVal = "更多"
+                } else {
+                    this.purposeMoreVal = "收回"
+                }
+            },
+            featureOpen() {
+                this.featureMore = !this.featureMore
+                if (this.featureMore) {
+                    this.featureMoreVal = "更多"
+                } else {
+                    this.featureMoreVal = "收回"
+                }
+            },
             getUserInfo() {
                 let data = getCookies('userinfor')
                 this.userinfo = data
@@ -209,19 +249,33 @@
             },
             async spotData() {
                 let params = {
+                    category: this.categoryId,
+                    process: this.processId,
+                    purpose: this.purposeId,
+                    feature: this.featureId,
                     current_page: this.current_page,
                     page_size: this.page_size
-                }
-                const res = await spotList(this, params)
-                this.spotlist = res.data.items
-                this.total = res.data.total
+                };
+                const res = await spotList(this, params);
+                this.spotlist = res.data.items;
+                console.log(res.data.items)
+                this.total = res.data.total;
+            },
+            async cateData() {
+                let params = {};
+                const res = await cateList(this, params);
+                this.category = res.data.category;
+                this.process = res.data.process;
+                this.purpose = res.data.purpose;
+                this.feature = res.data.feature;
             },
         },
         created() {
         },
         mounted() {
-            this.getUserInfo()
-            this.spotData()
+            this.getUserInfo();
+            this.cateData();
+            this.spotData();
         },
         watch: {
             '$route'(to, from) {
@@ -248,5 +302,13 @@
         align-items: center;
         margin-bottom: 1px;
         background-color: #fff;
+    }
+
+    .h50 {
+        height: 50px;
+    }
+
+    .arrow-up {
+        background: url(/img/icon.png) no-repeat 42px -147px;
     }
 </style>
