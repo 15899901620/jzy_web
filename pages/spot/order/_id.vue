@@ -149,7 +149,7 @@ import { getCookies } from '../../../config/storage'
 import { addressList, gainuserInfor } from '../../../api/users'
 
 export default {
-    name: "special-order-id",
+    name: "spot-order-id",
     components: {
         HeaderSmall: Header.small,
         Footer,

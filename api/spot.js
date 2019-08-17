@@ -25,10 +25,10 @@ export const spotList = (vm, data) => {
     }
     return vm.$axios.post(server.prefix + server.api.spot.spotList,
         {
-            params: {...data}
+            ...data
         }).catch((e) => {
         let errorInfo = e.response
-        console.log('spotListErr', errorInfo)
+        console.log('submitOrder', errorInfo)
     })
 };
 
