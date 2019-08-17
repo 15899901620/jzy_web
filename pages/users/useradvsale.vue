@@ -1,83 +1,65 @@
 <template>
-  <div class="clearfix graybg">
-    <div class="w1200 dflex " style="margin-bottom: 40px">
-      <usernav></usernav>
-
-      <div class="memberInfor ml20  whitebg bdccc  mt20">
-        <!--个人信息-->
-        <!--个人信息-->
-        <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >我的预售
-          <div class="bodbottom" style="width: 8%; height: 2px;"></div>
-        </h1>
-        <div class="" style="width: 95%; margin: 0 auto;">
-          <div class="order_operate">
-            <div class="dflex">
-              <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" />
-              <div class="check">查看</div>
-            </div>
-            <div class="dflexAlem">
-              <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
-            </div>
-          </div>
-          <div class="TableTitle graybg"  >
-            <span style="width: 12%;">商品信息</span>
-            <span style="width: 12%;">单价(元)</span>
-            <span style="width: 12%;">预定量(吨)</span>
-            <span style="width: 12%;">冻结金额</span>
-            <span style="width: 13%;">库区</span>
-            <span style="width: 10%;">交货方式</span>
-            <span style="width: 13%;">放货时间</span>
-            <span style="width: 12%;">状态</span>
-            <span style="width: 13%;">操作</span>
-          </div>
-          <table class="listT mt10" border="" cellspacing="" cellpadding="">
-            <tbody>
-            <tr class="Ttitle graybg" >
-              <td colspan="9">
-                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
-                <span class="ml15">预定时间：<span class="gray">2019-04-02  12:00:00</span></span>
-                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>02小时30分25秒</span>
-              </td>
-            </tr>
-            <tr class="detailTable">
-              <td>PP F08 现货</td>
-              <td><span class="orangeFont">￥1055.00</span>/吨</td>
-              <td>102.000</td>
-              <td>102.000</td>
-              <td>东莞市</td>
-              <td>自提</td>
-              <td>2019年4月中旬</td>
-              <td><span class="redFont">待付款</span></td>
-              <td class="operate">
-                <div class="">
-                  <a class="Paybtn mt15 PayCurr">去付款</a>
+    <div class="clearfix graybg">
+        <div class="w1200 dflex " style="margin-bottom: 40px">
+            <usernav></usernav>
+            <div class="memberInfor ml20  whitebg bdccc  mt20">
+                <!--个人信息-->
+                <!--个人信息-->
+                <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >我的预售
+                    <div class="bodbottom" style="width: 8%; height: 2px;"></div>
+                </h1>
+                <div class="" style="width: 95%; margin: 0 auto;">
+                    <div class="order_operate">
+                    <div class="dflex">
+                        <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" />
+                        <div class="check">查看</div>
+                    </div>
+                   
+                    </div>
+                    <div class="TableTitle graybg"  >
+                    <span style="width: 12%;">商品信息</span>
+                    <span style="width: 12%;">单价(元)</span>
+                    <span style="width: 12%;">预定量(吨)</span>
+                    <span style="width: 12%;">冻结金额</span>
+                    <span style="width: 13%;">库区</span>
+                    <span style="width: 10%;">交货方式</span>
+                    <span style="width: 13%;">放货时间</span>
+                    <span style="width: 12%;">状态</span>
+                    <span style="width: 13%;">操作</span>
+                    </div>
+                    <table class="listT mt10" border="" cellspacing="" cellpadding="">
+                        <tbody>
+                            <tr class="Ttitle graybg" >
+                                <td colspan="9">
+                                <span class="ml10">订单编号：<span class="gray">120002132</span></span>
+                                <span class="ml15">预定时间：<span class="gray">2019-04-02  12:00:00</span></span>
+                                <span class="fr mr15"><span class="gray">距离最后付款时间还剩：</span>02小时30分25秒</span>
+                                </td>
+                            </tr>
+                            <tr class="detailTable">
+                                <td>PP F08 现货</td>
+                                <td><span class="orangeFont">￥1055.00</span>/吨</td>
+                                <td>102.000</td>
+                                <td>102.000</td>
+                                <td>东莞市</td>
+                                <td>自提</td>
+                                <td>2019年4月中旬</td>
+                                <td><span class="redFont">待付款</span></td>
+                                <td class="operate">
+                                <div class="">
+                                    <a class="Paybtn mt15 PayCurr">去付款</a>
+                                </div>
+                                <a class="mt5 blackFont">查看详情</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--页码-->
+                 
                 </div>
-                <a class="mt5 blackFont">查看详情</a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <!--页码-->
-          <ul class="pagination">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">上一页</a></li>
-            <li><a href="#">1</a></li>
-            <li><a class="active" href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">下一页</a></li>
-            <li><a href="#">尾页</a></li>
-            <li class="ml10">共40页</li>
-            <div class="ml30">转到第<input type="text" class="pageText bdccc" />页</div>
-            <a class="PageNext graybg">Go</a>
-          </ul>
+            </div>
         </div>
-      </div>
     </div>
-</div>
 </template>
 
 <script>

@@ -145,7 +145,6 @@
 
 <script>
 import { capitalinfo } from '../../api/capital'
-import userright from './userCompontent/userright'
 import Navigation from '../../components/navigation'
 import { getCookies } from '../../config/storage'
 import { orderpage } from '../../api/order'

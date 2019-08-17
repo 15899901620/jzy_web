@@ -49,7 +49,11 @@ let api = {
    */
   order: {
     orderlist: '/bill/orderInfo/list',
-    orderpage: '/bill/orderInfo/page'
+    orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
+    orderDetail: '/bill/orderInfo/detail',
+    payment: '/bill/orderInfo/payment',
+    paycheckCode: '/bill/orderInfo/payment/checkCode',
+    paycode: '/bill/orderInfo/payment/code'
   },
   /**
    * @description 会员地址

@@ -52,3 +52,18 @@ export const orderpage = (vm, data) => {
         console.log('specialListErr', errorInfo)
     })
 };
+
+
+export const getorderDetail = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.order.orderDetail,
+    {
+        params: {...data}
+    }).catch((e) => {
+        let errorInfo = e.response
+        console.log('specialListErr', errorInfo)
+    })
+};

@@ -106,7 +106,7 @@
                         <div  style="width: 13%;">{{specialDetail.skuName}}</div>
                         <div  style="width: 12%;">￥{{specialDetail.bidPrice}}</div>
                         <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
-                        <div  style="width: 12%;">{{specialDetail.takenNum}}</div>
+                        <div  style="width: 12%;">{{specialDetail.totalNum - specialDetail.availableNum}}</div>
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>

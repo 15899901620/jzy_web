@@ -632,3 +632,62 @@ export const inspectionlistPage = (vm, data) => {
 
 
 
+/**
+ * @description 订单支付
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const orderPayment = (vm, data) => {
+    vm.$axios.defaults.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+    }
+    return vm.$axios.get(server.prefix + server.api.order.payment,
+      {
+        params:{...data}
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }
+
+  /**
+ * @description 订单支付
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const orderPayCheckCode = (vm, data) => {
+    vm.$axios.defaults.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+    }
+    return vm.$axios.get(server.prefix + server.api.order.paycheckCode,
+      {
+        params:{...data}
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }
+
+    /**
+ * @description 发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const orderPayCode = (vm, data) => {
+    vm.$axios.defaults.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+    }
+    return vm.$axios.get(server.prefix + server.api.order.paycode,
+      {
+        params:{...data}
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }

@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import userright from './userCompontent/userright'
 import Navigation from '../../components/navigation'
 export default {
   name: "userAccountBind",

@@ -38,8 +38,6 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import AddressPopup from './userCompontent/AddressPopup'
-import EditAddress from './userCompontent/EditAddress'
 import { addressList, addressDefault, addressDelete, addressInfor  } from '../../api/users'
 import { getCookies } from '../../config/storage'
 import AddressDialog from '../../components/address-dialog'
