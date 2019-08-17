@@ -47,8 +47,6 @@ export default {
     layout:'membercenter',
     components:{
         usernav: Navigation.user,
-        AddressPopup,
-        EditAddress,
         AddressDialog,
         AddressDialogEdit: AddressDialog.edit
     },
