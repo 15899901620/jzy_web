@@ -92,18 +92,16 @@
                 </div>
                 <ul class="orderPorList">
                     <li>
-                        <span class="title" style="width: 12%;">编号</span>
                         <span class="title" style="width: 13%;">货物信息</span>
-                        <span class="title" style="width: 12%;">单价（元/吨）</span>
-                        <span class="title" style="width: 12%;">放料单可提吨数</span>
-                        <span class="title" style="width: 12%;">周计划可提吨数</span>
-                        <span class="title" style="width: 12%;">已提吨数</span>
-                        <span class="title" style="width: 14%;">本次提货吨数</span>
+                        <span class="title" style="width: 12%;">单价（元）</span>
+                        <span class="title" style="width: 12%;">运费</span>
+                        <span class="title" style="width: 12%;">巨融易</span>
+                        <span class="title" style="width: 12%;">合计单价</span>
+                        <span class="title" style="width: 14%;">数量（吨）</span>
                         <span class="title" style="width: 12%;">交货地</span>
                         <span class="title" style="width: 9%;">小计</span>
                     </li>
                     <li>
-                        <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
                         <div  style="width: 13%;">{{specialDetail.skuName}}</div>
                         <div  style="width: 12%;">{{specialDetail.finalPriceFormat}}</div>
                         <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
@@ -112,7 +110,7 @@
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>
-                        <div  style="width: 12%;">东莞市</div>
+                        <div  style="width: 12%;">{{specialDetail.warehouseName}}</div>
                         <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmount }}</div>
                     </li>
                 </ul>
@@ -291,7 +289,6 @@ export default {
                 skuId: this.specialDetail.skuId
             }
             const res = await getWeek(this, data)
-            console.log('tag', res)
             if(res){
                 this.WeekList = res.data
             }
@@ -314,18 +311,13 @@ export default {
                 addressId: this.orderinfo.addressId
             }
             const res = await submitOrder(this, params)
-            if (res.data.errorcode){
+            if (typeof res.data.errorcode == "undefined"){
+                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+            }else{
                 this.$Modal.warning({
                     title: '提示',
                     content: res.data.message
                 });
-            }else{
-                // this.$Modal.success({
-                //     title: '提示',
-                //     content: "专料放料订单提交成功！"
-                // });
-
-                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
             }
         },
         //获取地址
