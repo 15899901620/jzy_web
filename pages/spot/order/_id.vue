@@ -88,7 +88,7 @@
                 <!-- 商品信息 -->
                 <div class="mt30 fs16 ml15" id="test1">
                     <span class="fwb">商品信息</span>
-                    <span class="gray fs14">（ 最后全部提货完成时间<span class="orangeFont">{{specialDetail.endTime}}</span>，逾期增加<span class="orangeFont">0.01%</span>的仓储费 ）</span>
+                    <span class="gray fs14">（ 最后全部提货完成时间<span class="orangeFont">{{spotDetail.endTime}}</span>，逾期增加<span class="orangeFont">0.01%</span>的仓储费 ）</span>
                 </div>
                 <ul class="orderPorList">
                     <li>
@@ -102,15 +102,15 @@
                         <span class="title" style="width: 9%;">小计</span>
                     </li>
                     <li>
-                        <div  style="width: 13%;">{{specialDetail.skuName}}</div>
-                        <div  style="width: 12%;">{{specialDetail.finalPriceFormat}}</div>
-                        <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
-                        <div  style="width: 12%;">{{specialDetail.weekCanDeliveryNum}}</div>
-                        <div  style="width: 12%;">{{specialDetail.alreadyDeliveryNum}}</div>
+                        <div  style="width: 13%;">{{spotDetail.skuName}}</div>
+                        <div  style="width: 12%;">{{spotDetail.finalPriceFormat}}</div>
+                        <div  style="width: 12%;">{{spotDetail.availableNum}}</div>
+                        <div  style="width: 12%;">{{spotDetail.weekCanDeliveryNum}}</div>
+                        <div  style="width: 12%;">{{spotDetail.alreadyDeliveryNum}}</div>
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>
-                        <div  style="width: 12%;">{{specialDetail.warehouseName}}</div>
+                        <div  style="width: 12%;">{{spotDetail.warehouseName}}</div>
                         <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmount }}</div>
                     </li>
                 </ul>
@@ -140,7 +140,7 @@
 import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import { mapState} from 'vuex'
-import { specialDetail, getWeek, submitOrder, devDetail } from '../../../api/special'
+import { spotDetail, submitOrder, devDetail } from '../../../api/spot'
 import { capitalinfo } from '../../../api/capital'
 import InputSpecial from '../../../components/input-special'
 import { getCookies } from '../../../config/storage'
@@ -213,7 +213,7 @@ export default {
             curraddress: 0,
             userinfo: !getCookies('userinfor') ? '' : getCookies('userinfor'),
             capitalinfo: {},
-            specialDetail: {},
+            spotDetail: {},
             addressList:[],
             currentIndex: 0,
             RegisterName: 'member',
@@ -221,7 +221,7 @@ export default {
             index: 0,
             payIndex: 0,
             totalAmount: '0.00',
-            specialId: !this.$route.params.id ? 0 : this.$route.params.id
+            spotId: !this.$route.params.id ? 0 : this.$route.params.id
         }
     },
     methods: {
@@ -276,10 +276,10 @@ export default {
         //基础数据
         async getSourceData() {
             let params = {
-                id: this.specialId
+                id: this.spotId
             }
-            const res = await specialDetail(this, params)
-            this.specialDetail = res.data
+            const res = await spotDetail(this, params)
+            this.spotDetail = res.data
             this.setCosting()
             this.getWeekDetail()
         },
@@ -312,7 +312,7 @@ export default {
             }
             const res = await submitOrder(this, params)
             if (typeof res.data.errorcode == "undefined"){
-                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+                this.$router.push({name:'spot-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
             }else{
                 this.$Modal.warning({
                     title: '提示',
@@ -359,34 +359,34 @@ export default {
         setCosting () {
             if( this.orderinfo.isDelivery  === 1){
                 //配送选择物流
-                this.currMin = this.specialDetail.deliveryMin
-                this.orderinfo.orderNum = this.specialDetail.deliveryMin
-                this.currMax = this.specialDetail.maxCanDeliveryNum
-                if(this.specialDetail.deliveryDoubly > 0) {
-                    this.currsetp = this.specialDetail.deliveryMin
+                this.currMin = this.spotDetail.deliveryMin
+                this.orderinfo.orderNum = this.spotDetail.deliveryMin
+                this.currMax = this.spotDetail.maxCanDeliveryNum
+                if(this.spotDetail.deliveryDoubly > 0) {
+                    this.currsetp = this.spotDetail.deliveryMin
                 }else{
                     this.currsetp =  1
                 }
                 if(this.currfreightdata){
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+                    this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
                 }else{
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                    this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
                 }
                 this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                this.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
             }else{
                 //自提
-                this.currMin = this.specialDetail.takeTheirMin
-                this.currMax = this.specialDetail.maxCanDeliveryNum
-                this.orderinfo.orderNum = this.specialDetail.takeTheirMin
-                if(this.specialDetail.takeTheirDoubly > 0) {
-                    this.currsetp = this.specialDetail.takeTheirMin
+                this.currMin = this.spotDetail.takeTheirMin
+                this.currMax = this.spotDetail.maxCanDeliveryNum
+                this.orderinfo.orderNum = this.spotDetail.takeTheirMin
+                if(this.spotDetail.takeTheirDoubly > 0) {
+                    this.currsetp = this.spotDetail.takeTheirMin
                 }else{
                     this.currsetp = 1
                 }
                 this.orderinfo.transportationMode = ''
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
+                this.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
             }
         },
         //选择订单数量
@@ -395,15 +395,15 @@ export default {
             if( this.orderinfo.isDelivery  === 1){
                 //配送选择物流
                 if(this.currfreightdata){
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
+                    this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
                 }else{
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                    this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
                 }  
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                this.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
             }else{
                 //自提
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+                this.orderinfo.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
+                this.totalAmount = this.spotDetail.finalPrice * this.orderinfo.orderNum
             }
         }
     },

@@ -50,3 +50,69 @@ export const cateList = (vm, data) => {
         console.log('spotListErr', errorInfo)
     })
 };
+
+export const spotDetail = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.spot.spotDetail,
+        {
+            params: {...data}
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('specialDetailErr', errorInfo)
+    })
+};
+
+export const getWeek = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.week.getWeek,
+        {
+            params: {...data}
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('getWeek', errorInfo)
+    })
+};
+
+/**
+ * @description 提交订单
+ * @param data
+ * @returns {*|never}
+ */
+export const submitOrder = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.post(server.prefix + server.api.spot.spotSubmitOrder,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('submitOrder', errorInfo)
+    })
+};
+
+/**
+ * @description 运费
+ * @param data
+ * @returns {*|never}
+ */
+export const  devDetail = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.extra.extraDetail,
+        {
+            params: {...data}
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('specialListErr', errorInfo)
+    })
+};

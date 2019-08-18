@@ -45,7 +45,7 @@ import { specialDetail, getWeek, submitOrder } from '../../../api/special'
 
 
 export default {
-    name: "special-order-success",
+    name: "spot-order-success",
     components: {
         HeaderSmall: Header.small,
         Footer,

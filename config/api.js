@@ -77,7 +77,9 @@ let api = {
    */
   spot: {
     spotList: '/item/spot/goods/list/page',
-    categoryList: '/item/spot/goods/category'
+    categoryList: '/item/spot/goods/category',
+    spotDetail: '/bill/spot/order',
+    spotSubmitOrder: '/bill/spot/order/create'
   },
   /**
    * @description 竞拍管理
