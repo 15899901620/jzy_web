@@ -76,7 +76,8 @@ let api = {
    * @description 现货超市
    */
   spot: {
-    spotList: '/item/spot/goods/list/page',
+    filterConditon: '/bill/spot/filter/condition',
+    spotList: '/bill/spot/list/page/onSale',
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     spotSubmitOrder: '/bill/spot/order/create'
