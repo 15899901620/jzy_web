@@ -6,7 +6,7 @@
                     <li class="curr"><i>1</i><p>编辑详细信息</p></li>
                     <li><i>2</i><p>提交订单成功</p></li>
                     <li><i>3</i><p>支付货款</p></li>
-                    <li><i>4</i><p>支付完成</p></li>
+                    <li><i>4</i><p>下单完成</p></li>
                 </ul>
 			</div>
 		</Header-small>

@@ -1793,7 +1793,7 @@ a {
 
 .DeliveryMethod{display: flex; margin-top:20px;   align-items: center;}
 .DeliveryMethod li{border: 1px solid #DDDDDD;padding: 5px 40px; cursor: pointer;box-sizing: border-box; font-size: 14px;}
-.DeliveryMethod li:nth-child(2){margin-left: 15px;}
+.DeliveryMethod li{margin-left: 15px;}
 .DeliveryMethod li.curr{ color: #ff7300; border:1px solid #ff7300; box-sizing: border-box; background: url(/img/selected.png)no-repeat  right bottom;}
 
 .inform{position: relative;}

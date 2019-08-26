@@ -62,8 +62,8 @@ let api = {
     addressList:'/bill/address/list',  //地址列表
     addressAdd:'/bill/address/save',       //添加地址信息
     addressEdit:'/bill/address/edit',      //修改地址信息
-    addressDelete:'/bill/address',    //删除地址列表
-    addressDefault:'/bill/address',   // 设置默认地址
+    addressDelete:'/bill/address/delete',    //删除地址列表
+    addressDefault:'/bill/address/default/set',   // 设置默认地址
     addressSigle:'/bill/address/detail',  //获取单条信息
     countryData:'/item/country/list',        //国家
     provinceData:'/item/region/country',        //省份
@@ -80,6 +80,7 @@ let api = {
     spotList: '/bill/spot/list/page/onSale',
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
+    freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create'
   },
   /**
@@ -175,7 +176,9 @@ let api = {
   sysconf: {
     cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
     friendlink: '/web/friendlink/list', //友情链接
-    systemcof: '/web/config/getAll'
+    systemcof: '/web/config/getAll',
+    getConfigValues: '/web/config/getValues',
+
   },
   /**
    * @description 广告位管理
@@ -187,7 +190,7 @@ let api = {
    * @description 资金管理
    */
   capital: {
-    capitalinfo: '/bill/getFund',
+    capitalinfo: '/user/m/capital/self',
     capitaldetail: '/bill/getFundByCompanyName'
   }
 }

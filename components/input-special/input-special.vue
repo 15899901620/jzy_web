@@ -176,6 +176,7 @@ export default {
         },
         setValue(value) {
             if (value === this.relValue) return;
+
             this.relValue = value;
             this.$emit('input', value);
             this.$emit('change', value);
@@ -194,7 +195,12 @@ export default {
         _onBlur(e) {
             if (e.target.value !== '') {
                 if (e.target.value > this.max) {
-                    e.target.value = this.max;
+                    if(this.step == 1){
+                        e.target.value = this.max
+                    }else{
+                        e.target.value = Math.floor(this.max/this.step)*this.step
+                    }
+
                     this.$emit('input', this.max);
                     this.$emit('change', this.max);
                     // this.dispatch('FormItem', 'form.change', [this.max]);

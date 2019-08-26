@@ -13,7 +13,7 @@
                     <li v-for="(items, index) in addressList" :key="index">
                         <ul class="address_content">
                             <li><span class="address_title">收 货 人：</span>{{items.name}}</li>
-                            <li><span class="address_title">手机号码：</span>{{items.phone}}</li>
+                            <li><span class="address_title">联系电话：</span>{{items.phone}}</li>
                             <li style=" display: flex; justify-content: flex-end;"><div class="Add_close" @click="confirm(items.id)"></div></li>
                             <li><span class="address_title">身份证号：</span>{{items.idNumber}}</li>
                             <li style="width: 54%;"><span class="address_title" style="letter-spacing: 7px;">地      址：</span>{{items.stateName}}{{items.cityName}}{{items.districtName}}{{items.address}}</li>
@@ -97,9 +97,11 @@ export default {
         },
         unaddChange(res) {
             this.addloading = res
+            this.AddressList()
         },
         uneditChange(res) {
             this.editloading = res
+            this.AddressList()
         },
         // 收货地址列表
         async AddressList(){
@@ -141,18 +143,11 @@ export default {
 
         // 设为默认地址
         async addressdefault(id){
-            let memberId=this.userinfor.id
             let params={
-                memberId:memberId,
                 id:id
             }
             const res= await addressDefault(this,params)
-            if(res.data===true && res.status ===200){
-                this.$Message.info({
-                    content: '设置成功',
-                    duration: 3,
-                    closable: true
-                })
+            if(res.status ===200){
                 this.AddressList()
                 return
             }else {

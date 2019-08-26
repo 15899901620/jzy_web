@@ -92,7 +92,7 @@
                                 <span v-if="isLogin" class="orangeFont" style="width: 15%;">{{item.finalPriceFormat}}</span>
                                 <span v-else class="orangeFont" style="width: 15%;" title="登录后查看">{{item.finalPriceFormat}}</span>
                                 <span style="width: 15%;">
-                                    <div v-if="isLogin" class="ListBtn" @click="addOrder(item.quotation_id)">下单</div>
+                                    <div v-if="isLogin" class="ListBtn" @click="addOrder(item.id)">下单</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>
                             </li>
@@ -114,9 +114,6 @@
 </template>
 
 <script>
-
-    // import Pagination from '../components/pagination/pagination'
-    import {mapState} from 'vuex'
     import Header from '../../components/header'
     import Footer from '../../components/footer'
     import pagination from '../../components/pagination'
@@ -184,7 +181,7 @@
                 this.$router.push({
                     name: 'spot-order-id',
                     params: {
-                        id
+                        id : id
                     }
                 })
             },

@@ -21,22 +21,15 @@
                 </Row>
                 <Row index="1">
                     <Col span="22">
-                        <FormItem label="手机号码" prop="phone">
+                        <FormItem label="联系电话" prop="phone">
                             <Input v-model="formAddress.phone"   placeholder="请输入手机号码"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="2">
                     <Col span="22">
-                        <FormItem label="身份证" prop="phone">
+                        <FormItem label="身份证号" prop="phone">
                             <Input v-model="formAddress.idNumber"   placeholder="请输入身份证"></Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row index="3">
-                    <Col span="22">
-                        <FormItem label="别名" prop="alias">
-                            <Input v-model="formAddress.alias"   placeholder="请输入别名"></Input>
                         </FormItem>
                     </Col>
                 </Row>
@@ -44,14 +37,12 @@
                     <Col>
                         <FormItem label="地址" prop="pickupMode">
                             <address-from
-                                :country="this.formAddress.countryId"
-                                :province="this.formAddress.state"
-                                :city="this.formAddress.city"
-                                :area="this.formAddress.district"
-                                @SelectCountry="getCountry"
-                                @SelectProvince="getProvince"
-                                @SelectCity="getCity"
-                                @SelectArea="getArea">
+                                :country="this.initAddress.countryId"
+                                :province="this.initAddress.state"
+                                :city="this.initAddress.city"
+                                :area="this.initAddress.district"
+                                :isshow="this.isAddressFormShow"
+                                @selectAddress="getSelectCountry">
                             </address-from>
                         </FormItem>
                     </Col>
@@ -99,7 +90,7 @@ export default {
         //收货人电话
         const validatephone = (rule, value, callback) => {
             if (value === '') {
-                callback(new Error('收货人电话不能为空'));
+                callback(new Error('收货人联系电话不能为空'));
             } else {
                 callback();
             }
@@ -129,9 +120,9 @@ export default {
         };
         return {
             loading: false,
+            isAddressFormShow: false,
             formAddress:{
                 id: 0,
-                memberId: '',
                 name: '',    //收货人姓名
                 phone: 0,   //收货人电话
                 idNumber: 0,  //身份证
@@ -142,6 +133,12 @@ export default {
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
                 alias: ''             //别名
+            },
+            initAddress : {
+                countryId: 0,   //国家
+                state: 0, //省
+                city: 0,     //市
+                district: 0,      //区县
             },
             ruleValidate: {
                 name: [
@@ -172,13 +169,18 @@ export default {
         }
     },
     methods:{
+        getSelectCountry(res){
+            this.formAddress.countryId = res.countryId
+            this.formAddress.state = res.provinceId
+            this.formAddress.city = res.cityId
+            this.formAddress.district = res.areaId
+        },
         async getAddressDetail(){
             let params= {
                 id: this.formAddress.id
             }
             let res = await addressInfor(this, params)
             this.formAddress.id = res.data.id
-            this.formAddress.memberId = res.data.memberId
             this.formAddress.name = res.data.name
             this.formAddress.phone = res.data.phone
             this.formAddress.idNumber = res.data.idNumber
@@ -189,28 +191,20 @@ export default {
             this.formAddress.address = res.data.address
             this.formAddress.defaultAddress = res.data.defaultAddress == 1 ? true : false
             this.formAddress.alias = res.data.alias
-            console.log("gt",this.formAddress)
-        },
-        getCountry(res){
-            this.formAddress.countryId = res
-        },
-        getProvince(res){
-            this.formAddress.state = res
-            this.formAddress.alias = res
-        },
-        getCity(res){
-            this.formAddress.city = res
-            this.formAddress.alias = this.formAddress.alias +' '+res
-        },
-        getArea(res){
-            this.formAddress.district = res
+
+            this.initAddress.countryId = res.data.countryId
+            this.initAddress.state = res.data.state
+            this.initAddress.city = res.data.city
+            this.initAddress.district = res.data.district
+
+            this.isAddressFormShow = true
+
         },
         AddressCancel() {
             this.loading = false
             this.$emit('unChange', false)
         },
         async AddressOk() {
-
             //设置别名
             if(!this.formAddress.name){
                 this.$Notice.warning({
@@ -221,14 +215,14 @@ export default {
                 return
             }else if(!this.formAddress.phone){
                 this.$Notice.warning({
-                    title: '手机号码不能为空',
+                    title: '联系电话不能为空',
                     duration: 5,
                     closable: true
                 });
                 return
             }else if(!this.formAddress.idNumber){
                 this.$Notice.warning({
-                    title: '身份证不能为空',
+                    title: '身份证号不能为空',
                     duration: 5,
                     closable: true
                 });
@@ -269,10 +263,8 @@ export default {
                 });
                 return
             }else {
-                let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-
                 let params = {
-                    memberId: userinfo.id,
+                    id: this.formAddress.id,
                     name: this.formAddress.name,    //收货人姓名
                     phone: this.formAddress.phone,   //收货人电话
                     idNumber: this.formAddress.idNumber,  //身份证
@@ -282,7 +274,6 @@ export default {
                     district: this.formAddress.district,      //区县
                     address: this.formAddress.address,//详细地址
                     defaultAddress: this.formAddress.defaultAddress === false ? 0 : 1,    //设置默认地址
-                    alias:this.formAddress.alias
                 }
                 const res = await addressEdit(this, params)
                 if(res) {
@@ -310,7 +301,6 @@ export default {
         datalist: {
             handler (newValue, oldValue) {
                 this.formAddress.id = newValue.id
-                console.log(this.formAddress)
             }
         },
         isshow: function (e) {

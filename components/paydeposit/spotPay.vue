@@ -11,10 +11,6 @@
         </p>
       
         <div class="Bond_Popup">
-            <div style="line-height:32px;" v-if="datalist.orderNo">
-                <span class="Bond_Popup_title">订单编号：</span>
-                <span class="ml10">{{datalist.orderNo}}</span>
-            </div>
             <div style="line-height:32px;">
                 <span class="Bond_Popup_title">订单商品：</span>
                 <span class="ml10">{{datalist.skuNo}} {{datalist.skuName}}</span>
@@ -151,32 +147,7 @@ export default {
             const CodeData = await orderPayCheckCode(this, paramCodes)
 
             if(CodeData.data && CodeData.status === 200) {
-                this.codeValid = true
-                this.TipCode = ''
-
-                let params = {
-                    id: this.datalist.id,
-                }
-                let res = await orderPayment(this, params)
-
-                if (!res.data.errorcode && res.status === 200 && res.data) {
-                    this.Bonddeposit.BondCode = ''
-                    this.$Message.info("支付成功")
-                    this.$emit('unChange', false)
-                } else {
-                    this.$Modal.confirm({
-                        title: '失败提示',
-                        content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
-                        okText: '确定',
-                        styles: 'top:30px;',
-                        onOk: () => {
-                            // this.$router.push({name:'login'});
-                        },
-                        onCancel: () => {
-
-                        }
-                    });
-                }
+                this.$emit('payedChange', false)
             } else {
                 this.TipCode = '验证码有误'
                 return

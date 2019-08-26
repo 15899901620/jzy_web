@@ -21,22 +21,15 @@
                 </Row>
                 <Row index="1">
                     <Col span="22">
-                        <FormItem label="手机号码" prop="phone">
-                            <Input v-model="formAddress.phone"   placeholder="请输入手机号码"></Input>
+                        <FormItem label="联系电话" prop="phone">
+                            <Input v-model="formAddress.phone"   placeholder="请输入收货人的联系电话"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="2">
                     <Col span="22">
-                        <FormItem label="身份证" prop="phone">
-                            <Input v-model="formAddress.idNumber"   placeholder="请输入身份证"></Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row index="3">
-                    <Col span="22">
-                        <FormItem label="别名" prop="alias">
-                            <Input v-model="formAddress.alias"   placeholder="请输入别名"></Input>
+                        <FormItem label="身份证号" prop="phone">
+                            <Input v-model="formAddress.idNumber"   placeholder="请输入身份证号"></Input>
                         </FormItem>
                     </Col>
                 </Row>
@@ -44,10 +37,10 @@
                     <Col>
                         <FormItem label="地址" prop="pickupMode">
                             <address-from
-                                @SelectCountry="getCountry"
-                                @SelectProvince="getProvince"
-                                @SelectCity="getCity"
-                                @SelectArea="getArea">
+                                :country="1"
+                                :isshow="this.isAddressFormShow"
+                                @selectAddress="getSelectCountry"
+                            >
                             </address-from>
                         </FormItem>
                     </Col>
@@ -95,7 +88,7 @@ export default {
         //收货人电话
         const validatephone = (rule, value, callback) => {
             if (value === '') {
-                callback(new Error('收货人电话不能为空'));
+                callback(new Error('收货人联系电话不能为空'));
             } else {
                 callback();
             }
@@ -124,6 +117,7 @@ export default {
             }
         };
         return {
+            isAddressFormShow: false,
             loading: false,
             formAddress:{
                 memberId: '',
@@ -164,26 +158,17 @@ export default {
         }
     },
     methods:{
-        getCountry(res){
-            this.formAddress.countryId = res
-        },
-        getProvince(res){
-            this.formAddress.state = res
-            this.formAddress.alias = res
-        },
-        getCity(res){
-            this.formAddress.city = res
-            this.formAddress.alias = this.formAddress.alias +' '+res
-        },
-        getArea(res){
-            this.formAddress.district = res
+        getSelectCountry(res){
+            this.formAddress.countryId = res.countryId
+            this.formAddress.state = res.provinceId
+            this.formAddress.city = res.cityId
+            this.formAddress.district = res.areaId
         },
         AddressCancel() {
             this.loading = false
             this.$emit('unChange', false)
         },
         async AddressOk() {
-
             //设置别名
             if(!this.formAddress.name){
                 this.$Notice.warning({
@@ -194,14 +179,14 @@ export default {
                 return
             }else if(!this.formAddress.phone){
                 this.$Notice.warning({
-                    title: '手机号码不能为空',
+                    title: '联系电话不能为空',
                     duration: 5,
                     closable: true
                 });
                 return
             }else if(!this.formAddress.idNumber){
                 this.$Notice.warning({
-                    title: '身份证不能为空',
+                    title: '身份证号不能为空',
                     duration: 5,
                     closable: true
                 });
@@ -242,10 +227,7 @@ export default {
                 });
                 return
             }else {
-                let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-
                 let params = {
-                    memberId: userinfo.id,
                     name: this.formAddress.name,    //收货人姓名
                     phone: this.formAddress.phone,   //收货人电话
                     idNumber: this.formAddress.idNumber,  //身份证
@@ -255,7 +237,6 @@ export default {
                     district: this.formAddress.district,      //区县
                     address: this.formAddress.address,//详细地址
                     defaultAddress: this.formAddress.defaultAddress === false ? 0 : 1,    //设置默认地址
-                    alias:this.formAddress.alias
                 }
                 const res = await addressAdd(this, params)
                 if(res) {
@@ -283,6 +264,7 @@ export default {
         isshow: function (e) {
             if (e === true) {
                 this.loading = true
+                this.isAddressFormShow = true
             } else {
                 this.loading = false
             }

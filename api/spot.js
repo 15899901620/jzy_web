@@ -88,12 +88,12 @@ export const submitOrder = (vm, data) => {
  * @param data
  * @returns {*|never}
  */
-export const  devDetail = (vm, data) => {
+export const  getFreightList = (vm, data) => {
     vm.$axios.defaults.headers = {
         'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     }
-    return vm.$axios.get(server.prefix + server.api.extra.extraDetail,
+    return vm.$axios.get(server.prefix + server.api.spot.freightList,
         {
             params: {...data}
         }).catch((e) => {

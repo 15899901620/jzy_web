@@ -540,7 +540,6 @@ export const addressInfor = (vm, data) => {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
-  console.log('data', data)
   return vm.$axios.get(server.prefix + server.api.Address.addressSigle,
     {
       params:{...data}
@@ -562,9 +561,9 @@ export const addressDefault = (vm, data) => {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
-  return vm.$axios.patch(server.prefix + server.api.Address.addressDefault,
+  return vm.$axios.get(server.prefix + server.api.Address.addressDefault,
     {
-      ...data
+        params:{...data}
     }).catch((e) => {
     let errorInfo = e.response
     console.log('manageEditErr', errorInfo)
