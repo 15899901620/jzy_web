@@ -63,8 +63,8 @@ export default {
     methods:{
         async AuctionRecord(){
           let params={
-            current_page:'',
-            page_size:'',
+            current_page:'1',
+            page_size:'12',
             isActive:''
           }
           let res = await auctionPage(this,params)
