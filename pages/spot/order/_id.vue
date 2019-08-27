@@ -154,7 +154,7 @@
 		</div>
 		<Footer size="small" title="底部" style="margin-top:18px;"></Footer>
         <address-dialog :isshow="addAddressLoading" @unChange="unaddAddressChange"></address-dialog>
-        <payorder :isshow='payModalShow' :datalist='payData' :title="payModalTitle" @unChange="unPayOrder" @payedChange="PayedOrder"></payorder>
+        <spotPay :isshow='payModalShow' :datalist='payData' :title="payModalTitle" @unChange="unPayOrder" @payedChange="PayedOrder"></spotPay>
 	</div>
 </template>
 
@@ -168,7 +168,7 @@ import InputSpecial from '../../../components/input-special'
 import { getCookies } from '../../../config/storage'
 import { addressList, gainuserInfor } from '../../../api/users'
 import AddressDialog from '../../../components/address-dialog'
-import paydeposit from '../../../components/paydeposit'
+import spotPay from '../../../components/paydeposit/spotPay'
 
 export default {
     name: "spot-order-id",
@@ -177,7 +177,7 @@ export default {
         Footer,
         InputSpecial,
         AddressDialog,
-        payorder: paydeposit.order
+        spotPay
     },
     fetch({
         store,
@@ -440,6 +440,8 @@ export default {
                 skuName: this.spotDetail.sku_name,
                 orderNum: params.orderNum,
                 totalAmount: this.payAmount,
+                totalAmountFormat: parseFloat(this.payAmount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,')
+
             }
             if(params.payIndex == 1){
                 this.payModalTitle = '支付保证金'
@@ -456,12 +458,12 @@ export default {
         unPayOrder(row){
             this.payModalShow = row
         },
-        PayedOrder(){
-            this.payModalShow = false
-            this.createOrder()
+        PayedOrder(smsCode){
+            //this.payModalShow = false
+            this.createOrder(smsCode)
         },
         //提交订单
-        async createOrder() {
+        async createOrder(smsCode) {
             let params = {
                 spot_id : this.orderinfo.spot_id ,
                 is_delivery : this.orderinfo.isDelivery ,
@@ -470,11 +472,12 @@ export default {
                 transportation_mode : this.orderinfo.transportationMode ,
                 is_pay_deposit : this.orderinfo.payIndex ,
                 jry_days : this.orderinfo.jryDays ,
-                order_num : this.orderinfo.orderNum
+                order_num : this.orderinfo.orderNum,
+                sms_code: smsCode
             }
             const res = await submitOrder(this, params)
             if (typeof res.data.errorcode == "undefined"){
-                this.$router.push({name:'spot-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+                this.$router.push({name:'spot-order-success', query:{id:res.data.id,orderNo:res.data.orderNo,isPayed:res.data.status=='3'}})
             }else{
                 this.$Modal.warning({
                     title: '提示',

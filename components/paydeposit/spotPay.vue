@@ -24,7 +24,7 @@
             <div style="line-height: 28px; padding:20px">
                 <p>
                     <span class="PricePopup_title">需支付金额：</span>
-                    <span class="orangeFont fwb fs16"> ￥{{datalist.totalAmount}}</span>
+                    <span class="orangeFont fwb fs16"> ￥{{datalist.totalAmountFormat}}</span>
                 </p>
                 <p>
                     <span class="PricePopup_title">可用余额：</span>
@@ -34,15 +34,18 @@
             </div>
             </div>
             <!--输入验证码-->
-            <div class="PopupCode pr">
-                <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" @blur="userCodeCheck" />
+            <div class="PopupCode pr" v-if="total_fund > datalist.totalAmount">
+                <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" />
                 <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
                 <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
             </div>
+            <div style="line-height:32px;" v-else>
+                <span class="Bond_Popup_title">资金不足，不能进行支付操作！</span>
+            </div>
         </div>
       
-        <div slot="footer" style="text-align:center">
-            <Button type="primary"  size="large" @click="bidersOK">确认支付</Button>
+        <div slot="footer" style="text-align:center" >
+            <Button type="primary" size="large" v-if="total_fund > datalist.totalAmount" @click="bidersOK">确认支付</Button>
         </div>
     </Modal>
 </template>
@@ -54,7 +57,7 @@ import { orderPayCode, orderPayCheckCode, orderPayment } from '../../api/users'
 import {setCookies, getCookies} from '../../config/storage'
 
 export default {
-    name: 'payorder',
+    name: 'spotPay',
     data() {
         return {
             loading: false,
@@ -117,41 +120,13 @@ export default {
                 });
             }
         },
-        async userCodeCheck(){
-            let params = {
-                code:this.Bonddeposit.BondCode
-            }
-            if(!this.Bonddeposit.BondCode){
-                this.TipCode='验证码不能为空'
-                return
-            }
-            const res = await orderPayCheckCode(this, params)
-            if(res.data && res.status === 200){
-                this.codeValid=true
-                this.TipCode=''
-            }else {
-                this.TipCode='验证码有误'
-                return
-            }
-        },
         //提交缴纳保证金
         async bidersOK(){
-            this.auth_time=0
             if(!this.Bonddeposit.BondCode){
                 this.TipCode='验证码不能为空'
                 return
             }
-            let paramCodes = {
-                code:this.Bonddeposit.BondCode
-            }
-            const CodeData = await orderPayCheckCode(this, paramCodes)
-
-            if(CodeData.data && CodeData.status === 200) {
-                this.$emit('payedChange', false)
-            } else {
-                this.TipCode = '验证码有误'
-                return
-            }
+            this.$emit('payedChange', this.Bonddeposit.BondCode)
         }
     },
     created() {
