@@ -159,9 +159,9 @@ export const getGainuserInfor = (vm, data) => {
   vm.$axios.defaults.headers = {
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
-  return vm.$axios.put(server.prefix + server.api.user.gainuserInfor,
+  return vm.$axios.get(server.prefix + server.api.user.gainuserInfor,
     {
-      ...data
+        params: {...data}
     }).catch((e) => {
     let errorInfo = e.response
     console.log('supplierRegErr', errorInfo)
