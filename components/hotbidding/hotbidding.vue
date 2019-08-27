@@ -3,6 +3,7 @@
         <div class="Time-limited_back position prve" id='prev' :style="{'display':display}" >
             <img src="../../static/img/back.png" />
         </div>
+        <template v-if="indexAuction.length > 0">
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}"  id='TimeL-ul'>
             <li   ref="elememt" v-for="(items, index) in indexAuction" :key="index">
                 <div class="endTime endTimebg" v-if="items.type===1">
@@ -27,6 +28,12 @@
                 <div class="Timebtn endbg"  v-if="items.type===3" @click="acutionDetail(items.id)">竞拍结束</div>
             </li>
         </ul>
+        </template>
+        <template v-else>
+          <ul>
+            <li>暂无任何信息！</li>
+          </ul>
+        </template>
         <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">
             <img src="../../static/img/next.png" />
         </div>
@@ -68,28 +75,29 @@ export default {
             isActive:''
           }
           let res = await auctionPage(this,params)
-          this.indexAuction=res.data.items
-          var arrayData=[]
-          for (var i=0;i<this.indexAuction.length;i++){
-             if(i<8){
-               arrayData.push(this.indexAuction[i])
-             }
-
+          console.log(res)
+          if(res.status === 200){
+            this.indexAuction=res.data.items
+            var arrayData=[]
+            for (var i=0;i<this.indexAuction.length;i++){
+              if(i<8){
+                arrayData.push(this.indexAuction[i])
+              }
+            }
+            var TimeArray= arrayData.map(function(v){
+              if(v.type=== 1){
+                return v.beginTime
+              }
+              if(v.type=== 2){
+                return v.reservationEndTime
+              }
+              if(v.type=== 3){
+                return v.reservationEndTime
+              }
+            });
+            this.actEndTimeList =TimeArray
+            this.countDown();
           }
-         var TimeArray= arrayData.map(function(v){
-           if(v.type=== 1){
-             return v.beginTime
-           }
-           if(v.type=== 2){
-             return v.reservationEndTime
-           }
-           if(v.type=== 3){
-             return v.reservationEndTime
-           }
-
-          });
-          this.actEndTimeList =TimeArray
-          this.countDown();
         },
         timeFormat (param) {
           return param < 10 ? '0' + param : param;
