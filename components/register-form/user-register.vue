@@ -313,7 +313,7 @@ export default {
             phoneValid:false,//号码有效
             passwordValid:'',//密码有效
             repasswordValid:'',//号码有效
-            current: 1,
+            current: 0,
             uploadUrl: '',
             companyValid: false,
             formCustom: {
