@@ -155,7 +155,7 @@ export default {
                 this.TipCode = ''
 
                 let params = {
-                    id: this.datalist.id,
+                    id: this.datalist.id
                 }
                 let res = await orderPayment(this, params)
 

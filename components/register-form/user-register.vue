@@ -122,7 +122,7 @@
                             <FormItem label="营业执照：">
                                 <Upload
                                     ref="upload"
-                                    action="//192.168.40.31:28082/image"
+                                    :action="uploadUrl"
                                     :on-success="imageSuccess"
                                     :max-size="2048"
                                     :format="['jpg','jpeg','png', 'gif']"
@@ -140,7 +140,7 @@
                             <FormItem label="授 权 书：">
                                 <Upload
                                     ref="upload"
-                                    action="//192.168.40.31:28082/image"
+                                    :action="uploadUrl"
                                     :on-success="handleFileSuccess"
                                     :max-size="2048"
                                     :format="['jpg','jpeg','png', 'gif']"
@@ -179,6 +179,9 @@ const prefixCls = 'ant-user-register'
 import {steps,step} from '../steps'
 import captcha from '../captcha'
 import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg } from '../../api/users'
+
+const appConfig = require('../../config/app.config')
+const uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
 
 export default {
     name: 'UserRegister',
