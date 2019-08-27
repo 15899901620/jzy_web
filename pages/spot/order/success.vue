@@ -2,8 +2,9 @@
 <template>
 	<div class="body">
 		<Header-small title="专料下单">
+
 			<div slot="headerother">
-				 <ul class="sp_cat_title_list">
+				 <ul class="sp_cat_title_list" >
                     <li class="curr"><i>1</i><p>编辑详细信息</p></li>
                     <li class="curr"><i>2</i><p>提交订单成功</p></li>
                     <li><i>3</i><p>支付货款</p></li>
