@@ -993,7 +993,8 @@ a {
 .registerTab li {
 	font-size:18px;
 	border-right:1px solid #DEDEDE;
-	padding:0 55px;
+  padding:0 55px;
+  line-height: 22px;
 	cursor:default;
 }
 .registerTab li:last-child {
@@ -1006,7 +1007,7 @@ a {
 }
 .registerTab li.curr {
   color:#007de4;
-  font-size: 20px;
+  font-size: 22px;
 	cursor:default;
 }
 /*注册进度*/
