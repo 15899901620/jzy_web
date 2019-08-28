@@ -23,7 +23,7 @@ export default {
         },
         fontSizeMin: {
           type: Number,
-          default: 16
+          default: 25
         },
         fontSizeMax: {
           type: Number,
@@ -95,7 +95,7 @@ export default {
           for (let i = 0; i < this.identifyCode.length; i++) {
             this.drawText(ctx, this.identifyCode[i], i)
           }
-          this.drawLine(ctx)
+          //this.drawLine(ctx)
           this.drawDot(ctx)
         },
 
@@ -115,7 +115,7 @@ export default {
         },
         drawLine (ctx) {
           // 绘制干扰线
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < 6; i++) {
             ctx.strokeStyle = this.randomColor(this.lineColorMin, this.lineColorMax)
             ctx.beginPath()
             ctx.moveTo(this.randomNum(0, this.contentWidth), this.randomNum(0, this.contentHeight))

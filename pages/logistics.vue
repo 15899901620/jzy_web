@@ -11,21 +11,27 @@
 					<h2>询价找车</h2>
 					<ul class="inquiryList">
 						<li>
-							<div class="inquiryTitle iconbg01">装点</div>
+							<div class="inquiryTitle iconbg01">发货仓</div>
+                            <Select v-model="searchForm.warehouse_id" style="width:170px">
+                                <i-option v-for="(item, index) in warehouseList" :value="item.id" :key="index">{{ item.wName }}</i-option>
+                            </Select>
 						</li>
 						<li>
-							<div class="inquiryTitle iconbg02">卸点</div>
+							<div class="inquiryTitle iconbg02">卸货点</div>
+                            <Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:170px"></Cascader>
 						</li>
 						<li>
-							<div class="inquiryTitle iconbg03">货物</div>
+							<div class="inquiryTitle iconbg03">类&nbsp;&nbsp;&nbsp;目</div>
+                            <Select v-model="searchForm.category_code" style="width:170px">
+                                <i-option v-for="(item, index) in categoryList" :value="item.code" :key="index">{{ item.name }}</i-option>
+                            </Select>
 						</li>
 						<li>
-							<div class="inquiryTitle iconbg04">吨位</div><input type="text" class="inquiryText" name=""
+							<div class="inquiryTitle iconbg04">吨&nbsp;&nbsp;&nbsp;位</div><input type="text" class="inquiryText" name=""
 								id="" value="" />
 						</li>
 					</ul>
-					<p class="tac mt40">一键委托，一对一保姆式服务</p>
-					<div class="inquiryFree">查询运价</div>
+					<div class="inquiryFree" @click='searchFreight'>查询运价</div>
 				</div>
 			</div>
 			<div class="w1200">
@@ -114,18 +120,28 @@
 					</ul>
 
 				</div>
-
-
 			</div>
-
 		</div>
 		<Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+        <Modal
+            title="查询结果"
+            v-model="searchModalShow"
+            @on-cancel="searchModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+            <div class="">
+                <Table size="small" border stripe highlight-row :columns="searchColumns"   :data="searchData" :content="self" >
+                </Table>
+            </div>
+        </Modal>
 	</div>
 </template>
 
 <script>
 	// Logisticslist
 	import Logisticslist from '../components/logistics-list/logistics-list'
+    import { getWarehouseList, getERPCategoryList, searchFreightFee } from '../api/logistics'
+    import { provinceData, cityregionData } from '../api/users'
 	import {
 		mapState
 	} from 'vuex'
@@ -138,6 +154,109 @@
 			Footer,
 			Logisticslist
 		},
+        data() {
+            return {
+                self: this,
+                warehouseList: [],
+                categoryList: [],
+                registList: [],
+                searchForm: {
+                    warehouse_id: 0,
+                    category_code: '',
+                    country_id: 1,
+                    to_region_id: []
+                },
+                searchModalShow: false,
+                searchData: [],
+                searchColumns: [
+                    { title: '运输方式', key: 'transportation' },
+                    { title: '费用', key: 'freight_fee'}
+                ],
+            }
+        },
+        methods: {
+            async initData(){
+                const res = await getWarehouseList(this, {})
+                this.warehouseList = res.data
+                const res2 = await getERPCategoryList(this, {})
+                this.categoryList = res2.data
+                const res3 = await provinceData(this, {countryId:1})
+                res3.data.forEach((item, index, arr) => {
+                    let tem = {
+                        value: item.regionId,
+                        label: item.regionName,
+                        children: [],
+                        loading: false
+                    }
+                    this.registList.push(tem)
+                })
+            },
+            async loadRegionData (item, callback) {
+                console.log("aaaa")
+                item.loading = true
+                let children = []
+                const res = await cityregionData(this, {parentId: item.value})
+                res.data.forEach((item, index, arr) => {
+                    let tem = []
+                    if(item.regionLevel == 3){
+                        tem = {
+                            value: item.regionId,
+                            label: item.regionName,
+                        }
+                    }else{
+                        tem = {
+                            value: item.regionId,
+                            label: item.regionName,
+                            children: [],
+                            loading: false
+                        }
+                    }
+                    children.push(tem)
+                })
+                item.children = children
+                item.loading = false
+                callback()
+            },
+            async searchFreight(){
+                if(this.searchForm.warehouse_id == 0){
+                    this.showWarning('请选择发货仓')
+                    return
+                }
+                if(this.searchForm.to_region_id.length == 0){
+                    this.showWarning('请选择卸货点')
+                    return
+                }
+                if(this.searchForm.category_code == ''){
+                    this.showWarning('请选择配送物品类目')
+                    return
+                }
+                let params = {
+                    warehouse_id: this.searchForm.warehouse_id,
+                    category_code: this.searchForm.category_code,
+                    country_id: this.searchForm.country_id,
+                    to_region_id: this.searchForm.to_region_id.join(",")
+                }
+                const res = await searchFreightFee(this, params)
+                if(res.data.lenght == 0){
+                    this.showWarning('后台暂无此运输线路，无法给出参考运费！')
+                }else{
+                    this.searchData = res.data
+                    this.searchModalShow = true
+                }
+            },
+            searchModalCancel(){
+                this.searchModalShow = false
+            },
+            showWarning(msg){
+                this.$Modal.warning({
+                    title: '提示',
+                    content: msg
+                });
+            }
+        },
+        created() {
+            this.initData()
+        },
 		fetch({
 			store,
 			params
