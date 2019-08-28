@@ -20,7 +20,7 @@
                     <div class="dflex" style="width: 85%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
                         <div class="Av_balance">
                         <span>可用余额：</span>
-                        <span class="fs24 fwb orangeFont">{{total_fund-userinfo.freezeAmount}}</span>
+                        <span class="fs24 fwb orangeFont">{{available_amount_format}}</span>
                         </div>
                         <div class="priceOpera">
                             <a href="/users/usercapitalpaycheck" class="pricebtnbg brd1 orangeFont ml15">查看我的资金</a>
@@ -32,7 +32,7 @@
                         <div class="account_icon "></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>账户余额</span>
-                            <span class="fs18 fwb">{{total_fund-userinfo.freezeAmount}}</span>
+                            <span class="fs18 fwb">{{total_amount_format}}</span>
                         </div>
 
                         </div>
@@ -40,7 +40,7 @@
                         <div class="Frozen_icon"></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>冻结金额</span>
-                            <span class="fs18 fwb">{{userinfo.freezeAmount}}</span>
+                            <span class="fs18 fwb">{{freeze_amount_format}}</span>
                         </div>
                         </div>
                     </div>
@@ -164,7 +164,9 @@ export default {
     },
     data() {
         return {
-
+            total_amount_format:'',
+            freeze_amount_format:'',
+            available_amount_format:'',
             hotorderinfo: [],
             total_fund:'',
             showtimeVal: '',
@@ -191,7 +193,9 @@ export default {
         },
         async capital(){
             const res= await capitalinfo(this,{})
-            this.total_fund=res.data.total_fund
+             this.total_amount_format=res.data.total_amount_format
+            this.freeze_amount_format=res.data.freeze_amount_format
+            this.available_amount_format=res.data.available_amount_format
         },
         showtime () {
             var now = new Date();

@@ -66,6 +66,7 @@ export default {
         if(res.data.data === null && res.status === 200) {
           this.passwordTip=true
           this.passwordName='账号密码错误！'
+          this.NameCheck=false
           return
         }else{
           var authres = res.data
