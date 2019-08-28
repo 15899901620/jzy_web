@@ -89,7 +89,7 @@ export default {
             }),
             store.dispatch('system/getLinksInfo'),
             store.dispatch('system/getBannerInfo', {
-                positionId: 3
+                positionId: 2
             }),
         ])
     },
