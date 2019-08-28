@@ -2,9 +2,7 @@
  * @description 系统模块用户内容
  */
 import server from '../config/api'
-
 import Cookies from 'js-cookie'
-import { stringify } from 'qs'
 const getCookie = name => {
   if (!name) return
   let data = Cookies.get(name)
@@ -18,67 +16,44 @@ const getCookie = name => {
 }
 
 /**
- * @description 会员登录
+ * @description 仓库列表
  * @param vm
  * @param data
  * @returns {*}
  */
-export const manageLogin = (vm, data) => {
-  vm.$axios.defaults.headers = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-  }
-  return vm.$axios.post(server.prefix + server.api.user.manageLogin,
+export const getWarehouseList = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.logistics.warehouseList,
     {
-        ...data
+        params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
-      console.log('manageLoginErr', errorInfo)
+      console.log('getWarehouseListErr', errorInfo)
     })
 }
 
 /**
- * @description 承运注册
+ * @description erp分类列表
  * @param vm
  * @param data
  * @returns {*}
  */
-export const carrierRegister = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.carrierreg,
+export const getERPCategoryList = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.logistics.erpCategoryList,
     {
-      ...data
+        params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
-      console.log('supplierLoginErr', errorInfo)
+      console.log('getERPCategoryListErr', errorInfo)
     })
 }
 
-/**
- * @description 供应商登录
- * @param vm
- * @param data
- * @returns {*}
- */
-export const supplierLogin = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.supplierLogin,
+export const searchFreightFee = (vm, data) => {
+  return vm.$axios.get(server.prefix + server.api.logistics.searchFreightFee,
     {
-      ...data
+        params: {...data}
     }).catch((e) => {
       let errorInfo = e.response
-      console.log('supplierLoginErr', errorInfo)
-    })
-}
-
-
-
-
-
-export const carrierCodes = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.carriercode,
-    {
-      ...data
-    }).catch((e) => {
-      let errorInfo = e.response
-      console.log('manageRegErr', errorInfo)
+      console.log('searchFreightFeeErr', errorInfo)
     })
 }
 
