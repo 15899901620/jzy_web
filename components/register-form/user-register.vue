@@ -132,7 +132,7 @@
                             </FormItem>
                         </Col>
                         <Col span="12">
-                           <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）</div>
+                           <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
                         </Col>
                     </Row>
                     <Row :gutter="24" index="0" >
@@ -150,7 +150,7 @@
                             </FormItem>
                         </Col>
                         <Col span="12">
-                           <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）</div>
+                           <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
                         </Col>
                     </Row>
                     <Row :gutter="24" index="0" style="margin-bottom:120px">
@@ -181,11 +181,11 @@ import captcha from '../captcha'
 import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg } from '../../api/users'
 
 const appConfig = require('../../config/app.config')
-const uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
 
 export default {
     name: 'UserRegister',
     data() {
+
         const validatePhone=(rule, value, callback) => {
             if (value === '') {
                 callback(new Error('手机号不能为空'));
@@ -314,6 +314,7 @@ export default {
             passwordValid:'',//密码有效
             repasswordValid:'',//号码有效
             current: 0,
+            uploadUrl: '',
             companyValid: false,
             formCustom: {
                 phone: '',
@@ -387,6 +388,9 @@ export default {
         },
     },
     methods:{
+        getUploadURL(){
+          this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
+        },
         //验证手机是否存在
         async userPhoneCheck(value, callback){
             let params = {
@@ -688,6 +692,7 @@ export default {
         // 图形验证码
         this.identifyCode = '';
         this.makeCode(this.identifyCodes, 4);
+        this.getUploadURL()
     }
 }
 </script>

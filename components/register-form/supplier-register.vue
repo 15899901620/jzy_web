@@ -237,8 +237,6 @@ import captcha from '../captcha'
 import {  supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg } from '../../api/users'
 
 const appConfig = require('../../config/app.config')
-const uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
-
 
 export default {
     name: 'SupplierRegister',
@@ -396,6 +394,7 @@ export default {
             passwordValid:'',//密码有效
             repasswordValid:'',//号码有效
             current: 0,
+            uploadUrl: '',
             companyValid: false,
             supplierNatureList:[],
             usernameValid:false,
@@ -484,6 +483,9 @@ export default {
         },
     },
     methods:{
+        getUploadURL(){
+          this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
+        },
         getItemValue(items){
           this.formCustom.natureName=items.value,           //供应商性质
           this.formCustom.natureValue=items.value_name      //供应商性质值
@@ -814,6 +816,7 @@ export default {
         },
     },
     mounted() {
+        this.getUploadURL()
         this.companyNature()
         // 图形验证码
         this.identifyCode = '';

@@ -15,7 +15,7 @@
 					<img src="/img/Time_banner.png" />
 					<a class="bidders_front" href="/bidders"></a>
 				</div>
-				<hotbidding title="热门竞拍"></hotbidding>
+				<!-- <hotbidding title="热门竞拍"></hotbidding> -->
 			</div>
 			<div class="co-brands">
 				<outpacking title="合作品牌" cpadding="0px">
