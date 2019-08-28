@@ -1005,7 +1005,8 @@ a {
 	cursor:default;
 }
 .registerTab li.curr {
-	color:#007de4;
+  color:#007de4;
+  font-size: 20px;
 	cursor:default;
 }
 /*注册进度*/

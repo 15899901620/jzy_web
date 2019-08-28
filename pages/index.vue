@@ -69,7 +69,7 @@ export default {
             }),
             store.dispatch('system/getLinksInfo'),
             store.dispatch('system/getBannerInfo', {
-                positionId: 2
+                positionId: 1
             }),
             store.dispatch('article/getHomeNotice', {
                 current_page: 1,
