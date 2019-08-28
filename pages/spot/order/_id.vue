@@ -408,7 +408,7 @@ export default {
             this.orderinfo.orderNum = value
         },
         //开始订单
-        beginCreateOrder(value){
+        beginCreateOrder(){
             let params = {
                 spot_id : this.orderinfo.spot_id ,
                 isDelivery : this.orderinfo.isDelivery ,

@@ -22,7 +22,7 @@ export default {
                     name: '订单管理',
                     children: [
                         {
-                            path: './usertotalorder',
+                            path: '/users/usertotalorder',
                             name: '全部订单'
                         },
                     ]
@@ -31,7 +31,7 @@ export default {
                     name: '预售管理',
                     children: [
                         {
-                            path: './useradvsale',
+                            path: '/users/useradvsale',
                             name: '我的预售'
                         },
                     ]
@@ -40,7 +40,7 @@ export default {
                     name: '求购管理',
                     children: [
                         {
-                            path: './userseek',
+                            path: '/users/userseek',
                             name: '求购信息'
                         },
                     ]
@@ -49,7 +49,7 @@ export default {
                     name: '竞拍管理',
                     children: [
                         {
-                            path: './userauction',
+                            path: '/users/userauction',
                             name: '我的竞拍'
                         },
                     ]
@@ -58,7 +58,7 @@ export default {
                     name: '专料管理',
                     children: [
                         {
-                            path: './userSpecmat',
+                            path: '/users/userSpecmat',
                             name: '我的专料'
                         },
                     ]
@@ -67,7 +67,7 @@ export default {
                     name: '物流管理',
                     children: [
                         {
-                            path: './userlog',
+                            path: '/users/userlog',
                             name: '物流管理'
                         },
                     ]
@@ -76,7 +76,7 @@ export default {
                     name: '资金管理',
                     children: [
                         {
-                            path: './usercapitalmanage',
+                            path: '/users/usercapitalmanage',
                             name: '资金管理'
                         },
                     ]
@@ -85,15 +85,15 @@ export default {
                     name: '账号管理',
                     children: [
                         {
-                            path: './usermodifyinfor',
+                            path: '/users/usermodifyinfor',
                             name: '完善信息'
                         },
                         {
-                            path: './userCodeManage',
+                            path: '/users/userCodeManage',
                             name: '密码管理'
                         },
                         {
-                            path: './userAddress',
+                            path: '/users/userAddress',
                             name: '收货地址'
                         }
                     ]

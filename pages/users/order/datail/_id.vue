@@ -5,7 +5,7 @@
             <div class="memberInfor ml20 mt20">
                 <!--个人信息-->
                 <div class="whitebg" style="padding:0px 18px 18px;">
-                    <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">订单详情 <span style="float:right;color:#999; font-size:12px;">最后付款时间： {{this.datalist.orderPayLastTime}}</span></h3>
+                    <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">订单详情 <span v-if="this.datalist.status == 2" style="float:right;color:#999; font-size:12px;">最迟付款时间： {{this.datalist.orderPayLastTime}}</span></h3>
                     <div style="line-height:32px;">
                         <Row index="">
                             <Col span="">公司名称：{{this.datalist.companyName}}</Col>
@@ -40,10 +40,9 @@
                                 <Tag v-else color="default">自提</Tag>
                             </Col>
                         </Row>
-                        <Row index="">
+                        <Row index="" v-if="this.datalist.orderPayTime">
                             <Col span="">付款时间：
-                                <span v-if="this.datalist.orderPayTime">{{this.datalist.orderPayTime}}</span>
-                                <span v-else></span>
+                                <span>{{this.datalist.orderPayTime}}</span>
                             </Col>
                         </Row>
                     </div>
@@ -69,9 +68,8 @@
                         <Row index="">
                             <Col span="">联系电话：{{this.datalist.receiverPhone}}</Col>
                         </Row>
-                        
                         <Row index="">
-                            <Col span="">配送地址：{{this.datalist.receiverCountryId}} {{this.datalist.receiverState}}  {{this.datalist.receiverCity}}  {{this.datalist.receiverDistrict}} {{this.datalist.receiverAddress}}</Col>
+                            <Col span="">配送地址：{{this.datalist.receiverFullAddress}}</Col>
                         </Row>
                         <Row index="">
                             <Col span="">运输方式：{{this.datalist.transportationMode}}</Col>
@@ -94,11 +92,11 @@
                             <Col span="5">{{this.datalist.skuName}}</Col>
                             <Col span="5">{{this.datalist.finalPriceFormat}}</Col>
                             <Col span="4">{{this.datalist.orderNum}}</Col> 
-                            <Col span="5">{{this.datalist.orderNum * this.datalist.basePrice}}</Col>
+                            <Col span="5">{{this.datalist.totalAmountFormat}}</Col>
                         </Row>
                     </div>
                     <div>
-                        <p style="line-height:52px; text-align:right; font-size:14px; padding-right:10px;">应付总额：{{this.datalist.totalAmountFormat}}</p>
+                        <p style="line-height:52px; text-align:right; font-size:14px; padding-right:10px;">订单总额：{{this.datalist.totalAmountFormat}}</p>
                         <p style="line-height:32px; text-align:right; font-size:14px; padding-right:10px;" v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天</p>
                     </div>
                 </div>
@@ -112,7 +110,6 @@
 import Navigation from '../../../../components/navigation'
 import { orderpage, getorderDetail } from '../../../../api/order'
 import { getCookies } from '../../../../config/storage'
-import pagination from '../../../../components/pagination'
 import config from '../../../../config/config'
 
 
