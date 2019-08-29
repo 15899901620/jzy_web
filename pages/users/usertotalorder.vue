@@ -206,6 +206,14 @@ export default {
         this.inLogin()
         this.getSourceData()
     },
+    mounted(){
+          var status=this.$route.query.status
+          if(status==2){
+              this.formSearch.status = 2
+              this.currTabs = 1
+          }
+          
+    },
     watch: {
         '$route' (to, from) {
             this.$router.go(0);

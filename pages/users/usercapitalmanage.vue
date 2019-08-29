@@ -134,7 +134,7 @@ export default {
         this.capital()
     },
     mounted(){
-
+        
     }
 }
 </script>
