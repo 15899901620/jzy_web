@@ -4,7 +4,9 @@
  * @author hmymingyu <fgf67@163.com>
  */
 import { helpCatTree, helpPage } from '../api/helper'
-import api from '../config/api'
+import api from '../config/api' 
+import {setStore,hasStore,getStore,removeStore} from '../config/storage'
+
 export const state = () => {
     return {
         helpCatInfo: [],
@@ -23,10 +25,12 @@ export const mutations = {
     updatehelpDetail(state, data) {
         state.helpDetail = data
     }
-
 }
   
 export const actions = {
+
+
+  
     async getHelpCate({ commit }, { params }) { 
         const res = await helpCatTree(this, params)
         let cateData = res.data
@@ -41,6 +45,10 @@ export const actions = {
         }
         commit('updateHelperCat', cateData)
     },
+
+
+
+
     async getHelpCateAll({ commit }, { params }) { 
         const res = await helpCatTree(this, params)
         let cateData = res.data

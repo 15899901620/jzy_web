@@ -487,11 +487,9 @@ export default {
             }
             
             let res =await auctionInfor(this, params)
-             console.log('op',res)
             if(!res.data.errorcode && res.status === 200){
                 this.detailDatabrid = res.data
             }
-            console.log('1', this.detailDatabrid)
 
             this.auctionNum=this.detailDatabrid.minOrder
             this.auctionBond=this.detailDatabrid.marginRatio
@@ -518,7 +516,6 @@ export default {
                 if(res.data && res.status === 200){
                     this.WinBidShow=true
                     this.WinBid=res.data
-                    console.log(this.WinBid)
                     this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
                 }else{
                     this.NotWinBidShow=true
@@ -540,9 +537,7 @@ export default {
                 skuId: skuid,
                 type:2
             }
-            console.log(params)
             let res =await priceListInfo(this, params)
-            console.log(res)
             if(res){
                 this.MinPrice = res.data.minSellingPrice
                 this.auctionOffer = this.MinPrice
@@ -554,7 +549,6 @@ export default {
                 auctionId: this.auctionId
             }
             let res=await newprice(this,params)
-            console.log(res)
             if(res.data){
                 this.bidePrice = res.data.bidPrice
             }

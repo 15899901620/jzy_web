@@ -986,7 +986,7 @@ a {
 }
 .registerTab {
 	display:flex;
-	width:50%;
+	width:60%;
 	margin:50px auto 20px;
 	cursor:default;
 }
@@ -1008,7 +1008,8 @@ a {
 .registerTab li.curr {
   color:#007de4;
   font-size: 22px;
-	cursor:default;
+  cursor:default; 
+  /* font-weight: bold; */
 }
 /*注册进度*/
 .CarrierPro {
