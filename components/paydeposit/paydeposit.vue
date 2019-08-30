@@ -197,7 +197,6 @@ export default {
     watch:{
         datalist:{
             handler(newValue,oldValue){
-                console.log('newValue', newValue)
             },
             deep:true
         },

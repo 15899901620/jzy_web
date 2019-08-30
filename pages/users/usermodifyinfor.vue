@@ -122,7 +122,7 @@ export default {
         //获取用户信息
         async UserInfor(){
             const res=await getGainuserInfor(this,{})
-            console.log(res)
+     
             this.userinfor=res.data
         },
         modifInfor(){

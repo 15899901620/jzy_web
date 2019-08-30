@@ -140,55 +140,6 @@ export default {
     mounted () {
     },
     watch: {
-        /*country(newval, oldval) {
-            this.selectValue.countryId = newval
-            this.getProvinceData()
-        },
-        province(newval, oldval) {
-            this.selectValue.provinceId = newval
-            this.getCityData()
-        },
-        city (newval, oldval) {
-            console.log(newval)
-            this.selectValue.cityId = newval
-            this.getAreaData()
-            console.log('city',this.selectValue)
-        },
-        area (newval, oldval) {
-            this.selectValue.areaId = newval
-        },*/
-        /*'selectValue.countryId' (newval, oldval) {
-            if(this.isInit && newval > 0){
-                console.log('country', newval)
-                this.selectValue.provinceId = 0
-                this.selectValue.cityId = 0
-                this.selectValue.areaId = 0
-                this.getProvinceData()
-                this.$emit('selectAddress', this.selectValue)
-            }
-        },
-        'selectValue.provinceId' (newval, oldval) {
-            if(this.isInit && newval > 0) {
-                console.log('provinceId', newval)
-                this.selectValue.cityId = 0
-                this.selectValue.areaId = 0
-                this.getCityData()
-                this.$emit('selectAddress', this.selectValue)
-            }
-        },
-        'selectValue.cityId' (newval, oldval) {
-            if(this.isInit && newval > 0){
-                console.log('cityId', newval)
-                this.selectValue.areaId = 0
-                this.getAreaData()
-                this.$emit('selectAddress', this.selectValue)
-            }
-        },
-        'selectValue.areaId' (newval, oldval) {
-            if(this.isInit && newval > 0){
-                this.$emit('selectAddress', this.selectValue)
-            }
-        },*/
         isshow: function (e) {
             if (e === true) {
                 this.selectValue.countryId = this.country
