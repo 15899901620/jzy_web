@@ -1008,7 +1008,8 @@ a {
 .registerTab li.curr {
   color:#007de4;
   font-size: 22px;
-	cursor:default;
+  cursor:default;
+  padding:0 50px;
 }
 /*注册进度*/
 .CarrierPro {

@@ -51,11 +51,13 @@
                             </FormItem>
                         </Col>
                     </Row>
-                    <Row :gutter="24"  index="5">
-                        <Col span="21">
-                        <FormItem prop="single">
-                            <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源用户服务协议》</a>
+                    <Row :gutter="24"  index="5" >
+                        <Col span="21" @click="protocolModalToShow">
+                            <div @click="protocolModalToShow">
+                        <FormItem prop="single" >
+                            <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a class="orangeFont">《巨正源用户服务协议》</a>
                         </FormItem>
+                            </div>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="6">
@@ -171,11 +173,22 @@
                 </div>
             </Form>
         </div>
+        <Modal
+            title="注册协议"
+            v-model="protocolModalShow"
+            @on-cancel="protocolModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+            <div class="">
+                {{systeminfo.MEMBER_REGISTRATION_PROTOCOL}}
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
 const prefixCls = 'ant-user-register'
+import { mapState } from 'vuex'
 import {steps,step} from '../steps'
 import captcha from '../captcha'
 import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg } from '../../api/users'
@@ -295,6 +308,8 @@ export default {
             }
         };
         return {
+            protocolModalShow: false,
+
             CodeCate:'CodeuserCate',
             identifyCodes: "1234567890",
             identifyImgCode:false,//校验图形验证码
@@ -380,6 +395,9 @@ export default {
         captcha
     },
     computed: {
+        ...mapState({
+            systeminfo: state => state.system.systeminfo,
+        }),
         classes() {
             return [
                 `${prefixCls}`,
@@ -686,7 +704,16 @@ export default {
                     })
                 }
             }
-        }
+        },
+        protocolModalToShow(){
+            this.protocolModalShow = true
+        },
+        protocolOkClick(){
+            this.protocolModalShow = false
+        },
+        protocolModalCancel(){
+            this.protocolModalShow = false
+        },
     },
     mounted() {
         // 图形验证码

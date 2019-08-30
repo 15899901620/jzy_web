@@ -192,7 +192,6 @@
                 })
             },
             async loadRegionData (item, callback) {
-                console.log("aaaa")
                 item.loading = true
                 let children = []
                 const res = await cityregionData(this, {parentId: item.value})
