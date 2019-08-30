@@ -40,22 +40,24 @@
                     <Row :gutter="24"  index="3">
                         <Col span="21">
                             <FormItem prop="password" label="密  码：">
-                                <Input v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入密码"/>
+                                <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入密码"/>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="4">
                         <Col span="21">
                             <FormItem prop="repassword" label="确认密码：">
-                                <Input v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认密码"/>
+                                <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认密码"/>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="5">
-                        <Col span="21">
-                        <FormItem prop="single">
-                            <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源供应商服务协议》</a>
-                        </FormItem>
+                        <Col span="21" @click="protocolModalToShow">
+                            <div @click="protocolModalToShow">
+                                <FormItem prop="single">
+                                    <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源供应商服务协议》</a>
+                                </FormItem>
+                           </div>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="6">
@@ -140,7 +142,7 @@
                     </Row>
                     <Row :gutter="24" index="0">
                         <Col span="9">
-                            <FormItem label="营业执照：">
+                            <FormItem label="营业执照：" prop="contacterEmail">
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -174,7 +176,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="授 权 书：">
+                            <FormItem label="授 权 书："  prop="businessLicense">
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -192,7 +194,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="其它文件：">
+                            <FormItem label="其它文件："  prop="other_license">>
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -227,11 +229,23 @@
                 </div>
             </Form>
         </div>
+          <Modal
+            title="注册协议"
+            v-model="protocolModalShow"
+            @on-cancel="protocolModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+            <div class="" style="text-align: center;">
+                {{systeminfo.SUPPLIER_REGISTRATION_PROTOCOL}}    
+                <Button  type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
 const prefixCls = 'ant-user-register'
+import { mapState } from 'vuex'
 import {steps,step} from '../steps'
 import captcha from '../captcha'
 import {  supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg } from '../../api/users'
@@ -258,12 +272,17 @@ export default {
             }
         };
         const validatePass = (rule, value, callback) => {
-            if (value === '') {
+           if (value === '') {
                 callback(new Error('密码不能为空'));
-            } else {
+            }
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/; 
+            if (!patrn.exec(value)) {
+                   callback(new Error('密码必须是6-20字母和数字组合'));   
+            }else{
                 this.passwordValid=true
                 callback();
             }
+
         };
         const validaterePass = (rule, value, callback) => {
             if (value === '') {
@@ -322,6 +341,13 @@ export default {
             callback();
           }
         };
+        const corporation = (rule, value, callback)=>{
+            if (value === '') {
+            callback(new Error('公司法人不能为空'));
+          } else {
+            callback();
+          }
+        };
         //联系人
         const validateContacter = (rule, value, callback) => {
          
@@ -376,6 +402,7 @@ export default {
           }
         };
         return {
+              protocolModalShow: false,
             CodeCate:'Codeuserspplier',
             identifyCodes: "1234567890",
             identifyImgCode:false,//校验图形验证码
@@ -408,6 +435,7 @@ export default {
                 phone: '',          //注册手机号
                 password:'',      //密码
                 taxId:'',          //纳税人识别号
+                companyName:'',
                 corporation:'',    //法人
                 contacter:'',       //联系人
                 contacterMobile:'',  //联系人电话
@@ -437,34 +465,53 @@ export default {
                     { validator: validateImgcode, trigger: 'blur' }
                 ],
                 mobilecode:[
-                    { validator: validatemobilecode, trigger: 'blur' }
+                    {  validator: validatemobilecode, trigger: 'blur' }
+                ],
+                contacterMobile:[
+                    {required: true,  trigger: 'blur' }
+                ],
+                authorizationElc:[
+                    {required: true,  trigger: 'blur' }
+                ],
+                other_license:[
+                    {required: true,  trigger: 'blur' }
+                ],
+                contacterEmail:[
+                    {required: true,  trigger: 'blur' }
+                ],
+                businessLicense:[
+                    {required: true,  trigger: 'blur' }
+                ],
+              
+                corporation:[
+                     { required: true, validator: corporation, trigger: 'blur' }
                 ],
                 companyName: [
-                    { validator: validateCompanyName, trigger: 'blur' }
+                    { required: true, validator: validateCompanyName, trigger: 'blur' }
                 ],
                 username: [
-                    { validator: validatename, trigger: 'blur' }
+                    { required: true, validator: validatename, trigger: 'blur' }
                 ],
                 taxId: [
-                    { validator: validatTaxId, trigger: 'blur' }
+                    { required: true, validator: validatTaxId, trigger: 'blur' }
                 ],
                 contacter: [
-                    { validator: validateContacter, trigger: 'blur' }
+                    { required: true, validator: validateContacter, trigger: 'blur' }
                 ],
                 bankAccount:[
-                    { validator: validateBankAccount, trigger: 'blur' }
+                    { required: true, validator: validateBankAccount, trigger: 'blur' }
                 ],
                 telephone:[
-                    { validator: validateTelephone, trigger: 'blur' }
+                    { required: true, validator: validateTelephone, trigger: 'blur' }
                 ],
                 address:[
-                    { validator: validateAddress, trigger: 'blur' }
+                    { required: true, validator: validateAddress, trigger: 'blur' }
                 ],
                 bankName:[
-                    {validator: validateBankName, trigger: 'blur' }
+                    {required: true, validator: validateBankName, trigger: 'blur' }
                 ],
                 registCapi:[
-                    {validator: validateRegistCapi, trigger: 'blur' }
+                    {required: true, validator: validateRegistCapi, trigger: 'blur' }
                 ]
             }
         }
@@ -475,6 +522,9 @@ export default {
         captcha
     },
     computed: {
+        ...mapState({
+            systeminfo: state => state.system.systeminfo,
+        }),
         classes() {
             return [
                 `${prefixCls}`,
@@ -598,12 +648,8 @@ export default {
             // userFormData.password=this.formCustom.password
             // userFormData.code=this.formCustom.mobilecode
             if(!this.phoneValid){
-                this.$Message.info({
-                    content: '手机号有误',
-                    duration: 5,
-                    closable: true
-                })
-                return
+                 this.current = 1
+                this.$emit('currData', true)
             } else if(!this.isrefreshpic){
                 this.$Message.info({
                     content: '手机验证码有误',
@@ -813,6 +859,22 @@ export default {
           }else{
 
           }
+        },
+        protocolModalToShow(){
+            this.protocolModalShow = true
+        },
+        protocolOkClick(){
+            this.protocolModalShow = false
+        },
+        protocolModalCancel(){
+            this.formCustom.single=false
+            this.protocolModalShow = false
+        },
+        //确认协议
+        protocol(){
+            this.formCustom.single=true
+            this.protocolModalShow = false
+
         },
     },
     mounted() {

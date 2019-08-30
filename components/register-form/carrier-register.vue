@@ -40,22 +40,24 @@
                     <Row :gutter="24"  index="3">
                         <Col span="21">
                             <FormItem prop="password" label="密  码：">
-                                <Input v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入密码"/>
+                                <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入密码"/>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="4">
                         <Col span="21">
                             <FormItem prop="repassword" label="确认密码：">
-                                <Input v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认密码"/>
+                                <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认密码"/>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="5">
-                        <Col span="21">
-                        <FormItem prop="single">
-                            <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源供应商服务协议》</a>
-                        </FormItem>
+                        <Col span="21" @click="protocolModalToShow">
+                            <div @click="protocolModalToShow">
+                                <FormItem prop="single">
+                                    <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a href="#.html" class="orangeFont">《巨正源供应商服务协议》</a>
+                                </FormItem>
+                             </div>
                         </Col>
                     </Row>
                     <Row :gutter="24"  index="6">
@@ -140,7 +142,7 @@
                     </Row>
                     <Row :gutter="24" index="0">
                         <Col span="9">
-                            <FormItem label="营业执照：">
+                            <FormItem label="营业执照：" prop='businessLicense'>
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -174,7 +176,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="授 权 书：">
+                            <FormItem label="授 权 书：" prop='authorizationElc'>
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -192,7 +194,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="道路运输许可证：">
+                            <FormItem label="道路运输许可证：" prop='transportLicense'>
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -227,11 +229,23 @@
                 </div>
             </Form>
         </div>
+        <Modal
+            title="注册协议"
+            v-model="protocolModalShow"
+            @on-cancel="protocolModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+            <div class="" style="text-align: center;">
+                {{systeminfo.CARRIER_REGISTRATION_PROTOCOL}}    
+                <Button  type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
 const prefixCls = 'ant-user-register'
+import { mapState } from 'vuex'
 import {steps,step} from '../steps'
 import captcha from '../captcha'
 import {  supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg, carrierRegister, carrierCodes } from '../../api/users'
@@ -258,9 +272,13 @@ export default {
             }
         };
         const validatePass = (rule, value, callback) => {
-            if (value === '') {
+           if (value === '') {
                 callback(new Error('密码不能为空'));
-            } else {
+            }
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/; 
+            if (!patrn.exec(value)) {
+                   callback(new Error('密码必须是6-20字母和数字组合'));   
+            }else{
                 this.passwordValid=true
                 callback();
             }
@@ -376,6 +394,7 @@ export default {
           }
         };
         return {
+            protocolModalShow: false,
             CodeCate:'Codeusercarrier',
             identifyCodes: "1234567890",
             identifyImgCode:false,//校验图形验证码
@@ -405,6 +424,7 @@ export default {
             formCustom: {
                 code:'',
                 username: '',      //供应商名称
+                companyName:'',
                 phone: '',          //注册手机号
                 password:'',      //密码
                 taxId:'',          //纳税人识别号
@@ -440,32 +460,47 @@ export default {
                 mobilecode:[
                     { validator: validatemobilecode, trigger: 'blur' }
                 ],
+                transportLicense:[
+                    { required: true, trigger: 'blur' }
+                ],
+                contacterMobile:[
+                    { required: true,trigger: 'blur' }
+                ],
+                contacterEmail:[
+                    { required: true, trigger: 'blur' }
+                ],
+                businessLicense:[
+                    { required: true, trigger: 'blur' }
+                ],
+                authorizationElc:[
+                    { required: true, trigger: 'blur' }
+                ],
                 companyName: [
-                    { validator: validateCompanyName, trigger: 'blur' }
+                    { required: true, validator: validateCompanyName, trigger: 'blur' }
                 ],
                 username: [
-                    { validator: validatename, trigger: 'blur' }
+                    { required: true, validator: validatename, trigger: 'blur' }
                 ],
                 taxId: [
-                    { validator: validatTaxId, trigger: 'blur' }
+                    { required: true, validator: validatTaxId, trigger: 'blur' }
                 ],
                 contacter: [
-                    { validator: validateContacter, trigger: 'blur' }
+                    {required: true,  validator: validateContacter, trigger: 'blur' }
                 ],
                 bankAccount:[
-                    { validator: validateBankAccount, trigger: 'blur' }
+                    {required: true,  validator: validateBankAccount, trigger: 'blur' }
                 ],
                 telephone:[
-                    { validator: validateTelephone, trigger: 'blur' }
+                    {required: true,  validator: validateTelephone, trigger: 'blur' }
                 ],
                 address:[
-                    { validator: validateAddress, trigger: 'blur' }
+                    { required: true, validator: validateAddress, trigger: 'blur' }
                 ],
                 bankName:[
-                    {validator: validateBankName, trigger: 'blur' }
+                    {required: true, validator: validateBankName, trigger: 'blur' }
                 ],
                 registCapi:[
-                    {validator: validateRegistCapi, trigger: 'blur' }
+                    {required: true, validator: validateRegistCapi, trigger: 'blur' }
                 ]
             }
         }
@@ -476,6 +511,9 @@ export default {
         captcha
     },
     computed: {
+         ...mapState({
+            systeminfo: state => state.system.systeminfo,
+        }),
         classes() {
             return [
                 `${prefixCls}`,
@@ -814,6 +852,22 @@ export default {
           }else{
 
           }
+        },
+        protocolModalToShow(){
+            this.protocolModalShow = true
+        },
+        protocolOkClick(){
+            this.protocolModalShow = false
+        },
+        protocolModalCancel(){
+            this.formCustom.single=false
+            this.protocolModalShow = false
+        },
+        //确认协议
+        protocol(){
+            this.formCustom.single=true
+            this.protocolModalShow = false
+
         },
     },
     mounted() {

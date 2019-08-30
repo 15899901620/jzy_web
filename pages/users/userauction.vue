@@ -139,7 +139,7 @@ export default {
       }
     },
     changePage (row) {
-      this.$router.push({name:'usertotalorder',query:{page:row}})
+      this.$router.push({name:'users-userauction',query:{page:row}})
     },
     async getSourceData () {
       let params = {
@@ -154,6 +154,10 @@ export default {
   },
   mounted(){
     // this.auctionOrderList()
+       var page=this.$route.query.page
+          if(page){
+              this.current_page = page
+          }
   },
   created(){
     this.inLogin()

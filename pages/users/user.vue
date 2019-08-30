@@ -48,7 +48,7 @@
 
                 </div>
 
-                <ul class="orderlist">
+                <ul class="orderlist"   style="justify-content: left;">
                     <li @click='payment()' style="cursor: pointer">
                     <div class="listIcon01 mt20"></div>
                     <div class="mt10">待付款</div>

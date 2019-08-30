@@ -121,7 +121,7 @@
                     </Row>
                     <Row :gutter="24" index="0">
                         <Col span="9">
-                            <FormItem label="营业执照：">
+                            <FormItem label="营业执照：" prop="contacterEmail">
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -139,7 +139,7 @@
                     </Row>
                     <Row :gutter="24" index="0" >
                         <Col span="9">
-                            <FormItem label="授 权 书：">
+                            <FormItem label="授 权 书：" prop="businessLicense">
                                 <Upload
                                     ref="upload"
                                     :action="uploadUrl"
@@ -179,8 +179,9 @@
             @on-cancel="protocolModalCancel"
             :width='700'
             class-name="vertical-center-modal">
-            <div class="">
-                {{systeminfo.MEMBER_REGISTRATION_PROTOCOL}}
+            <div class="" style="text-align: center;">
+                {{systeminfo.MEMBER_REGISTRATION_PROTOCOL}}    
+                <Button  type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
             </div>
         </Modal>
     </div>
@@ -218,7 +219,11 @@ export default {
         const validatePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('密码不能为空'));
-            } else {
+            }
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/; 
+            if (!patrn.exec(value)) {
+                   callback(new Error('密码必须是6-20字母和数字组合'));   
+            }else{
                 this.passwordValid=true
                 callback();
             }
@@ -350,7 +355,7 @@ export default {
                 code:''
             },
             ruleCustom: {
-                phone: [
+                 phone: [
                     { validator: validatePhone, trigger: 'blur' }
                 ],
                 password: [
@@ -363,28 +368,34 @@ export default {
                     { validator: validateImgcode, trigger: 'blur' }
                 ],
                 mobilecode:[
-                    { validator: validatemobilecode, trigger: 'blur' }
-                ],
+                    {  validator: validatemobilecode, trigger: 'blur' }
+                ],             
                 companyName: [
-                    { validator: validateCompanyName, trigger: 'blur' }
+                    { required: true, validator: validateCompanyName, trigger: 'blur' }
+                ],
+                contacterEmail:[
+                    {required: true,  trigger: 'blur' }
+                ],
+                businessLicense:[
+                    {required: true,  trigger: 'blur' }
                 ],
                 taxId: [
-                    { validator: validateTaxId, trigger: 'blur' }
+                    { required: true, validator: validateTaxId, trigger: 'blur' }
                 ],
                 invBankName: [
-                    { validator: validateInvBankName, trigger: 'blur' }
+                    { required: true, validator: validateInvBankName, trigger: 'blur' }
                 ],
                 invBankAccount: [
-                    { validator: validateInvBankAccount, trigger: 'blur' }
+                    { required: true, validator: validateInvBankAccount, trigger: 'blur' }
                 ],
                 invAddress: [
-                    { validator: validateInvAddress, trigger: 'blur' }
+                    { required: true, validator: validateInvAddress, trigger: 'blur' }
                 ],
                 invTelephone: [
-                    { validator: validateInvTelephone, trigger: 'blur' }
+                    { required: true, validator: validateInvTelephone, trigger: 'blur' }
                 ],
                 contacter: [
-                    { validator: validateContacter, trigger: 'blur' }
+                    { required: true, validator: validateContacter, trigger: 'blur' }
                 ]
             }
         }
@@ -409,6 +420,7 @@ export default {
         getUploadURL(){
           this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
         },
+        
         //验证手机是否存在
         async userPhoneCheck(value, callback){
             let params = {
@@ -712,7 +724,14 @@ export default {
             this.protocolModalShow = false
         },
         protocolModalCancel(){
+            this.formCustom.single=false
             this.protocolModalShow = false
+        },
+        //确认协议
+        protocol(){
+            this.formCustom.single=true
+            this.protocolModalShow = false
+
         },
     },
     mounted() {
