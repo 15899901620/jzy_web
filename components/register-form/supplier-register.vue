@@ -275,9 +275,9 @@ export default {
            if (value === '') {
                 callback(new Error('密码不能为空'));
             }
-            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/; 
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
             if (!patrn.exec(value)) {
-                   callback(new Error('密码必须是6-20字母和数字组合'));   
+                   callback(new Error('密码必须是8-20字母和数字组合'));   
             }else{
                 this.passwordValid=true
                 callback();
@@ -341,7 +341,7 @@ export default {
             callback();
           }
         };
-        const corporation = (rule, value, callback)=>{
+        const valicorporation = (rule, value, callback)=>{
             if (value === '') {
             callback(new Error('公司法人不能为空'));
           } else {
@@ -372,6 +372,22 @@ export default {
         const validateBankAccount= (rule, value, callback) => {
           if (value === '') {
             callback(new Error('账号不能为空'));
+          } else {
+            this.BankAccountValid=true
+            callback();
+          }
+        };
+          const valicontacterMobile= (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('联系人电话不能为空'));
+          } else {
+            this.BankAccountValid=true
+            callback();
+          }
+        };
+          const valicontacterEmail= (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('联系人邮箱不能为空'));
           } else {
             this.BankAccountValid=true
             callback();
@@ -468,23 +484,23 @@ export default {
                     {  validator: validatemobilecode, trigger: 'blur' }
                 ],
                 contacterMobile:[
-                    {required: true,  trigger: 'blur' }
+                    {required: true, validator: valicontacterMobile , trigger: 'blur' }
                 ],
                 authorizationElc:[
-                    {required: true,  trigger: 'blur' }
+                    {required: true, trigger: 'blur' }
                 ],
                 other_license:[
                     {required: true,  trigger: 'blur' }
                 ],
                 contacterEmail:[
-                    {required: true,  trigger: 'blur' }
+                    {required: true, validator: valicontacterEmail ,trigger: 'blur' }
                 ],
                 businessLicense:[
-                    {required: true,  trigger: 'blur' }
+                    {required: true , trigger: 'blur' }
                 ],
               
                 corporation:[
-                     { required: true, validator: corporation, trigger: 'blur' }
+                     { required: true, validator: valicorporation, trigger: 'blur' }
                 ],
                 companyName: [
                     { required: true, validator: validateCompanyName, trigger: 'blur' }

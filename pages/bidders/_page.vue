@@ -180,10 +180,13 @@ export default {
             bidderssoonData: state => state.bidders.bidderssoonData,
             biddersendData: state => state.bidders.biddersendData
         })
+        
     },
     methods:{
         //竞拍列表
+       
         async AuctionList(status,index){
+
             if(status){
                 this.status = status
             }
