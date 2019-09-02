@@ -30,6 +30,7 @@ let api = {
     userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
+    userLoginCodeSend: '/user/m/login/code',
     gainuserInfor:'/user/m/info',
     supplierCheck: '/user/supplier/check',
     supplierdataCheck: '/user/supplier/check/data',
