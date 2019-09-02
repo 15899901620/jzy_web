@@ -8,14 +8,14 @@
         <div class="TableList">
           <h1 class="fs16 mt20 bb1 pb10" >资金管理</h1>
           <div class="dflexAlem" style="justify-content: space-between; margin: 25px auto; font-size: 14px ">
-            <div>可用余额<span class="fs24 orangeFont fwb ml10">{{this.total_fund-this.userinfo.freezeAmount}}</span></div>
+            <div>可用余额<span class="fs24 orangeFont fwb ml10">{{available_amount_format}}</span></div>
             <div class="opePrice">
               <a class="orangesbg" href="/help/9" target="_blank" style="padding: 10px 15px; border-radius: 3px;">查看充值方式</a>
               <!-- <span class="orangeFont CashAdvBg ml15" href="">申请提现</span> -->
             </div>
           </div>
           <ul class="balancebg mb30">
-            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">{{this.total_fund - this.userinfo.freezeAmount}}</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">{{this.userinfo.freezeAmount}}</span></li>
+            <li><i class="pribg"></i>账户余额<span class="fs18 orangeFont fwb ml10">{{total_amount_format}}</span></li><li><i class="Frozenbg"></i>冻结金额<span class="fs18 orangeFont fwb ml10">{{freeze_amount_format}}</span></li>
           </ul>
         </div>
 
@@ -104,6 +104,9 @@ export default {
     data(){
         return{
             total_fund:'',
+            total_amount_format:'',
+            freeze_amount_format:'',
+            available_amount_format:'',
             userinfo: {}
         }
     },
@@ -117,7 +120,10 @@ export default {
         },
         async capital(){
             const res= await capitalinfo(this,{})
-            this.total_fund=res.data.total_fund
+            this.total_amount_format=res.data.total_amount_format
+            this.freeze_amount_format=res.data.freeze_amount_format
+            this.available_amount_format=res.data.available_amount_format
+                  
         },
         paycheck(){
             this.$router.push({name: "users-usercapitalpaycheck"})
@@ -128,7 +134,7 @@ export default {
         this.capital()
     },
     mounted(){
-
+        
     }
 }
 </script>

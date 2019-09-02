@@ -193,7 +193,15 @@ let api = {
   capital: {
     capitalinfo: '/user/m/capital/self',
     capitaldetail: '/bill/getFundByCompanyName'
-  }
+  },
+    /**
+     * @description 物流找车
+     */
+    logistics: {
+        warehouseList: '/item/warehouse/list',
+        erpCategoryList: '/item/category/sysMiddleCate',
+        searchFreightFee: '/bill/freightList/searchFreightFee'
+    },
 }
 
 export default {

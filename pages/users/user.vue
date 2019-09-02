@@ -20,11 +20,11 @@
                     <div class="dflex" style="width: 85%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
                         <div class="Av_balance">
                         <span>可用余额：</span>
-                        <span class="fs24 fwb orangeFont">{{total_fund-userinfo.freezeAmount}}</span>
+                        <span class="fs24 fwb orangeFont">{{available_amount_format}}</span>
                         </div>
-                        <div class="priceOpera">
+                        <!-- <div class="priceOpera">
                             <a href="/users/usercapitalpaycheck" class="pricebtnbg brd1 orangeFont ml15">查看我的资金</a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="" style="display: flex;width: 85%;margin: 20px auto;">
                         <div class="dflexPrice">
@@ -32,7 +32,7 @@
                         <div class="account_icon "></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>账户余额</span>
-                            <span class="fs18 fwb">{{total_fund-userinfo.freezeAmount}}</span>
+                            <span class="fs18 fwb">{{total_amount_format}}</span>
                         </div>
 
                         </div>
@@ -40,7 +40,7 @@
                         <div class="Frozen_icon"></div>
                         <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                             <span>冻结金额</span>
-                            <span class="fs18 fwb">{{userinfo.freezeAmount}}</span>
+                            <span class="fs18 fwb">{{freeze_amount_format}}</span>
                         </div>
                         </div>
                     </div>
@@ -48,29 +48,29 @@
 
                 </div>
 
-                <ul class="orderlist">
-                    <li>
+                <ul class="orderlist"   style="justify-content: left;">
+                    <li @click='payment()' style="cursor: pointer">
                     <div class="listIcon01 mt20"></div>
                     <div class="mt10">待付款</div>
                     </li>
-                    <li>
+                    <!-- <li>
                     <div class="listIcon02 mt20"></div>
                     <div class="mt10">待传单</div>
                     </li>
                     <li>
                     <div class="listIcon03 mt20"></div>
                     <div class="mt10">待提货</div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <li @click='auction()' style="cursor: pointer">
                     <div class="listIcon04 mt20"></div>
                     <div class="mt10">竞拍管理</div>
                     </li>
-                    <li>
+                    <li @click='logistics()' style="cursor: pointer">
                     <div class="listIcon05 mt20"></div>
                     <div class="mt10">物流管理</div>
                     </li>
-                    <li>
-                    <div class="listIcon06 mt20"></div>
+                    <li @click='account()' style="cursor: pointer">
+                    <div  class="listIcon06 mt20"></div>
                     <div class="mt10">账号完善</div>
                     </li>
                 </ul>
@@ -125,12 +125,12 @@
                                     </td>
                                     <td class="operate">
                                     <div class="" v-if="item.status == 1">
-                                        <a class="Paybtn mt15">去付款</a>
+                                        <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                                     </div>
                                     <div class="" v-if="item.status == 2">
-                                        <a class="Paybtn mt15">去付款</a>
+                                        <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                                     </div>
-                                    <a class="mt5 blackFont">查看详情</a>
+                                  <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"  class="mt5 blackFont">查看详情</router-link>
                                     </td>
                                 </tr>
                             </tbody>
@@ -140,6 +140,7 @@
                 </div>
             </div>
         </div>
+            <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
     </div>
 </template>
 
@@ -149,12 +150,13 @@ import Navigation from '../../components/navigation'
 import { getCookies } from '../../config/storage'
 import { orderpage } from '../../api/order'
 import config from '../../config/config'
-
+import paydeposit from '../../components/paydeposit'
 export default {
     name: "index",
     layout:'membercenter',
     components:{
         usernav: Navigation.user,
+        payorder: paydeposit.order
     },
     fetch({ store }) {
         return Promise.all([
@@ -164,7 +166,11 @@ export default {
     },
     data() {
         return {
-
+            dataRow: {},
+            payloading: false,
+            total_amount_format:'',
+            freeze_amount_format:'',
+            available_amount_format:'',
             hotorderinfo: [],
             total_fund:'',
             showtimeVal: '',
@@ -184,14 +190,40 @@ export default {
             if(!typeId) return
             return config.orderType[typeId]
         },
+        payment(){
+            this.$router.push({name:'users-usertotalorder',query:{status:2}})
+        },
+        auction(){
+            this.$router.push({name:'users-userauction'})
+        },
+        logistics(){
+            this.$router.push({name:'users-userlog'})   
+        },
+        account(){
+            this.$router.push({name:'users-useraccountinfor'})
+        },
         //订单状态
         getOrderState(typeId) {
             if(!typeId) return
             return config.orderState[typeId]
         },
+        paymentBut(row){
+            // console.log(row)
+            this.payloading = true
+            console.log(111);
+            this.dataRow = {
+                ...row,
+                freezeAmount: this.userinfo.freezeAmount
+            }
+        },
+        unPayOrder(row){
+            this.payloading = row
+        },
         async capital(){
             const res= await capitalinfo(this,{})
-            this.total_fund=res.data.total_fund
+             this.total_amount_format=res.data.total_amount_format
+            this.freeze_amount_format=res.data.freeze_amount_format
+            this.available_amount_format=res.data.available_amount_format
         },
         showtime () {
             var now = new Date();

@@ -7,7 +7,7 @@ import { parse, stringify } from 'qs'
  * @param {*} content 
  * @param {*} time  分
  */
-export const setStore = (name, content, time=0) => {
+export const setStore = (name, content, time) => {
     if (!name) return
     if (typeof content !== 'string') {
         content = stringify(content)

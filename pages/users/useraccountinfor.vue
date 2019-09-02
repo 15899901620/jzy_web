@@ -99,9 +99,9 @@ export default {
         },
         //获取用户信息
         async UserInfor(){
-             console.log(111);
+   
             const res=await getGainuserInfor(this,{})
-            console.log(res);
+ 
             this.userinfor=res.data
         },
         async handleSubmit(){
@@ -136,7 +136,7 @@ export default {
     },
     mounted() {
          this.UserInfor()
-        console.log("UserInfor")
+
     }
 }
 </script>

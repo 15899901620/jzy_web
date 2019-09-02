@@ -68,7 +68,7 @@
                     <div v-if="item.status === 2">
                       <a class="Paybtn mt15 CarCurr">已完成</a>
                     </div>
-                    <a class="mt5 blackFont">查看详情</a>
+                    <a class="mt5 blackFont" @click='BidersDetail(item.auctionId)'>查看详情</a>
                   </td>
                 </tr>
               </tbody>
@@ -123,6 +123,15 @@ export default {
     showTotal(total) {
       return `全部 ${total} 条`;
     },
+     BidersDetail(id){
+        console.log(id)
+            if(Cookies.get('userinfor') && Cookies.get('webtoken')){
+                this.$router.push({name:'bidders-detail-id', params:{id:id}})
+            }else {
+                console.log(id)
+            }
+
+    },
     inLogin () {
       let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
       if (!userinfo) {
@@ -130,7 +139,7 @@ export default {
       }
     },
     changePage (row) {
-      this.$router.push({name:'usertotalorder',query:{page:row}})
+      this.$router.push({name:'users-userauction',query:{page:row}})
     },
     async getSourceData () {
       let params = {
@@ -145,6 +154,10 @@ export default {
   },
   mounted(){
     // this.auctionOrderList()
+       var page=this.$route.query.page
+          if(page){
+              this.current_page = page
+          }
   },
   created(){
     this.inLogin()

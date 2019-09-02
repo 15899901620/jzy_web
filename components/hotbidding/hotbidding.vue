@@ -75,7 +75,6 @@ export default {
             isActive:''
           }
           let res = await auctionPage(this,params)
-          console.log(res)
           if(res.status === 200){
             this.indexAuction=res.data.items
             var arrayData=[]

@@ -163,7 +163,6 @@ export default {
             }
             let res = await getorderDetail(this, params)
             this.datalist = res.data
-            console.log('res', res)
         }
     },
     created(){
