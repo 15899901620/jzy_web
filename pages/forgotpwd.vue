@@ -505,7 +505,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .swiper-wrapper{width: 3600px; margin: 0 auto;}
 .swiper_con{width:100%; margin: 0 auto; position:relative; overflow: hidden; margin-bottom: 30px;}
 .swiper-slide { width: 100%; margin: 0PX auto;}
