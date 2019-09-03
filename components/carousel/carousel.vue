@@ -154,6 +154,7 @@ export default {
                     this.slideInstances.push(child);
                 }
             });
+           
             this.slides = slides;
             this.updatePos();
         },

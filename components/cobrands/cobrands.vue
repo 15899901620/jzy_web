@@ -5,11 +5,15 @@
             :height = "174"
             :autoplay-speed="9000">
             <carousel-item  v-for="(item, index) in brandList" :key="index">
+              <template v-if="brandList.length > 0">
                 <ul class="coorperList">
                     <li v-for="(items, k) in item" :key="k">
                         <a href="#"><img :src="returnImage(items)"/></a>
                     </li>
                 </ul>
+              </template>
+              <template v-if="brandList.length > 0">
+              </template>
             </carousel-item>
         </carousel>
     </div>
@@ -41,7 +45,6 @@ export default {
         ...mapState({
             cobrandsInfo: state => state.home.cobrandsInfo,
         }),
-        
         classes() {
             return [
                 `${prefixCls}`,
@@ -60,13 +63,13 @@ export default {
             }
             const res = await cooperativeBrand(this, params)
             let cobrand = res.data.items
-             if(cobrand) {
+            if(cobrand) {
                 let i = 0
                 let a = 14
                 let b = 0
                 for(let k in cobrand) {
                     if(k<a) {
-                        this.currlist[b] =  Object.assign({}, cobrand[k])
+                        this.currlist[b] = Object.assign({}, cobrand[k])
                     }else{
                         this.brandList.push(this.currlist)
                         this.currlist = []
@@ -76,11 +79,6 @@ export default {
                     }
                     b = b+1
                 }
-
-            //    this.brandList =  Object.assign({}, cobrandData);
-
-
-               
             }
         }
     },
