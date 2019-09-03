@@ -73,7 +73,7 @@ export default {
             var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
             if (!myreg.test(this.loginform.username)) {
                 this.NameCheck = true
-                this.NameText = '手机号和用户名不能为空!'
+                this.NameText = '手机号不能为空!'
                 return
             } else {
                 this.NameCheck = false
@@ -126,6 +126,11 @@ export default {
                 this.$Message.info("手机号不能为空")
                 return
             } else {
+                var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+                if (!myreg.test(phone)) {
+                    this.$Message.info("请输入正确的手机号")
+                    return
+                }
                 let params = {
                     phone: phone
                 }
