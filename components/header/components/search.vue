@@ -1,8 +1,8 @@
 <template>
   <div class="TopSearch">
     <div style="display: flex;">
-      <input class="search-text" autocomplete="off" value="" id="keyword" type="text" name="keyword" placeholder="请输入牌号、厂商进行搜索">
-      <input class="search-btn" id="search_submit" type="button" value="搜  索">
+      <input class="search-text" autocomplete="off" id="keyword" v-model="keyword" type="text" name="keyword" placeholder="请输入牌号、厂商进行搜索">
+      <input class="search-btn" id="search_submit" type="button" v-on:click="gotoSearch" value="搜  索">
     </div>
     <div class="HotTip mt5 fs12" style="display: flex;">
         <span>热门搜索 :</span>
@@ -21,7 +21,8 @@ export default {
     name: "search",
     data() {
         return {
-            hotsearch:[]
+            hotsearch:[],
+            keyword: !this.$route.query.kd ? '' :this.$route.query.kd 
         }
     },
     methods: {
@@ -33,6 +34,11 @@ export default {
             } else {
                 this.hotsearch = getStore('hotsearch')
             }
+        },
+        gotoSearch() {
+            let kd = this.keyword
+            if(!kd) return false;
+            this.$router.push({name:'spot-page',query:{kd:kd}})
         }
     },
     created() {

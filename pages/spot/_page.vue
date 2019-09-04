@@ -153,7 +153,7 @@
                 processId: '',
                 purposeId: '',
                 featureId: '',
-                skuName: '',
+                skuName: !this.$route.query.kd ? '' :this.$route.query.kd ,
                 manufacturer: '',
                 minPrice: '',
                 maxPrice: '',

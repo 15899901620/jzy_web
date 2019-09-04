@@ -70,13 +70,6 @@ export default {
     },
     methods:{
         async AuctionRecord(){
-          // let params={
-          //   current_page:'1',
-          //   page_size:'12',
-          //   isActive:''
-          // }
-          // let res = await auctionPage(this,params)
-          console.log(this.hotbidderList)
           if(this.hotbidderList){
             this.indexAuction= this.hotbidderList
             var arrayData=[]
