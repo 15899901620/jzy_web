@@ -1,9 +1,13 @@
 <template>
   <div>
+    
     <div class="mt25">
       <input type="text" class="NumInput" v-model="loginform.username"  placeholder="手机" />
     </div>
-    <div class="mt25 lCode">
+    <div class="mt15">
+      <slide-verify @onChange="onTime"></slide-verify>
+    </div>
+    <div class="mt15 lCode">
       <Input class="logincode" v-model="loginform.mobilecode"  placeholder="请输入验证码" />
 
         <div class="loginCodebtn graybg"  @click="getNoteValue" v-if="btnBoolen" style="pointer-events: none;" >
@@ -34,135 +38,146 @@ import { manageLogin, getGainuserInfor, userLoginCodeSend } from '../../api/user
 import Cookies from 'js-cookie'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import { parse, stringify } from 'qs'
-
+import SlideVerify from '../slide-verify'
 
 export default {
     name: "login",
+    components: {
+      SlideVerify
+    },
     data() {
-        return {
-            NameCheck: false,
-            passwordTip: false,
-            NameText: '',
-            passwordName: '',
-            loginform: {
-                username: '',
-                mobilecode: '',
-                password: ''
-            },
-            btnValue: "获取短信验证码",
-            btnBoolen: false,
-            btnClassName: "btn",
-            second: 60
-        };
+      return {
+        NameCheck: false,
+        passwordTip: false,
+        NameText: '',
+        passwordName: '',
+        loginform: {
+          username: '',
+          mobilecode: '',
+          password: ''
+        },
+        btnValue: "获取短信验证码",
+        btnBoolen: false,
+        btnClassName: "btn",
+        second: 60
+      };
+    },
+    computed: {
+      ...mapState([
+        'slidecode'
+      ])
     },
     methods: {
-        ...mapMutations('login', [
-            'updateUserInfof'
-        ]),
+      ...mapMutations('login', [
+          'updateUserInfof'
+      ]),
+      onTime(res){
+        console.log("1",this.slidecode)
+        console.log(res)
+      },
+      async LoginForm(){
+          if (!this.loginform.username) {
+              this.NameCheck = true
+              this.NameText = '手机号不能为空!'
+              return
+          }
+          if (!this.loginform.mobilecode) {
+              this.NameText = '手机验证码不能为空!'
+              return
+          }
+          var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+          if (!myreg.test(this.loginform.username)) {
+              this.NameCheck = true
+              this.NameText = '手机号不能为空!'
+              return
+          } else {
+              this.NameCheck = false
+              let params = {
+                  username: this.loginform.username.replace(/^\s+|\s+$/g, ""),
+                  code: this.loginform.mobilecode,
+                  password: this.loginform.password.replace(/^\s+|\s+$/g, "")
+              }
 
-        async LoginForm(){
-            if (!this.loginform.username) {
-                this.NameCheck = true
-                this.NameText = '手机号不能为空!'
-                return
-            }
-            if (!this.loginform.mobilecode) {
-                this.NameText = '手机验证码不能为空!'
-                return
-            }
+              const res = await manageLogin(this, params)
+              if (res.data.data === null && res.status === 200) {
+                  this.passwordTip = true
+                  this.passwordName = '账号密码或验证码错误！'
+                  return
+              } else {
+                  var authres = res.data
+                  if (authres && res.status === 200) {
+                      let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
+                      Cookies.set('webtoken', authres, {expires: expires})
+                      const res = await getGainuserInfor(this, {})
+                      if (res.data && res.status === 200) {
+                          let auth = stringify(res.data)
+                          Cookies.set('userinfor', auth, {expires: expires})
+                          this.updateUserInfof(res.data)
+                          this.$router.push({name: 'index'})
+                      } else {
+                          this.passwordTip = true
+                          this.passwordName = '登录失败请与管理员联系！'
+                          return
+                      }
+                  }
+              }
+          }
+      },
+      //忘记密码
+      ForgotPassword(){
+          this.$router.push({name: 'ForgotPassword-ForgotPassword', query: {params: 'Member'}})
+      },
+
+      //跳转注册页面
+      Register(){
+          this.$router.push({name: 'register-supplyRegister'})
+      },
+      //获取短信验证码
+      async getNoteValue () {
+        var phone = this.loginform.username;
+        console.log(phone);
+
+        if (phone === "") {
+            this.$Message.info("手机号不能为空")
+            return
+        } else {
             var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
-            if (!myreg.test(this.loginform.username)) {
-                this.NameCheck = true
-                this.NameText = '手机号不能为空!'
+            if (!myreg.test(phone)) {
+                this.$Message.info("请输入正确的手机号")
                 return
-            } else {
-                this.NameCheck = false
-                let params = {
-                    username: this.loginform.username.replace(/^\s+|\s+$/g, ""),
-                    code: this.loginform.mobilecode,
-                    password: this.loginform.password.replace(/^\s+|\s+$/g, "")
-                }
+            }
+            let params = {
+                phone: phone
+            }
+            const res = await userLoginCodeSend(this, params)
+            if (res.data && res.status === 200) {
+                this.$Message.info("短信发送成功")
 
-                const res = await manageLogin(this, params)
-                if (res.data.data === null && res.status === 200) {
-                    this.passwordTip = true
-                    this.passwordName = '账号密码或验证码错误！'
-                    return
-                } else {
-                    var authres = res.data
-                    if (authres && res.status === 200) {
-                        let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
-                        Cookies.set('webtoken', authres, {expires: expires})
-                        const res = await getGainuserInfor(this, {})
-                        if (res.data && res.status === 200) {
-                            let auth = stringify(res.data)
-                            Cookies.set('userinfor', auth, {expires: expires})
-                            this.updateUserInfof(res.data)
-                            this.$router.push({name: 'index'})
-                        } else {
-                            this.passwordTip = true
-                            this.passwordName = '登录失败请与管理员联系！'
-                            return
-                        }
+                var sj = Math.ceil(Math.random(10 + 1) * 100000)
+                window.localStorage.setItem("note", sj)
+
+                this.auth_time = 10;
+                var timer = setInterval(() => {
+                    this.auth_time--;
+                    if (this.auth_time <= 0) {
+                        clearInterval(timer)
+                        this.btnBoolen = false;
+                        this.btnClassName = "btns"
+                        this.btnValue = "获取短信验证码"
+
+                    } else {
+                        this.btnBoolen = true;
+                        this.btnValue = `重新获取(${this.auth_time})S`
+                        this.btnClassName = "btn"
                     }
-                }
-            }
-        },
-        //忘记密码
-        ForgotPassword(){
-            this.$router.push({name: 'ForgotPassword-ForgotPassword', query: {params: 'Member'}})
-        },
+                }, 1000)
 
-        //跳转注册页面
-        Register(){
-            this.$router.push({name: 'register-supplyRegister'})
-        },
-        //获取短信验证码
-        async getNoteValue () {
-            var phone = this.loginform.username;
-            console.log(phone);
 
-            if (phone === "") {
-                this.$Message.info("手机号不能为空")
-                return
             } else {
-                var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
-                if (!myreg.test(phone)) {
-                    this.$Message.info("请输入正确的手机号")
-                    return
-                }
-                let params = {
-                    phone: phone
-                }
-                const res = await userLoginCodeSend(this, params)
-                if (res.data && res.status === 200) {
-                    this.$Message.info("短信发送成功")
-
-                    var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                    window.localStorage.setItem("note", sj)
-
-                    this.auth_time = 10;
-                    var timer = setInterval(() => {
-                        this.auth_time--;
-                        if (this.auth_time <= 0) {
-                            clearInterval(timer)
-                            this.btnBoolen = false;
-                            this.btnClassName = "btns"
-                            this.btnValue = "获取短信验证码"
-
-                        } else {
-                            this.btnBoolen = true;
-                            this.btnValue = `重新获取(${this.auth_time})S`
-                            this.btnClassName = "btn"
-                        }
-                    }, 1000)
-
-
-                } else {
-                    this.$Message.info("短信发送失败")
-                }
+                this.$Message.info("短信发送失败")
             }
-        },
+        }
+      },
     },
     mounted() {
 
@@ -175,6 +190,7 @@ export default {
 .lCode{display: flex; justify-content: space-between; align-items: center}
   .logincode{
     width:55%;
+    border-radius: 
   }
   .loginCodebtn{
     padding: 7px 10px;

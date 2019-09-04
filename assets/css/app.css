@@ -230,7 +230,7 @@
 	width:100%;
 	border:1px solid #dddddd;
 	border-radius:3px;
-	line-height:36px;
+	line-height:28px;
 	box-sizing:border-box;
 }
 .logingAccount {
@@ -239,7 +239,7 @@
 	cursor:pointer;
 	background-color:#007de4;
 	border:none;
-	line-height:36px;
+	line-height:28px;
 	color:#fff;
 	border-radius:3px;
 	margin-top:15px;

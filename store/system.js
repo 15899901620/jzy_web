@@ -8,6 +8,7 @@ import { adposition } from '../api/adposition'
 import { setCookies, getCookies } from '../config/storage'
 export const state = () => {
     return {
+      slidecode: 0,
       systeminfo: [],
       linksinfo: [],
       bannerinfo: [],
@@ -15,17 +16,21 @@ export const state = () => {
     }
 }
 export const mutations = {
+    setSlideVerify(state, data) {
+      console.log("set",data)
+      state.slidecode = data
+    },
     updateSystemCnf(state, data) {
-        state.systeminfo = data
+      state.systeminfo = data
     },
     updataLinksInfo(state, data) {
-        state.linksinfo = data
+      state.linksinfo = data
     },
     updateBannerInfo(state, data) {
-        state.bannerinfo = data
+      state.bannerinfo = data
     },
     updateHotSearch(state, data) {
-        state.hotsearch = data
+      state.hotsearch = data
     }
 }
   
