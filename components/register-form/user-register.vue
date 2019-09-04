@@ -610,6 +610,10 @@ export default {
                 }else if(res.data.is_exist === "true"){
                     this.companyValid = true
                     this.formCustom.taxId = res.data.tax_id
+                    this.formCustom.invBankName = res.data.Bank
+                    this.formCustom.invBankAccount = res.data.BankAccount
+                    this.formCustom.invAddress = res.data.Address
+                    this.formCustom.invTelephone = res.data.Tel
                 }
             }else{
                 callback(new Error('公司名称不存在'))
