@@ -59,6 +59,7 @@ export default {
     },
     computed: {
         ...mapState({
+          hotbidderList: state => state.bidders.hotbidderList,
         }),
         classes() {
             return [
@@ -69,14 +70,8 @@ export default {
     },
     methods:{
         async AuctionRecord(){
-          let params={
-            current_page:'1',
-            page_size:'12',
-            isActive:''
-          }
-          let res = await auctionPage(this,params)
-          if(res.status === 200){
-            this.indexAuction=res.data.items
+          if(this.hotbidderList){
+            this.indexAuction= this.hotbidderList
             var arrayData=[]
             for (var i=0;i<this.indexAuction.length;i++){
               if(i<8){
@@ -228,3 +223,4 @@ export default {
 <style>
 
 </style>
+    

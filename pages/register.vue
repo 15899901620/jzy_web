@@ -138,7 +138,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 	.swiper-wrapper {
 		width: 3600px;
 		margin: 0 auto;

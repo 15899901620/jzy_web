@@ -44,14 +44,19 @@ export default {
 	 */
 	css: [
 		'~/assets/css/global.css',
-		'~/assets/css/app.css',
+    '~/assets/css/app.css',
+    
+    { src: "swiper/dist/css/swiper.css" }
+
 	],
 	/*
 	 ** Plugins to load before mounting the App
 	 */
 	plugins: [
-		'@/plugins/axios',
-		'@/plugins/storage',
+    '@/plugins/axios',
+    '~/plugins/components',
+    '@/plugins/storage',
+    { src: "~/plugins/swiper.js", ssr: false },
 		{
 			src: '~/plugins/iview.js',
 			ssr: true

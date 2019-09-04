@@ -15,8 +15,12 @@
 					<img src="/img/Time_banner.png" />
 					<a class="bidders_front" href="/bidders"></a>
 				</div>
-				<!-- <hotbidding title="热门竞拍"></hotbidding> -->
+				<hotbidding title="热门竞拍"></hotbidding>
 			</div>
+      <div class="hot-spot">
+	      <outpacking title="现货超市" cpadding="0px" :more="spotData">
+    	  </outpacking>
+      </div>
 			<div class="co-brands">
 				<outpacking title="合作品牌" cpadding="0px">
 					<div slot="content">
@@ -82,6 +86,10 @@ export default {
             store.dispatch('article/getHotArticle', {
                 current_page: 1,
                 page_size: 4
+            }),
+            store.dispatch('bidders/getHotBidderList', {
+                current_page: 1,
+                page_size: 20
             })
         ])
     },
@@ -99,6 +107,10 @@ export default {
     },
     data() {
         return {
+            spotData: {
+              title: '前往现货超市...',
+              url: '/spot'
+            },
             moreData: {
                 title: '更多...',
                 url: '/article/2'

@@ -8,6 +8,7 @@ import api from '../config/api'
 
 export const state = () => {
     return {
+        hotbidderList: [],
         biddersbeingData: {},
         bidderssoonData: {},
         biddersendData: {}
@@ -15,6 +16,9 @@ export const state = () => {
 }
   
 export const mutations = {
+    updateHotBidderData(state, data) {
+      state.hotbidderList = data
+    },
     updatebeingData(state, data) {
         state.biddersbeingData = data
     },
@@ -28,9 +32,15 @@ export const mutations = {
 }
   
 export const actions = {
+    async getHotBidderList({ commit }, { params }) {
+      let res = await auctionPage(this,params)
+      if(res.status === 200){
+        commit('updateHotBidderData', res.data.items)
+      }
+    },
+    
     async getBidderDetail({ commit }, { params }) { 
         const res = await auctionInfor(this, params)
-            console.log(res)
         commit('updatebidderDetail', res)
     },
    

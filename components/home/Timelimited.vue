@@ -4,7 +4,7 @@
       <img src="../../static/img/Time_banner.png" />
       <div class="bidders_front" @click="biddersList"></div>
     </div>
-    <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
+    <div class="ovh pr"  id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
       <div class="Time-limited_back position prve" id='prev' :style="{'display':display}" >
         <img src="../../static/img/back.png" />
       </div>

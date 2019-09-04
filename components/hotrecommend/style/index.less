@@ -59,11 +59,18 @@
                 align-items: center;
                 list-style: disc inside; 
                 font-size: 12px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                word-break: keep-all;
+                line-height: 26px;
+                overflow: hidden;   //隐藏
                 & a {
                     display: flex; 
                     justify-content: space-between;
                     padding-left: 5px;
                     line-height: 25px;
+                    white-space: nowrap;
+                    word-break: keep-all;
                     &:hover{
                         color: @blue-6
                     }
