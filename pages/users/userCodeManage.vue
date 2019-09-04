@@ -16,7 +16,7 @@
                     </li>
                     <li>
                         <span class="titleInfor">新密码</span>
-                        <Input type="password" class="inforInput" v-model="newspassword"  />
+                        <Input type="password" class="inforInput" v-model="newspassword" @on-blur="repasswordCheck"   />
                     </li>
                     <li>
                         <span class="titleInfor">新密码确认</span>
@@ -121,10 +121,19 @@ export default {
             });
             return
             }
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
+            if (!patrn.exec(this.newspassword)) {
+                  this.$Notice.warning({
+                        title: '密码必须是8-20字母和数字组合',
+                        duration: 5
+                    });
+                    return
+            }
             if(this.newspassword === this.repassword){
                 this.password = this.newspassword
+                this.showpassword=false
             }else{
-            this.showpassword=true
+                this.showpassword=true
             }
         },
         // 验证手机验证码

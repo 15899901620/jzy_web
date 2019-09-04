@@ -73,12 +73,22 @@ export const supplierLogin = (vm, data) => {
 
 
 export const carrierCodes = (vm, data) => {
-  return vm.$axios.post(server.prefix + server.api.user.carriercode,
-    {
-      ...data
-    }).catch((e) => {
-      let errorInfo = e.response
-      console.log('manageRegErr', errorInfo)
+    return vm.$axios.post(server.prefix + server.api.user.carriercode,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('manageRegErr', errorInfo)
+    })
+}
+
+export const userLoginCodeSend = (vm, data) => {
+    return vm.$axios.post(server.prefix + server.api.user.userLoginCodeSend,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('manageRegErr', errorInfo)
     })
 }
 

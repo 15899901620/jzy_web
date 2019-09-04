@@ -220,9 +220,9 @@ export default {
             if (value === '') {
                 callback(new Error('密码不能为空'));
             }
-            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/; 
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
             if (!patrn.exec(value)) {
-                   callback(new Error('密码必须是6-20字母和数字组合'));   
+                   callback(new Error('密码必须是8-20字母和数字组合'));   
             }else{
                 this.passwordValid=true
                 callback();
