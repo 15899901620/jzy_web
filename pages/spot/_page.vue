@@ -34,7 +34,7 @@
                         <div class="fr pro_m_select" :class="processMore ? '' : 'arrow-up'" @click="processOpen">{{processMoreVal}}</div>
                     </div>
                     <!--用途-->
-                    <div class="screenibre">
+                    <!--<div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">用途：</dt>
                             <dd class="pro_brand_list" :class="purposeMore ? 'h50' : ''">
@@ -44,7 +44,7 @@
                             </dd>
                         </dl>
                         <div class="fr pro_m_select" :class="purposeMore ? '' : 'arrow-up'" @click="purposeOpen">{{purposeMoreVal}}</div>
-                    </div>
+                    </div>-->
                     <!--特性-->
                     <div class="screenibre">
                         <dl class="fl filter_item">
@@ -147,11 +147,11 @@
                 total: 0,
                 category: [],
                 process: [],
-                purpose: [],
+                //purpose: [],
                 feature: [],
                 categoryId: '',
                 processId: '',
-                purposeId: '',
+                //purposeId: '',
                 featureId: '',
                 skuName: !this.$route.query.kd ? '' :this.$route.query.kd ,
                 manufacturer: '',
@@ -159,11 +159,11 @@
                 maxPrice: '',
                 categoryMore: true,
                 processMore: true,
-                purposeMore: true,
+                //purposeMore: true,
                 featureMore: true,
                 categoryMoreVal: '更多',
                 processMoreVal: '更多',
-                purposeMoreVal: '更多',
+                //purposeMoreVal: '更多',
                 featureMoreVal: '更多'
             }
         },
@@ -193,10 +193,10 @@
                 this.processId = id;
                 this.spotData();
             },
-            purposeClick(id) {
+            /*purposeClick(id) {
                 this.purposeId = id;
                 this.spotData();
-            },
+            },*/
             featureClick(id) {
                 this.featureId = id;
                 this.spotData();
@@ -217,14 +217,14 @@
                     this.processMoreVal = "收回"
                 }
             },
-            purposeOpen() {
+            /*purposeOpen() {
                 this.purposeMore = !this.purposeMore
                 if (this.purposeMore) {
                     this.purposeMoreVal = "更多"
                 } else {
                     this.purposeMoreVal = "收回"
                 }
-            },
+            },*/
             featureOpen() {
                 this.featureMore = !this.featureMore
                 if (this.featureMore) {
@@ -248,7 +248,7 @@
                 let params = {
                     category_id: this.categoryId,
                     level_id: this.processId,
-                    purpose_id: this.purposeId,
+                    //purpose_id: this.purposeId,
                     feature_id: this.featureId,
                     sku_name: this.skuName,
                     manufacturer: this.manufacturer,
@@ -266,7 +266,7 @@
                 const res = await filterConditon(this, params);
                 this.category = res.data.categoryFilter;
                 this.process = res.data.specLevelFilter;
-                this.purpose = res.data.specPurposeFilter;
+                //this.purpose = res.data.specPurposeFilter;
                 this.feature = res.data.specFeatureFilter;
             },
         },
