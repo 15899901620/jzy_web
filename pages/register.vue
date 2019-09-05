@@ -8,7 +8,7 @@
                 </div>
 			</div>
 		</Header-small>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
 			<div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
 				<ul class="registerTab">
 					<li v-for="(item, index) in Registerlist" :class="{'curr':nowIndex === index}" @click="tabClick(index,item.name)" v-bind:key="index">{{item.name}}</li>
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<Footer size="small" title="底部" style="margin-top:18px;"></Footer>
+		<Footer size="small" title="" style="margin-top:18px;"></Footer>
 	</div>
 </template>
 

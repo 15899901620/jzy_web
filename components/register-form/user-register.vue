@@ -54,9 +54,9 @@
                     <Row :gutter="24"  index="5" >
                         <Col span="21" @click="protocolModalToShow">
                             <div @click="protocolModalToShow">
-                        <FormItem prop="single" >
-                            <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a class="orangeFont">《巨正源用户服务协议》</a>
-                        </FormItem>
+                                <FormItem prop="single" >
+                                    <Checkbox v-model="formCustom.single"></Checkbox><span>我已阅读并同意</span><a class="orangeFont">《巨正源用户注册服务协议》</a>
+                                </FormItem>
                             </div>
                         </Col>
                     </Row>
@@ -174,14 +174,15 @@
             </Form>
         </div>
         <Modal
-            title="注册协议"
+            title="用户注册协议"
             v-model="protocolModalShow"
             @on-cancel="protocolModalCancel"
             :width='700'
             class-name="vertical-center-modal">
-            <div class="" style="text-align: center;">
-                {{systeminfo.MEMBER_REGISTRATION_PROTOCOL}}    
-                <Button  type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+            <div class="" v-html="systeminfo.MEMBER_REGISTRATION_PROTOCOL">
+            </div>
+            <div slot="footer" style="text-align: center">
+                <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
             </div>
         </Modal>
     </div>
@@ -199,7 +200,6 @@ const appConfig = require('../../config/app.config')
 export default {
     name: 'UserRegister',
     data() {
-
         const validatePhone=(rule, value, callback) => {
             if (value === '') {
                 callback(new Error('手机号不能为空'));

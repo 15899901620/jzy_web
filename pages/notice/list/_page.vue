@@ -15,11 +15,16 @@
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in noticelist.items" :key="index">
                                     <div class="News_content">
-                                        <h2><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link></h2>
-                                        <div class="NewsList_text">{{items.seoDescription}}</div>
                                         <div class=" mt20">
-                                            <div class="dflexAlem fl"><img src="/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：<nuxt-link to="/">巨正源</nuxt-link></div>
-                                            <nuxt-link class="blueFont fr" :to="{name:'notice-detail-id', params:{id:items.id}}">阅读更多</nuxt-link>
+                                            <span style="    float: left;">
+
+                                             <nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
+                                            </span>
+                                           
+                                              <span class="gray fl ml30" style="float: right;">来源：<nuxt-link to="/">巨正源</nuxt-link></span>
+                                            <span class="dflexAlem fl" style="float: right;"><img src="/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></span>
+                                          
+
                                         </div>
                                     </div>
                                 </li>
