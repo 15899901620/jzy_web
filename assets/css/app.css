@@ -516,7 +516,12 @@ a {
 }
 .newsWeek li a {
 	display:flex;
-	align-items:center;
+  align-items:center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: keep-all;
+  width: 220px;
+  overflow: hidden;
 }
 .newsWeek li .text {
 	width:80%;
