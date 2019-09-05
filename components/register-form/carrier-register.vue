@@ -230,14 +230,15 @@
             </Form>
         </div>
         <Modal
-            title="注册协议"
+            title="承运商注册协议"
             v-model="protocolModalShow"
             @on-cancel="protocolModalCancel"
             :width='700'
             class-name="vertical-center-modal">
-            <div class="" style="text-align: center;">
-                {{systeminfo.CARRIER_REGISTRATION_PROTOCOL}}    
-                <Button  type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+            <div class="" v-html="systeminfo.CARRIER_REGISTRATION_PROTOCOL">
+            </div>
+            <div slot="footer" style="text-align: center">
+                <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
             </div>
         </Modal>
     </div>

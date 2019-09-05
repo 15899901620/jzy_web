@@ -178,12 +178,13 @@ export default {
         }
     },
     methods:{
-        inLogin () {
+        isLogin () {
             let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
             if (!userinfo) {
-                this.$router.push('/login')
+                return false
             }
             this.userinfo = userinfo
+            return true
         },
         //订单类型
         getOrderType(typeId) {
@@ -246,12 +247,13 @@ export default {
         }
     },
     created(){
-        this.capital()
-        this.showtime()
-    },
-    mounted(){
-        this.inLogin();
-        this.getOrderList();
+        if(this.isLogin()){
+            this.capital()
+            this.showtime()
+            this.getOrderList()
+        }else{
+            window.location.href = '/login'
+        }
     }
 }
 </script>

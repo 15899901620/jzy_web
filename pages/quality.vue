@@ -1,7 +1,7 @@
 <template>
 	<div class="body">
 		<Header title="头部"></Header>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
             <div class="w1200 fs14" style="margin-top:18px">
                 <outpacking title="质检单" cpadding="0px">
 					<div slot="content">
@@ -56,12 +56,12 @@
                             </template>
                             <template v-else>
                                 <li>
-                                    <p style="width:100%; text-align:center">暂无任何符合条件的质检单信息！</p>
+                                    <p style="width:100%; text-align:center; font-size: large;padding-top: 30px;">暂无任何符合条件的质检单信息！</p>
                                 </li>
                             </template>
                         </ul>
                         <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="datalist">
-                            <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page"></pages>
+                            <pages :total="total" :pageSize="page_size" :show-total="showTotal" @change="changePage" :value="current_page"></pages>
                         </div>
 					</div>
 				</outpacking>
@@ -87,7 +87,6 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import pagination from '../components/pagination'
 import outpacking from '../components/outpacking'
-import { inspectionlistPage } from '../api/users'
 
 import server from '../config/api'
 import { sendHttp } from '../api/common'
@@ -118,7 +117,7 @@ export default {
         return {
             showmodal: false,
             datalist:[],
-            page_size:5,
+            page_size:2,
             current_page:1,
             total: 0,
             rowData: {},
@@ -169,12 +168,8 @@ export default {
             return `全部 ${total} 条`;
         },
         changePage(row) {
-            this.$router.push({
-                name: 'spot',
-                query: {
-                    page: row
-                }
-            })
+            this.current_page = row
+            this.handleSearch()
         },
         seedetail (info) {
             this.rowData = info
@@ -190,9 +185,9 @@ export default {
         this.SourceData()
     },
     watch: {
-        '$route' (to, from) {
+        /*'$route' (to, from) {
             this.$router.go(0);
-        }
+        }*/
     }
 }
 </script>
