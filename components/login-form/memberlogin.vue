@@ -1,40 +1,50 @@
 <template>
-  <div>
-    
-    <div class="mt25">
-      <input type="text" class="NumInput" v-model="loginform.username"  placeholder="手机" />
-    </div>
-    <div class="mt15">
-      <slide-verify @onChange="onTime"></slide-verify>
-    </div>
-    <div class="mt15 lCode">
-      <Input class="logincode" v-model="loginform.mobilecode"  placeholder="请输入验证码" />
-
-        <div class="loginCodebtn graybg"  @click="getNoteValue" v-if="btnBoolen" style="pointer-events: none;" >
-          {{this.btnValue}}
-        </div>
-        <div class="loginCodebtn graybg"  @click="getNoteValue" v-else >
-          {{this.btnValue}}
-        </div>
-    </div>
-    <div class="mt15">
-      <input type="password" class="NumInput"  v-model="loginform.password" placeholder="密码" @keyup.enter='LoginForm' />
-    </div>
-    <div class="msg-wrap" >
-      <div class="msg-error" v-show="NameCheck"><b></b><span>{{NameText}}</span></div>
-      <div class="msg-error" v-show="passwordTip"><b></b><span>{{passwordName}}</span></div>
-    </div>
-
-    <div class="logingAccount" @click="LoginForm">登 录</div>
-    <div class="mt40 dflex codeNews" style="justify-content: space-between; color: #666; ">
-      <div  class="cp"><nuxt-link to="/forgotpwd" >忘记密码</nuxt-link></div>
-      <div  class="cp"><nuxt-link to="/register" >注册新账号</nuxt-link></div>
-    </div>
+  <div class="memberlogin">
+    <Form ref="loginform" :model="loginform" :rules="ruleCustom">
+      <Row :gutter="24" index="">
+        <Col span="24">
+          <FormItem prop="username">
+            <Input v-model="loginform.username"  max="11" placeholder="手机号"/>
+          </FormItem>
+        </Col>
+      </Row>
+      <Row :gutter="24" index="">
+        <Col span="24">
+          <FormItem prop="slidecode">
+            <slide-verify @onChange="onTime"></slide-verify>
+          </FormItem>
+        </Col>
+      </Row>
+      <Row :gutter="24" index="">
+        <Col span="24">
+          <FormItem prop="mobilecode">
+            <Input v-model="loginform.mobilecode"  placeholder="短信验证码"/>
+          </FormItem>
+          <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
+        </Col>
+      </Row>
+      <Row :gutter="24" index="">
+        <Col span="24">
+          <FormItem prop="password">
+            <Input v-model="loginform.password" type="password" placeholder="登录密码"/>
+          </FormItem>
+        </Col>
+      </Row>
+      <Button type="primary" long v-on:click="LoginForm">登录</Button>
+      <Row :gutter="24" index="">
+        <Col span="12" style="text-align:left; margin:10px auto;">
+          <nuxt-link to="/forgotpwd" >忘记密码</nuxt-link>
+        </Col>
+        <Col span="12" style="text-align:right; margin:10px auto;">
+          <nuxt-link to="/register" >注册新账号</nuxt-link>
+        </Col>
+      </Row>
+    </Form>
   </div>
 </template>
 
 <script>
-import { manageLogin, getGainuserInfor, userLoginCodeSend } from '../../api/users'
+import { manageLogin, getGainuserInfor, userLoginCodeSend, userPhoneCheck } from '../../api/users'
 import Cookies from 'js-cookie'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import { parse, stringify } from 'qs'
@@ -46,20 +56,53 @@ export default {
       SlideVerify
     },
     data() {
+      const validatePhone = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('手机号不能为空'));
+        } else {
+          if(this.loginform.username.length != 11){
+              callback(new Error('请正确填写手机号，需是11位！'));
+          }else {
+            var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+            if(!myreg.test(this.loginform.username)){
+              callback(new Error('请正确填写手机号'));
+            }else{
+              callback();
+            }
+          }
+        }
+      };
+      const validateSlide = (rule, value, callback) => {
+        if(value === 0){
+          callback(new Error('请滑动完成验证'));
+        }else{
+          callback();
+        }
+      };
       return {
         NameCheck: false,
         passwordTip: false,
-        NameText: '',
+        cphone: false,
         passwordName: '',
+        auth_time: 0,
         loginform: {
           username: '',
           mobilecode: '',
-          password: ''
+          password: '',
+          slidecode: 0
         },
-        btnValue: "获取短信验证码",
+        btnValue: "发送验证码",
         btnBoolen: false,
         btnClassName: "btn",
-        second: 60
+        second: 60,
+        ruleCustom: {
+          username: [
+            { validator: validatePhone, trigger: 'blur' }
+          ],
+          slidecode: [
+            { validator: validateSlide, trigger: 'blur' }
+          ]
+        }
       };
     },
     computed: {
@@ -72,24 +115,47 @@ export default {
           'updateUserInfof'
       ]),
       onTime(res){
-        console.log("1",this.slidecode)
-        console.log(res)
+        console.log(!res)
+        if(res){
+          this.loginform.slidecode = res
+        }else{
+          this.$Modal.warning({
+            title: '提示',
+            content:  '验证失败！',
+            duration: 5,
+            styles:'top:300px'
+          });
+        }
       },
       async LoginForm(){
           if (!this.loginform.username) {
-              this.NameCheck = true
-              this.NameText = '手机号不能为空!'
-              return
+              this.$Modal.info({
+                title: '提示',
+                content: '手机号不能为空!'
+              });
+              return false
           }
           if (!this.loginform.mobilecode) {
-              this.NameText = '手机验证码不能为空!'
-              return
+              this.$Modal.info({
+                title: '提示',
+                content: '验证码不能为空!'
+              });
+              return false
+          }
+          if (!this.loginform.password) {
+              this.$Modal.info({
+                title: '提示',
+                content: '密码不能为空!'
+              });
+              return false
           }
           var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
           if (!myreg.test(this.loginform.username)) {
-              this.NameCheck = true
-              this.NameText = '手机号不能为空!'
-              return
+              this.$Modal.info({
+                title: '提示',
+                content: '手机号格式不正确!'
+              });
+              return false
           } else {
               this.NameCheck = false
               let params = {
@@ -97,12 +163,13 @@ export default {
                   code: this.loginform.mobilecode,
                   password: this.loginform.password.replace(/^\s+|\s+$/g, "")
               }
-
               const res = await manageLogin(this, params)
               if (res.data.data === null && res.status === 200) {
-                  this.passwordTip = true
-                  this.passwordName = '账号密码或验证码错误！'
-                  return
+                this.$Modal.info({
+                  title: '提示',
+                  content: '账号密码或验证码错误！'
+                });
+                return false
               } else {
                   var authres = res.data
                   if (authres && res.status === 200) {
@@ -127,57 +194,68 @@ export default {
       ForgotPassword(){
           this.$router.push({name: 'ForgotPassword-ForgotPassword', query: {params: 'Member'}})
       },
-
       //跳转注册页面
       Register(){
           this.$router.push({name: 'register-supplyRegister'})
       },
       //获取短信验证码
       async getNoteValue () {
-        var phone = this.loginform.username;
-        console.log(phone);
-
-        if (phone === "") {
-            this.$Message.info("手机号不能为空")
-            return
-        } else {
-            var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
-            if (!myreg.test(phone)) {
-                this.$Message.info("请输入正确的手机号")
-                return
+        const that = this
+        this.$refs.loginform.validate((valid) => {
+          if (valid) {
+            //正常情况下，检查是否已经是注册用户，如何不是中断不发送
+             let params = {
+              phone: that.loginform.username
             }
-            let params = {
-                phone: phone
+            let isPhone = true
+            userPhoneCheck(that, params).then(function (res) {
+              if(res.data === false) {
+                that.cphone = true
+                that.$Modal.info({
+                  title: '提示',
+                  content: '该账号尚未注册，请您先注册在进行登录'
+                });
+                return false
+              }
+            })
+            console.log(that.cphone)
+            if(that.cphone  === true) {
+              return false
             }
-            const res = await userLoginCodeSend(this, params)
-            if (res.data && res.status === 200) {
-                this.$Message.info("短信发送成功")
-
-                var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                window.localStorage.setItem("note", sj)
-
-                this.auth_time = 10;
+            //发送
+            let data = {
+                phone: that.loginform.username
+            }
+            userLoginCodeSend(that, data).then(function (res) {
+              if (res.data && res.status === 200) {
+                let countdown = 120
                 var timer = setInterval(() => {
-                    this.auth_time--;
-                    if (this.auth_time <= 0) {
+                    countdown = countdown-1
+                    console.log(countdown)
+                    if (countdown <= 0) {
                         clearInterval(timer)
-                        this.btnBoolen = false;
-                        this.btnClassName = "btns"
-                        this.btnValue = "获取短信验证码"
-
+                        that.btnBoolen = false;
+                        that.btnClassName = "btns"
+                        that.btnValue = "发送验证码"
                     } else {
-                        this.btnBoolen = true;
-                        this.btnValue = `重新获取(${this.auth_time})S`
-                        this.btnClassName = "btn"
+                        that.btnBoolen = true;
+                        that.btnValue = `已发送(${countdown})S`
+                        that.btnClassName = "btn"
                     }
                 }, 1000)
-
-
-            } else {
-                this.$Message.info("短信发送失败")
-            }
-        }
-      },
+              } else {
+                 that.$Modal.info({
+                  title: '提示',
+                  content: '短信发送失败'
+                });
+              }
+            })
+            
+            
+            
+          }
+        })
+      }
     },
     mounted() {
 
@@ -186,18 +264,23 @@ export default {
 }
 </script>
 
-<style scoped>
-.lCode{display: flex; justify-content: space-between; align-items: center}
-  .logincode{
-    width:55%;
-    border-radius: 
+<style lang="less" scoped>
+.memberlogin {
+  margin-top: 15px;
+  .butGetCode {
+    position: absolute;
+    right: 15px;
+    z-index: 1111;
+    line-height: 14px;
+    margin-top: 2px;
+    top: 1px;
+    border-left: 1px solid #ddd;
   }
-  .loginCodebtn{
-    padding: 7px 10px;
-    font-size: 12px;
-    border-radius:3px;
-    color: #666;
-
+  .ivu-form-item {
+    margin-bottom: 20px;
   }
-
+  .ivu-form-item-error-tip {
+    padding-top:4px;
+  }
+}
 </style>

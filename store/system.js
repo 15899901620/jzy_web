@@ -17,7 +17,6 @@ export const state = () => {
 }
 export const mutations = {
     setSlideVerify(state, data) {
-      console.log("set",data)
       state.slidecode = data
     },
     updateSystemCnf(state, data) {

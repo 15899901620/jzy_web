@@ -270,14 +270,6 @@
 	overflow:hidden;
 	background:url('/img/icon.png') -314px -5px no-repeat;
 }
-.NumInput {
-	padding-left:10px;
-	width:100%;
-	border:1px solid #dddddd;
-	border-radius:3px;
-	line-height:36px;
-	box-sizing:border-box;
-}
 .logingAccount {
 	text-align:center;
 	width:100%;
@@ -929,7 +921,7 @@ a {
 	width:310px;
 	border-radius:3px;
 	background-color:#fff;
-	margin-top:33px;
+	margin-top:20px;
 }
 .LoginCenter {
 	display:flex;
@@ -961,15 +953,7 @@ a {
 .loginMethod li:last-child {
 	border:none;
 }
-.NumInput {
-	padding-left:10px;
-	width:100%;
-	border:1px solid #dddddd;
-	border-radius:3px;
-	line-height:36px;
-	box-sizing:border-box;
-}
-.logingAccount {
+gAccount {
 	cursor:pointer;
 	background-color:#007de4;
 	border:none;
