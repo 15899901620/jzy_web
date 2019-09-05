@@ -19,7 +19,9 @@
                                 </Select>
                                 <span class="ml30">牌号</span><input type="text" v-model="condition.name" name="title"  class="PhysearchInput" placeholder="请输入牌号"/>
                                 <span class="ml30">加工级别</span>
-                                <input type="text" v-model="condition.attr" class="PhysearchInput" placeholder="请输入加工级别"/>
+                                <Select v-model="condition.attr" clearable style="width:170px;padding-left: 10px;">
+                                    <i-option v-for="(item, index) in specList" :value="item.id" :key="index">{{ item.value }}</i-option>
+                                </Select>
                                 <div class="xhBtn" style="margin-left: 20px;" @click="submitSearch">搜索</div>
                         
                             </div>
@@ -96,8 +98,8 @@ export default {
                 current_page: !query.page ? 1 : query.page, 
                 page_size: 10,
                 title: !query.name ? '' : query.name,
-                cid1: !query.cate_id ? '' : query.cate_id,
-                rocessingLevelValue: !query.attr ? '' : query.attr,
+                cid1: !query.cate_id ? 0 : query.cate_id,
+                level_id: !query.attr ? 0 : query.attr,
                 }),
             store.dispatch('physical/getphysicalHotList'),
         ])
@@ -124,7 +126,7 @@ export default {
             condition: {
                 cate_id: !this.$route.query.cate_id ? 0 : parseInt(this.$route.query.cate_id),
                 name: !this.$route.query.name ? '' : this.$route.query.name,
-                attr: !this.$route.query.attr ? '' : this.$route.query.attr,
+                attr: !this.$route.query.attr ? 0 : parseInt(this.$route.query.attr),
             },
             title: '',
             purpose: '',
@@ -142,11 +144,18 @@ export default {
     },
     created(){
         this.initCategoryListData()
+        this.initAttrListData()
     },
     methods: {
         async initCategoryListData(){
+            console.log('aaaa')
+            console.log(this.physicalHotlist)
             const res = await sendHttp(this, false, server.api.product.categoryList, {'pid': 0})
             this.categoryList = res.data
+        },
+        async initAttrListData(){
+            const res = await sendHttp(this, false, server.api.product.attrlist, {'spec_id': 1})
+            this.specList = res.data
         },
 
         showTotal(total) {

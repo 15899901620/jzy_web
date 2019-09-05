@@ -1,7 +1,7 @@
 <template>
   <div class="body">
       <Header title="头部"></Header>
-      <div class="container" title="内容区块">
+      <div class="container" title="">
         <div class="breadcrumb">
           <breadcrumb>
             <breadcrumb-item><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
@@ -20,12 +20,12 @@
                     <img src="/img/newsTime.png"/><span class="gray ml5">{{this.physicaldetailinfo.createTime}}</span>
                   </div>
                 </div>
-                <div class="newsShare">分享</div>
+                <!--<div class="newsShare">分享</div>-->
               </div>
               <div class="mt20 mb40 fs14" v-html="this.physicaldetailinfo.description"></div>
-              <div class="mt20 mb40 fs14">
+              <!--<div class="mt20 mb40 fs14">
                 <span>关键词:</span><span v-html="this.physicaldetailinfo.purposeValue"></span>
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="Pages_right">
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+      <Footer size="default" title="" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
