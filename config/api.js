@@ -162,7 +162,8 @@ let api = {
    */
   inspection:{
     inspectionlist:'/item/inspection_sheet/list',  //质检单列表
-    inspectionlistPage:'/item/inspection_sheet/list/page',  //质检单列表(分页)
+    //inspectionlistPage:'/item/inspection_sheet/list/page',  //质检单列表(分页)
+    inspectionlistPage: {'url': '/item/inspection_sheet/list/page', 'method': 'get'},  //质检单列表(分页)
   },
   /**
    * @description 导航
