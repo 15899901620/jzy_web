@@ -155,7 +155,7 @@ let api = {
     inspectionCheck: '/item/inspection_sheet/list/page',
     // goodsHot: '/item/goods/hotGoods',
     goodsHot: {'url': '/item/goods/hotGoods', 'method': 'get'},
-    // cateHot: '/category/hotCate',
+    categoryList: {'url': '/item/category/list', 'method': 'get'},
     cateHot: {'url': '/item/category/hotCate', 'method': 'get'},
     // attrlist: '/item/spec/value'
     attrlist: {'url': '/item/spec/value', 'method': 'get'},

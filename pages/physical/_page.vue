@@ -13,11 +13,14 @@
                     <outpacking title="物性表" :total="physicallist.total">
                         <div slot="content">
                             <div class="XHsearch whitebg" style="display: flex;">
-                              
-                                <span>牌号</span><input type="text" v-model="title" name="title"  class="PhysearchInput" placeholder="请输入牌号"/>
-                                <span class="ml30">用途</span><input type="text" v-model="purpose" name="purpose"  class="PhysearchInput" placeholder="请输入用途"/>
-                                <span class="ml30">特性</span><input type="text" v-model="feature"  name="feature" class="PhysearchInput" placeholder="请输入特性"/>
-                                <div class="xhBtn" style="margin-left: 60px;" @click="submitSearch">搜索</div>
+                                <span>分类</span>
+                                <Select v-model="condition.cate_id" clearable style="width:170px;padding-left: 10px;">
+                                    <i-option v-for="(item, index) in categoryList" :value="item.id" :key="index">{{ item.name }}</i-option>
+                                </Select>
+                                <span class="ml30">牌号</span><input type="text" v-model="condition.name" name="title"  class="PhysearchInput" placeholder="请输入牌号"/>
+                                <span class="ml30">加工级别</span>
+                                <input type="text" v-model="condition.attr" class="PhysearchInput" placeholder="请输入加工级别"/>
+                                <div class="xhBtn" style="margin-left: 20px;" @click="submitSearch">搜索</div>
                         
                             </div>
                         </div>
@@ -26,9 +29,9 @@
                         <ul class="phyList">
                             <li v-for="(items,index) in physicallist.items" :key="index">
                                 <div class="phylistlist mt10 ml20 mb30">
-                                    <nuxt-link :to="{name:'physical-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
+                                    <nuxt-link :to="{name:'physical-detail-id', params:{id:items.id}}">{{items.title}} ({{items.skuNo}})</nuxt-link>
                                     <div class="mt10">
-                                        用途 :{{items.purposeValue}},{{items.rocessingLevelValue}},{{items.featureValue}}
+                                        加工级别 : {{items.rocessingLevelValue}}
                                     </div>
                                     <div class="mt10  gray">
                                         <span>分类 :</span><span class="orangeFont ml10">{{items.cname1}}</span><span class="ml10">{{items.cname2}}</span><span class="ml10">{{items.cname3}}</span>
@@ -78,6 +81,9 @@ import breadcrumb from '../../components/breadcrumb'
 import outpacking from '../../components/outpacking'
 import pagination from '../../components/pagination'
 
+import server from '../../config/api'
+import { sendHttp } from '../../api/common'
+
 export default {
     name: 'noticeList',
     fetch({ store, params, query }) {
@@ -89,9 +95,9 @@ export default {
             store.dispatch('physical/getphysicalList', {
                 current_page: !query.page ? 1 : query.page, 
                 page_size: 10,
-                title: !query.title ? '' : query.title,
-                purposeValue: !query.purpose ? '' : query.purpose,
-                featureValue: !query.feature ? '' : query.feature,
+                title: !query.name ? '' : query.name,
+                cid1: !query.cate_id ? '' : query.cate_id,
+                rocessingLevelValue: !query.attr ? '' : query.attr,
                 }),
             store.dispatch('physical/getphysicalHotList'),
         ])
@@ -115,9 +121,16 @@ export default {
     },
     data() {
         return {
+            condition: {
+                cate_id: !this.$route.query.cate_id ? 0 : parseInt(this.$route.query.cate_id),
+                name: !this.$route.query.name ? '' : this.$route.query.name,
+                attr: !this.$route.query.attr ? '' : this.$route.query.attr,
+            },
             title: '',
             purpose: '',
             feature: '',
+            categoryList: [],
+            specList: []
         }
     },
     computed:{
@@ -127,7 +140,15 @@ export default {
             physicalHotlist: state => state.physical.physicalHotlist,
         })
     },
+    created(){
+        this.initCategoryListData()
+    },
     methods: {
+        async initCategoryListData(){
+            const res = await sendHttp(this, false, server.api.product.categoryList, {'pid': 0})
+            this.categoryList = res.data
+        },
+
         showTotal(total) {
             return `全部 ${total} 条`;
         },
@@ -135,13 +156,8 @@ export default {
             let id = this.$route.params.id
             this.$router.push({name:'physical-page',params:{id:id},query:{page:row}})
         },
-        submitSearch(res) {
-            let search = {
-                title: this.title,
-                purpose: this.purpose,
-                feature: this.feature,
-            }
-            this.$router.push({ name:'physical-page',query:search })
+        submitSearch() {
+            this.$router.push({ name:'physical-page',query: this.condition })
         }
     },
     watch: {
