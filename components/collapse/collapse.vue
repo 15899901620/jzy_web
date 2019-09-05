@@ -9,51 +9,24 @@
                     <li>
                         <div class="ass-ty2-p 1">
                             <p class="fs16"><i></i>热门品质:</p>
-                            <p style="word-wrap:break-word">
-                                <a href="#">PP</a>
-                                <a href="#">HDPE</a>
-                                <a href="#">LLDPE</a>
-                                <a href="#">EVA</a>
-                                <a href="#">LDPE</a>
-                                <a href="#">MDPE</a>
-                                <a href="#">PC</a>
-                                <a href="#">PVC</a>
-                                <a href="#">HIPS</a>
-                                <a href="#">GPPS</a>
-                                <a href="#">ABS</a>
+                            <p style="word-wrap:break-word" v-for="(items,index) in cateHot"  :key="index" >
+                                <a href="#" style="float:left">{{items.name}}</a>                   
                             </p>
                         </div>
                     </li>
                     <li>
                         <div class="ass-ty2-p 1">
                             <p class="fs16 mt10"><i></i>热门牌号:</p>
-                            <p style="word-wrap:break-word">
-                                <a href="#">PP</a>
-                                <a href="#">HDPE</a>
-                                <a href="#">LLDPE</a>
-                                <a href="#">EVA</a>
-                                <a href="#">LDPE</a>
-                                <a href="#">MDPE</a>
-                                <a href="#">PC</a>
-                                <a href="#">PVC</a>
-                                <a href="#">HIPS</a>
-                                <a href="#">GPPS</a>
-                                <a href="#">ABS</a>
+                            <p style="word-wrap:break-word" v-for="(items,index) in goodsHot"  :key="index">
+                                <a href="#" style="float:left">{{items.title}}</a>  
                             </p>
                         </div>
                     </li>
                     <li>
                         <div class="ass-ty2-p level 1">
                             <p class="fs16 mt10"><i></i>加工级别:</p>
-                            <p style="word-wrap:break-word">
-                                <a href="#">挤出</a>
-                                <a href="#">注塑</a>
-                                <a href="#">吹塑</a>
-                                <a href="#">中空</a>
-                                <a href="#">拉丝</a>
-                                <a href="#">发泡</a>
-                                <a href="#">涂覆</a>
-                                <a href="#">热熔</a>
+                            <p style="word-wrap:break-word" v-for="(items,index) in attrlist"  :key="index">
+                                <a href="#" style="float:left">{{items.value}}</a>  
                             </p>
                         </div>
                     </li>
@@ -137,22 +110,32 @@
 <script>
     const prefixCls = 'ant-collapse'
     import { mapState, mapGetters } from 'vuex'
+    import server from '../../config/api'
+    import { sendHttp } from '../../api/common'
+
     export default {
         name: 'collapse',
         data() {
             return {
+                current_page:1,
+                page_size:10,
                 seen:false,
                 seentwo:false,
+                goodsHot:{},
+                cateHot:{},
+                attrlist:{},
                 seenthree:false,
                 datePif:false,
                 qualityForm:{
                     qualityDate:'',
                     qualityNo:'',
                 },
+                
             };
         },
         props:{
             openCol: {
+           
                 type: String,
                 default: 'none'
             }
@@ -169,6 +152,22 @@
             },
         },
         methods:{
+            async GoodsHot() {     
+                const res = await sendHttp(this, false, server.api.product.goodsHot)
+                this.goodsHot = res.data
+            },
+            async CateHot() {     
+                const res = await sendHttp(this, false, server.api.product.cateHot)
+                console.log(res)
+                this.cateHot = res.data
+            },
+             async Attrlist() {  
+                let params = {
+                    spec_id: 1,
+                }   
+                const res = await sendHttp(this, false, server.api.product.attrlist,params)
+                this.attrlist = res.data
+            },
             oneMouseout:function(){
                 this.seen = false;
             },
@@ -201,7 +200,12 @@
                 window.location.href='/logistics'
             }
 
-        }
+        },
+        mounted() {
+          this.GoodsHot()
+          this.CateHot()
+          this.Attrlist()
+        },
     }
 </script>
 

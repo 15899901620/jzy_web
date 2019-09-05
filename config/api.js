@@ -153,16 +153,20 @@ let api = {
     productlist: '/item/goods/list/page',
     productdetail: '/item/goods/sku/info',
     inspectionCheck: '/item/inspection_sheet/list/page',
-    goodsHot: '/item//goods/hotGoods',
-    cateHot: '/category/hotCate',
-    attrlist: '/item/spec/value'
+    // goodsHot: '/item/goods/hotGoods',
+    goodsHot: {'url': '/item/goods/hotGoods', 'method': 'get'},
+    // cateHot: '/category/hotCate',
+    cateHot: {'url': '/item/category/hotCate', 'method': 'get'},
+    // attrlist: '/item/spec/value'
+    attrlist: {'url': '/item/spec/value', 'method': 'get'},
   },
   /**
    * @description 质检单(表)
    */
   inspection:{
     inspectionlist:'/item/inspection_sheet/list',  //质检单列表
-    inspectionlistPage:'/item/inspection_sheet/list/page',  //质检单列表(分页)
+    //inspectionlistPage:'/item/inspection_sheet/list/page',  //质检单列表(分页)
+    inspectionlistPage: {'url': '/item/inspection_sheet/list/page', 'method': 'get'},  //质检单列表(分页)
   },
   /**
    * @description 导航
