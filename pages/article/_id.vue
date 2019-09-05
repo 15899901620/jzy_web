@@ -28,7 +28,7 @@
                                 </li>
                             </ul>
                             <div class="whitebg ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-                                <pages :total="articlelist.total" :show-total="showTotal" @change="changePage" :value="currPage"></pages>
+                                <pages :total="articlelist.total" :show-total="showTotal" :pageSize="6" @change="changePage" :value="currPage"></pages>
                             </div>
                         </div>
                     </outpacking>
@@ -79,7 +79,7 @@ export default {
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
-            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 10, catId: !params.id ? 1 : params.id}),
+            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? 1 : params.id}),
             store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10}),
             store.dispatch('article/getArticleCatList',  {parentId: 0}),
         ])

@@ -153,9 +153,12 @@ let api = {
     productlist: '/item/goods/list/page',
     productdetail: '/item/goods/sku/info',
     inspectionCheck: '/item/inspection_sheet/list/page',
-    goodsHot: '/item//goods/hotGoods',
-    cateHot: '/category/hotCate',
-    attrlist: '/item/spec/value'
+    // goodsHot: '/item/goods/hotGoods',
+    goodsHot: {'url': '/item/goods/hotGoods', 'method': 'get'},
+    // cateHot: '/category/hotCate',
+    cateHot: {'url': '/item/category/hotCate', 'method': 'get'},
+    // attrlist: '/item/spec/value'
+    attrlist: {'url': '/item/spec/value', 'method': 'get'},
   },
   /**
    * @description 质检单(表)
