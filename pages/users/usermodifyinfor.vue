@@ -68,6 +68,9 @@
 <script>
 import Navigation from '../../components/navigation'
 import { getGainuserInfor } from  '../../api/users'
+import { getCookies } from '../../config/storage'
+
+
 export default {
     name: "usermodifyinfor",
     layout:'membercenter',
@@ -125,12 +128,23 @@ export default {
      
             this.userinfor=res.data
         },
+        isLogin () {
+          let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+          if (!userinfo) {
+              return false
+          }
+          this.userinfo = userinfo
+          return true
+        },
         modifInfor(){
             this.$router.push({name:'users-useraccountinfor'})
         }
     },
     create(){
-
+      if(this.isLogin()){
+      }else{
+          window.location.href = '/login'
+      }
     },
     mounted() {
         this.UserInfor()

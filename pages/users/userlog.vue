@@ -155,6 +155,8 @@
 
 <script>
 import Navigation from '../../components/navigation'
+import { getCookies } from '../../config/storage'
+
 export default {
   name: "userlog",
   layout:'membercenter',
@@ -166,6 +168,22 @@ export default {
       store.dispatch('system/getSystemCnf'),
       store.dispatch('menu/getMenuList')
     ])
+  },
+  methods:{
+    isLogin () {
+        let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+        if (!userinfo) {
+            return false
+        }
+        this.userinfo = userinfo
+        return true
+    },
+  },
+  created(){
+    if(this.isLogin()){
+    }else{
+        window.location.href = '/login'
+    }
   }
 }
 </script>

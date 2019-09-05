@@ -82,7 +82,6 @@ export const actions = {
     async getArticleList({ commit }, params) {
         commit('updateCurrPage', parseInt(params.current_page))
 
-        console.log('tag', params)
         return await this.$axios.$get(api.prefix + api.api.information.info, { params })
         .then(response => {
             commit('updateArticleList', response)

@@ -8,9 +8,10 @@ import Cookies from 'js-cookie'
 
 export const state = () => {
     return {
-        userinfor:{},
-        webtoken: '',
-        websuppliertoken: ''
+      chackPhone: false,
+      userinfor:{},
+      webtoken: '',
+      websuppliertoken: ''
     }
 }
   
@@ -23,7 +24,11 @@ export const getters = (state) => {
 export const mutations = {
     updateUserInfof(state, data) {
         state.userinfor = data
-    }
+    },
+    updateChackPhone(state, list) {
+      console.log("sss",list)
+      state.chackPhone = list
+    },
 }
   
 export const actions = {

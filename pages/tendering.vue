@@ -12,18 +12,10 @@
   <div class="trenderCenter">
       <div class="trendLogin fs14">
 
-          <div class="trendLoginCenter" v-if="!SupplierInfor">
+          <div class="trendLoginCenter" v-if="!SupplierInfor" style="margin:20px 32px;">
             <p class="trendTitle">招标登录</p>
-            <input type="text" class="trendInput mt20" v-model="loginsupplierform.username"  placeholder="手机/用户名">
-            <input type="password" class="trendInput mt15" v-model="loginsupplierform.password" placeholder="密码">
-            <div class="msg-wrap" >
-              <div class="msg-error" v-show="NameCheck"><b></b><span>{{NameText}}</span></div>
-              <div class="msg-error" v-show="passwordTip"><b></b><span>{{passwordName}}</span></div>
-            </div>
-            <div class="trendbtn mt10 cp" @click="LoginsupplyerForm">登 录</div>
-            <div class="dflexAlem mt40 newsCode" style="justify-content: space-between">
-              <span @click="forCode()">忘记密码</span><span @click="regNewsAccount()">注册新账号</span>
-            </div>
+            <login-supply></login-supply>
+
           </div>
 
 
@@ -115,7 +107,7 @@
 import Header from '../components/header'
 import Footer from '../components/footer'
 import { mapState } from 'vuex'
-
+import login from '../components/login-form'
 import { supplierLogin, supplierValid } from '../api/users'
 import Cookies from 'js-cookie'
 export default {
@@ -137,6 +129,7 @@ export default {
       components: {
         Header,
         HeaderSmall: Header.small,
+        loginSupply: login.supply,
         Footer
       },
        fetch({ store, params }) {

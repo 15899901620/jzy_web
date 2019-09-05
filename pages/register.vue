@@ -98,10 +98,17 @@ export default {
     },
     mounted() {
         var that = this
-        this.RegisterName = this.$router.history.current.query.name
-        if (this.$router.history.current.query.params === "Supplier") {
-            this.nowIndex = 1
+        let type = this.$route.query.type;
+        if(type === 'users') {
+          this.nowIndex = 0
+        }else if(type === 'supply'){
+          this.nowIndex = 1
+        }else if(type === 'carrier'){
+          this.nowIndex = 2
+        }else {
+          this.nowIndex = 0
         }
+     
         // 划动--切换
         that.mySwiper = new Swiper('.swiper-container', {
             initialSlide: this.nowIndex,

@@ -33,10 +33,10 @@
       <Button type="primary" long v-on:click="LoginForm">登录</Button>
       <Row :gutter="24" index="">
         <Col span="12" style="text-align:left; margin:10px auto;">
-          <nuxt-link to="/forgotpwd" >忘记密码</nuxt-link>
+          <nuxt-link to="/forgotpwd?type=users" >忘记密码</nuxt-link>
         </Col>
         <Col span="12" style="text-align:right; margin:10px auto;">
-          <nuxt-link to="/register" >注册新账号</nuxt-link>
+          <nuxt-link to="/register?type=users" >注册新账号</nuxt-link>
         </Col>
       </Row>
     </Form>
@@ -135,6 +135,13 @@ export default {
               });
               return false
           }
+          if (!this.loginform.slidecode) {
+            this.$Modal.info({
+              title: '提示',
+              content: '滑块验证未完成!'
+            });
+            return false
+          }
           if (!this.loginform.mobilecode) {
               this.$Modal.info({
                 title: '提示',
@@ -213,12 +220,11 @@ export default {
                 that.cphone = true
                 that.$Modal.info({
                   title: '提示',
-                  content: '该账号尚未注册，请您先注册在进行登录'
+                  content: '该账号尚未注册，请您先注册'
                 });
                 return false
               }
             })
-            console.log(that.cphone)
             if(that.cphone  === true) {
               return false
             }
@@ -231,7 +237,6 @@ export default {
                 let countdown = 120
                 var timer = setInterval(() => {
                     countdown = countdown-1
-                    console.log(countdown)
                     if (countdown <= 0) {
                         clearInterval(timer)
                         that.btnBoolen = false;

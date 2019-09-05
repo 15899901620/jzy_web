@@ -33,10 +33,10 @@
       <Button type="primary" long v-on:click="LoginsupplyerForm">登录</Button>
       <Row :gutter="24" index="">
         <Col span="12" style="text-align:left; margin:10px auto;">
-          <nuxt-link to="/forgotpwd" >忘记密码</nuxt-link>
+          <nuxt-link to="/forgotpwd?type=supply" >忘记密码</nuxt-link>
         </Col>
         <Col span="12" style="text-align:right; margin:10px auto;">
-          <nuxt-link to="/register" >注册新账号</nuxt-link>
+          <nuxt-link to="/register?type=supply" >注册新账号</nuxt-link>
         </Col>
       </Row>
     </Form>
@@ -82,7 +82,7 @@ export default {
     return {
       NameCheck:false,
       passwordTip:false,
-      cphone: false,
+      cphones: false,
       btnValue: "发送验证码",
       btnBoolen: false,
       loginsupplierform:{
@@ -102,15 +102,15 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'slidecode'
-    ])
+    ...mapState({
+      slidecode: state => state.system.slidecode,
+      chackPhone: state => state.login.chackPhone,
+    })
   },
-  
   methods:{
-    ...mapMutations('login', [
-        'updateUserInfof'
-    ]),
+    ...mapMutations({
+      updateChackPhone: 'login/updateChackPhone'
+    }),
     onTime(res){
       console.log(!res)
       if(res){
@@ -125,6 +125,35 @@ export default {
       }
     },
     async LoginsupplyerForm(){
+
+      if (!this.loginsupplierform.username) {
+        this.$Modal.info({
+          title: '提示',
+          content: '手机号不能为空!'
+        });
+        return false
+      }
+      if (!this.loginsupplierform.slidecode) {
+        this.$Modal.info({
+          title: '提示',
+          content: '滑块验证未完成!'
+        });
+        return false
+      }
+      if (!this.loginsupplierform.mobilecode) {
+        this.$Modal.info({
+          title: '提示',
+          content: '验证码不能为空!'
+        });
+        return false
+      }
+      if (!this.loginsupplierform.password) {
+        this.$Modal.info({
+          title: '提示',
+          content: '密码不能为空!'
+        });
+        return false
+      }
       var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
       if(!myreg.test(this.loginsupplierform.username)){
         this.$Message.info({
@@ -141,9 +170,11 @@ export default {
         const res = await supplierLogin(this, params)
         let authres=res.data
         if(res.data.data===null && res.status === 200){
-          this.passwordTip=true
-          this.passwordName='账号密码错误！'
-          return
+          this.$Modal.info({
+            title: '提示',
+            content: '账号密码及验证码错误!'
+          });
+          return false
         }else{
           let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
           Cookies.set('websuppliertoken',  authres, { expires: expires })
@@ -159,7 +190,6 @@ export default {
             return
           }
         }
-
       }
     },
     //忘记密码
@@ -182,19 +212,22 @@ export default {
           }
           let isPhone = true
           supplierdataCheck(that, params).then(function (res) {
-            if(res.data === false) {
-              that.cphone = true
+            if(res.data === true) {
+              that.updateChackPhone(true)
               that.$Modal.info({
                 title: '提示',
-                content: '该账号尚未注册，请您先注册在进行登录'
+                content: '该账号尚未注册，请您先注册!'
               });
               return false
+            }else{
+              that.updateChackPhone(false)
             }
           })
-          if(that.cphone  === true) {
+    
+          if(this.chackPhone === true) {
             return false
           }
-          //发送
+          
           let data = {
               phone: that.loginsupplierform.username
           }
@@ -203,7 +236,6 @@ export default {
               let countdown = 120
               var timer = setInterval(() => {
                   countdown = countdown-1
-                  console.log(countdown)
                   if (countdown <= 0) {
                       clearInterval(timer)
                       that.btnBoolen = false;
