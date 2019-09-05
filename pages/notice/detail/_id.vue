@@ -12,16 +12,10 @@
         <div class="Pages">
           <div class="Pages_left" style="background: #fff;">
             <div class="NewsDetail" >
-              <h3 class="mt10 fs20">{{this.noticedetailinfo.title}}</h3>
-              <div class="NewsDetail_tip mt20"  >
-                <div class="dflexAlem">
-                  <a href="/" class="blueFont">巨正源</a>
-                  <div class="time">
-                    <img src="/img/newsTime.png"/><span class="gray ml5">{{this.noticedetailinfo.addTime}}</span>
-                  </div>
+              <h3 class="mt10 fs20" style="text-align: center;">{{this.noticedetailinfo.title}}</h3>
+                <div class=" mt20" style="text-align: center;border-bottom: 1px solid #eee; padding-bottom: 5px" >
+                    <span>{{this.noticedetailinfo.addTime}}</span>
                 </div>
-                <div class="newsShare">分享</div>
-              </div>
               <div class="mt20 mb40 fs14" v-html="this.noticedetailinfo.content"></div>
             </div>
           </div>

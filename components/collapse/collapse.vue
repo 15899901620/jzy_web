@@ -175,7 +175,7 @@
                     this.$router.push({name:'physical-page', query:{name:items.title }})
             },
             feature(items){
-                    this.$router.push({name:'physical-page', query:{attr:items.value }})
+                    this.$router.push({name:'physical-page', query:{attr:items.id }})
             },
             oneMouseout:function(){
                 this.seen = false;

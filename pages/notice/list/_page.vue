@@ -15,22 +15,17 @@
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in noticelist.items" :key="index">
                                     <div class="News_content">
-                                        <div class=" mt20">
+                                        <div >
                                             <span style="    float: left;">
-
                                              <nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
                                             </span>
-                                           
-                                              <span class="gray fl ml30" style="float: right;">来源：<nuxt-link to="/">巨正源</nuxt-link></span>
-                                            <span class="dflexAlem fl" style="float: right;"><img src="/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></span>
-                                          
-
+                                            <span class="dflexAlem fl" style="float: right;"><span class="gray ml10">{{items.addTime}}</span></span>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                             <div class="whitebg ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-                                <pagination :total="noticelist.total" urlPage="notice-list-page" :value="currPage"></pagination>
+                                <pagination :total="noticelist.total" urlPage="notice-list-page" @change="changePage" :value="currPage"></pagination>
                             </div>
                         </div>
                     </outpacking>
@@ -72,8 +67,8 @@ export default {
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
-            store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10}),
-            store.dispatch('notice/getNoticeHotList',  {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'click', desc: 'desc'}),
+            store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'add_time', desc: true}),
+            store.dispatch('notice/getNoticeHotList',  {current_page: 3, page_size: 10, sortBy: 'click', desc: 'desc'}),
         ])
     },
     components: {
@@ -100,5 +95,11 @@ export default {
             noticeHotlist: state => state.notice.noticeHotlist,
         })
     },
+    methods: {
+        changePage (row) {
+            let id = this.$route.params.id
+            this.$router.push({name:'notice-list-page',params:{id:id},query:{page:row}})
+        }
+    }
 }
 </script>
