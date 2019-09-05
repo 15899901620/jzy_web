@@ -120,7 +120,6 @@
                         <span class="quality_title"  >批次号</span>
                         <div style="display: flex;flex-direction: column; position: relative">
                             <input type="text" class="batchNumber" v-model="qualityForm.qualityNo" name=""  value="" />
-                            <i class="redFont fs12" v-show="datePif" style="position: absolute;bottom: -20px">日期和批次号不能为空</i>
                         </div>
                     </li>
                 </ul>
@@ -194,12 +193,7 @@
             },
             //质检单页面
             Quality(){
-                if(!this.qualityForm.qualityDate && !this.qualityForm.qualityNo){
-                    this.$router.push({name:'quality', query:{batchNo:this.qualityForm.qualityNo, productionDate:this.qualityForm.qualityDate}})
-                    this.datePif=false
-                }else{
-                    this.datePif=true
-                }
+               this.$router.push({name:'quality', query:{batchNo:this.qualityForm.qualityNo, productionDate:this.qualityForm.qualityDate}})    
                 this.qualityForm.qualityDate=''
                 this.qualityForm.qualityNo=''
             },
