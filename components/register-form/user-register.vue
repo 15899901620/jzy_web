@@ -369,7 +369,7 @@ export default {
                 ],
                 mobilecode:[
                     {  validator: validatemobilecode, trigger: 'blur' }
-                ],             
+                ],
                 companyName: [
                     { required: true, validator: validateCompanyName, trigger: 'blur' }
                 ],

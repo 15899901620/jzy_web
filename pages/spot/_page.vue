@@ -46,7 +46,7 @@
                         <div class="fr pro_m_select" :class="purposeMore ? '' : 'arrow-up'" @click="purposeOpen">{{purposeMoreVal}}</div>
                     </div>-->
                     <!--特性-->
-                    <div class="screenibre">
+                    <!--<div class="screenibre">
                         <dl class="fl filter_item">
                             <dt class="scTitle">特性：</dt>
                             <dd class="pro_brand_list" :class="featureMore ? 'h50' : ''">
@@ -57,7 +57,7 @@
                         </dl>
                         <div class="fr pro_m_select" :class="featureMore ? '' : 'arrow-up'" @click="featureOpen">{{featureMoreVal}}</div>
                     </div>
-
+-->
                     <div class="XHsearch" style="display: flex;">
                         <span>厂商</span><input type="text" v-model="manufacturer" class="XHsearchInput" placeholder="请输入厂商"/>
                         <span class="ml15">牌号</span><input type="text" v-model="skuName" class="XHsearchInput" placeholder="请输入牌号"/>
@@ -249,7 +249,7 @@
                     category_id: this.categoryId,
                     level_id: this.processId,
                     //purpose_id: this.purposeId,
-                    feature_id: this.featureId,
+                    //feature_id: this.featureId,
                     sku_name: this.skuName,
                     manufacturer: this.manufacturer,
                     min_price: this.minPrice,
@@ -267,7 +267,7 @@
                 this.category = res.data.categoryFilter;
                 this.process = res.data.specLevelFilter;
                 //this.purpose = res.data.specPurposeFilter;
-                this.feature = res.data.specFeatureFilter;
+                //this.feature = res.data.specFeatureFilter;
             },
         },
         created() {

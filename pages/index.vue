@@ -77,11 +77,12 @@ export default {
             }),
             store.dispatch('article/getHomeNotice', {
                 current_page: 1,
-                page_size: 8
+                page_size: 8,
+                sortBy: 'add_time', desc: true,isShow: 1
             }),
             store.dispatch('article/getHomeArticle', {
                 current_page: 1,
-                page_size: 8
+                page_size: 8,sortBy: 'add_time', desc: true,isShow: 1
             }),
             store.dispatch('article/getHotArticle', {
                 current_page: 1,
