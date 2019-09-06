@@ -24,6 +24,16 @@
           </div>
     	  </outpacking>
       </div>
+      <div class="hot-spot">
+	      <outpacking title="物流找车" cpadding="0px" :more="logData">
+          <div slot="content" style="display: flex;">
+            <div class="logistic_banner">
+              <img src="/img/logistics_banner.png" />
+            </div>
+            <logistics-list></logistics-list>
+          </div>
+    	  </outpacking>
+      </div>
 			<div class="co-brands">
 				<outpacking title="合作品牌" cpadding="0px">
 					<div slot="content">
@@ -57,6 +67,8 @@ import cobrands from '../components/cobrands'
 import hottrade from '../components/hottrade'
 import sidebar from '../components/sidebar'
 import SpotList from '../components/spot-list'
+import LogisticsList from '../components/logistics-list'
+
 
 export default {
     async asyncData({ app }) {
@@ -114,6 +126,7 @@ export default {
         cobrands,
         hottrade,
         sidebar,
+        LogisticsList,
         SpotList
     },
     data() {
@@ -125,6 +138,10 @@ export default {
             moreData: {
                 title: '更多...',
                 url: '/article/1'
+            },
+            logData:{
+                title: '更多...',
+                url: '/logistics'
             },
             heightNum: 320
         }
