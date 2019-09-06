@@ -113,7 +113,7 @@ export default {
             },
             moreData: {
                 title: '更多...',
-                url: '/article/2'
+                url: '/article/1'
             },
             heightNum: 320
         }

@@ -160,8 +160,7 @@ export default {
       }
       this.formItem.memberId = userinfo.id
      gooddemandadd(this, this.formItem).then(response => {
-        if (response.status === 200 ) {
-          if(response.data && typeof res.data.errorcode == "undefined")
+        if (response.status === 200 && response.data ==true) {
            this.$Modal.success({
                 title: '提示',
                 content: '求购发布成功！'
