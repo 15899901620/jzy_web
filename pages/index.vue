@@ -19,6 +19,19 @@
 			</div>
       <div class="hot-spot">
 	      <outpacking title="现货超市" cpadding="0px" :more="spotData">
+          <div slot="content">
+            <spot-list></spot-list>
+          </div>
+    	  </outpacking>
+      </div>
+      <div class="hot-spot">
+	      <outpacking title="物流找车" cpadding="0px" :more="logData">
+          <div slot="content" style="display: flex;">
+            <div class="logistic_banner">
+              <img src="/img/logistics_banner.png" />
+            </div>
+            <logistics-list></logistics-list>
+          </div>
     	  </outpacking>
       </div>
 			<div class="co-brands">
@@ -53,6 +66,9 @@ import outpacking from '../components/outpacking'
 import cobrands from '../components/cobrands'
 import hottrade from '../components/hottrade'
 import sidebar from '../components/sidebar'
+import SpotList from '../components/spot-list'
+import LogisticsList from '../components/logistics-list'
+
 
 export default {
     async asyncData({ app }) {
@@ -91,9 +107,14 @@ export default {
             store.dispatch('bidders/getHotBidderList', {
                 current_page: 1,
                 page_size: 20
-            })
+            }),
+            store.dispatch('spot/getSpotList', {
+                current_page: 1,
+                page_size: 20
+            })  
         ])
     },
+
     components: {
         Header,
         Footer,
@@ -104,7 +125,9 @@ export default {
         outpacking,
         cobrands,
         hottrade,
-        sidebar
+        sidebar,
+        LogisticsList,
+        SpotList
     },
     data() {
         return {
@@ -116,16 +139,21 @@ export default {
                 title: '更多...',
                 url: '/article/1'
             },
+            logData:{
+                title: '更多...',
+                url: '/logistics'
+            },
             heightNum: 320
         }
+    },
+    computed: {
+      ...mapState({
+        bannerinfo: state => state.system.bannerinfo,
+      })
     },
     methods: {
        
     },
-    computed: {
-        ...mapState({
-            bannerinfo: state => state.system.bannerinfo,
-        })
-    }
+  
 }
 </script>
