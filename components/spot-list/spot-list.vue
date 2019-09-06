@@ -5,7 +5,7 @@
       <Col span="4">牌号</Col>
       <Col span="4">厂商</Col>
       <Col span="4">交货仓</Col>
-      <Col span="2">剩余数量（吨）</Col>
+      <Col span="2">数量（吨）</Col>
       <Col span="3">单价（元/吨）</Col>
       <Col span="2">更新时间</Col>
       <Col span="2">操作</Col>
@@ -97,7 +97,7 @@ export default {
       line-height: 38px;
       text-align: center;
       font-size: 14px;
-      border-bottom:1px solid #ddd; 
+      border-bottom:1px solid #eee; 
     }
   }
   .spotabody:hover {
