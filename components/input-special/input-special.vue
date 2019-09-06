@@ -209,6 +209,8 @@ export default {
                     this.$emit('input', this.min);
                     this.$emit('change', this.min);
                     // this.dispatch('FormItem', 'form.change', [this.min]);
+                } else if(this.step > 1){
+                    e.target.value = Math.floor(e.target.value/this.step)*this.step
                 }
             }
             if (this.precision) {

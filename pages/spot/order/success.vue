@@ -1,7 +1,7 @@
 
 <template>
 	<div class="body">
-		<Header-small title="专料下单">
+		<Header-small title="现货下单">
 
 			<div slot="headerother">
 				 <ul class="sp_cat_title_list" >
@@ -18,12 +18,6 @@
                 <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>
                 <div class="tac fs14">
                     <span>订单号：<span>{{orderNo}}</span></span><a class="blueFont ml15">查看详情</a>
-                </div>
-                <div class="OrderTime" >
-                    请尽早提货，逾期会收取仓储费
-                </div>
-                <div class="OrderTime" style="display: none;">
-                    我们将按照您指定的地址帮您安排发货
                 </div>
                 <div class="tac gray">
                     <p>如有疑问您可以通过一下联系方式与我们取得联系</p>
