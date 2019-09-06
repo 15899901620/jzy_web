@@ -28,7 +28,7 @@
                 </Row>
                 <Row index="2">
                     <Col span="22">
-                        <FormItem label="身份证号" prop="phone">
+                        <FormItem label="身份证号" prop="idNumber">
                             <Input v-model="formAddress.idNumber"   placeholder="请输入身份证"></Input>
                         </FormItem>
                     </Col>
@@ -88,13 +88,24 @@ export default {
             }
         };
         //收货人电话
-        const validatephone = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('收货人联系电话不能为空'));
+        const validatephone = (rule, value, callback) => {   
+            if (!value) {
+                callback('电话不能为空'); // 校验不通过
+                return false;
             } else {
-                callback();
-            }
-        };
+                const isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/; // 0571-86295197
+                const isPhone02 = /^\d{3,4}-\d{3,4}-\d{3,4}$/; // 4001-550-520
+                const isMob=/^1[0-9]{10}$/;
+                const valuePhone = value.trim();
+                if (isMob.test(valuePhone) || isPhone.test(valuePhone) || isPhone02.test(valuePhone)) { // 正则验证
+                    callback(); // 校验通过
+                    return true;
+                } else {
+                    callback('请输入正确手机号或座机电话'); // 校验不通过
+                    return false;
+                }
+            }  
+         };
         //国家
         const validatecountryId=(rule, value, callback) => {
             if (value === '') {
@@ -105,11 +116,27 @@ export default {
         };
         //身份证号
         const validateidNumber=(rule, value, callback) => {
-            if (value === '') {
+          if (value === '') {
                 callback(new Error('身份证号不能为空'));
-            } else {
-                callback();
+            } 
+            if(value.length == 15){
+                var  patrn= /^[1-9]\d{5}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}$/
+                if (!patrn.exec(value)) {
+                     callback(new Error('请输入正确的身份证号'));   
+                }else{
+                    callback();
+                }
+            }else if(value.length == 18){
+                var  patrn= /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+                if (!patrn.exec(value)) {
+                    callback(new Error('请输入正确的身份证号'));   
+                }else{
+                    callback();
+                }
+            }else{
+                callback(new Error('请输入正确的身份证号'));   
             }
+            
         };
         const validateaddress=(rule, value, callback) => {
             if (value === '') {
@@ -125,7 +152,7 @@ export default {
                 id: 0,
                 name: '',    //收货人姓名
                 phone: 0,   //收货人电话
-                idNumber: 0,  //身份证
+                idNumber:'',  //身份证
                 countryId: 0,   //国家
                 state: 0, //省
                 city: 0,     //市
