@@ -19,7 +19,7 @@ export default {
         return {
             nav: [
                 {
-                    name: '订单管理',
+                    name: '订单列表',
                     children: [
                         {
                             path: '/users/usertotalorder',

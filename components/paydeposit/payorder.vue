@@ -28,7 +28,7 @@
             <div style="line-height: 28px; padding:20px">
                 <p>
                     <span class="PricePopup_title">需支付金额：</span>
-                    <span class="orangeFont fwb fs16"> ￥{{datalist.totalAmount}}</span>
+                    <span class="orangeFont fwb fs16"> ￥{{amountFormat(datalist.totalAmount - datalist.depositAmount)}}</span>
                 </p>
                 <p>
                     <span class="PricePopup_title">可用余额：</span>
@@ -39,7 +39,7 @@
             </div>
             <!--输入验证码-->
             <div class="PopupCode pr">
-                <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" @blur="userCodeCheck" />
+                <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码" />
                 <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
                 <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
             </div>
@@ -96,6 +96,9 @@ export default {
         biderscancel() {
             this.$emit('unChange', false)
         },
+        amountFormat(amount){
+            return parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        },
         async getNoteValue () {
             let params = {}
             const res = await orderPayCode(this, params)
@@ -121,66 +124,39 @@ export default {
                 });
             }
         },
-        async userCodeCheck(){
-            let params = {
-                code:this.Bonddeposit.BondCode
-            }
-            if(!this.Bonddeposit.BondCode){
-                this.TipCode='验证码不能为空'
-                return
-            }
-            const res = await orderPayCheckCode(this, params)
-            if(res.data && res.status === 200){
-                this.codeValid=true
-                this.TipCode=''
-            }else {
-                this.TipCode='验证码有误'
-                return
-            }
-        },
         //提交缴纳保证金
         async bidersOK(){
-            this.auth_time=0
             if(!this.Bonddeposit.BondCode){
                 this.TipCode='验证码不能为空'
                 return
             }
-            let paramCodes = {
-                code:this.Bonddeposit.BondCode
+            this.TipCode = ''
+
+            let params = {
+                id: this.datalist.id,
+                code: this.Bonddeposit.BondCode
             }
-            const CodeData = await orderPayCheckCode(this, paramCodes)
+            let res = await orderPayment(this, params)
 
-            if(CodeData.data && CodeData.status === 200) {
-                this.codeValid = true
-                this.TipCode = ''
-
-                let params = {
-                    id: this.datalist.id
-                }
-                let res = await orderPayment(this, params)
-
-                if (!res.data.errorcode && res.status === 200 && res.data) {
-                    this.Bonddeposit.BondCode = ''
-                    this.$Message.info("支付成功")
-                    this.$emit('unChange', false)
-                } else {
-                    this.$Modal.confirm({
-                        title: '失败提示',
-                        content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
-                        okText: '确定',
-                        styles: 'top:30px;',
-                        onOk: () => {
-                            // this.$router.push({name:'login'});
-                        },
-                        onCancel: () => {
-
-                        }
-                    });
-                }
+            if (!res.data.errorcode && res.status === 200 && res.data) {
+                this.Bonddeposit.BondCode = ''
+                this.$Message.info("支付成功")
+                this.$emit('unChange', false)
             } else {
-                this.TipCode = '验证码有误'
-                return
+                this.$Modal.confirm({
+                    title: '失败提示',
+                    content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+                    okText: '确定',
+                    styles: 'top:30px;',
+                    onOk: () => {
+                        // this.$router.push({name:'login'});
+                    },
+                    onCancel: () => {
+
+                    }
+                });
             }
+
         }
     },
     created() {

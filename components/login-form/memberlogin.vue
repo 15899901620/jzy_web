@@ -179,11 +179,11 @@ export default {
                 return false
               } else {
                   var authres = res.data
-                  if (authres && res.status === 200) {
+                  if (res.status === 200 && authres) {
                       let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
                       Cookies.set('webtoken', authres, {expires: expires})
                       const res = await getGainuserInfor(this, {})
-                      if (res.data && res.status === 200) {
+                      if (res.status === 200 && res.data) {
                           let auth = stringify(res.data)
                           Cookies.set('userinfor', auth, {expires: expires})
                           this.updateUserInfof(res.data)
@@ -223,36 +223,34 @@ export default {
                   content: '该账号尚未注册，请您先注册'
                 });
                 return false
-              }
-            })
-            if(that.cphone  === true) {
-              return false
-            }
-            //发送
-            let data = {
-                phone: that.loginform.username
-            }
-            userLoginCodeSend(that, data).then(function (res) {
-              if (res.data && res.status === 200) {
-                let countdown = 120
-                var timer = setInterval(() => {
-                    countdown = countdown-1
-                    if (countdown <= 0) {
-                        clearInterval(timer)
-                        that.btnBoolen = false;
-                        that.btnClassName = "btns"
-                        that.btnValue = "发送验证码"
-                    } else {
-                        that.btnBoolen = true;
-                        that.btnValue = `已发送(${countdown})S`
-                        that.btnClassName = "btn"
-                    }
-                }, 1000)
-              } else {
-                 that.$Modal.info({
-                  title: '提示',
-                  content: '短信发送失败'
-                });
+              }else{
+                  //发送
+                  let data = {
+                      phone: that.loginform.username
+                  }
+                  userLoginCodeSend(that, data).then(function (res) {
+                      if (res.status === 200 && res.data) {
+                          let countdown = 120
+                          var timer = setInterval(() => {
+                              countdown = countdown-1
+                              if (countdown <= 0) {
+                                  clearInterval(timer)
+                                  that.btnBoolen = false;
+                                  that.btnClassName = "btns"
+                                  that.btnValue = "发送验证码"
+                              } else {
+                                  that.btnBoolen = true;
+                                  that.btnValue = `已发送(${countdown})S`
+                                  that.btnClassName = "btn"
+                              }
+                          }, 1000)
+                      } else {
+                          that.$Modal.info({
+                              title: '提示',
+                              content: '短信发送失败'
+                          });
+                      }
+                  })
               }
             })
           }

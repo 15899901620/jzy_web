@@ -37,28 +37,31 @@
                         <tbody>
                             <tr class="Ttitle graybg" >
                             <td colspan="7">
-                                <span class="ml10">订单编号：<span class="blue">{{item.orderNo}}</span></span>
-                                <span class="ml15">订单类型：{{getOrderType(item.orderType)}}</span>
+                                <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
+                                    <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"  class="mt5 blackFont">
+                                        <span class="blue">{{item.orderNo}}</span>
+                                    </router-link>
+                                </span>
                                 <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
-                                <span class="fr mr15" v-show="item.status == 1"><span class="gray">最后付款：</span> <span class="gray">{{item.depositPayLastTime}}</span></span>
+                                <span class="fr mr15" v-show="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>
                             </td>
                             </tr>
                             <tr class="detailTable">
 
                             <td>{{item.skuNo}} {{item.skuName}}</td>
-                            <td><span class="orangeFont">￥{{item.finalPrice}}</span> <span style="color:#999">/吨</span></td>
+                            <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                             <td>{{item.orderNum}}</td>
                             <td>{{item.warehouseName}}</td>
-                            <td>￥{{item.totalAmount}}</td>
+                            <td>
+                                {{item.totalAmountFormat}}
+                                <template v-if="item.depositId > 0"><br><Tag color="success">定</Tag>{{item.depositAmountFormat}}</template>
+                            </td>
                             <td>
                                 <span v-if="item.status == 3" class="greenFont" >{{getOrderState(item.status)}}</span>
                                 <span v-else-if="item.status == 0" class="gray" >{{getOrderState(item.status)}}</span>
                                 <span v-else class="orangeFont" >{{getOrderState(item.status)}}</span>
                             </td>
                             <td class="operate">
-                                <div class="" v-if="item.status == 1">
-                                    <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
-                                </div>
                                 <div class="" v-if="item.status == 2">
                                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                                 </div>
@@ -135,11 +138,9 @@ export default {
             this.userinfo = userinfo
         },
         paymentBut(row){
-            // console.log(row)
             this.payloading = true
             this.dataRow = {
-                ...row,
-                freezeAmount: this.userinfo.freezeAmount
+                ...row
             }
         },
         unPayOrder(row){
@@ -147,7 +148,6 @@ export default {
             this.getSourceData()
         },
         setTabs(res){
-            console.log('status', res)
             if(res == '1'){
                 this.formSearch.status = ''
                 this.currTabs = 0
@@ -166,7 +166,7 @@ export default {
         //订单类型
         getOrderType(typeId) {
             if(!typeId) return
-            return config.orderType[typeId]
+            return config.orderType[typeId].substring(0,1)
         },
         //订单状态
         getOrderState(typeId) {
