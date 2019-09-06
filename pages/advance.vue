@@ -67,46 +67,18 @@
           <span style="width: 13%;"><div class="ListBtn">预定</div></span>
         </li>
       </ul>
-      <div class="whitebg ovh">
-        <Pagination></Pagination>
+      <div class="whitebg ovh" style="padding:18px; text-align:center;">
+        <page></page>
       </div>
-
-
     </div>
 
       <div class="ml10" style="width: 23%;">
         <div class="whitebg">
           <h1  style="padding: 16px 15px;background-color: #fcfcfc; font-size: 16px;border-bottom:1px solid #DEDEDE">求购信息</h1>
 
-          <ul class="purInfor">
-            <li>
-              <span class="Infortitle">产品名称</span><input type="text"  class="input" name="" id="" value="" />
-            </li>
-            <li>
-              <span class="Infortitle">库       区</span><input type="text"  class="input" name="" id="" value="" />
-            </li>
-            <li>
-              <span class="Infortitle">数       量</span><input type="text"  class="input" name="" id="" value="" />
-            </li>
-            <li>
-              <span class="Infortitle">意 向 价</span><input type="text"  class="input" name="" id="" value="" />
-            </li>
-            <li>
-              <span class="Infortitle">产品等级</span><select class="input" style="height: 35px; width: 170px;"><option>10</option></select>
-            </li>
-            <li>
-              <span class="Infortitle">交货时间</span>
-              <div class="DateTIME">
-                <Col span="12">
-                  <DatePicker type="date" placeholder="Select date" style="width: 170px"></DatePicker>
-                </Col>
-                </div>
-            </li>
+          <!--求购-->
 
-            <div class="purinfobtn">
-              发布求购
-            </div>
-          </ul>
+          <purchasing></purchasing>
         </div>
         <!--最近交易-->
 
@@ -154,13 +126,14 @@
 
 <script>
 
-  // import Pagination from '../components/pagination/pagination'
 import { mapState } from 'vuex'
 import Header from '../components/header'
 import Footer from '../components/footer'
-  export default {
-      name: "advance",
-      fetch({ store, params }) {
+import purchasing from '../components/purchasing'
+
+export default {
+  name: "advance",
+  fetch({ store, params }) {
     return Promise.all([
       store.dispatch('menu/getMenuList'),
       store.dispatch('system/getSystemCnf'),
@@ -170,10 +143,11 @@ import Footer from '../components/footer'
   },
   components: {
     Header,
-    Footer
+    Footer,
+    purchasing
   },
 
-    }
+}
 </script>
 
 <style scoped>
@@ -209,8 +183,4 @@ import Footer from '../components/footer'
   .currdate{margin: 18px 20px;  overflow:hidden;}
   .currdate li{border-bottom: 1px dotted #DDDDDD;display: flex;flex-direction: column; margin-top: 10px; font-size: 14px;}
   .currdate li:last-child{margin-bottom: 30px;}
-
-
-
-
 </style>
