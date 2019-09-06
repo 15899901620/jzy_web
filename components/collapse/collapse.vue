@@ -10,7 +10,7 @@
                         <div class="ass-ty2-p 1">
                             <p class="fs16"><i></i>热门分类:</p>
                             <p style="word-wrap:break-word" v-for="(items,index) in cateHot"  :key="index" >
-                                <a style="float:left" @click='purpose(items)'>{{items.name}}</a>                   
+                                <a style="float:left" @click='searchCate(items)'>{{items.name}}</a>
                             </p>
                         </div>
                     </li>
@@ -168,14 +168,14 @@
                 const res = await sendHttp(this, false, server.api.product.attrlist,params)
                 this.attrlist = res.data
             },
-            purpose(items){
-                     this.$router.push({name:'physical-page', query:{purpose:items.name, }})  
+            searchCate(items){
+                     this.$router.push({name:'physical-page', query:{cate_id:items.id }})
             },
             title(items){
-                    this.$router.push({name:'physical-page', query:{title:items.title, }})  
+                    this.$router.push({name:'physical-page', query:{name:items.title }})
             },
             feature(items){
-                    this.$router.push({name:'physical-page', query:{feature:items.value, }})  
+                    this.$router.push({name:'physical-page', query:{attr:items.id }})
             },
             oneMouseout:function(){
                 this.seen = false;

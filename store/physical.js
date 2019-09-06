@@ -52,7 +52,7 @@ export const actions = {
         })
     },
     async getphysicalHotList({ commit }, params = {}) {
-        return await this.$axios.$get(api.prefix + api.api.product.goodsHot, { params })
+        return await this.$axios.$get(api.prefix + api.api.product.goodsHot.url, { params })
         .then(response => {
             commit('updatephysicalHotList', response)
         })
