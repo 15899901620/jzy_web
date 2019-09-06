@@ -3,27 +3,14 @@ import api from '../config/api'
 
 export const state = () => {
     return {
-        SpotList: [],
-        biddersbeingData: {},
-        bidderssoonData: {},
-        biddersendData: {}
+      spotlist: []
     }
 }
   
 export const mutations = {
     updateSpotList(state, data) {
-      state.SpotList = data
-    },
-    updatebeingData(state, data) {
-        state.biddersbeingData = data
-    },
-    updatesoonData(state, data) {
-        state.bidderssoonData = data
-    },
-    updateendData(state, data) {
-        state.biddersendData = data
+      state.spotlist = data
     }
-
 }
   
 export const actions = {

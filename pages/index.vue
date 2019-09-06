@@ -90,7 +90,12 @@ export default {
             store.dispatch('bidders/getHotBidderList', {
                 current_page: 1,
                 page_size: 20
+            }),
+            store.dispatch('spot/getSpotList', {
+                current_page: 1,
+                page_size: 20
             })
+            
         ])
     },
     components: {

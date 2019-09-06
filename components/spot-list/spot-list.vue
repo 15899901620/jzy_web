@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     ...mapState({
-      systeminfo: state => state.system.systeminfo
+      spotlist: state => state.system.systeminfo
     })
   },
   methods: {
