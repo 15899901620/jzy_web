@@ -153,6 +153,7 @@ let api = {
     productlist: '/item/goods/list/page',
     productdetail: '/item/goods/sku/info',
     inspectionCheck: '/item/inspection_sheet/list/page',
+    demandadd: '/bill/goodsDemand/add',
     // goodsHot: '/item/goods/hotGoods',
     goodsHot: {'url': '/item/goods/hotGoods', 'method': 'get'},
     // cateHot: '/category/hotCate',
