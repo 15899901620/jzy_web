@@ -135,7 +135,6 @@
         },
         props:{
             openCol: {
-           
                 type: String,
                 default: 'none'
             }
