@@ -5,15 +5,11 @@
             :height = "174"
             :autoplay-speed="9000">
             <carousel-item  v-for="(item, index) in brandList" :key="index">
-              <template v-if="brandList.length > 0">
                 <ul class="coorperList">
                     <li v-for="(items, k) in item" :key="k">
                         <a href="#"><img :src="returnImage(items)"/></a>
                     </li>
                 </ul>
-              </template>
-              <template v-if="brandList.length > 0">
-              </template>
             </carousel-item>
         </carousel>
     </div>
@@ -87,11 +83,16 @@ export default {
                   }
                   this.brandList = m
                 }else{
+                  // console.log(this.brandList)
+
                   let onedata = []
                   for(let k in cobrand) {
                     onedata.push(Object.assign({}, cobrand[k]))
                   }
-                  this.brandList[0] = onedata
+                  this.brandList.push(onedata)
+
+
+                  // console.log(this.brandList.length)
                 }
                 
             }
