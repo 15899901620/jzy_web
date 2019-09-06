@@ -26,26 +26,20 @@ export default {
         }
     },
     methods: {
-        async getHotSearch () {            
-            if (!hasStore('hotsearch')) {
-                let res = await gethotsearch(this, {})
-                setStore('hotsearch',res.data,10)
-                this.hotsearch = res.data
-            } else {
-                this.hotsearch = getStore('hotsearch')
-            }
-        },
-        gotoSearch() {
-            let kd = this.keyword
-            if(!kd) return false;
-            this.$router.push({name:'spot-page',query:{kd:kd}})
-        }
+      async getHotSearch () {            
+        let res = await gethotsearch(this, {})
+        this.hotsearch = res.data
+      },
+      gotoSearch() {
+          let kd = this.keyword
+          if(!kd) return false;
+          this.$router.push({name:'spot-page',query:{kd:kd}})
+      }
     },
     created() {
         this.getHotSearch()
     },
     mounted() {
-        this.getHotSearch()
     }
 }
 </script>

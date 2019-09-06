@@ -9,7 +9,7 @@ export const state = () => {
   
 export const mutations = {
     updateSpotList(state, data) {
-      console.log(data)
+      // console.log(data)
       state.spotlist = data
     }
 }
@@ -17,7 +17,7 @@ export const mutations = {
 export const actions = {
     async getSpotList({ commit },  params ) {
       let res = await spotList(this, params)
-      console.log(res);
+      // console.log(res);
       if(res.status === 200){
         commit('updateSpotList', res.data.items)
       }

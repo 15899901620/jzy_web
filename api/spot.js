@@ -41,8 +41,6 @@ export const spotList = (vm, data) => {
         'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     }
-    console.log(server.prefix + server.api.spot.spotList)
-    console.log(data)
     return vm.$axios.get(server.prefix + server.api.spot.spotList,
         {
             params: {...data}

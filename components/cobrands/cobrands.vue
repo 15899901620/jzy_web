@@ -63,22 +63,37 @@ export default {
             }
             const res = await cooperativeBrand(this, params)
             let cobrand = res.data.items
+            let total = res.data.total
             if(cobrand) {
                 let i = 0
                 let a = 14
                 let b = 0
-                for(let k in cobrand) {
-                    if(k<a) {
-                        this.currlist[b] = Object.assign({}, cobrand[k])
+                let da = []
+                let ba =[]
+                if(total > a) {
+                  let towdata = []
+                  let showdata = []
+                  let m =[]
+                  for(let k in cobrand) {
+                    if(i < a){
+                      towdata.push(Object.assign({}, cobrand[k]))
+                      m[b] = towdata
+                      i = i+1
                     }else{
-                        this.brandList.push(this.currlist)
-                        this.currlist = []
-                        i = i+1
-                        a = a+a
-                        b = 0
+                      towdata =[]
+                      b = b+1
+                      i = 0
                     }
-                    b = b+1
+                  }
+                  this.brandList = m
+                }else{
+                  let onedata = []
+                  for(let k in cobrand) {
+                    onedata.push(Object.assign({}, cobrand[k]))
+                  }
+                  this.brandList[0] = onedata
                 }
+                
             }
         }
     },

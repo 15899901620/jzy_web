@@ -44,6 +44,7 @@ export default {
   name: 'SpotList',
   data(){
     return{
+      modal_loading: false,
       ISlogin: false
     }
   },
