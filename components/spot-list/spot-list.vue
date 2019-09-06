@@ -1,21 +1,21 @@
 <template>
   <div class="hotspot">
     <Row :gutter="24" index="0" class="spothead">
-      <Col span="2">品种</Col>
+      <Col span="3">品种</Col>
       <Col span="4">牌号</Col>
       <Col span="4">厂商</Col>
       <Col span="4">交货仓</Col>
-      <Col span="3">剩余数量（吨）</Col>
+      <Col span="2">剩余数量（吨）</Col>
       <Col span="3">单价（元/吨）</Col>
       <Col span="2">更新时间</Col>
       <Col span="2">操作</Col>
     </Row>
     <Row :gutter="24" v-for="(item, index) in spotlist" :key="index" :index="index+1" class="spotabody">
-      <Col span="2">{{item.category_name}}</Col>
+      <Col span="3">{{item.category_name}}</Col>
       <Col span="4">{{item.sku_name}}</Col>
       <Col span="4">{{item.manufacturer}}</Col>
       <Col span="4">{{item.warehouse_name}}</Col>
-      <Col span="3">{{item.available_num}}</Col>
+      <Col span="2">{{item.available_num}}</Col>
       <Col span="3">{{item.finalPriceFormat}}</Col>
       <Col span="2">{{item.relativeCreateTime}}</Col>
       <Col span="2"><Button type="primary" v-on:click="addOrder(item)" size="small">下单</Button></Col>
@@ -85,7 +85,7 @@ export default {
     color: #333;
     .ivu-col {
       padding: 5px 0px;
-      line-height: 38px;
+      line-height: 42px;
       text-align: center;
       font-size: 14px;
     }
@@ -94,7 +94,7 @@ export default {
     color: #666;
     .ivu-col {
       padding: 5px 0px;
-      line-height: 36px;
+      line-height: 38px;
       text-align: center;
       font-size: 14px;
       border-bottom:1px solid #ddd; 
