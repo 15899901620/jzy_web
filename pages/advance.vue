@@ -130,6 +130,7 @@ import { mapState } from 'vuex'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import purchasing from '../components/purchasing'
+
 export default {
   name: "advance",
   fetch({ store, params }) {
@@ -182,8 +183,4 @@ export default {
   .currdate{margin: 18px 20px;  overflow:hidden;}
   .currdate li{border-bottom: 1px dotted #DDDDDD;display: flex;flex-direction: column; margin-top: 10px; font-size: 14px;}
   .currdate li:last-child{margin-bottom: 30px;}
-
-
-
-
 </style>

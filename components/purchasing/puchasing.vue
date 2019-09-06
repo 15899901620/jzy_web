@@ -30,8 +30,8 @@
       </Row>
       <Row :gutter="24" index="1">
         <Col span="24">
-          <FormItem label="库区" prop="warehouseId">
-            <Select v-model="formItem.warehouseId" style="width:90%">
+          <FormItem label="库区" prop="warehouseId" >
+            <Select v-model="formItem.warehouseId" style="width:90%" @on-change="getWarehouseName" label-in-value	>
               <Option  v-for="item in warehouseData" :value="item.id" :key="item.id">{{ item.wName }}</Option>
             </Select>
           </FormItem>
@@ -49,25 +49,43 @@
       <Row :gutter="24" index="1">
         <Col span="24">
           <FormItem prop="phone" label="交货时间">
-            <DatePicker  v-model="formItem.intentionDate"  type="date" placeholder="交货时间" style="width: 90%;"></DatePicker>
+            <DatePicker @on-change="getDatetime"  type="date" placeholder="交货时间" style="width: 90%;"></DatePicker>
           </FormItem>
         </Col>
       </Row>
       <div style="text-align: center;">
-        <Button type="primary">发布求购</Button>
+        <Button type="primary" v-on:click="addDeand">发布求购</Button>
       </div>
     </Form>
+
+    <Modal v-model="ISlogin" width="400">
+        <p slot="header" style="color:#666;text-align:left">
+            <Icon type="ios-information-circle"></Icon>
+            <span>提示</span>
+        </p>
+        <div style="text-align:center; font-size:14px;">
+            <p>你未登录会员无法发布求购，请您登录后再发布！</p>
+        </div>
+        <div slot="footer">
+              <Button type="primary" :loading="modal_loading" @click="goLogin">去登录</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 import { getWarehouseList } from '../../api/logistics'
-import { getproductlist } from '../../api/product'
+import { getproductlist, gooddemandadd } from '../../api/product'
+import { getCookies } from '../../config/storage'
+
+
 export default {
   name:'puchasing',
   data() {
     return {
+      ISlogin: false,
       loading1: false,
+      modal_loading: false,
       formItem: {
         memberId: '',
         skuId: '',
@@ -92,14 +110,19 @@ export default {
     }
   },
   methods:{
+    getDatetime(res){
+      // console.log(res)
+      this.formItem.intentionDate = res
+    },
+    getWarehouseName(res) {
+      this.formItem.warehouseName=res.label
+    },
     selectProName (res) {
       if (res) {
         let splitData = res.label.split('-')
         this.formItem.skuId = res.value
         this.formItem.skuNo = splitData[0]
         this.formItem.skuName = splitData[1]
-        this.formItem.uomName = splitData[2]
-        this.formItem.manufacturer = splitData[3]
       }
     },
     getwarehouse () {
@@ -129,6 +152,33 @@ export default {
         }
       })
     },
+    addDeand () {
+      let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+      if (!userinfo) {
+        this.ISlogin = true;
+        return false
+      }
+      this.formItem.memberId = userinfo.id
+     gooddemandadd(this, this.formItem).then(response => {
+        if (response.status === 200 && response.data ==true) {
+           this.$Modal.success({
+                title: '提示',
+                content: '求购发布成功！'
+            });
+        }
+     }).catch(err => {
+        this.loading1 = false
+        if (err) {
+          this.$Modal.warning({
+              title: '提示',
+              content: '求购发布不成功！'
+          });
+        }
+      })
+    },
+    goLogin(){
+      window.location.href = '/login'
+    }
   },
   mounted() {
     this.getwarehouse()

@@ -67,8 +67,8 @@ export default {
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
-            store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'add_time', desc: true}),
-            store.dispatch('notice/getNoticeHotList',  {current_page: 3, page_size: 10, sortBy: 'click', desc: 'desc'}),
+            store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'add_time', desc: true, isShow: 1}),
+            store.dispatch('notice/getNoticeHotList',  {current_page: 1, page_size: 10, sortBy: 'click', desc: true, isShow: 1}),
         ])
     },
     components: {
