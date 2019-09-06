@@ -19,6 +19,9 @@
 			</div>
       <div class="hot-spot">
 	      <outpacking title="现货超市" cpadding="0px" :more="spotData">
+          <div slot="content">
+            <spot-list></spot-list>
+          </div>
     	  </outpacking>
       </div>
 			<div class="co-brands">
@@ -53,6 +56,7 @@ import outpacking from '../components/outpacking'
 import cobrands from '../components/cobrands'
 import hottrade from '../components/hottrade'
 import sidebar from '../components/sidebar'
+import SpotList from '../components/spot-list'
 
 export default {
     async asyncData({ app }) {
@@ -95,10 +99,10 @@ export default {
             store.dispatch('spot/getSpotList', {
                 current_page: 1,
                 page_size: 20
-            })
-            
+            })  
         ])
     },
+
     components: {
         Header,
         Footer,
@@ -109,7 +113,8 @@ export default {
         outpacking,
         cobrands,
         hottrade,
-        sidebar
+        sidebar,
+        SpotList
     },
     data() {
         return {
@@ -124,13 +129,14 @@ export default {
             heightNum: 320
         }
     },
+    computed: {
+      ...mapState({
+        bannerinfo: state => state.system.bannerinfo,
+      })
+    },
     methods: {
        
     },
-    computed: {
-        ...mapState({
-            bannerinfo: state => state.system.bannerinfo,
-        })
-    }
+  
 }
 </script>
