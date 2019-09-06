@@ -100,5 +100,8 @@ export default {
       border-bottom:1px solid #ddd; 
     }
   }
+  .spotabody:hover {
+    background: #fafafa;
+  }
 }
 </style>
