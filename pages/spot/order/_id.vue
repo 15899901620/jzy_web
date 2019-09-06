@@ -16,6 +16,35 @@
                 <div class="mt30 fs16 ml15 fwb">公司信息</div>
                 <div class="ml35 mt20 mb20 fs14">{{userinfo.username}}</div>
                 <div class="lineborder"></div>
+
+                <!-- 商品信息 -->
+                <div class="mt30 fs16 ml15" id="test1">
+                    <span class="fwb">商品信息</span>
+                </div>
+                <ul class="orderPorList">
+                    <li>
+                        <span class="title" style="width: 13%;">货物信息</span>
+                        <span class="title" style="width: 12%;">交货仓</span>
+                        <span class="title" style="width: 12%;">单价（元/吨）</span>
+                        <span class="title" style="width: 12%;">运费</span>
+                        <span class="title" style="width: 12%;">巨融易</span>
+                        <span class="title" style="width: 12%;">合计单价（元/吨）</span>
+                        <span class="title" style="width: 14%;">数量（吨）</span>
+                        <span class="title" style="width: 9%;">小计</span>
+                    </li>
+                    <li>
+                        <div style="width: 13%;">{{spotDetail.sku_name}}</div>
+                        <div  style="width: 12%;">{{spotDetail.warehouse_name}}</div>
+                        <div style="width: 12%;">{{spotDetail.finalPriceFormat}}</div>
+                        <div style="width: 12%;">+ {{this.orderinfo.freightFee}}元/吨</div>
+                        <div style="width: 12%;">+ {{this.orderinfo.jryCost}}元/吨</div>
+                        <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
+                        <div style="width: 14%;">
+                            <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
+                        </div>
+                        <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
+                    </li>
+                </ul>
                 <!--交货方式-->
                 <div class="mt30 fs16 ml15 fwb">交货方式</div>
                 <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
@@ -55,7 +84,7 @@
                     <template v-else><p>暂无任何收货地址，请您添加！</p></template>
                 </div>
                 <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-                <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+                <!--<div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
                     选择承运商
                     <div class="ml35" v-if="carrierList.length > 0">
                         <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
@@ -63,7 +92,7 @@
                         </Select>
                     </div>
                     <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-                </div>
+                </div>-->
                 <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
                     选择运输方式
                     <ul class="DeliveryMethod ml35 mb20">
@@ -79,7 +108,7 @@
                 </div>
 
                 <div class="lineborder"></div>
-                <div class="mt30 fs16 ml15 fwb">余额支付</div>
+                <div class="mt30 fs16 ml15 fwb">支付选择</div>
                 <ul class="DeliveryMethod ml35">
                     <li v-for="(item, index) in payList" @click="choosePayType(index)" :class="{'curr':index === orderinfo.payIndex}" :key="index">{{item.name}}</li>
                     <div class="ml10 fs14">可用余额：<span class="orangeFont">{{capitalinfo.available_amount_format}}</span></div>
@@ -107,34 +136,6 @@
                     （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{systeminfo.CLOSED_TIME}}:00前完成尾款付款）
                 </div>
                 <div class="lineborder" v-if="orderinfo.payIndex==1"></div>
-                <!-- 商品信息 -->
-                <div class="mt30 fs16 ml15" id="test1">
-                    <span class="fwb">商品信息</span>
-                </div>
-                <ul class="orderPorList">
-                    <li>
-                        <span class="title" style="width: 13%;">货物信息</span>
-                        <span class="title" style="width: 12%;">交货仓</span>
-                        <span class="title" style="width: 12%;">单价（元/吨）</span>
-                        <span class="title" style="width: 12%;">运费</span>
-                        <span class="title" style="width: 12%;">巨融易</span>
-                        <span class="title" style="width: 12%;">合计单价（元/吨）</span>
-                        <span class="title" style="width: 14%;">数量（吨）</span>
-                        <span class="title" style="width: 9%;">小计</span>
-                    </li>
-                    <li>
-                        <div style="width: 13%;">{{spotDetail.sku_name}}</div>
-                        <div  style="width: 12%;">{{spotDetail.warehouse_name}}</div>
-                        <div style="width: 12%;">{{spotDetail.finalPriceFormat}}</div>
-                        <div style="width: 12%;">+ {{this.orderinfo.freightFee}}元/吨</div>
-                        <div style="width: 12%;">+ {{this.orderinfo.jryCost}}元/吨</div>
-                        <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
-                        <div style="width: 14%;">
-                            <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
-                        </div>
-                        <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
-                    </li>
-                </ul>
 
                 <div class="proInfor">
                     <div  style="display: flex; flex-direction: column; width: 300px; " >
@@ -228,7 +229,7 @@ export default {
                 spot_id : 0,
                 isDelivery: 0,
                 addressId: 0,
-                carrierId: 0,
+                //carrierId: 0,
                 transportationMode: '',
                 payIndex: 0,
                 jryDays: 0,
@@ -242,18 +243,11 @@ export default {
             currMax: 0,
             currsetp: 1,
             ServiceTimeList:[
-                {
-                    value:'5',
-                    timeSelect:'5天'
-                },
-                {
-                    value:'3',
-                    timeSelect:'3天'
-                },
-                {
-                    value:'1',
-                    timeSelect:'1天'
-                }
+                {value:'5', timeSelect:'5天'},
+                {value:'4', timeSelect:'4天'},
+                {value:'3', timeSelect:'3天'},
+                {value:'2', timeSelect:'2天'},
+                {value:'1', timeSelect:'1天'}
             ],
             methodList:[
                 {value:1, name:'自提'},
@@ -263,8 +257,8 @@ export default {
                 {value:1, name:'支付全款'},
                 {value:2, name:'支付保证金'},
             ],
-            carrierList:[],
-            carrierListDesc: '',
+            //carrierList:[],
+            //carrierListDesc: '',
             currentIndex: 0,
             currfreight: -1,
             currfreightdata: {},
@@ -326,16 +320,17 @@ export default {
                 this.orderinfo.isDelivery = index
                 this.currMin = this.spotDetail.delivery_min
                 this.currsetp = this.spotDetail.delivery_doubly == 1 ? this.spotDetail.delivery_min : 1
-                if(this.currMin < this.currMax){
-                    this.orderinfo.orderNum = this.currMin
-                }
             }else{
                 this.orderinfo.isDelivery = 0
                 this.currMin = this.spotDetail.take_their_min
                 this.currsetp = this.spotDetail.take_their_doubly == 1 ? this.spotDetail.take_their_min : 1
-                if(this.currMin < this.currMax){
-                    this.orderinfo.orderNum = this.currMin
-                }
+            }
+            if(this.currMin < this.currMax){
+                this.orderinfo.orderNum = this.currMin
+            }else{
+                this.showWarning("剩余库存("+this.currMax+")不满足当前交货方式的起订量("+this.currMin+")要求，请重新下单！", function(){
+                    window.location.href = '/spot'
+                })
             }
         },
         //获取地址
@@ -378,7 +373,7 @@ export default {
             }
             const res=await getFreightList(this, data)
             if(res.data){
-                this.carrierList = res.data.carriers
+                //this.carrierList = res.data.carriers
 
                 this.logisticsfreight = res.data.freightList
                 this.orderinfo.transportationMode = 0
@@ -413,7 +408,7 @@ export default {
                 spot_id : this.orderinfo.spot_id ,
                 isDelivery : this.orderinfo.isDelivery ,
                 addressId : this.orderinfo.addressId ,
-                carrierId : this.orderinfo.carrierId ,
+                //carrierId : this.orderinfo.carrierId ,
                 transportationMode : this.orderinfo.transportationMode ,
                 payIndex : this.orderinfo.payIndex ,
                 jryDays : this.orderinfo.jryDays ,
@@ -423,10 +418,10 @@ export default {
                 this.showWarning('配送请维护选择收货地址！');
                 return ;
             }
-            if(params.isDelivery == 1 && params.carrierId == 0){
+            /*if(params.isDelivery == 1 && params.carrierId == 0){
                 this.showWarning('配送承运商不能为空！');
                 return ;
-            }
+            }*/
             if(params.isDelivery == 1 && params.transportationMode == 0){
                 this.showWarning('配送运输方式不能为空！');
                 return ;
@@ -468,7 +463,7 @@ export default {
                 spot_id : this.orderinfo.spot_id ,
                 is_delivery : this.orderinfo.isDelivery ,
                 address_id : this.orderinfo.addressId ,
-                carrier_id : this.orderinfo.carrierId ,
+                //carrier_id : this.orderinfo.carrierId ,
                 transportation_mode : this.orderinfo.transportationMode ,
                 is_pay_deposit : this.orderinfo.payIndex ,
                 jry_days : this.orderinfo.jryDays ,
@@ -485,11 +480,20 @@ export default {
                 });
             }
         },
-        showWarning(msg){
-            this.$Modal.warning({
-                title: '提示',
-                content: msg
-            });
+        showWarning(msg, okCallback){
+            if(okCallback){
+                this.$Modal.warning({
+                    title: '提示',
+                    content: msg,
+                    onOk: okCallback
+                })
+            }else{
+                this.$Modal.warning({
+                    title: '提示',
+                    content: msg,
+                })
+            }
+
         }
     },
     mounted() {  
