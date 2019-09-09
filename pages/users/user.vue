@@ -211,7 +211,6 @@ export default {
         paymentBut(row){
             // console.log(row)
             this.payloading = true
-            console.log(111);
             this.dataRow = {
                 ...row,
                 freezeAmount: this.userinfo.freezeAmount

@@ -5,12 +5,12 @@
             <div class="breadcrumb">
                 <breadcrumb>
                     <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
-                    <breadcrumb-item>{{articlelist.items[0].catName}}</breadcrumb-item>
+                    <breadcrumb-item>{{this.articecatDetail.title}}</breadcrumb-item>
                 </breadcrumb>
             </div>
             <div class="Pages">
                 <div class="Pages_left">
-                    <outpacking :title="articlelist.items[0].catName" :total="articlelist.total">
+                    <outpacking :title="this.articecatDetail.title" :total="articlelist.total">
                         <div slot="content">
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in articlelist.items" :key="index">
@@ -70,7 +70,6 @@ import Footer from '../../components/footer'
 import breadcrumb from '../../components/breadcrumb'
 import outpacking from '../../components/outpacking'
 import pagination from '../../components/pagination'
-
 export default {
     name: 'articleList',
     fetch({ store, params, query }) {
@@ -82,6 +81,8 @@ export default {
             store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? 1 : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
             store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
             store.dispatch('article/getArticleCatList',  {parentId: 0}),
+            store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 1 : params.id}),
+
         ])
     },
     components: {
@@ -93,11 +94,13 @@ export default {
         pages: pagination.pages
     },
     head () {
+    
         return {
-            title: this.articlelist.items[0].catName+'-巨正源',
+            
+            title: this.articecatDetail.title+'-巨正源',
             meta: [
-                { hid: 'keywords', name: 'keywords', content:this.articlelist.items[0].catName+',巨正源' },
-                { hid: 'description', name: 'description', content: this.articlelist.items[0].catName+'-巨正源' }
+                { hid: 'keywords', name: 'keywords', content:this.articecatDetail.title+',巨正源' },
+                { hid: 'description', name: 'description', content: this.articecatDetail.title+'-巨正源' }
             ]
         }
     },
@@ -108,16 +111,20 @@ export default {
         changePage (row) {
             let id = this.$route.params.id
             this.$router.push({name:'article-id',params:{id:id},query:{page:row}})
-        }
+        },
+        
     },
     computed:{
         ...mapState({
             currPage:  state => state.article.currPage,
             articlelist: state => state.article.articlelist,
             hotarticleInfo: state => state.article.hotarticleInfo,
-            articleCat: state => state.article.articleCat
+            articleCat: state => state.article.articleCat,
+             articecatDetail: state => state.article.articecatDetail
         })
     },
+
+
     watch: {
         '$route' (to, from) {
             this.$router.go(0);

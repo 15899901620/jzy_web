@@ -7,6 +7,7 @@ import api from '../config/api'
 
 export const state = () => {
     return {
+        articecatDetail: {},
         articleCat: [],
         noticeInfo: [],
         articleInfo: [],
@@ -39,11 +40,22 @@ export const mutations = {
     },
     updateCurrPage (state, data) {
         state.currPage = data
+    },
+    updatearticecatDetail (state, data) {
+        state.articecatDetail = data
     }
-    
 }
 
 export const actions = {
+    async getArticleCatDetail({ commit }, params){
+        return await this.$axios.$get(api.prefix + api.api.information.articleCatDetail, { params })
+        .then(response => {
+            commit('updatearticecatDetail', response.data)
+        })
+        .catch(error => {
+            console.log('err', error)
+        })
+   },
     async getHomeNotice({ commit }, {params}) {
         return await this.$axios.$get(api.prefix + api.api.information.announcement, { params })
         .then(response => {
