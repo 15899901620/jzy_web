@@ -78,10 +78,10 @@ export default {
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
-            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? 1 : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
+            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
             store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
             store.dispatch('article/getArticleCatList',  {parentId: 0}),
-            store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 1 : params.id}),
+            store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
 
         ])
     },
