@@ -10,7 +10,7 @@
             </div>
             <div class="Pages">
                 <div class="Pages_left">
-                    <outpacking :title="   this.currCategoryInfo.title" :total="articlelist.total">
+                    <outpacking :title="this.currCategoryInfo.title" :total="articlelist.total">
                         <div slot="content">
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in articlelist.items" :key="index">
@@ -97,10 +97,10 @@ export default {
     
         return {
             
-            title:    this.currCategoryInfo.title+'-巨正源',
+            title:    this.currCategoryInfo.seoTitle+'-巨正源',
             meta: [
-                { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.title +',巨正源' },
-                { hid: 'description', name: 'description', content:    this.currCategoryInfo.title +'-巨正源' }
+                { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.seoKeywords +',巨正源' },
+                { hid: 'description', name: 'description', content:    this.currCategoryInfo.seoDescription +'-巨正源' }
             ]
         }
     },
@@ -130,10 +130,13 @@ export default {
             }
            
         }
-
+        console.log('currCategoryInfo',this.currCategoryInfo)
         if(this.currCategoryInfo == ''){
             this.currCategoryInfo = {
-                title:'',
+                title:'全部',
+                seoKeywords:'全部',
+                seoDescription:'全部',
+                seoDescription:'全部',
             }
         }
     },
