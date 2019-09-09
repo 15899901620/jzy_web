@@ -5,12 +5,12 @@
             <div class="breadcrumb">
                 <breadcrumb>
                     <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
-                    <breadcrumb-item>{{this.articecatDetail.title}}</breadcrumb-item>
+                    <breadcrumb-item>{{ this.currCategoryInfo.title}}</breadcrumb-item>
                 </breadcrumb>
             </div>
             <div class="Pages">
                 <div class="Pages_left">
-                    <outpacking :title="this.articecatDetail.title" :total="articlelist.total">
+                    <outpacking :title="   this.currCategoryInfo.title" :total="articlelist.total">
                         <div slot="content">
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in articlelist.items" :key="index">
@@ -97,12 +97,17 @@ export default {
     
         return {
             
-            title: this.articecatDetail.title+'-巨正源',
+            title:    this.currCategoryInfo.title+'-巨正源',
             meta: [
-                { hid: 'keywords', name: 'keywords', content:this.articecatDetail.title+',巨正源' },
-                { hid: 'description', name: 'description', content: this.articecatDetail.title+'-巨正源' }
+                { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.title +',巨正源' },
+                { hid: 'description', name: 'description', content:    this.currCategoryInfo.title +'-巨正源' }
             ]
         }
+    },
+    data() {
+        return {
+            currCategoryInfo : ''
+        };
     },
     methods: {
         showTotal(total) {
@@ -114,13 +119,31 @@ export default {
         },
         
     },
+    created(){
+        let id = this.$route.params.id ? this.$route.params.id : 0
+        let len = this.articleCat.length
+        for (var i=0;i<len;i++)
+        { 
+            if(this.articleCat[i].id == id){
+                this.currCategoryInfo = this.articleCat[i]
+                break
+            }
+           
+        }
+
+        if(this.currCategoryInfo == ''){
+            this.currCategoryInfo = {
+                title:'',
+            }
+        }
+    },
     computed:{
         ...mapState({
             currPage:  state => state.article.currPage,
             articlelist: state => state.article.articlelist,
             hotarticleInfo: state => state.article.hotarticleInfo,
             articleCat: state => state.article.articleCat,
-             articecatDetail: state => state.article.articecatDetail
+            //articecatDetail: state => state.article.articecatDetail
         })
     },
 
