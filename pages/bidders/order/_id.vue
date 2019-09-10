@@ -192,8 +192,16 @@ export default {
                     timeSelect:'5天'
                 },
                 {
+                    value:'4',
+                    timeSelect:'4天'
+                },
+                {
                     value:'3',
                     timeSelect:'3天'
+                },
+                {
+                    value:'2',
+                    timeSelect:'2天'
                 },
                 {
                     value:'1',
