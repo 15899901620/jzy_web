@@ -72,26 +72,26 @@
                 <div class="mt20">
                     <div class="XhlistTitle">
                         <h1 style="width: 10%;">品种</h1>
-                        <h1 style="width: 10%;">牌号</h1>
-                        <h1 style="width: 10%;">厂商</h1>
-                        <h1 style="width: 15%;">交货仓</h1>
+                        <h1 style="width: 20%;">牌号</h1>
+                        <h1 style="width: 20%;">厂商</h1>
+                        <h1 style="width: 10%;">交货仓</h1>
                         <h1 style="width: 10%;">剩余数量（吨）</h1>
-                        <h1 style="width: 15%;">更新时间</h1>
-                        <h1 style="width: 15%;">单价（元/吨）</h1>
-                        <h1 style="width: 15%;">操作</h1>
+                        <h1 style="width: 10%;">单价（元/吨）</h1>
+                        <h1 style="width: 10%;">更新时间</h1>
+                        <h1 style="width: 10%;">操作</h1>
                     </div>
                     <ul class="Xhlist">
                         <template v-if="spotlist">
                             <li v-for="(item, index) in spotlist" :key="index">
                                 <span style="width: 10%;">{{item.category_name}}</span>
-                                <span style="width: 10%;">{{item.sku_name}}</span>
-                                <span style="width: 10%;">{{item.manufacturer}}</span>
-                                <span style="width: 15%;">{{item.warehouse_name}}</span>
+                                <span style="width: 20%;">{{item.sku_name}}</span>
+                                <span style="width: 20%;">{{item.manufacturer}}</span>
+                                <span style="width: 10%;">{{item.warehouse_name}}</span>
                                 <span style="width: 10%;">{{item.available_num}}</span>
-                                <span style="width: 15%;">{{item.relativeCreateTime}}</span>
-                                <span v-if="isLogin" class="orangeFont" style="width: 15%;">{{item.finalPriceFormat}}</span>
-                                <span v-else class="orangeFont" style="width: 15%;" title="登录后查看">{{item.finalPriceFormat}}</span>
-                                <span style="width: 15%;">
+                                <span v-if="isLogin" class="orangeFont" style="width: 10%;">{{item.finalPriceFormat}}</span>
+                                <span v-else class="orangeFont" style="width: 10%;" title="登录后查看">{{item.finalPriceFormat}}</span>
+                                <span style="width: 10%;">{{item.relativeCreateTime}}</span>
+                                <span style="width: 10%;">
                                     <div v-if="isLogin" class="ListBtn" @click="addOrder(item.id)">下单</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>

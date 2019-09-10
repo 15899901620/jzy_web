@@ -84,7 +84,7 @@
                     <template v-else><p>暂无任何收货地址，请您添加！</p></template>
                 </div>
                 <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-                <!--<div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+                <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
                     选择承运商
                     <div class="ml35" v-if="carrierList.length > 0">
                         <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
@@ -92,7 +92,7 @@
                         </Select>
                     </div>
                     <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-                </div>-->
+                </div>
                 <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
                     选择运输方式
                     <ul class="DeliveryMethod ml35 mb20">
@@ -229,7 +229,7 @@ export default {
                 spot_id : 0,
                 isDelivery: 0,
                 addressId: 0,
-                //carrierId: 0,
+                carrierId: 0,
                 transportationMode: '',
                 payIndex: 0,
                 jryDays: 0,
@@ -257,7 +257,7 @@ export default {
                 {value:1, name:'支付全款'},
                 {value:2, name:'支付保证金'},
             ],
-            //carrierList:[],
+            carrierList:[],
             //carrierListDesc: '',
             currentIndex: 0,
             currfreight: -1,
@@ -373,7 +373,7 @@ export default {
             }
             const res=await getFreightList(this, data)
             if(res.data){
-                //this.carrierList = res.data.carriers
+                this.carrierList = res.data.carriers
 
                 this.logisticsfreight = res.data.freightList
                 this.orderinfo.transportationMode = 0
@@ -408,7 +408,7 @@ export default {
                 spot_id : this.orderinfo.spot_id ,
                 isDelivery : this.orderinfo.isDelivery ,
                 addressId : this.orderinfo.addressId ,
-                //carrierId : this.orderinfo.carrierId ,
+                carrierId : this.orderinfo.carrierId ,
                 transportationMode : this.orderinfo.transportationMode ,
                 payIndex : this.orderinfo.payIndex ,
                 jryDays : this.orderinfo.jryDays ,
@@ -463,7 +463,7 @@ export default {
                 spot_id : this.orderinfo.spot_id ,
                 is_delivery : this.orderinfo.isDelivery ,
                 address_id : this.orderinfo.addressId ,
-                //carrier_id : this.orderinfo.carrierId ,
+                carrier_id : this.orderinfo.carrierId ,
                 transportation_mode : this.orderinfo.transportationMode ,
                 is_pay_deposit : this.orderinfo.payIndex ,
                 jry_days : this.orderinfo.jryDays ,
