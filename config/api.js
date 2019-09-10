@@ -119,7 +119,9 @@ let api = {
     infocate: '/web/article_cat/tree',
     announcement: '/web/announcement/page',  //网站列表
     announcementdetail: '/web/announcement/detail',
-    noticeclick: '/web/announcement/click'
+    noticeclick: '/web/announcement/click',
+    articleCatDetail:'/web/article_cat/detail',
+    getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
   },
   /**
    * @description 帮助中心

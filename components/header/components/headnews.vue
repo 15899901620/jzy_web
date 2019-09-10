@@ -106,6 +106,6 @@ export default {
   .newtitle{width: 80%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; color: #333;}
   .newscont{ width: 90%; margin: 0 auto;}
   .newscont li{display: flex;align-items: center;list-style: disc inside; margin-top: 7px; font-size: 14px;}
-  .newscont li a{display: flex; justify-content: space-between; width: 100%;}
+  .newscont li a{display: flex; justify-content: space-between; width: 100%; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
   .Newsdate{width: 20%; color: #999}
 </style>

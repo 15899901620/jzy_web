@@ -87,7 +87,7 @@ export default {
         };
         //收货人电话
         const validatephone = (rule, value, callback) => {
-              if (!value) {
+            if (!value) {
                 callback('电话不能为空'); // 校验不通过
                 return false;
             } else {

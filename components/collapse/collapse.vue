@@ -157,7 +157,6 @@
             },
             async CateHot() {     
                 const res = await sendHttp(this, false, server.api.product.cateHot)
-                console.log(res)
                 this.cateHot = res.data
             },
              async Attrlist() {  
