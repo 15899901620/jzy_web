@@ -112,7 +112,8 @@ let api = {
    * @description 资讯管理
    */
   information: {
-    info: '/web/article/page',
+    info:'/web/article/page',
+    infos:{'url': '/web/article/page', 'method': 'get'},
     infodetail: '/web/article/detail',
     infoClick: '/web/article/click',
     cateall: '/web/article_cat/page',
@@ -122,6 +123,7 @@ let api = {
     noticeclick: '/web/announcement/click',
     articleCatDetail:'/web/article_cat/detail',
     getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
+    
   },
   /**
    * @description 帮助中心
@@ -140,6 +142,16 @@ let api = {
         specialDetail: '/bill/yearlyFeeding/detail',
         submitOrder: '/bill/orderInfo/feeding/create'
     },
+     /**
+     * @description 招标
+     */
+    biddding:{
+       bidddingList:{'url': '/bill/bidding/web/list/page', 'method': 'get'},
+       bidddingDetail:{'url': '/bill/bidding/detail', 'method': 'get'},
+       bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
+       BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
+       
+    }, 
 
     /**
      * @description 周计划
