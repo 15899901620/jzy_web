@@ -13,7 +13,7 @@
             <div class="titleOrder mt15" >
               <ul class="dflex" >
                 <li  v-for="(item, index) in cateName" :key="index" :class="{curr:changeSelectStyle == index}" @click="changeStyle(index)" >
-                  {{item.name}}(0个)
+                  {{item.name}}({{item.count}}个)
                   </li>
               </ul>
             </div>
@@ -128,14 +128,24 @@
               biddingNo:this.biddingNo
             };
             const res = await sendHttp(this, true, server.api.biddding.bidList,params,2)
-            console.log(res)
             this.dataList = res.data.items
             this.total = res.data.total
+        },
+        async getMyBiddingListCount() {  
+         
+            let params = {}          
+            const res = await sendHttp(this, true, server.api.biddding.bidddingCount,params,2)
+            var count = res.data
+             this.cateName[0].count= count.all
+             this.cateName[1].count= count.bidOpening
+             this.cateName[2].count= count.unWonBid
+             this.cateName[3].count= count.wonBid
         },
      },
      mounted(){
        this.Totile=this.$router.history.current.query.category
        this.SourceData();
+       this.getMyBiddingListCount()
      }
 
 

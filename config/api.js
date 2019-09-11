@@ -150,7 +150,7 @@ let api = {
        bidddingDetail:{'url': '/bill/bidding/detail', 'method': 'get'},
        bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
        BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
-       
+       bidddingCount:{'url': '/bill/bidding/getMyBiddingListCount', 'method': 'get'},
     }, 
 
     /**
