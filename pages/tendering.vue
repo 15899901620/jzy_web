@@ -51,13 +51,13 @@
             <li  @click="WineDetail(item)">
               <span class="pl10" style="width: 25%;">{{item.biddingNo}}</span>
               <span class="tac" style="width:45%;">{{item.title}}</span>
-              <span class="tac" style="width: 13%">{{item.status}}</span>
+              <span class="tac" style="width: 13%">{{item.statusName}}</span>
               <span class="tar gray pr10" style="width: 17%">{{item.beginTime}}</span>
             </li>
             
           </ul>
           <div style="text-align: center;">
-               <sapn @if='dataList==""'>暂无数据</sapn>
+               <sapn v-if='dataList==""'>暂无数据</sapn>
           </div>
          
         </div>
