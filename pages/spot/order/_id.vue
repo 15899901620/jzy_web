@@ -372,7 +372,7 @@ export default {
                 district_id: this.defaultAdd.district,
             }
             const res=await getFreightList(this, data)
-            if(res.data){
+            if(res.status == 200 && res.data){
                 this.carrierList = res.data.carriers
 
                 this.logisticsfreight = res.data.freightList

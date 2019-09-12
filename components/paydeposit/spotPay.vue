@@ -13,7 +13,7 @@
         <div class="Bond_Popup">
             <div style="line-height:32px;">
                 <span class="Bond_Popup_title">订单商品：</span>
-                <span class="ml10">{{datalist.skuNo}} {{datalist.skuName}}</span>
+                <span class="ml10">{{datalist.skuName}}</span>
             </div>
             <div style="line-height:32px;">
                 <span class="Bond_Popup_title">订单数量：</span>
