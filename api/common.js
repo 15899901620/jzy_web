@@ -16,17 +16,29 @@ const getCookie = name => {
     return data
 };
 
-export const sendHttp = (vm, hasAuth, apiName, data) => {
+export const sendHttp = (vm, hasAuth, apiName, data, type) => {
+    let authType = type || 1
     let authorization = ''
     if(hasAuth){
-        authorization = getCookie('webtoken')
+        if(authType == 1){
+            authorization = getCookie('webtoken')
+        }else if(authType == 2){
+            authorization = getCookie('websuppliertoken')
+        }
         if(authorization === false){
             window.location.href = '/login'
+            return ;
         }
-    }
-    vm.$axios.defaults.headers = {
-        'Authorization': authorization,
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        
+        
+        vm.$axios.defaults.headers = {
+            'Authorization': authorization,
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }
+    }else{
+        vm.$axios.defaults.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }
     }
 
     return vm.$axios.request({
