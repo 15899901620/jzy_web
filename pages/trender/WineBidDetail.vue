@@ -5,7 +5,7 @@
     <!--页面路径-->
       <div class="w1200">
         <div class="mt10 fs14">
-          <a class="blackFont">巨正源首页</a> > <span class="gray">预售专栏</span>
+          <a class="blackFont">巨正源首页</a> > <span class="gray">招标中心</span>> <span class="gray">中标详情</span>
         </div>
       </div>
 
@@ -38,11 +38,6 @@
 
       </div>
 
-
-
-
-
-
     </div>
 
 </template>
@@ -70,6 +65,27 @@
             dataList:{}
         };
       },
+      methods:{
+          async SourceData() {    
+              let params = {
+                id: this.id,
+              };
+              const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
+              this.dataList = res.data
+          },
+          // async BySupplier() {    
+          //     let params = {
+          //       biddingId: this.id,
+          //     };
+          //     const res = await sendHttp(this, false, server.api.biddding.BySupplier,params)
+          //     this.dataList = res.data
+          // },
+
+      },
+      mounted() {
+          this.SourceData()
+          // this.BySupplier()
+      }
     
     }
 </script>

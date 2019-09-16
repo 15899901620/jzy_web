@@ -1,4 +1,5 @@
 <template>
+
     <div class="whitebg">
        <div class="mt20 mb40 fs14" v-html="dataList.content"></div>
        <div style="text-align: center;">
@@ -6,14 +7,12 @@
                       ref="upload"
                       :action="uploadUrl"
                       :on-success="handleOtherFile"
-                      :max-size="2048"
-                      :format="['jpg','jpeg','png', 'gif']"
-                      :on-format-error="handleFormatError"
-                      :on-exceeded-size="handleMaxSize">  
+                      :max-size="2048">  
                <Button type="primary" size="large">上传标书</Button>
              </Upload>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -21,7 +20,7 @@
   import Header from "../../../components/header";
   import { sendHttp } from "../../../api/common";
   import server from "../../../config/api";     
-const appConfig = require('../../../config/app.config')
+  const appConfig = require('../../../config/app.config')
 
   export default {
     name: "DetailsBidding",
@@ -44,18 +43,6 @@ const appConfig = require('../../../config/app.config')
           handleOtherFile(res){
               this.formCustom.appendix = res.url
           },
-          handleMaxSize (file) {
-            this.$Notice.warning({
-                title: '超出文件大小限制',
-                desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
-          });
-          },
-          handleFormatError (file) {
-            this.$Notice.warning({
-              title: '文件格式不正确',
-              desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-            });
-          },
 
           async SourceData() {    
               let params = {
@@ -64,18 +51,18 @@ const appConfig = require('../../../config/app.config')
               const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
               this.dataList = res.data
           },
-          async BySupplier() {    
-              let params = {
-                biddingId: this.id,
-              };
-              const res = await sendHttp(this, false, server.api.biddding.BySupplier,params)
-              this.dataList = res.data
-          },
+          // async BySupplier() {    
+          //     let params = {
+          //       biddingId: this.id,
+          //     };
+          //     const res = await sendHttp(this, false, server.api.biddding.BySupplier,params)
+          //     this.dataList = res.data
+          // },
 
       },
       mounted() {
           this.SourceData()
-          this.BySupplier()
+          // this.BySupplier()
       }
     }
 </script>

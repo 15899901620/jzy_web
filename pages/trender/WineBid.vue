@@ -7,7 +7,7 @@
 <!-- 公告信息-->
            <div class="Notice">
               <div class="title">
-                <span>招标列表</span><span class="fs14">共<span class="orangeFont">{{total}}</span>条数据</span>
+                <span>公告信息</span><span class="fs14">共<span class="orangeFont">{{total}}</span>条数据</span>
               </div>
              <div class="graybg trendlistTitle">
                <span style="width: 25%; padding-left: 10px">招标编号</span><span class="tac" style="width:45%;">名称</span><span class="tac" style="width: 13%">结果</span><span class="tar mr10" style="width: 17%">招标时间</span>
