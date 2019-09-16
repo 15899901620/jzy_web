@@ -24,7 +24,7 @@
                     <p>联系电话：{{systeminfo.SERVICEHOTLINE}}</p>
                 </div>
                 <div class="orderbtn">
-                    <a class="submitBtn btnBg" href="/special">继续采购</a><a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
+                    <a class="submitBtn btnBg" href="/spot">继续采购</a><a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
                 </div>
             </div>
 		</div>
