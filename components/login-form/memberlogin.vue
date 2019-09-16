@@ -230,7 +230,7 @@ export default {
                   }
                   userLoginCodeSend(that, data).then(function (res) {
                       if (res.status === 200 && res.data) {
-                          let countdown = 120
+                          let countdown = 60
                           var timer = setInterval(() => {
                               countdown = countdown-1
                               if (countdown <= 0) {

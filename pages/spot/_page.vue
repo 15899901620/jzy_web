@@ -99,7 +99,7 @@
                         </template>
                         <template v-else>
                             <li>
-                                <p style="width:100%; text-align:center">暂无任何现货信息！</p>
+                                <p style="width:100%; text-align:center">暂无任何有效的报价信息！</p>
                             </li>
                         </template>
                     </ul>

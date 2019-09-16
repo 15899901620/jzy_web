@@ -51,6 +51,7 @@ let api = {
   order: {
     orderlist: '/bill/orderInfo/list',
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
+    orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
