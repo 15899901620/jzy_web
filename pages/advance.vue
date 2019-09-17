@@ -1,7 +1,7 @@
 <template>
    <div class="body">
       <Header title="头部"></Header>
-      <div class="container" title="内容区块">
+      <div class="container" title="">
     <div class="w1200">
       <div class="mt10">
         <a>巨正源首页</a>><span class="gray">预售专栏</span>

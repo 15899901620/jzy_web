@@ -1,7 +1,7 @@
 <template>
 	<div class="body">
 		<Header title="头部"></Header>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
 			<div class="materials_banner">
 				<Banner :bannerData="this.bannerinfo" :heightNum="this.heightNum"></Banner>
 			</div>

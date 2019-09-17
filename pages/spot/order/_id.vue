@@ -10,7 +10,7 @@
                 </ul>
 			</div>
 		</Header-small>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
             <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">
                 <!--公司信息-->
                 <div class="mt30 fs16 ml15 fwb">公司信息</div>
@@ -188,6 +188,16 @@ export default {
             store.dispatch('menu/getMenuList'),
             store.dispatch('system/getSystemCnf'),
         ])
+    },
+    asyncData ({app, params, query}) {//请求
+        let myParams = {
+            sku_name: query.keyword || '',
+            current_page: 1,
+            page_size: 10
+        }
+        return sendHttp(app, false, server.api.spot.initSpotList, myParams).then(function (res) {
+            return { spotlist: res.data.items, total: res.data.total  }
+        })
     },
     computed: {
         ...mapState({

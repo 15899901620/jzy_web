@@ -80,6 +80,7 @@ let api = {
   spot: {
     filterConditon: '/bill/spot/filter/condition',
     spotList: '/bill/spot/list/page/onSale',
+    initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     freightList: '/bill/freightList/orderFreightInfo',

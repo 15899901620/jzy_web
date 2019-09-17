@@ -5,7 +5,7 @@
                 <div data-v-7b07b57b="" class="dflexAlem fs20 gray" style="color: rgb(102, 102, 102);margin-top: 44px;">服务热线 : {{systeminfo.SERVICEHOTLINE}}</div>
             </div>
         </Header-small>
-        <div class="container" title="内容区块">
+        <div class="container" title="">
             <div class="Loginbg">
                 <div class="w1200" style="display: flex; justify-content: flex-end;">
                     <div class="LoginInput">

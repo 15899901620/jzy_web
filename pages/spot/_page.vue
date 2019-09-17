@@ -75,10 +75,11 @@
                         <h1 style="width: 20%;">牌号</h1>
                         <h1 style="width: 20%;">厂商</h1>
                         <h1 style="width: 10%;">交货仓</h1>
-                        <h1 style="width: 10%;">剩余数量（吨）</h1>
-                        <h1 style="width: 10%;">单价（元/吨）</h1>
-                        <h1 style="width: 10%;">更新时间</h1>
-                        <h1 style="width: 10%;">操作</h1>
+                        <h1 style="width: 9%;">剩余数量（吨）</h1>
+                        <h1 style="width: 9%;">单价（元/吨）</h1>
+                        <h1 style="width: 6%;">更新时间</h1>
+                        <h1 style="width: 8%;">有效截止时间</h1>
+                        <h1 style="width: 8%;">操作</h1>
                     </div>
                     <ul class="Xhlist">
                         <template v-if="spotlist">
@@ -87,11 +88,12 @@
                                 <span style="width: 20%;">{{item.sku_name}}</span>
                                 <span style="width: 20%;">{{item.manufacturer}}</span>
                                 <span style="width: 10%;">{{item.warehouse_name}}</span>
-                                <span style="width: 10%;">{{item.available_num}}</span>
-                                <span v-if="isLogin" class="orangeFont" style="width: 10%;">{{item.finalPriceFormat}}</span>
-                                <span v-else class="orangeFont" style="width: 10%;" title="登录后查看">{{item.finalPriceFormat}}</span>
-                                <span style="width: 10%;">{{item.relativeCreateTime}}</span>
-                                <span style="width: 10%;">
+                                <span style="width: 9%;">{{item.available_num}}</span>
+                                <span v-if="isLogin" class="orangeFont" style="width: 9%;">{{item.finalPriceFormat}}</span>
+                                <span v-else class="orangeFont" style="width: 9%;" title="登录后查看">{{item.finalPriceFormat}}</span>
+                                <span style="width: 6%;">{{item.relativeCreateTime}}</span>
+                                <span style="width: 8%;">{{item.price_valid_time.substring(11, 16)}}</span>
+                                <span style="width: 8%;">
                                     <div v-if="isLogin" class="ListBtn" @click="addOrder(item.id)">下单</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>
@@ -119,6 +121,8 @@
     import pagination from '../../components/pagination'
     import { getCookies } from '../../config/storage'
     import { spotList, filterConditon } from '../../api/spot'
+    import { sendHttp } from '../../api/common'
+    import server from '../../config/api'
 
     export default {
         name: "spot",
@@ -136,6 +140,17 @@
             Footer,
             pages: pagination.pages
         },
+        asyncData ({app, params, query}) {//请求
+            let myParams = {
+                sku_name: query.keyword || '',
+                current_page: 1,
+                page_size: 10
+            }
+            return sendHttp(app, false, server.api.spot.initSpotList, myParams).then(function (res) {
+                    return { spotlist: res.data.items, total: res.data.total  }
+                })
+        },
+        watchQuery: ['page'],
         data() {
             return {
                 isLogin: false,
@@ -143,8 +158,6 @@
                 page: '',
                 current_page: 1,
                 page_size: 10,
-                spotlist: [],
-                total: 0,
                 category: [],
                 process: [],
                 //purpose: [],
@@ -153,7 +166,7 @@
                 processId: '',
                 //purposeId: '',
                 featureId: '',
-                skuName: !this.$route.query.kd ? '' :this.$route.query.kd ,
+                skuName: this.$route.query.keyword || '',
                 manufacturer: '',
                 minPrice: '',
                 maxPrice: '',
@@ -275,7 +288,8 @@
         mounted() {
             this.hasLogin()
             this.filterConditonData()
-            this.spotData()
+            console.log(this.initSpotList)
+            //this.spotData()
         },
         watch: {
             '$route'(to, from) {

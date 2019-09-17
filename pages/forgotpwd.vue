@@ -7,7 +7,7 @@
                 </div>
             </div>
         </Header-small>
-        <div class="container" title="内容区块">
+        <div class="container" title="">
             <div class="w1200 whitebg " style="margin-top: 18px; border-radius: 3px; overflow: hidden;">
                 <div style="width:800px; margin:80px auto;">
                     <div class="dflexAlem stepsItem">
@@ -71,14 +71,14 @@
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="password" label="重置密码：">
-                                        <Input v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码："/>
+                                        <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码："/>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="repassword" label="确认重置密码：">
-                                        <Input v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码："/>
+                                        <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码："/>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -214,6 +214,7 @@ export default {
             btnBoolen:false,
             btnClassName:"btn",
             btnValue:"获取短信验证码",
+            smsTotalTime: 60,
             phoneValid:false,//号码有效
             passwordValid:'',//密码有效
             repasswordValid:'',//号码有效
@@ -318,6 +319,9 @@ export default {
         },
           //获取短信验证码
         async getNoteValue () {
+            if(this.btnBoolen){
+                return
+            }
             var phone = this.formCustom.phone//验证码
             //验证验证码是否为空
             if(this.Imgcode === ''){
@@ -330,7 +334,7 @@ export default {
             }
             if(!this.ImgCodeValid){
                 this.$Message.info({
-                    content: '请重新输入图形证码',
+                    content: '图形验证码不正确',
                     duration: 5,
                     closable: true
                 })
@@ -352,10 +356,9 @@ export default {
 
                         var sj = Math.ceil(Math.random(10 + 1) * 100000)
                         window.localStorage.setItem("note", sj)
-                        this.auth_time = 60;
                         var timer = setInterval(()=>{
-                            this.auth_time;
-                            if(this.auth_time<=0){
+                            this.smsTotalTime--
+                            if(this.smsTotalTime<=0){
                                 clearInterval(timer)
                                 this.btnBoolen = false;
                                 this.btnClassName="btns"
@@ -363,7 +366,7 @@ export default {
 
                             }else {
                                 this.btnBoolen = true;
-                                this.btnValue=`重新获取(${this.auth_time})S`
+                                this.btnValue=`${this.smsTotalTime}s后重新获取`
                                 this.btnClassName="btn"
                             }
                         },1000)

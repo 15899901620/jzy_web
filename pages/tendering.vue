@@ -12,7 +12,7 @@
         </div>
       </div>
     </Header-small>
-    <div class="container" title="内容区块">
+    <div class="container" title="">
       <div class="tac fs0">
         <img src="/img/Tenderingbanner.png" />
       </div>

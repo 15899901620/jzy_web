@@ -1,7 +1,7 @@
 <template>
 	<div class="body">
 		<Header title="头部"></Header>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
 			<!--内容-->
 			<Banner title="广告" :bannerData="this.bannerinfo" :heightNum="this.heightNum"
 				style="height: 320px; overflow: hidden;"></Banner>
