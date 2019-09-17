@@ -66,6 +66,9 @@
                                 <div class="" v-if="item.status == 2">
                                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                                 </div>
+                                 <div class="" v-if="item.status == 3">
+                                    <a class="greenFont mt15" @click="addLog(item)">添加货物需求</a>
+                                </div>
                                 <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"  class="mt5 blackFont">查看详情</router-link>
                             </td>
                             </tr>
@@ -81,6 +84,7 @@
             </div>
         </div>
         <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
+           <address-dialog :isshow="addloading" @unChange="unaddChange" :datalist='addList'></address-dialog>
     </div>
 </template>
 
@@ -91,12 +95,14 @@ import { getCookies } from '../../config/storage'
 import pagination from '../../components/pagination'
 import config from '../../config/config'
 import paydeposit from '../../components/paydeposit'
+import AddressDialog from '../../components/freight-add/freight-add'
 
 
 export default {
     name: "usertotalorder",
     layout:'membercenter',
     components:{
+        AddressDialog,
         usernav: Navigation.user,
         payorder: paydeposit.order
     },
@@ -108,8 +114,10 @@ export default {
     },
     data() {
         return {
+            addloading:false,
             payloading: false,
             dataRow: {},
+            addList:{},
             datalist: [],
             current_page: 1,
             page_size: 5,
@@ -146,6 +154,20 @@ export default {
             this.payloading = row
             this.getSourceData()
         },
+         addAddress(){
+             
+          this.addloading = true
+        },
+        unaddChange(res) {
+        
+            this.addloading = res
+        },
+        addLog(row){
+            this.addList = {
+                ...row
+            }
+            this.addloading = true
+        },  
         setTabs(res){
             if(res == '1'){
                 this.formSearch.status = ''

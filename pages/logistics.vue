@@ -51,30 +51,14 @@
 							<div class="TitleName">实时数据</div>
 						</div>
 						<ul class="RealTime whitebg">
-							<li>
+							<li v-for="(items, index) in reaList" :key="index">
 								<div class="dflexAlem" style="justify-content: space-between;">
-									<span class="fwb">上海春万实业有限公司</span><span class="gray">03-27 16:53</span></div>
+									<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
 								<div class="dflexAlem mt5" style="justify-content: space-between;">
-									<span class="gray">上海市-宁波市 <span class="orangeFont">50.15吨</span></span><span
-										class="greenFont">已接单</span>
+									<span class="gray">{{items.dispatchStateName}}-{{items.dispatchDistrictName}} <span class="orangeFont">{{items.weight}}吨</span></span>
+									<span  class="greenFont" v-if='items.status==2'>已选择</span>
 								</div>
-							</li>
-							<li>
-								<div class="dflexAlem" style="justify-content: space-between;"><span
-										class="fwb">上海春万实业有限公司</span><span class="gray">03-27 16:53</span></div>
-								<div class="dflexAlem mt5" style="justify-content: space-between;">
-									<span class="gray">上海市-宁波市 <span class="orangeFont">50.15吨</span></span><span
-										class="greenFont">已接单</span>
-								</div>
-							</li>
-							<li>
-								<div class="dflexAlem" style="justify-content: space-between;">
-									<span class="fwb">上海春万实业有限公司</span><span class="gray">03-27 16:53</span></div>
-								<div class="dflexAlem mt5" style="justify-content: space-between;">
-									<span class="gray">上海市-宁波市 <span class="orangeFont">50.15吨</span></span><span
-										class="greenFont">已接单</span>
-								</div>
-							</li>
+							</li>				
 						</ul>
 
 
@@ -147,6 +131,8 @@
 	} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
+	import { sendHttp } from "../api/common";
+	import server from "../config/api";
 	export default {
 		name: "logistics",
 		components: {
@@ -165,7 +151,8 @@
                     category_code: '',
                     country_id: 1,
                     to_region_id: []
-                },
+				},
+				reaList:{},
                 searchModalShow: false,
                 searchData: [],
                 searchColumns: [
@@ -175,6 +162,18 @@
             }
         },
         methods: {
+			async offerList(){
+				  let params={
+					  current_page:1,
+					  page_size:3,
+					  status:2
+					}
+				const res = await sendHttp(this, true, server.api.freight.freightList,params,1)
+		
+				this.reaList=res.data.items;
+				this.total=res.data.total
+        		console.log(this.reaList)
+			  },
             async initData(){
                 const res = await getWarehouseList(this, {})
                 this.warehouseList = res.data
@@ -254,7 +253,8 @@
             }
         },
         created() {
-            this.initData()
+			this.initData()
+			this.offerList();
         },
 		fetch({
 			store,

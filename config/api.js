@@ -153,15 +153,27 @@ let api = {
        bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
        BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
        bidddingCount:{'url': '/bill/bidding/getMyBiddingListCount', 'method': 'get'},
+       freightDemand:{'url': '/bill/freightDemand/save', 'method': 'post'},
     }, 
 
+    freight:{
+      freightMyList:{'url': '/bill/freightDemand/myList/page', 'method': 'get'},
+      cancel:{'url': '/bill/freightDemand/cancel', 'method': 'post'},
+      setSelected:{'url': '/bill/freightOffer/setSelected', 'method': 'post'},
+      freightList:{'url': '/bill/freightDemand/list/page', 'method': 'get'},
+       
+    },
+    freightOffer:{
+      offerList:{'url': '/bill/freightOffer/list', 'method': 'get'},
+      save:{'url': '/bill/freightOffer/save', 'method': 'post'},
+    },
     /**
      * @description 周计划
      */
     week: {
         getWeek: '/bill/getWeekPlannedByMember'
     },
-
+ 
   /**
    * @description 商品(物性表)
    */
