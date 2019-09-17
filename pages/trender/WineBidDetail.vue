@@ -61,7 +61,7 @@
       },
       data() {
         return{
-            id: !this.$route.params.id ? 0 :this.$route.params.id,
+            id: !this.$route.query.id ? 1 :this.$route.query.id,
             dataList:{}
         };
       },

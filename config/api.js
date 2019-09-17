@@ -149,6 +149,8 @@ let api = {
      */
     biddding:{
        bidddingList:{'url': '/bill/bidding/web/list/page', 'method': 'get'},
+       save:{'url': '/bill/bid/save', 'method': 'post'},
+       bidDetail:{'url': '/bill/bid/detail', 'method': 'get'},
        bidddingDetail:{'url': '/bill/bidding/detail', 'method': 'get'},
        bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
        BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},

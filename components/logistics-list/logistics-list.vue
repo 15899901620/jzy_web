@@ -13,6 +13,7 @@
               <p>{{item.receiptStateName}} {{item.receiptDistrictName}}</p>
             </div>
             <div class="logNumTime graybg"  >
+              <p><span class="logNumTime_title">类       别:</span> <span class="orangeFont">{{item.freightGoods}}</span></p>
               <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">{{item.weight}}吨</span></p>
               <p class="mt10"><span class="logNumTime_title">装货时间 :</span> {{item.demandBeginDate}}~{{item.demandEndDate}}</p>
             </div>
