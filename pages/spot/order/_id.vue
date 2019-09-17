@@ -49,13 +49,13 @@
                 <div class="mt30 fs16 ml15 fwb">交货方式</div>
                 <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
                     <ul class="DeliveryMethod mb20">
-                        <li v-for="(item, index) in methodList" @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index"><div style="background-color: #fff;">{{item.name}}</div></li>
+                        <li v-for="(item, index) in methodList" v-if="index != 1 || systeminfo.IS_CAN_DELIVERY == 1" @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index"><div style="background-color: #fff;">{{item.name}}</div></li>
                         <div class="gray">
                             <template v-if="this.orderinfo.isDelivery == 1">
-                                （您选择交货方式为配送，配送起订量为<span class="orangeFont">{{spotDetail.delivery_min}}</span>吨<template v-if="spotDetail.delivery_doubly == 1">，且下单数量必须为<span class="orangeFont">{{spotDetail.delivery_min}}吨的倍数</span></template>）
+                                （您选择交货方式为配送，配送起订量为<span class="orangeFont">{{spotDetail.delivery_min}}吨</span>，数量加量幅度为<span class="orangeFont">{{spotDetail.delivery_bid_increment}}吨</span>）
                             </template>
                             <template v-else>
-                                （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotDetail.take_their_min}}</span>吨<template v-if="spotDetail.take_their_doubly == 1">，且下单数量必须为<span class="orangeFont">{{spotDetail.take_their_min}}吨的倍数</span></template>）
+                                （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotDetail.take_their_min}}吨</span>，数量加量幅度为<span class="orangeFont">{{spotDetail.take_bid_increment}}吨</span>）
                             </template>
                         </div>
                     </ul>
@@ -121,17 +121,17 @@
                 </div>
 
                 <!--优选服务-->
-                <div class="mt30 fs16 ml15 fwb" id="test2" v-if="orderinfo.payIndex==1">优选服务</div>
-                <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.payIndex==1">
+                <div class="mt30 fs16 ml15 fwb" id="test2" v-if="orderinfo.payIndex==1 && is_jry">优选服务</div>
+                <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.payIndex==1 && is_jry">
                     巨融易
                     <div class="ml5">
                         <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" style="width:200px" placeholder="需要请选择">
-                            <i-option v-for="(item, index) in ServiceTimeList" :value="item.value" :key="index">{{ item.timeSelect }}</i-option>
+                            <i-option v-for="(item, index) in ServiceTimeList" :value="item" :key="index">{{ item }}天</i-option>
                         </Select>
                     </div>
                     <div class="ml20 orangeFont">* 费率=天数*吨数*{{systeminfo.JRY_COST}}元</div>
                 </div>
-                <div class="orderCzTip" v-if="orderinfo.payIndex==1">
+                <div class="orderCzTip" v-if="orderinfo.payIndex==1 && is_jry">
                     * 选择巨融易产品，提交订单后必须在有效期内支付尾款完成，逾期将扣除保证金。<br/>
                     （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{systeminfo.CLOSED_TIME}}:00前完成尾款付款）
                 </div>
@@ -242,13 +242,8 @@ export default {
             currMin: 0,
             currMax: 0,
             currsetp: 1,
-            ServiceTimeList:[
-                {value:'5', timeSelect:'5天'},
-                {value:'4', timeSelect:'4天'},
-                {value:'3', timeSelect:'3天'},
-                {value:'2', timeSelect:'2天'},
-                {value:'1', timeSelect:'1天'}
-            ],
+            is_jry: false,
+            ServiceTimeList:[],
             methodList:[
                 {value:1, name:'自提'},
                 {value:2, name:'配送'}
@@ -300,10 +295,13 @@ export default {
 
             this.currMin = this.spotDetail.take_their_min
             this.currMax = this.spotDetail.available_num
-            this.currsetp = this.spotDetail.take_their_doubly == 1 ? this.spotDetail.take_their_min : 1
+            this.currsetp = this.spotDetail.take_bid_increment
             if(this.currMin < this.currMax){
                 this.orderinfo.orderNum = this.currMin
             }
+
+            this.is_jry = this.spotDetail.is_jry
+            this.ServiceTimeList = this.spotDetail.jry_days.split(',')
 
         },
         //资金
@@ -319,11 +317,11 @@ export default {
             if(index==1){
                 this.orderinfo.isDelivery = index
                 this.currMin = this.spotDetail.delivery_min
-                this.currsetp = this.spotDetail.delivery_doubly == 1 ? this.spotDetail.delivery_min : 1
+                this.currsetp = this.spotDetail.delivery_bid_increment
             }else{
                 this.orderinfo.isDelivery = 0
                 this.currMin = this.spotDetail.take_their_min
-                this.currsetp = this.spotDetail.take_their_doubly == 1 ? this.spotDetail.take_their_min : 1
+                this.currsetp = this.spotDetail.take_bid_increment
             }
             if(this.currMin < this.currMax){
                 this.orderinfo.orderNum = this.currMin

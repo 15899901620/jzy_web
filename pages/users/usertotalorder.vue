@@ -8,15 +8,16 @@
                 <div class="TableList">
                     <div class="titleOrder mt15" >
                         <ul class="dflex">
-                            <li v-for="(item,index) in orderTabs"  :class=" index === currTabs ? 'curr' : ''" :key="index" @click="setTabs(item.status)">{{item.name}}</li>
-                            
-                            <!-- <li>全部订单（2个）</li><li>已付款（0个）</li><li>待付款（2个）</li> -->
+                            <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">全部订单({{this.total_cn}})</li>
+                            <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">待付款({{this.unpay_cn}})</li>
+                            <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">已付款({{this.payed_cn}})</li>
+                            <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">已取消({{this.cancel_cn}})</li>
                         </ul>
                     </div>
                     <div class="order_operate">
                         <div class="dflex">
-                            <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" id="" value="" class="orderInput" style="width:140px;"/>
-                            <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" id="" value="" class="orderInput" style="width:140px; margin-left:5px;"/>
+                            <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" value="" class="orderInput" style="width:140px;"/>
+                            <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput" style="width:140px; margin-left:5px;"/>
                             <div class="check" @click="onSearch">查询</div>
                         </div>
                         <!-- <div class="dflexAlem">
@@ -54,7 +55,7 @@
                             <td>{{item.warehouseName}}</td>
                             <td>
                                 {{item.totalAmountFormat}}
-                                <template v-if="item.depositId > 0"><br><Tag color="success">定</Tag>{{item.depositAmountFormat}}</template>
+                                <template v-if="item.depositId > 0"><br><span style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.depositAmountFormat}}</span></template>
                             </td>
                             <td>
                                 <span v-if="item.status == 3" class="greenFont" >{{getOrderState(item.status)}}</span>
@@ -89,7 +90,7 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import { orderpage } from '../../api/order'
+import { orderpage, orderCount } from '../../api/order'
 import { getCookies } from '../../config/storage'
 import pagination from '../../components/pagination'
 import config from '../../config/config'
@@ -121,13 +122,11 @@ export default {
             current_page: 1,
             page_size: 5,
             total: 0,
-            orderTabs: [
-                {value: 0, name:'全部订单', status: 1},
-                {value: 0, name:'待付款', status: 2},
-                {value: 0, name:'已付款', status: 3},
-                {value: 0, name:'已取消', status: 0},
-            ],
             currTabs: 0,
+            total_cn: 0,
+            unpay_cn: 0,
+            payed_cn: 0,
+            cancel_cn: 0,
             formSearch: {
                 orderType: '',
                 status: '',
@@ -192,7 +191,6 @@ export default {
         },
         //订单状态
         getOrderState(typeId) {
-            if(!typeId) return
             return config.orderState[typeId]
         },
         async getSourceData () {
@@ -204,6 +202,15 @@ export default {
             const res= await orderpage(this, params)
             this.datalist = res.data.items
             this.total = res.data.total
+        },
+        async getCountData () {
+            const res= await orderCount(this, {})
+            if(res.status == 200){
+                this.total_cn = res.data.total_cn
+                this.unpay_cn = res.data.unpay_cn
+                this.payed_cn = res.data.payed_cn
+                this.cancel_cn = res.data.cancel_cn
+            }
         },
         onSearch () {
             this.current_page = 1
@@ -227,13 +234,14 @@ export default {
     created(){
         this.inLogin()
         this.getSourceData()
+        this.getCountData()
     },
     mounted(){
-          var status=this.$route.query.status
-          if(status==2){
-              this.formSearch.status = 2
-              this.currTabs = 1
-          }
+        var status=this.$route.query.status
+        if(status==2){
+          this.formSearch.status = 2
+          this.currTabs = 1
+        }
           
     },
     watch: {

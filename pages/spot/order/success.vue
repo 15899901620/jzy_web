@@ -17,7 +17,7 @@
                 <div class="submit"></div>
                 <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>
                 <div class="tac fs14">
-                    <span>订单号：<span>{{orderNo}}</span></span><a class="blueFont ml15">查看详情</a>
+                    <span>订单号：<span>{{orderNo}}</span></span>
                 </div>
                 <div class="tac gray">
                     <p>如有疑问您可以通过一下联系方式与我们取得联系</p>
