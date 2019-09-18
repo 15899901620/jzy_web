@@ -78,6 +78,8 @@ export default {
 	modules: [
 		'@nuxtjs/axios',
 		'@nuxtjs/proxy',
+        'cookie-universal-nuxt',
+        ['cookie-universal-nuxt', { alias: 'cookiz' }],
 		// 'swiper'
 	],
 	axios: {

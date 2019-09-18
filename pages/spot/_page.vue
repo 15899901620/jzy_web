@@ -73,12 +73,12 @@
                     <div class="XhlistTitle">
                         <h1 style="width: 10%;">品种</h1>
                         <h1 style="width: 20%;">牌号</h1>
-                        <h1 style="width: 20%;">厂商</h1>
+                        <h1 style="width: 16%;">厂商</h1>
                         <h1 style="width: 10%;">交货仓</h1>
                         <h1 style="width: 9%;">剩余数量（吨）</h1>
-                        <h1 style="width: 9%;">单价（元/吨）</h1>
-                        <h1 style="width: 6%;">更新时间</h1>
-                        <h1 style="width: 8%;">有效截止时间</h1>
+                        <h1 style="width: 11%;">单价（元/吨）</h1>
+                        <h1 style="width: 8%;">距下架时间</h1>
+                        <h1 style="width: 8%;">提货期限</h1>
                         <h1 style="width: 8%;">操作</h1>
                     </div>
                     <ul class="Xhlist">
@@ -86,15 +86,21 @@
                             <li v-for="(item, index) in spotlist" :key="index">
                                 <span style="width: 10%;">{{item.category_name}}</span>
                                 <span style="width: 20%;">{{item.sku_name}}</span>
-                                <span style="width: 20%;">{{item.manufacturer}}</span>
+                                <span style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                                 <span style="width: 10%;">{{item.warehouse_name}}</span>
                                 <span style="width: 9%;">{{item.available_num}}</span>
-                                <span v-if="isLogin" class="orangeFont" style="width: 9%;">{{item.finalPriceFormat}}</span>
+                                <span v-if="isLogin" class="orangeFont" style="width: 11%;">
+                                    <Tag v-if="item.is_jry" color="error">易</Tag>
+                                    {{item.finalPriceFormat}}
+                                </span>
                                 <span v-else class="orangeFont" style="width: 9%;" title="登录后查看">{{item.finalPriceFormat}}</span>
-                                <span style="width: 6%;">{{item.relativeCreateTime}}</span>
-                                <span style="width: 8%;">{{item.price_valid_time.substring(11, 16)}}</span>
                                 <span style="width: 8%;">
-                                    <div v-if="isLogin" class="ListBtn" @click="addOrder(item.id)">下单</div>
+                                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+                                </span>
+                                <span style="width: 8%;">{{item.delivery_deadline}}</span>
+                                <span style="width: 8%;">
+                                    <div v-if="isLogin && item.available_num > 0" class="ListBtn" @click="addOrder(item.id)">下单</div>
+                                    <div v-else-if="isLogin && item.available_num == 0" class="ListBtn">已售完</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>
                             </li>
@@ -106,7 +112,7 @@
                         </template>
                     </ul>
                     <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="spotlist">
-                        <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page"></pages>
+                        <pages :total="total" :show-total="showTotal" :value="current_page"></pages>
                     </div>
                 </div>
             </div>
@@ -123,6 +129,7 @@
     import { spotList, filterConditon } from '../../api/spot'
     import { sendHttp } from '../../api/common'
     import server from '../../config/api'
+    import TimeDown from '../../components/timeDown'
 
     export default {
         name: "spot",
@@ -138,25 +145,24 @@
         components: {
             Header,
             Footer,
-            pages: pagination.pages
+            pages: pagination.pages,
+            TimeDown
         },
-        asyncData ({app, params, query}) {//请求
+        asyncData ({app, params, query, headers}) {//请求
             let myParams = {
                 sku_name: query.keyword || '',
-                current_page: 1,
+                current_page: query.page|| 1,
                 page_size: 10
             }
             return sendHttp(app, false, server.api.spot.initSpotList, myParams).then(function (res) {
                     return { spotlist: res.data.items, total: res.data.total  }
                 })
         },
-        watchQuery: ['page'],
         data() {
             return {
                 isLogin: false,
                 color: '',
-                page: '',
-                current_page: 1,
+                current_page: parseInt(this.$route.query.page)|| 1,
                 page_size: 10,
                 category: [],
                 process: [],
@@ -249,13 +255,8 @@
             showTotal(total) {
                 return `全部 ${total} 条`;
             },
-            changePage(row) {
-                this.$router.push({
-                    name: 'spot',
-                    query: {
-                        page: row
-                    }
-                })
+            reloadPage(){
+                this.$router.go(0)
             },
             async spotData() {
                 let params = {
@@ -288,12 +289,10 @@
         mounted() {
             this.hasLogin()
             this.filterConditonData()
-            console.log(this.initSpotList)
-            //this.spotData()
         },
         watch: {
             '$route'(to, from) {
-                this.$router.go(0);
+                this.$router.go(0)
             }
         },
         head() {

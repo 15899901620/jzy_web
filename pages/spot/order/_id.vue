@@ -138,6 +138,11 @@
                 <div class="lineborder" v-if="orderinfo.payIndex==1"></div>
 
                 <div class="proInfor">
+                    <div style="display: flex; flex-direction: column; width: 200px; " >
+                        <div class="mt40 tar mr20 dflex " style="align-items: center;">
+                            <span class="totalprice fs20 tar">订单数量：</span><span class="fs20 orangeFont tar fwb" style="width: 50px;">{{this.orderinfo.orderNum}}吨</span>
+                        </div>
+                    </div>
                     <div  style="display: flex; flex-direction: column; width: 300px; " >
                         <div class="mt20 tar mr20 dflex " style="align-items: center;">
                             <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.totalAmountFormat}}</span>
@@ -190,14 +195,6 @@ export default {
         ])
     },
     asyncData ({app, params, query}) {//请求
-        let myParams = {
-            sku_name: query.keyword || '',
-            current_page: 1,
-            page_size: 10
-        }
-        return sendHttp(app, false, server.api.spot.initSpotList, myParams).then(function (res) {
-            return { spotlist: res.data.items, total: res.data.total  }
-        })
     },
     computed: {
         ...mapState({
@@ -333,7 +330,7 @@ export default {
                 this.currMin = this.spotDetail.take_their_min
                 this.currsetp = this.spotDetail.take_bid_increment
             }
-            if(this.currMin < this.currMax){
+            if(this.currMin <= this.currMax){
                 this.orderinfo.orderNum = this.currMin
             }else{
                 this.showWarning("剩余库存("+this.currMax+")不满足当前交货方式的起订量("+this.currMin+")要求，请重新下单！", function(){
