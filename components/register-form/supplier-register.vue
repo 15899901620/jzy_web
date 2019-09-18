@@ -128,13 +128,6 @@
                     </Row>
                     <Row :gutter="24" index="0">
                         <Col span="21">
-                            <FormItem  prop="contacterMobile" label="联系电话：">
-                                <Input type="text" v-model="formCustom.contacterMobile" class="CarrierIput"  placeholder="请输入联系人" />
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row :gutter="24" index="0">
-                        <Col span="21">
                             <FormItem  prop="contacterEmail" label="邮箱：">
                                 <Input type="text" v-model="formCustom.contacterEmail" class="CarrierIput"  placeholder="请输入邮箱" />
                             </FormItem>
@@ -378,14 +371,6 @@ export default {
             callback();
           }
         };
-          const valicontacterMobile= (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('联系人电话不能为空'));
-          } else {
-            this.BankAccountValid=true
-            callback();
-          }
-        };
           const valicontacterEmail= (rule, value, callback) => {
           if (value === '') {
             callback(new Error('联系人邮箱不能为空'));
@@ -455,7 +440,6 @@ export default {
                 companyName:'',
                 corporation:'',    //法人
                 contacter:'',       //联系人
-                contacterMobile:'',  //联系人电话
                 contacterEmail:'',    //联系人邮箱
                 businessLicense:'',     //营业执照
                 authorizationElc:'',    //授权书
@@ -483,9 +467,6 @@ export default {
                 ],
                 mobilecode:[
                     {  validator: validatemobilecode, trigger: 'blur' }
-                ],
-                contacterMobile:[
-                    {required: true, validator: valicontacterMobile , trigger: 'blur' }
                 ],
                 authorizationElc:[
                     {required: true, trigger: 'blur' }

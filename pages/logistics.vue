@@ -168,7 +168,7 @@
 					  page_size:3,
 					  status:2
 					}
-				const res = await sendHttp(this, true, server.api.freight.freightList,params,1)
+				const res = await sendHttp(this, false, server.api.freight.freightList,params)
 		
 				this.reaList=res.data.items;
 				this.total=res.data.total

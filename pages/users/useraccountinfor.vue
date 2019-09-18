@@ -7,7 +7,8 @@
                 <!--基本信息-->
                 <ul class="inforList">
                     <div class="inforTitle">基本信息</div>
-                    <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.username}}</span></li>
+                    <li><span class="titleInfor">企业名称</span><span class="blackFont fs14">{{userinfor.username}}</span></li>         
+                    <li><span class="titleInfor">手机号</span><span class="blackFont fs14">{{userinfor.phone}}</span></li>
                     <li style="align-items: inherit;">
                         <span class="titleInfor mt10" >营业执照</span>
                         <div class="dflex" style="flex-direction: column;">
@@ -55,9 +56,7 @@
                         <li>
                             <span class="titleInfor">联系人</span><Input type="text" class="inforInput" v-model="userinfor.contacter"  @on-blur="contacter"/>
                         </li>
-                        <li>
-                             <span class="titleInfor">电话</span><Input type="text" class="inforInput" v-model="userinfor.contacter_mobile"     @on-blur="contacter_mobile" />
-                        </li>
+
                         <li>
                             <span class="titleInfor">邮箱</span><Input type="text" class="inforInput" v-model="userinfor.contacter_email"     @on-blur="contacter_email" />
                         </li>

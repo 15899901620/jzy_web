@@ -25,10 +25,14 @@ export default {
                             path: '/supply/Supplier',
                             name: '优质货源需求'
                         },
+                         {
+                            path: '/supply/myquote',
+                            name: '我的报价'
+                        },
                     ]
                 },
 
-            ]
+            ],
         }
     },
     computed: {

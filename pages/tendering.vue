@@ -149,14 +149,20 @@ export default {
     WineDetail(row){
       this.$router.push({
             name: 'trender-WineBidDetail',
-            params: {
+            query: {
                 id: row.id
             }
         })
     },
     async SourceData() {    
-            const res = await sendHttp(this, false, server.api.biddding.bidddingList,2)
+        if(this.SupplierInfor != undefined){
+            const res = await sendHttp(this, true, server.api.biddding.bidddingList,2)
             this.dataList = res.data.items
+        }else{
+             const res = await sendHttp(this, false, server.api.biddding.bidddingList)
+            this.dataList = res.data.items
+        }
+       
     },
 
     WineBid() {

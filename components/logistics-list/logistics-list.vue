@@ -8,11 +8,12 @@
         <ul class="logisticList mt1" :style="{width:TLlength+'px'}"  id='log-ul'>
           <li v-for="(item, index) in dataList"  :key="index" @click='detail()'>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>{{item.dispatchStateName}}{{item.dispatchDistrictName}}</p>
+              <p>{{item.dispatchFullAddress}}</p>
               <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>{{item.receiptStateName}} {{item.receiptDistrictName}}</p>
+              <p>{{item.receiptFullAddress}} </p>
             </div>
             <div class="logNumTime graybg"  >
+              <p><span class="logNumTime_title">类       别:</span> <span class="orangeFont">{{item.freightGoodsCname}}</span></p>
               <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">{{item.weight}}吨</span></p>
               <p class="mt10"><span class="logNumTime_title">装货时间 :</span> {{item.demandBeginDate}}~{{item.demandEndDate}}</p>
             </div>
