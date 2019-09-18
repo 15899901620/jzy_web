@@ -19,17 +19,17 @@ const getCookie = name => {
 export const sendHttp = (vm, hasAuth, apiName, data, type) => {
     let authType = type || 1
     let authorization = ''
-    if(authType == 1){
-        authorization = getCookie('webtoken')
-    }else if(authType == 2){
-        authorization = getCookie('websuppliertoken')
-    }
-    //由于不知怎么判断是处于服务器端还是客户端，做两次获取操作
-    if(authorization === false){
+    if(process.server){
         if(authType == 1){
             authorization = vm.$cookies.get('webtoken')
         }else if(authType == 2){
             authorization = vm.$cookies.get('websuppliertoken')
+        }
+    }else{
+        if(authType == 1){
+            authorization = getCookie('webtoken')
+        }else if(authType == 2){
+            authorization = getCookie('websuppliertoken')
         }
     }
 
