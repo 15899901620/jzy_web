@@ -72,9 +72,10 @@
                 <div class="mt20">
                     <div class="XhlistTitle">
                         <h1 style="width: 10%;">品种</h1>
-                        <h1 style="width: 20%;">牌号</h1>
+                        <h1 style="width: 16%;">牌号</h1>
                         <h1 style="width: 16%;">厂商</h1>
                         <h1 style="width: 10%;">交货仓</h1>
+                        <h1 style="width: 9%;">包装方式</h1>
                         <h1 style="width: 9%;">剩余数量（吨）</h1>
                         <h1 style="width: 11%;">单价（元/吨）</h1>
                         <h1 style="width: 8%;">距下架时间</h1>
@@ -85,10 +86,12 @@
                         <template v-if="spotlist">
                             <li v-for="(item, index) in spotlist" :key="index">
                                 <span style="width: 10%;">{{item.category_name}}</span>
-                                <span style="width: 20%;">{{item.sku_name}}</span>
+                                <span style="width: 16%;">{{item.sku_name}}</span>
                                 <span style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                                 <span style="width: 10%;">{{item.warehouse_name}}</span>
                                 <span style="width: 9%;">{{item.available_num}}</span>
+                                <span style="width: 9%;" v-if='item.packing_modes=="1"'>标准包装</span>
+                                <span style="width: 9%;" v-else>非标准包装</span>
                                 <span v-if="isLogin" class="orangeFont" style="width: 11%;">
                                     <Tag v-if="item.is_jry" color="error">易</Tag>
                                     {{item.finalPriceFormat}}
