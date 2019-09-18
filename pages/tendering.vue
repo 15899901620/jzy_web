@@ -155,7 +155,7 @@ export default {
         })
     },
     async SourceData() {    
-        if(this.SupplierInfor){
+        if(this.SupplierInfor != undefined){
             const res = await sendHttp(this, true, server.api.biddding.bidddingList,2)
             this.dataList = res.data.items
         }else{
