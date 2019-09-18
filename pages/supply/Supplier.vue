@@ -10,9 +10,9 @@
                  <div class="" style="width: 95%; margin: 0 auto;">
                     <div class="order_operate">
                     <div class="dflex">
-                        <input type="text" placeholder="居正源一号仓" name="receiptFull"  v-model='dispatchFull' class="orderInput" />
+                        <input type="text" placeholder="居正源一号仓" name="receiptFull"  v-model='dispatchFull' class="orderInput"  style="width: 200px;"/>
                          <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"  style="font-size: 32px;     color: #007de4;"></i>
-                         <input type="text" placeholder="请选择到达地" name=""   v-model='receiptFull' class="orderInput" />
+                         <input type="text" placeholder="请选择到达地" name=""   v-model='receiptFull' class="orderInput" style="width: 200px;" />
                         <div class="check" @click='check()'>确定</div>
                     </div>
                    
