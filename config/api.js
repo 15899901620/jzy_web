@@ -166,6 +166,7 @@ let api = {
        
     },
     freightOffer:{
+      offerMyList:{'url': '/bill/freightOffer/myList/page', 'method': 'get'},
       offerList:{'url': '/bill/freightOffer/list', 'method': 'get'},
       save:{'url': '/bill/freightOffer/save', 'method': 'post'},
     },

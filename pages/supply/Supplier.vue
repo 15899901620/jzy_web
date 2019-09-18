@@ -6,12 +6,12 @@
                 <div style='font-size: 16px;margin: 20px 10px 10px 10px;'>
                     优质货源需求
                 </div>
-                <div class="bodbottom" style="width: 8%; height: 2px;"></div>
+                <div  style="width: 100%; height: 2px; background-color: #f7f7f7;"></div>
                  <div class="" style="width: 95%; margin: 0 auto;">
                     <div class="order_operate">
                     <div class="dflex">
                         <input type="text" placeholder="居正源一号仓" name="receiptFull"  v-model='dispatchFull' class="orderInput" />
-                        <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"  style="font-size: 32px;"></i>
+                         <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"  style="font-size: 32px;     color: #007de4;"></i>
                          <input type="text" placeholder="请选择到达地" name=""   v-model='receiptFull' class="orderInput" />
                         <div class="check" @click='check()'>确定</div>
                     </div>
@@ -28,7 +28,7 @@
                         <tbody>
                             <tr class="detailTable" v-for="(item, index) in dataList" :key="index">
                                 <td  style="width: 25%;">{{item.dispatchFullAddress}}
-                                     <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size: 32px;"></i>
+                                    <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size: 32px;     color: #007de4;"></i>
                                      {{item.receiptFullAddress}}
                                 </td>
                                 <td>{{item.freightGoods}}</td>
@@ -36,7 +36,7 @@
                                 <td>{{item.demandBeginDate}}至{{item.demandEndDate}}</td>
                                 <td class="operate">
                                 <div class="check mt5 blackFont" style="margin-left:50px" v-if='item.isQuote==1'>已报价</div>
-                                <div class="check mt5 blackFont" style="margin-left:50px" v-else @click="oldtime(item)">立即出价</div>
+                                <div class="check mt5 blackFont" style="margin-left:50px"  v-else  @click="oldtime(item)">立即出价</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -48,15 +48,23 @@
         </div>
          <Modal
           v-model="modal1"
-          title="立即出价"
+          title="发布找车"
           @on-ok="delay"
-          @on-cancel="cancelDelay">
-            <Row>
-                <span>吨数</span>：
-              <Input v-model="weight" disabled='true' placeholder="Enter something..." style="width: 150px" />
+          @on-cancel="cancelDelay" :width='340' >
+             <Row>
+            <span style="margin-top: 10px   margin-left: 40px; font-size:14px">起 点</span>：
+              <Input v-model="dispatchFull" :disabled='true' placeholder="Enter something..." style="width: 150px; margin-top: 10px;" />
             </Row>
-            <Row style="    margin-top: 10px;">
-                <span>价格</span>：
+             <Row>
+                <span style="margin-top: 10px   margin-left: 40px; font-size:14px">终 点</span>：
+              <Input v-model="receiptFull" :disabled='true' placeholder="Enter something..." style="width: 150px; margin-top: 10px;" />
+            </Row>
+            <Row>
+                <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数</span>：
+              <Input v-model="weight" :disabled='true'  style="width: 150px;margin-top: 10px;" />
+            </Row>
+            <Row style=" margin-top: 10px;">
+                <span style="margin-top: 10px   margin-left: 40px; font-size:14px">价 格</span>：
               <Input v-model="price" placeholder="立即出价" style="width: 150px" />
             </Row>
       </Modal>
@@ -115,6 +123,11 @@ export default {
             this.modal1=true
             this.id=row.id
             this.weight=row.weight
+            this.dispatchFull=row.dispatchFullAddress
+            this.receiptFull=row.receiptFullAddress
+        },
+        cancelDelay(){
+
         },
         delay(){
             let params={
@@ -163,12 +176,9 @@ export default {
             if(this.receiptFull){
                 params.receiptFullAddress=this.receiptFull
             }     
-            params.current_page=this.current_page,
-            params.page_size=this.page_size,
-          
-            console.log(params)
+            params.current_page=this.current_page
+            params.page_size=this.page_size
             const res = await sendHttp(this, true, server.api.freight.freightList,params,2)
-            console.log(res)
             this.dataList=res.data.items;
             this.total=res.data.total
         },
