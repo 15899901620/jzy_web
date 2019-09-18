@@ -151,7 +151,7 @@
             pages: pagination.pages,
             TimeDown
         },
-        asyncData ({app, params, query, headers}) {//请求
+        /*asyncData ({app, params, query, headers}) {//请求
             let myParams = {
                 sku_name: query.keyword || '',
                 current_page: query.page|| 1,
@@ -160,7 +160,7 @@
             return sendHttp(app, false, server.api.spot.initSpotList, myParams).then(function (res) {
                     return { spotlist: res.data.items, total: res.data.total  }
                 })
-        },
+        },*/
         data() {
             return {
                 isLogin: false,
@@ -186,7 +186,10 @@
                 categoryMoreVal: '更多',
                 processMoreVal: '更多',
                 //purposeMoreVal: '更多',
-                featureMoreVal: '更多'
+                featureMoreVal: '更多',
+
+                spotlist:[],
+                total: 0,
             }
         },
         methods: {
@@ -208,20 +211,20 @@
                 })
             },
             categoryClick(id) {
-                this.categoryId = id;
-                this.spotData();
+                this.categoryId = id
+                this.spotData()
             },
             processClick(id) {
-                this.processId = id;
-                this.spotData();
+                this.processId = id
+                this.spotData()
             },
             /*purposeClick(id) {
                 this.purposeId = id;
                 this.spotData();
             },*/
             featureClick(id) {
-                this.featureId = id;
-                this.spotData();
+                this.featureId = id
+                this.spotData()
             },
             categoryOpen() {
                 this.categoryMore = !this.categoryMore;
@@ -292,6 +295,7 @@
         mounted() {
             this.hasLogin()
             this.filterConditonData()
+            this.spotData()
         },
         watch: {
             '$route'(to, from) {
