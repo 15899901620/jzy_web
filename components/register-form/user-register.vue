@@ -126,8 +126,8 @@
                                     ref="upload"
                                     :action="uploadUrl"
                                     :on-success="imageSuccess"
-                                    :max-size="2048"
-                                    :format="['jpg','jpeg','png', 'gif']"
+                                    :max-size="10240"
+                                    :format="['jpg','jpeg','png', 'pdf']"
                                     :on-exceeded-size="handleMaxSize">
                                     <Button icon="ios-cloud-upload-outline">上  传</Button>
                                 </Upload>
@@ -144,8 +144,8 @@
                                     ref="upload"
                                     :action="uploadUrl"
                                     :on-success="handleFileSuccess"
-                                    :max-size="2048"
-                                    :format="['jpg','jpeg','png', 'gif']"
+                                    :max-size="10240"
+                                    :format="['jpg','jpeg','png', 'pdf']"
                                     :on-exceeded-size="handleMaxSize">
                                     <Button icon="ios-cloud-upload-outline">上  传</Button>
                                 </Upload>
@@ -593,7 +593,7 @@ export default {
         handleMaxSize (file) {
             this.$Notice.warning({
                 title: '超出文件大小限制',
-                desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+                desc: '文件 ' + file.name + ' 太大，不能超过 10M。'
             });
         },
         // 校验公司名称
