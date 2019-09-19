@@ -140,7 +140,7 @@
                 <div class="proInfor">
                     <div style="display: flex; flex-direction: column; width: 200px; " >
                         <div class="mt40 tar mr20 dflex " style="align-items: center;">
-                            <span class="totalprice fs20 tar">订单数量：</span><span class="fs20 orangeFont tar fwb" style="width: 50px;">{{this.orderinfo.orderNum}}吨</span>
+                            <span class="totalprice fs20 tar">订单数量：</span><span class="fs20 orangeFont tar fwb" style="width: 100px;">{{this.orderinfo.orderNum}}吨</span>
                         </div>
                     </div>
                     <div  style="display: flex; flex-direction: column; width: 300px; " >
