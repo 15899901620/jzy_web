@@ -93,9 +93,9 @@
                                 <span style="width: 9%;" v-else>非标准包装</span>
                                 <span style="width: 9%;">{{item.available_num}}</span>
                      
-                                <span v-if="isLogin" class="orangeFont" style="width: 11%;">
-                                    <Tag v-if="item.is_jry" color="error">易</Tag>
-                                    {{item.finalPriceFormat}}
+                                <span v-if="isLogin" class="orangeFont" style="width: 11%;position:relative;text-align:right;padding-right:18px;">
+                                    <Tag v-if="item.is_jry" color="error" style="padding:1px 5px;line-height:20px;float:left;position:absolute;left:5px;top:-3px;">易</Tag>
+                                    <i style="padding-left:30px;">{{item.finalPriceFormat}}</i>
                                 </span>
                                 <span v-else class="orangeFont" style="width: 9%;" title="登录后查看">{{item.finalPriceFormat}}</span>
                                 <span style="width: 8%;">
