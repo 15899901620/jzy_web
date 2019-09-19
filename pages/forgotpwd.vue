@@ -492,6 +492,10 @@ export default {
         }
     },
     mounted(){
+        if(this.$route.query.type){
+                this.formCustom.type='供应商&承运商'
+        }
+       
         this.identifyCode = '';
         this.makeCode(this.identifyCodes, 4);
     },

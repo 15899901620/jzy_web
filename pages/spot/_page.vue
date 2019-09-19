@@ -103,7 +103,8 @@
                                 </span>
                                 <span style="width: 8%;">{{item.delivery_deadline}}</span>
                                 <span style="width: 8%;">
-                                    <div v-if="isLogin && item.available_num > 0" class="ListBtn" @click="addOrder(item.id)">下单</div>
+                                     <div v-if="isLogin && item.available_num < item.delivery_min" style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;" >下单</div>
+                                    <div v-else-if="isLogin && item.available_num > 0" class="ListBtn" @click="addOrder(item.id)">下单</div>
                                     <div v-else-if="isLogin && item.available_num == 0" class="ListBtn">已售完</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>
