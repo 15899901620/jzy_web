@@ -53,6 +53,7 @@
                       <span>已选择</span>
                 </div>
                 <span><a class="logBtn redbg" @click='cancel(item)'>取消</a></span>
+                <span><a class="logBtn greenbg" @click="detailLog(item)">需求详情</a></span>
               </div>
               <div class="pro_jmts">
                 <ul>
@@ -90,7 +91,7 @@
 
 
         </div>
-
+      <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
      </div>
     </div>
      
@@ -103,10 +104,12 @@ import { getCookies } from '../../config/storage'
 import { sendHttp } from "../../api/common";
 import server from "../../config/api";
 import pagination from '../../components/pagination'
+import AddressDetail from '../../components/freight-add/freght-detail'
 export default {
   name: "userlog",
   layout:'membercenter',
   components:{
+      AddressDetail,
     pages: pagination.pages, 
      usernav: Navigation.user
   },
@@ -118,7 +121,9 @@ export default {
   },
     data(){
         return{
+            addList:{},
             billNo:"",
+            detailloading:false,
             showcancel_pop:false,
             showEditpop:false,
             TipAddress:'',
@@ -170,9 +175,20 @@ export default {
     changePage (row) {
               this.$router.push({name:'users-userlog',query:{page:row}})
     },
+    undetailChange(res) {
+    
+        this.detailloading = res
+    },
     check(){
         this.freight();
     },
+    detailLog(row){
+         row.id=row.orderId
+          this.addList = {
+              ...row
+          }
+          this.detailloading = true
+      },
     cancel(row){
          this.$Modal.confirm({
           title: '警告',
