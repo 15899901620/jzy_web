@@ -178,6 +178,7 @@ import spotPay from '../../../components/paydeposit/spotPay'
 
 export default {
     name: "spot-order-id",
+    middleware: 'memberAuth',
     components: {
         HeaderSmall: Header.small,
         Footer,

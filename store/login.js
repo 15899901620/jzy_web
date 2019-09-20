@@ -7,32 +7,35 @@ import api from '../config/api'
 import Cookies from 'js-cookie'
 
 export const state = () => {
-    return {
-      chackPhone: false,
-      userinfor:{},
-      webtoken: '',
-      websuppliertoken: ''
-    }
+	return {
+		chackPhone: false,
+		userinfor: {},
+		webtoken: '',
+		websuppliertoken: ''
+	}
 }
-  
+
 export const getters = (state) => {
-    return {
-        userinfo  :  Cookies.get('userinfor')
-    }
+	return {
+		userinfo: Cookies.get('userinfor')
+	}
 }
-  
+
 export const mutations = {
-    updateUserInfof(state, data) {
-        state.userinfor = data
-    },
-    updateChackPhone(state, list) {
-      console.log("sss",list)
-      state.chackPhone = list
-    },
+	updateUserInfof(state, data) {
+		state.userinfor = data
+	},
+	updateChackPhone(state, list) {
+		console.log("sss", list)
+		state.chackPhone = list
+	},
 }
-  
+
 export const actions = {
-    setUserInfor({ commit }, params) {
-        commit('updateUserInfof', params)
-    },
+	setUserInfor({commit}, params) {
+		commit('updateUserInfof', params)
+	},
+	getUserInfor({commit}, params) {
+		commit('updateUserInfof', params)
+	},
 }
