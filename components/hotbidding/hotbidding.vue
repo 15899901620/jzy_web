@@ -45,7 +45,6 @@
 <script>
 	import TimeDown from '../../components/timeDown'
 	const prefixCls = 'ant-hotbidding'
-	import {mapState} from 'vuex'
 
 	export default {
 		name: 'hotbidding',

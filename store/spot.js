@@ -1,6 +1,3 @@
-import {spotList} from '../api/spot'
-import api from '../config/api'
-
 import { sendCurl } from '../api/common'
 import server from '../config/api'
 

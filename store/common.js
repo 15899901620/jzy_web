@@ -11,9 +11,11 @@ export const state = () => {
 		},
 		hotCategory: [],
 		hotProduct: [],
+
 		productLevelValues: [],
 		sysConfig: {},
-		adList:{}
+		adList:{},
+		friendlyList: [],
 	}
 }
 
@@ -40,6 +42,9 @@ export const mutations = {
 		let key = data.key
 		state.adList[key] = data.value
 	},
+	updateFriendlyList(state, data){
+		state.friendlyList = data
+	}
 }
 
 export const actions = {
@@ -99,6 +104,12 @@ export const actions = {
 		let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
 		if (res.status === 200) {
 			commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
+		}
+	},
+	async getFriendlyList({commit}) {
+		let res = await sendCurl(this, server.api.sysconf.getFriendLink, {})
+		if (res.status === 200) {
+			commit('updateFriendlyList', res.data)
 		}
 	},
 }

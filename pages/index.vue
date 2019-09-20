@@ -50,7 +50,7 @@
       </div>
       <sidebar></sidebar>-->
     </div>
-    <!--<Footer size="default" title="底部" style="margin-top:18px;"></Footer>-->
+    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
@@ -77,6 +77,9 @@
         store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
+				//获取友情链接
+				store.dispatch('common/getFriendlyList'),
+
         //获取轮播图
 				store.dispatch('common/getBannerList', 1),
 				//获取网站公告
@@ -95,6 +98,8 @@
 					current_page: 1,
 					page_size: 8
 				}),
+
+
 				/*
         //获取现货报价
         store.dispatch('spot/getSpotList', {
@@ -106,7 +111,7 @@
             parentId: 0,
             indexShow: 1
         }),
-        store.dispatch('system/getLinksInfo'),
+
 
 
         store.dispatch('article/getHotArticle', {

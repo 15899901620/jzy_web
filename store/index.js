@@ -30,10 +30,7 @@ export const actions = {
 	 * @param req
 	 */
 	nuxtServerInit({commit, state}, {req}) {
-		let auth = null
 		if (req.headers.cookie) {
-			console.log(utils.getMemberTokenInServer(req))
-			console.log(utils.getMemberInfoInServer(req))
 			commit('setMemberToken', utils.getMemberTokenInServer(req))
 			commit('setMember', utils.getMemberInfoInServer(req))
 		}

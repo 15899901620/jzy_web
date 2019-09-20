@@ -220,6 +220,7 @@ let api = {
   sysconf: {
     cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
     friendlink: '/web/friendlink/list', //友情链接
+    getFriendLink: {'url':'/web/friendlink/list','method':'get'}, //友情链接
     systemcof: '/web/config/getAll',
     getSysConfig: {'url':'/web/config/getAll', 'method':'get'},
     getConfigValues: '/web/config/getValues',
