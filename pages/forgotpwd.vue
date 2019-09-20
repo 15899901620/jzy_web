@@ -492,7 +492,7 @@ export default {
         }
     },
     mounted(){
-        if(this.$route.query.type){
+        if(this.$route.query.type!='users'){
                 this.formCustom.type='供应商&承运商'
         }
        
