@@ -1,25 +1,48 @@
-import { spotList } from '../api/spot'
+import {spotList} from '../api/spot'
 import api from '../config/api'
 
+import { sendCurl } from '../api/common'
+import server from '../config/api'
+
 export const state = () => {
-    return {
-      spotlist: []
-    }
+	return {
+		spotList: [],
+		total: 0,
+		condition:{
+			category: [],
+			process: [],
+		}
+	}
 }
-  
+
 export const mutations = {
-    updateSpotList(state, data) {
-      // console.log(data)
-      state.spotlist = data
-    }
+	updateSpotList(state, data) {
+		state.spotList = data
+	},
+	updateTotal(state, data) {
+		state.total = data
+	},
+	updateCondition(state, data) {
+		state.condition = data
+	}
 }
-  
+
 export const actions = {
-    async getSpotList({ commit },  params ) {
-      let res = await spotList(this, params)
-      // console.log(res);
-      if(res.status === 200){
-        commit('updateSpotList', res.data.items)
-      }
-    }
+	async getSpotList({commit}, params) {
+		let res = await sendCurl(this, server.api.spot.initSpotList, params)
+		if (res.status === 200) {
+			commit('updateSpotList', res.data.items)
+			commit('updateTotal', res.data.total)
+		}
+	},
+	async getFilterConditonData({commit}) {
+		let res = await sendCurl(this, server.api.spot.getFilterConditon, {})
+		if (res.status === 200) {
+			let condition = {
+				category: res.data.categoryFilter,
+				process: res.data.specLevelFilter
+			}
+			commit('updateCondition', condition)
+		}
+	}
 }
