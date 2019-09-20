@@ -14,7 +14,7 @@
             <a href="/login">登录</a>
           </li>
           <li :key="97">
-            <nuxt-link to="/register">注册</nuxt-link>
+            <a href="/register">登录</a>
           </li>
         </template>
         <li v-for="(item, index) in topmenu" :key="index">
