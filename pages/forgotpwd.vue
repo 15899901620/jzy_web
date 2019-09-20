@@ -48,16 +48,6 @@
                                     <div class="captcha" @click="refreshCode"><captcha :CodeCate="CodeCate" :contentWidth='126'  :contentHeight='36' :identifyCode="identifyCode" ></captcha></div>
                                 </Col>
                             </Row>
-                            <Row :gutter="24" v-if="isopenSms && phoneValid"  index="2">
-                                <Col span="15">
-                                    <FormItem prop="mobilecode" label="短信验证：">
-                                        <Input class="CarrierImgcode" v-model="formCustom.mobilecode"  placeholder="请输入验证码" />
-                                    </FormItem>
-                                </Col>
-                                <Col span="6">
-                                    <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
-                                </Col>
-                            </Row>
                             <Row :gutter="24"  index="6">
                                 <Col span="12" />
                                 <Col span="9">
@@ -68,6 +58,17 @@
                             </Row>
                         </div>
                         <div v-else-if="current == 1">
+
+                             <Row :gutter="24" index="0" v-if="isopenSms && phoneValid" >
+                                        <Col span="15">
+                                    <FormItem prop="mobilecode" label="短信验证：">
+                                        <Input class="CarrierImgcode" v-model="formCustom.mobilecode"  placeholder="请输入验证码" />
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                        <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
+                                </Col>
+                               </Row>
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="password" label="重置密码：">
@@ -197,7 +198,8 @@ export default {
             if(value === ''){
                 callback(new Error('手机验证码不能为空'));
             }else{
-                this.getuserCodeCheck(value, callback)
+                // this.getuserCodeCheck(value, callback)
+                  callback();
             }
         };
         return{
@@ -413,13 +415,6 @@ export default {
                     closable: true
                 })
                 return
-            } else if(!this.isrefreshpic){
-                this.$Message.info({
-                    content: '手机验证码有误',
-                    duration: 5,
-                    closable: true
-                })
-                return
             }else if(!this.identifyImgCode){
                 this.$Message.info({
                     content: '图形验证码有误',
@@ -448,14 +443,7 @@ export default {
                     closable: true
                 })
                 return
-            }else if(!this.formCustom.mobilecode){
-                this.$Message.info({
-                    content: '验证码有误，请返回重新获取',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            } else {
+            }else {
                 let params={
                     phone: this.formCustom.phone,
                     password:this.formCustom.password,

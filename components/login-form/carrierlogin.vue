@@ -212,15 +212,15 @@ export default {
           }
           let isPhone = true
           supplierdataCheck(that, params).then(function (res) {
-            if(res.data === true) {
-              that.updateChackPhone(true)
+            if(res.data === false) {
+              that.updateChackPhone(false)
               that.$Modal.info({
                 title: '提示',
                 content: '该账号尚未注册，请您先注册!'
               });
               return false
             }else{
-              that.updateChackPhone(false)
+              that.updateChackPhone(true)
             }
           })
     

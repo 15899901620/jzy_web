@@ -103,14 +103,14 @@
                                 </span>
                                 <span style="width: 8%;">{{item.delivery_deadline}}</span>
                                 <span style="width: 8%;">
-                                     <div v-if="isLogin && item.available_num < item.delivery_min" style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;" >下单</div>
+                                    <div v-if="isLogin && item.available_num < item.delivery_min || item.price_valid_time<=0" style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;" >下单</div>
                                     <div v-else-if="isLogin && item.available_num > 0" class="ListBtn" @click="addOrder(item.id)">下单</div>
                                     <div v-else-if="isLogin && item.available_num == 0" class="ListBtn">已售完</div>
                                     <div v-else class="ListBtn" @click="toLogin">登录</div>
                                 </span>
                             </li>
                         </template>
-                        <template v-else>
+                        <template v-else>   
                             <li>
                                 <p style="width:100%; text-align:center">暂无任何有效的报价信息！</p>
                             </li>

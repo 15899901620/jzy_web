@@ -212,7 +212,7 @@ export default {
           }
           let isPhone = true
           supplierdataCheck(that, params).then(function (res) {
-            if(res.data === true) {
+            if(res.data === false) {
               that.updateChackPhone(true)
               that.$Modal.info({
                 title: '提示',
@@ -220,7 +220,31 @@ export default {
               });
               return false
             }else{
-              that.updateChackPhone(false)
+                //发送
+                  let data = {
+                      phone: that.loginsupplierform.username
+                  }
+               supplierCodeSend(that, data).then(function (res) {
+                  if (res.data && res.status === 200) {
+                    let countdown = 120
+                    var timer = setInterval(() => {
+                        countdown = countdown-1
+                        if (countdown <= 0) {
+                            clearInterval(timer)
+                            that.btnBoolen = false;
+                            that.btnValue = "发送验证码"
+                        } else {
+                            that.btnBoolen = true;
+                            that.btnValue = `已发送(${countdown})S`
+                        }
+                    }, 1000)
+                  } else {
+                      that.$Modal.info({
+                      title: '提示',
+                      content: '短信发送失败'
+                    });
+                  }
+                })
             }
           })
     
@@ -231,27 +255,7 @@ export default {
           let data = {
               phone: that.loginsupplierform.username
           }
-          supplierCodeSend(that, data).then(function (res) {
-            if (res.data && res.status === 200) {
-              let countdown = 120
-              var timer = setInterval(() => {
-                  countdown = countdown-1
-                  if (countdown <= 0) {
-                      clearInterval(timer)
-                      that.btnBoolen = false;
-                      that.btnValue = "发送验证码"
-                  } else {
-                      that.btnBoolen = true;
-                      that.btnValue = `已发送(${countdown})S`
-                  }
-              }, 1000)
-            } else {
-                that.$Modal.info({
-                title: '提示',
-                content: '短信发送失败'
-              });
-            }
-          })
+        
         }
       })
     }
