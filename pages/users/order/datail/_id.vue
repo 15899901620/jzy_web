@@ -57,6 +57,17 @@
                         </Row>
                     </div>
                 </div>
+                 <div v-if="this.datalist.isDelivery === 0" class="whitebg mt20" style="padding:0px 18px 18px;">
+                    <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">用车需求</h3>
+                    <div style="line-height:32px;">
+                        <Row index="">
+                            <Col span="">仓库名称：{{this.datalist.warehouseName}}</Col>
+                        </Row>
+                         <Row index="">
+                            <Col span="">仓库地址：{{this.datalist.warehouseAddress}}</Col>
+                        </Row>
+                    </div>
+                </div>
                 <!--配送信息-->
                 <div v-if="this.datalist.isDelivery === 0" class="whitebg mt20" style="padding:0px 18px 18px;">
                     <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">自提信息</h3>
@@ -162,6 +173,7 @@ export default {
             formSearch: {
                 orderType: '',
                 status: '',
+                OrderList:'',
                 orderNo: '',
                 skuName: ''
             },
@@ -187,6 +199,15 @@ export default {
             if(!typeId) return
             return config.orderState[typeId]
         },
+        async dataList(){
+            let params = {
+                orderId:this.datalist.id,
+            }
+            const res = await sendHttp(this, true, server.api.freight.InfoByOrderId,params,1)
+           
+            this.OrderList=  res.data
+
+        },
         async sourceDeta() {
             let params = {
                 id: this.orderid
@@ -199,6 +220,7 @@ export default {
         },
     },
     created(){
+        this.dataList();
         this.inLogin()
         this.sourceDeta()
     },

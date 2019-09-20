@@ -13,36 +13,88 @@
         <div class="">
             <Form ref="formAddress" :model="formAddress" :label-width="100"  :rules="ruleValidate">
                 <Row index="0">
-                    <Col span="22">
-                        <FormItem label="收货人姓名" >
-                            <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
+                    <Col span="12">
+                        <FormItem label="订单号" >
+                            <Input v-model="OrderList.billNo"  disabled  placeholder="请输入订单号"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="货物名称" >
+                            <Input v-model="OrderList.freightGoods" disabled  placeholder="请输入货物名称"></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row index="1">
-                    <Col span="22">
+                <Row index="0">
+                    <Col span="12">
+                        <FormItem label="数量" >
+                            <Input v-model="OrderList.weight"  disabled placeholder="请输入数量"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="提货仓库" >
+                            <Input v-model="OrderList.dispatchFullAddress" disabled  placeholder="请输入提货仓库"></Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row index="0">
+                    <Col span="12">
+                        <FormItem label="联系人姓名" >
+                            <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
+                        </FormItem>
+                    </Col>
+                     <Col span="12">
                         <FormItem label="联系电话" prop="phone">
                             <Input v-model="formAddress.phone"   placeholder="请输入收货人的联系电话"></Input>
                         </FormItem>
                     </Col>
                 </Row>
+                <Row index="1">
+                    <Col span="22">
+                        <FormItem label="提货地址" >
+                            <Input v-model="formAddress.phone" disabled ></Input>
+                        </FormItem>
+                    </Col>
+                </Row>
                 <Row index="2">
                     <Col span="12">
-                        <FormItem label="用车开始时间" >
-                                <Date-picker v-model="formAddress.demandBeginDate" format="yyyy-MM-dd HH:mm:ss" type="datetime" placement="bottom-end" placeholder="用车开始时间" style="width: 168px" @on-change="formAddress.demandBeginDate=$event"></Date-picker>
+                        <FormItem label="用车时间" prop="demandEndDate">
+                                <Date-picker    format="yyyy-MM-dd"  :options="options4"  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
                 <Row index="3">
-                    <Col span="12">
-                        <FormItem label="用车开始最终时间" >
-                                <Date-picker v-model="formAddress.demandEndDate" format="yyyy-MM-dd HH:mm:ss" type="datetime" placement="bottom-end" placeholder="用车开始最终时间" style="width: 168px" @on-change="formAddress.demandEndDate=$event"></Date-picker>
+                     <Col span="12">
+                     <FormItem label="询价截止时间" >
+                         <Dropdown placement="bottom-start" trigger="click" @on-click="selectLang">
+                                <Button type="primary">
+                                    {{title}}分钟
+                                    <Icon type="ios-arrow-down"></Icon>
+                                </Button>
+                            <DropdownMenu slot="list">
+
+                                <DropdownItem v-for="(value, key) in localList" :name="key" :key="key">{{value}}</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                         </FormItem>
-                    </Col> 
+                    </Col>
+                    <Col span="12">
+                     <FormItem label="是否含税" >
+                         <Dropdown placement="bottom-start" trigger="click" @on-click="selectTax">
+                                <Button type="primary">
+                                    {{tax}}
+                                    <Icon type="ios-arrow-down"></Icon>
+                                </Button>
+                            <DropdownMenu slot="list">
+
+                                <DropdownItem v-for="(value, key) in taxList" :name="key" :key="key">{{value}}</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row index="4">
                     <Col>
-                        <FormItem label="地址" prop="pickupMode">
+                        <FormItem label="收货地址" prop="pickupMode">
                             <address-from
                                 :country="1"
                                 :isshow="this.isAddressFormShow"
@@ -138,12 +190,40 @@ export default {
                 callback();
             }
         };
+        const valdemandBeginDate=(rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('用车开始时间'));
+            } else {
+                callback();
+            }
+        };
+        
         return {
+            options4: {
+                disabledDate: date => {
+                    // this成功指向vue实例
+                    return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000; 
+                }
+            },
+            
+            tax_id:0,
             isAddressFormShow: false,
             loading: false,
-        
+            localList: [
+                 '30',
+                 '60',
+                 '120'
+            ],
+            taxList:[
+                 '否',
+                 '是',        
+            ],
+            tax:'否',
+            title:'60',
+            OrderList:{},
+            date:'',
             formAddress:{
-                memberId: '',
+                memberId: '',                
                 contact: '',    //收货人姓名
                 phone: '',   //收货人电话
                 idNumber:'',  //身份证
@@ -158,20 +238,23 @@ export default {
                 alias:''             //别名
             },
             ruleValidate: {
+                demandBeginDate:[
+                     { validator: valdemandBeginDate, trigger: 'blur',required:true }
+                ],
                 name: [
-                    { validator: validatename, trigger: 'blur' }
+                    { validator: validatename, trigger: 'blur' ,required:true}
                 ],
                 phone:[
-                    { validator: validatephone, trigger: 'blur' }
+                    { validator: validatephone, trigger: 'blur' ,required:true}
                 ],
                 countryId:[
-                    { validator: validatecountryId, trigger: 'blur' }
+                    { validator: validatecountryId, trigger: 'blur' ,required:true}
                 ],
                 idNumber:[
-                    { validator: validateidNumber, trigger: 'blur' }
+                    { validator: validateidNumber, trigger: 'blur' ,required:true}
                 ],
                 address:[
-                    { validator: validateaddress, trigger: 'blur' }
+                    { validator: validateaddress, trigger: 'blur' ,required:true}
                 ],
             }
         }
@@ -186,6 +269,10 @@ export default {
         }
     },
     methods:{
+        demandDate(e){
+            this.formAddress.demandBeginDate=e[0]
+            this.formAddress.demandEndDate=e[1]
+        } , 
         getSelectCountry(res){
             this.formAddress.countryId = res.countryId
             this.formAddress.state = res.provinceId
@@ -198,6 +285,28 @@ export default {
         },
         cancelDelay(){
 
+        },
+        selectLang(e){
+            this.title=this.localList[e]
+        },
+        selectTax(e){
+            this.tax=this.taxList[e]
+            this.tax_id=e
+        },
+       async dataList(){
+            let params = {
+                orderId:this.datalist.id,
+            }
+            const res = await sendHttp(this, true, server.api.freight.InfoByOrderId,params,1)
+           
+            this.OrderList=  res.data
+            this.formAddress.phone=  res.data.phone
+            this.formAddress.contact=  res.data.contact
+
+            demandBeginDate
+            // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
+            let t= new Date(res.data.demandEndDate)
+            this.date = t.getTime();
         },
         async AddressOk() {
             //设置别名
@@ -238,6 +347,8 @@ export default {
                 return
             }else {
                 let params = {
+                    inquiryMinute:this.title,
+                    tax_id:this.tax_id,
                     orderId:this.datalist.id,
                     contact:this.formAddress.contact,
                     phone: this.formAddress.phone,   //收货人电话
@@ -276,6 +387,7 @@ export default {
     watch: {
         isshow: function (e) {
             if (e === true) {
+                this.dataList();
                 this.loading = true
                 this.isAddressFormShow = true
             } else {

@@ -49,7 +49,7 @@
                             </tr>
                             <tr class="detailTable">
 
-                            <td>{{item.skuNo}} {{item.skuName}}</td>
+                            <td>{{item.skuName}}</td>
                             <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                             <td>{{item.orderNum}}</td>
                             <td>{{item.warehouseName}}</td>
@@ -66,8 +66,11 @@
                                 <div class="" v-if="item.status == 2">
                                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                                 </div>
-                                 <div class="" v-if="item.status == 3">
+                                 <div class="" v-if="item.status == 3 && item.isAddDemand == 0">
                                     <a class="greenFont mt15" @click="addLog(item)">添加货物需求</a>
+                                </div>
+                                 <div class="" v-else>
+                                    <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
                                 </div>
                                 <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"  class="mt5 blackFont">查看详情</router-link>
                             </td>
@@ -84,7 +87,8 @@
             </div>
         </div>
         <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
-           <address-dialog :isshow="addloading" @unChange="unaddChange" :datalist='addList'></address-dialog>
+        <address-dialog :isshow="addloading" @unChange="unaddChange" :datalist='addList'></address-dialog>
+        <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
     </div>
 </template>
 
@@ -96,12 +100,14 @@ import pagination from '../../components/pagination'
 import config from '../../config/config'
 import paydeposit from '../../components/paydeposit'
 import AddressDialog from '../../components/freight-add/freight-add'
+import AddressDetail from '../../components/freight-add/freght-detail'
 
 
 export default {
     name: "usertotalorder",
     layout:'membercenter',
     components:{
+        AddressDetail,
         AddressDialog,
         usernav: Navigation.user,
         payorder: paydeposit.order
@@ -114,6 +120,7 @@ export default {
     },
     data() {
         return {
+            detailloading:false,
             addloading:false,
             payloading: false,
             dataRow: {},
@@ -162,6 +169,11 @@ export default {
         
             this.addloading = res
         },
+        undetailChange(res) {
+        
+            this.detailloading = res
+        },
+
         addLog(row){
             this.addList = {
                 ...row
@@ -183,6 +195,12 @@ export default {
                 this.currTabs = 3
             }
             this.getSourceData()
+        },
+        detailLog(row){
+            this.addList = {
+                ...row
+            }
+            this.detailloading = true
         },
         //订单类型
         getOrderType(typeId) {
