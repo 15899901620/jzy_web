@@ -1,45 +1,39 @@
 <template>
   <div class="TopSearch">
     <div style="display: flex;">
-      <input class="search-text" autocomplete="off" id="keyword" v-model="keyword" type="text" name="keyword" placeholder="请输入牌号、厂商进行搜索">
-      <input class="search-btn" id="search_submit" type="button" v-on:click="gotoSearch" value="搜  索">
+      <input class="search-text" autocomplete="off" id="keyword" v-model="keyword" type="text" name="keyword"
+             placeholder="请输入牌号、厂商进行搜索">
+      <input class="search-btn" id="search_submit" type="button" @click="gotoSearch" value="搜  索">
     </div>
     <div class="HotTip mt5 fs12" style="display: flex;">
-        <span>热门搜索 :</span>
-      <ul><li v-for="(item, index) in hotsearch" :key="index"><nuxt-link to="/">{{ item.searchKey }}</nuxt-link></li></ul>
+      <span>热门搜索 :</span>
+      <ul>
+        <li v-for="(item, index) in $store.state.common.hotSearch" :key="index">
+          <a :href="`/spot?keyword=${item.searchKey}`">{{ item.searchKey }}</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import api from '../../../config/api'
-import {gethotsearch} from '../../../api/helper'
-import { setStore, getStore, hasStore} from '../../../config/storage'
-import { parse, stringify } from 'qs'
+	export default {
+		name: "search",
+		data() {
+			return {
+				keyword: this.$route.query.keyword || ''
+			}
+		},
 
-export default {
-    name: "search",
-    data() {
-        return {
-            hotsearch:[],
-            keyword: !this.$route.query.kd ? '' :this.$route.query.kd 
-        }
-    },
-    methods: {
-      async getHotSearch () {            
-        let res = await gethotsearch(this, {})
-        this.hotsearch = res.data
-      },
-      gotoSearch() {
-          let kd = this.keyword
-          if(!kd) return false;
-          this.$router.push({name:'spot-page',query:{kd:kd}})
-      }
-    },
-    created() {
-        this.getHotSearch()
-    },
-    mounted() {
-    }
-}
+		methods: {
+			gotoSearch() {
+				let kd = this.keyword
+				if (!kd) return false;
+				this.$router.push({name: 'spot-page', query: {keyword: kd}})
+			}
+		},
+		mounted() {
+			this.$store.dispatch('common/getHotSearch')
+		}
+	}
 </script>

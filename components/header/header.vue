@@ -8,8 +8,8 @@
       <!--搜索-->
       <Search></Search>
       <!--电话-->
-      <div class="TopTel" v-if="systeminfo.SERVICEHOTLINE">
-        {{systeminfo.SERVICEHOTLINE}}
+      <div class="TopTel" v-if="$store.state.common.sysConfig.SERVICEHOTLINE">
+        {{$store.state.common.sysConfig.SERVICEHOTLINE}}
       </div>
     </div>
     <div class="navigation">
@@ -18,13 +18,12 @@
         <div class="fication_menu">查看服务分类</div>
         <coolapse :openCol="openCol"></coolapse>
       </div>
-      <Navigation :data="middleMenu"></Navigation>
+      <Navigation></Navigation>
     </div>
   </div>
 </template>
 <script>
 	const prefixCls = 'ant-header'
-	import {mapState} from 'vuex'
 	import shortcut from '../shortcut'
 	import Logo from './components/logo'
 	import Search from './components/search'
@@ -47,12 +46,6 @@
 			coolapse
 		},
 		computed: {
-			...mapState({
-				userinfof: state => state.login.userinfof,
-				topmenu: state => state.menu.topMenu,
-				middleMenu: state => state.menu.middleMenu,
-				systeminfo: state => state.system.systeminfo,
-			}),
 			classes() {
 				return [
 					`${prefixCls}`,
@@ -80,7 +73,9 @@
 			}
 		},
 		created() {
-			this.showCol()
 		},
+    mounted() {
+			this.showCol()
+		}
 	}
 </script>

@@ -1,24 +1,16 @@
 <template>
   <div class="Logo">
-    <nuxt-link to="/">
-      <img src="~/static/img/logo.png" alt="巨正源" >
-    </nuxt-link>
+    <a href="/">
+      <img src="~/static/img/logo.png" alt="巨正源">
+    </a>
   </div>
 </template>
 
 <script>
-export default {
-    name: "Logo",
-  data(){
-      return{
-        tid:'',
-      }
-  },
-  methods:{
-    toIndex(){
-      var tid='index'
-      this.$emit('tidName', tid)
-    }
-  }
-}
+	export default {
+		name: "Logo",
+		data() {
+			return {}
+		}
+	}
 </script>

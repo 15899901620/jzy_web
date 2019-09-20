@@ -1,23 +1,23 @@
 <template>
   <div class="body">
-    <Header title="头部"></Header>
-    <!--<div class="container" title="">
-      &lt;!&ndash;内容&ndash;&gt;
-      <Banner title="广告" :bannerData="this.bannerinfo" :heightNum="this.heightNum"
-              style="height: 320px; overflow: hidden;"></Banner>
+    <Header title=""></Header>
+    <div class="container" title="">
+      <!--内容-->
+      <Banner title="" :bannerData="$store.state.common.adList.ad1" :heightNum="this.heightNum"
+              style="height: 320px; overflow: hidden;" />
       <div class="memberCenter">
         <hotrecommend>
-          <hotinfo title="最新资讯&公告"></hotinfo>
+          <hotinfo title=""></hotinfo>
         </hotrecommend>
       </div>
       <div class="hotbidding">
         <div class="Time_Banner pr">
           <img src="/img/Time_banner.png"/>
-          <a class="bidders_front" href="/bidders"></a>
+          <a class="bidders_front" href="/bidders">查看更多</a>
         </div>
         <hotbidding title="热门竞拍"></hotbidding>
       </div>
-      <div class="hot-spot">
+      <!--<div class="hot-spot">
         <outpacking title="现货超市" cpadding="0px" :more="spotData">
           <div slot="content">
             <spot-list></spot-list>
@@ -48,8 +48,8 @@
           </div>
         </outpacking>
       </div>
-      <sidebar></sidebar>
-    </div>-->
+      <sidebar></sidebar>-->
+    </div>
     <!--<Footer size="default" title="底部" style="margin-top:18px;"></Footer>-->
   </div>
 </template>
@@ -73,41 +73,47 @@
 	export default {
 		fetch({store}) {
 			return Promise.all([
-				/*//获取顶部、中部、底部导航信息
-        store.dispatch('menu/getMenuList'),
-        //获取系统配置
-        store.dispatch('system/getSystemCnf'),
-        //获取现货报价
-				store.dispatch('spot/getSpotList', {
+				//获取顶部、中部、底部导航信息
+        store.dispatch('common/getNavList'),
+				//获取系统配置
+				store.dispatch('common/getSysConfig'),
+        //获取轮播图
+				store.dispatch('common/getBannerList', 1),
+				//获取网站公告
+				store.dispatch('article/getNoticeList', {
 					current_page: 1,
-					page_size: 20
-				})*/
+					page_size: 5,
+					sortBy: 'add_time', desc: true, isShow: 1
+				}),
+				//获取行业资讯
+				store.dispatch('article/getArticleList', {
+					current_page: 1,
+					page_size: 5,sortBy: 'add_time', desc: true, isShow: 1
+				}),
+				//获取竞拍列表
+				store.dispatch('bidders/getAuctionList', {
+					current_page: 1,
+					page_size: 8
+				}),
+				/*
+        //获取现货报价
+        store.dispatch('spot/getSpotList', {
+          current_page: 1,
+          page_size: 20
+        })*/
 
         /*store.dispatch('helper/getHelpCate', {
             parentId: 0,
             indexShow: 1
         }),
         store.dispatch('system/getLinksInfo'),
-        store.dispatch('system/getBannerInfo', {
-            positionId: 1
-        }),
-        store.dispatch('article/getHomeNotice', {
-            current_page: 1,
-            page_size: 8,
-            sortBy: 'add_time', desc: true,isShow: 1
-        }),
-        store.dispatch('article/getHomeArticle', {
-            current_page: 1,
-            page_size: 8,sortBy: 'add_time', desc: true,isShow: 1
-        }),
+
+
         store.dispatch('article/getHotArticle', {
             current_page: 1,
             page_size: 4
         }),
-        store.dispatch('bidders/getHotBidderList', {
-            current_page: 1,
-            page_size: 20
-        }),
+
         store.dispatch('spot/getSpotList', {
             current_page: 1,
             page_size: 20
@@ -147,7 +153,6 @@
 			}
 		},
 		created() {
-			console.log('index created:', process.server)
 		},
 		computed: {
 			...mapState({

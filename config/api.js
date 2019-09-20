@@ -11,6 +11,7 @@ let api = {
   },
   search: {
     hotsearch: '/web/hotSearch/list',
+    getHotSearch: {'url':'/web/hotSearch/list', 'method':'get'},
     addsearch: '/web/hotSearch/add'
   },
   /**
@@ -93,6 +94,7 @@ let api = {
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
+    getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍
@@ -115,6 +117,7 @@ let api = {
    * @description 资讯管理
    */
   information: {
+    getArticleList:{'url': '/web/article/page', 'method': 'get'},
     info:'/web/article/page',
     infos:{'url': '/web/article/page', 'method': 'get'},
     infodetail: '/web/article/detail',
@@ -126,7 +129,8 @@ let api = {
     noticeclick: '/web/announcement/click',
     articleCatDetail:'/web/article_cat/detail',
     getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
-    
+    getNoticeCatList:{'url': '/web/announcement/page', 'method': 'get'},
+
   },
   /**
    * @description 帮助中心
@@ -206,6 +210,7 @@ let api = {
    * @description 导航
    */
   navigation: {
+    getNavList: {'url':'/web/nav/list','method':'get'},
     navlist: '/web/nav/list',
     navdetail: '/web/nav/detail'
   },
@@ -216,6 +221,7 @@ let api = {
     cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
     friendlink: '/web/friendlink/list', //友情链接
     systemcof: '/web/config/getAll',
+    getSysConfig: {'url':'/web/config/getAll', 'method':'get'},
     getConfigValues: '/web/config/getValues',
 
   },
@@ -223,7 +229,8 @@ let api = {
    * @description 广告位管理
    */
   ad: {
-    adposition: '/web/ad/list'
+    adposition: '/web/ad/list',
+		getAdList:{'url':'/web/ad/list', 'method':'get'}
   },
   /**
    * @description 资金管理

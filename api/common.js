@@ -69,7 +69,6 @@ export const sendHttp = (vm, hasAuth, apiName, data, type) => {
         window.location.href = '/login'
         return
     }
-    console.log("authorization:", authorization)
 
     if(authorization === false){
         vm.$axios.defaults.headers = {

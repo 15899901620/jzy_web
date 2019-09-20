@@ -2,7 +2,7 @@
   <div :class="classes">
     <div class="TopPos" style="display: flex;">
       <div class="slogens">您好，欢迎光临巨正源化工交易网！ <span>|</span>
-        <nuxt-link to="/">巨正源首页</nuxt-link>
+        <a href="/">巨正源首页</a>
       </div>
       <ul class="topnavlist" v-if="showNav">
         <template v-if="$store.state.memberToken">
@@ -17,8 +17,8 @@
             <a href="/register">注册</a>
           </li>
         </template>
-        <li v-for="(item, index) in topmenu" :key="index">
-          <nuxt-link :to="item.url">{{ item.name }}</nuxt-link>
+        <li v-for="(item, index) in $store.state.common.nav.topNav" :key="index">
+          <a :href="item.url">{{ item.name }}</a>
         </li>
       </ul>
     </div>
@@ -27,7 +27,6 @@
 <script>
 	const prefixCls = 'ant-shortcut'
 	import utils from '~/utils/utils'
-	import {mapState} from 'vuex'
 
 	export default {
 		name: 'shortcut',
@@ -38,9 +37,6 @@
 			}
 		},
 		computed: {
-			...mapState({
-				topmenu: state => state.menu.topMenu,
-			}),
 			classes() {
 				return [
 					`${prefixCls}`,
@@ -50,7 +46,6 @@
 		},
 		data() {
 			return {
-
 			}
 		},
 		methods: {
@@ -61,10 +56,6 @@
 				utils.setCoolies('websuppliertoken', '')
 				location.href = '/'
 			}
-		},
-    created() {
-		},
-		mounted() {
 		}
 	}
 </script>
