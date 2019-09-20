@@ -14,7 +14,7 @@
             <a href="/login">登录</a>
           </li>
           <li :key="97">
-            <a href="/register">登录</a>
+            <a href="/register">注册</a>
           </li>
         </template>
         <li v-for="(item, index) in topmenu" :key="index">
