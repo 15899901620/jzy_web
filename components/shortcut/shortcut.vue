@@ -11,7 +11,7 @@
         </template>
         <template v-else>
           <li :key="99">
-            <nuxt-link to="/login">登录</nuxt-link>
+            <a href="/login">登录</a>
           </li>
           <li :key="97">
             <nuxt-link to="/register">注册</nuxt-link>
