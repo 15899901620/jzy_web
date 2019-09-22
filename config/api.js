@@ -86,7 +86,13 @@ let api = {
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     freightList: '/bill/freightList/orderFreightInfo',
-    spotSubmitOrder: '/bill/spot/order/create'
+    spotSubmitOrder: '/bill/spot/order/create',
+  },
+  /**
+   * @description 预售商口
+   */
+  advance: {
+    initAdvanceList: {'url':'/bill/book/list/show', 'method':'get'},
   },
   /**
    * @description 竞拍管理
@@ -140,7 +146,7 @@ let api = {
     helpPage: '/web/help_article/getHelpArticleByCatId',
     helpdetail: '/web/help_article/detail'
   },
-  
+
     /**
      * @description 专料
      */
@@ -161,7 +167,7 @@ let api = {
        BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
        bidddingCount:{'url': '/bill/bidding/getMyBiddingListCount', 'method': 'get'},
        freightDemand:{'url': '/bill/freightDemand/save', 'method': 'post'},
-    }, 
+    },
 
     freight:{
       freightMyList:{'url': '/bill/freightDemand/myList/page', 'method': 'get'},
@@ -169,7 +175,7 @@ let api = {
       cancel:{'url': '/bill/freightDemand/cancel', 'method': 'post'},
       setSelected:{'url': '/bill/freightOffer/setSelected', 'method': 'post'},
       freightList:{'url': '/bill/freightDemand/list/page', 'method': 'get'},
-       
+
     },
     freightOffer:{
       offerMyList:{'url': '/bill/freightOffer/myList/page', 'method': 'get'},
@@ -182,7 +188,7 @@ let api = {
     week: {
         getWeek: '/bill/getWeekPlannedByMember'
     },
- 
+
   /**
    * @description 商品(物性表)
    */
