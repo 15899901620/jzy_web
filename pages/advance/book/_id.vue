@@ -55,35 +55,35 @@
                     </div>
                 </div>
             </div>
-            <div class="w1200 mt20 whitebg">
-                <div class="w1200 sku_name">
+            <div class="w1200">
+                <div class="sku_name mt20 whitebg">
                     <span style="font-weight: 400">预定信息</span>
                 </div>
-                <div class="w1200 advance-table">
-                    <div class="XhlistTitle graybg">
-                        <span style="width: 11%;">品种</span>
-                        <span style="width: 11%;">牌号</span>
-                        <span style="width: 10%;">厂商</span>
-                        <span style="width: 14%;">库区</span>
-                        <span style="width: 13%;">总吨数 </span>
-                        <span style="width: 14%;">交货时间</span>
-                        <span style="width: 14%;">单价（元/吨）</span>
-                        <span style="width: 13%;">操作</span>
+                <div class="w1200 whitebg">
+                    <div class="advance-table">
+                        <div class="XhlistTitle graybg">
+                            <span style="width: 14%;">品种</span>
+                            <span style="width: 14%;">牌号</span>
+                            <span style="width: 14%;">厂商</span>
+                            <span style="width: 15%;">库区</span>
+                            <span style="width: 14%;">总吨数 </span>
+                            <span style="width: 15%;">交货时间</span>
+                            <span style="width: 14%;">单价（元/吨）</span>
+                        </div>
+                        <ul class="Xhlist">
+                            <template v-if="spotList">
+                                <li v-for="(item, index) in spotList" :key="index">
+                                    <span style="width: 14%;">PP</span>
+                                    <span style="width: 14%;">F08</span>
+                                    <span style="width: 14%;">{{item.manufacturer}}</span>
+                                    <span style="width: 15%;">东莞</span>
+                                    <span style="width: 14%;">{{item.total_num}}</span>
+                                    <span style="width: 15%;">{{item.last_delivery_time}}</span>
+                                    <span class="orangeFont" style="width: 14%;">¥{{item.base_price}}</span>
+                                </li>
+                            </template>
+                        </ul>
                     </div>
-                    <ul class="Xhlist">
-                        <template v-if="spotList">
-                            <li v-for="(item, index) in spotList" :key="index">
-                                <span style="width: 11%;">PP</span>
-                                <span style="width: 11%;">F08</span>
-                                <span style="width: 10%;">{{item.manufacturer}}</span>
-                                <span style="width: 14%;">东莞</span>
-                                <span style="width: 13%;">{{item.total_num}}</span>
-                                <span style="width: 14%;">{{item.last_delivery_time}}</span>
-                                <span class="orangeFont" style="width: 14%;">¥{{item.base_price}}</span>
-                                <span style="width: 13%;"><div class="ListBtn" @click="addBook(item.id)">预定</div></span>
-                            </li>
-                        </template>
-                    </ul>
                 </div>
             </div>
         </div>
