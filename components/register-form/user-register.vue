@@ -20,7 +20,7 @@
                     <Row :gutter="24"  index="1">
                         <Col span="15">
                             <FormItem prop="Imgcode" label="验 证 码：">
-                                <Input class="CarrierImgcode" v-model="formCustom.Imgcode"  placeholder="请输入验证码" />
+                                <Input class="CarrierImgcode" v-model="formCustom.Imgcode"  placeholder="请输入验证码"  autocomplete="off"/>
                             </FormItem>
                         </Col>
                         <Col span="6">
