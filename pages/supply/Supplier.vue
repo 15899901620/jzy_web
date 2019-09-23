@@ -187,7 +187,7 @@ export default {
         if(this.isLogin()){
             this.getOrderList()
         }else{
-            window.location.href = '/login'
+            this.$router.push({name: 'login'})
         }
     }
 }

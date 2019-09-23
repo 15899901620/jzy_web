@@ -251,7 +251,7 @@ export default {
             this.showtime()
             this.getOrderList()
         }else{
-            window.location.href = '/login'
+             this.$router.push({name: 'login'})
         }
     }
 }

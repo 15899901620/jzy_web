@@ -187,7 +187,7 @@ export default {
             if(res.data.roleType == 2){//供应商
                 this.$router.push({name:'trender-WineBid'})
             }else if(res.data.roleType == 3){
-                this.$router.push({name:'logistics'})
+                this.$router.push({name:'supply-Supplier'})
             }
           }else{
             this.passwordTip=true
