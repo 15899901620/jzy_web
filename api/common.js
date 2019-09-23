@@ -20,14 +20,13 @@ export const sendCurl = (vm, apiName, params, isMember) => {
 
 	if(isMember){
 		if(process.server){
-			authorization = utils.getMemberTokenInServer()
+			authorization = utils.getMemberTokenInVm(vm)
 		}else{
 			authorization = utils.getMemberTokenInClient()
 		}
 	}else{
 		authorization = vm.store.state.supplierToken
 	}
-
 	if(authorization === false){
 		vm.$axios.defaults.headers = {
 			'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

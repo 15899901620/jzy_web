@@ -195,7 +195,7 @@
          //质检单页面
         Quality(){
 
-        
+
           if(this.qualityForm. qualityDate || this.qualityForm. qualityNo){
             this.$router.push({name:'QualityForm', query:{qualityForm:this.qualityForm}})
             this.datePif=false
@@ -209,7 +209,7 @@
 
       },
       mounted(){
-      
+
         }
     }
 </script>
@@ -225,7 +225,8 @@
   .product_assortment .AssProduct{margin: 20px 20px 4px 20px;}
   .product_assortment .AssProduct li{border-bottom: 1px solid #DEDEDE;}
   .product_assortment .AssProduct li:last-child{border-bottom: none;}
-  .level a{border: 1px solid #D2D2D2; border-radius: 3px; padding: 2px 10px; color: #666; font-size: 12px;}
+  .level a{border: 1px solid #D2D2D2; border-radius: 3px; padding: 2px 10px; color: #666; font-size: 12px;margin-left: 15px;
+    margin-top: 5px;}
   .freight_assortment{width: 388px;top: -79px;}
   .see_icon{width: 20px;height: 15px;background: url(../../../static/img/icon.png)no-repeat -100px -2px;}
   .capital_icon{width: 16px;height: 18px;background: url(../../../static/img/icon.png)no-repeat -197px -3px;}
