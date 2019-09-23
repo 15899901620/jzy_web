@@ -18,7 +18,7 @@
       <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">
         <!--公司信息-->
         <div class="mt30 fs16 ml15 fwb">公司信息</div>
-        <div class="ml35 mt20 mb20 fs14">{{userinfo.username}}</div>
+        <div class="ml35 mt20 mb20 fs14">{{$store.state.memberInfo.username}}</div>
         <div class="lineborder"></div>
 
         <!-- 商品信息 -->
@@ -184,13 +184,11 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
 	import Header from '../../../components/header'
 	import Footer from '../../../components/footer'
 	import {spotDetail, submitOrder, getFreightList} from '../../../api/spot'
 	import InputSpecial from '../../../components/input-special'
-	import {getCookies} from '../../../config/storage'
-	import {addressList, gainuserInfor} from '../../../api/users'
+	import {addressList} from '../../../api/users'
 	import AddressDialog from '../../../components/address-dialog'
 	import spotPay from '../../../components/paydeposit/spotPay'
 
@@ -213,8 +211,6 @@
         //获取资金情况
 				store.dispatch('member/getCapitalInfo'),
 			])
-		},
-		asyncData({app, params, query}) {//请求
 		},
 		computed: {
 			totalPrice: function () {
@@ -282,7 +278,6 @@
 				defaultAdd: {},
 				logisticsfreight: {},
 				curraddress: 0,
-				userinfo: !getCookies('userinfor') ? '' : getCookies('userinfor'),
 				spotDetail: {},
 				addressList: [],
 
@@ -503,9 +498,6 @@
 			}
 		},
 		mounted() {
-
-		},
-		created() {
 			this.getSpotData()
 			this.getMyAddress()
 		},

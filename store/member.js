@@ -14,7 +14,7 @@ export const mutations = {
 }
 
 export const actions = {
-	async getCapitalinfo({commit}) {
+	async getCapitalInfo({commit}) {
 		let res = await sendCurl(this, server.api.capital.myCapital, {})
 		if (res.status === 200) {
 			commit('updateCapitalInfo', res.data)

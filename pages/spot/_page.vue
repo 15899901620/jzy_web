@@ -214,7 +214,7 @@
 					current_page: this.current_page,
 					page_size: this.page_size
 				};
-				store.dispatch('spot/getSpotList', params)
+				this.$store.dispatch('spot/getSpotList', params)
 			},
 		},
 		created() {
