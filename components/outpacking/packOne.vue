@@ -3,7 +3,7 @@
         <div class="title">
             <h3>{{title}}</h3>
             <span v-if="total>0">共 {{total}} 条数据</span>
-            <span v-if="more"><router-link :to="more.url">{{more.title}}</router-link></span>
+            <span v-if="more"><a :href="more.url">{{more.title}}</a></span>
         </div>
         <div class="content" v-bind:style="{padding:cpadding}">
             <slot name="content">

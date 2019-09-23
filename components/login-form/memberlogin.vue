@@ -35,10 +35,10 @@
       <Button type="primary" long v-on:click="LoginForm">登录</Button>
       <Row :gutter="24" index="">
         <Col span="12" style="text-align:left; margin:10px auto;">
-          <nuxt-link to="/forgotpwd?type=users">忘记密码</nuxt-link>
+          <a href="/forgotpwd?type=users">忘记密码</a>
         </Col>
         <Col span="12" style="text-align:right; margin:10px auto;">
-          <nuxt-link to="/register?type=users">注册新账号</nuxt-link>
+          <a href="/register?type=users">注册新账号</a>
         </Col>
       </Row>
     </Form>
