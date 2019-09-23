@@ -84,6 +84,7 @@ import server from "../../config/api";
 import pagination from '../../components/pagination'
 export default {
     name: "index",
+	middleware: 'memberAuth',
     layout:'membercenter',
     components:{
         pages: pagination.pages,
@@ -92,8 +93,10 @@ export default {
     },
     fetch({ store }) {
         return Promise.all([
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('menu/getMenuList')
+					//获取顶部、中部、底部导航信息
+					store.dispatch('common/getNavList'),
+					//获取系统配置
+					store.dispatch('common/getSysConfig'),
         ])
     },
     data() {
@@ -187,7 +190,7 @@ export default {
         if(this.isLogin()){
             this.getOrderList()
         }else{
-            window.location.href = '/login'
+            this.$router.push({name: 'login'})
         }
     }
 }

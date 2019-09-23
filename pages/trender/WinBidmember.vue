@@ -88,6 +88,7 @@
    export default {
       name: "WinBidmember",
      layout:'membercenter',
+		 middleware: 'memberAuth',
       components:{
         Header,
         Pagination,

@@ -112,6 +112,7 @@
 
 	export default {
 		name: "usertotalorder",
+		middleware: 'memberAuth',
 		layout: 'membercenter',
 		components: {
 			AddressDetail,

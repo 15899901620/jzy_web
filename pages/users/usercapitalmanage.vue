@@ -91,14 +91,17 @@ import { getCookies } from '../../config/storage'
 
 export default {
     name: "usercapitalmanage",
+	middleware: 'memberAuth',
     layout:'membercenter',
     components:{
         usernav: Navigation.user
     },
     fetch({ store }) {
         return Promise.all([
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('menu/getMenuList')
+					//获取顶部、中部、底部导航信息
+					store.dispatch('common/getNavList'),
+					//获取系统配置
+					store.dispatch('common/getSysConfig'),
         ])
     },
     data(){

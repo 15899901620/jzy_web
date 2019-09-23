@@ -139,15 +139,13 @@
 </template>
 
 <script>
-	import {capitalinfo} from '../../api/capital'
 	import Navigation from '../../components/navigation'
-	import {getCookies} from '../../config/storage'
 	import {orderpage} from '../../api/order'
 	import config from '../../config/config'
 	import paydeposit from '../../components/paydeposit'
 
 	export default {
-		name: "index",
+		name: 'index',
 		layout: 'membercenter',
 		middleware: 'memberAuth',
 		components: {
@@ -227,7 +225,6 @@
 					desc: true
 				}
 				const res = await orderpage(this, params)
-				console.log('tag', res)
 				this.hotorderinfo = res.data.items
 			}
 		},

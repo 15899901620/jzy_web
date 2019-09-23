@@ -107,6 +107,7 @@ import pagination from '../../components/pagination'
 import AddressDetail from '../../components/freight-add/freght-detail'
 export default {
   name: "userlog",
+	middleware: 'memberAuth',
   layout:'membercenter',
   components:{
       AddressDetail,
@@ -115,8 +116,10 @@ export default {
   },
   fetch({ store }) {
     return Promise.all([
-      store.dispatch('system/getSystemCnf'),
-      store.dispatch('menu/getMenuList')
+			//获取顶部、中部、底部导航信息
+			store.dispatch('common/getNavList'),
+			//获取系统配置
+			store.dispatch('common/getSysConfig'),
     ])
   },
     data(){
