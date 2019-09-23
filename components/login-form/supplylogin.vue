@@ -165,7 +165,8 @@ export default {
       }else{
         let params = {
           username:this.loginsupplierform.username,
-          password:this.loginsupplierform.password
+          password:this.loginsupplierform.password,
+          code: this.loginsupplierform.mobilecode
         }
         const res = await supplierLogin(this, params)
         let authres=res.data

@@ -223,6 +223,9 @@
 				};
 				this.$store.dispatch('spot/getSpotList', params)
 			},
+			toLogin(){
+				location.href = '/login'
+			}
 		},
 		created() {
 		},
