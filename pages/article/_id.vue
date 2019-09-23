@@ -1,16 +1,16 @@
 <template>
     <div class="body">
         <Header title="头部"></Header>
-        <div class="container" title="内容区块">
+        <div class="container" title="">
             <div class="breadcrumb">
                 <breadcrumb>
                     <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
-                    <breadcrumb-item>{{articlelist.items[0].catName}}</breadcrumb-item>
+                    <breadcrumb-item>{{ this.currCategoryInfo.title}}</breadcrumb-item>
                 </breadcrumb>
             </div>
             <div class="Pages">
                 <div class="Pages_left">
-                    <outpacking :title="articlelist.items[0].catName" :total="articlelist.total">
+                    <outpacking :title="this.currCategoryInfo.title" :total="articlelist.total">
                         <div slot="content">
                             <ul class="NewContentlist">
                                 <li v-for="(items, index) in articlelist.items" :key="index">
@@ -70,7 +70,6 @@ import Footer from '../../components/footer'
 import breadcrumb from '../../components/breadcrumb'
 import outpacking from '../../components/outpacking'
 import pagination from '../../components/pagination'
-
 export default {
     name: 'articleList',
     fetch({ store, params, query }) {
@@ -79,9 +78,11 @@ export default {
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
-            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? 1 : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
+            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
             store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
             store.dispatch('article/getArticleCatList',  {parentId: 0}),
+            store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
+
         ])
     },
     components: {
@@ -93,13 +94,20 @@ export default {
         pages: pagination.pages
     },
     head () {
+    
         return {
-            title: this.articlelist.items[0].catName+'-巨正源',
+            
+            title:    this.currCategoryInfo.seoTitle+'-巨正源',
             meta: [
-                { hid: 'keywords', name: 'keywords', content:this.articlelist.items[0].catName+',巨正源' },
-                { hid: 'description', name: 'description', content: this.articlelist.items[0].catName+'-巨正源' }
+                { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.seoKeywords +',巨正源' },
+                { hid: 'description', name: 'description', content:    this.currCategoryInfo.seoDescription +'-巨正源' }
             ]
         }
+    },
+    data() {
+        return {
+            currCategoryInfo : ''
+        };
     },
     methods: {
         showTotal(total) {
@@ -108,6 +116,28 @@ export default {
         changePage (row) {
             let id = this.$route.params.id
             this.$router.push({name:'article-id',params:{id:id},query:{page:row}})
+        },
+        
+    },
+    created(){
+        let id = this.$route.params.id ? this.$route.params.id : 0
+        let len = this.articleCat.length
+        for (var i=0;i<len;i++)
+        { 
+            if(this.articleCat[i].id == id){
+                this.currCategoryInfo = this.articleCat[i]
+                break
+            }
+           
+        }
+        console.log('currCategoryInfo',this.currCategoryInfo)
+        if(this.currCategoryInfo == ''){
+            this.currCategoryInfo = {
+                title:'全部',
+                seoKeywords:'全部',
+                seoDescription:'全部',
+                seoDescription:'全部',
+            }
         }
     },
     computed:{
@@ -115,9 +145,12 @@ export default {
             currPage:  state => state.article.currPage,
             articlelist: state => state.article.articlelist,
             hotarticleInfo: state => state.article.hotarticleInfo,
-            articleCat: state => state.article.articleCat
+            articleCat: state => state.article.articleCat,
+            //articecatDetail: state => state.article.articecatDetail
         })
     },
+
+
     watch: {
         '$route' (to, from) {
             this.$router.go(0);

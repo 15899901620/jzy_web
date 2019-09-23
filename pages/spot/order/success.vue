@@ -12,19 +12,19 @@
                 </ul>
 			</div>
 		</Header-small>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
             <div class="w1200 whitebg" style="margin-top: 20px; margin-bottom: 40px; border:1px solid #eee;">
                 <div class="submit"></div>
                 <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>
                 <div class="tac fs14">
-                    <span>订单号：<span>{{orderNo}}</span></span><a class="blueFont ml15">查看详情</a>
+                    <span>订单号：<span>{{orderNo}}</span></span>
                 </div>
                 <div class="tac gray">
                     <p>如有疑问您可以通过一下联系方式与我们取得联系</p>
                     <p>联系电话：{{systeminfo.SERVICEHOTLINE}}</p>
                 </div>
                 <div class="orderbtn">
-                    <a class="submitBtn btnBg" href="/special">继续采购</a><a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
+                    <a class="submitBtn btnBg" href="/spot">继续采购</a><a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
                 </div>
             </div>
 		</div>

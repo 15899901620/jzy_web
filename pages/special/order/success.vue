@@ -11,7 +11,7 @@
                 </ul>
 			</div>
 		</Header-small>
-		<div class="container" title="内容区块">
+		<div class="container" title="">
             <div class="w1200 whitebg" style="margin-top: 20px; margin-bottom: 40px; border:1px solid #eee;">
                 <div class="submit"></div>
                 <h1 class="tac fs24 mt25 mb15">订单提交成功</h1>

@@ -6,59 +6,16 @@
           <img src="../../static/img/back.png" />
         </div>
         <ul class="logisticList mt1" :style="{width:TLlength+'px'}"  id='log-ul'>
-          <li>
+          <li v-for="(item, index) in dataList"  :key="index" @click='detail()'>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>广东省 东莞市</p>
+              <p>{{item.dispatchFullAddress}}</p>
               <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>广东省 东莞市</p>
+              <p>{{item.receiptFullAddress}} </p>
             </div>
             <div class="logNumTime graybg"  >
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">15,000吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> 2019-5-20</p>
-            </div>
-          </li>
-          <li>
-            <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>广东省 东莞市</p>
-            </div>
-            <div class="logNumTime graybg"  >
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">15,000吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> 2019-5-20</p>
-            </div>
-          </li>
-          <li>
-            <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>广东省 东莞市</p>
-            </div>
-            <div class="logNumTime graybg "  >
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">15,000吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> 2019-5-20</p>
-            </div>
-          </li>
-          <li>
-            <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>广东省 东莞市</p>
-            </div>
-            <div class="logNumTime graybg "  >
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">15,000吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> 2019-5-20</p>
-            </div>
-          </li>
-          <li>
-            <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
-              <p>广东省 东莞市</p>
-              <p class="mt10 mb10"><img src="../../static/img/down.png"/></p>
-              <p>广东省 东莞市</p>
-            </div>
-            <div class="logNumTime graybg "  >
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">15,000吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> 2019-5-20</p>
+              <p><span class="logNumTime_title">类       别:</span> <span class="orangeFont">{{item.freightGoodsCname}}</span></p>
+              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">{{item.weight}}吨</span></p>
+              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> {{item.demandBeginDate}}~{{item.demandEndDate}}</p>
             </div>
           </li>
         </ul>
@@ -71,15 +28,21 @@
 </template>
 
 <script>
+import { sendHttp } from "../../api/common";
+import server from "../../config/api";
     export default {
       name: "LogisticsList",
       data () {
           return {
           display: "flex",
           TLlength:'',
+          dataList:{},
         }
       },
       methods:{
+        detail(){
+             this.$router.push({name:'supply-Supplier'})
+        },
         //鼠标移入
         mouseEnter(){
           var ul=document.getElementById('log-ul')
@@ -93,78 +56,89 @@
         //   鼠标移除
         mouseLeave(){
           this.display = "none";
-        }
+        },
+        async offerList(){
+				  let params={
+					  current_page:1,
+					  page_size:3
+					}
+				  const res = await sendHttp(this, false, server.api.freight.freightList,params)
+  
+				  this.dataList=res.data.items;
+				  this.total=res.data.total
+			  },
       },
       created() {
-
+          this.offerList();
       },
-      mounted() {
+      // mounted() {
 
-        // *****限时竞拍******
-        var chefElement = {
-          minSpeed: 10,//每次移动的距离
-          //获取页面元素
-          prev:document.getElementById('prev'),
-          next:document.getElementById('next'),
-          parent:document.getElementById('parent'),
-          ul:document.getElementById('log-ul'),
-          li:document.getElementById('log-ul').getElementsByTagName('li'),
-          liWidth:document.getElementById('log-ul').getElementsByTagName('li')[0].offsetWidth,
-          type:true,
-          nextTimer:null,
-          prevTimer:null,
-          parent_n:null
-        }
 
-        chefElement.prev.onclick = function(){
+      //   // *****限时竞拍******
+      //   var chefElement = {
+      //     minSpeed: 10,//每次移动的距离
+      //     //获取页面元素
+      //     prev:document.getElementById('prev'),
+      //     next:document.getElementById('next'),
+      //     parent:document.getElementById('parent'),
+      //     ul:document.getElementById('log-ul'),
+      //     li:document.getElementById('log-ul').getElementsByTagName('li'),
+      //     liWidth:document.getElementById('log-ul').getElementsByTagName('li')[0].offsetWidth,
+      //     type:true,
+      //     nextTimer:null,
+      //     prevTimer:null,
+      //     parent_n:null
+      //   }
 
-          if(chefElement.type){
-            clearInterval(chefElement.prevTimer);
-            // chefElement.ul.insertBefore(chefElement.li[chefElement.li.length-1],chefElement.li[0]);
-            chefElement.liWidth = chefElement.li[0].offsetWidth;
-            chefElement.ul.style.left = '-'+chefElement.liWidth+'px';
-            chefElement.prevTimer = setInterval(pre,chefElement.animationSpeed);
-            chefElement.type = false;
-          }
-        };
-        next.onclick = function(){
+      //   chefElement.prev.onclick = function(){
 
-          if(chefElement.type){
-            chefElement.liWidth = 0;
-            clearInterval(chefElement.nextTimer);
-            chefElement.nextTimer = setInterval(nex,chefElement.animationSpeed);
-            chefElement.type = false;
-          }
-        };
-        //next动画函数
-        function nex(){
+      //     if(chefElement.type){
+      //       clearInterval(chefElement.prevTimer);
+      //       // chefElement.ul.insertBefore(chefElement.li[chefElement.li.length-1],chefElement.li[0]);
+      //       chefElement.liWidth = chefElement.li[0].offsetWidth;
+      //       chefElement.ul.style.left = '-'+chefElement.liWidth+'px';
+      //       chefElement.prevTimer = setInterval(pre,chefElement.animationSpeed);
+      //       chefElement.type = false;
+      //     }
+      //   };
+      //   next.onclick = function(){
 
-          chefElement.ul.style.left = '-'+chefElement.liWidth+ 'px';
-          chefElement.liWidth += chefElement.minSpeed ;
-          if(chefElement.liWidth >= chefElement.li[0].offsetWidth){
-            clearInterval(chefElement.nextTimer);
-            chefElement.ul.appendChild(chefElement.li[0]);
-            chefElement.ul.style.left = 0;
-            chefElement.type = true;
-          }
-        }
-        //prev动画函数
-        function pre(){
+      //     if(chefElement.type){
+      //       chefElement.liWidth = 0;
+      //       clearInterval(chefElement.nextTimer);
+      //       chefElement.nextTimer = setInterval(nex,chefElement.animationSpeed);
+      //       chefElement.type = false;
+      //     }
+      //   };
+      //   //next动画函数
+      //   function nex(){
 
-          chefElement.ul.style.left = '-'+chefElement.liWidth+'px';
-          chefElement.liWidth -= chefElement.minSpeed ;
-          if(chefElement.liWidth <= -1){
-            chefElement.ul.style.left = 0;
-            clearInterval(chefElement.prevTimer);
-            chefElement.type = true;
-          }
-        }
-          // *****限时竞拍******
-        var  that=this
-        let TL=document.getElementsByClassName('logisticList')[0].getElementsByTagName('li')
-        let TLWidth=TL[0].offsetWidth
-        // that.TLlength=TL.length*TLWidth
-      },
+      //     chefElement.ul.style.left = '-'+chefElement.liWidth+ 'px';
+      //     chefElement.liWidth += chefElement.minSpeed ;
+      //     if(chefElement.liWidth >= chefElement.li[0].offsetWidth){
+      //       clearInterval(chefElement.nextTimer);
+      //       chefElement.ul.appendChild(chefElement.li[0]);
+      //       chefElement.ul.style.left = 0;
+      //       chefElement.type = true;
+      //     }
+      //   }
+      //   //prev动画函数
+      //   function pre(){
+
+      //     chefElement.ul.style.left = '-'+chefElement.liWidth+'px';
+      //     chefElement.liWidth -= chefElement.minSpeed ;
+      //     if(chefElement.liWidth <= -1){
+      //       chefElement.ul.style.left = 0;
+      //       clearInterval(chefElement.prevTimer);
+      //       chefElement.type = true;
+      //     }
+      //   }
+      //     // *****限时竞拍******
+      //   var  that=this
+      //   let TL=document.getElementsByClassName('logisticList')[0].getElementsByTagName('li')
+      //   let TLWidth=TL[0].offsetWidth
+      //   // that.TLlength=TL.length*TLWidth
+      // },
       updated() {
 
       },

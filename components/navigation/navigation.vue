@@ -1,9 +1,9 @@
 <template>
     <div :class="classes">
         <ul>
-            <template v-for="(item, index) in data">
+            <template v-for="(item, index) in $store.state.common.nav.middleNav">
                 <li :key="index" :class="[ item.url  == selected ? 'curr' : ' ']">
-                    <nuxt-link  :to="item.url" >{{ item.name }}</nuxt-link>
+                    <a :href="item.url" >{{ item.name }}</a>
                 </li>
             </template>
         </ul>
@@ -14,12 +14,6 @@ const prefixCls = 'ant-navigation'
 
 export default {
     name: 'Navigation',
-    props: {
-        data: {
-            type: Array,
-            default: () => [],
-        }
-    },
     computed: {
         selected() {
             return !this.$route.path ? '/' : this.$route.path

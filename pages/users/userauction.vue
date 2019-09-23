@@ -124,11 +124,9 @@ export default {
       return `全部 ${total} 条`;
     },
      BidersDetail(id){
-        console.log(id)
             if(Cookies.get('userinfor') && Cookies.get('webtoken')){
                 this.$router.push({name:'bidders-detail-id', params:{id:id}})
             }else {
-                console.log(id)
             }
 
     },

@@ -8,15 +8,16 @@
                 <div class="TableList">
                     <div class="titleOrder mt15" >
                         <ul class="dflex">
-                            <li v-for="(item,index) in orderTabs"  :class=" index === currTabs ? 'curr' : ''" :key="index" @click="setTabs(item.status)">{{item.name}}</li>
-                            
-                            <!-- <li>全部订单（2个）</li><li>已付款（0个）</li><li>待付款（2个）</li> -->
+                            <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">全部订单({{this.total_cn}})</li>
+                            <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">待付款({{this.unpay_cn}})</li>
+                            <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">已付款({{this.payed_cn}})</li>
+                            <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">已取消({{this.cancel_cn}})</li>
                         </ul>
                     </div>
                     <div class="order_operate">
                         <div class="dflex">
-                            <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" id="" value="" class="orderInput" style="width:140px;"/>
-                            <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" id="" value="" class="orderInput" style="width:140px; margin-left:5px;"/>
+                            <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" value="" class="orderInput" style="width:140px;"/>
+                            <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput" style="width:140px; margin-left:5px;"/>
                             <div class="check" @click="onSearch">查询</div>
                         </div>
                         <!-- <div class="dflexAlem">
@@ -48,13 +49,13 @@
                             </tr>
                             <tr class="detailTable">
 
-                            <td>{{item.skuNo}} {{item.skuName}}</td>
+                            <td>{{item.skuName}}</td>
                             <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                             <td>{{item.orderNum}}</td>
                             <td>{{item.warehouseName}}</td>
                             <td>
                                 {{item.totalAmountFormat}}
-                                <template v-if="item.depositId > 0"><br><Tag color="success">定</Tag>{{item.depositAmountFormat}}</template>
+                                <template v-if="item.depositId > 0"><br><span style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.depositAmountFormat}}</span></template>
                             </td>
                             <td>
                                 <span v-if="item.status == 3" class="greenFont" >{{getOrderState(item.status)}}</span>
@@ -64,6 +65,12 @@
                             <td class="operate">
                                 <div class="" v-if="item.status == 2">
                                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
+                                </div>
+                                 <div class="" v-if="item.status == 3 && item.isAddDemand == 0">
+                                    <a class="greenFont mt15" @click="addLog(item)">添加货物需求</a>
+                                </div>
+                                 <div class="" v-else>
+                                    <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
                                 </div>
                                 <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"  class="mt5 blackFont">查看详情</router-link>
                             </td>
@@ -80,22 +87,28 @@
             </div>
         </div>
         <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
+        <address-dialog :isshow="addloading" @unChange="unaddChange" :datalist='addList'></address-dialog>
+        <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
     </div>
 </template>
 
 <script>
 import Navigation from '../../components/navigation'
-import { orderpage } from '../../api/order'
+import { orderpage, orderCount } from '../../api/order'
 import { getCookies } from '../../config/storage'
 import pagination from '../../components/pagination'
 import config from '../../config/config'
 import paydeposit from '../../components/paydeposit'
+import AddressDialog from '../../components/freight-add/freight-add'
+import AddressDetail from '../../components/freight-add/freght-detail'
 
 
 export default {
     name: "usertotalorder",
     layout:'membercenter',
     components:{
+        AddressDetail,
+        AddressDialog,
         usernav: Navigation.user,
         payorder: paydeposit.order
     },
@@ -107,19 +120,20 @@ export default {
     },
     data() {
         return {
+            detailloading:false,
+            addloading:false,
             payloading: false,
             dataRow: {},
+            addList:{},
             datalist: [],
             current_page: 1,
             page_size: 5,
             total: 0,
-            orderTabs: [
-                {value: 0, name:'全部订单', status: 1},
-                {value: 0, name:'待付款', status: 2},
-                {value: 0, name:'已付款', status: 3},
-                {value: 0, name:'已取消', status: 0},
-            ],
             currTabs: 0,
+            total_cn: 0,
+            unpay_cn: 0,
+            payed_cn: 0,
+            cancel_cn: 0,
             formSearch: {
                 orderType: '',
                 status: '',
@@ -147,6 +161,25 @@ export default {
             this.payloading = row
             this.getSourceData()
         },
+         addAddress(){
+             
+          this.addloading = true
+        },
+        unaddChange(res) {
+        
+            this.addloading = res
+        },
+        undetailChange(res) {
+        
+            this.detailloading = res
+        },
+
+        addLog(row){
+            this.addList = {
+                ...row
+            }
+            this.addloading = true
+        },  
         setTabs(res){
             if(res == '1'){
                 this.formSearch.status = ''
@@ -163,6 +196,12 @@ export default {
             }
             this.getSourceData()
         },
+        detailLog(row){
+            this.addList = {
+                ...row
+            }
+            this.detailloading = true
+        },
         //订单类型
         getOrderType(typeId) {
             if(!typeId) return
@@ -170,7 +209,6 @@ export default {
         },
         //订单状态
         getOrderState(typeId) {
-            if(!typeId) return
             return config.orderState[typeId]
         },
         async getSourceData () {
@@ -182,6 +220,15 @@ export default {
             const res= await orderpage(this, params)
             this.datalist = res.data.items
             this.total = res.data.total
+        },
+        async getCountData () {
+            const res= await orderCount(this, {})
+            if(res.status == 200){
+                this.total_cn = res.data.total_cn
+                this.unpay_cn = res.data.unpay_cn
+                this.payed_cn = res.data.payed_cn
+                this.cancel_cn = res.data.cancel_cn
+            }
         },
         onSearch () {
             this.current_page = 1
@@ -205,13 +252,14 @@ export default {
     created(){
         this.inLogin()
         this.getSourceData()
+        this.getCountData()
     },
     mounted(){
-          var status=this.$route.query.status
-          if(status==2){
-              this.formSearch.status = 2
-              this.currTabs = 1
-          }
+        var status=this.$route.query.status
+        if(status==2){
+          this.formSearch.status = 2
+          this.currTabs = 1
+        }
           
     },
     watch: {

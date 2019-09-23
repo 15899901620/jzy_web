@@ -38,6 +38,7 @@
                         <FormItem label="地址" prop="pickupMode">
                             <address-from
                                 :country="1"
+                                :province="440000"
                                 :isshow="this.isAddressFormShow"
                                 @selectAddress="getSelectCountry"
                             >
@@ -87,7 +88,7 @@ export default {
         };
         //收货人电话
         const validatephone = (rule, value, callback) => {
-              if (!value) {
+            if (!value) {
                 callback('电话不能为空'); // 校验不通过
                 return false;
             } else {
@@ -161,19 +162,19 @@ export default {
             },
             ruleValidate: {
                 name: [
-                    { validator: validatename, trigger: 'blur' }
+                    { validator: validatename, trigger: 'blur',required: true }
                 ],
                 phone:[
-                    { validator: validatephone, trigger: 'blur' }
+                    { validator: validatephone, trigger: 'blur' ,required: true}
                 ],
                 countryId:[
-                    { validator: validatecountryId, trigger: 'blur' }
+                    { validator: validatecountryId, trigger: 'blur',required: true}
                 ],
                 idNumber:[
-                    { validator: validateidNumber, trigger: 'blur' }
+                    { validator: validateidNumber, trigger: 'blur',required: true }
                 ],
                 address:[
-                    { validator: validateaddress, trigger: 'blur' }
+                    { validator: validateaddress, trigger: 'blur' ,required: true}
                 ],
             }
         }

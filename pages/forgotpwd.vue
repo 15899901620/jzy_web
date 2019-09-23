@@ -7,7 +7,7 @@
                 </div>
             </div>
         </Header-small>
-        <div class="container" title="内容区块">
+        <div class="container" title="">
             <div class="w1200 whitebg " style="margin-top: 18px; border-radius: 3px; overflow: hidden;">
                 <div style="width:800px; margin:80px auto;">
                     <div class="dflexAlem stepsItem">
@@ -48,16 +48,6 @@
                                     <div class="captcha" @click="refreshCode"><captcha :CodeCate="CodeCate" :contentWidth='126'  :contentHeight='36' :identifyCode="identifyCode" ></captcha></div>
                                 </Col>
                             </Row>
-                            <Row :gutter="24" v-if="isopenSms && phoneValid"  index="2">
-                                <Col span="15">
-                                    <FormItem prop="mobilecode" label="短信验证：">
-                                        <Input class="CarrierImgcode" v-model="formCustom.mobilecode"  placeholder="请输入验证码" />
-                                    </FormItem>
-                                </Col>
-                                <Col span="6">
-                                    <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
-                                </Col>
-                            </Row>
                             <Row :gutter="24"  index="6">
                                 <Col span="12" />
                                 <Col span="9">
@@ -68,17 +58,28 @@
                             </Row>
                         </div>
                         <div v-else-if="current == 1">
+
+                             <Row :gutter="24" index="0" v-if="isopenSms && phoneValid" >
+                                        <Col span="15">
+                                    <FormItem prop="mobilecode" label="短信验证：">
+                                        <Input class="CarrierImgcode" v-model="formCustom.mobilecode"  placeholder="请输入验证码" />
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                        <div class="codeCarrier graybg"  @click="getNoteValue"  disabled>{{this.btnValue}}</div>
+                                </Col>
+                               </Row>
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="password" label="重置密码：">
-                                        <Input v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码："/>
+                                        <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码："/>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="repassword" label="确认重置密码：">
-                                        <Input v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码："/>
+                                        <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码："/>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -197,7 +198,8 @@ export default {
             if(value === ''){
                 callback(new Error('手机验证码不能为空'));
             }else{
-                this.getuserCodeCheck(value, callback)
+                // this.getuserCodeCheck(value, callback)
+                  callback();
             }
         };
         return{
@@ -214,6 +216,7 @@ export default {
             btnBoolen:false,
             btnClassName:"btn",
             btnValue:"获取短信验证码",
+            smsTotalTime: 60,
             phoneValid:false,//号码有效
             passwordValid:'',//密码有效
             repasswordValid:'',//号码有效
@@ -318,6 +321,9 @@ export default {
         },
           //获取短信验证码
         async getNoteValue () {
+            if(this.btnBoolen){
+                return
+            }
             var phone = this.formCustom.phone//验证码
             //验证验证码是否为空
             if(this.Imgcode === ''){
@@ -330,7 +336,7 @@ export default {
             }
             if(!this.ImgCodeValid){
                 this.$Message.info({
-                    content: '请重新输入图形证码',
+                    content: '图形验证码不正确',
                     duration: 5,
                     closable: true
                 })
@@ -352,10 +358,9 @@ export default {
 
                         var sj = Math.ceil(Math.random(10 + 1) * 100000)
                         window.localStorage.setItem("note", sj)
-                        this.auth_time = 60;
                         var timer = setInterval(()=>{
-                            this.auth_time;
-                            if(this.auth_time<=0){
+                            this.smsTotalTime--
+                            if(this.smsTotalTime<=0){
                                 clearInterval(timer)
                                 this.btnBoolen = false;
                                 this.btnClassName="btns"
@@ -363,7 +368,7 @@ export default {
 
                             }else {
                                 this.btnBoolen = true;
-                                this.btnValue=`重新获取(${this.auth_time})S`
+                                this.btnValue=`${this.smsTotalTime}s后重新获取`
                                 this.btnClassName="btn"
                             }
                         },1000)
@@ -410,13 +415,6 @@ export default {
                     closable: true
                 })
                 return
-            } else if(!this.isrefreshpic){
-                this.$Message.info({
-                    content: '手机验证码有误',
-                    duration: 5,
-                    closable: true
-                })
-                return
             }else if(!this.identifyImgCode){
                 this.$Message.info({
                     content: '图形验证码有误',
@@ -445,14 +443,7 @@ export default {
                     closable: true
                 })
                 return
-            }else if(!this.formCustom.mobilecode){
-                this.$Message.info({
-                    content: '验证码有误，请返回重新获取',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            } else {
+            }else {
                 let params={
                     phone: this.formCustom.phone,
                     password:this.formCustom.password,
@@ -489,6 +480,10 @@ export default {
         }
     },
     mounted(){
+        if(this.$route.query.type!='users'){
+                this.formCustom.type='供应商&承运商'
+        }
+       
         this.identifyCode = '';
         this.makeCode(this.identifyCodes, 4);
     },

@@ -15,7 +15,19 @@ export default {
 			{
 				name: 'viewport',
 				content: 'width=device-width, initial-scale=1'
-			},
+      },
+      {
+        'http-equiv': 'pragram',
+        content: 'no-cache'
+      },
+      {
+        'http-equiv': 'cache-control',
+        content: 'no-cache, no-store, must-revalidate'
+      },
+      {
+        'http-equiv': 'expires',
+        content: '0'
+      },
 			{
 				hid: 'keywords',
 				name: 'keywords',
@@ -57,10 +69,8 @@ export default {
     '~/plugins/components',
     '@/plugins/storage',
     { src: "~/plugins/swiper.js", ssr: false },
-		{
-			src: '~/plugins/iview.js',
-			ssr: true
-		}
+    { src: '~/plugins/iview.js', ssr: true},
+    { src: '~/plugins/polyfill.js', ssr: true}
 	],
 	/*
 	 ** Nuxt.js modules
@@ -68,6 +78,8 @@ export default {
 	modules: [
 		'@nuxtjs/axios',
 		'@nuxtjs/proxy',
+        'cookie-universal-nuxt',
+        ['cookie-universal-nuxt', { alias: 'cookiz' }],
 		// 'swiper'
 	],
 	axios: {

@@ -126,8 +126,8 @@
                                     ref="upload"
                                     :action="uploadUrl"
                                     :on-success="imageSuccess"
-                                    :max-size="2048"
-                                    :format="['jpg','jpeg','png', 'gif']"
+                                    :max-size="10240"
+                                    :format="['jpg','jpeg','png', 'pdf']"
                                     :on-exceeded-size="handleMaxSize">
                                     <Button icon="ios-cloud-upload-outline">上  传</Button>
                                 </Upload>
@@ -144,8 +144,8 @@
                                     ref="upload"
                                     :action="uploadUrl"
                                     :on-success="handleFileSuccess"
-                                    :max-size="2048"
-                                    :format="['jpg','jpeg','png', 'gif']"
+                                    :max-size="10240"
+                                    :format="['jpg','jpeg','png', 'pdf']"
                                     :on-exceeded-size="handleMaxSize">
                                     <Button icon="ios-cloud-upload-outline">上  传</Button>
                                 </Upload>
@@ -428,10 +428,10 @@ export default {
             }
             const res = await userPhoneCheck(this, params)
             if(res.data && res.status === 200){
-                this.phoneValid=false;
+                this.phoneValid=false
                 callback(new Error('手机号码已注册'));
             }else{
-                this.phoneValid=true;
+                this.phoneValid=true
                 callback()
             }
         },
@@ -446,7 +446,7 @@ export default {
                 this.isrefreshpic=true
                 callback();
             }else{
-                callback(new Error('手机验证码错误'));
+                callback(new Error('手机验证码错误'))
             }
         },
         //获取短信验证码
@@ -593,7 +593,7 @@ export default {
         handleMaxSize (file) {
             this.$Notice.warning({
                 title: '超出文件大小限制',
-                desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+                desc: '文件 ' + file.name + ' 太大，不能超过 10M。'
             });
         },
         // 校验公司名称

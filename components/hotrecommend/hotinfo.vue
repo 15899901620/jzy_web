@@ -3,22 +3,32 @@
       <tabs>
         <tabs-pane label="网站公告" name='1'>
           <ul class="newscont">
-            <li v-for="(item, index) in noticeInfo" :key="index">
-              <span>{{item.time}}</span>
-              <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}">
-                {{item.title}}
-              </nuxt-link>
-            </li>
+            <template v-if="$store.state.article.noticeList.length > 0">
+              <li v-for="(item, index) in $store.state.article.noticeList" :key="index">
+                <span>{{item.time}}</span>
+                <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}">
+                  {{item.title}}
+                </nuxt-link>
+              </li>
+            </template>
+            <template v-else>
+              <li>暂无公告信息</li>
+            </template>
           </ul>
         </tabs-pane>
         <tabs-pane label="行业资讯" name='2' style="display: none;">
           <ul class="newscont">
-            <li v-for="(item, index) in articleInfo" :key="index">
+            <template v-if="$store.state.article.noticeList.length > 0">
+            <li v-for="(item, index) in $store.state.article.articleList" :key="index">
               <span>{{item.time}}</span>
-              <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">
+              <a :href="`/article/detail/${item.id}`">
                 {{item.title}}
-              </nuxt-link>
+              </a>
             </li>
+            </template>
+            <template v-else>
+              <li>暂无行业资讯</li>
+            </template>
           </ul>
         </tabs-pane>
       </tabs>
@@ -27,7 +37,6 @@
 
 <script>
 const prefixCls = 'ant-hotinfo'
-import { mapState } from 'vuex'
 import tabs from '../tabs'
 
 export default {
@@ -37,10 +46,6 @@ export default {
     tabsPane: tabs.pane
   },
   computed: {
-    ...mapState({
-        noticeInfo: state => state.article.noticeInfo,
-        articleInfo: state => state.article.articleInfo
-    }),
     classes() {
       return [
         `${prefixCls}`,

@@ -8,18 +8,14 @@
         <div class="TableList">
           <div class="titleOrder mt15" >
             <ul class="dflex">
-              <li class="curr">全部状态（2个）</li>
-              <li>等待报价（0 ）</li>
-              <li>报价中（0个）</li>
-              <li>已完成（0个）</li>
-              <li>已取消（1个）</li>
+              <li v-for="(item,index) in orderTabs"  :class=" index === currTabs ? 'curr' : ''" :key="index" @click="setTabs(item.status)">{{item.name}}</li>
             </ul>
             <a>查看全部订单 ></a>
           </div>
 
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" /><div class="check">查看</div>
+              <input type="text" placeholder="输入货运需求编号" name="" id="" value=""  v-model='billNo'  class="orderInput" /><div class="check" @click='check()'>查看</div>
             </div>
             <div class="dflex" style="align-items: center;">
               <span style="width: 65px;">订单筛选:</span>
@@ -39,96 +35,44 @@
             <span style="width: 12%;">订单操作</span>
           </div>
 
-          <ul class="logistics">
+          <ul class="logistics mt10" v-for="(item, index) in dataList" :key="index">
             <h2>
-              <span>订单编号：<span class="gray">120002132</span></span><span>发布时间：<span class="gray">2019-04-02  12:00:00</span></span>
+              <span>编号：<span class="gray">{{item.billNo}}</span></span><span>发布时间：<span class="gray">{{item.create_time}}</span></span>
             </h2>
-            <li><div class="priOpen">
-              <span>上海 市辖区</span><span>吉林 白山 临江市</span><span>PP F08</span><span>102.00</span>
-              <span>王小牛</span><span>15000256652</span><span>等待报价</span>
-              <span><a class="logBtn redbg">取消</a></span>
-            </div>
-            </li>
-          </ul>
-
-          <ul class="logistics mt10">
-            <h2>
-              <span>订单编号：<span class="gray">120002132</span></span><span>发布时间：<span class="gray">2019-04-02  12:00:00</span></span>
-            </h2>
-            <li>
+            <li >
               <div class="priOpen">
-                <span>上海 市辖区</span><span>吉林 白山 临江市</span><span>PP F08</span><span>102.00</span>
-                <span>王小牛</span><span>15000256652</span><span>等待报价</span>
-                <span><a class="logBtn bluebg">收 起</a></span>
+                <span>{{item.dispatchFullAddress}} </span><span>{{item.receiptFullAddress}}</span><span>{{item.freightGoods}}</span><span>{{item.weight}}</span>
+                <span>{{item.contact}}</span><span>{{item.phone}}</span>
+                <div v-if='item.status==0'>
+                      <span>取消</span>
+                </div>
+                <div v-if='item.status==1'>
+                      <span>报价中</span>
+                </div>
+                <div v-if='item.status==2'>
+                      <span>已选择</span>
+                </div>
+                <span><a class="logBtn redbg" @click='cancel(item)'>取消</a></span>
+                <span><a class="logBtn greenbg" @click="detailLog(item)">需求详情</a></span>
               </div>
               <div class="pro_jmts">
                 <ul>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
-                </ul>
-              </div>
-
-            </li>
-          </ul>
-          <ul class="logistics mt10">
-            <h2>
-              <span>订单编号：<span class="gray">120002132</span></span><span>发布时间：<span class="gray">2019-04-02  12:00:00</span></span>
-            </h2>
-            <li>
-              <div class="priOpen">
-                <span>上海 市辖区</span><span>吉林 白山 临江市</span><span>PP F08</span><span>102.00</span>
-                <span>王小牛</span><span>15000256652</span><span>等待报价</span>
-                <span><a class="logBtn bluebg">收 起</a></span>
-              </div>
-              <div class="pro_jmts">
-                <ul>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
-                  <li>
-                    <span style="width: 40%; text-align: left;margin-left: 10px;">上海塑创电子商务有限公司</span>
-                    <span>￥12000.00</span>
-                    <span>王小牛</span>
-                    <span>15000256652</span>
-                    <span><a class="logBtn greenbg">入 选</a></span>
-                  </li>
+                  <li v-for="(items, index) in dataList[index].freightOffers" :key="index">
+                    <span style="width: 40%; text-align: left;margin-left: 10px;">{{items.supplierName}}</span>
+                    <span>￥{{items.price}}</span>
+                    <span>{{item.contact}}</span>
+                    <span>{{item.phone}}</span>
+                    <span v-if='items.status==1'><a class="logBtn greenbg" @click='setSelected(items)'>入 选</a></span>
+                    <span v-else><a class="logBtn greenbg" >已入选</a></span>
+                  </li> 
                 </ul>
               </div>
 
             </li>
           </ul>
 
-          <ul class="pagination">
+            <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages>
+          <!-- <ul class="pagination">
             <li><a href="#">首页</a></li>
             <li><a href="#">上一页</a></li>
             <li><a href="#">1</a></li>
@@ -143,24 +87,30 @@
             <li class="ml10">共40页</li>
             <div class="ml30">转到第<input type="text" class="pageText" />页</div>
             <a class="PageNext">Go</a>
-          </ul>
+          </ul> -->
 
 
         </div>
-
+      <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
      </div>
     </div>
+     
   </div>
 </template>
 
 <script>
 import Navigation from '../../components/navigation'
 import { getCookies } from '../../config/storage'
-
+import { sendHttp } from "../../api/common";
+import server from "../../config/api";
+import pagination from '../../components/pagination'
+import AddressDetail from '../../components/freight-add/freght-detail'
 export default {
   name: "userlog",
   layout:'membercenter',
   components:{
+      AddressDetail,
+    pages: pagination.pages, 
      usernav: Navigation.user
   },
   fetch({ store }) {
@@ -169,6 +119,47 @@ export default {
       store.dispatch('menu/getMenuList')
     ])
   },
+    data(){
+        return{
+            addList:{},
+            billNo:"",
+            detailloading:false,
+            showcancel_pop:false,
+            showEditpop:false,
+            TipAddress:'',
+            AddressNum:0,
+            addressList:[],
+            addressDefault:false,
+            currTabs:0,
+            addressId:0,
+            total: 0,
+            page_size:10,
+            current_page:1,
+            dataList:{},
+            status:'',
+            orderTabs:[
+                {value: 0, name:'全部状态', status: 1},
+                {value: 0, name:'报价中', status: 2},
+                {value: 0, name:'已完成', status: 3},
+                {value: 0, name:'已取消', status: 0},
+            ],
+            formAddress:{
+                id:0,
+                memberId: '',
+                name: '',    //收货人姓名
+                phone: '',   //收货人电话
+                idNumber:'',  //身份证
+                countryId: 0,   //国家
+                state: 0, //省
+                city: 0,     //市
+                district: 0,      //区县
+                address: '',//详细地址
+                defaultAddress: 0,    //设置默认地址
+                alias:''             //别名
+            },
+            formEditAddress:{},
+        }
+    },
   methods:{
     isLogin () {
         let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
@@ -177,10 +168,100 @@ export default {
         }
         this.userinfo = userinfo
         return true
+    }, 
+    showTotal(total) {
+            return `全部 ${total} 条`;
+        },
+    changePage (row) {
+              this.$router.push({name:'users-userlog',query:{page:row}})
     },
+    undetailChange(res) {
+    
+        this.detailloading = res
+    },
+    check(){
+        this.freight();
+    },
+    detailLog(row){
+         row.id=row.orderId
+          this.addList = {
+              ...row
+          }
+          this.detailloading = true
+      },
+    cancel(row){
+         this.$Modal.confirm({
+          title: '警告',
+          content: '<p>确定要取消信息吗</p>',
+                  onOk: () => {
+              sendHttp(this,true,server.api.freight.cancel, {id: row.id},1).then(response => {
+                  this.loading = false
+                }).catch(err=>{
+                  this.$Notice.warning({
+                    title: '警告',
+                    desc: err.response.data.message
+                  })
+                  this.freight();
+                  this.loading = false
+              })
+          
+          }
+          })
+    
+    },
+    setSelected(row){
+         this.$Modal.confirm({
+          title: '警告',
+          content: '<p>是否进行入选</p>',
+                  onOk: () => {
+              sendHttp(this,true,server.api.freight.setSelected, {id: row.id},1).then(response => {
+                  this.loading = false
+                }).catch(err=>{
+                  this.$Notice.warning({
+                    title: '警告',
+                    desc: err.response.data.message
+                  })
+                  this.freight();
+                  this.loading = false
+              })
+          
+          }
+          })
+    
+    },
+    setTabs(res){
+            if(res == '1'){
+                 this.status = ''
+                this.currTabs = 0
+            }else if(res == '2'){
+                 this.status = 1
+                this.currTabs = 1
+            }else if(res == '3'){
+                 this.status = 2
+                this.currTabs = 2
+            }else if(res == '0'){
+                 this.status = 0
+                this.currTabs = 3
+            }
+            this.freight()
+    },
+    async freight(){
+        let params={
+            status:this.status,
+            billNo:this.billNo,
+            current_page:this.current_page,
+            page_size:this.page_size
+        }
+        const res = await sendHttp(this, true, server.api.freight.freightMyList,params,1)
+        this.dataList=res.data.items;
+        this.total=res.data.total
+
+    }
   },
   created(){
+    
     if(this.isLogin()){
+      this.freight();
     }else{
         window.location.href = '/login'
     }

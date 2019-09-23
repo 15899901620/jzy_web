@@ -11,7 +11,6 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
 import carousel from '../carousel'
 
 const prefixCls = 'ant-banner'

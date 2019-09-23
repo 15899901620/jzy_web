@@ -21,7 +21,8 @@
     	  			prefixCls + '-prev',
     	  			_hasPrev() ? '' : prefixCls + '-disabled'
     	  		]">
-                <a class="ant-pages-item-link"></a>
+                <nuxt-link v-if="current-1 > 0" class="ant-pages-item-link" :to="{query:{page:current - 1}}"></nuxt-link>
+                <a v-else class="ant-pages-item-link"></a>
             </li>
             <li v-if="showFirstPager" title="1" @click="_handleChange(1)" :class="[
     	  			prefixCls + '-item',
@@ -54,7 +55,8 @@
     	  			prefixCls + '-next',
     	  			_hasNext() ? '' : prefixCls + '-disabled'
     	  		]">
-                <a class="ant-pages-item-link"></a>
+                <nuxt-link v-if="current < allPages" class="ant-pages-item-link" :to="{query:{page:current + 1}}"></nuxt-link>
+                <a v-else class="ant-pages-item-link"></a>
             </li>
           
         </ul>

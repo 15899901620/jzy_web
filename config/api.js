@@ -11,6 +11,7 @@ let api = {
   },
   search: {
     hotsearch: '/web/hotSearch/list',
+    getHotSearch: {'url':'/web/hotSearch/list', 'method':'get'},
     addsearch: '/web/hotSearch/add'
   },
   /**
@@ -51,6 +52,7 @@ let api = {
   order: {
     orderlist: '/bill/orderInfo/list',
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
+    orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
@@ -78,11 +80,19 @@ let api = {
    */
   spot: {
     filterConditon: '/bill/spot/filter/condition',
+    getFilterConditon: {'url':'/bill/spot/filter/condition', 'method':'get'},
     spotList: '/bill/spot/list/page/onSale',
+    initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     freightList: '/bill/freightList/orderFreightInfo',
-    spotSubmitOrder: '/bill/spot/order/create'
+    spotSubmitOrder: '/bill/spot/order/create',
+  },
+  /**
+   * @description 预售商口
+   */
+  advance: {
+    initAdvanceList: {'url':'/bill/book/list/show', 'method':'get'},
   },
   /**
    * @description 竞拍管理
@@ -90,6 +100,7 @@ let api = {
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
+    getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍
@@ -112,14 +123,20 @@ let api = {
    * @description 资讯管理
    */
   information: {
-    info: '/web/article/page',
+    getArticleList:{'url': '/web/article/page', 'method': 'get'},
+    info:'/web/article/page',
+    infos:{'url': '/web/article/page', 'method': 'get'},
     infodetail: '/web/article/detail',
     infoClick: '/web/article/click',
     cateall: '/web/article_cat/page',
     infocate: '/web/article_cat/tree',
     announcement: '/web/announcement/page',  //网站列表
     announcementdetail: '/web/announcement/detail',
-    noticeclick: '/web/announcement/click'
+    noticeclick: '/web/announcement/click',
+    articleCatDetail:'/web/article_cat/detail',
+    getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
+    getNoticeCatList:{'url': '/web/announcement/page', 'method': 'get'},
+
   },
   /**
    * @description 帮助中心
@@ -129,7 +146,7 @@ let api = {
     helpPage: '/web/help_article/getHelpArticleByCatId',
     helpdetail: '/web/help_article/detail'
   },
-  
+
     /**
      * @description 专料
      */
@@ -138,7 +155,33 @@ let api = {
         specialDetail: '/bill/yearlyFeeding/detail',
         submitOrder: '/bill/orderInfo/feeding/create'
     },
+     /**
+     * @description 招标
+     */
+    biddding:{
+       bidddingList:{'url': '/bill/bidding/web/list/page', 'method': 'get'},
+       save:{'url': '/bill/bid/save', 'method': 'post'},
+       bidDetail:{'url': '/bill/bid/detail', 'method': 'get'},
+       bidddingDetail:{'url': '/bill/bidding/detail', 'method': 'get'},
+       bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
+       BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
+       bidddingCount:{'url': '/bill/bidding/getMyBiddingListCount', 'method': 'get'},
+       freightDemand:{'url': '/bill/freightDemand/save', 'method': 'post'},
+    },
 
+    freight:{
+      freightMyList:{'url': '/bill/freightDemand/myList/page', 'method': 'get'},
+      InfoByOrderId:{'url': '/bill/freightDemand/getDemandInfoByOrderId', 'method': 'get'},
+      cancel:{'url': '/bill/freightDemand/cancel', 'method': 'post'},
+      setSelected:{'url': '/bill/freightOffer/setSelected', 'method': 'post'},
+      freightList:{'url': '/bill/freightDemand/list/page', 'method': 'get'},
+
+    },
+    freightOffer:{
+      offerMyList:{'url': '/bill/freightOffer/myList/page', 'method': 'get'},
+      offerList:{'url': '/bill/freightOffer/list', 'method': 'get'},
+      save:{'url': '/bill/freightOffer/save', 'method': 'post'},
+    },
     /**
      * @description 周计划
      */
@@ -173,6 +216,7 @@ let api = {
    * @description 导航
    */
   navigation: {
+    getNavList: {'url':'/web/nav/list','method':'get'},
     navlist: '/web/nav/list',
     navdetail: '/web/nav/detail'
   },
@@ -182,7 +226,9 @@ let api = {
   sysconf: {
     cooperativeBrand: '/web/coobrand/page',  //网站合作品牌
     friendlink: '/web/friendlink/list', //友情链接
+    getFriendLink: {'url':'/web/friendlink/list','method':'get'}, //友情链接
     systemcof: '/web/config/getAll',
+    getSysConfig: {'url':'/web/config/getAll', 'method':'get'},
     getConfigValues: '/web/config/getValues',
 
   },
@@ -190,7 +236,8 @@ let api = {
    * @description 广告位管理
    */
   ad: {
-    adposition: '/web/ad/list'
+    adposition: '/web/ad/list',
+		getAdList:{'url':'/web/ad/list', 'method':'get'}
   },
   /**
    * @description 资金管理

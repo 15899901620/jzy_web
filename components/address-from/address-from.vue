@@ -62,7 +62,7 @@ export default {
             streetData: [],
             selectValue: {
                 countryId: 1,
-                provinceId: 0,
+                provinceId: 440000,
                 cityId:0,
                 areaId:0,
                 streetId:0,

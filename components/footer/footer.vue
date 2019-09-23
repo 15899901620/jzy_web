@@ -12,10 +12,10 @@
                         </ul>
                     </div>
                     <div class="tel">
-                        <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{systeminfo.SERVICEHOTLINE}}</a></p>
+                        <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</a></p>
                         <p>全国服务热线</p>
                         <p>交易时间(工作日)</p>
-                        <p>{{systeminfo.OPENING_TIME}}-{{systeminfo.CLOSED_TIME}}</p>
+                        <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
                         <p class="mt10">
                             <a rel="nofollow" target="_blank"  @v-on::click="OnlineService()"  class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
                         </p>
@@ -25,7 +25,7 @@
             <links :linksData="linksinfo"></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright">
-                    {{ systeminfo.COPYRIGHT }}
+                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
                 </div>
             </div>
         </template>
@@ -40,10 +40,10 @@
                         </ul>
                     </div>
                     <div class="tel">
-                        <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{systeminfo.SERVICEHOTLINE}}</a></p>
+                        <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</a></p>
                         <p>全国服务热线</p>
                         <p>交易时间(工作日)</p>
-                        <p>{{systeminfo.OPENING_TIME}}-{{systeminfo.CLOSED_TIME}}</p>
+                        <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
                         <p class="mt10">
                             <a rel="nofollow" target="_blank" @v-on::click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
                         </p>
@@ -53,14 +53,14 @@
             <links :linksData="linksinfo"></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright">
-                    {{ systeminfo.COPYRIGHT }}
+                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
                 </div>
             </div>
         </template>
         <template v-if="size === 'small'">
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright">
-                    {{ systeminfo.COPYRIGHT }}
+                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
                 </div>
             </div>
         </template>
@@ -89,12 +89,6 @@ export default {
         }
     },
     computed: {
-        ...mapState({
-            userinfo: state => state.login.userinfo,
-            topmenu: state => state.menu.topMenu,
-            systeminfo: state => state.system.systeminfo,
-            linksinfo: state => state.system.linksinfo
-        }),
         classes() {
             return [
                 `${prefixCls}`,
@@ -104,7 +98,7 @@ export default {
     },
     methods: {
         OnlineService () {
-            let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ systeminfo.ONLINESERVICE +'&site=qq&menu=yes'
+            let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
             // window.open(url)
         } 
     }
