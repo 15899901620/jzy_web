@@ -181,9 +181,14 @@ export default {
           const res = await supplierValid(this, {})
 
           if(res.data  && res.status === 200){
+            console.log(res.data);
             let auth= JSON.stringify(res.data)
             Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
-            this.$router.push({name:'trender-WineBid'})
+            if(res.data.roleType == 2){//供应商
+                this.$router.push({name:'trender-WineBid'})
+            }else if(res.data.roleType == 3){
+                this.$router.push({name:'logistics'})
+            }
           }else{
             this.passwordTip=true
             this.passwordName='登录失败请与管理员联系！'
