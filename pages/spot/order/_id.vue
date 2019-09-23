@@ -75,7 +75,7 @@
                                         <span style="margin-left: 15px">{{item.name}}</span>
                                         <span style="margin-left: 15px">{{item.phone}}</span>
                                         <span style="margin-left: 15px">身份证：{{item.idNumber}}</span>
-                                        <span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}} {{item.address}}</span>                                    
+                                        <span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}} {{item.address}}</span>
                                     </Radio>
                                 </RadioGroup>
                             </li>
@@ -224,7 +224,7 @@ export default {
             return parseFloat(this.payAmount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,')
         },
     },
-    
+
     data() {
         return {
             addAddressLoading: false,
@@ -502,13 +502,13 @@ export default {
 
         }
     },
-    mounted() {  
-     
+    mounted() {
+
     },
     created() {
         this.inLogin()
         this.getSpotData()
-        this.getMyCapital()   
+        this.getMyCapital()
         this.getMyAddress()
     },
     head() {
