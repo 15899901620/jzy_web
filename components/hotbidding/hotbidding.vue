@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="display: flex">
     <div class="Time_Banner pr">
-      <img src="/img/Time_banner.png"/>
+      <img src="/img/Time_banner.jpg"/>
       <a class="bidders_front" href="/bidders"></a>
     </div>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
@@ -95,6 +95,9 @@
 				this.$router.push({name: 'bidders-detail-id', params: {id: id}})
 			}
 		},
+      created(){
+		  console.log("TLlength",this.TLlength)
+      },
 		mounted() {
 			if(this.$store.state.bidders.auctionList.length > 0){
 				setTimeout(function () {
@@ -160,11 +163,16 @@
 
 // *****限时竞拍******
 
-					var that = this
-					let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-					let TLWidth = TL[0].offsetWidth
-					that.TLlength = TL.length * TLWidth
+
+
 				}, 2000)
+              var that = this
+              let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
+              console.log("TL",TL)
+               let TLWidth = TL[0].offsetWidth
+              console.log("TLWidth",TLWidth)
+               that.TLlength = TL.length * TLWidth
+              console.log("TLWidth",this.TLlength)
       }
 		},
 		destoryed() {
@@ -176,4 +184,3 @@
 <style>
 
 </style>
-    

@@ -7,7 +7,7 @@
 
     <div class="logistic dflex">
       <div class="logistic_banner">
-        <img src="../../static/img/logistics_banner.png" />
+        <img src="../../static/img/logistics_banner.jpg" />
       </div>
       <ul class="logisticList mt1 dflex">
         <li>

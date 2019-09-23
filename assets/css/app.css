@@ -25,7 +25,7 @@
 .Time-limited_list {
 	display:flex;
 	position:relative;
-	width:1500px
+	 width: 1928px;
 }
 .Time-limited_list li {
 	margin-left:1px;
@@ -34,7 +34,7 @@
     justify-content:center;
     font-size: 9pt;
 	text-align:center;
-	width:241px;
+	width:240px;
 	overflow:hidden;
 	background-color:#fff;
 	position:relative;

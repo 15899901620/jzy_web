@@ -25,10 +25,13 @@
           <li>
             <div class="ass-ty2-p level 1">
               <p class="fs16 mt10"><i></i>加工级别:</p>
-              <p style="word-wrap:break-word" v-for="(items,index) in $store.state.common.productLevelValues"
-                 :key="index">
-                <a style="float:left" :href="`/spot?level_id=${items.id}`">{{items.value}}</a>
-              </p>
+              <div style="margin-left: -10px;">
+                <p style="word-wrap:break-word" v-for="(items,index) in $store.state.common.productLevelValues"
+                   :key="index">
+                  <a style="float:left" :href="`/spot?level_id=${items.id}`">{{items.value}}</a>
+                </p>
+              </div>
+
             </div>
           </li>
         </ul>

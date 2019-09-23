@@ -1,7 +1,7 @@
 <template>
   <div class="Time-limited">
     <div class="Time_Banner pr" >
-      <img src="../../static/img/Time_banner.png" />
+      <img src="../../static/img/Time_banner.jpg" />
       <div class="bidders_front" @click="biddersList"></div>
     </div>
     <div class="ovh pr"  id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
@@ -245,7 +245,7 @@
 // *****限时竞拍******
         var that=this
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-        console.log("TL:",TL)
+        console.log("****TL:",TL)
         let TLWidth=TL[0].offsetWidth
         console.log("TLWidth:",TLWidth)
         that.TLlength=TL.length*TLWidth
@@ -271,7 +271,7 @@
   .Time-limited_list li .NumStore{display: flex; flex-direction: column;  text-align: left;  padding: 10px 0px 10px 32px; font-size: 13px;
     border-bottom: 1px dashed #dedede; width: 70%;  margin: 0 auto;  border-top: 1px dashed #dedede;  box-sizing: border-box;}
 
-  .bidders_front{width: 24px;height: 24px;position: absolute;   bottom: 34px; left: 21px; cursor: pointer;}
+  .bidders_front{width: 80px;height: 24px;position: absolute;   bottom: 71px; left: 20px; cursor: pointer;}
 
   .Time-limited_list li .Timebtn{width: 70%;margin: 17px auto;    padding: 7px 52px; box-sizing: border-box; color: #fff; border-radius:3px; cursor: pointer;}
   .Time-limited_list li .beginbg{background-color: #23aa36}.Time-limited_list li .endbg{background-color: #cfcfcf}
