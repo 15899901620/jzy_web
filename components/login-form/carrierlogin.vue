@@ -205,14 +205,14 @@ export default {
       const that = this
       this.$refs.loginsupplierform.validate((valid) => {
         if (valid) {
-          //正常情况下，检查是否已经是注册用户，如何不是中断不发送
+          //正常情况下，检查是否已经是注册用户，如何不是中断不发送 true 未注册  false 已注册
           let params = {
             data: that.loginsupplierform.username,
             type: 2
           }
           let isPhone = true
           supplierdataCheck(that, params).then(function (res) {
-            if(res.data === false) {
+            if(res.data === true) {
               that.updateChackPhone(false)
               that.$Modal.info({
                 title: '提示',

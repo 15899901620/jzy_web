@@ -212,7 +212,7 @@ export default {
           }
           let isPhone = true
           supplierdataCheck(that, params).then(function (res) {
-            if(res.data === false) {
+            if(res.data === true) {
               that.updateChackPhone(true)
               that.$Modal.info({
                 title: '提示',

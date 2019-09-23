@@ -219,7 +219,7 @@
 						}
 						let isPhone = true
 						userPhoneCheck(that, params).then(function (res) {
-							if (res.data === false) {
+							if (res.data === true) {
 								that.cphone = true
 								that.$Modal.info({
 									title: '提示',
