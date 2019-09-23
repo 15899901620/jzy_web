@@ -124,24 +124,13 @@
 			}
 		},
 		methods: {
-			addOrder(item) {
-				let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-				if (!userinfo) {
-					this.ISlogin = true;
-					return false
-				}
-				console.log(item)
-				this.$router.push({
-					name: 'spot-order-id',
-					params: {
-						id: item.id
-					}
-				})
+			addOrder(id) {
+				location.href='/spot/order/'+id
 			},
 			reloadPage() {
 				this.$router.go(0)
 			},
-			toLogin(){
+			goLogin(){
 				location.href='/login'
       },
 		},
