@@ -17,6 +17,9 @@ export default {
 	setCoolies: function (key, value, attributes) {
 		Cookie.set(key, value, attributes)
 	},
+	getMemberTokenInVm: function (vm) {
+		return vm.$cookies.get('webtoken') || ''
+	},
 	getMemberTokenInServer: function (req) {
 		let cookies = this.getCookiesInServer(req)
 		return cookies.webtoken ? cookies.webtoken : ''

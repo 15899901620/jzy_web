@@ -245,6 +245,7 @@ let api = {
    * @description 资金管理
    */
   capital: {
+    myCapital: {'url': '/user/m/capital/self', 'method':'get'},
     capitalinfo: '/user/m/capital/self',
     capitaldetail: '/bill/getFundByCompanyName'
   },

@@ -11,20 +11,26 @@
         </hotrecommend>
       </div>
       <div class="hotbidding">
-        <div class="Time_Banner pr">
+        <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
+          <div slot="content">
+            <hotbidding title="热门竞拍"></hotbidding>
+          </div>
+        </outpacking>
+
+        <!--<div class="Time_Banner pr">
           <img src="/img/Time_banner.png"/>
-          <a class="bidders_front" href="/bidders">查看更多</a>
+          <a class="bidders_front" href="/bidders"></a>
         </div>
-        <hotbidding title="热门竞拍"></hotbidding>
+        <hotbidding title="热门竞拍"></hotbidding>-->
       </div>
-      <!--<div class="hot-spot">
+      <div class="hot-spot">
         <outpacking title="现货超市" cpadding="0px" :more="spotData">
           <div slot="content">
             <spot-list></spot-list>
           </div>
         </outpacking>
       </div>
-      <div class="hot-spot">
+      <!--<div class="hot-spot">
         <outpacking title="物流找车" cpadding="0px" :more="logData">
           <div slot="content" style="display: flex;">
             <div class="logistic_banner">
@@ -102,6 +108,10 @@
 					current_page: 1,
 					page_size: 8
 				}),
+				store.dispatch('spot/getSpotList', {
+					current_page: 1,
+					page_size: 20
+				})
 
 
 				/*
@@ -143,6 +153,10 @@
 		},
 		data() {
 			return {
+				bidderData: {
+					title: '更多...',
+					url: '/bidders'
+				},
 				spotData: {
 					title: '前往现货超市...',
 					url: '/spot'

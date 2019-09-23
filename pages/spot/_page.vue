@@ -87,7 +87,7 @@
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
                 <span style="width: 7%;">
                   <div
-                      v-if="$store.state.memberToken && item.available_num < item.delivery_min || item.price_valid_time<=0"
+                      v-if="$store.state.memberToken && item.available_num < item.delivery_min"
                       style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
@@ -163,12 +163,13 @@
 		},
 		methods: {
 			addOrder(id) {
-				this.$router.push({
+				location.href='/spot/order/'+id
+				/*this.$router.push({
 					name: 'spot-order-id',
 					params: {
 						id: id
 					}
-				})
+				})*/
 			},
 			categoryClick(id) {
 				this.categoryId = id
