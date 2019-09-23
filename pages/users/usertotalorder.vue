@@ -102,13 +102,11 @@
 <script>
 	import Navigation from '../../components/navigation'
 	import {orderpage, orderCount} from '../../api/order'
-	import {getCookies} from '../../config/storage'
 	import pagination from '../../components/pagination'
 	import config from '../../config/config'
 	import paydeposit from '../../components/paydeposit'
 	import AddressDialog from '../../components/freight-add/freight-add'
 	import AddressDetail from '../../components/freight-add/freght-detail'
-
 
 	export default {
 		name: "usertotalorder",

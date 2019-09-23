@@ -28,6 +28,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="password">
+            
             <Input v-model="loginform.password" type="password" placeholder="登录密码"/>
           </FormItem>
         </Col>
