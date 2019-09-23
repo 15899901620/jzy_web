@@ -54,7 +54,7 @@
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
         <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
           <ul class="DeliveryMethod mb20">
-            <li v-for="(item, index) in methodList" v-if="index != 1 || $store.state.memberInfo.IS_CAN_DELIVERY == 1"
+            <li v-for="(item, index) in methodList" v-if="index != 1 || $store.state.common.sysConfig.IS_CAN_DELIVERY == 1"
                 @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index">
               <div style="background-color: #fff;">{{item.name}}</div>
             </li>
@@ -129,11 +129,11 @@
           <a class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
         </ul>
         <div class="orderCzTip" v-if="this.orderinfo.payIndex == 1">
-          <template v-if="$store.state.memberInfo.SPOT_PAYMENT_TIME == 1">*
+          <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 1">*
             如仅支付保证金，在提交订单后当天{{$store.state.memberInfo.CLOSED_TIME}}前完成付款，逾期将扣除保证金
           </template>
-          <template v-if="$store.state.memberInfo.SPOT_PAYMENT_TIME == 2">* 如仅支付保证金，在提交订单后30分钟内完成付款，逾期扣除保证金</template>
-          <template v-if="$store.state.memberInfo.SPOT_PAYMENT_TIME == 3">* 如仅支付保证金，在提交订单后60分钟内完成付款，逾期扣除保证金</template>
+          <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 2">* 如仅支付保证金，在提交订单后30分钟内完成付款，逾期扣除保证金</template>
+          <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 3">* 如仅支付保证金，在提交订单后60分钟内完成付款，逾期扣除保证金</template>
         </div>
 
         <!--优选服务-->
@@ -145,11 +145,11 @@
               <i-option v-for="(item, index) in ServiceTimeList" :value="item" :key="index">{{ item }}天</i-option>
             </Select>
           </div>
-          <div class="ml20 orangeFont">* 费率=天数*吨数*{{$store.state.memberInfo.JRY_COST}}元</div>
+          <div class="ml20 orangeFont">* 费率=天数*吨数*{{$store.state.common.sysConfig.JRY_COST}}元</div>
         </div>
         <div class="orderCzTip" v-if="orderinfo.payIndex==1 && is_jry">
           * 选择巨融易产品，提交订单后必须在有效期内支付尾款完成，逾期将扣除保证金。<br/>
-          （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{$store.state.memberInfo.CLOSED_TIME}}:00前完成尾款付款）
+          （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{$store.state.common.sysConfig.CLOSED_TIME}}:00前完成尾款付款）
         </div>
         <div class="lineborder" v-if="orderinfo.payIndex==1"></div>
 
@@ -392,7 +392,7 @@
 			//选择巨融易
 			setJry(value) {
 				if (this.orderinfo.jryDays > 0) {
-					this.orderinfo.jryCost = this.$store.state.memberInfo.JRY_COST * this.orderinfo.jryDays
+					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
 
 				} else {
 					this.orderinfo.jryCost = 0

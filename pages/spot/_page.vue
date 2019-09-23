@@ -85,6 +85,9 @@
                   <template v-if="item.on_sale == 2 && item.available_num == 0">
                   已售罄
                   </template>
+                  <template v-else-if="item.on_sale == 2 && item.available_num > 0">
+                  已失效
+                  </template>
                   <template v-else>
                     <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
                   </template>
