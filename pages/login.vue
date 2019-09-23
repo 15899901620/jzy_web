@@ -41,7 +41,6 @@
 <script>
 	import Header from '../components/header'
 	import Footer from '../components/footer'
-	import {mapState} from 'vuex'
 	import Swiper from 'swiper';
 	import login from '../components/login-form'
 

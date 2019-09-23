@@ -79,6 +79,7 @@
    import Rightmenu from './trenderCompontent/Rightmenu'
     export default {
       name: "rightinfor",
+			middleware: 'memberAuth',
       layout:'membercenter',
       components:{
          Rightmenu

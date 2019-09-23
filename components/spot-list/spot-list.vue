@@ -72,18 +72,25 @@
                 </span>
           <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
           <span style="width: 8%;">
-                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
-                </span>
+            <template v-if="item.on_sale == 2 && item.available_num == 0">
+            已售罄
+            </template>
+            <template v-else-if="item.on_sale == 2 && item.available_num > 0">
+            已失效
+            </template>
+            <template v-else>
+              <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+            </template>
+          </span>
           <span style="width: 7%;">{{item.delivery_deadline}}</span>
           <span style="width: 7%;">
-                  <div
-                      v-if="$store.state.memberToken && item.available_num < item.delivery_min"
-                      style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
-                  <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
-                       @click="addOrder(item.id)">下单</div>
-                  <div v-else-if="$store.state.memberToken && item.available_num == 0" class="ListBtn">已售完</div>
-                  <div v-else class="ListBtn" @click="toLogin">登录</div>
-                </span>
+            <div
+                v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
+                style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+            <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
+                 @click="addOrder(item.id)">下单</div>
+            <div v-else class="ListBtn" @click="toLogin">登录</div>
+          </span>
         </li>
       </template>
       <template v-else>
@@ -127,24 +134,13 @@
 		  console.log('spotList',this.$store.state.spot.spotList)
       },
 		methods: {
-			addOrder(item) {
-				let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-				if (!userinfo) {
-					this.ISlogin = true;
-					return false
-				}
-				console.log(item)
-				this.$router.push({
-					name: 'spot-order-id',
-					params: {
-						id: item.id
-					}
-				})
+			addOrder(id) {
+				location.href='/spot/order/'+id
 			},
 			reloadPage() {
 				this.$router.go(0)
 			},
-			toLogin(){
+			goLogin(){
 				location.href='/login'
       },
 		},

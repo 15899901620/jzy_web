@@ -18,7 +18,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="mobilecode">
-            <Input v-model="loginsupplierform.mobilecode"  placeholder="短信验证码"/>
+            <Input v-model="loginsupplierform.mobilecode"  autocomplete="off" placeholder="短信验证码"/>
           </FormItem>
           <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
         </Col>
@@ -165,7 +165,8 @@ export default {
       }else{
         let params = {
           username:this.loginsupplierform.username,
-          password:this.loginsupplierform.password
+          password:this.loginsupplierform.password,
+          code: this.loginsupplierform.mobilecode
         }
         const res = await supplierLogin(this, params)
         let authres=res.data
@@ -181,9 +182,14 @@ export default {
           const res = await supplierValid(this, {})
 
           if(res.data  && res.status === 200){
+            console.log(res.data);
             let auth= JSON.stringify(res.data)
             Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
-            this.$router.push({name:'trender-WineBid'})
+            if(res.data.roleType == 2){//供应商
+                this.$router.push({name:'trender-WineBid'})
+            }else if(res.data.roleType == 3){
+                this.$router.push({name:'supply-Supplier'})
+            }
           }else{
             this.passwordTip=true
             this.passwordName='登录失败请与管理员联系！'
