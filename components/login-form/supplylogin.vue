@@ -186,9 +186,9 @@ export default {
             let auth= JSON.stringify(res.data)
             Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
             if(res.data.roleType == 2){//供应商
-                this.$router.push({name:'trender-WineBid'})
+							location.href = '/trender/WineBid'
             }else if(res.data.roleType == 3){
-                this.$router.push({name:'supply-Supplier'})
+							location.href = '/supply/Supplier'
             }
           }else{
             this.passwordTip=true
