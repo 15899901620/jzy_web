@@ -155,9 +155,6 @@
 					this.loading = false
 				})
 			},
-			bidder() {
-
-			},
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
@@ -167,35 +164,21 @@
 			check() {
 				this.getOrderList()
 			},
-			isLogin() {
-				let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-				if (!userinfo) {
-					return false
-				}
-				this.userinfo = userinfo
-				return true
-			},
 			async getOrderList() {
-				let params = []
-				if (this.dispatchFull) {
-					params.dispatchFullAddress = this.dispatchFull
-				}
-				if (this.receiptFull) {
-					params.receiptFullAddress = this.receiptFull
-				}
-				params.current_page = this.current_page
-				params.page_size = this.page_size
+				let params = {
+					'dispatchFullAddress' : this.dispatchFull,
+          'receiptFullAddress' :  this.receiptFull,
+          'current_page' : this.current_page,
+          'page_size' : this.page_size
+        }
+
 				const res = await sendHttp(this, true, server.api.freight.freightList, params, 2)
 				this.dataList = res.data.items;
 				this.total = res.data.total
 			},
 		},
-		created() {
-			if (this.isLogin()) {
-				this.getOrderList()
-			} else {
-				this.$router.push({name: 'login'})
-			}
-		}
+    mounted(){
+			this.getOrderList()
+    }
 	}
 </script>

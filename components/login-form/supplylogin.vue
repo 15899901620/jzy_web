@@ -184,9 +184,9 @@ export default {
           if(res.data  && res.status === 200){
             let auth= JSON.stringify(res.data)
             Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
-            if(res.data.roleType == 2){//供应商
+            if(res.data.roleType == 3){//供应商
 							location.href = '/trender/WineBid'
-            }else if(res.data.roleType == 3){
+            }else if(res.data.roleType == 4){
 							location.href = '/supply/Supplier'
             }
           }else{
