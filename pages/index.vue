@@ -61,7 +61,6 @@
 </template>
 
 <script>
-	import api from '../config/api'
 	import {mapState} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
@@ -113,19 +112,7 @@
 					page_size: 20
 				})
 
-
-				/*
-        //获取现货报价
-        store.dispatch('spot/getSpotList', {
-          current_page: 1,
-          page_size: 20
-        })*/
-
-        /*
-
-
-
-        store.dispatch('article/getHotArticle', {
+        /*store.dispatch('article/getHotArticle', {
             current_page: 1,
             page_size: 4
         }),

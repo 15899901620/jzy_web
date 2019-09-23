@@ -26,6 +26,9 @@
       <a href="/register" class="registerbg ml10">注 册</a>
     </div>
     <div v-else class="loginReg mt10">
+      <div @click="User" class="registerbg ml10"
+           style="padding:2px 10px;cursor: default; border:1px solid #ddd;  border-radius:3px;">会员中心
+      </div>
       <div @click="logout" class="registerbg ml10"
            style="padding:2px 10px;cursor: default; border:1px solid #ddd;  border-radius:3px;">退出登录
       </div>
@@ -54,7 +57,7 @@
 		},
 		methods: {
 			User() {
-				if ($store.state.memberToken) {
+				if (this.$store.state.memberToken) {
 					location.href = '/users/user'
 				} else {
 					location.href = '/login'
