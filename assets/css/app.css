@@ -936,6 +936,8 @@ a {
 	font-size:14px;
 }
 .loginMethod li {
+    width: 50%;
+    text-align: center;
 	border-right:1px solid #DEDEDE;
 	color:#333;
 	font-size:14px;

@@ -137,6 +137,8 @@ let api = {
    */
   helper: {
     helpCatTree: '/web/help_cat/getHelpCatatByParentId',
+    getHelpCatTree: {'url':'/web/help_cat/getHelpCatatByParentId','method':'get'},
+    getHelpPage: {'url':'/web/help_article/getHelpArticleByCatId','method':'get'},
     helpPage: '/web/help_article/getHelpArticleByCatId',
     helpdetail: '/web/help_article/detail'
   },

@@ -79,7 +79,11 @@
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
 				store.dispatch('common/getFriendlyList'),
-
+				//获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {
+					catId: 0,
+					indexShow: 1
+				}),
         //获取轮播图
 				store.dispatch('common/getBannerList', 1),
 				//获取网站公告
@@ -107,10 +111,7 @@
           page_size: 20
         })*/
 
-        /*store.dispatch('helper/getHelpCate', {
-            parentId: 0,
-            indexShow: 1
-        }),
+        /*
 
 
 
