@@ -72,7 +72,7 @@
                 </span>
           <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
           <span style="width: 8%;">
-            <template v-if="item.on_sale == 0 && item.available_num == 0">
+            <template v-if="item.on_sale == 2 && item.available_num == 0">
             已售罄
             </template>
             <template v-else>
