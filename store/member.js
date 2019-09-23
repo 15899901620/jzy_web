@@ -3,21 +3,47 @@ import server from '../config/api'
 
 export const state = () => {
 	return {
-		capitalInfo: {}
+		capitalInfo: {},
+		orderList:[],
+		orderListTotal: 0,
+		orderCount: {}
 	}
 }
 
 export const mutations = {
 	updateCapitalInfo(state, data) {
 		state.capitalInfo = data
+	},
+	updateOrderList(state, data) {
+		state.orderList = data
+	},
+	updateOrderListTotal(state, data) {
+		state.orderListTotal = data
+	},
+	updateOrderCount(state, data) {
+		state.orderCount = data
 	}
 }
 
 export const actions = {
-	async getCapitalInfo({commit}) {
-		let res = await sendCurl(this, server.api.capital.myCapital, {})
+	async getCapitalInfo({commit}, params) {
+		let res = await sendCurl(this, server.api.capital.myCapital, params)
 		if (res.status === 200) {
 			commit('updateCapitalInfo', res.data)
 		}
-	}
+	},
+	async getOrderList({commit}, params) {
+		let res = await sendCurl(this, server.api.order.getMemberOrderList, params)
+		if (res.status === 200) {
+			commit('updateOrderList', res.data.items)
+			commit('updateOrderListTotal', res.data.total)
+		}
+	},
+	async getOrderCount({commit}) {
+		let res = await sendCurl(this, server.api.order.getMemberOrderCount, {})
+		if (res.status === 200) {
+			console.log(res)
+			commit('updateOrderCount', res.data)
+		}
+	},
 }

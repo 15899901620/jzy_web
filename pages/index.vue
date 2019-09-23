@@ -107,6 +107,7 @@
 					current_page: 1,
 					page_size: 8
 				}),
+				//获取现货列表
 				store.dispatch('spot/getSpotList', {
 					current_page: 1,
 					page_size: 20

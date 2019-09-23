@@ -50,6 +50,8 @@ let api = {
    * @description 订单管理
    */
   order: {
+		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
+		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
     orderlist: '/bill/orderInfo/list',
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
