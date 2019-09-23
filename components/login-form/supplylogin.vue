@@ -182,7 +182,6 @@ export default {
           const res = await supplierValid(this, {})
 
           if(res.data  && res.status === 200){
-            console.log(res.data);
             let auth= JSON.stringify(res.data)
             Cookies.set('supplierInfor', auth, { expires: 36000000 || 1 })
             if(res.data.roleType == 2){//供应商
