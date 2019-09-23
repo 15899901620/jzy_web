@@ -72,7 +72,7 @@
             isActive:''
           }
           let res = await auctionPage(this,params)
-
+          console.log("**res**",res)
           this.indexAuction=res.data.items
           var arrayData=[]
           for (var i=0;i<this.indexAuction.length;i++){
@@ -243,7 +243,6 @@
         }
 
 // *****限时竞拍******
-
         var that=this
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
         console.log("TL:",TL)
