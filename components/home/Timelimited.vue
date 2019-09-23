@@ -72,7 +72,7 @@
             isActive:''
           }
           let res = await auctionPage(this,params)
-      
+
           this.indexAuction=res.data.items
           var arrayData=[]
           for (var i=0;i<this.indexAuction.length;i++){
@@ -82,7 +82,7 @@
 
           }
          var TimeArray= arrayData.map(function(v){
-         
+
            if(v.type=== 1){
              return v.beginTime
            }
@@ -246,7 +246,9 @@
 
         var that=this
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
+        console.log("TL:",TL)
         let TLWidth=TL[0].offsetWidth
+        console.log("TLWidth:",TLWidth)
         that.TLlength=TL.length*TLWidth
       },2000)
 
@@ -262,7 +264,7 @@
   .prve{  display: flex; align-items: center;justify-content: center; position: absolute; width: 23px;height: 70px;background-color: rgba(113,113,113,0.3); cursor: pointer;transition: opacity 1s; }
   .Time-limited{width: 1200px;margin: 0 auto; display: flex; margin-top: 20px; }
   .Time_Banner{width: 234px;height: 242px;}
-    .Time-limited_list{display: flex; position: relative; width: 1500px}
+    .Time-limited_list{display: flex; position: relative; width: 1920px}
   .Time-limited_list li{ margin-left: 1px; display: flex;flex-direction: column;justify-content: center; text-align: center; width: 241px;overflow: hidden; background-color: #fff; position: relative;}
   .Time-limited_list li .endTime{height: 26px; width: 90%;margin: 0 auto; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px; line-height: 26px;}
   .Time-limited_list li .endTimebg{background-color: #e0effc;}
