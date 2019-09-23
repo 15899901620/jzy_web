@@ -12,7 +12,7 @@
 			</div>
 			<div class="hotbidding">
 				<div class="Time_Banner pr">
-					<img src="/img/Time_banner.png" />
+					<img src="/img/Time_banner.jpg" />
 					<a class="bidders_front" href="/bidders"></a>
 				</div>
 				<hotbidding title="热门竞拍"></hotbidding>
@@ -111,7 +111,7 @@ export default {
             store.dispatch('spot/getSpotList', {
                 current_page: 1,
                 page_size: 20
-            })  
+            })
         ])*/
     },
 
@@ -152,8 +152,8 @@ export default {
       })
     },
     methods: {
-       
+
     },
-  
+
 }
 </script>

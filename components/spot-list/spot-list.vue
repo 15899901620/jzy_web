@@ -54,7 +54,7 @@
       <h1 style="width: 7%;">操作</h1>
     </div>
     <ul class="Xhlist">
-      <template v-if="$store.state.spot.spotList">
+      <template v-if="$store.state.spot.spotList.length>0">
         <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
           <span style="width: 10%;">{{item.category_name}}</span>
           <span style="width: 16%;">{{item.sku_name}}</span>
@@ -109,7 +109,7 @@
         <p>你未登录会员无法下单，请您登录后再下单！</p>
       </div>
       <div slot="footer">
-        <Button type="primary" :loading="modal_loading" @click="goLogin">去登录</Button>
+        <Button type="primary" :loading="modal_loading" @click="toLogin">去登录</Button>
       </div>
     </Modal>
   </div>
@@ -130,6 +130,9 @@
 				ISlogin: false
 			}
 		},
+      mounted(){
+		  console.log('spotList',this.$store.state.spot.spotList)
+      },
 		methods: {
 			addOrder(id) {
 				location.href='/spot/order/'+id

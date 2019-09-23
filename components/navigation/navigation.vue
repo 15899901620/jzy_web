@@ -14,6 +14,9 @@ const prefixCls = 'ant-navigation'
 
 export default {
     name: 'Navigation',
+    mounted(){
+        console.log("middleNav",this.$store.state.common.nav.middleNav)
+    },
     computed: {
         selected() {
             return !this.$route.path ? '/' : this.$route.path
