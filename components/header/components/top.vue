@@ -4,9 +4,9 @@
     <!--头部-文字-->
     <div class="IndexTop">
       <div class="w1200 TopPos">
-        <div class="">您好，欢迎来到巨正源化工交易网！</div>
+        <div class="">您好，欢迎来到巨正源化科技交易平台！</div>
         <ul class="UserList">
-          <li>巨正源首页</li>
+          <li>首页</li>
         </ul>
 
       </div>

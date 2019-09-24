@@ -37,7 +37,7 @@ let api = {
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',
     supplierCodeCheck: '/user/supplier/checkCode',
-    supplierCodeSend: '/user/supplier/code',
+    supplierCodeSend: '/user/supplier/login/code',
     supplierInfor:'/user/supplier/info',
     supplierEdit: '/user/supplier/edit',
     userRepassWd: '/user/m/updatePwd',

@@ -4,12 +4,12 @@
       <div class="indexHead" @click="User"><img  src="../../../static/img/index_head.png"/></div>
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
-        <p class="gray">欢迎来到巨正源交易网!</p>
+        <p class="gray">欢迎来到巨正源化科技交易平台!</p>
       </div>
     </div>
     <div class="loginReg mt10"><a  @click="Login" class="loginbg">登 录</a><a @click="register"   class="registerbg ml10">注 册</a></div>
     <ul class="NewsList">
-      <li @click="cur=0" :class="{curr:cur==0}">网站公告</li><li @click="cur=1" :class="{curr:cur==1}">行业资讯</li>
+      <li @click="cur=0" :class="{curr:cur==0}">网站公告</li><li @click="cur=1" :class="{curr:cur==1}">公司动态</li>
     </ul>
     <ul class="news">
       <li v-show="cur==0">
