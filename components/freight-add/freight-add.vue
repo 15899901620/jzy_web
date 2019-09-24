@@ -58,7 +58,7 @@
                 <Row index="2">
                     <Col span="12">
                         <FormItem label="用车时间" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd"    type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                                <Date-picker    format="yyyy-MM-dd"  :options="options4"  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
