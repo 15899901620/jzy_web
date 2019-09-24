@@ -296,7 +296,6 @@ export default {
             //   const res = await addressAdd(this, params)
 
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-              console.log(res)
                 if(res) {
                     this.$Modal.success({
                         title: '提示',

@@ -112,7 +112,7 @@ export default {
       updateChackPhone: 'login/updateChackPhone'
     }),
     onTime(res){
-      console.log(!res)
+      
       if(res){
         this.loginsupplierform.slidecode = res
       }else{

@@ -27,7 +27,6 @@ export const actions = {
         commit('updateCurrPage', parseInt(params.current_page))
         
         const res = await specialList(this, params).then(response => {
-            console.log('tag', response)
             commit('updatespeciallist', response)
         })
         .catch(error => {

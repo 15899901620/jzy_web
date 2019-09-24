@@ -91,7 +91,7 @@
 				this.mySeconds = `${add(this.timeObj.seconds)}`
 				// 当时间差小于等于0时,停止倒计时
 				if (time <= 0) {
-					console.log('time:', time)
+					
 					this.isStop = true
 					this.clocker = this.endMsg || '已结束'
 					//this.$emit('onTimeOver')

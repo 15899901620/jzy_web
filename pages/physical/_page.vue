@@ -148,8 +148,6 @@ export default {
     },
     methods: {
         async initCategoryListData(){
-            console.log('aaaa')
-            console.log(this.physicalHotlist)
             const res = await sendHttp(this, false, server.api.product.categoryList, {'pid': 0})
             this.categoryList = res.data
         },

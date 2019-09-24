@@ -673,7 +673,6 @@
 			},
 			//触发第一步的下一步
 			handleSubmit(name) {
-				console.log('handleSubmit', this.phoneValid)
 				if (!this.phoneValid) {
 					this.$Message.info({
 						content: '手机号有误',

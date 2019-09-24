@@ -44,7 +44,7 @@ export const actions = {
         })
     },
     async getHotSearch({ commit },  params = {}) {
-        console.log('tag', '')
+        ('tag', '')
         return await this.$axios.$get(api.prefix + api.api.search.hotsearch, { params })
         .then(response => {
             commit('updateHotSearch', response)
