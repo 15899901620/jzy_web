@@ -10,6 +10,15 @@
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
         <div v-if="current == 0">
+		  <Row :gutter="24" index="1">
+            <Col span="21">
+              <FormItem prop="Imgcode" label="注册类型：">
+                <Select v-model="formCustom.isLogisticsCompany">
+                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="phone" label="手 机 号：">
@@ -54,15 +63,7 @@
               </FormItem>
             </Col>
           </Row>
-          <Row :gutter="24" index="1">
-            <Col span="21">
-              <FormItem prop="Imgcode" label="注册类型：">
-                <Select v-model="formCustom.isLogisticsCompany">
-                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
+       
           <Row :gutter="24" index="5">
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">
@@ -262,7 +263,7 @@
       </Form>
     </div>
     <Modal
-        title="供应商注册协议"
+        :title="title"
         v-model="protocolModalShow"
         @on-cancel="protocolModalCancel"
         :width='700'
@@ -444,7 +445,8 @@
 				registType:[
           {'label': '供应商','value':0},
           {'label': '承运商','value':1},
-        ],
+		],	
+				title:'供应商注册协议',
 				protocolModalShow: false,
 				CodeCate: 'Codeuserspplier',
 				identifyCodes: "1234567890",
@@ -904,6 +906,9 @@
 				}
 			},
 			protocolModalToShow() {
+				if(this.formCustom.isLogisticsCompany==1){
+					this.title='承运商注册协议'
+				}
 				this.protocolModalShow = true
 			},
 			protocolOkClick() {
@@ -915,6 +920,7 @@
 			},
 			//确认协议
 			protocol() {
+				
 				this.formCustom.single = true
 				this.protocolModalShow = false
 

@@ -50,7 +50,7 @@
 			return {
 				loginList: [
 					{name: '会员登录', registerName: 'member'},
-					{name: '供应商登录', registerName: 'supply'}
+					{name: '供应/承运商登录', registerName: 'supply'}
 				],
 				nowIndex: 0,
 				registerName: 'member'
