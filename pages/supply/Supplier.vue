@@ -88,7 +88,7 @@
 
 	export default {
 		name: "index",
-		middleware: 'supplierAuth',
+		middleware: 'carrierAuth',
 		layout: 'membercenter',
 		components: {
 			pages: pagination.pages,
@@ -167,18 +167,18 @@
 			async getOrderList() {
 				let params = {
 					'dispatchFullAddress' : this.dispatchFull,
-          'receiptFullAddress' :  this.receiptFull,
-          'current_page' : this.current_page,
-          'page_size' : this.page_size
-        }
+					'receiptFullAddress' :  this.receiptFull,
+					'current_page' : this.current_page,
+					'page_size' : this.page_size
+					}
 
-				const res = await sendHttp(this, true, server.api.freight.freightList, params, 2)
+				const res = await sendHttp(this, true, server.api.freight.getPageList, params, 2)
 				this.dataList = res.data.items;
 				this.total = res.data.total
 			},
 		},
-    mounted(){
-			this.getOrderList()
-    }
+		mounted(){
+				this.getOrderList()
+		}
 	}
 </script>

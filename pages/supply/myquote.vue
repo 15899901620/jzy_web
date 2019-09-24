@@ -83,7 +83,7 @@ import server from "../../config/api";
 import pagination from '../../components/pagination'
 export default {
     name: "index",
-	middleware: 'memberAuth',
+	middleware: 'carrierAuth',
     layout:'membercenter',
     components:{
         pages: pagination.pages,
@@ -191,12 +191,8 @@ export default {
             this.total=res.data.total
         },
     },
-    created(){
-        if(this.isLogin()){
-            this.getOrderList()
-        }else{
-            window.location.href = '/login'
-        }
+    mounted(){
+        this.getOrderList()
     }
 }
 </script>

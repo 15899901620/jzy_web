@@ -38,7 +38,7 @@
                 </Row>
                 <Row index="0">
                     <Col span="12">
-                        <FormItem label="联系人姓名" >
+                        <FormItem label="联系人姓名" prop="name">
                             <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
                         </FormItem>
                     </Col>
@@ -51,14 +51,14 @@
                 <Row index="1">
                     <Col span="22">
                         <FormItem label="提货地址" >
-                            <Input v-model="formAddress.phone" disabled ></Input>
+                            <Input v-model="formAddress.dispatchFullAddress" disabled ></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="2">
                     <Col span="12">
                         <FormItem label="用车时间" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd"  :options="options4"  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                                <Date-picker    format="yyyy-MM-dd"    type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
@@ -190,14 +190,13 @@ export default {
                 callback();
             }
         };
-        const valdemandBeginDate=(rule, value, callback) => {
+        const validatedemandEnd=(rule, value, callback) => {
             if (value === '') {
-                callback(new Error('用车开始时间'));
+                callback(new Error('用车时间不能为空'));
             } else {
                 callback();
             }
         };
-        
         return {
             options4: {
                 disabledDate: date => {
@@ -231,6 +230,8 @@ export default {
                 state: '', //省
                 city: '',     //市
                 district: '',      //区县
+                receiver_district:'',
+                dispatchFullAddress:'',
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
                 demandBeginDate:'',
@@ -238,9 +239,6 @@ export default {
                 alias:''             //别名
             },
             ruleValidate: {
-                demandBeginDate:[
-                     { validator: valdemandBeginDate, trigger: 'blur',required:true }
-                ],
                 name: [
                     { validator: validatename, trigger: 'blur' ,required:true}
                 ],
@@ -255,6 +253,9 @@ export default {
                 ],
                 address:[
                     { validator: validateaddress, trigger: 'blur' ,required:true}
+                ],
+                demandEndDate:[
+                    { validator: validatedemandEnd, trigger: 'blur' ,required:true}
                 ],
             }
         }
@@ -351,6 +352,7 @@ export default {
                     tax_id:this.tax_id,
                     orderId:this.datalist.id,
                     contact:this.formAddress.contact,
+                    dispatchFullAddress:this.formAddress.dispatchFullAddress,
                     phone: this.formAddress.phone,   //收货人电话
                     receiptCountryId: this.formAddress.countryId,   //国家
                     receiptState: this.formAddress.state, //省

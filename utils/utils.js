@@ -55,6 +55,6 @@ export default {
 	},
 	getSupperInfoInClient: function () {
 		let info = this.getCookiesInClient('supplierInfor')
-		return info ? info : ''
+		return info ? JSON.parse(decodeURIComponent(info)) : ''
 	},
 }
