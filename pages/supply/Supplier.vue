@@ -81,7 +81,6 @@
 
 <script>
 	import Navigation from '../../components/navigation'
-	import {getCookies} from '../../config/storage'
 	import paydeposit from '../../components/paydeposit'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
@@ -89,6 +88,7 @@
 
 	export default {
 		name: "index",
+		middleware: 'supplierAuth',
 		layout: 'membercenter',
 		components: {
 			pages: pagination.pages,

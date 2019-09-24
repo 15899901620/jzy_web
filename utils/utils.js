@@ -41,4 +41,20 @@ export default {
 		Cookie.set('websuppliertoken', '')
 		location.href='/'
 	},
+
+	getSupperTokenInServer: function (req) {
+		let cookies = this.getCookiesInServer(req)
+		return cookies.websuppliertoken ? cookies.websuppliertoken : ''
+	},
+	getSupperTokenInClient: function () {
+		return this.getCookiesInClient('websuppliertoken')
+	},
+	getSupperInfoInServer: function (req) {
+		let cookies = this.getCookiesInServer(req)
+		return cookies.supplierInfor ? JSON.parse(decodeURIComponent(cookies.supplierInfor)) : ''
+	},
+	getSupperInfoInClient: function () {
+		let info = this.getCookiesInClient('supplierInfor')
+		return info ? info : ''
+	},
 }
