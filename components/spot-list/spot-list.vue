@@ -52,7 +52,9 @@
       </template>
       <template v-else>
         <li>
-          <p style="width:100%; text-align:center">暂无任何有效的报价信息！</p>
+          <p style="width:100%; text-align:center; padding:60px;">
+            <img src="../../static/img/nodata.png"/>
+          </p>
         </li>
       </template>
     </ul>

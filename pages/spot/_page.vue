@@ -64,7 +64,7 @@
             <span style="width: 7%;">操作</span>
           </div>
           <ul class="Xhlist">
-            <template v-if="$store.state.spot.spotList">
+            <template v-if="$store.state.spot.spotList.length > 0">
               <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
                 <span style="width: 10%;">{{item.category_name}}</span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
@@ -104,12 +104,14 @@
               </li>
             </template>
             <template v-else>
-              <li>
-                <p style="width:100%; text-align:center">暂无任何有效的报价信息！</p>
+              <li style="height:500px;">
+                <p style="width:100%; text-align:center; padding:60px;">
+                  <img src="../../static/img/nodata.png"/>
+                </p>
               </li>
             </template>
           </ul>
-          <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList">
+          <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
             <pages :total="$store.state.spot.total" :show-total="showTotal" :value="current_page"></pages>
           </div>
         </div>
@@ -134,7 +136,12 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
-				store.dispatch('common/getFriendlyList'),
+        store.dispatch('common/getFriendlyList'),
+        //获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {
+					catId: 0,
+					indexShow: 1
+				}),
 				//获取筛选条件
 				store.dispatch('spot/getFilterConditonData'),
 				//获取报价
