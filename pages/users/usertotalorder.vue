@@ -8,10 +8,10 @@
         <div class="TableList">
           <div class="titleOrder mt15">
             <ul class="dflex">
-              <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">全部订单({{this.total_cn}})</li>
-              <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">待付款({{this.unpay_cn}})</li>
-              <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">已付款({{this.payed_cn}})</li>
-              <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">已取消({{this.cancel_cn}})</li>
+              <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">全部订单({{$store.state.member.orderCount.total_cn}})</li>
+              <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">待付款({{$store.state.member.orderCount.unpay_cn}})</li>
+              <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">已付款({{$store.state.member.orderCount.payed_cn}})</li>
+              <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">已取消({{$store.state.member.orderCount.cancel_cn}})</li>
             </ul>
           </div>
           <div class="order_operate">
@@ -35,24 +35,20 @@
             <span style="width: 15%;">订单状态</span>
             <span style="width: 15%;">订单操作</span>
           </div>
-          <template v-if="datalist.length > 0">
-            <table v-for="(item, index) in datalist" :key="index" class="listT mt10" border="" cellspacing=""
+          <template v-if="$store.state.member.orderList.length > 0">
+            <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
                    cellpadding="">
               <tbody>
               <tr class="Ttitle graybg">
                 <td colspan="7">
-                                <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
-                                    <router-link :to="{name:'users-order-datail-id', params:{id:item.id}}"
-                                                 class="mt5 blackFont">
-                                        <span class="blue">{{item.orderNo}}</span>
-                                    </router-link>
-                                </span>
+                  <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
+                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
+                  </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
                   <span class="fr mr15" v-show="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>
                 </td>
               </tr>
               <tr class="detailTable">
-
                 <td>{{item.skuName}}</td>
                 <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                 <td>{{item.orderNum}}</td>
@@ -83,19 +79,19 @@
               </tr>
               </tbody>
             </table>
+            <!--页码-->
+            <Page style="margin:20px auto; float:right;" :total="$store.state.member.orderListTotal" :current="current_page" @on-change="changePage"
+                  :page-size="page_size" @on-page-size-change="changePageSize"></Page>
           </template>
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-          <!--页码-->
-          <Page style="margin:20px auto; float:right;" :total="total" :current="current_page" @on-change="changePage"
-                :page-size="page_size" @on-page-size-change="changePageSize"></Page>
         </div>
       </div>
     </div>
     <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
-    <address-dialog :isshow="addloading" @unChange="unaddChange" :datalist='addList'></address-dialog>
-    <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
+    <FreightAdd :isshow="addloading" @unChange="unaddChange" :datalist='addList'></FreightAdd>
+    <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
   </div>
 </template>
 
@@ -105,16 +101,16 @@
 	import pagination from '../../components/pagination'
 	import config from '../../config/config'
 	import paydeposit from '../../components/paydeposit'
-	import AddressDialog from '../../components/freight-add/freight-add'
-	import AddressDetail from '../../components/freight-add/freght-detail'
+	import FreightAdd from '../../components/freight-add/freight-add'
+	import FreightDetail from '../../components/freight-add/freght-detail'
 
 	export default {
 		name: "usertotalorder",
 		middleware: 'memberAuth',
 		layout: 'membercenter',
 		components: {
-			AddressDetail,
-			AddressDialog,
+			FreightAdd,
+			FreightDetail,
 			usernav: Navigation.user,
 			payorder: paydeposit.order
 		},
@@ -133,15 +129,9 @@
 				payloading: false,
 				dataRow: {},
 				addList: {},
-				datalist: [],
 				current_page: 1,
 				page_size: 5,
-				total: 0,
 				currTabs: 0,
-				total_cn: 0,
-				unpay_cn: 0,
-				payed_cn: 0,
-				cancel_cn: 0,
 				formSearch: {
 					orderType: '',
 					status: '',
@@ -152,6 +142,18 @@
 			}
 		},
 		methods: {
+			async getSourceData() {
+				let params = {
+					current_page: this.current_page,
+					page_size: this.page_size,
+					...this.formSearch
+				}
+				this.$store.dispatch('member/getOrderList', params)
+			},
+			async getCountData() {
+				this.$store.dispatch('member/getOrderCount')
+			},
+
 			paymentBut(row) {
 				this.payloading = true
 				this.dataRow = {
@@ -163,7 +165,6 @@
 				this.getSourceData()
 			},
 			addAddress() {
-
 				this.addloading = true
 			},
 			unaddChange(res) {
@@ -212,25 +213,7 @@
 			getOrderState(typeId) {
 				return config.orderState[typeId]
 			},
-			async getSourceData() {
-				let params = {
-					current_page: this.current_page,
-					page_size: this.page_size,
-					...this.formSearch
-				}
-				const res = await orderpage(this, params)
-				this.datalist = res.data.items
-				this.total = res.data.total
-			},
-			async getCountData() {
-				const res = await orderCount(this, {})
-				if (res.status == 200) {
-					this.total_cn = res.data.total_cn
-					this.unpay_cn = res.data.unpay_cn
-					this.payed_cn = res.data.payed_cn
-					this.cancel_cn = res.data.cancel_cn
-				}
-			},
+
 			onSearch() {
 				this.current_page = 1
 				this.page_size = 20
