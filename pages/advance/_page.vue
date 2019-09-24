@@ -14,14 +14,14 @@
                     </div>
                     <div class="dflex whitebg" style="justify-content: space-between; align-items: center;">
                         <div class="XHsearch" style="display: flex;">
-                            <span>品种</span><input type="text" class="XHsearchInput" placeholder="请输入品种"/>
-                            <span class="ml15">牌号</span><input type="text" class="XHsearchInput" placeholder="请输入牌号"/>
+                            <span>品种</span><input type="text" v-model="categoryName" class="XHsearchInput" placeholder="请输入品种"/>
+                            <span class="ml15">牌号</span><input type="text" v-model="skuName" class="XHsearchInput" placeholder="请输入牌号"/>
                             <div class="ml20">
-                                <input type="text" class="priceInput" placeholder="￥最低价"/>-<input type="text"
-                                                                                                  class="priceInput"
+                                <input type="text" v-model="minPrice" class="priceInput" placeholder="￥最低价"/>-<input type="text"
+                                                                                                  class="priceInput" v-model="maxPrice"
                                                                                                   placeholder="￥最高价"/>
                             </div>
-                            <div class="xhBtn">确定</div>
+                            <div class="xhBtn" @click="spotData">确定</div>
                         </div>
                         <div class="mr15 fs14">共搜到<span class="orangeFont">845</span>条数据</div>
                     </div>
@@ -40,10 +40,10 @@
                     <ul class="Xhlist">
                         <template v-if="spotList">
                             <li v-for="(item, index) in spotList" :key="index">
-                                <span style="width: 11%;">PP</span>
-                                <span style="width: 11%;">F08</span>
+                                <span style="width: 11%;">{{item.category_name}}</span>
+                                <span style="width: 11%;">{{item.sku_name}}</span>
                                 <span style="width: 10%;">{{item.manufacturer}}</span>
-                                <span style="width: 14%;">东莞</span>
+                                <span style="width: 14%;">{{item.warehouse_name}}</span>
                                 <span style="width: 13%;">{{item.total_num}}</span>
                                 <span style="width: 14%;">{{item.last_delivery_time}}</span>
                                 <span class="orangeFont" style="width: 14%;">¥{{item.base_price}}</span>
@@ -146,8 +146,12 @@
         },
         data() {
             return {
-                current_page: parseInt(this.$route.query.page) || 1,
-                page_size: 10,
+                skuName: '',
+                categoryName: '',
+                minPrice: '',
+                maxPrice: '',
+                currentPage: parseInt(this.$route.query.page) || 1,
+                pageSize: 10,
             }
         },
         methods: {
@@ -167,10 +171,14 @@
             },
             async spotData() {
                 let params = {
-                    current_page: this.current_page,
-                    page_size: this.page_size
+                    sku_name: this.skuName,
+                    category_name: this.categoryName,
+                    min_price: this.minPrice,
+                    max_price: this.maxPrice,
+                    current_page: this.currentPage,
+                    page_size: this.pageSize
                 };
-                store.dispatch('advance/getAdvanceList', params)
+                this.$store.dispatch('advance/getAdvanceList', params)
             },
         },
         watch: {
