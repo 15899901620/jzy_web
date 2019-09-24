@@ -110,7 +110,6 @@ export const actions = {
 	async getArticleCatList({commit}, params) {
 		return await this.$axios.$get(api.prefix + api.api.information.infocate, {params})
 			.then(response => {
-				// console.log('n', response)
 				commit('updateArticleCatList', response)
 			})
 			.catch(error => {
@@ -120,7 +119,6 @@ export const actions = {
 	async getArticleDetail({commit}, params) {
 		return await this.$axios.$get(api.prefix + api.api.information.infodetail, {params})
 			.then(response => {
-				console.log('n', response)
 				commit('updateHotArticleDetail', response)
 			})
 			.catch(error => {

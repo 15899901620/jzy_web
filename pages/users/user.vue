@@ -199,7 +199,6 @@
 				return config.orderState[typeId]
 			},
 			paymentBut(row) {
-				// console.log(row)
 				this.payloading = true
 				this.dataRow = {
 					...row,

@@ -130,7 +130,6 @@ export default {
             }
            
         }
-        console.log('currCategoryInfo',this.currCategoryInfo)
         if(this.currCategoryInfo == ''){
             this.currCategoryInfo = {
                 title:'全部',

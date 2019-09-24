@@ -347,24 +347,21 @@ export default {
                 });
                 return
             }else {
-                let params = {
-                    inquiryMinute:this.title,
-                    tax_id:this.tax_id,
-                    orderId:this.datalist.id,
-                    contact:this.formAddress.contact,
-                    dispatchFullAddress:this.formAddress.dispatchFullAddress,
-                    phone: this.formAddress.phone,   //收货人电话
-                    receiptCountryId: this.formAddress.countryId,   //国家
-                    receiptState: this.formAddress.state, //省
-                    receiptCity: this.formAddress.city,     //市
-                    receiptDistrict: this.formAddress.district,      //区县
-                    demandBeginDate:this.formAddress.demandBeginDate,
-                    demandEndDate:this.formAddress.demandEndDate,
-                }
-            //   const res = await addressAdd(this, params)
-
+              let params = {
+                inquiryMinute:this.title,
+                tax_id:this.tax_id,
+                orderId:this.datalist.id,
+                contact:this.formAddress.contact,
+                dispatchFullAddress:this.formAddress.dispatchFullAddress,
+                phone: this.formAddress.phone,   //收货人电话
+                receiptCountryId: this.formAddress.countryId,   //国家
+                receiptState: this.formAddress.state, //省
+                receiptCity: this.formAddress.city,     //市
+                receiptDistrict: this.formAddress.district,      //区县
+                demandBeginDate:this.formAddress.demandBeginDate,
+                demandEndDate:this.formAddress.demandEndDate,
+              }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-              console.log(res)
                 if(res) {
                     this.$Modal.success({
                         title: '提示',

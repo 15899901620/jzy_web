@@ -664,11 +664,16 @@ a {
 }
 .XhlistTitle {
 	display:flex;
-	align-items:center;
+  align-items:center;
+  background: #fafafa;
 }
-.XhlistTitle h1 {
+.XhlistTitle span {
 	text-align:center;
-	margin:10px 0;
+  margin:10px 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 32px;
+  font-weight: 700;
 }
 .Xhlist li {
 	display:flex;
@@ -1885,3 +1890,16 @@ gAccount {
 .saveInfor:hover{background-color: #007de4;color: #fff;}
 .licenseImg{width: 100px;height: 80px;} .licenseImg img{width: 100%; height: 100%;}
 .inforInput .ivu-input{height: 40px;}
+.newsTile a {
+  color: #666;
+  font-size: 14px;
+}
+.newsTile a:hover {
+  color: #2b85e4;
+}
+.newsTimeLink a {
+  color: #666;
+}
+.newsTimeLink a:hover {
+  color: #2b85e4;
+}

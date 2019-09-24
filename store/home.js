@@ -19,7 +19,6 @@ export const mutations = {
   
 export const actions = {
     async getCoBrandsInfo({ commit },  params) {
-        console.log('params', params)
         return await this.$axios.$get(api.prefix + api.api.sysconf.cooperativeBrand, { params })
         .then(response => {
             if(response.items) {
