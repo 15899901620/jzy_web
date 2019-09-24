@@ -79,7 +79,7 @@
 		fetch({store}) {
 			return Promise.all([
 				//获取顶部、中部、底部导航信息
-        store.dispatch('common/getNavList'),
+                 store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
@@ -89,7 +89,7 @@
 					catId: 0,
 					indexShow: 1
 				}),
-        //获取轮播图
+                //获取轮播图
 				store.dispatch('common/getBannerList', 1),
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
@@ -141,19 +141,19 @@
 		data() {
 			return {
 				bidderData: {
-					title: '更多...',
+					title: '更多',
 					url: '/bidders'
 				},
 				spotData: {
-					title: '前往现货超市...',
+					title: '前往现货超市',
 					url: '/spot'
 				},
 				moreData: {
-					title: '更多...',
+					title: '更多',
 					url: '/article/1'
 				},
 				logData: {
-					title: '更多...',
+					title: '更多',
 					url: '/logistics'
 				},
 				heightNum: 320

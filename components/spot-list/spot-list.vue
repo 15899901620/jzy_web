@@ -89,7 +89,7 @@
                 style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
             <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                  @click="addOrder(item.id)">下单</div>
-            <div v-else class="ListBtn" @click="toLogin">登录</div>
+            <div v-else class="ListBtn" @click="goLogin">登录</div>
           </span>
         </li>
       </template>
@@ -109,7 +109,7 @@
         <p>你未登录会员无法下单，请您登录后再下单！</p>
       </div>
       <div slot="footer">
-        <Button type="primary" :loading="modal_loading" @click="toLogin">去登录</Button>
+        <Button type="primary" :loading="modal_loading" @click="goLogin">去登录</Button>
       </div>
     </Modal>
   </div>
