@@ -666,6 +666,15 @@ a {
 	display:flex;
   align-items:center;
   background: #fafafa;
+
+}
+.XhlistTitle h1{
+	height: 35px;
+	display:flex;
+
+	align-items:center;
+
+	justify-content: center;
 }
 .XhlistTitle span {
 	text-align:center;

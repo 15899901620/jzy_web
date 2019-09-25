@@ -58,6 +58,7 @@ export const actions = {
 		commit('updateCurrPage', parseInt(params.current_page))
 
 		let res = await sendCurl(this, server.api.information.getArticleList, params)
+		console.log("res",res)
 		if (res.status === 200) {
 			commit('updateArticleList', res.data.items)
 		}

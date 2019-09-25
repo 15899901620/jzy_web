@@ -129,7 +129,9 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
+
               <FormItem label="营业执照：" prop="contacterEmail">
+
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
@@ -142,7 +144,7 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+              <div class="uploadimg">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
           </Row>
           <Row :gutter="24" index="0">
@@ -160,13 +162,13 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
             <Col span="21" style="text-align:center;">
-              <Button class="CarrierRegister" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister" @click="memberReset">提 交</Button>
+              <Button class="CarrierRegister mt10" @click="handleUp">上一步</Button>
+              <Button type="primary" class="CarrierRegister mt20" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
@@ -324,8 +326,7 @@
 				}
 			};
           const validateSlide = (rule, value, callback) => {
-            console.log("value",value)
-            if (value === 0) {
+             if (value === 0) {
                console.log("value",value)
               callback(new Error('请滑动完成验证'));
             } else {
@@ -393,7 +394,7 @@
 						{validator: validatemobilecode, trigger: 'blur'}
 					],
 					companyName: [
-						{  validator: validateCompanyName, trigger: 'blur'}
+						{ required:true, validator: validateCompanyName, trigger: 'blur'}
 					],
 					contacterEmail: [
 						{ trigger: 'blur'}
@@ -405,19 +406,19 @@
 						{required:true, validator: validateTaxId, trigger: 'blur'}
 					],
 					invBankName: [
-						{ validator: validateInvBankName, trigger: 'blur'}
+						{required:true,  validator: validateInvBankName, trigger: 'blur'}
 					],
 					invBankAccount: [
 						{ required:true,  validator: validateInvBankAccount, trigger: 'blur'}
 					],
 					invAddress: [
-						{   validator: validateInvAddress, trigger: 'blur'}
+						{ required:true,  validator: validateInvAddress, trigger: 'blur'}
 					],
 					invTelephone: [
-						{    validator: validateInvTelephone, trigger: 'blur'}
+						{  required:true,  validator: validateInvTelephone, trigger: 'blur'}
 					],
 					contacter: [
-						{  validator: validateContacter, trigger: 'blur'}
+						{ required:true, validator: validateContacter, trigger: 'blur'}
 					],
                     slidecode: [
                       {  validator: validateSlide, trigger: 'blur'}
