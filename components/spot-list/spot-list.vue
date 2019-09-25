@@ -1,17 +1,16 @@
 <template>
   <div class="hotspot">
     <div class="XhlistTitle">
-       <h1 style="width: 11%;">品种</h1>
-      <h1 style="width: 16%;">牌号</h1>
-      <h1 style="width: 16%;">厂商</h1>
-      <h1 style="width: 10%;">交货仓</h1>
-      <h1 style="width: 6%;">包装方式</h1>
-      <h1 style="width: 8%;">剩余数量（吨）</h1>
-      <h1 style="width: 9%;">单价（元/吨）</h1>
-      <h1 style="width: 8%;">距下架时间</h1>
-      <h1 style="width: 7%;">提货期限</h1>
-      <h1 style="width: 12%;">操作</h1>
-
+      <span style="width: 11%;">品种</span>
+      <span style="width: 16%;">牌号</span>
+      <span style="width: 16%;">厂商</span>
+      <span style="width: 10%;">交货仓</span>
+      <span style="width: 6%;">包装方式</span>
+      <span style="width: 8%;">剩余数量（吨）</span>
+      <span style="width: 9%;">单价（元/吨）</span>
+      <span style="width: 8%;">距下架时间</span>
+      <span style="width: 7%;">提货期限</span>
+      <span style="width: 12%;">操作</span>
     </div>
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
