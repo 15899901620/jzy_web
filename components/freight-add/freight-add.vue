@@ -15,24 +15,24 @@
                 <Row index="0">
                     <Col span="12">
                         <FormItem label="订单号" >
-                            <Input v-model="OrderList.billNo"  disabled  placeholder="请输入订单号"></Input>
+                            <Input v-model="datalist.orderNo"  disabled  placeholder="请输入订单号"></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="货物名称" >
-                            <Input v-model="OrderList.freightGoods" disabled  placeholder="请输入货物名称"></Input>
+                            <Input v-model="datalist.skuName" disabled  placeholder="请输入货物名称"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="0">
                     <Col span="12">
                         <FormItem label="数量" >
-                            <Input v-model="OrderList.weight"  disabled placeholder="请输入数量"></Input>
+                            <Input v-model="datalist.orderNum"  disabled placeholder="请输入数量"></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="提货仓库" >
-                            <Input v-model="OrderList.dispatchFullAddress" disabled  placeholder="请输入提货仓库"></Input>
+                            <Input v-model="datalist.warehouseName" disabled  placeholder="请输入提货仓库"></Input>
                         </FormItem>
                     </Col>
                 </Row>
