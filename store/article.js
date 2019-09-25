@@ -14,7 +14,8 @@ export const state = () => {
 		noticeInfo: [],
 		articleInfo: [],
 		hotarticleInfo: [],
-		articleList: [],
+    articleList: [],
+    articleTotal: 0,
 		noticeList: [],
 		articledetail: {},
 		currPage: 0
@@ -24,6 +25,9 @@ export const state = () => {
 export const mutations = {
 	updateArticleList(state, data) {
 		state.articleList = data
+  },
+  updateArticleTotal(state, data) {
+		state.articleTotal = data
 	},
 	updateNoticeList(state, data) {
 		state.noticeList = data
@@ -58,9 +62,10 @@ export const actions = {
 		commit('updateCurrPage', parseInt(params.current_page))
 
 		let res = await sendCurl(this, server.api.information.getArticleList, params)
-		console.log("res",res)
+
 		if (res.status === 200) {
-			commit('updateArticleList', res.data.items)
+      commit('updateArticleList', res.data.items)
+      commit('updateArticleTotal', res.data.total)
 		}
 	},
 	async getNoticeList({commit}, params) {
@@ -118,8 +123,12 @@ export const actions = {
 			})
 	},
 	async getArticleDetail({commit}, params) {
+    console.log(params)
 		return await this.$axios.$get(api.prefix + api.api.information.infodetail, {params})
 			.then(response => {
+        if (response.errorcode) {
+          response = {}
+        } 
 				commit('updateHotArticleDetail', response)
 			})
 			.catch(error => {

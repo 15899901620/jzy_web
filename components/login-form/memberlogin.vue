@@ -11,7 +11,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify @onChange="onTime" :width="250"></slide-verify>
+            <slide-verify @onChange="onTime" :width="260"></slide-verify>
           </FormItem>
         </Col>
       </Row>
@@ -28,7 +28,6 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="password">
-
             <Input v-model="loginform.password" type="password" @keyup.enter.native="LoginForm" placeholder="登录密码"/>
           </FormItem>
         </Col>
@@ -273,7 +272,6 @@
 
 <style lang="less" scoped>
   .memberlogin {
-    margin-top: 15px;
 
     .butGetCode {
       position: absolute;

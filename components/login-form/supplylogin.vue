@@ -11,7 +11,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="260"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
@@ -270,7 +270,7 @@ export default {
 
 <style lang="less" scoped>
 .supplierlogin {
-  margin-top: 15px;
+
   .butGetCode {
     position: absolute;
     right: 15px;
