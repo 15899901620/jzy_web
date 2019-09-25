@@ -52,7 +52,7 @@
                         </template>
                     </ul>
                     <div class="whitebg ovh" style="padding:18px; text-align:center;">
-                        <pages :total="total" :show-total="showTotal" :value="current_page"></pages>
+                        <pages :total="total" :show-total="showTotal" :value="currentPage"></pages>
                     </div>
                 </div>
 
@@ -178,6 +178,7 @@
                     current_page: this.currentPage,
                     page_size: this.pageSize
                 };
+
                 this.$store.dispatch('advance/getAdvanceList', params)
             },
         },
@@ -186,6 +187,7 @@
                 this.$router.go(0);
             }
         },
+        created(){},
         computed: {
             spotList: function () {
                 return this.$store.state.advance.advanceList
