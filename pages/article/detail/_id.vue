@@ -1,7 +1,12 @@
 <template>
     <div class="body">
         <Header title="头部"></Header>
-        <div class="container" title="">
+        <div v-if="!articledetail">
+          <p style="width:100%; text-align:center">
+            <img src="../../../static/img/Nothing.png"/>
+          </p>
+        </div>
+        <div class="container" title="" v-else>
             <div class="breadcrumb">
                 <breadcrumb>
                     <breadcrumb-item><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
@@ -110,6 +115,7 @@ export default {
       ]
     }
   },
+
   computed:{
     ...mapState({
         articledetail: state => state.article.articledetail,
