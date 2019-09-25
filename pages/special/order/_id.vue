@@ -39,7 +39,7 @@
                                         <span style="margin-left: 15px">{{item.name}}</span>
                                         <span style="margin-left: 15px">{{item.phone}}</span>
                                         <span style="margin-left: 15px">身份证：{{item.idNumber}}</span>
-                                        <span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}} {{item.address}}</span>                                    
+                                        <span style="margin-left: 15px">{{item.stateName}} {{item.cityName}}{{item.districtName}} {{item.address}}</span>
                                     </Radio>
                                 </RadioGroup>
                             </li>
@@ -51,7 +51,7 @@
                 <div class="mt30 fs16 ml15 fwb">余额支付</div>
                 <ul class="DeliveryMethod ml35">
                     <li v-for="(item, index) in payList" :class="{'curr':index === payIndex}" :key="index">{{item.name}}</li>
-                    <div class="ml10 fs14">可用余额：<span class="orangeFont">￥{{capitalinfo.remain_fund}}</span>元</div>
+                    <div class="ml10 fs14">可用余额：<span class="orangeFont">{{capitalinfo.available_amount_format}}</span>元</div>
                     <a  class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
                 </ul>
                 <div class="orderCzTip">
@@ -164,7 +164,7 @@ export default {
             store.dispatch('system/getSystemCnf'),
         ])
     },
-    
+
     data() {
         return {
             orderinfo: {
@@ -236,10 +236,12 @@ export default {
         },
         //添加新的地址
         addNewAddress () {
-         
+
         },
         //选择运费
         setFreight(i, row){
+            console.log("i",i)
+            console.log("row",row)
             this.currfreight = i
             if(row){
                 this.currfreightdata =row
@@ -259,6 +261,7 @@ export default {
         },
         //选择提货或者配置
         chooseDelieryType (index) {
+            console.log("index",index)
             this.currentIndex = index
             if(index==1){
                 this.orderinfo.isDelivery = index
@@ -272,6 +275,7 @@ export default {
         async getMyCapital () {
             const res3=await capitalinfo(this, {})
             if(res3){
+                console.log("res3",res3)
                 this.capitalinfo = res3.data
             }
         },
@@ -353,7 +357,7 @@ export default {
                     this.orderinfo.totalAmount = (this.specialDetail.finalPrice * this.orderinfo.orderNum) + this.currfreightdata.basePrice
                 }else{
                     this.orderinfo.transportationMode = ''
-                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                    this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
                 }
             }
         },
@@ -375,7 +379,7 @@ export default {
                     this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
                 }
                 this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
             }else{
                 //自提
                 this.currMin = this.specialDetail.takeTheirMin
@@ -400,8 +404,8 @@ export default {
                     this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum + parseInt(this.currfreightdata.basePrice)
                 }else{
                     this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-                }  
-                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum 
+                }
+                this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
             }else{
                 //自提
                 this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
@@ -409,13 +413,13 @@ export default {
             }
         }
     },
-    mounted() {  
-     
+    mounted() {
+
     },
     created() {
         this.inLogin()
         this.getSourceData()
-        this.getMyCapital()   
+        this.getMyCapital()
         this.getMyAddress()
     },
     head() {
