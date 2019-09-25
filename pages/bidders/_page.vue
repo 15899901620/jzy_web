@@ -55,7 +55,7 @@
                             <div class="mt30 fs14">开始时间：{{items.beginTime}}</div>
                         </div>
                         <div class="acuOpear">
-                            <div style="display: flex; flex-direction: column; justify-content: flex-end">
+                            <div style=" width: 73%;  font-size: 15px;   display: flex; flex-direction: column; justify-content: center">
                                 <span class="mt10 ">城市：{{items.warehouseName}}</span>
                                 <span class="mt5">竞拍厂商：{{items.manufacturer}}</span>
                             </div>
@@ -124,7 +124,7 @@
             <Button type="default" size="large" @click="goLogin" >去登录</Button>
         </div>
     </Modal>
-        
+
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
 </div>
@@ -159,12 +159,12 @@ export default {
             ]
         }
     },
-    
+
     fetch({ store, params, query }) {
         return Promise.all([
 					//获取顶部、中部、底部导航信息
-					store.dispatch('common/getNavList'),
-					//获取系统配置
+                    store.dispatch('common/getNavList'),
+ 					//获取系统配置
 					store.dispatch('common/getSysConfig'),
 					//获取友情链接
 					store.dispatch('common/getFriendlyList'),
@@ -187,11 +187,11 @@ export default {
             bidderssoonData: state => state.bidders.bidderssoonData,
             biddersendData: state => state.bidders.biddersendData
         })
-        
+
     },
     methods:{
         //竞拍列表
-       
+
         async AuctionList(status,index){
 
             if(status){

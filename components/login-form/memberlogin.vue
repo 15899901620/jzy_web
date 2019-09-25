@@ -11,7 +11,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify @onChange="onTime"></slide-verify>
+            <slide-verify @onChange="onTime" :width="250"></slide-verify>
           </FormItem>
         </Col>
       </Row>
@@ -28,7 +28,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="password">
-            
+
             <Input v-model="loginform.password" type="password" placeholder="登录密码"/>
           </FormItem>
         </Col>
@@ -76,6 +76,7 @@
 				}
 			};
 			const validateSlide = (rule, value, callback) => {
+			  console.log("value",value)
 				if (value === 0) {
 					callback(new Error('请滑动完成验证'));
 				} else {
@@ -118,6 +119,7 @@
 				'updateUserInfof'
 			]),
 			onTime(res) {
+			  console.log("res",res)
 				if (res) {
 					this.loginform.slidecode = res
 				} else {

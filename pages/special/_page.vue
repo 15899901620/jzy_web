@@ -81,18 +81,21 @@ export default {
         query
     }) {
         return Promise.all([
-          //获取顶部、中部、底部导航信息
-          store.dispatch('common/getNavList'),
-          store.dispatch('system/getSystemCnf'),
-          store.dispatch('helper/getHelpCate', {
-            parentId: 0,
-            indexShow: 1
-          }),
-          store.dispatch('system/getLinksInfo'),
-          store.dispatch('system/getBannerInfo', {
-            positionId: 2
-          }),
-        ])
+
+			//获取顶部、中部、底部导航信息
+			store.dispatch('common/getNavList'),
+            store.dispatch('menu/getMenuList'),
+            store.dispatch('system/getSystemCnf'),
+            store.dispatch('helper/getHelpCate', {
+                parentId: 0,
+                indexShow: 1
+            }),
+            store.dispatch('system/getLinksInfo'),
+            store.dispatch('system/getBannerInfo', {
+                positionId: 2
+            }),
+
+         ])
     },
     components: {
         Header,

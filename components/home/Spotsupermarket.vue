@@ -2,7 +2,7 @@
   <div class="w1200 ">
     <div class="ListTitle  whitebg mt20">
       <div class="TitleName">现货超市</div>
-      <a class="mr20 mt15 mb15 gray fs14">前往超市选购 ></a>
+      <a class="mr20 mt15 mb15 gray fs14">前往超市选购 <span> > </span></a>
     </div>
     <div class="indexXhTitle   dflexAlem">
       <span style="width: 7%;">品种</span>

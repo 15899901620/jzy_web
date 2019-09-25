@@ -69,7 +69,7 @@
                                         <tbody>
                                             <tr class="Bidders_record_tr"  v-for="(items,index) in MineOfferRecord" :key="index" :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">
                                                 <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>
-                                                
+
                                                 <td><span>{{items.bidPrice}}</span></td>
                                                 <td><span>{{items.bidNum}}</span></td>
                                                 <td>
@@ -121,7 +121,7 @@
                                 <span class="fs16 ml15">{{detailDatabrid.reservationEndTime}}</span>
                             </div>
                             <div class="Bidders_record_result_icon"  v-if="detailDatabrid.type === 3"></div>
-                        </div> 
+                        </div>
                         <!--恭喜中标-->
                         <div class="Bidders_record_result_list orangebg  mt10" v-show="WinBidShow">
                             <span class="gxzb">恭喜中标</span>
@@ -375,9 +375,9 @@ export default {
             MinPrice:'',     //最小起拍价
             bidePrice:'',     //当前价
             bidersloading: false,
-            day: 0, 
-            hr: 0, 
-            min: 0, 
+            day: 0,
+            hr: 0,
+            min: 0,
             sec: 0
         }
     },
@@ -485,12 +485,13 @@ export default {
             let params={
                 id: this.auctionId
             }
-            
+            console.log("id",res)
             let res =await auctionInfor(this, params)
+            console.log("res",res)
             if(!res.data.errorcode && res.status === 200){
+
                 this.detailDatabrid = res.data
             }
-
             this.auctionNum=this.detailDatabrid.minOrder
             this.auctionBond=this.detailDatabrid.marginRatio
             if(this.detailDatabrid.type===1){    //即将开始
@@ -502,8 +503,8 @@ export default {
             if(this.detailDatabrid.type === 3) {
                 this.getwinningbid()
             }
-           
-            this.getpriceInfo(this.detailDatabrid.skuId)
+
+            this.getpriceInfo(this.detailDatabrid.skuNo)
             this.countdown()
         },
         //中标信息
@@ -534,7 +535,7 @@ export default {
         //最小起拍价
         async getpriceInfo(skuid){
             let params={
-                skuId: skuid,
+                skuNo: skuid,
                 type:2
             }
             let res =await priceListInfo(this, params)
@@ -654,7 +655,7 @@ export default {
                 //     //     text-align: left;
                 //     //     font-size: 14px;
                 //     // }
-                   
+
                 // }
             }
         }

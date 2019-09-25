@@ -102,9 +102,9 @@ export default {
         pages: pagination.pages
     },
     head () {
-    
+
         return {
-            
+
             title:    this.currCategoryInfo.seoTitle+'-巨正源',
             meta: [
                 { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.seoKeywords +',巨正源' },
@@ -114,29 +114,31 @@ export default {
     },
     data() {
         return {
+
             currCategoryInfo : ''
         };
     },
     methods: {
         showTotal(total) {
+            console.log('total',total)
             return `全部 ${total} 条`;
         },
         changePage (row) {
             let id = this.$route.params.id
             this.$router.push({name:'article-id',params:{id:id},query:{page:row}})
         },
-        
+
     },
     created(){
         let id = this.$route.params.id ? this.$route.params.id : 0
         let len = this.articleCat.length
         for (var i=0;i<len;i++)
-        { 
+        {
             if(this.articleCat[i].id == id){
                 this.currCategoryInfo = this.articleCat[i]
                 break
             }
-           
+
         }
         if(this.currCategoryInfo == ''){
             this.currCategoryInfo = {

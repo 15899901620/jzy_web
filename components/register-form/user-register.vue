@@ -13,31 +13,35 @@
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="phone" label="手 机 号：">
-                <Input v-model="formCustom.phone" class="CarrierIput" placeholder="请输入手机号"/>
+                <Input v-model="formCustom.phone" class="CarrierIput" id="phone" placeholder="请输入手机号"/>
               </FormItem>
             </Col>
           </Row>
           <Row :gutter="24" index="1">
-            <Col span="15">
-              <FormItem prop="Imgcode" label="验 证 码：">
-                <Input class="CarrierImgcode" v-model="formCustom.Imgcode" placeholder="请输入验证码" autocomplete="off"/>
-              </FormItem>
-            </Col>
-            <Col span="6">
-              <div class="captcha" @click="refreshCode">
-                <captcha :CodeCate="CodeCate" :contentWidth='131' :contentHeight='31'
-                         :identifyCode="identifyCode"></captcha>
-              </div>
+            <Col span="21">
+<!--              <FormItem prop="Imgcode" label="验 证 码：">-->
+<!--                <Input class="CarrierImgcode" v-model="formCustom.Imgcode" placeholder="请输入验证码" autocomplete="off"/>-->
+<!--              </FormItem>-->
+<!--            </Col>-->
+<!--            <Col span="6">-->
+<!--              <div class="captcha" @click="refreshCode">-->
+                <FormItem prop="slidecode" label="滑动验证：">
+                  <slide-verify @onChange="onTime" width="392" ></slide-verify>
+                </FormItem>
+
+<!--                <captcha :CodeCate="CodeCate" :contentWidth='131' :contentHeight='31'-->
+<!--                         :identifyCode="identifyCode"></captcha>-->
+<!--              </div>-->
             </Col>
           </Row>
           <Row :gutter="24" v-if="isopenSms && phoneValid" index="2">
             <Col span="15">
               <FormItem prop="mobilecode" label="短信验证：">
-                <Input class="CarrierImgcode" v-model="formCustom.mobilecode" placeholder="请输入验证码"/>
+                <Input class="CarrierImgcode" v-model="formCustom.mobilecode"  placeholder="请输入验证码"/>
               </FormItem>
             </Col>
             <Col span="6">
-              <div class="codeCarrier graybg" @click="getNoteValue" disabled>{{this.btnValue}}</div>
+              <div class="codeCarrier graybg" @click="getNoteValue" disabled="btnBoolen">{{this.btnValue}}</div>
             </Col>
           </Row>
           <Row :gutter="24" index="3">
@@ -66,7 +70,7 @@
           </Row>
           <Row :gutter="24" index="6">
             <Col span="12"></Col>
-            <Col span="9">
+            <Col span="25">
               <FormItem>
                 <Button type="primary" class="CarrierRegister" @click="handleSubmit('formCustom')">下一步</Button>
               </FormItem>
@@ -201,7 +205,7 @@
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
 	import {userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg} from '../../api/users'
-
+    import SlideVerify from '../slide-verify'
 	const appConfig = require('../../config/app.config')
 
 	export default {
@@ -271,7 +275,7 @@
 				}
 			};
 			const validateCompanyName = (rule, value, callback) => {
-				if (value === '') {
+ 				if (value === '') {
 					callback(new Error('请输入公司名称'));
 				} else {
 					this.companyChenckValid(value, callback)
@@ -319,6 +323,15 @@
 					callback();
 				}
 			};
+          const validateSlide = (rule, value, callback) => {
+            console.log("value",value)
+            if (value === 0) {
+               console.log("value",value)
+              callback(new Error('请滑动完成验证'));
+            } else {
+              callback();
+            }
+          };
 			return {
 				protocolModalShow: false,
 
@@ -329,6 +342,7 @@
 				identifyCode: "",
 				//图片验证通过后开启
 				isopenSms: false,
+                Width:392,
 				single: false,
 				//用来发判断发送验证码
 				isrefreshpic: false,
@@ -359,14 +373,15 @@
 					contacter: '',
 					business_license: '',
 					authorization_elc: '',
-					code: ''
+					code: '',
+                    slidecode: 0
 				},
 				ruleCustom: {
 					phone: [
-						{validator: validatePhone, trigger: 'blur'}
+						{  validator: validatePhone, trigger: 'blur'}
 					],
 					password: [
-						{validator: validatePass, trigger: 'blur'}
+						{  validator: validatePass, trigger: 'blur'}
 					],
 					repassword: [
 						{validator: validaterePass, trigger: 'blur'}
@@ -378,49 +393,74 @@
 						{validator: validatemobilecode, trigger: 'blur'}
 					],
 					companyName: [
-						{required: true, validator: validateCompanyName, trigger: 'blur'}
+						{  validator: validateCompanyName, trigger: 'blur'}
 					],
 					contacterEmail: [
-						{required: true, trigger: 'blur'}
+						{ trigger: 'blur'}
 					],
 					businessLicense: [
-						{required: true, trigger: 'blur'}
+						{ trigger: 'blur'}
 					],
 					taxId: [
-						{required: true, validator: validateTaxId, trigger: 'blur'}
+						{required:true, validator: validateTaxId, trigger: 'blur'}
 					],
 					invBankName: [
-						{required: true, validator: validateInvBankName, trigger: 'blur'}
+						{ validator: validateInvBankName, trigger: 'blur'}
 					],
 					invBankAccount: [
-						{required: true, validator: validateInvBankAccount, trigger: 'blur'}
+						{ required:true,  validator: validateInvBankAccount, trigger: 'blur'}
 					],
 					invAddress: [
-						{required: true, validator: validateInvAddress, trigger: 'blur'}
+						{   validator: validateInvAddress, trigger: 'blur'}
 					],
 					invTelephone: [
-						{required: true, validator: validateInvTelephone, trigger: 'blur'}
+						{    validator: validateInvTelephone, trigger: 'blur'}
 					],
 					contacter: [
-						{required: true, validator: validateContacter, trigger: 'blur'}
-					]
+						{  validator: validateContacter, trigger: 'blur'}
+					],
+                    slidecode: [
+                      {  validator: validateSlide, trigger: 'blur'}
+                    ]
 				}
 			}
 		},
 		components: {
 			steps,
 			step,
-			captcha
+			captcha,
+            SlideVerify
 		},
 		computed: {
 			classes() {
+
 				return [
 					`${prefixCls}`,
 					{[`${prefixCls}-shortcut`]: this.vertical},
 				];
 			},
+          ...mapState([
+            'slidecode'
+          ])
 		},
 		methods: {
+          // 滑动验证
+          onTime(res) {
+            console.log("res",res)
+            if (res) {
+              this.formCustom.slidecode = res
+              this.isopenSms = true
+            } else {
+              this.$Modal.warning({
+                title: '提示',
+                content: '验证失败！',
+                duration: 5,
+                styles: 'top:300px'
+              });
+            }
+          },
+
+
 			getUploadURL() {
 				this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
 			},
@@ -431,6 +471,7 @@
 					phone: value
 				}
 				const res = await userPhoneCheck(this, params)
+              console.log("res",res)
 				if (res.data && res.status === 200) {
 					this.phoneValid = false
 					callback(new Error('手机号码已注册'));
@@ -445,7 +486,9 @@
 					phone: this.formCustom.phone,
 					code: value
 				}
+				console.log("params",params)
 				const res = await userCodeCheck(this, params)
+                console.log("res",res)
 				if (res.data && res.status === 200) {
 					this.isrefreshpic = true
 					callback();
@@ -460,22 +503,29 @@
 				}
 				var phone = this.formCustom.phone//验证码
 				//验证验证码是否为空
-				if (this.Imgcode === '') {
-					this.$Message.info({
-						content: '图形证码不能为空',
-						duration: 5,
-						closable: true
-					})
-					return
-				}
-				if (!this.ImgCodeValid) {
-					this.$Message.info({
-						content: '图形验证码不正确',
-						duration: 5,
-						closable: true
-					})
-					return
-				}
+				// if (this.Imgcode === '') {
+				// 	this.$Message.info({
+				// 		content: '图形证码不能为空',
+				// 		duration: 5,
+				// 		closable: true
+				// 	})
+				// 	return
+				// }
+				// if (!this.ImgCodeValid) {
+				// 	this.$Message.info({
+				// 		content: '图形验证码不正确',
+				// 		duration: 5,
+				// 		closable: true
+				// 	})
+				// 	return
+				// }
+              if(!this.isopenSms){
+                this.$Message.info({
+                    content: '请滑动验证码',
+                    duration: 5,
+                    closable: true
+                })
+              }
 				if (phone === "") {
 					this.$Message.info("手机号不能为空")
 					return
@@ -483,9 +533,10 @@
 					let params = {
 						phone: phone
 					}
+
 					const res = await userCodeSend(this, params)
-					if (res.data && res.status === 200) {
-						this.ImgCodeValid = false
+ 					if (res.data && res.status === 200) {
+						// this.ImgCodeValid = false
 
 						this.$Message.info("短信发送成功")
 						this.refreshCode()
@@ -544,9 +595,9 @@
 						closable: true
 					})
 					return
-				} else if (!this.identifyImgCode) {
+				} else if (!this.isopenSms) {
 					this.$Message.info({
-						content: '图形验证码有误',
+						content: '滑动验证有误',
 						duration: 5,
 						closable: true
 					})
@@ -737,7 +788,12 @@
 				this.protocolModalShow = false
 
 			},
+
 		},
+
+      create(){
+
+      },
 		mounted() {
 			// 图形验证码
 			this.identifyCode = '';
@@ -746,3 +802,12 @@
 		}
 	}
 </script>
+<style scoped>
+  .CarrierRegister{width: 80%}
+  /*.ivu-form >>>.ivu-form-item:before{*/
+  /*  content: '*';*/
+  /*  display: inline-block;*/
+  /*  font-size: 16px;*/
+  /*  color: #ed1e2d;*/
+  /*}*/
+</style>

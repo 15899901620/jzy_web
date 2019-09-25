@@ -684,6 +684,9 @@ a {
 .Xhlist li:hover {
 	background-color:#f2f8fe;
 }
+.Xhlist li:nth-child(even) {
+	background-color:#fafafa;
+}
 .Xhlist li:last-child {
 	margin-bottom:30px;
 }
@@ -975,7 +978,7 @@ gAccount {
 	margin-top:35px;
 }
 .swiper-wrapper {
-	width:750px;
+	width:500px;
 }
 .swiper_con {
 	width:100%;
@@ -987,7 +990,7 @@ gAccount {
 }
 .registerTab {
 	display:flex;
-	width:50%;
+	justify-content: center;
 	margin:50px auto 20px;
 	cursor:default;
 }
