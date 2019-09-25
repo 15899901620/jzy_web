@@ -50,21 +50,25 @@
           </div>
         </div>
         <!--现货列表-->
-        <div class="mt20">
+        <div class="">
           <div class="XhlistTitle">
-            <h1 style="width: 10%;">品种</h1>
-            <h1 style="width: 16%;">牌号</h1>
-            <h1 style="width: 16%;">厂商</h1>
-            <h1 style="width: 10%;">交货仓</h1>
-            <h1 style="width: 6%;">包装方式</h1>
-            <h1 style="width: 9%;">剩余数量（吨）</h1>
-            <h1 style="width: 11%;">单价（元/吨）</h1>
-            <h1 style="width: 8%;">距下架时间</h1>
-            <h1 style="width: 7%;">提货期限</h1>
-            <h1 style="width: 7%;">操作</h1>
+            <span style="width: 10%;">品种</span>
+            <span style="width: 16%;">牌号</span>
+            <span style="width: 16%;">厂商</span>
+            <span style="width: 10%;">交货仓</span>
+            <span style="width: 6%;">包装方式</span>
+            <span style="width: 9%;">剩余数量（吨）</span>
+            <span style="width: 11%;">单价（元/吨）</span>
+            <span style="width: 8%;">距下架时间</span>
+            <span style="width: 7%;">提货期限</span>
+            <span style="width: 7%;">操作</span>
           </div>
           <ul class="Xhlist">
+<<<<<<< HEAD
             <template v-if="$store.state.spot.spotList.length>0">
+=======
+            <template v-if="$store.state.spot.spotList.length > 0">
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
               <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
                 <span style="width: 10%;">{{item.category_name}}</span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
@@ -82,7 +86,7 @@
                 </span>
                 <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
                 <span style="width: 8%;">
-                  <template v-if="item.on_sale == 2 && item.available_num == 0">
+                  <template v-if="item.available_num == 0">
                   已售罄
                   </template>
                   <template v-else-if="item.on_sale == 2 && item.available_num > 0">
@@ -95,8 +99,8 @@
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
                 <span style="width: 7%;">
                   <div
-                      v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
-                      style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+                      v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1"
+                      style="color: #1e1e1e;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
@@ -104,14 +108,20 @@
               </li>
             </template>
             <template v-else>
+<<<<<<< HEAD
               <li style="overflow:hidden; height: 235px;">
                 <p style="width:100%; text-align:center">
                   <img src="../../static/img/Nothing.png"/>
+=======
+              <li style="height:500px;">
+                <p style="width:100%; text-align:center; padding:60px;">
+                  <img src="../../static/img/nodata.png"/>
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
                 </p>
               </li>
             </template>
           </ul>
-          <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList">
+          <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
             <pages :total="$store.state.spot.total" :show-total="showTotal" :value="current_page"></pages>
           </div>
         </div>
@@ -136,7 +146,12 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
-				store.dispatch('common/getFriendlyList'),
+        store.dispatch('common/getFriendlyList'),
+        //获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {
+					catId: 0,
+					indexShow: 1
+				}),
 				//获取筛选条件
 				store.dispatch('spot/getFilterConditonData'),
 				//获取报价
@@ -173,12 +188,6 @@
 		methods: {
 			addOrder(id) {
 				location.href='/spot/order/'+id
-				/*this.$router.push({
-					name: 'spot-order-id',
-					params: {
-						id: id
-					}
-				})*/
 			},
 			categoryClick(id) {
 				this.categoryId = id

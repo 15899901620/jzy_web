@@ -98,7 +98,7 @@
 			}
 		},
       created(){
-		  console.log("TLlength",this.TLlength)
+		  
       },
 		mounted() {
 			if(this.$store.state.bidders.auctionList.length > 0){
@@ -168,13 +168,13 @@
 
 
 				}, 2000)
-              var that = this
-              let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-              console.log("TL",TL)
-               let TLWidth = TL[0].offsetWidth
-              console.log("TLWidth",TLWidth)
-               that.TLlength = TL.length * TLWidth
-              console.log("TLWidth",this.TLlength)
+          var that = this
+          let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
+          
+            let TLWidth = TL[0].offsetWidth
+          
+            that.TLlength = TL.length * TLWidth
+          
       }
 		},
 		destoryed() {

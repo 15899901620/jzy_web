@@ -4,7 +4,11 @@
       <div class="indexHead" @click="User"><img  src="../../../static/img/index_head.png"/></div>
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
+<<<<<<< HEAD
         <p class="gray">欢迎来到巨正源科技交易平台!</p>
+=======
+        <p class="gray">欢迎来到巨正源化科技交易平台!</p>
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
       </div>
     </div>
     <div class="loginReg mt10"><a  @click="Login" class="loginbg">登 录</a><a @click="register"   class="registerbg ml10">注 册</a></div>

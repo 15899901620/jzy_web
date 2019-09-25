@@ -112,7 +112,7 @@ import { mapState } from 'vuex'
 import Swiper from 'swiper';
 import captcha from '../components/captcha'
 import {steps,step} from '../components/steps'
-import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg, userRepassWd, userRECodeSend, supplierdataCheck, supplierReCodeSend, supplierCodeCheck } from '../api/users'
+import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg, userRepassWd, userRECodeSend, supplierdataCheck, supplierRepssWd,supplierReCodeSend, supplierCodeCheck } from '../api/users'
 
 
 export default {

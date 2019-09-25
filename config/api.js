@@ -37,7 +37,7 @@ let api = {
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',
     supplierCodeCheck: '/user/supplier/checkCode',
-    supplierCodeSend: '/user/supplier/code',
+    supplierCodeSend: '/user/supplier/login/code',
     supplierInfor:'/user/supplier/info',
     supplierEdit: '/user/supplier/edit',
     userRepassWd: '/user/m/updatePwd',
@@ -80,7 +80,7 @@ let api = {
   /**
    * @description 现货超市
    */
-  spot: {
+  spot: { 
     filterConditon: '/bill/spot/filter/condition',
     getFilterConditon: {'url':'/bill/spot/filter/condition', 'method':'get'},
     spotList: '/bill/spot/list/page/onSale',
@@ -179,11 +179,15 @@ let api = {
       cancel:{'url': '/bill/freightDemand/cancel', 'method': 'post'},
       setSelected:{'url': '/bill/freightOffer/setSelected', 'method': 'post'},
       freightList:{'url': '/bill/freightDemand/list/page', 'method': 'get'},
-
+      getPageList: {'url': '/bill/freightDemand/getPageListBySupplierId/page', 'method': 'get'},
     },
+    /**
+     * @description 货物需求报价
+     */
     freightOffer:{
       offerMyList:{'url': '/bill/freightOffer/myList/page', 'method': 'get'},
       offerList:{'url': '/bill/freightOffer/list', 'method': 'get'},
+      freightListpage:{'url': '/bill/freightOffer/list/page', 'method': 'get'},
       save:{'url': '/bill/freightOffer/save', 'method': 'post'},
     },
     /**

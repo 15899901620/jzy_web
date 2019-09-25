@@ -196,6 +196,7 @@
             }
         },
         methods: {
+<<<<<<< HEAD
 			async offerList(){
 				  let params={
 					  current_page:1,
@@ -284,7 +285,95 @@
                     title: '提示',
                     content: msg
                 });
+=======
+          async offerList(){
+            let params={
+              current_page:1,
+              page_size:3,
+              status:2
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
             }
+            const res = await sendHttp(this, false, server.api.freight.freightList,params)
+            this.reaList=res.data.items;
+            this.total=res.data.total
+          },
+          async initData(){
+              const res = await getWarehouseList(this, {})
+              this.warehouseList = res.data
+              const res2 = await getERPCategoryList(this, {})
+              this.categoryList = res2.data
+              const res3 = await provinceData(this, {countryId:1})
+              res3.data.forEach((item, index, arr) => {
+                  let tem = {
+                      value: item.regionId,
+                      label: item.regionName,
+                      children: [],
+                      loading: false
+                  }
+                  this.registList.push(tem)
+              })
+          },
+          async loadRegionData (item, callback) {
+              item.loading = true
+              let children = []
+              const res = await cityregionData(this, {parentId: item.value})
+              res.data.forEach((item, index, arr) => {
+                  let tem = []
+                  if(item.regionLevel == 3){
+                      tem = {
+                          value: item.regionId,
+                          label: item.regionName,
+                      }
+                  }else{
+                      tem = {
+                          value: item.regionId,
+                          label: item.regionName,
+                          children: [],
+                          loading: false
+                      }
+                  }
+                  children.push(tem)
+              })
+              item.children = children
+              item.loading = false
+              callback()
+          },
+          async searchFreight(){
+              if(this.searchForm.warehouse_id == 0){
+                  this.showWarning('请选择发货仓')
+                  return
+              }
+              if(this.searchForm.to_region_id.length == 0){
+                  this.showWarning('请选择卸货点')
+                  return
+              }
+              if(this.searchForm.category_code == ''){
+                  this.showWarning('请选择配送物品类目')
+                  return
+              }
+              let params = {
+                  warehouse_id: this.searchForm.warehouse_id,
+                  category_code: this.searchForm.category_code,
+                  country_id: this.searchForm.country_id,
+                  to_region_id: this.searchForm.to_region_id.join(",")
+              }
+              const res = await searchFreightFee(this, params)
+              if(res.data.lenght == 0){
+                  this.showWarning('后台暂无此运输线路，无法给出参考运费！')
+              }else{
+                  this.searchData = res.data
+                  this.searchModalShow = true
+              }
+          },
+          searchModalCancel(){
+              this.searchModalShow = false
+          },
+          showWarning(msg){
+              this.$Modal.warning({
+                  title: '提示',
+                  content: msg
+              });
+          }
         },
         created() {
 			this.initData()

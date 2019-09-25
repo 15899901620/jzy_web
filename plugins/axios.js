@@ -34,7 +34,6 @@ export default function (app) {
   // 错误回调
   axios.onError(error => {
     let errorInfo = error.response
-    console.log('err', errorInfo)
     if (!errorInfo) {
       const { request: { statusText, status, data }, config } = JSON.parse(JSON.stringify(error))
       errorInfo = {

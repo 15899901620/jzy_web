@@ -10,7 +10,11 @@
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
         <div v-if="current == 0">
+<<<<<<< HEAD
           <Row :gutter="24" index="1">
+=======
+		  <Row :gutter="24" index="1">
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
             <Col span="21">
               <FormItem prop="Imgcode" label="注册类型：">
                 <Select v-model="formCustom.isLogisticsCompany">
@@ -66,7 +70,11 @@
               </FormItem>
             </Col>
           </Row>
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
           <Row :gutter="24" index="5">
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">
@@ -266,7 +274,7 @@
       </Form>
     </div>
     <Modal
-        title="供应商注册协议"
+        :title="title"
         v-model="protocolModalShow"
         @on-cancel="protocolModalCancel"
         :width='700'
@@ -458,7 +466,8 @@
 				registType:[
           {'label': '供应商','value':0},
           {'label': '承运商','value':1},
-        ],
+		],	
+				title:'供应商注册协议',
 				protocolModalShow: false,
 				CodeCate: 'Codeuserspplier',
 				identifyCodes: "1234567890",
@@ -717,7 +726,6 @@
 			},
 			//触发第一步的下一步
 			handleSubmit(name) {
-				console.log('handleSubmit', this.phoneValid)
 				if (!this.phoneValid) {
 					this.$Message.info({
 						content: '手机号有误',
@@ -950,6 +958,9 @@
 				}
 			},
 			protocolModalToShow() {
+				if(this.formCustom.isLogisticsCompany==1){
+					this.title='承运商注册协议'
+				}
 				this.protocolModalShow = true
 			},
 			protocolOkClick() {
@@ -961,6 +972,7 @@
 			},
 			//确认协议
 			protocol() {
+				
 				this.formCustom.single = true
 				this.protocolModalShow = false
 

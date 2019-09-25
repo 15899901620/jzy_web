@@ -30,9 +30,7 @@
 
       },
       mounted() {
-        console.log('this.$router:', this.$router.history.current)
-        console.log('Cookies', Cookies.get('supplierInfor'))
-       // this.username=JSON.parse(Cookies.get('supplierInfor')).username
+      
       }
 
     }

@@ -26,7 +26,6 @@ export const mutations = {
 		state.userinfor = data
 	},
 	updateChackPhone(state, list) {
-		console.log("sss", list)
 		state.chackPhone = list
 	},
 }

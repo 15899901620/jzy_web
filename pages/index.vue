@@ -16,12 +16,6 @@
             <hotbidding></hotbidding>
           </div>
         </outpacking>
-
-        <!--<div class="Time_Banner pr">
-          <img src="/img/Time_banner.png"/>
-          <a class="bidders_front" href="/bidders"></a>
-        </div>
-        <hotbidding title="热门竞拍"></hotbidding>-->
       </div>
       <div class="hot-spot">
         <outpacking title="现货超市" cpadding="0px" :more="spotData">
@@ -30,7 +24,7 @@
           </div>
         </outpacking>
       </div>
-      <!--<div class="hot-spot">
+      <!-- <div class="hot-spot">
         <outpacking title="物流找车" cpadding="0px" :more="logData">
           <div slot="content" style="display: flex;">
             <div class="logistic_banner">
@@ -39,22 +33,22 @@
             <logistics-list></logistics-list>
           </div>
         </outpacking>
-      </div>
-      <div class="co-brands">
+      </div> -->
+      <!-- <div class="co-brands">
         <outpacking title="合作品牌" cpadding="0px">
           <div slot="content">
             <cobrands></cobrands>
           </div>
         </outpacking>
-      </div>
-      <div class="hot-industry">
+      </div> -->
+       <div class="hot-industry">
         <outpacking title="行业资讯" cpadding="0px" :more="moreData">
           <div slot="content">
             <hottrade></hottrade>
           </div>
         </outpacking>
       </div>
-      <sidebar></sidebar>-->
+      <sidebar></sidebar>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
@@ -111,13 +105,13 @@
 				store.dispatch('spot/getSpotList', {
 					current_page: 1,
 					page_size: 20
-				})
+				}),
 
-        /*store.dispatch('article/getHotArticle', {
+        store.dispatch('article/getHotArticle', {
             current_page: 1,
             page_size: 4
         }),
-
+/*
         store.dispatch('spot/getSpotList', {
             current_page: 1,
             page_size: 20

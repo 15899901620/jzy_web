@@ -44,7 +44,6 @@ export const actions = {
     async getphysicalDetail({ commit }, params) {
         return await this.$axios.$get(api.prefix + api.api.product.productdetail, { params })
         .then(response => {
-            console.log('detail',response)
             commit('updatephysicalDetail', response)
         })
         .catch(error => {

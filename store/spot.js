@@ -28,7 +28,6 @@ export const actions = {
 	async getSpotList({commit}, params) {
 	 console.log("params:",params)
 		let res = await sendCurl(this, server.api.spot.initSpotList, params)
-		console.log('getSpotList_res',res)
 		if (res.status === 200) {
 			commit('updateSpotList', res.data.items)
 			commit('updateTotal', res.data.total)

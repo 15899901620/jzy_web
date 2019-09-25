@@ -27,7 +27,6 @@ export const mutations = {
 
 export const actions = {
 	async getMenuList({commit}, params = {}) {
-		console.log('menu getMenuList')
 		return await this.$axios.$get(api.prefix + api.api.navigation.navlist, {params})
 			.then(response => {
 				let TopMenuData = []

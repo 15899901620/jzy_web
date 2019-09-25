@@ -111,7 +111,6 @@ export default {
   },
   methods:{
     getDatetime(res){
-      // console.log(res)
       this.formItem.intentionDate = res
     },
     getWarehouseName(res) {

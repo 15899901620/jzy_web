@@ -25,20 +25,17 @@ export default {
     ])
   },
   components: {
-    // SwiperType,
-    // countdown,
     SlideVerify
   },
   methods: {
     countDownS_cb: function (x) {
-      console.log(x)
+
     },
     countDownE_cb: function (x) {
-      console.log(x)
+
     },
     onTime(res){
-      console.log("1",this.slidecode)
-      console.log(res)
+
     }
   }
 }

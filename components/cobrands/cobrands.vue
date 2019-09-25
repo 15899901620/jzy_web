@@ -83,16 +83,11 @@ export default {
                   }
                   this.brandList = m
                 }else{
-                  // console.log(this.brandList)
-
                   let onedata = []
                   for(let k in cobrand) {
                     onedata.push(Object.assign({}, cobrand[k]))
                   }
                   this.brandList.push(onedata)
-
-
-                  // console.log(this.brandList.length)
                 }
                 
             }

@@ -74,14 +74,22 @@ export default {
     name: 'articleList',
     fetch({ store, params, query }) {
         return Promise.all([
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
-            store.dispatch('system/getLinksInfo'),
-            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
-            store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
-            store.dispatch('article/getArticleCatList',  {parentId: 0}),
-            store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
+          //获取顶部、中部、底部导航信息
+          store.dispatch('common/getNavList'),
+          //获取系统配置
+          store.dispatch('common/getSysConfig'),
+          //获取友情链接
+          store.dispatch('common/getFriendlyList'),
+          //获取底部帮助分类
+          store.dispatch('helper/getHelpCate', {
+            catId: 0,
+            indexShow: 1
+          }),
+          
+          store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
+          store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
+          store.dispatch('article/getArticleCatList',  {parentId: 0}),
+          store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
 
         ])
     },
@@ -132,7 +140,6 @@ export default {
             }
 
         }
-        console.log('currCategoryInfo',this.currCategoryInfo)
         if(this.currCategoryInfo == ''){
             this.currCategoryInfo = {
                 title:'全部',
