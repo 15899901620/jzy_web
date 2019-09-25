@@ -14,15 +14,14 @@ const prefixCls = 'ant-navigation'
 
 export default {
     name: 'Navigation',
-<<<<<<< HEAD
+
     fetch({store}) {
         return Promise.all([
             //获取顶部、中部、底部导航信息
             store.dispatch('common/getNavList'),
         ])
     },
-=======
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
+
     computed: {
         selected() {
             return !this.$route.path ? '/' : this.$route.path

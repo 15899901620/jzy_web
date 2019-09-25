@@ -10,11 +10,8 @@
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
         <div v-if="current == 0">
-<<<<<<< HEAD
+
           <Row :gutter="24" index="1">
-=======
-		  <Row :gutter="24" index="1">
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
             <Col span="21">
               <FormItem prop="Imgcode" label="注册类型：">
                 <Select v-model="formCustom.isLogisticsCompany">
@@ -70,11 +67,6 @@
               </FormItem>
             </Col>
           </Row>
-<<<<<<< HEAD
-
-=======
-       
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
           <Row :gutter="24" index="5">
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">
@@ -87,7 +79,7 @@
           </Row>
           <Row :gutter="24" index="6">
             <Col span="12"></Col>
-            <Col span="9">
+            <Col span="25">
               <FormItem>
                 <Button type="primary" class="CarrierRegister" @click="handleSubmit('formCustom')">下一步</Button>
               </FormItem>
@@ -466,7 +458,7 @@
 				registType:[
           {'label': '供应商','value':0},
           {'label': '承运商','value':1},
-		],	
+		],
 				title:'供应商注册协议',
 				protocolModalShow: false,
 				CodeCate: 'Codeuserspplier',
@@ -972,7 +964,7 @@
 			},
 			//确认协议
 			protocol() {
-				
+
 				this.formCustom.single = true
 				this.protocolModalShow = false
 

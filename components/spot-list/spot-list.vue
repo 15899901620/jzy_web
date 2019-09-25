@@ -1,8 +1,7 @@
 <template>
   <div class="hotspot">
     <div class="XhlistTitle">
-<<<<<<< HEAD
-      <h1 style="width: 11%;">品种</h1>
+       <h1 style="width: 11%;">品种</h1>
       <h1 style="width: 16%;">牌号</h1>
       <h1 style="width: 16%;">厂商</h1>
       <h1 style="width: 10%;">交货仓</h1>
@@ -12,18 +11,7 @@
       <h1 style="width: 8%;">距下架时间</h1>
       <h1 style="width: 7%;">提货期限</h1>
       <h1 style="width: 12%;">操作</h1>
-=======
-      <span style="width: 10%;">品种</span>
-      <span style="width: 16%;">牌号</span>
-      <span style="width: 16%;">厂商</span>
-      <span style="width: 10%;">交货仓</span>
-      <span style="width: 6%;">包装方式</span>
-      <span style="width: 9%;">剩余数量（吨）</span>
-      <span style="width: 11%;">单价（元/吨）</span>
-      <span style="width: 8%;">距下架时间</span>
-      <span style="width: 7%;">提货期限</span>
-      <span style="width: 7%;">操作</span>
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
+
     </div>
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
@@ -55,19 +43,14 @@
             </template>
           </span>
           <span style="width: 7%;">{{item.delivery_deadline}}</span>
-<<<<<<< HEAD
+
           <span style="width: 12%;">
             <div
                 v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
                 style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
             <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                  @click="addOrder(item.id)">下单</div>
-=======
-          <span style="width: 7%;">
-            <div v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1"
-                style="color: #1e1e1e;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
-            <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn" @click="addOrder(item.id)">下单</div>
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
+
             <div v-else class="ListBtn" @click="goLogin">登录</div>
           </span>
         </li>
@@ -80,7 +63,6 @@
         </li>
       </template>
     </ul>
-<<<<<<< HEAD
 
     <Modal v-model="ISlogin" width="400">
       <p slot="header" style="color:#666;text-align:left">
@@ -94,8 +76,6 @@
         <Button type="primary" :loading="modal_loading" @click="goLogin">去登录</Button>
       </div>
     </Modal>
-=======
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
   </div>
 </template>
 
@@ -114,7 +94,7 @@
 				ISlogin: false
 			}
 		},
-     
+
 		methods: {
 			addOrder(id) {
 				location.href='/spot/order/'+id
