@@ -85,11 +85,11 @@ export default {
             catId: 0,
             indexShow: 1
           }),
-
-          store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
-          store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
-          store.dispatch('article/getArticleCatList',  {parentId: 0}),
-          store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
+          
+          // store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: !params.id ? '' : params.id,sortBy: 'add_time', desc: true, isShow: 1}),
+          // store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
+          // store.dispatch('article/getArticleCatList',  {parentId: 0}),
+          // store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
 
         ])
     },
@@ -113,14 +113,14 @@ export default {
         }
     },
     data() {
-        return
-        {
+        return {
 
             currCategoryInfo : ''
         };
     },
     methods: {
         showTotal(total) {
+            console.log('total',total)
             return `全部 ${total} 条`;
         },
         changePage (row) {
