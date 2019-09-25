@@ -1,6 +1,6 @@
 
 <template>
-  <div id="dragSupply" class="drag1" ref="dragSupply">
+  <div id="dragSupply" class="drag1" ref="dragSupply" :style="{width:width+'px'}">
     <div class="drag_bg1"></div>
     <div class="drag_text1">{{confirmWords}}</div>
     <div ref="moveSupply" @mousedown="mousedownFn($event)" :class="{'handler_ok_bg1':confirmSuccess}" class="handler1 handler_bg1" style="position: absolute;top: 0px;left: 0px;"></div>
@@ -12,6 +12,7 @@ import {mapMutations} from 'vuex'
 
 export default {
   name: 'SlideVerifySupply',
+  props:['width'],
   data(){
     return {
       beginClientX:0,           /*距离屏幕左端距离*/

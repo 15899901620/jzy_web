@@ -64,7 +64,7 @@
             <h1 style="width: 7%;">操作</h1>
           </div>
           <ul class="Xhlist">
-            <template v-if="$store.state.spot.spotList">
+            <template v-if="$store.state.spot.spotList.length>0">
               <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
                 <span style="width: 10%;">{{item.category_name}}</span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
@@ -104,8 +104,10 @@
               </li>
             </template>
             <template v-else>
-              <li>
-                <p style="width:100%; text-align:center">暂无任何有效的报价信息！</p>
+              <li style="overflow:hidden; height: 235px;">
+                <p style="width:100%; text-align:center">
+                  <img src="../../static/img/Nothing.png"/>
+                </p>
               </li>
             </template>
           </ul>
@@ -228,8 +230,10 @@
 			}
 		},
 		created() {
+
 		},
 		mounted() {
+
 		},
 		watch: {
 			'$route'(to, from) {

@@ -23,7 +23,7 @@
                                     <i-option v-for="(item, index) in specList" :value="item.id" :key="index">{{ item.value }}</i-option>
                                 </Select>
                                 <div class="xhBtn" style="margin-left: 20px;" @click="submitSearch">搜索</div>
-                        
+
                             </div>
                         </div>
                     </outpacking>
@@ -63,10 +63,8 @@
                             </ul>
                         </div>
                     </outpacking>
-                    <div class="mt20">
-                        <a href="">
+                    <div class="mt20"  @click="Tospot"  style="cursor: pointer">
                         <img src="/img/phyAdv.png" />
-                        </a>
                     </div>
                 </div>
             </div>
@@ -90,12 +88,14 @@ export default {
     name: 'noticeList',
     fetch({ store, params, query }) {
         return Promise.all([
+            //获取顶部、中部、底部导航信息
+            store.dispatch('common/getNavList'),
             store.dispatch('menu/getMenuList'),
             store.dispatch('system/getSystemCnf'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('system/getLinksInfo'),
             store.dispatch('physical/getphysicalList', {
-                current_page: !query.page ? 1 : query.page, 
+                current_page: !query.page ? 1 : query.page,
                 page_size: 10,
                 title: !query.name ? '' : query.name,
                 cid1: !query.cate_id ? 0 : query.cate_id,
@@ -147,6 +147,9 @@ export default {
         this.initAttrListData()
     },
     methods: {
+        Tospot(){
+            this.$router.push({name:"spot-page"})
+        },
         async initCategoryListData(){
             console.log('aaaa')
             console.log(this.physicalHotlist)

@@ -42,35 +42,35 @@
       </Col>
     </Row>-->
     <div class="XhlistTitle">
-      <h1 style="width: 10%;">品种</h1>
+      <h1 style="width: 11%;">品种</h1>
       <h1 style="width: 16%;">牌号</h1>
       <h1 style="width: 16%;">厂商</h1>
       <h1 style="width: 10%;">交货仓</h1>
       <h1 style="width: 6%;">包装方式</h1>
-      <h1 style="width: 9%;">剩余数量（吨）</h1>
-      <h1 style="width: 11%;">单价（元/吨）</h1>
+      <h1 style="width: 8%;">剩余数量（吨）</h1>
+      <h1 style="width: 9%;">单价（元/吨）</h1>
       <h1 style="width: 8%;">距下架时间</h1>
       <h1 style="width: 7%;">提货期限</h1>
-      <h1 style="width: 7%;">操作</h1>
+      <h1 style="width: 12%;">操作</h1>
     </div>
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
         <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
-          <span style="width: 10%;">{{item.category_name}}</span>
+          <span style="width: 11%;">{{item.category_name}}</span>
           <span style="width: 16%;">{{item.sku_name}}</span>
           <span
               style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
           <span style="width: 10%;">{{item.warehouse_name}}</span>
           <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
           <span style="width: 6%;" v-else>非标准包装</span>
-          <span style="width: 9%;">{{item.available_num}}</span>
+          <span style="width: 8%;">{{item.available_num}}</span>
           <span v-if="$store.state.memberToken" class="orangeFont"
                 style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
                          style="padding:1px 5px;line-height:20px;float:left;position:absolute;left:5px;top:-3px;">易</Tag>
                     <i style="padding-left:30px;">{{item.finalPriceFormat}}</i>
                 </span>
-          <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
+          <span v-else class="orangeFont" style="width: 9%;" title="登录后查看">{{item.finalPriceFormat}}</span>
           <span style="width: 8%;">
             <template v-if="item.on_sale == 2 && item.available_num == 0">
             已售罄
@@ -83,7 +83,7 @@
             </template>
           </span>
           <span style="width: 7%;">{{item.delivery_deadline}}</span>
-          <span style="width: 7%;">
+          <span style="width: 12%;">
             <div
                 v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
                 style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>

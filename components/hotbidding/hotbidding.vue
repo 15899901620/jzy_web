@@ -1,9 +1,11 @@
 <template>
   <div style="display: flex">
+      <a   href="/bidders">
     <div class="Time_Banner pr">
       <img src="/img/Time_banner.jpg"/>
-      <a class="bidders_front" href="/bidders"></a>
+
     </div>
+      </a>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
       <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">
         <img src="../../static/img/back.png"/>

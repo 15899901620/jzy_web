@@ -679,6 +679,9 @@ a {
 .Xhlist li:hover {
 	background-color:#f2f8fe;
 }
+.Xhlist li:nth-child(even) {
+	background-color:#fafafa;
+}
 .Xhlist li:last-child {
 	margin-bottom:30px;
 }
@@ -982,7 +985,7 @@ gAccount {
 }
 .registerTab {
 	display:flex;
-	width:50%;
+	justify-content: center;
 	margin:50px auto 20px;
 	cursor:default;
 }

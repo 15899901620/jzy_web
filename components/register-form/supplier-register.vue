@@ -10,6 +10,15 @@
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
         <div v-if="current == 0">
+          <Row :gutter="24" index="1">
+            <Col span="21">
+              <FormItem prop="Imgcode" label="注册类型：">
+                <Select v-model="formCustom.isLogisticsCompany">
+                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="phone" label="手 机 号：">
@@ -18,16 +27,19 @@
             </Col>
           </Row>
           <Row :gutter="24" index="1">
-            <Col span="15">
-              <FormItem prop="Imgcode" label="验 证 码：">
-                <Input class="CarrierImgcode" v-model="formCustom.Imgcode" placeholder="请输入验证码" autocomplete="off"/>
+            <Col span="21">
+<!--              <FormItem prop="Imgcode" label="验 证 码：">-->
+<!--                <Input class="CarrierImgcode" v-model="formCustom.Imgcode" placeholder="请输入验证码" autocomplete="off"/>-->
+<!--              </FormItem>-->
+<!--            </Col>-->
+<!--            <Col span="6">-->
+<!--              <div class="captcha" @click="refreshCode">-->
+<!--                <captcha :CodeCate="CodeCate" :contentWidth='131' :contentHeight='31'-->
+<!--                         :identifyCode="identifyCode"></captcha>-->
+<!--              </div>-->
+              <FormItem prop="slidecode" label="滑动验证：">
+                <SlideVerifysupply @onChange="onTimesupply" width="392" ></SlideVerifysupply>
               </FormItem>
-            </Col>
-            <Col span="6">
-              <div class="captcha" @click="refreshCode">
-                <captcha :CodeCate="CodeCate" :contentWidth='131' :contentHeight='31'
-                         :identifyCode="identifyCode"></captcha>
-              </div>
             </Col>
           </Row>
           <Row :gutter="24" v-if="isopenSms && phoneValid" index="2">
@@ -54,15 +66,7 @@
               </FormItem>
             </Col>
           </Row>
-          <Row :gutter="24" index="1">
-            <Col span="21">
-              <FormItem prop="Imgcode" label="注册类型：">
-                <Select v-model="formCustom.isLogisticsCompany">
-                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
+
           <Row :gutter="24" index="5">
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">
@@ -282,6 +286,7 @@
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
 	import {supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
+    import SlideVerifysupply from '../slide-verify/slide-verify-supply'
 
 	const appConfig = require('../../config/app.config')
 
@@ -440,6 +445,15 @@
 					callback();
 				}
 			};
+          const validateSlide = (rule, value, callback) => {
+            console.log("value",value)
+            if (value === 0) {
+              console.log("value",value)
+              callback(new Error('请滑动完成验证'));
+            } else {
+              callback();
+            }
+          };
 			return {
 				registType:[
           {'label': '供应商','value':0},
@@ -493,7 +507,8 @@
 					telephone: '',         //公司电话
 					natureName: '',        //供应商性质
 					natureValue: '',      //供应商性质值
-					registCapi: ''         //注册资金
+					registCapi: '',         //注册资金
+                    slidecode: 0
 				},
 				ruleCustom: {
 					phone: [
@@ -552,14 +567,18 @@
 					],
 					registCapi: [
 						{required: true, validator: validateRegistCapi, trigger: 'blur'}
-					]
+					],
+                  slidecode: [
+                    {  validator: validateSlide, trigger: 'blur'}
+                  ]
 				}
 			}
 		},
 		components: {
 			steps,
 			step,
-			captcha
+			captcha,
+          SlideVerifysupply
 		},
 		computed: {
 			classes() {
@@ -568,8 +587,26 @@
 					{[`${prefixCls}-shortcut`]: this.vertical},
 				];
 			},
+          ...mapState([
+            'slidecode'
+          ])
 		},
 		methods: {
+          // 滑动验证
+          onTimesupply(res) {
+            console.log("res",res)
+            if (res) {
+              this.formCustom.slidecode = res
+              this.isopenSms = true
+            } else {
+              this.$Modal.warning({
+                title: '提示',
+                content: '验证失败！',
+                duration: 5,
+                styles: 'top:300px'
+              });
+            }
+          },
 			getUploadURL() {
 				this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
 			},
@@ -603,22 +640,29 @@
 			async getNoteValue() {
 				var phone = this.formCustom.phone//验证码
 				//验证验证码是否为空
-				if (this.Imgcode === '') {
-					this.$Message.info({
-						content: '图形证码不能为空',
-						duration: 5,
-						closable: true
-					})
-					return
-				}
-				if (!this.ImgCodeValid) {
-					this.$Message.info({
-						content: '请重新输入图形证码',
-						duration: 5,
-						closable: true
-					})
-					return
-				}
+				// if (this.Imgcode === '') {
+				// 	this.$Message.info({
+				// 		content: '图形证码不能为空',
+				// 		duration: 5,
+				// 		closable: true
+				// 	})
+				// 	return
+				// }
+				// if (!this.ImgCodeValid) {
+				// 	this.$Message.info({
+				// 		content: '请重新输入图形证码',
+				// 		duration: 5,
+				// 		closable: true
+				// 	})
+				// 	return
+				// }
+                if(!this.isopenSms){
+                  this.$Message.info({
+                    content: '请滑动验证码',
+                    duration: 5,
+                    closable: true
+                  })
+                }
 				if (phone === "") {
 					this.$Message.info("手机号不能为空")
 					return
@@ -681,12 +725,12 @@
 						closable: true
 					})
 					return
-				} else if (!this.identifyImgCode) {
-					this.$Message.info({
-						content: '图形验证码有误',
-						duration: 5,
-						closable: true
-					})
+				} else if (!this.isopenSms) {
+                    this.$Message.info({
+                      content: '滑动验证有误',
+                      duration: 5,
+                      closable: true
+                    })
 					return
 				} else if (!this.passwordValid) {
 					this.$Message.info({
@@ -755,6 +799,7 @@
 					type: 1
 				}
 				const res = await supplierdataCheck(this, params)
+              console.log("res",res)
 				if (res.status === 200) {
 					if (res.data.is_registered === "true") {
 						this.companyValid = false

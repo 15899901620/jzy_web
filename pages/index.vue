@@ -13,7 +13,7 @@
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
-            <hotbidding title="热门竞拍"></hotbidding>
+            <hotbidding></hotbidding>
           </div>
         </outpacking>
 
