@@ -681,7 +681,7 @@
 						window.localStorage.setItem("note", sj)
 						this.auth_time = 60;
 						var timer = setInterval(() => {
-							this.auth_time;
+							this.auth_time--;
 							if (this.auth_time <= 0) {
 								clearInterval(timer)
 								this.btnBoolen = false;
@@ -952,6 +952,8 @@
 			protocolModalToShow() {
 				if(this.formCustom.isLogisticsCompany==1){
 					this.title='承运商注册协议'
+				}else{
+					this.title='供应商注册协议'
 				}
 				this.protocolModalShow = true
 			},
