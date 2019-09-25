@@ -352,7 +352,8 @@ export default {
                 demandEndDate:this.formAddress.demandEndDate,
               }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-                if(res) {
+              console.log(res)
+                if(res.data.data) {
                     this.$Modal.success({
                         title: '提示',
                         content: '添加成功',
@@ -364,7 +365,7 @@ export default {
                 }else{
                     this.$Modal.warning({
                         title: '提示',
-                        title: '添加地址失败，请联系客服',
+                        title: res.data.message,
                         duration: 5,
                         closable: true
                     });
