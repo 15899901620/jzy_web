@@ -58,7 +58,7 @@
                 <Row index="2">
                     <Col span="12">
                         <FormItem label="用车时间" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd"   type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                                <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
@@ -201,7 +201,7 @@ export default {
             options4: {
                 disabledDate: date => {
                     // this成功指向vue实例
-                    return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000; 
+                    return  date && date.valueOf() < Date.now() - 86400000; 
                 }
             },
             
@@ -295,18 +295,8 @@ export default {
             this.tax_id=e
         },
        async dataList(){
-            let params = {
-                orderId:this.datalist.id,
-            }
-            const res = await sendHttp(this, true, server.api.freight.InfoByOrderId,params,1)
-           
-            this.OrderList=  res.data
-            this.formAddress.phone=  res.data.phone
-            this.formAddress.contact=  res.data.contact
-
-            demandBeginDate
             // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
-            let t= new Date(res.data.demandEndDate)
+            let t= new Date(this.datalist.deliveryDeadline)
             this.date = t.getTime();
         },
         async AddressOk() {

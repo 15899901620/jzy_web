@@ -68,8 +68,8 @@
                   <div class="" v-if="item.status == 2">
                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                   </div>
-                  <div class="" v-if="item.status == 3 && item.isAddDemand == 0">
-                    <a class="greenFont mt15" @click="addLog(item)">添加货物需求</a>
+                  <div class="" v-if="item.status == 3 && item.isAddDemand == 0 && item.isDelivery == 0">
+                    <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
                   </div>
                   <div class="" v-else>
                     <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
