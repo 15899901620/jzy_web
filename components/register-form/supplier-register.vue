@@ -681,7 +681,7 @@
 						window.localStorage.setItem("note", sj)
 						this.auth_time = 60;
 						var timer = setInterval(() => {
-							this.auth_time;
+							this.auth_time--;
 							if (this.auth_time <= 0) {
 								clearInterval(timer)
 								this.btnBoolen = false;
