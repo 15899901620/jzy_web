@@ -9,7 +9,7 @@
     </div>
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
-        <div v-if="current == 0">
+        <div v-show="current == 0">
 
           <Row :gutter="24" index="1">
             <Col span="21">
@@ -86,7 +86,7 @@
             </Col>
           </Row>
         </div>
-        <div v-else-if="current == 1">
+        <div v-show="current == 1">
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="companyName" label="公司名称：">
@@ -251,7 +251,7 @@
             </Col>
           </Row>
         </div>
-        <div v-else-if="current == 2">
+        <div v-show="current == 2">
           <!--审核成功-->
           <div class="dflexAlemJust" style="margin-top: 60px;">
             <img src="../../static/img/exam_icon.png"/>
@@ -979,3 +979,6 @@
 		}
 	}
 </script>
+<style>
+  .CarrierRegister{width: 83%}
+</style>

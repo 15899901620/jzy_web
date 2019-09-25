@@ -10,27 +10,37 @@
     <div class="container" title="">
       <div class="Loginbg">
         <div class="w1200" style="display: flex; justify-content: flex-end;">
+
           <div class="LoginInput">
-            <div class="LoginCenter">
-              <ul class="dflexAlem loginMethod">
-                <li v-for="(item,index) in loginList" :class="{'curr':nowIndex === index}"
-                    @click="tabClick(index,item.registerName)" v-bind:key="index">
-                  {{item.name}}
-                </li>
-              </ul>
-              <div class="swiper-container swiper_con">
-                <div class="swiper-wrapper dflex">
-                  <div class="swiper-slide swiper-no-swiping" ref="viewBox">
-                    <login></login>
-                  </div>
-                  <!-- 第二个swiper -->
-                  <div class="swiper-slide swiper-no-swiping">
-                    <login-supply></login-supply>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <div class="LoginCenter">
+                <Tabs  v-model="nowIndex" >
+                  <TabPane label="会员登录" name="users"> <login></login></TabPane>
+                  <TabPane label="供应/承运商登录" name="supply"> <login-supply></login-supply> </TabPane>
+                </Tabs>
+             </div>
           </div>
+<!--          <div class="LoginInput">-->
+<!--            <div class="LoginCenter">-->
+<!--              <ul class="dflexAlem loginMethod">-->
+<!--                <li v-for="(item,index) in loginList" :class="{'curr':nowIndex === index}"-->
+<!--                    @click="tabClick(index,item.registerName)" v-bind:key="index">-->
+<!--                  {{item.name}}-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--              <div class="swiper-container swiper_con">-->
+<!--                <div class="swiper-wrapper dflex">-->
+<!--                  <div class="swiper-slide swiper-no-swiping" ref="viewBox">-->
+<!--                    <login></login>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 第二个swiper &ndash;&gt;-->
+<!--                  <div class="swiper-slide swiper-no-swiping">-->
+<!--                    <login-supply></login-supply>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
         </div>
       </div>
     </div>
@@ -104,3 +114,10 @@
 		}
 	}
 </script>
+<style lang="less" >
+  .ivu-tabs .ivu-tabs-bar{
+    display: flex;
+    justify-content: center;
+
+  }
+</style>

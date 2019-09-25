@@ -10,9 +10,9 @@
     </Header-small>
     <div class="container" title="">
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
-        <Tabs >
-          <TabPane label="会员注册" name="name1"><user-register @currData="currData"></user-register></TabPane>
-          <TabPane label="供应/承运商注册" name="name2"><supplier-register @currData="currData"></supplier-register></TabPane>
+        <Tabs  v-model="nowIndex" >
+          <TabPane label="会员注册" name="users"><user-register @currData="currData"></user-register></TabPane>
+          <TabPane label="供应/承运商注册" name="supply"><supplier-register @currData="currData"></supplier-register></TabPane>
         </Tabs>
       </div>
     </div>
@@ -23,8 +23,7 @@
 <script>
 	import Header from '../components/header'
 	import Footer from '../components/footer'
-	import Swiper from 'swiper';
-	import UserRegister from '../components/register-form'
+ 	import UserRegister from '../components/register-form'
 
 	export default {
 		name: "register",
@@ -49,14 +48,7 @@
 				nowIndex: 0,
 				index: 0,
 				current: false,
-				RegisterList: [
-					{
-					  name: '会员注册'
-				  },
-					{
-						name: '供应/承运商注册'
-					}
-				]
+
 			}
 		},
 		methods: {
@@ -74,26 +66,14 @@
 			var that = this
 			let type = this.$route.query.type;
 			if (type === 'users') {
-				this.nowIndex = 0
+				this.nowIndex = "users"
 			} else if (type === 'supply') {
-				this.nowIndex = 1
+				this.nowIndex = 'supply'
 			} else {
-				this.nowIndex = 0
+				this.nowIndex = 'users'
 			}
 
-			// 划动--切换
-			that.mySwiper = new Swiper('.swiper-container', {
-				initialSlide: this.nowIndex,
-				autoplay: false,
-				noSwiping: true,
-				keyboardControl: true,
-				autoHeight: true,
-				observer: true,
-				observeParents: true,
-				onSlideChangeStart: function () {
-					that.nowIndex = that.mySwiper.activeIndex
-				}
-			});
+
 		},
 		head() {
 			return {
@@ -135,18 +115,18 @@
   /*  width: 100%;*/
   /*  margin: 0PX auto;*/
   /*}*/
-  // .ivu-tabs .ivu-tabs-bar{
-  //   width: 80%;
-  //   margin: 0 auto;
-  //   display: flex;
-  //   justify-content: center;
-  //   margin-top: 26px;
-  // }
-  // .ivu-tabs-nav .ivu-tabs-tab{
-  //   padding: 17px 16px;
-  // }
-  // .ivu-tabs-nav-container{
-  //   font-size: 16px;
-  // }
+   .ivu-tabs .ivu-tabs-bar{
+     width: 80%;
+     margin: 0 auto;
+     display: flex;
+     justify-content: center;
+     margin-top: 26px;
+   }
+   .ivu-tabs-nav .ivu-tabs-tab{
+     padding: 17px 16px;
+   }
+   .ivu-tabs-nav-container{
+     font-size: 16px;
+   }
 
 </style>
