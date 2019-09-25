@@ -340,7 +340,7 @@ export default {
               let params = {
                 inquiryMinute:this.title,
                 tax_id:this.tax_id,
-                id:this.datalist.id,
+                orderId:this.datalist.id,
                 contact:this.formAddress.contact,
                 dispatchFullAddress:this.formAddress.dispatchFullAddress,
                 phone: this.formAddress.phone,   //收货人电话
