@@ -339,10 +339,9 @@ export default {
             }else {
               let params = {
                 inquiryMinute:this.title,
-                tax_id:this.tax_id,
+                isTax:this.tax_id,
                 orderId:this.datalist.id,
                 contact:this.formAddress.contact,
-                dispatchFullAddress:this.formAddress.dispatchFullAddress,
                 phone: this.formAddress.phone,   //收货人电话
                 receiptCountryId: this.formAddress.countryId,   //国家
                 receiptState: this.formAddress.state, //省
