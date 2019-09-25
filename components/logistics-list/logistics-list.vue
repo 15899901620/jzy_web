@@ -13,9 +13,9 @@
               <p>{{item.receiptFullAddress}} </p>
             </div>
             <div class="logNumTime graybg"  >
-              <p><span class="logNumTime_title">类       别:</span> <span class="orangeFont">{{item.freightGoodsCname}}</span></p>
-              <p><span class="logNumTime_title">数       量 :</span> <span class="orangeFont">{{item.weight}}吨</span></p>
-              <p class="mt10"><span class="logNumTime_title">装货时间 :</span> {{item.demandBeginDate}}~{{item.demandEndDate}}</p>
+              <p><span class="logNumTime_title">类       别</span>: <span class="orangeFont">{{item.freightGoodsCname}}</span></p>
+              <p><span class="logNumTime_title">数       量</span>: <span class="orangeFont">{{item.weight}}吨</span></p>
+              <p class="mt10"><span class="logNumTime_title">装货时间</span>: {{item.demandBeginDate}}~{{item.demandEndDate}}</p>
             </div>
           </li>
         </ul>
@@ -39,6 +39,7 @@ import server from "../../config/api";
           dataList:{},
         }
       },
+
       methods:{
         detail(){
              this.$router.push({name:'supply-Supplier'})
@@ -63,7 +64,7 @@ import server from "../../config/api";
 					  page_size:3
 					}
 				  const res = await sendHttp(this, false, server.api.freight.freightList,params)
-  
+
 				  this.dataList=res.data.items;
 				  this.total=res.data.total
 			  },
@@ -151,7 +152,7 @@ import server from "../../config/api";
     text-align: center;  overflow: hidden; background-color: #fff;  position: relative;font-size: 14px;}
   .logNumTime{width: 85%; margin: 30px auto 20px; padding: 15px 15px;  display: flex; flex-direction: column;   box-sizing: border-box;}
   .logNumTime p{display: flex;align-items: center;}
-  .logNumTime_title{width: 70px;text-align-last: justify; margin-right: 5px;}
+  .logNumTime_title{width: 70px;text-align-last: justify; margin-right: 5px; display:inline-block;}
 
   .orangeFont{color: #ff9800;}
   .greenFont{color: #009900;}

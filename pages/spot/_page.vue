@@ -64,7 +64,11 @@
             <span style="width: 7%;">操作</span>
           </div>
           <ul class="Xhlist">
+<<<<<<< HEAD
+            <template v-if="$store.state.spot.spotList.length>0">
+=======
             <template v-if="$store.state.spot.spotList.length > 0">
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
               <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
                 <span style="width: 10%;">{{item.category_name}}</span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
@@ -96,7 +100,7 @@
                 <span style="width: 7%;">
                   <div
                       v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1"
-                      style="color: white;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+                      style="color: #1e1e1e;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
@@ -104,9 +108,15 @@
               </li>
             </template>
             <template v-else>
+<<<<<<< HEAD
+              <li style="overflow:hidden; height: 235px;">
+                <p style="width:100%; text-align:center">
+                  <img src="../../static/img/Nothing.png"/>
+=======
               <li style="height:500px;">
                 <p style="width:100%; text-align:center; padding:60px;">
                   <img src="../../static/img/nodata.png"/>
+>>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
                 </p>
               </li>
             </template>
@@ -229,8 +239,10 @@
 			}
 		},
 		created() {
+
 		},
 		mounted() {
+
 		},
 		watch: {
 			'$route'(to, from) {

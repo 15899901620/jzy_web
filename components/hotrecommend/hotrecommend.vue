@@ -1,7 +1,7 @@
 <template>
   <div :class="classes">
     <div class="dflex mt25" style="justify-content: center;" v-if="$store.state.memberToken">
-      <div class="indexHead" @click="User">
+      <div class="indexHead" @click="User" style="margin-left: 16px">
         <template v-if="$store.state.memberInfo.avatar">
           <img :src="$store.state.memberInfo.avatar"/>
         </template>
@@ -9,16 +9,17 @@
           <img src="../../static/img/index_head.png" />
         </template>
       </div>
-      <div class="ml10">
-        <p class="mt5">HI {{$store.state.memberInfo.phone}},上午好！</p>
-        <p class="gray">欢迎来到巨正源交易网!</p>
+      <div class="ml10" style="width: 66%;">
+        <p class=" ">HI {{$store.state.memberInfo.phone}},上午好！</p>
+        <p class="gray">欢迎来到巨正源科技交易平台!</p>
       </div>
     </div>
     <div class="dflex mt25" style="justify-content: center;" v-else>
-      <div class="indexHead" @click="User"><img src="../../static/img/index_head.png"/></div>
-      <div class="ml10">
-        <p class="mt5">HI,上午好！</p>
-        <p class="gray">欢迎来到巨正源交易网!</p>
+      <div class="indexHead" @click="User" style="margin-left: 16px"><img src="../../static/img/index_head.png"/></div>
+      <div class="ml10" style="width: 66%;" >
+        <p class=" ">HI,上午好！</p>
+        <p class="gray" style="width: 88%">
+          欢迎来到巨正源科技交易平台!</p>
       </div>
     </div>
     <div class="loginReg mt10" v-if="!$store.state.memberToken">

@@ -1,8 +1,8 @@
 <template>
   <div :class="classes">
     <div class="TopPos" style="display: flex;">
-      <div class="slogens">您好，欢迎光临巨正源化工交易网！ <span>|</span>
-        <a href="/">巨正源首页</a>
+      <div class="slogens">您好，欢迎来到巨正源科技交易平台！ <span>|</span>
+        <a href="/">首页</a>
       </div>
       <ul class="topnavlist" v-if="showNav">
         <template v-if="$store.state.memberToken">

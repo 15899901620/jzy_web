@@ -10,6 +10,7 @@ const addErrorLog = errorInfo => {
   }
   console.log('err', info)
 }
+
 export default function (app) {
   const axios = app.$axios
   axios.defaults.timeout = 100000

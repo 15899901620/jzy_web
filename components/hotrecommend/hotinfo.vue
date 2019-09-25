@@ -16,7 +16,7 @@
             </template>
           </ul>
         </tabs-pane>
-        <tabs-pane label="行业资讯" name='2' style="display: none;">
+        <tabs-pane label="公司动态" name='2' style="display: none;">
           <ul class="newscont">
             <template v-if="$store.state.article.noticeList.length > 0">
             <li v-for="(item, index) in $store.state.article.articleList" :key="index">
@@ -54,7 +54,7 @@ export default {
     },
   },
   methods:{
-   
+
   },
 }
 </script>

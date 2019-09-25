@@ -1,6 +1,6 @@
 
 <template>
-  <div id="dragDiv" class="drag" ref="dragDiv">
+  <div id="dragDiv" class="drag" ref="dragDiv"  :style="{width:width+'px'}"  >
     <div class="drag_bg"></div>
     <div class="drag_text">{{confirmWords}}</div>
     <div ref="moveDiv" @mousedown="mousedownFn($event)" :class="{'handler_ok_bg':confirmSuccess}" class="handler handler_bg" style="position: absolute;top: 0px;left: 0px;"></div>
@@ -12,7 +12,7 @@ import {mapMutations} from 'vuex'
 
 export default {
   name: 'SlideVerify',
-  
+  props:['width'],
   data(){
     return {
       beginClientX:0,           /*距离屏幕左端距离*/
@@ -70,8 +70,14 @@ export default {
       }
     }                       //mouseup事件
   },
+  computed:{
+
+  },
   mounted(){
+    var o=document.getElementById("dragDiv")
+    this.Width=o.clientWidth||o.offsetWidth;
     this.maxwidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth;
+    console.log("maxwidth:",this.maxwidth)
     document.getElementsByTagName('html')[0].addEventListener('mousemove',this.mouseMoveFn);
     document.getElementsByTagName('html')[0].addEventListener('mouseup',this.moseUpFn)
   }
@@ -82,10 +88,11 @@ export default {
     .drag{
         position: relative;
         background-color: #e8e8e8;
-        width: 247px;
+        width: 100%;
         height: 34px;
         line-height: 34px;
         text-align: center;
+        overflow: hidden;
     }
     .handler{
         width: 40px;

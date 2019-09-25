@@ -26,6 +26,7 @@ export const mutations = {
 
 export const actions = {
 	async getSpotList({commit}, params) {
+	 console.log("params:",params)
 		let res = await sendCurl(this, server.api.spot.initSpotList, params)
 		if (res.status === 200) {
 			commit('updateSpotList', res.data.items)
