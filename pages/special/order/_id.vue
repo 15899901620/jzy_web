@@ -59,16 +59,39 @@
                 </div>
                 <div class="lineborder"></div>
                 <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-                <ul class="DeliveryMethod ml35 mb20" v-if="this.orderinfo.isDelivery == 1">
-                    <template v-if="logisticsfreight.length > 0">
-                        <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)" :class="{'curr':index === currfreight}" :key="index">
-                            {{item.transportationMode}}({{item.basePrice}}元)
-                        </li>
-                    </template>
-                    <template v-else>
-                        <p>暂无任何运费数据！</p>
-                    </template>
-                </ul>
+                <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+                    选择承运商
+                    <div class="ml35" v-if="carrierList.length > 0">
+                        <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
+                            <i-option v-for="(item, index) in carrierList" :value="item.id" :key="index" @click="setCarrier(item)">{{ item.name }}</i-option>
+                        </Select>
+                    </div>
+                    <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
+                </div>
+                <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+                    选择运输方式
+                    <ul class="DeliveryMethod ml35 mb20">
+                        <template v-if="logisticsfreight.length > 0">
+                            <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)"
+                                :class="{'curr':index === currfreight}" :key="index">
+                                {{item.transportation}}({{item.freight_fee}}元/吨)
+                            </li>
+                        </template>
+                        <template v-else>
+                            <p>此线路暂无任何运输方式数据，请变更配送地址 或 货物选择自提！</p>
+                        </template>
+                    </ul>
+                </div>
+<!--                <ul class="DeliveryMethod ml35 mb20" v-if="this.orderinfo.isDelivery == 1">-->
+<!--                    <template v-if="logisticsfreight.length > 0">-->
+<!--                        <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)" :class="{'curr':index === currfreight}" :key="index">-->
+<!--                            {{item.transportationMode}}({{item.basePrice}}元)-->
+<!--                        </li>-->
+<!--                    </template>-->
+<!--                    <template v-else>-->
+<!--                        <p>暂无任何运费数据！</p>-->
+<!--                    </template>-->
+<!--                </ul>-->
                 <div class="lineborder"></div>
                 <!--优选服务-->
                 <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
@@ -113,17 +136,17 @@
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum" @change="changeNum"></input-special>
                         </div>
                         <div  style="width: 12%;">{{specialDetail.warehouseName}}</div>
-                        <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmount }}</div>
+                        <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmountes }}</div>
                     </li>
                 </ul>
 
                 <div class="proInfor">
                     <div  style="display: flex; flex-direction: column; width: 300px; " >
                         <div class="mt20 tar mr20 dflex " style="align-items: center;">
-                            <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.orderinfo.totalAmount}}</span>
+                            <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.totalAmountFormat}}</span>
                         </div>
                         <div class="mt20 mb20 tar mr20 dflexAlem">
-                            <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.orderinfo.totalAmount}}</span>
+                            <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.payAmountFormat}}</span>
                         </div>
                     </div>
                 </div>
@@ -180,6 +203,7 @@ export default {
                 feedingId: 0,
                 transportationMode: '',
                 orderNum: 0,
+                freightFee:0,
                 addressId: 0
             },
             createInfo:false,
@@ -207,7 +231,9 @@ export default {
             payList:[
                 {value:1, name:'支付全款'},
             ],
-            currfreight: 0,
+            carrierList: [],
+            carrierId:'',
+            currfreight:"",
             WeekList: {},
             currfreightdata: {},
             defaultAdd:{},
@@ -226,6 +252,36 @@ export default {
             specialId: !this.$route.params.id ? 0 : this.$route.params.id
         }
     },
+    computed: {
+        totalPrice: function () {
+            console.log("totalPrice",this.specialDetail.finalPrice)
+            console.log("freightFee",this.orderinfo.freightFee)
+            console.log("jryCost",this.orderinfo.jryCost)
+            return parseFloat(this.specialDetail.finalPrice) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
+        },
+        totalPriceFormat: function () {
+            return parseFloat(this.totalPrice).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+        },
+        totalAmountes: function () {
+            console.log("totalPrice",this.totalPrice)
+            console.log("orderNum:",this.orderinfo.orderNum)
+            return parseFloat(this.totalPrice) * parseInt(this.orderinfo.orderNum)
+        },
+        totalAmountFormat: function () {
+            console.log("totalAmountes",this.totalAmountes)
+            return parseFloat(this.totalAmountes).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+        },
+        payAmount: function () {
+            if (this.orderinfo.payIndex == 1) {
+                return parseFloat(this.totalAmountes) * parseInt(this.spotDetail.margin_ratio) / 100
+            } else {
+                return this.totalAmountes;
+            }
+        },
+        payAmountFormat: function () {
+            return parseFloat(this.payAmount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+        },
+    },
     methods: {
         //判断是否登录，没有跳转登录
         inLogin () {
@@ -242,16 +298,22 @@ export default {
         setFreight(i, row){
             console.log("i",i)
             console.log("row",row)
-            this.currfreight = i
-            if(row){
-                this.currfreightdata =row
-                this.orderinfo.transportationMode = this.currfreightdata.transportationMode
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
-            }else{
-                this.currfreightdata = {}
-                this.orderinfo.transportationMode = ''
-                this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
-            }
+            // this.currfreight = i
+            // if(row){
+            //     this.currfreightdata =row
+            //     this.orderinfo.transportationMode = this.currfreightdata.transportationMode
+            //     this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum +  parseInt(this.currfreightdata.basePrice)
+            // }else{
+            //     this.currfreightdata = {}
+            //     this.orderinfo.transportationMode = ''
+            //     this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
+            // }
+            //选择运费
+
+                this.orderinfo.transportationMode = row.transportation
+                this.orderinfo.freightFee = row.freight_fee
+                this.currfreight = i
+
         },
         //单选
         setAddress(i,row){
@@ -259,17 +321,45 @@ export default {
             this.defaultAdd = row
             this.getFreight();
         },
+        //选择承运商
+        setCarrier(item){
+            this.carrierId=item.id
+        },
         //选择提货或者配置
         chooseDelieryType (index) {
             console.log("index",index)
             this.currentIndex = index
-            if(index==1){
+            // if(index==1){
+            //     this.orderinfo.isDelivery = index
+            //     this.getFreight();
+            // }else{
+            //     this.orderinfo.isDelivery = 0
+            // }
+            // this.setCosting();
+
+            if (index == 1) {
                 this.orderinfo.isDelivery = index
-                this.getFreight();
-            }else{
+                this.currMin = this.specialDetail.deliveryMin
+                this.currsetp = this.specialDetail.deliveryMin
+            console.log("specialDetail:",this.specialDetail)
+                console.log("currMin:",this.currMin)
+            } else {
                 this.orderinfo.isDelivery = 0
+                this.currMin = this.specialDetail.takeTheirMin
+                this.currsetp = this.specialDetail.deliveryMin
             }
-            this.setCosting();
+            if (this.currMin <= this.currMax) {
+                this.orderinfo.orderNum = this.currMin
+            } else {
+                console.log("currMin",this.currMin)
+                this.showWarning("剩余库存(" + this.currMax + ")不满足当前交货方式的起订量(" + this.currMin + ")要求，请重新下单！", function () {
+                    window.location.href = '/special'
+                })
+            }
+
+
+
+
         },
         //资金
         async getMyCapital () {
@@ -286,6 +376,7 @@ export default {
             }
             const res = await specialDetail(this, params)
             this.specialDetail = res.data
+            console.log("specialDetail:",this.specialDetail)
             this.setCosting()
             this.getWeekDetail()
         },
@@ -307,19 +398,25 @@ export default {
                 isJryService: this.orderinfo.isJryService == false ? 0 : 1,
                 jryDays: this.orderinfo.jryDays,
                 jryCost: this.orderinfo.jryCost,
-                totalAmount: this.orderinfo.totalAmount,
+                totalAmount: this.totalAmountes,
                 depositAmount: this.orderinfo.depositAmount,
                 orderType: this.orderinfo.orderType,
                 sourceId: this.WeekList.id,
                 feedingId: this.specialDetail.id,
                 transportationMode: this.orderinfo.transportationMode,
                 orderNum: this.orderinfo.orderNum,
-                addressId: this.orderinfo.addressId
+                addressId: this.orderinfo.addressId,
+                carrierId: this.carrierId
             }
+            console.log("params:",params)
             const res = await submitOrder(this, params)
+            console.log("res",res)
             if (typeof res.data.errorcode == "undefined"){
+
                 this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+
             }else{
+
                 this.$Modal.warning({
                     title: '提示',
                     content: res.data.message
@@ -350,7 +447,11 @@ export default {
             }
             const res= await devDetail(this, data)
             if(res.data){
-                this.logisticsfreight = res.data
+                console.log("rescarriers",res.data.carriers)
+                this.carrierList = res.data.carriers
+
+                 this.logisticsfreight = res.data.freightList
+
                 this.currfreightdata = res.data[this.currfreight]
                 if(this.currfreightdata){
                     this.orderinfo.transportationMode = this.currfreightdata.transportationMode
@@ -411,6 +512,21 @@ export default {
                 this.orderinfo.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
                 this.totalAmount = this.specialDetail.finalPrice * this.orderinfo.orderNum
             }
+        },
+        showWarning(msg, okCallback) {
+            if (okCallback) {
+                this.$Modal.warning({
+                    title: '提示',
+                    content: msg,
+                    onOk: okCallback
+                })
+            } else {
+                this.$Modal.warning({
+                    title: '提示',
+                    content: msg,
+                })
+            }
+
         }
     },
     mounted() {

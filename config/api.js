@@ -80,7 +80,7 @@ let api = {
   /**
    * @description 现货超市
    */
-  spot: { 
+  spot: {
     filterConditon: '/bill/spot/filter/condition',
     getFilterConditon: {'url':'/bill/spot/filter/condition', 'method':'get'},
     spotList: '/bill/spot/list/page/onSale',
@@ -263,6 +263,13 @@ let api = {
         erpCategoryList: '/item/category/sysMiddleCate',
         searchFreightFee: '/bill/freightList/searchFreightFee'
     },
+  /**
+   * @description 运费
+   */
+
+  extra:{
+    extraDetail:'/bill/freightList/orderFreightInfo',
+  },
 }
 
 export default {
