@@ -952,6 +952,8 @@
 			protocolModalToShow() {
 				if(this.formCustom.isLogisticsCompany==1){
 					this.title='承运商注册协议'
+				}else{
+					this.title='供应商注册协议'
 				}
 				this.protocolModalShow = true
 			},
