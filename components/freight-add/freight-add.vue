@@ -352,7 +352,6 @@ export default {
                 demandEndDate:this.formAddress.demandEndDate,
               }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-              console.log(res)
                 if(res.data.data) {
                     this.$Modal.success({
                         title: '提示',
