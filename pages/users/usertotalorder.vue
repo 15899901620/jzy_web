@@ -71,7 +71,7 @@
                   <div class="" v-if="item.status == 3 && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
                   </div>
-                  <div class="" v-else>
+                  <div class="" v-if="item.isAddDemand == 1 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
                   </div>
                   <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">查看详情</a>
