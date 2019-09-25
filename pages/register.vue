@@ -10,35 +10,10 @@
     </Header-small>
     <div class="container" title="">
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
-
-<!--        <ul class="registerTab">-->
-<!--          <li v-for="(item, index) in RegisterList" :class="{'curr':nowIndex === index}"-->
-<!--              @click="tabClick(index,item.name)" v-bind:key="index">{{item.name}}-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--        <div class="swiper-container swiper_con" :style="{height:(!this.current ? 'auto' : '1180px')}">-->
-<!--          <div class="swiper-wrapper dflex">-->
-<!--            &lt;!&ndash; 第一个 swiper &ndash;&gt;-->
-<!--            <div class="swiper-slide swiper-no-swiping" ref="viewBox">-->
-<!--              <user-register @currData="currData"></user-register>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; 第二个 swiper &ndash;&gt;-->
-<!--            <div class="swiper-slide swiper-no-swiping">-->
-<!--              <supplier-register @currData="currData"></supplier-register>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-        <Tabs value="name1">
-          <TabPane label="会员注册" name="name1">
-            <user-register @currData="currData"></user-register>
-          </TabPane>
-          <TabPane label="供应/承运商注册" name="name2">
-            <supplier-register @currData="currData"></supplier-register>
-          </TabPane>
-
+        <Tabs >
+          <TabPane label="会员注册" name="name1"><user-register @currData="currData"></user-register></TabPane>
+          <TabPane label="供应/承运商注册" name="name2"><supplier-register @currData="currData"></supplier-register></TabPane>
         </Tabs>
-
-
       </div>
     </div>
     <Footer size="small" title="" style="margin-top:18px;"></Footer>
@@ -160,18 +135,18 @@
   /*  width: 100%;*/
   /*  margin: 0PX auto;*/
   /*}*/
-  .ivu-tabs .ivu-tabs-bar{
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    margin-top: 26px;
-  }
-  .ivu-tabs-nav .ivu-tabs-tab{
-    padding: 17px 16px;
-  }
-  .ivu-tabs-nav-container{
-    font-size: 16px;
-  }
+  // .ivu-tabs .ivu-tabs-bar{
+  //   width: 80%;
+  //   margin: 0 auto;
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: 26px;
+  // }
+  // .ivu-tabs-nav .ivu-tabs-tab{
+  //   padding: 17px 16px;
+  // }
+  // .ivu-tabs-nav-container{
+  //   font-size: 16px;
+  // }
 
 </style>
