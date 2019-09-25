@@ -25,8 +25,8 @@
                             <div class="mt30 fs14">开始时间：{{items.beginTime}}</div>
                         </div>
                         <div class="acuOpear">
-                            <div style="display: flex; flex-direction: column; justify-content: flex-end">
-                                <span class="mt10 ">城市：{{items.warehouseName}}</span>
+                            <div style="height: 80px; font-size: 15px; width: 80%; display: flex; flex-direction: column; justify-content: center">
+                                <span style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;text-overflow: ellipsis;">城市：{{items.warehouseName}}</span>
                                 <span class="mt5">竞拍厂商：{{items.manufacturer}}</span>
                             </div>
                             <template v-if="items.type === 2">

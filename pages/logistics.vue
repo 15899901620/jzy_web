@@ -151,7 +151,11 @@
                 <Table size="small" border stripe highlight-row :columns="searchColumns"   :data="searchData" :content="self" >
                 </Table>
             </div>
+			<div slot="footer">
+				<Button type="primary" @click="searchModalCancel">确定</Button>
+			</div>
         </Modal>
+
 	</div>
 </template>
 
