@@ -105,11 +105,9 @@
               </li>
             </template>
             <template v-else>
-
               <li style="overflow:hidden; height: 235px;">
                 <p style="width:100%; text-align:center">
                   <img src="../../static/img/Nothing.png"/>
-
                 </p>
               </li>
             </template>
@@ -121,6 +119,7 @@
       </div>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    <CheckType :record_id="selectRecordID" :isShow="checkTypeShow" @cancel="checkTypeCancel"></CheckType>
   </div>
 </template>
 
@@ -129,6 +128,7 @@
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
+	import CheckType from '../../components/spot-list/checkType'
 
 	export default {
 		name: "spot",
@@ -157,6 +157,7 @@
 			])
 		},
 		components: {
+			CheckType,
 			Header,
 			Footer,
 			pages: pagination.pages,
@@ -164,6 +165,9 @@
 		},
 		data() {
 			return {
+				selectRecordID: 0,
+				checkTypeShow: false,
+
 				current_page: parseInt(this.$route.query.page) || 1,
 				page_size: 10,
 				categoryId: this.$route.query.category_id || '',
@@ -180,7 +184,8 @@
 		},
 		methods: {
 			addOrder(id) {
-				location.href='/spot/order/'+id
+				this.selectRecordID = id
+        this.checkTypeShow = true
 			},
 			categoryClick(id) {
 				this.categoryId = id
@@ -216,8 +221,6 @@
 				let params = {
 					category_id: this.categoryId,
 					level_id: this.processId,
-					//purpose_id: this.purposeId,
-					//feature_id: this.featureId,
 					sku_name: this.skuName,
 					manufacturer: this.manufacturer,
 					min_price: this.minPrice,
@@ -227,6 +230,9 @@
 				};
 				this.$store.dispatch('spot/getSpotList', params)
 			},
+			checkTypeCancel(){
+				this.checkTypeShow = false
+      },
 			toLogin(){
 				location.href = '/login'
 			}

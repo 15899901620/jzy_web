@@ -51,7 +51,7 @@
 	background-color:#e0effc;
 }
 .Time-limited_list li .limitedPrice {
-	width:80%;
+	width:90%;
 	margin:0 auto;
 	padding:10px 0;
 }
@@ -1066,7 +1066,7 @@ gAccount {
 }
 .AuctionTime li {
 	background-color:#fff;
-	width:33.3%;
+	width:50%;
 	text-align:center;
 	padding:15px 0;
 	cursor:pointer;

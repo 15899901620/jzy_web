@@ -8,7 +8,8 @@ export const state = () => {
 		condition:{
 			category: [],
 			process: [],
-		}
+		},
+		spotInfo: {}
 	}
 }
 
@@ -21,12 +22,14 @@ export const mutations = {
 	},
 	updateCondition(state, data) {
 		state.condition = data
+	},
+	updateSpotInfo(state, data) {
+		state.spotInfo = data
 	}
 }
 
 export const actions = {
 	async getSpotList({commit}, params) {
-	 console.log("params:",params)
 		let res = await sendCurl(this, server.api.spot.initSpotList, params)
 		if (res.status === 200) {
 			commit('updateSpotList', res.data.items)
@@ -41,6 +44,12 @@ export const actions = {
 				process: res.data.specLevelFilter
 			}
 			commit('updateCondition', condition)
+		}
+	},
+	async getSpotInfo({commit}, params) {
+		let res = await sendCurl(this, server.api.spot.getSpotInfoToOrder, params)
+		if (res.status === 200) {
+			commit('updateSpotInfo', res.data.items)
 		}
 	}
 }

@@ -1,7 +1,7 @@
 const appConfig = require('./config/app.config')
 
 const proxy_url = process.env.NODE_ENV === 'development' ? appConfig.system.BASE_URL.dev : appConfig.system.BASE_URL.pro
-
+let Version = new Date().getTime()
 export default {
 	mode: 'universal',
 	/*
@@ -113,10 +113,10 @@ export default {
 			chunk: ({isDev}) => isDev ? '[name].js' : '[chunkhash].js',
 			css: ({isDev}) => isDev ? '[name].js' : '[contenthash].css',
 			img: ({isDev}) => isDev ? '[path][name].[ext]' : '[hash:7].[ext]'*/
-			app: '[chunkhash].js',
-			chunk: '[chunkhash].js',
-			js: '[chunkhash].js',
-			css: '[contenthash].css',
+			app: '[name].[contenthash].'+Version+'.js',
+			chunk: '[name].[contenthash].'+Version+'.js',
+			js: '[name].[contenthash].'+Version+'.js',
+			css: '[name].[contenthash].'+Version+'.css',
 			img: '[hash:7].[ext]'
 		},
 		/*loaderOptions: { // 向 CSS 相关的 loader 传递选项
