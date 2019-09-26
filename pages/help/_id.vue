@@ -47,12 +47,15 @@ export default {
     },
     fetch({ store, params }) {
         return Promise.all([
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
+            //获取顶部、中部、底部导航信息
+            store.dispatch('common/getNavList'),
+            //获取系统配置
+            store.dispatch('common/getSysConfig'),
             store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
             store.dispatch('helper/getHelpCateAll',{parentId: 0, indexShow: 1}),
             store.dispatch('helper/gethelpDetail',{id:params.id}),
-            store.dispatch('system/getLinksInfo')
+            store.dispatch('common/getFriendlyList'),
+
         ])
     },
     computed:{

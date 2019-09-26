@@ -27,7 +27,7 @@
                         </div>
                         <div class="newsShare">分享</div>
                         </div>
-                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content"></div>
+                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content" style="min-height: 80vh"></div>
                         <div class="new_other" style="margin-bottom:20px;">
                             <span v-if="!this.articledetail.lastPage.id">【上一篇】{{this.articledetail.lastPage.title}}</span>
                             <span v-else>【上一篇】
@@ -92,7 +92,7 @@ export default {
             catId: 0,
             indexShow: 1
           }),
-          
+
         store.dispatch('article/getArticleDetail', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getArticleClick', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10}),
