@@ -650,13 +650,15 @@ export default {
                     border-top-right-radius: 6px;
                     background-color: #f9f9f9;
                 }
-                // .ivu-modal-body {
+                 .ivu-modal-body {
+                     display: flex;
+                     justify-content: space-between;
                 //     // p {
                 //     //     text-align: left;
                 //     //     font-size: 14px;
                 //     // }
 
-                // }
+                 }
             }
         }
     }

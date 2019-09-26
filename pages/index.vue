@@ -85,6 +85,7 @@
 				}),
 				//获取轮播图
 				store.dispatch('common/getBannerList', 1),
+                store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
 					current_page: 1,
@@ -94,7 +95,7 @@
 				//获取行业资讯
 				store.dispatch('article/getHotArticle', {
 					current_page: 1,
-					page_size: 5, sortBy: 'add_time', desc: true, isShow: 1
+					page_size: 4, sortBy: 'add_time', desc: true, isShow: 1
 				}),
 				//获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {

@@ -1,18 +1,18 @@
 <template>
   <div class="body">
     <Header-small title="现货超市">
-      <div slot="headerother">
-        <ul class="sp_cat_title_list">
-          <li class="curr"><i>1</i>
-            <p>编辑详细信息</p></li>
-          <li><i>2</i>
-            <p>提交订单成功</p></li>
-          <li><i>3</i>
-            <p>支付货款</p></li>
-          <li><i>4</i>
-            <p>下单完成</p></li>
-        </ul>
-      </div>
+<!--      <div slot="headerother">-->
+<!--        <ul class="sp_cat_title_list">-->
+<!--          <li class="curr"><i>1</i>-->
+<!--            <p>编辑详细信息</p></li>-->
+<!--          <li><i>2</i>-->
+<!--            <p>提交订单成功</p></li>-->
+<!--          <li><i>3</i>-->
+<!--            <p>支付货款</p></li>-->
+<!--          <li><i>4</i>-->
+<!--            <p>下单完成</p></li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </Header-small>
     <div class="container" title="">
       <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">

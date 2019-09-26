@@ -1,7 +1,7 @@
 <template>
 
     <div class="mb40">
-        <pageRoute></pageRoute>
+
     <!--页面路径-->
       <div class="w1200">
         <div class="mt10 fs14">
@@ -57,7 +57,8 @@
         Contact,
         Commonproblem,
         membercenter,
-        Notice
+        Notice,
+
       },
       data() {
         return{
@@ -66,14 +67,8 @@
         };
       },
       methods:{
-          async SourceData() {    
-              let params = {
-                id: this.id,
-              };
-              const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
-              this.dataList = res.data
-          },
-          // async BySupplier() {    
+
+          // async BySupplier() {
           //     let params = {
           //       biddingId: this.id,
           //     };
@@ -83,10 +78,9 @@
 
       },
       mounted() {
-          this.SourceData()
           // this.BySupplier()
       }
-    
+
     }
 </script>
 

@@ -10,7 +10,7 @@
               <div class="head">
                 <img :src="!userinfo.avatar ? '~/static/img/head.png': userinfo.avatar"/>
 
-                <div class="headClick">上传</div>
+                <div class="headClick" >上传</div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfo.phone}}</span>
               <span>欢迎来到巨正源科技交易平台！</span>

@@ -6,8 +6,11 @@
       @on-cancel="cancel"
       :mask-closable="false"
       :styles="{top:'280px'}">
-    <Button type="primary" size="large" @click="goPlan" >预付，生成合约</Button>
-    <Button type="success" size="large" @click="goOrder">全额付款，生成订单</Button>
+    <div style="text-align:center; display: flex; justify-content: space-between">
+          <Button type="primary" size="large" @click="goPlan" >预付，生成合约</Button>
+          <Button type="success" size="large" @click="goOrder">全额付款，生成订单</Button>
+    </div>
+
     <div slot="footer" style="text-align:center;">
     </div>
   </Modal>
@@ -42,3 +45,8 @@
 		},
 	}
 </script>
+<style>
+  .ivu-modal-content >>> .ivu-modal-body{
+    display: flex; justify-content: space-between;
+  }
+</style>

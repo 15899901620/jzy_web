@@ -57,6 +57,7 @@ export default {
             store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
         ])
     },
+
   methods:{
     User(){
       this.$router.push({path:'./users/user'})
@@ -89,6 +90,7 @@ export default {
     }
   },
   mounted() {
+
     this.sourceData()   //公告
     this.NewsData()
   }

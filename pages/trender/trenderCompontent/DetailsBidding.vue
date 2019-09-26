@@ -7,7 +7,7 @@
                       ref="upload"
                       :action="uploadUrl"
                       :on-success="handleOtherFile"
-                      :max-size="2048">  
+                      :max-size="2048">
                <Button type="primary" size="large">上传标书</Button>
              </Upload>
         </div>
@@ -19,7 +19,7 @@
 
   import Header from "../../../components/header";
   import { sendHttp } from "../../../api/common";
-  import server from "../../../config/api";     
+  import server from "../../../config/api";
   import Cookies from "js-cookie";
 
 
@@ -36,8 +36,8 @@
                  appendix:'',
             },
             SupplierInfor:{},
-           
-            
+
+
         };
       },
        methods:{
@@ -49,8 +49,8 @@
               this.fileUpdate();
               this.SourceData();
           },
-          async fileUpdate() {  
-            
+          async fileUpdate() {
+
              let params = {
                 supplierId:this.SupplierInfor.id,
                 biddingId: this.id,
@@ -58,16 +58,16 @@
                 supplierName:this.SupplierInfor.username
               };
               const res = await sendHttp(this, true, server.api.biddding.save,params,2)
-  
+
           },
-          async SourceData() {    
+          async SourceData() {
               let params = {
                 id: this.id,
               };
               const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
               this.dataList = res.data
           },
-          // async BySupplier() {    
+          // async BySupplier() {
           //     let params = {
           //       biddingId: this.id,
           //     };
@@ -78,7 +78,6 @@
       },
       mounted() {
           this.SupplierInfor = Cookies.get("supplierInfor");
-          this.SupplierInfor=JSON.parse(this.SupplierInfor)
          this.getUploadURL()
           this.SourceData()
           // this.BySupplier()
