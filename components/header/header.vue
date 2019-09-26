@@ -11,6 +11,7 @@
       <div class="TopTel" v-if="$store.state.common.sysConfig.SERVICEHOTLINE">
         {{$store.state.common.sysConfig.SERVICEHOTLINE}}
       </div>
+
     </div>
     <div class="navigation">
       <!--热门服务分类-->
@@ -23,12 +24,13 @@
   </div>
 </template>
 <script>
-	const prefixCls = 'ant-header'
+ 	const prefixCls = 'ant-header'
 	import shortcut from '../shortcut'
 	import Logo from './components/logo'
 	import Search from './components/search'
 	import Navigation from '../navigation'
 	import coolapse from '../collapse'
+
 
 	export default {
 		name: 'Header',

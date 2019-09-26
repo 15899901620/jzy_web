@@ -228,12 +228,18 @@
 		}*/
 		computed: {
 			totalPrice: function () {
+              console.log("final_price",this.spotDetail.final_price)
+              console.log("freightFee",this.orderinfo.freightFee)
+              console.log("jryCost",this.orderinfo.jryCost)
 				return parseFloat(this.spotDetail.final_price) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
 			},
 			totalPriceFormat: function () {
+			  console.log("totalPrice:",this.totalPrice)
 				return parseFloat(this.totalPrice).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
 			},
 			totalAmount: function () {
+              console.log("totalPrice:",this.totalPrice)
+              console.log("orderNum:",this.orderinfo.orderNum)
 				return parseFloat(this.totalPrice) * parseInt(this.orderinfo.orderNum)
 			},
 			totalAmountFormat: function () {

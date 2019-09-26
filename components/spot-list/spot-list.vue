@@ -1,12 +1,12 @@
 <template>
   <div class="hotspot">
     <div class="XhlistTitle">
-      <span style="width: 11%;">品种</span>
+      <span style="width: 10%;">品种</span>
       <span style="width: 16%;">牌号</span>
       <span style="width: 16%;">厂商</span>
       <span style="width: 10%;">交货仓</span>
       <span style="width: 6%;">包装方式</span>
-      <span style="width: 8%;">剩余数量（吨）</span>
+      <span style="width: 9%;">剩余数量（吨）</span>
       <span style="width: 9%;">单价（元/吨）</span>
       <span style="width: 8%;">距下架时间</span>
       <span style="width: 7%;">提货期限</span>
@@ -15,14 +15,14 @@
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
         <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
-          <span style="width: 11%;">{{item.category_name}}</span>
+          <span style="width: 10%;">{{item.category_name}}</span>
           <span style="width: 16%;">{{item.sku_name}}</span>
           <span
               style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
           <span style="width: 10%;">{{item.warehouse_name}}</span>
           <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
           <span style="width: 6%;" v-else>非标准包装</span>
-          <span style="width: 8%;">{{item.available_num}}</span>
+          <span style="width: 9%;">{{item.available_num}}</span>
           <span v-if="$store.state.memberToken" class="orangeFont"
                 style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
@@ -46,7 +46,7 @@
           <span style="width: 12%;">
             <div
                 v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
-                style="color: white;background: gray; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+                style="color: #000;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
             <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                  @click="addOrder(item.id)">下单</div>
 

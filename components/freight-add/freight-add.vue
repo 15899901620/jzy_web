@@ -15,24 +15,24 @@
                 <Row index="0">
                     <Col span="12">
                         <FormItem label="订单号" >
-                            <Input v-model="OrderList.billNo"  disabled  placeholder="请输入订单号"></Input>
+                            <Input v-model="datalist.orderNo"  disabled  placeholder="请输入订单号"></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="货物名称" >
-                            <Input v-model="OrderList.freightGoods" disabled  placeholder="请输入货物名称"></Input>
+                            <Input v-model="datalist.skuName" disabled  placeholder="请输入货物名称"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="0">
                     <Col span="12">
                         <FormItem label="数量" >
-                            <Input v-model="OrderList.weight"  disabled placeholder="请输入数量"></Input>
+                            <Input v-model="datalist.orderNum"  disabled placeholder="请输入数量"></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="提货仓库" >
-                            <Input v-model="OrderList.dispatchFullAddress" disabled  placeholder="请输入提货仓库"></Input>
+                            <Input v-model="datalist.warehouseName" disabled  placeholder="请输入提货仓库"></Input>
                         </FormItem>
                     </Col>
                 </Row>
@@ -58,7 +58,7 @@
                 <Row index="2">
                     <Col span="12">
                         <FormItem label="用车时间" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd"  :options="options4"  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                                <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
@@ -201,7 +201,7 @@ export default {
             options4: {
                 disabledDate: date => {
                     // this成功指向vue实例
-                    return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000; 
+                    return  date && date.valueOf() < Date.now() - 86400000; 
                 }
             },
             
@@ -295,18 +295,8 @@ export default {
             this.tax_id=e
         },
        async dataList(){
-            let params = {
-                orderId:this.datalist.id,
-            }
-            const res = await sendHttp(this, true, server.api.freight.InfoByOrderId,params,1)
-           
-            this.OrderList=  res.data
-            this.formAddress.phone=  res.data.phone
-            this.formAddress.contact=  res.data.contact
-
-            demandBeginDate
             // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
-            let t= new Date(res.data.demandEndDate)
+            let t= new Date(this.datalist.deliveryDeadline)
             this.date = t.getTime();
         },
         async AddressOk() {
@@ -349,10 +339,9 @@ export default {
             }else {
               let params = {
                 inquiryMinute:this.title,
-                tax_id:this.tax_id,
+                isTax:this.tax_id,
                 orderId:this.datalist.id,
                 contact:this.formAddress.contact,
-                dispatchFullAddress:this.formAddress.dispatchFullAddress,
                 phone: this.formAddress.phone,   //收货人电话
                 receiptCountryId: this.formAddress.countryId,   //国家
                 receiptState: this.formAddress.state, //省
@@ -362,7 +351,7 @@ export default {
                 demandEndDate:this.formAddress.demandEndDate,
               }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-                if(res) {
+                if(res.data.data) {
                     this.$Modal.success({
                         title: '提示',
                         content: '添加成功',
@@ -374,7 +363,7 @@ export default {
                 }else{
                     this.$Modal.warning({
                         title: '提示',
-                        title: '添加地址失败，请联系客服',
+                        title: res.data.message,
                         duration: 5,
                         closable: true
                     });

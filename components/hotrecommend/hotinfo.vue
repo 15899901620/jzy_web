@@ -18,7 +18,7 @@
         </tabs-pane>
         <tabs-pane label="公司动态" name='2' style="display: none;">
           <ul class="newscont">
-            <template v-if="$store.state.article.noticeList.length > 0">
+            <template v-if="$store.state.article.articleList.length > 0">
             <li v-for="(item, index) in $store.state.article.articleList" :key="index">
               <span>{{item.time}}</span>
               <a :href="`/article/detail/${item.id}`">

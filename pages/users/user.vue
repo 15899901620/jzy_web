@@ -13,7 +13,7 @@
                 <div class="headClick">上传</div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfo.phone}}</span>
-              <span>欢迎来到巨正源化工交易网！</span>
+              <span>欢迎来到巨正源科技交易平台！</span>
               <div class="gray mt10 mb10 fs12">上次登录时间：{{userinfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">

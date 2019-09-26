@@ -92,7 +92,7 @@
 					sortBy: 'add_time', desc: true, isShow: 1
 				}),
 				//获取行业资讯
-				store.dispatch('article/getArticleList', {
+				store.dispatch('article/getHotArticle', {
 					current_page: 1,
 					page_size: 5, sortBy: 'add_time', desc: true, isShow: 1
 				}),

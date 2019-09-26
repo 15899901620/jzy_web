@@ -9,7 +9,7 @@
     </div>
     <div class="formItem">
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
-        <div v-if="current == 0">
+        <div v-show="current == 0">
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="phone" label="手 机 号：">
@@ -19,19 +19,9 @@
           </Row>
           <Row :gutter="24" index="1">
             <Col span="21">
-<!--              <FormItem prop="Imgcode" label="验 证 码：">-->
-<!--                <Input class="CarrierImgcode" v-model="formCustom.Imgcode" placeholder="请输入验证码" autocomplete="off"/>-->
-<!--              </FormItem>-->
-<!--            </Col>-->
-<!--            <Col span="6">-->
-<!--              <div class="captcha" @click="refreshCode">-->
                 <FormItem prop="slidecode" label="滑动验证：">
                   <slide-verify @onChange="onTime" width="392" ></slide-verify>
                 </FormItem>
-
-<!--                <captcha :CodeCate="CodeCate" :contentWidth='131' :contentHeight='31'-->
-<!--                         :identifyCode="identifyCode"></captcha>-->
-<!--              </div>-->
             </Col>
           </Row>
           <Row :gutter="24" v-if="isopenSms && phoneValid" index="2">
@@ -77,7 +67,7 @@
             </Col>
           </Row>
         </div>
-        <div v-else-if="current == 1">
+        <div v-show="current == 1">
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="companyName" label="公司名称：">
@@ -129,7 +119,9 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
+
               <FormItem label="营业执照：" prop="contacterEmail">
+
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
@@ -142,7 +134,7 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+              <div class="uploadimg">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
           </Row>
           <Row :gutter="24" index="0">
@@ -160,17 +152,17 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
             <Col span="21" style="text-align:center;">
-              <Button class="CarrierRegister" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister" @click="memberReset">提 交</Button>
+              <Button class="CarrierRegister mt20" @click="handleUp">上一步</Button>
+              <Button type="primary" class="CarrierRegister mt20" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
-        <div v-else-if="current == 2">
+        <div v-show="current == 2">
           <!--审核成功-->
           <div class="dflexAlemJust" style="margin-top: 60px;">
             <img src="../../static/img/exam_icon.png"/>
@@ -324,8 +316,7 @@
 				}
 			};
           const validateSlide = (rule, value, callback) => {
-            console.log("value",value)
-            if (value === 0) {
+             if (value === 0) {
                console.log("value",value)
               callback(new Error('请滑动完成验证'));
             } else {
@@ -393,31 +384,31 @@
 						{validator: validatemobilecode, trigger: 'blur'}
 					],
 					companyName: [
-						{  validator: validateCompanyName, trigger: 'blur'}
+						{required:true,  validator: validateCompanyName, trigger: 'blur'}
 					],
 					contacterEmail: [
-						{ trigger: 'blur'}
+						{  required:true, trigger: 'blur'}
 					],
 					businessLicense: [
-						{ trigger: 'blur'}
+						{ required:true, trigger: 'blur'}
 					],
 					taxId: [
-						{required:true, validator: validateTaxId, trigger: 'blur'}
+						{required:true,  validator: validateTaxId, trigger: 'blur'}
 					],
 					invBankName: [
-						{ validator: validateInvBankName, trigger: 'blur'}
+						{ required:true,  validator: validateInvBankName, trigger: 'blur'}
 					],
 					invBankAccount: [
-						{ required:true,  validator: validateInvBankAccount, trigger: 'blur'}
+						{  required:true, validator: validateInvBankAccount, trigger: 'blur'}
 					],
 					invAddress: [
-						{   validator: validateInvAddress, trigger: 'blur'}
+						{  required:true,  validator: validateInvAddress, trigger: 'blur'}
 					],
 					invTelephone: [
-						{    validator: validateInvTelephone, trigger: 'blur'}
+						{ required:true,    validator: validateInvTelephone, trigger: 'blur'}
 					],
 					contacter: [
-						{  validator: validateContacter, trigger: 'blur'}
+						{  required:true, validator: validateContacter, trigger: 'blur'}
 					],
                     slidecode: [
                       {  validator: validateSlide, trigger: 'blur'}
@@ -803,11 +794,6 @@
 	}
 </script>
 <style scoped>
-  .CarrierRegister{width: 80%}
-  /*.ivu-form >>>.ivu-form-item:before{*/
-  /*  content: '*';*/
-  /*  display: inline-block;*/
-  /*  font-size: 16px;*/
-  /*  color: #ed1e2d;*/
-  /*}*/
-</style>
+  .CarrierRegister{width: 83%}
+
+ </style>

@@ -11,7 +11,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="260"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
@@ -26,7 +26,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="password">
-            <Input v-model="loginsupplierform.password" type="password" placeholder="登录密码"/>
+            <Input v-model="loginsupplierform.password" type="password" @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
           </FormItem>
         </Col>
       </Row>
@@ -112,7 +112,7 @@ export default {
       updateChackPhone: 'login/updateChackPhone'
     }),
     onTime(res){
-      
+
       if(res){
         this.loginsupplierform.slidecode = res
       }else{
@@ -252,15 +252,15 @@ export default {
                 })
             }
           })
-    
+
           if(this.chackPhone === true) {
             return false
           }
-          
+
           let data = {
               phone: that.loginsupplierform.username
           }
-        
+
         }
       })
     }
@@ -270,7 +270,7 @@ export default {
 
 <style lang="less" scoped>
 .supplierlogin {
-  margin-top: 15px;
+
   .butGetCode {
     position: absolute;
     right: 15px;

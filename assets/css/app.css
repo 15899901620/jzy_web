@@ -666,6 +666,15 @@ a {
 	display:flex;
   align-items:center;
   background: #fafafa;
+
+}
+.XhlistTitle h1{
+	height: 35px;
+	display:flex;
+
+	align-items:center;
+
+	justify-content: center;
 }
 .XhlistTitle span {
 	text-align:center;
@@ -937,10 +946,11 @@ a {
 	margin-top:20px;
 }
 .LoginCenter {
-	display:flex;
-	justify-content:center;
-	flex-direction:column;
-	margin:20px 30px;
+	/*display:flex;*/
+	/*justify-content:center;*/
+	/*flex-direction:column;*/
+	width: 85%;
+	margin:10px 25px;
 	font-size:14px;
 }
 .loginMethod li {
