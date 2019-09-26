@@ -1,14 +1,14 @@
 <template>
     <!--出价提示-->
     <Modal
-        title="新增货物需求"
+        title="填写用车信息"
         v-model="loading"
         @on-cancel="AddressCancel"
         :width='700'
         class-name="vertical-center-modal">
         <p slot="header" style="color:#666; text-align:left; font-size:14px;">
             <Icon type="ios-create" style="font-size:18px;" />
-            <span>新增货物需求</span>
+            <span>填写用车信息</span>
         </p>
         <div class="">
             <Form ref="formAddress" :model="formAddress" :label-width="100"  :rules="ruleValidate">
@@ -38,7 +38,7 @@
                 </Row>
                 <Row index="0">
                     <Col span="12">
-                        <FormItem label="联系人姓名" prop="name">
+                        <FormItem label="联系人" prop="name">
                             <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
                         </FormItem>
                     </Col>
@@ -57,17 +57,17 @@
                 </Row>
                 <Row index="2">
                     <Col span="12">
-                        <FormItem label="用车时间" prop="demandEndDate">
+                        <FormItem label="用车日期" prop="demandEndDate">
                                 <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
                     </Col> 
                 </Row>
                 <Row index="3">
                      <Col span="12">
-                     <FormItem label="询价截止时间" >
+                     <FormItem label="询价有效时间" >
                          <Dropdown placement="bottom-start" trigger="click" @on-click="selectLang">
                                 <Button type="primary">
-                                    {{title}}分钟
+                                    {{title}}小时
                                     <Icon type="ios-arrow-down"></Icon>
                                 </Button>
                             <DropdownMenu slot="list">
@@ -107,7 +107,7 @@
             </Form>
         </div>
         <p slot="footer" style="text-align:center">
-            <Button type="primary" @click="AddressOk">添加货物需求</Button>
+            <Button type="primary" @click="AddressOk">我要找车</Button>
         </p>
     </Modal>
 </template>
@@ -209,16 +209,21 @@ export default {
             isAddressFormShow: false,
             loading: false,
             localList: [
-                 '30',
-                 '60',
-                 '120'
+                 '1',
+                 '2',
+                 '3',
+                 '4',
+                 '5',
+                 '6',
+                 '7',
+                 '8',
             ],
             taxList:[
                  '否',
                  '是',        
             ],
             tax:'否',
-            title:'60',
+            title:'2',
             OrderList:{},
             date:'',
             formAddress:{
