@@ -162,8 +162,8 @@ export const supplierReg = (vm, data) => {
 
 /**
  * @description 获取会员信息
- * @param {*} vm 
- * @param {*} data 
+ * @param {*} vm
+ * @param {*} data
  */
 export const getGainuserInfor = (vm, data) => {
   vm.$axios.defaults.headers = {
@@ -292,10 +292,38 @@ export const supplierCodeCheck = (vm, data) => {
 }
 
 
-
-
 /**
- * @description 供应商发送短信
+ * @description 供应商注册发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierRegCode = (vm, data) => {
+    return vm.$axios.post(server.prefix + server.api.user.supplierRegCode,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('supplierRegCodeSendErr', errorInfo)
+    })
+}
+/**
+ * @description 承运商注册发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const carrierRegcode = (vm, data) => {
+    return vm.$axios.post(server.prefix + server.api.user.carrierRegcode,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('supplierRegCodeSendErr', errorInfo)
+    })
+}
+/**
+ * @description 供应商登录发送短信
  * @param vm
  * @param data
  * @returns {*}
@@ -636,7 +664,7 @@ export const inspectionlistPage = (vm, data) => {
   })
 }
 
-  
+
 
 
 
