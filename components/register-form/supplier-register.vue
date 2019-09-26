@@ -15,7 +15,7 @@
             <Col span="21">
               <FormItem prop="Imgcode" label="注册类型：">
                 <Select v-model="formCustom.isLogisticsCompany">
-                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                  <Option v-for="item in registType" :value="item.value" :key="item.value" >{{ item.label }}</Option>
                 </Select>
               </FormItem>
             </Col>
@@ -245,9 +245,9 @@
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
-            <Col span="21" style="text-align:center;">
+            <Col span="21" style="text-align:center; display: flex; margin-left: 90px;width: 72%;">
               <Button class="CarrierRegister" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister" @click="memberReset">提 交</Button>
+              <Button type="primary" class="CarrierRegister ml10" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
@@ -271,11 +271,17 @@
         @on-cancel="protocolModalCancel"
         :width='700'
         class-name="vertical-center-modal">
-      <div class="" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL">
-      </div>
+
+      <template v-if="formCustom.isLogisticsCompany == 0">
+          <div class="" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL"></div>
+      </template>
+      <template v-else>
+          <div class="" v-html="$store.state.common.sysConfig.CARRIER_REGISTRATION_PROTOCOL"></div>
+      </template>
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
       </div>
+
     </Modal>
   </div>
 </template>
@@ -285,7 +291,7 @@
 	import {mapState} from 'vuex'
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
-	import {supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
+	import {supplierCodeCheck, supplierCodeSend, supplierRegCode, carrierRegcode, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
     import SlideVerifysupply from '../slide-verify/slide-verify-supply'
 
 	const appConfig = require('../../config/app.config')
@@ -353,7 +359,9 @@
 			const validatemobilecode = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('手机验证码不能为空'));
-				}
+				}else{
+                  this.mobilecodeChenckValid(value, callback)
+                }
 			};
 			// 供应商名称
 			const validatename = (rule, value, callback) => {
@@ -363,6 +371,7 @@
 					callback();
 				}
 			};
+			//校验公司名称
 			const validateCompanyName = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入公司名称'));
@@ -456,9 +465,10 @@
           };
 			return {
 				registType:[
-          {'label': '供应商','value':0},
-          {'label': '承运商','value':1},
-		],
+                  {'label': '供应商','value':0},
+                  {'label': '承运商','value':1},
+                ],
+                registtype:0,
 				title:'供应商注册协议',
 				protocolModalShow: false,
 				CodeCate: 'Codeuserspplier',
@@ -478,7 +488,8 @@
 				phoneValid: false,//号码有效
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
-				current: 0,
+                codeValid:false,   //验证码有效
+				current: 1,
 				uploadUrl: '',
 				companyValid: false,
 				supplierNatureList: [],
@@ -593,6 +604,7 @@
           ])
 		},
 		methods: {
+
           // 滑动验证
           onTimesupply(res) {
             console.log("res",res)
@@ -621,9 +633,8 @@
 					data: value,
 					type: 2
 				}
+
 				const res = await supplierdataCheck(this, params)
-
-
 				if (res.data && res.status === 200) {
 					if (res.data.is_registered === "true") {
 						this.phoneValid = false
@@ -637,26 +648,25 @@
 					callback(new Error('手机号码已注册'));
 				}
 			},
+          //验证手机验证码codeValid
+          async mobilecodeChenckValid(value, callback) {
+            let params = {
+              phone: this.formCustom.phone,
+              code:value
+            }
+            const res = await supplierCodeCheck(this, params)
+            console.log("res",res)
+            if (res.data && res.status === 200) {
+                this.codeValid=true
+                callback()
+            } else {
+              callback(new Error('验证码错误'));
+            }
+          },
 			//获取短信验证码
 			async getNoteValue() {
 				var phone = this.formCustom.phone//验证码
 				//验证验证码是否为空
-				// if (this.Imgcode === '') {
-				// 	this.$Message.info({
-				// 		content: '图形证码不能为空',
-				// 		duration: 5,
-				// 		closable: true
-				// 	})
-				// 	return
-				// }
-				// if (!this.ImgCodeValid) {
-				// 	this.$Message.info({
-				// 		content: '请重新输入图形证码',
-				// 		duration: 5,
-				// 		closable: true
-				// 	})
-				// 	return
-				// }
                 if(!this.isopenSms){
                   this.$Message.info({
                     content: '请滑动验证码',
@@ -671,7 +681,15 @@
 					let params = {
 						phone: phone
 					}
-					const res = await supplierCodeSend(this, params)
+					if(this.formCustom.isLogisticsCompany === 0){
+					 console.log("***supplierRegCode***")
+                      var res = await supplierRegCode(this, params)
+                    }
+                    if(this.formCustom.isLogisticsCompany === 1){
+                      console.log("***carrierRegcode***")
+                      var res = await carrierRegcode(this, params)
+                    }
+
 					if (res.data && res.status === 200) {
 						this.ImgCodeValid = false
 
@@ -700,6 +718,8 @@
 					}
 				}
 			},
+
+
 			//生成随机数
 			randomNum(min, max) {
 				return Math.floor(Math.random() * (max - min) + min);
@@ -808,14 +828,15 @@
 						this.companyValid = false
 						callback(new Error('公司名称不存在'))
 					} else if (res.data.is_exist === "true") {
+					  console.log('res',res)
 						this.companyValid = true
 						this.formCustom.taxId = res.data.tax_id
 						this.formCustom.corporation = res.data.operName
 						this.formCustom.registCapi = res.data.registCapi
-						this.formCustom.invBankName = res.data.Bank
-						this.formCustom.invBankAccount = res.data.BankAccount
-						this.formCustom.invAddress = res.data.Address
-						this.formCustom.invTelephone = res.data.Tel
+						this.formCustom.bankName = res.data.Bank
+						this.formCustom.bankAccount = res.data.BankAccount
+						this.formCustom.address = res.data.Address
+						this.formCustom.telephone = res.data.Tel
 						this.companyValid = true
 						callback()
 					}

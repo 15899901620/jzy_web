@@ -80,7 +80,7 @@
 		methods: {
 			reloadPage(){
 				location.href.reload()
-      },
+            },
 			mouseEnter() {
 				var ul = document.getElementById('TimeL-ul')
 				var li = ul.getElementsByTagName('li')
@@ -102,8 +102,7 @@
       },
 		mounted() {
 			if(this.$store.state.bidders.auctionList.length > 0){
-			  console.log("auctionList",this.$store.state.bidders.auctionList)
-				setTimeout(function () {
+ 				setTimeout(function () {
 					var chefElement = {
 						minSpeed: 10,//每次移动的距离
 						//获取页面元素
@@ -163,17 +162,11 @@
 							chefElement.type = true;
 						}
 					}
-
 // *****限时竞拍******
-
-
-
-				}, 2000)
+            }, 2000)
           var that = this
           let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-
             let TLWidth = TL[0].offsetWidth
-
             that.TLlength = TL.length * TLWidth
 
       }
