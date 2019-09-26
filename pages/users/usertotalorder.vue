@@ -60,7 +60,7 @@
                   </template>
                 </td>
                 <td>
-                  <span v-if="item.status == 3" class="greenFont">{{getOrderState(item.status)}}</span>
+                  <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
                 </td>
@@ -68,7 +68,7 @@
                   <div class="" v-if="item.status == 2">
                     <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
                   </div>
-                  <div class="" v-if="item.status == 3 && item.isAddDemand == 0 && item.isDelivery == 0">
+					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
                   </div>
                   <div class="" v-if="item.isAddDemand == 1 && item.isDelivery == 0">
@@ -168,7 +168,7 @@
 				this.addloading = true
 			},
 			unaddChange(res) {
-
+				this.getSourceData()
 				this.addloading = res
 			},
 			undetailChange(res) {
