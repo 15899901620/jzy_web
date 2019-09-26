@@ -41,7 +41,8 @@ export const mutations = {
 export const actions = {
 	async getAuctionList({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
-		if (res.status === 200) {
+		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			console.log(res.data.items)
 			commit('updateAuctionList', res.data.items)
 		}
 	},

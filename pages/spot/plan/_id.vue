@@ -191,7 +191,6 @@
 	import {addressList} from '../../../api/users'
 	import AddressDialog from '../../../components/address-dialog'
 	import spotPay from '../../../components/paydeposit/spotPay'
-	import { mapState } from 'vuex'
 
 	export default {
 		name: "spot-order-id",
@@ -211,21 +210,8 @@
 				store.dispatch('common/getSysConfig'),
         //获取资金情况
 				store.dispatch('member/getCapitalInfo'),
-        //获取报价信息
-				//store.dispatch('spot/getSpotInfo'),
 			])
 		},
-		/*computed: {
-			...mapState({
-				helpCatInfo: state => state.spot.helpCatInfo,
-			}),
-			classes() {
-				return [
-					`${prefixCls}`,
-					{ [`${prefixCls}-shortcut`]: this.vertical },
-				];
-			},
-		}*/
 		computed: {
 			totalPrice: function () {
 				return parseFloat(this.spotDetail.final_price) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
@@ -281,7 +267,8 @@
 					{value: 2, name: '配送'}
 				],
 				payList: [
-					{value: 1, name: '支付全款'}
+					{value: 1, name: '支付全款'},
+					{value: 2, name: '支付保证金'},
 				],
 				carrierList: [],
 				//carrierListDesc: '',

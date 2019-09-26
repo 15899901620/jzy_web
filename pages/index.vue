@@ -4,7 +4,7 @@
     <div class="container" title="">
       <!--内容-->
       <Banner title="" :bannerData="$store.state.common.adList.ad1" :heightNum="this.heightNum"
-              style="height: 320px; overflow: hidden;" />
+              style="height: 320px; overflow: hidden;"/>
       <div class="memberCenter">
         <hotrecommend>
           <hotinfo title=""></hotinfo>
@@ -41,7 +41,7 @@
           </div>
         </outpacking>
       </div> -->
-       <div class="hot-industry">
+      <div class="hot-industry">
         <outpacking title="行业资讯" cpadding="0px" :more="moreData">
           <div slot="content">
             <hottrade></hottrade>
@@ -73,7 +73,7 @@
 		fetch({store}) {
 			return Promise.all([
 				//获取顶部、中部、底部导航信息
-                 store.dispatch('common/getNavList'),
+				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
@@ -83,7 +83,7 @@
 					catId: 0,
 					indexShow: 1
 				}),
-                //获取轮播图
+				//获取轮播图
 				store.dispatch('common/getBannerList', 1),
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
@@ -94,7 +94,7 @@
 				//获取行业资讯
 				store.dispatch('article/getArticleList', {
 					current_page: 1,
-					page_size: 5,sortBy: 'add_time', desc: true, isShow: 1
+					page_size: 5, sortBy: 'add_time', desc: true, isShow: 1
 				}),
 				//获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {
@@ -107,16 +107,16 @@
 					page_size: 20
 				}),
 
-        store.dispatch('article/getHotArticle', {
-            current_page: 1,
-            page_size: 4
-        }),
-/*
-        store.dispatch('spot/getSpotList', {
-            current_page: 1,
-            page_size: 20
-        })*/
-      ])
+				/*store.dispatch('article/getHotArticle', {
+					current_page: 1,
+					page_size: 4
+				}),*/
+				/*
+                store.dispatch('spot/getSpotList', {
+                    current_page: 1,
+                    page_size: 20
+                })*/
+			])
 		},
 
 		components: {

@@ -62,44 +62,38 @@
         </li>
       </template>
     </ul>
-
-    <Modal v-model="ISlogin" width="400">
-      <p slot="header" style="color:#666;text-align:left">
-        <Icon type="ios-information-circle"></Icon>
-        <span>提示</span>
-      </p>
-      <div style="text-align:center; font-size:14px;">
-        <p>你未登录会员无法下单，请您登录后再下单！</p>
-      </div>
-      <div slot="footer">
-        <Button type="primary" :loading="modal_loading" @click="goLogin">去登录</Button>
-      </div>
-    </Modal>
+    <CheckType :record_id="selectRecordID" :isShow="checkTypeShow" @cancel="checkTypeCancel"></CheckType>
   </div>
 </template>
 
 <script>
-	import {getCookies} from '../../config/storage'
 	import TimeDown from '../../components/timeDown'
+	import CheckType from '../../components/spot-list/checkType'
 
 	export default {
 		name: 'SpotList',
 		components: {
-			TimeDown
+			TimeDown,
+			CheckType
 		},
 		data() {
 			return {
 				modal_loading: false,
-				ISlogin: false
+				selectRecordID: 0,
+				checkTypeShow: false,
 			}
 		},
 
 		methods: {
 			addOrder(id) {
-				location.href='/spot/order/'+id
+				this.selectRecordID = id
+				this.checkTypeShow = true
 			},
 			reloadPage() {
 				this.$router.go(0)
+			},
+			checkTypeCancel(){
+				this.checkTypeShow = false
 			},
 			goLogin(){
 				location.href='/login'

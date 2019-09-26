@@ -13,28 +13,28 @@
       <template v-if="$store.state.bidders.auctionList.length > 0">
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}" id='TimeL-ul'>
           <li ref="elememt" v-for="(items, index) in $store.state.bidders.auctionList" :key="index">
-            <div class="endTime endTimebg" v-if="items.type===1">
+            <div class="endTime endTimebg" v-if="items.statusType == '1'">
               <!--距开始时间 :-->
+              <TimeDown :timeStyleType="2" :endTime="items.realEndTime" dayShow hoursShow endMsg="" :onTimeOver="reloadPage"></TimeDown>
+            </div>
+            <div class="endTime endTimebg" v-if="items.statusType == '2'">
+              <!--距结束时间 :-->
               <TimeDown :timeStyleType="2" :endTime="items.beginTime" dayShow hoursShow endMsg="" :onTimeOver="reloadPage"></TimeDown>
             </div>
-            <div class="endTime endTimebg" v-if="items.type===2">
-              <!--距结束时间 :-->
-              <TimeDown :timeStyleType="2" :endTime="items.reservationEndTime" dayShow hoursShow endMsg="" :onTimeOver="reloadPage"></TimeDown>
-            </div>
-            <div class="endTime graybg" v-if="items.type===3">
+            <div class="endTime graybg" v-if="items.statusType == '3'">
               竞拍结束
             </div>
-            <h3 class="fs16 fwb mt20">{{items.manufacturer}} {{items.skuName}}</h3>
+            <h3 class="fs16 fwb mt20">{{items.skuName}}</h3>
             <div class="limitedPrice">
-              <span class="fs14">起拍价 : </span><span class="fs18" style="color: #ff6600;">{{items.startPrice}}元/吨</span>
+              <span class="fs18" style="color: #ff6600;">{{items.finalPriceFormat}}元/吨</span><span class="fs14"> 起</span>
             </div>
             <div class="NumStore">
-              <span>数量 : {{items.totalNum}}吨</span>
+              <span>数量 : {{items.totalNum}}{{items.uomName}}</span>
               <span>库区 : {{items.warehouseName}}</span>
             </div>
-            <div class="Timebtn beginbg" v-if="items.type===1" @click="acutionDetail(items.id)">即将开始</div>
-            <div class="Timebtn orangebg" v-if="items.type===2" @click="acutionDetail(items.id)">竞拍中</div>
-            <div class="Timebtn endbg" v-if="items.type===3" @click="acutionDetail(items.id)">竞拍结束</div>
+            <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">竞拍中</div>
+            <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">竞拍中即将开始</div>
+            <div class="Timebtn endbg" v-if="items.statusType == '3'" @click="acutionDetail(items.id)">竞拍结束</div>
           </li>
         </ul>
       </template>
