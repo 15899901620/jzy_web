@@ -1,4 +1,17 @@
 <template>
+<div class="body">
+    <Header-small title="招标中心">
+      <div slot="headerother">
+        <div
+          data-v-228ad150
+          class="dflexAlem gray fs14"
+          style="color: rgb(102, 102, 102);    margin-top: 50px;"
+        >
+          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
+          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
+        </div>
+      </div>
+    </Header-small>
 
     <div class="mb40">
 
@@ -24,7 +37,7 @@
             <!--通知公告-->
             <Notice></Notice>
             <!--常见问题-->
-            <Commonproblem></Commonproblem>
+            <!-- <Commonproblem></Commonproblem> -->
             <!--联系我们-->
             <Contact></Contact>
 
@@ -39,10 +52,11 @@
       </div>
 
     </div>
-
+</div>
 </template>
 
 <script>
+  import Header from "../../components/header";
   import DetailsBidding from './trenderCompontent/DetailsBidding'
   import membercenter from  './trenderCompontent/membercenter'
   import Commonproblem from  './trenderCompontent/Commonproblem'
@@ -53,6 +67,7 @@
     export default {
         name: "WineBidDetail",
       components:{
+        HeaderSmall: Header.small,
         DetailsBidding,
         Contact,
         Commonproblem,

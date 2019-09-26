@@ -1,21 +1,21 @@
 <template>
   <div class="supplierlogin">
     <Form ref="loginsupplierform" :model="loginsupplierform" :rules="ruleCustom">
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="username">
             <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号"/>
           </FormItem>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="slidecode">
             <slide-verify-supply @onChange="onTime" :width="260"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="mobilecode">
             <Input v-model="loginsupplierform.mobilecode"  autocomplete="off" placeholder="短信验证码"/>
@@ -23,7 +23,7 @@
           <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="password">
             <Input v-model="loginsupplierform.password" type="password" @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
@@ -31,7 +31,7 @@
         </Col>
       </Row>
       <Button type="primary" long v-on:click="LoginsupplyerForm">登录</Button>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="12" style="text-align:left; margin:10px auto;">
           <a href="/forgotpwd?type=supply">忘记密码</a>
         </Col>

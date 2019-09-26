@@ -10,7 +10,7 @@
       <p class="mt5 "><span class="gray">在线客服：</span>{{systeminfo.ONLINESERVICE}}</p>
     </div>
     <div class="dflexAlemJust mt20 mb20">
-      <button class="serviceBtn">在线客服</button>
+      <button class="serviceBtn"  @click="OnlineService()"  alt="点击这里给我发消息" title="点击这里给我发消息">在线客服</button>
     </div>
 
 
@@ -34,6 +34,12 @@
               systeminfo: state => state.system.systeminfo,
           })
        },
+       methods: {
+        OnlineService () {
+            let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
+            window.open(url)
+      } ,
+      }
     }
 </script>
 
