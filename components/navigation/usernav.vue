@@ -95,6 +95,10 @@ export default {
                         {
                             path: '/users/userAddress',
                             name: '收货地址'
+                        },
+                        {
+                            path: '/users/usereditphone',
+                            name: '换绑手机号'
                         }
                     ]
                 }

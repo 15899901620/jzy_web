@@ -425,6 +425,26 @@ export const userSeekPassword = (vm, data) => {
   })
 }
 /**
+ * @description 会员修改手机号短信验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userEditPhoneSend = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.post(server.prefix + server.api.user.userEditPhoneSend,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('userRepassWdErr', errorInfo)
+  })
+}
+
+/**
  * @description 会员找回密码
  * @param vm
  * @param data
@@ -437,6 +457,26 @@ export const userRepassWd = (vm, data) => {
     }).catch((e) => {
       let errorInfo = e.response
       console.log('userRepassWdErr', errorInfo)
+    })
+}
+
+/**
+ * @description 会员换绑手机号
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userRephone = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.userRephone,
+    {
+      ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userRephoneErr', errorInfo)
     })
 }
 /**
