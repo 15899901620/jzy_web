@@ -43,6 +43,8 @@ let api = {
     supplierEdit: '/user/supplier/edit',
     userRepassWd: '/user/m/updatePwd',
     userRECodeSend:'/user/m/updatePwd/code',
+    userEditPhoneSend:'/user/m/editPhone/code',
+    userRephone:'/user/m/editPhone',
     supplierRepssWd: '/user/supplier/updatePwd',
     supplierRECodeSend:'/user/supplier/updatePwd/code',
     manageEdit: '/user/m/edit',
