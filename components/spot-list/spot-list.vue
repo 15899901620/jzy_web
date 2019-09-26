@@ -45,7 +45,7 @@
 
           <span style="width: 12%;">
             <div v-if="($store.state.memberToken && item.available_num < item.delivery_min) || item.on_sale != 1"
-                style="color: #000;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+                style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
             <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                  @click="addOrder(item.id)">下单</div>
 

@@ -279,8 +279,7 @@
         background-color: #f2f8fe;
     }
 
-    .Xhlist li:last-child {
-    }
+
 
     .Xhlist li span {
         text-align: center;
