@@ -11,8 +11,8 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入竞拍计划编号查询" ref="searchval" class="orderInput"   />
-              <div class="check">查看</div>
+              <input type="text" placeholder="输入竞拍计划编号查询" ref="searchval" class="orderInput" v-model="planNo"  />
+              <div class="check" @click='checked()' style="cursor: pointer">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
               <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
@@ -33,7 +33,7 @@
               <tbody>
                 <tr class="Ttitle graybg" >
                   <td colspan="8">
-                    <span class="ml10">计划编号：<span class="gray">{{item.auctionNo}}</span></span>
+                    <span class="ml10">计划编号：<span class="gray">{{item.planNo}}</span></span>
                     <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
                     <span class="fr mr15"><span class="gray">最后提货时间：</span>{{item.lastDeliveryTime}}</span>
                   </td>
@@ -86,7 +86,7 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import { auctionOrderList } from '../../api/auction'
+import { auctionOrderList ,myAuctionOrderList} from '../../api/auction'
 import Cookies from 'js-cookie'
 import { getCookies } from '../../config/storage'
 import pagination from '../../components/pagination'
@@ -114,6 +114,7 @@ export default {
       page_size: 5,
       total: 0,
       datalist: [],
+      auctionNo:'',
       formSearch: {
         planNo: '',
         skuNo: '',
@@ -133,6 +134,10 @@ export default {
             }
 
     },
+    checked(){
+        this.formSearch.planNo=this.planNo
+        this.getSourceData();
+    },
     inLogin () {
       let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
       if (!userinfo) {
@@ -148,7 +153,7 @@ export default {
         page_size: this.page_size,
         ...this.formSearch
       }
-      const res= await auctionOrderList(this, params)
+      const res= await myAuctionOrderList(this, params)
       this.datalist = res.data.items
       this.total = res.data.total
     }

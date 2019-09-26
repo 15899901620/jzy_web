@@ -20,7 +20,7 @@
                      style="width:140px;"/>
               <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput"
                      style="width:140px; margin-left:5px;"/>
-              <div class="check" @click="onSearch">查询</div>
+              <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
             </div>
             <!-- <div class="dflexAlem">
             <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">

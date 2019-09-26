@@ -87,7 +87,11 @@
         <div class="pr mt20 mb20"  >
 
           <img src="/img/member_index.png"/>
+<<<<<<< HEAD
           <a   class="seeRight" href="/bidders">
+=======
+          <a  class="seeRight" @click='bidders'>
+>>>>>>> 4c424bfa8159b54590d4ddef537e02ce67de0e7d
             立即查看
           </a>
         </div>
@@ -223,7 +227,10 @@
 			},
 			account() {
 				this.$router.push({name: 'users-useraccountinfor'})
-			},
+      },
+      bidders(){
+	        this.$router.push({name: 'bidders-page'})
+      },
 			//订单状态
 			getOrderState(typeId) {
 				if (!typeId) return
