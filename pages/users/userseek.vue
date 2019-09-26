@@ -11,8 +11,8 @@
 
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" />
-              <div class="check">查看</div>
+              <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" v-model="skuName"/>
+              <div class="check" @click='checked()' style="cursor: pointer;">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
               <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
@@ -88,6 +88,7 @@ export default {
       current_page: 1,
       page_size:10,
       total: 0,
+      skuName:'',
       formSearch: {
         skuName: ''
       }
@@ -103,6 +104,10 @@ export default {
         this.$router.push('/login')
       }
     },
+    checked(){
+      this.formSearch.skuName=this.skuName
+      this.getSourceData();
+    },
      //订单状态
     getOrderState(typeId) {
       if(!typeId) return
@@ -115,7 +120,7 @@ export default {
       let params = {
         current_page: this.current_page,
         page_size: this.page_size,
-        // ...this.formSearch
+        ...this.formSearch
       }
       const res= await getbuylist(this, params)
       this.datalist = res.data.items
