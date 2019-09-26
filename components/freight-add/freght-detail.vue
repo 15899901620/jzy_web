@@ -69,10 +69,6 @@
                         <span>收货地址:</span>
                         <span>{{OrderList.receiptFullAddress}}</span>
                     </Col>
-                    <Col span="12">
-                        <span>提货地址:</span>
-                        <span>{{OrderList.dispatchFullAddress}}</span>
-                    </Col>
                 </Row>
             </Form>
         </div>

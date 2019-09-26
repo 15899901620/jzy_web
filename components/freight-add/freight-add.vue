@@ -351,13 +351,13 @@ export default {
                 demandEndDate:this.formAddress.demandEndDate,
               }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-                if(res.data.data) {
+                if(res.data==true) {
                     this.$Modal.success({
                         title: '提示',
                         content: '添加成功',
                         duration: 5,
                         closable: true
-                    })
+                    })         
                     this.loading = false
                     this.$emit('unChange', false)
                 }else{
