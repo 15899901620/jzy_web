@@ -58,10 +58,10 @@
             <span style="width: 10%;">交货仓</span>
             <span style="width: 6%;">包装方式</span>
             <span style="width: 9%;">剩余数量（吨）</span>
-            <span style="width: 11%;">单价（元/吨）</span>
+            <span style="width: 9%;">单价（元/吨）</span>
             <span style="width: 8%;">距下架时间</span>
             <span style="width: 7%;">提货期限</span>
-            <span style="width: 7%;">操作</span>
+            <span style="width: 12%;">操作</span>
           </div>
           <ul class="Xhlist">
             <template v-if="$store.state.spot.spotList.length>0">
@@ -71,12 +71,12 @@
                 <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
                     style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
-                <span style="width: 10%;">{{item.warehouse_name}}</span>
+                <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
                 <span style="width: 9%;">{{item.available_num}}</span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
-                      style="width: 11%;position:relative;text-align:right;padding-right:18px;">
+                      style="width: 9%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
                          style="padding:1px 5px;line-height:20px;float:left;position:absolute;left:5px;top:-3px;">易</Tag>
                     <i style="padding-left:30px;">{{item.finalPriceFormat}}</i>
@@ -94,10 +94,10 @@
                   </template>
                 </span>
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
-                <span style="width: 7%;">
+                <span style="width: 12%;">
                   <div
                       v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1"
-                      style="color: #1e1e1e;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
+                      style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>

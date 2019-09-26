@@ -4,11 +4,9 @@
       <div class="indexHead" @click="User"><img  src="../../../static/img/index_head.png"/></div>
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
-<<<<<<< HEAD
+
         <p class="gray">欢迎来到巨正源科技交易平台!</p>
-=======
-        <p class="gray">欢迎来到巨正源化科技交易平台!</p>
->>>>>>> 37c7379ca2b6ed5575f083bed6ab816f85947f72
+
       </div>
     </div>
     <div class="loginReg mt10"><a  @click="Login" class="loginbg">登 录</a><a @click="register"   class="registerbg ml10">注 册</a></div>
@@ -28,7 +26,7 @@
       </li>
       <li v-show="cur==1">
         <ul class="newscont">
-          <li  v-for="(item, index) in newslist" :key="index">
+          <li  v-for="(item, index) in $store.state.article.articleList" :key="index">
             <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">
               <span class="newtitle">{{item.title}}</span><span class="ml10 Newsdate">{{item.time}}</span>
             </nuxt-link>
@@ -54,6 +52,11 @@ export default {
       newslist:[]  //资讯
     }
   },
+    fetch({ store, params, query }) {
+        return Promise.all([
+            store.dispatch('article/getArticleList', {current_page: !query.page ? 1 : query.page, page_size: 6, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
+        ])
+    },
   methods:{
     User(){
       this.$router.push({path:'./users/user'})
@@ -108,7 +111,7 @@ export default {
   .news ul{list-style-type: disc;}
   .news li{width: 100%;}
   .newtitle{width: 80%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; color: #333;}
-  .newscont{ width: 90%; margin: 0 auto;}
+  .newscont{ width: 90%; margin: 0 auto; height: 120px; overflow: hidden;}
   .newscont li{display: flex;align-items: center;list-style: disc inside; margin-top: 7px; font-size: 14px;}
   .newscont li a{display: flex; justify-content: space-between; width: 100%; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
   .Newsdate{width: 20%; color: #999}

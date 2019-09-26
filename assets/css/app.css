@@ -696,9 +696,7 @@ a {
 .Xhlist li:nth-child(even) {
 	background-color:#fafafa;
 }
-.Xhlist li:last-child {
-	margin-bottom:30px;
-}
+
 .Xhlist li span {
 	text-align:center;
 	margin:20px 0;
@@ -868,7 +866,7 @@ a {
 /*下单按钮*/
 .ListBtn {
 	cursor:pointer;
-	width:50px;
+	width:80px;
 	line-height:24px;
 	margin:0 auto;
 	color:#007de4;
