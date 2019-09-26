@@ -47,7 +47,7 @@ let api = {
     userRephone:'/user/m/editPhone',
     supplierRepssWd: '/user/supplier/updatePwd',
     supplierRECodeSend:'/user/supplier/updatePwd/code',
-    manageEdit: '/user/m/edit',
+    manageEdit: '/user/m/edit',    //会员自己修改会员信息
   },
   /**
    * @description 订单管理

@@ -192,7 +192,7 @@
 								Cookies.set('userinfor', auth, {expires: expires})
 								Cookies.set('memberInfo', res.data, {expires: expires})
 								this.updateUserInfof(res.data)
-                location.href = '/'
+                                  location.href = '/'
 								//this.$router.push({name: 'index'})
 							} else {
 								this.passwordTip = true

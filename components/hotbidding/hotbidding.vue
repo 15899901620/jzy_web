@@ -3,7 +3,6 @@
       <a   href="/bidders">
     <div class="Time_Banner pr">
       <img src="/img/Time_banner.jpg"/>
-
     </div>
       </a>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
