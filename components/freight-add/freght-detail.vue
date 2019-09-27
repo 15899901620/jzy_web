@@ -15,22 +15,23 @@
                 <Row index="0" >
                     <Col span="12">
                         <span>订单号:</span>
-                         <span>{{OrderList.billNo}}</span>
+                         <span>{{OrderList.orderNo}}</span>
                     </Col>
                     <Col span="12">
+                        <span>需求编号:</span>
+                         <span>{{OrderList.billNo}}</span>
+                    </Col>           
+                </Row>
+                <Row index="0">
+                     <Col span="12">
                         <span>货物名称:</span>
                          <span>{{OrderList.freightGoods}}</span>
                     </Col>
-                </Row>
-                <Row index="0">
                     <Col span="12">
                         <span>数量:</span>
-                        <span>{{OrderList.weight}}</span>
+                        <span>{{OrderList.weight}}吨</span>
                     </Col>
-                    <Col span="12">
-                        <span>提货仓库:</span>
-                        <span>{{OrderList.dispatchFullAddress}}</span>
-                    </Col>
+
                 </Row>
                 <Row index="0">
                     <Col span="12">
@@ -56,7 +57,7 @@
                 <Row index="3">
                      <Col span="12">
                         <span>询价截止时间:</span>
-                        <span>{{OrderList.inquiryMinute}}</span>
+                        <span>{{OrderList.inquiryMinute}}小时</span>
                     </Col>
                     <Col span="12">
                         <span>是否含税:</span>
@@ -69,6 +70,10 @@
                         <span>收货地址:</span>
                         <span>{{OrderList.receiptFullAddress}}</span>
                     </Col>
+                    <Col span="12">
+                        <span>提货仓库:</span>
+                        <span>{{OrderList.dispatchFullAddress}}</span>
+                    </Col>
                 </Row>
             </Form>
         </div>
@@ -78,8 +83,8 @@
                         <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
                             <Col span="4">货物名称</Col>
                             <Col span="3">金额</Col>
-                            <Col span="6">联系人名称</Col>
-                            <Col span="4">联系人手机号</Col>
+                            <Col span="6">承运商名称</Col>
+                            <Col span="4">承运商电话</Col>
                             <Col span="3">状态</Col>
                             <Col span="3">操作</Col>
 
