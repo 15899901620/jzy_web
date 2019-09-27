@@ -8,9 +8,14 @@
       <!--搜索-->
       <Search></Search>
       <!--电话-->
-      <div class="TopTel" v-if="$store.state.common.sysConfig.SERVICEHOTLINE">
-        {{$store.state.common.sysConfig.SERVICEHOTLINE}}
-      </div>
+<!--      <div class="TopTel" >-->
+<!--        <a rel="nofollow" target="_blank" @v-on::click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">-->
+<!--          <div>-->
+<!--            <img src="../../static/img/qq_service.png" style="width: 100%; height: 100%;" />-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+     <qqserivce></qqserivce>
 
     </div>
     <div class="navigation">
@@ -28,6 +33,7 @@
 	import shortcut from '../shortcut'
 	import Logo from './components/logo'
 	import Search from './components/search'
+    import qqserivce from './components/qqservice'
 	import Navigation from '../navigation'
 	import coolapse from '../collapse'
 
@@ -45,7 +51,8 @@
 			Logo,
 			Search,
 			Navigation,
-			coolapse
+			coolapse,
+          qqserivce
 		},
 		computed: {
 			classes() {
@@ -56,7 +63,8 @@
 			}
 		},
 		methods: {
-			infication() {
+
+          infication() {
 				this.openCol = 'block'
 			},
 			outfication() {
@@ -81,3 +89,4 @@
 		}
 	}
 </script>
+
