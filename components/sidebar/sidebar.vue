@@ -53,6 +53,7 @@
 import { mapState } from 'vuex'
 import { scrollTop } from '../../config/utils';
 
+
 export default {
 
     name: "sidebar",

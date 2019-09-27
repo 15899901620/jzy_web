@@ -55,6 +55,7 @@
 </template>
 
 <script>
+
 	import {mapState} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
@@ -120,6 +121,17 @@
 			])
 		},
 
+
+      head:{
+            script:[
+              {
+                type:"text/javascript",
+                src:"https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f",
+                id:"qd288570929125de54b1b05179506f548d8f6e40700f",
+                async:true
+                }
+            ]
+        },
 		components: {
 			Header,
 			Footer,
@@ -163,6 +175,7 @@
 			})
 		},
 		methods: {},
+
 
 	}
 </script>
