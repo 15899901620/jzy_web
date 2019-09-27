@@ -26,8 +26,9 @@
       <Row  index="">
         <Col span="24">
           <FormItem prop="password">
-            <Input v-model="loginsupplierform.password" type="password" @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
+            <Input v-model="loginsupplierform.password" autocomplete="off" type="password" @keyup.native="loginKeyDown"   @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
           </FormItem>
+           <div style="height:15px">&nbsp;<tag v-show="bigChar" style="margin-left:20px">大写锁定已打开</tag></div>
         </Col>
       </Row>
       <Button type="primary" long v-on:click="LoginsupplyerForm">登录</Button>
@@ -85,6 +86,8 @@ export default {
       cphones: false,
       btnValue: "发送验证码",
       btnBoolen: false,
+      firstTochar:false,
+      bigChar:false,
       loginsupplierform:{
         username: '',
         mobilecode: '',
@@ -263,7 +266,39 @@ export default {
 
         }
       })
-    }
+    },
+    	loginKeyDown(event){
+				const _that=this;
+				//是否输入过字母键，且判断是否按键为caps lock
+				if(_that.firstTochar){
+					if(event.keyCode===20){
+						_that.bigChar=!_that.bigChar;
+						return;
+					}
+				}
+				//未输入过字母键，或按键不是caps lock，判断每次最后输入的字符的大小写
+				var e = event||window.event;
+				var keyvalue = e.keyCode ? e.keyCode : e.which;
+				var shifKey = e.shiftKey ? e.shiftKey:((keyvalue == 16) ? true : false);
+				if(typeof(_that.loginsupplierform.password)==='undefined'){
+					return;
+				}
+				var strlen = _that.loginsupplierform.password.length;
+				var password=_that.loginsupplierform.password;
+
+				if(strlen){
+					var uniCode =password.charCodeAt(strlen-1);
+					if(keyvalue>=65 && keyvalue<=90){     
+						//如果是字母键                    
+						_that.firstTochar=true;
+						if(((uniCode >= 65 && uniCode <= 90) && !shifKey)||((uniCode >= 97 && uniCode <= 122) && shifKey)){
+							_that.bigChar=true;
+						}else{
+							_that.bigChar=false;
+						}
+					}
+				}
+			},
   }
 }
 </script>
