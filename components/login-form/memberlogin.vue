@@ -31,7 +31,7 @@
             <Input v-model="loginform.password" @keyup.native="loginKeyDown" type="password"  @keyup.enter.native="LoginForm" placeholder="登录密码"/>
           </FormItem>
         </Col>
-		<div style="height:15px">&nbsp;<tag v-show="bigChar" style="margin-left:20px">大写锁定已打开</tag></div>
+		<div style="height:15px; position: relative;">&nbsp;<tag v-show="bigChar" style="margin-left:20px; position: absolute; top: 31px; left: -7px;">大写锁定已打开</tag></div>
       </Row>
       <Button type="primary" long v-on:click="LoginForm">登录</Button>
       <Row :gutter="24" index="">
@@ -286,8 +286,8 @@
 
 				if(strlen){
 					var uniCode =password.charCodeAt(strlen-1);
-					if(keyvalue>=65 && keyvalue<=90){     
-						//如果是字母键                    
+					if(keyvalue>=65 && keyvalue<=90){
+						//如果是字母键
 						_that.firstTochar=true;
 						if(((uniCode >= 65 && uniCode <= 90) && !shifKey)||((uniCode >= 97 && uniCode <= 122) && shifKey)){
 							_that.bigChar=true;
@@ -326,5 +326,9 @@
     .ivu-form-item-error-tip {
       padding-top: 4px;
     }
+  }
+  .ivu-tag{
+    background: none;
+    border: none;
   }
 </style>

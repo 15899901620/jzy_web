@@ -2,9 +2,10 @@
   <div class="body">
     <Header-small title="交易平台登录">
       <div slot="headerother">
-        <div v-if="$store.state.common.sysConfig.SERVICEHOTLINE" data-v-7b07b57b="" class="dflexAlem fs20 gray" style="color: rgb(102, 102, 102);margin-top: 44px;">服务热线 :
-          {{$store.state.common.sysConfig.SERVICEHOTLINE}}
-        </div>
+<!--        <div v-if="$store.state.common.sysConfig.SERVICEHOTLINE" data-v-7b07b57b="" class="dflexAlem fs20 gray" style="color: rgb(102, 102, 102);margin-top: 44px;">服务热线 :-->
+<!--          {{$store.state.common.sysConfig.SERVICEHOTLINE}}-->
+<!--        </div>-->
+        <qqservice></qqservice>
       </div>
     </Header-small>
     <div class="container" title="">
@@ -50,7 +51,9 @@
 
 <script>
 	import Header from '../components/header'
-	import Footer from '../components/footer'
+    import qqservice from '../components/header/components/qqservice'
+
+    import Footer from '../components/footer'
 	import Swiper from 'swiper';
 	import login from '../components/login-form'
 
@@ -71,6 +74,7 @@
 			HeaderSmall: Header.small,
 			Footer,
 			login,
+            qqservice,
 			loginSupply: login.supply,
 			loginCarrier: login.carrier
 		},

@@ -4,14 +4,14 @@
       <Row  index="">
         <Col span="24">
           <FormItem prop="username">
-            <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号"/>
+            <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号" id="input1"/>
           </FormItem>
         </Col>
       </Row>
       <Row  index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime" :width="260"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="246"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
@@ -27,8 +27,9 @@
         <Col span="24">
           <FormItem prop="password">
             <Input v-model="loginsupplierform.password" autocomplete="off" type="password" @keyup.native="loginKeyDown"   @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
+            <div style="height:13px; position: relative"><div v-show="bigChar" style="margin-top: -5px; color: #666;">大写锁定已打开</div></div>
           </FormItem>
-           <div style="height:15px">&nbsp;<tag v-show="bigChar" style="margin-left:20px">大写锁定已打开</tag></div>
+
         </Col>
       </Row>
       <Button type="primary" long v-on:click="LoginsupplyerForm">登录</Button>
@@ -111,6 +112,9 @@ export default {
     })
   },
   methods:{
+    trim(x) {
+      document.getElementById("input1").value = x.trim();
+    },
     ...mapMutations({
       updateChackPhone: 'login/updateChackPhone'
     }),
@@ -166,12 +170,15 @@ export default {
         })
         return
       }else{
+        console.log("params***")
         let params = {
           username:this.loginsupplierform.username,
           password:this.loginsupplierform.password,
           code: this.loginsupplierform.mobilecode
         }
+      console.log("params:",params)
         const res = await supplierLogin(this, params)
+
         let authres=res.data
         if(res.data.data===null && res.status === 200){
           this.$Modal.info({
@@ -288,8 +295,8 @@ export default {
 
 				if(strlen){
 					var uniCode =password.charCodeAt(strlen-1);
-					if(keyvalue>=65 && keyvalue<=90){     
-						//如果是字母键                    
+					if(keyvalue>=65 && keyvalue<=90){
+						//如果是字母键
 						_that.firstTochar=true;
 						if(((uniCode >= 65 && uniCode <= 90) && !shifKey)||((uniCode >= 97 && uniCode <= 122) && shifKey)){
 							_that.bigChar=true;
@@ -321,5 +328,9 @@ export default {
   .ivu-form-item-error-tip {
     padding-top:4px;
   }
+}
+.ivu-tag{
+  background: none;
+  border: none;
 }
 </style>

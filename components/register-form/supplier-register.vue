@@ -489,7 +489,7 @@
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
                 codeValid:false,   //验证码有效
-				current: 1,
+				current: 0,
 				uploadUrl: '',
 				companyValid: false,
 				supplierNatureList: [],

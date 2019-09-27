@@ -18,7 +18,10 @@
     <!--页面路径-->
       <div class="w1200">
         <div class="mt10 fs14">
-          <a class="blackFont">巨正源首页</a> > <span class="gray">招标中心</span>> <span class="gray">中标详情</span>
+          <breadcrumb>
+            <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源首页</nuxt-link></breadcrumb-item>
+            <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>中标详情</breadcrumb-item>
+          </breadcrumb>
         </div>
       </div>
 
