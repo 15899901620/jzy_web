@@ -283,8 +283,8 @@
               <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
             </Col>
             <Col span="21">
-              <div class="Image" v-if="this.formCustom.other_license">
-                <img :src="this.formCustom.other_license" />
+              <div class="Image" v-if="this.formCustom.otherLicense">
+                <img :src="this.formCustom.otherLicense" />
               </div>
             </Col>
           </Row>
@@ -327,7 +327,17 @@
       </div>
 
     </Modal>
+    <Modal
+        v-model="submitModal"
+        title="请认真核对开票资料"
+        @on-ok="this.checkData=true"
+        @on-cancel="cancel">
+      <p>Content of dialog</p>
+      <p>Content of dialog</p>
+      <p>Content of dialog</p>
+    </Modal>
   </div>
+
 </template>
 
 <script>
@@ -450,6 +460,7 @@
 
 			//开户银行
 			const validateBankName = (rule, value, callback) => {
+			  console.log("value",value)
 				if (value === '') {
 					callback(new Error('开户行不能为空'));
 				} else {
@@ -542,6 +553,8 @@
 				BankAccountValid: false,  //账号不能为空
 				TelephoneValid: false,     //公司电话不能空
 				companyinfo: {},
+                submitModal:false,         //确认提交框
+                checkData:false,
 				formCustom: {
 					isLogisticsCompany: 0,
 					code: '',
@@ -555,7 +568,7 @@
 					contacterEmail: '',    //联系人邮箱
 					businessLicense: '',     //营业执照
 					authorizationElc: '',    //授权书
-					other_license: '',      //其他证件
+                    otherLicense: '',      //其他证件
 					transportLicense: '',
 					bankName: '',           //开户银行
 					bankAccount: '',      //银行账号
@@ -844,7 +857,7 @@
 			},
 			//其它文件
 			handleOtherFile(res) {
-				this.formCustom.other_license = res.url
+				this.formCustom.otherLicense = res.url
 
 			},
             handletransportFile(res){
@@ -895,7 +908,7 @@
 				}
 			},
 			//第二部提交
-			async memberReset(data) {
+			 memberReset(data) {
 				this.formCustom.code = this.formCustom.mobilecode
 				this.formCustom.username = this.formCustom.companyName
 				if (!this.companyValid) {
@@ -995,22 +1008,29 @@
 					});
 					return
 				} else {
-					const res = await supplierReg(this, this.formCustom)
-					if (res.data && res.status === 200) {
-						this.current = 2
-						this.$emit('currData', false)
-						// this.$router.push({name:'RegisterSuccess'})
-					} else {
-						this.$Message.info({
-							content: '注册未成功',
-							duration: 5,
-							closable: true
-						})
-						return
-					}
+                  this.submitModal=true;
+                  if(this.checkData){
+                    this.supSubmit(this.formCustom)
+                  }
+
 				}
 			},
-
+          cancel(){},
+          async supSubmit(formCustom){
+              const res = await supplierReg(this, formCustom)
+              if (res.data && res.status === 200) {
+                this.current = 2
+                this.$emit('currData', false)
+                // this.$router.push({name:'RegisterSuccess'})
+              } else {
+                this.$Message.info({
+                  content: '注册未成功',
+                  duration: 5,
+                  closable: true
+                })
+                return
+              }
+            },
 			async companyNature(value) {
 				const res = await supplierNature(this, {})
 				if (res.data && res.status === 200) {

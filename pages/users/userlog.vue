@@ -64,7 +64,7 @@
                     <span>{{item.phone}}</span>
                     <span v-if='items.status==1'><a class="logBtn greenbg" @click='setSelected(items)'>入 选</a></span>
                     <span v-else><a class="logBtn greenbg" >已入选</a></span>
-                  </li> 
+                  </li>
                 </ul>
               </div>
 
@@ -94,7 +94,7 @@
       <Address-Detail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></Address-Detail>
      </div>
     </div>
-     
+
   </div>
 </template>
 
@@ -111,7 +111,7 @@ export default {
   layout:'membercenter',
   components:{
       AddressDetail,
-    pages: pagination.pages, 
+    pages: pagination.pages,
      usernav: Navigation.user
   },
   fetch({ store }) {
@@ -171,7 +171,7 @@ export default {
         }
         this.userinfo = userinfo
         return true
-    }, 
+    },
     showTotal(total) {
             return `全部 ${total} 条`;
         },
@@ -179,7 +179,7 @@ export default {
               this.$router.push({name:'users-userlog',query:{page:row}})
     },
     undetailChange(res) {
-    
+
         this.detailloading = res
     },
     check(){
@@ -207,10 +207,10 @@ export default {
                   this.freight();
                   this.loading = false
               })
-          
+
           }
           })
-    
+
     },
     setSelected(row){
          this.$Modal.confirm({
@@ -227,10 +227,10 @@ export default {
                   this.freight();
                   this.loading = false
               })
-          
+
           }
           })
-    
+
     },
     setTabs(res){
             if(res == '1'){
@@ -262,11 +262,11 @@ export default {
     }
   },
   created(){
-    
+
     if(this.isLogin()){
       this.freight();
     }else{
-        window.location.href = '/login'
+       // window.location.href = '/login'
     }
   }
 }
