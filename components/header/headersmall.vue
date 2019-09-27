@@ -5,10 +5,8 @@
         <div class="searchLogo">
             <!--logo-->
             <Logo class="mt20 mb20" style="border-right: 1px solid rgb(210, 210, 210);padding-right: 30px;"></Logo>
-            <div class="fs20 pl25 gray" style="position: absolute;top: 82px;left: 578px;">{{title}}</div>
-            <slot class="topother" name="headerother">
-              
-            </slot>
+            <div class="fs20 pl25 gray" style="position: absolute; top: 82px; margin-left: 230px;">{{title}}</div>
+            <slot class="topother" name="headerother"></slot>
         </div>
     </div>
 </template>
