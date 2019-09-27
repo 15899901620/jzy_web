@@ -35,7 +35,7 @@
                 </Row>
                 <Row index="0">
                     <Col span="12">
-                         <span>联系人姓名:</span>
+                         <span>联系人:</span>
                         <span>{{OrderList.contact}}</span>
                     </Col>
                      <Col span="12">
@@ -45,18 +45,18 @@
                 </Row>
                 <Row index="2">
                     <Col span="12">
-                        <span>用车开始时间:</span>
+                        <span>用车开始日期:</span>
                         <span>{{OrderList.demandBeginDate}}</span>
                     </Col> 
                     <Col span="12">
-                        <span>用车结束时间:</span>
+                        <span>用车结束日期:</span>
                         <span>{{OrderList.demandEndDate}}</span>
 
                     </Col>
                 </Row>
                 <Row index="3">
                      <Col span="12">
-                        <span>询价截止时间:</span>
+                        <span>询价有效时间:</span>
                         <span>{{OrderList.inquiryMinute}}小时</span>
                     </Col>
                     <Col span="12">
@@ -75,25 +75,31 @@
                         <span>{{OrderList.dispatchFullAddress}}</span>
                     </Col>
                 </Row>
+                <Row index='5'>
+                     <Col span="24">
+                        <span>确定承运商倒计时:{{OrderList.inquiryEndTime}}</span>
+                        <TimeDown :endTime="OrderList.inquiryEndTime" hoursShow  :onTimeOver="reloadPage"></TimeDown>
+                     </Col>
+                </Row>
             </Form>
         </div>
           <div class="whitebg mt20" style="padding:0px 18px 18px;">
-                    <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">报价信息</h3>
+                    <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">承运商报价信息</h3>
                     <div style="line-height:32px; ">
                         <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
                             <Col span="4">货物名称</Col>
-                            <Col span="3">金额</Col>
-                            <Col span="6">承运商名称</Col>
+                            <Col span="3">单价（元/吨）</Col>
+                            <Col span="6">承运商</Col>
                             <Col span="4">承运商电话</Col>
                             <Col span="3">状态</Col>
                             <Col span="3">操作</Col>
 
                         </Row>
-                        <Row  v-for="(item, index) in OrderList.freightOffers" :key='index' index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
+                        <Row  justify=center v-for="(item, index) in OrderList.freightOffers" :key='index' index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
                             <Col span="4">{{item.freightGoods}}</Col>
                             <Col span="3">{{item.price}}</Col>
-                            <Col span="6">{{item.memberName}}</Col>
-                            <Col span="4">{{item.memberPhone}}</Col>
+                            <Col span="6">{{item.supplierName}}</Col>
+                            <Col span="4">{{item.supplierMobile}}</Col>
                             <Col span="3" >
                                  <span v-if="item.status==0">取消</span>
                                  <span v-if="item.status==1">待报价</span>
@@ -101,7 +107,7 @@
                             </Col>
                             <Col span="3" >
                                 <span v-if='item.status==1'><a style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;" @click='setSelected(items)'>入 选</a></span>
-                                <span v-else><a style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;" >已入选</a></span>
+                                <span v-else><a style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
                             </Col>
                         </Row>
                         <Row>
@@ -121,12 +127,14 @@
 import AddressFrom from "../address-from";
 import { getCookies } from '../../config/storage'
 import { sendHttp } from "../../api/common";
+import TimeDown from '../../components/timeDown'
 import server from "../../config/api";
 
 export default {
     name: 'AddressDetail',
     components:{
-        AddressFrom
+        AddressFrom,
+        TimeDown
     },
     data() {
     
@@ -153,7 +161,9 @@ export default {
             ],
             tax:'否',
             title:'60',
-            OrderList:{},
+            OrderList:{
+                inquiryEndTime: '2019-01-01'
+            },
             date:'',
             formAddress:{
                 memberId: '',                
@@ -183,6 +193,9 @@ export default {
         }
     },
     methods:{
+        reloadPage() {
+            this.$router.go(0)
+        },
         demandDate(e){
             this.formAddress.demandBeginDate=e[0]
             this.formAddress.demandEndDate=e[1]
@@ -218,21 +231,18 @@ export default {
             this.formAddress.contact=  res.data.contact
             this.formAddress.demandBeginDate=  res.data.demandBeginDate
             this.formAddress.demandEndDate=  res.data.demandEndDate
-            // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
             let t= new Date(res.data.demandEndDate)
             this.date = t.getTime();
        
         },
         setSelected(row){
          this.$Modal.confirm({
-          title: '警告',
-          content: '<p>是否进行入选</p>',
+          content: '<p>是否选择该承运商，确认后无法取消</p>',
                   onOk: () => {
               sendHttp(this,true,server.api.freight.setSelected, {id: row.id},1).then(response => {
                   this.loading = false
                 }).catch(err=>{
-                  this.$Notice.warning({
-                    title: '警告',
+                  this.$Notice({
                     desc: err.response.data.message
                   })
                   this.freight();
