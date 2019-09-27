@@ -327,15 +327,22 @@
       </div>
 
     </Modal>
-<!--    <Modal-->
-<!--        v-model="submitModal"-->
-<!--        title="请认真核对开票资料"-->
-<!--        @on-ok="this.checkData=true"-->
-<!--        @on-cancel="cancel">-->
-<!--      <p>Content of dialog</p>-->
-<!--      <p>Content of dialog</p>-->
-<!--      <p>Content of dialog</p>-->
-<!--    </Modal>-->
+    <Modal
+        v-model="submitModal"
+        title="请认真再次核对开票资料"
+        @on-ok="ok"
+        @on-cancel="cancel">
+      <ul class="ivulist">
+        <li><span>公司名称</span>:{{formCustom.companyName}}</li>
+        <li><span style="width: 65px; text-align-last: justify">法人</span>: {{formCustom.corporation}}</li>
+        <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
+        <li><span>开户银行</span>: {{formCustom.bankName}}</li>
+        <li><span>银行账号</span>: {{formCustom.bankAccount}}</li>
+        <li><span>公司地址</span>: {{formCustom.address}}</li>
+        <li><span>公司电话</span>: {{formCustom.telephone}}</li>
+      </ul>
+
+    </Modal>
   </div>
 
 </template>
@@ -464,7 +471,7 @@
 				if (value === '') {
 					callback(new Error('开户行不能为空'));
 				} else {
-					this.BankNameValid = true
+				//	this.BankNameValid = true
 					callback();
 				}
 			};
@@ -473,7 +480,7 @@
 				if (value === '') {
 					callback(new Error('账号不能为空'));
 				} else {
-					this.BankAccountValid = true
+				//	this.BankAccountValid = true
 					callback();
 				}
 			};
@@ -481,7 +488,7 @@
 				if (value === '') {
 					callback(new Error('联系人邮箱不能为空'));
 				} else {
-					this.BankAccountValid = true
+					//this.BankAccountValid = true
 					callback();
 				}
 			};
@@ -489,7 +496,7 @@
 				if (value === '') {
 					callback(new Error('公司电话不能为空'));
 				} else {
-					this.TelephoneValid = true
+					//this.TelephoneValid = true
 					callback();
 				}
 			};
@@ -977,13 +984,13 @@
 						duration: 5
 					});
 					return
-				} else if (!this.BankNameValid) {
+				} else if (!this.formCustom.bankName) {
 					this.$Notice.warning({
 						title: '开户银行不能空',
 						duration: 5
 					});
 					return
-				} else if (!this.BankAccountValid) {
+				} else if (!this.formCustom.bankAccount) {
 					this.$Notice.warning({
 						title: '银行账号不能空',
 						duration: 5
@@ -995,7 +1002,7 @@
 						duration: 5
 					});
 					return
-				} else if (!this.TelephoneValid) {
+				} else if (!this.formCustom.telephone) {
 					this.$Notice.warning({
 						title: '公司电话不能空',
 						duration: 5
@@ -1008,26 +1015,30 @@
 					});
 					return
 				} else {
-                  // this.submitModal=true;
-                  // if(this.checkData){
-                  //   this.supSubmit(this.formCustom)
+                  this.submitModal=true;
+
+
+
+                  // const res = await supplierReg(this, this.formCustom)
+                  // if (res.data && res.status === 200) {
+                  //   this.current = 2
+                  //   this.$emit('currData', false)
+                  //   // this.$router.push({name:'RegisterSuccess'})
+                  // } else {
+                  //   this.$Message.info({
+                  //     content: '注册未成功',
+                  //     duration: 5,
+                  //     closable: true
+                  //   })
+                  //   return
                   // }
-                  const res = await supplierReg(this, this.formCustom)
-                  if (res.data && res.status === 200) {
-                    this.current = 2
-                    this.$emit('currData', false)
-                    // this.$router.push({name:'RegisterSuccess'})
-                  } else {
-                    this.$Message.info({
-                      content: '注册未成功',
-                      duration: 5,
-                      closable: true
-                    })
-                    return
-                  }
 				}
 			},
           cancel(){},
+          ok(){
+            console.log("formCustom",this.formCustom)
+            this.supSubmit(this.formCustom)
+          },
           async supSubmit(formCustom){
               const res = await supplierReg(this, formCustom)
               if (res.data && res.status === 200) {
@@ -1094,6 +1105,16 @@
     img{
       width: 100%;
       height: 100%;
+    }
+  }
+  .ivulist{
+    font-size: 16px;
+    li{
+      display: flex;
+      line-height: 30px;
+      .idsa{
+        width: 68px; text-align-last:justify;
+      }
     }
   }
 </style>
