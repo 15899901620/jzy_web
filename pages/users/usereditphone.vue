@@ -3,31 +3,52 @@
             <div class="w1200 dflex " style="margin-bottom: 40px">
                   <usernav></usernav>
                    <div class="memberInfor ml20  whitebg bdccc  mt20">
-                        <div class="TableList">
+                        <div class="TableList code_manange mt30 ml20">
                             <h1 class="fs16  mt25 bb1 pb10">换绑手机号</h1>
-                            <ul class="code_manange mt30 ml20">
-                                <li>
-                                    <span class="titleInfor">手机号</span>
-                                    <Input type="text" class="inforInput blackFont"  v-model="userinfo.phone" disabled/>
-                                </li>                                                                                                                                                                                                                                                                       
-                                <li>
-                                    <span class="titleInfor">验证码</span>
-                                    <Input type="text" class="inforInput" v-model="code"   placeholder="请输入验证码"  />
-                                    <button class="codeCarrier graybg" :disabled="btnBoolen"  @click="getsupplyNoteValue" >{{this.btnValue}}</button>
-                                </li>
-                                <li>
-                                    <span class="titleInfor">新手机号</span>
-                                    <Input type="text" class="inforInput" v-model="newphone" @on-blur="newphoneCheck"   />
-                                </li>
-                                <li >
-                                        <span class="titleInfor" >验证码</span>
-                                        <Input type="text" class="inforInput" v-model="newcode"   placeholder="请输入验证码"  />
-                                        <button class="codeCarrier graybg" :disabled="btn2Boolen"  @click="getuserNoteValue" >{{this.btn2Value}}</button>
-                                </li>
-                            </ul>
+                             <div class="formItem code_manange mt30 ml20" >
+                                <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">         
+                                    <Row :gutter="24" index="0">
+                                        <Col span="21">
+                                        <FormItem  label="手机号：">
+                                            <Input v-model="userinfo.phone" class="CarrierIput" disabled id="phone" placeholder="请输入手机号"/>
+                                        </FormItem>
+                                        </Col>
+                                    </Row>
+                                    <Row :gutter="24" index="2">
+                                        <Col span="15">
+                                        <FormItem prop="mobilecode" label="短信验证：">
+                                            <Input class="CarrierImgcode" v-model="formCustom.code"   placeholder="请输入验证码"/>
+                                        </FormItem>
+                                        </Col>
+                                        <Col span="6">
+                                            <button class="codeCarrier graybg" :disabled="btnBoolen" type="button"  @click="getsupplyNoteValue" >{{this.btnValue}}</button>
+                                        </Col>
+                                    </Row>
+                                    <Row :gutter="24" index="3">
+                                        <Col span="21">
+                                        <FormItem prop="newphone" label="新手机号：">
+                                            <Input  v-model="formCustom.newphone" class="CarrierIput" />
+                                        </FormItem>
+                                        </Col>
+                                    </Row>
+                                    <Row :gutter="24" index="4">
+                                        <Col span="15">
+                                        <FormItem prop="mobilecode" label="短信验证：">
+                                            <Input class="CarrierImgcode" v-model="formCustom.newcode"   placeholder="请输入验证码"/>
+                                        </FormItem>
+                                        </Col>
+                                        <Col span="6">
+                                            <button class="codeCarrier graybg" :disabled="btn2Boolen" type="button"  @click="getuserNoteValue" >{{this.btn2Value}}</button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                              
                             <div class="ConfirmSubmit" @click='butmodif' >确认提交</div>
+                              </div>
                         </div>  
+                    
                    </div>
+                     
             </div>
         </div>
 </template>
@@ -53,6 +74,22 @@ export default {
         ])
     },
       data() {
+          const validatePhone = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('手机号不能为空'));
+				} else {
+					if (this.formCustom.newphone.length != 11) {
+						callback(new Error('请输入有效的手机号码，需是11位！'));
+					} else {
+						var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+						if (!myreg.test(this.formCustom.newphone)) {
+							callback(new Error('手机号码格式不正确'));
+						} else {
+							this.userPhoneCheck(value, callback)
+						}
+					}
+				}
+			};
             return{
                 btnBoolen:false,
                 btn2Boolen:true,
@@ -65,6 +102,17 @@ export default {
                 btnValue:"获取短信验证码",
                 btn2Value:'请输入新手机号',
                 newphone:'',
+                formCustom:{
+                      newphone:'',  
+                      code:'',
+                      newcode:'',
+                },
+                ruleCustom: {
+					newphone: [
+						{  validator: validatePhone, trigger: 'blur'}
+					],
+
+				}
             }
     },
     methods:{
@@ -79,7 +127,6 @@ export default {
          //获取短信验证码
         async getsupplyNoteValue () {
             var phone = this.userinfo.phone//验证码
-              console.log(phone)
             //验证验证码是否为空
             if (phone === "") {
                 this.$Message.info("手机号不能为空")
@@ -116,7 +163,7 @@ export default {
             
         },
        async getuserNoteValue(){
-        var phone = this.newphone//验证码
+        var phone = this.formCustom.newphone//验证码
 
             //验证验证码是否为空
             if (phone === "") {
@@ -151,52 +198,32 @@ export default {
                 this.$Message.info("短信发送失败")
             }
        },
-
-        newphoneCheck(){
-                if (this.newphone === '') {
-                    this.$Message.info("手机号不能为空")
-                    return ;
-				} else {
-					if (this.newphone.length != 11) {
-                        this.$Message.info("请输入有效的手机号码，需是11位！")
-                          return ;
-					} else {
-						var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
-						if (!myreg.test(this.newphone)) {
-                             this.$Message.info("手机号码格式不正确")
-                               return ;
-						} else {
-							this.userPhoneCheck(this.newphone)
-						}
-					}
-				}
-        },
         async butmodif(){
          
-            if(this.code==''){
+            if(this.formCustom.code==''){
                 this.$Message.info("请输入原手机号验证码")
                 return ;
             }
-            if(this.newcode==''){
+            if(this.formCustom.newcode==''){
                 this.$Message.info("请输入新手机号验证码")
                 return ;
             }
-            if(this.newphone==''){
+            if(this.formCustom.newphone==''){
                 this.$Message.info("请输入新手机号")
                 return ;
             }
             let params = {
                 phone: this.userinfo.phone,
-                newPhone:this.newphone,
-                code:this.code,
-                newCode:this.newcode
+                newPhone:this.formCustom.newphone,
+                code:this.formCustom.code,
+                newCode:this.formCustom.newcode
             }
           
             const res = await userRephone(this, params)
             
             if(res.data && res.status ===200){
                 this.$Message.info({content: '换绑手机号成功'})
-                this.$router.push('/users/user')
+                // this.$router.push('/users/user')
             }else{
             this.$Notice.warning({
                 title: '换绑手机号失败',
@@ -209,13 +236,13 @@ export default {
 					phone: value
 				}
 				const res = await userPhoneCheck(this, params)
-              console.log("res",res)
 				if (res.data && res.status === 200) {
 					this.phoneValid = false
-					this.$Message.info("手机号已被注册")
+					callback(new Error('手机号码已注册'));
 				} else {
 					 this.btn2Value="获取短信验证码"
                      this.btn2Boolen = false;
+                    callback()
 				}
         },
 

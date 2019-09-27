@@ -124,9 +124,9 @@ let api = {
     auctionPlanDetail:'/bill/auctionPlanned/info',    //根据竞拍计划id获取计划详情
     auctionsubmitOrderL:'/bill/orderInfo/auction/create',    //客户通过竞拍计划单下单
     auctionOrderList:'/bill/auctionPlanned/page',        //客户通过竞拍订单列表
-    myAuctionOrderList:'/bill/myAuctionPlanned/page'
+    myAuctionOrderList:'/bill/auctionPlanned/getMyList/page'
   }, 
-  /**
+  /**GET /auctionPlanned/getMyList/page
    * @description 资讯管理
    */
   information: {
