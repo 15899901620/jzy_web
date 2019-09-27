@@ -327,15 +327,15 @@
       </div>
 
     </Modal>
-    <Modal
-        v-model="submitModal"
-        title="请认真核对开票资料"
-        @on-ok="this.checkData=true"
-        @on-cancel="cancel">
-      <p>Content of dialog</p>
-      <p>Content of dialog</p>
-      <p>Content of dialog</p>
-    </Modal>
+<!--    <Modal-->
+<!--        v-model="submitModal"-->
+<!--        title="请认真核对开票资料"-->
+<!--        @on-ok="this.checkData=true"-->
+<!--        @on-cancel="cancel">-->
+<!--      <p>Content of dialog</p>-->
+<!--      <p>Content of dialog</p>-->
+<!--      <p>Content of dialog</p>-->
+<!--    </Modal>-->
   </div>
 
 </template>
@@ -460,7 +460,7 @@
 
 			//开户银行
 			const validateBankName = (rule, value, callback) => {
-			  console.log("value",value)
+              console.log("value",value)
 				if (value === '') {
 					callback(new Error('开户行不能为空'));
 				} else {
@@ -908,7 +908,7 @@
 				}
 			},
 			//第二部提交
-			 memberReset(data) {
+          async memberReset(data) {
 				this.formCustom.code = this.formCustom.mobilecode
 				this.formCustom.username = this.formCustom.companyName
 				if (!this.companyValid) {
@@ -1008,11 +1008,23 @@
 					});
 					return
 				} else {
-                  this.submitModal=true;
-                  if(this.checkData){
-                    this.supSubmit(this.formCustom)
+                  // this.submitModal=true;
+                  // if(this.checkData){
+                  //   this.supSubmit(this.formCustom)
+                  // }
+                  const res = await supplierReg(this, this.formCustom)
+                  if (res.data && res.status === 200) {
+                    this.current = 2
+                    this.$emit('currData', false)
+                    // this.$router.push({name:'RegisterSuccess'})
+                  } else {
+                    this.$Message.info({
+                      content: '注册未成功',
+                      duration: 5,
+                      closable: true
+                    })
+                    return
                   }
-
 				}
 			},
           cancel(){},

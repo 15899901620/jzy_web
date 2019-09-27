@@ -20,7 +20,7 @@
                     <Col span="12">
                         <span>需求编号:</span>
                          <span>{{OrderList.billNo}}</span>
-                    </Col>           
+                    </Col>
                 </Row>
                 <Row index="0">
                      <Col span="12">
@@ -47,7 +47,7 @@
                     <Col span="12">
                         <span>用车开始日期:</span>
                         <span>{{OrderList.demandBeginDate}}</span>
-                    </Col> 
+                    </Col>
                     <Col span="12">
                         <span>用车结束日期:</span>
                         <span>{{OrderList.demandEndDate}}</span>
@@ -95,11 +95,12 @@
                             <Col span="3">操作</Col>
 
                         </Row>
-                        <Row  justify=center v-for="(item, index) in OrderList.freightOffers" :key='index' index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
+                        <Row   v-for="(item, index) in OrderList.freightOffers" :key='index' index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
                             <Col span="4">{{item.freightGoods}}</Col>
                             <Col span="3">{{item.price}}</Col>
                             <Col span="6">{{item.supplierName}}</Col>
                             <Col span="4">{{item.supplierMobile}}</Col>
+
                             <Col span="3" >
                                  <span v-if="item.status==0">取消</span>
                                  <span v-if="item.status==1">待报价</span>
@@ -115,10 +116,10 @@
 
                         </Row>
                     </div>
-                    </div>  
-                   
+                    </div>
+
          <p slot="footer" style="text-align:center">
-        
+
         </p>
     </Modal>
 </template>
@@ -137,13 +138,13 @@ export default {
         TimeDown
     },
     data() {
-    
-        
+
+
         return {
             options4: {
                 disabledDate: date => {
                     // this成功指向vue实例
-                    return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000; 
+                    return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000;
                 }
             },
             detailloading:false,
@@ -157,7 +158,7 @@ export default {
             ],
             taxList:[
                  '否',
-                 '是',        
+                 '是',
             ],
             tax:'否',
             title:'60',
@@ -166,7 +167,7 @@ export default {
             },
             date:'',
             formAddress:{
-                memberId: '',                
+                memberId: '',
                 contact: '',    //收货人姓名
                 phone: '',   //收货人电话
                 idNumber:'',  //身份证
@@ -180,7 +181,7 @@ export default {
                 demandEndDate:'',
                 alias:''             //别名
             },
-           
+
         }
     },
     props:{
@@ -199,7 +200,7 @@ export default {
         demandDate(e){
             this.formAddress.demandBeginDate=e[0]
             this.formAddress.demandEndDate=e[1]
-        } , 
+        } ,
         getSelectCountry(res){
             this.formAddress.countryId = res.countryId
             this.formAddress.state = res.provinceId
@@ -225,7 +226,7 @@ export default {
                 orderId:this.datalist.id,
             }
             const res = await sendHttp(this, true, server.api.freight.InfoByOrderId,params,1)
-           
+
             this.OrderList=  res.data
             this.formAddress.phone=  res.data.phone
             this.formAddress.contact=  res.data.contact
@@ -233,7 +234,7 @@ export default {
             this.formAddress.demandEndDate=  res.data.demandEndDate
             let t= new Date(res.data.demandEndDate)
             this.date = t.getTime();
-       
+
         },
         setSelected(row){
          this.$Modal.confirm({
@@ -248,10 +249,10 @@ export default {
                   this.freight();
                   this.loading = false
               })
-          
+
           }
           })
-    
+
         },
         async AddressOk() {
             //设置别名
