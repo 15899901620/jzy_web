@@ -4,7 +4,7 @@
        <usernav></usernav>
       <div class="memberInfor ml20  whitebg bdccc  mt20">
         <!--物流管理-->
-        <h1 class="fs16 ml25 mt25 bb1 pb10" >物流管理</h1>
+        <h1 class="fs16 ml25 mt25 bb1 pb10" >用车</h1>
         <div class="TableList">
           <div class="titleOrder mt15" >
             <ul class="dflex">
@@ -28,21 +28,21 @@
             <span style="width: 12%;">装货点</span>
             <span style="width: 12%;">卸货点</span>
             <span style="width: 12%;">货物名称</span>
-            <span style="width: 12%;">货物重量</span>
-            <span style="width: 12%;">联系人</span>
-            <span style="width: 12%;">电话</span>
+            <span style="width: 12%;">重量/吨</span>
+            <span style="width: 12%;">承运商</span>
+            <span style="width: 12%;">联系电话</span>
             <span style="width: 12%;">订单状态</span>
             <span style="width: 12%;">订单操作</span>
           </div>
 
           <ul class="logistics mt10" v-for="(item, index) in dataList" :key="index">
             <h2>
-              <span>编号：<span class="gray">{{item.billNo}}</span></span><span>发布时间：<span class="gray">{{item.create_time}}</span></span>
+              <span>编号：<span class="gray">{{item.billNo}}</span></span><span>发布时间：<span class="gray">{{item.createTime}}</span></span>
             </h2>
             <li >
               <div class="priOpen">
                 <span>{{item.dispatchFullAddress}} </span><span>{{item.receiptFullAddress}}</span><span>{{item.freightGoods}}</span><span>{{item.weight}}</span>
-                <span>{{item.contact}}</span><span>{{item.phone}}</span>
+                <span>{{item.supplierName}}</span><span>{{item.supplierMobile}}</span>
                 <div v-if='item.status==0'>
                       <span>取消</span>
                 </div>
@@ -53,7 +53,7 @@
                       <span>已选择</span>
                 </div>
                 <span><a class="logBtn redbg" @click='cancel(item)'>取消</a></span>
-                <span><a class="logBtn greenbg" @click="detailLog(item)">需求详情</a></span>
+                <span><a class="logBtn greenbg" @click="detailLog(item)">用车详情</a></span>
               </div>
               <div class="pro_jmts">
                 <ul>
