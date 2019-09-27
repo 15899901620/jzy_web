@@ -49,7 +49,7 @@
 							</li>
 							<li>
 								<FormItem label="收货地">
-									<Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:170px"></Cascader>
+									<Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:229px"></Cascader>
 								</FormItem>
 							</li>
 							<li>
@@ -320,7 +320,7 @@
 <style scoped>
 	.ivu-form{display: flex;}
 	.ivu-form >>> .ivu-select-selection{
-		width: 165px;
+		width: 229px;
 		border: none;
 		background-color: #f0f2f5;}
 	.ivu-form-item{margin: 2px 0;}
@@ -365,7 +365,7 @@
 		margin-left: 0;
 	}
 	.inquiryList li {
-		width: 235px;
+		width: 295px;
 		display: flex;
 		align-items: center;
 		background-color: #f0f2f5;margin-left: 20px;
@@ -403,7 +403,7 @@
 		background-color: #007de4;
 		border-radius: 3px;
 
-		padding: 10px 50px;
+		padding: 10px 75px;
 		text-align: center;
 		color: #fff;
 	}
