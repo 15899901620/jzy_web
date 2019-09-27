@@ -94,8 +94,9 @@
 								</div>
 							</li>
 						</ul>
-
-
+					</div>
+					<div style="text-align: center;">
+						<sapn v-if='reaList==""'>暂无数据</sapn>
 					</div>
 				</div>
 
@@ -138,6 +139,7 @@
 					</ul>
 
 				</div>
+
 			</div>
 		</div>
 		<Footer size="default" title="底部" style="margin-top:18px;"></Footer>

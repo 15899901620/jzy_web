@@ -21,8 +21,10 @@
               </p>
             </div>
           </li>
-        </ul>
-
+      </ul>
+          <div style="text-align: center;">
+						<sapn v-if='dataList==""'>暂无数据</sapn>
+					</div>
         <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">
           <img src="../../static/img/next.png" />
         </div>
