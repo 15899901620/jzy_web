@@ -97,6 +97,7 @@
                         <FormItem label="收货地址" prop="pickupMode">
                             <address-from
                                 :country="1"
+                                :province="440000"
                                 :isshow="this.isAddressFormShow"
                                 @selectAddress="getSelectCountry"
                             >
@@ -222,9 +223,10 @@ export default {
                  '否',
                  '是',
             ],
-            tax:'否',
+            tax:'是',
             title:'2',
             OrderList:{},
+            userinfo:{},
             date:'',
             formAddress:{
                 memberId: '',
@@ -236,6 +238,7 @@ export default {
                 city: '',     //市
                 district: '',      //区县
                 receiver_district:'',
+                provinceId:'',  
                 dispatchFullAddress:'',
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
@@ -275,6 +278,16 @@ export default {
         }
     },
     methods:{
+        inLogin(){
+            var  userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+            if (!userinfo) {
+                this.$router.push('/login')
+            }
+            this.formAddress.contact= userinfo.logistics_contacter
+            this.formAddress.phone  = userinfo.logistics_mobile
+   
+      
+        },
         demandDate(e){
             this.formAddress.demandBeginDate=e[0]
             this.formAddress.demandEndDate=e[1]
@@ -381,6 +394,7 @@ export default {
         isshow: function (e) {
             if (e === true) {
                 this.dataList();
+                this.inLogin();
                 this.loading = true
                 this.isAddressFormShow = true
             } else {
