@@ -127,6 +127,7 @@
                     :action="uploadUrl"
                     :on-success="imageSuccess"
                     :max-size="10240"
+                    :show-upload-list="false"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
@@ -136,6 +137,11 @@
             <Col span="12">
               <div class="uploadimg">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.business_license">
+                <img :src="this.formCustom.business_license" />
+              </div>
+            </Col>
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
@@ -144,6 +150,7 @@
                     ref="upload"
                     :action="uploadUrl"
                     :on-success="handleFileSuccess"
+                    :show-upload-list="false"
                     :max-size="10240"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
@@ -153,6 +160,11 @@
             </Col>
             <Col span="12">
               <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.authorization_elc">
+                <img :src="this.formCustom.authorization_elc" />
+              </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">

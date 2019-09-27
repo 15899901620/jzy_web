@@ -159,6 +159,7 @@
                     :on-success="imageSuccess"
                     :max-size="10240"
                     :format="['jpg','jpeg','png', 'pdf']"
+                    :show-upload-list="false"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
                 </Upload>
@@ -167,14 +168,14 @@
             <Col span="12">
               <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）</div>
             </Col>
-          </Row>
-          <Row :gutter="24" index="0">
             <Col span="21">
-              <FormItem prop="registCapi" label="注册资金：">
-                <Input type="text" v-model="formCustom.registCapi" class="CarrierIput" placeholder="请输入注册资金"/>
-              </FormItem>
+              <div class="Image" v-if="this.formCustom.businessLicense">
+                <img :src="this.formCustom.businessLicense" />
+              </div>
             </Col>
           </Row>
+
+
           <Row :gutter="24" index="0">
             <Col span="21">
               <FormItem prop="registCapi" label="公司性质：">
@@ -195,6 +196,7 @@
                     :on-success="handleFileSuccess"
                     :max-size="10240"
                     :format="['jpg','jpeg','png', 'pdf']"
+                    :show-upload-list="false"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
                 </Upload>
@@ -202,6 +204,11 @@
             </Col>
             <Col span="12">
               <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.authorizationElc">
+                <img :src="this.formCustom.authorizationElc" />
+              </div>
             </Col>
           </Row>
           <template v-if="formCustom.isLogisticsCompany == 1">
@@ -211,9 +218,10 @@
                   <Upload
                       ref="upload"
                       :action="uploadUrl"
-                      :on-success="handleOtherFile"
+                      :on-success="handletransportFile"
                       :max-size="10240"
                       :format="['jpg','jpeg','png','pdf']"
+                      :show-upload-list="false"
                       :on-format-error="handleFormatError"
                       :on-exceeded-size="handleMaxSize">
                     <Button icon="ios-cloud-upload-outline">上  传</Button>
@@ -223,8 +231,38 @@
               <Col span="12">
                 <div class="uploadimg mt5">请点击上传运输许可证图片（png、jpeg、jpg和pdf）</div>
               </Col>
+              <Col span="21">
+                <div class="Image" v-if="this.formCustom.transportLicense">
+                  <img :src="this.formCustom.transportLicense" />
+                </div>
+              </Col>
             </Row>
           </template>
+          <Row :gutter="24" index="0">
+            <Col span="9">
+              <FormItem label="危化品经营许可证：">
+                <Upload
+                        ref="upload"
+                        :action="uploadUrl"
+                        :on-success="HazchemiFile"
+                        :max-size="10240"
+                        :show-upload-list="false"
+                        :format="['jpg','jpeg','png', 'pdf']"
+                        :on-format-error="handleFormatError"
+                        :on-exceeded-size="handleMaxSize">
+                  <Button icon="ios-cloud-upload-outline">上 传</Button>
+                </Upload>
+              </FormItem>
+            </Col>
+            <Col span="12">
+              <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.dangerouslicense">
+                <img :src="this.formCustom.dangerouslicense" />
+              </div>
+            </Col>
+          </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
               <FormItem label="其它证件：">
@@ -233,6 +271,7 @@
                     :action="uploadUrl"
                     :on-success="handleOtherFile"
                     :max-size="10240"
+                    :show-upload-list="false"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-format-error="handleFormatError"
                     :on-exceeded-size="handleMaxSize">
@@ -242,6 +281,11 @@
             </Col>
             <Col span="12">
               <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.other_license">
+                <img :src="this.formCustom.other_license" />
+              </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
@@ -520,6 +564,7 @@
 					natureName: '',        //供应商性质
 					natureValue: '',      //供应商性质值
 					registCapi: '',         //注册资金
+                    dangerouslicense:'',       //危化品上传许可证
                     slidecode: 0
 				},
 				ruleCustom: {
@@ -802,7 +847,7 @@
 				this.formCustom.other_license = res.url
 
 			},
-			handleOtherFile(res){
+            handletransportFile(res){
 				this.formCustom.transportLicense=res.url
 
 			},
@@ -812,6 +857,10 @@
 					desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg,png,pdf,png 格式的文件。'
 				});
 			},
+          //危化品经营许可证
+          HazchemiFile(res){
+            this.formCustom.dangerouslicense=res.url
+          },
 			// 校验公司名称
 			async companyChenckValid(value, callback) {
 				let params = {
@@ -1002,6 +1051,17 @@
 		}
 	}
 </script>
-<style>
+<style lang="less">
   .CarrierRegister{width: 83%}
+  .Image{
+    width: 116px;
+    height: 75px;
+    overflow: hidden;
+    margin-left: 130px;
+    margin-bottom: 10px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>

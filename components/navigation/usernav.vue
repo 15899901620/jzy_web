@@ -25,8 +25,13 @@ export default {
                             path: '/users/usertotalorder',
                             name: '全部订单'
                         },
+                        {
+                            path: '/users/PlanBill',
+                            name: '计划单据'
+                        },
                     ]
                 },
+
                 {
                     name: '预售管理',
                     children: [

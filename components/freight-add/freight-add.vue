@@ -13,57 +13,57 @@
         <div class="">
             <Form ref="formAddress" :model="formAddress" :label-width="100"  :rules="ruleValidate">
                 <Row index="0">
-                    <Col span="12">
+                    <Col span="12" >
                         <FormItem label="订单号" >
                             <Input v-model="datalist.orderNo"  disabled  placeholder="请输入订单号"></Input>
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                    <Col span="12" >
                         <FormItem label="货物名称" >
                             <Input v-model="datalist.skuName" disabled  placeholder="请输入货物名称"></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row index="0">
-                    <Col span="12">
+                <Row index="0" >
+                    <Col span="12"  style="margin-top: 5px;">
                         <FormItem label="数量" >
                             <Input v-model="datalist.orderNum"  disabled placeholder="请输入数量"></Input>
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                    <Col span="12" style="margin-top: 5px;" >
                         <FormItem label="提货仓库" >
                             <Input v-model="datalist.warehouseName" disabled  placeholder="请输入提货仓库"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="0">
-                    <Col span="12">
+                    <Col span="12" style="margin-top: 5px;">
                         <FormItem label="联系人" prop="name">
                             <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
                         </FormItem>
                     </Col>
-                     <Col span="12">
+                     <Col span="12" style="margin-top: 5px;">
                         <FormItem label="联系电话" prop="phone">
                             <Input v-model="formAddress.phone"   placeholder="请输入收货人的联系电话"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="1">
-                    <Col span="22">
+                    <Col span="22" style="margin-top: 5px;">
                         <FormItem label="提货地址" >
                             <Input v-model="formAddress.dispatchFullAddress" disabled ></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="2">
-                    <Col span="12">
+                    <Col span="12" style="margin-top: 5px;">
                         <FormItem label="用车日期" prop="demandEndDate">
                                 <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
                         </FormItem>
-                    </Col> 
+                    </Col>
                 </Row>
                 <Row index="3">
-                     <Col span="12">
+                     <Col span="12" style="margin-top: 5px;">
                      <FormItem label="询价有效时间" >
                          <Dropdown placement="bottom-start" trigger="click" @on-click="selectLang">
                                 <Button type="primary">
@@ -78,7 +78,7 @@
                         </FormItem>
                     </Col>
                     <Col span="12">
-                     <FormItem label="是否含税" >
+                     <FormItem label="是否含税" style="margin-top: 5px;">
                          <Dropdown placement="bottom-start" trigger="click" @on-click="selectTax">
                                 <Button type="primary">
                                     {{tax}}
@@ -93,7 +93,7 @@
                     </Col>
                 </Row>
                 <Row index="4">
-                    <Col>
+                    <Col style="margin-top: 5px;">
                         <FormItem label="收货地址" prop="pickupMode">
                             <address-from
                                 :country="1"
@@ -149,9 +149,9 @@ export default {
                     callback('请输入正确手机号或座机电话'); // 校验不通过
                     return false;
                 }
-            }  
+            }
         };
-   
+
         //国家
         const validatecountryId=(rule, value, callback) => {
             if (value === '') {
@@ -164,23 +164,23 @@ export default {
         const validateidNumber=(rule, value, callback) => {
             if (value === '') {
                 callback(new Error('身份证号不能为空'));
-            } 
+            }
             if(value.length == 15){
                 var  patrn= /^[1-9]\d{5}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}$/
                 if (!patrn.exec(value)) {
-                     callback(new Error('请输入正确的身份证号'));   
+                     callback(new Error('请输入正确的身份证号'));
                 }else{
                     callback();
                 }
             }else if(value.length == 18){
                 var  patrn= /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
                 if (!patrn.exec(value)) {
-                    callback(new Error('请输入正确的身份证号'));   
+                    callback(new Error('请输入正确的身份证号'));
                 }else{
                     callback();
                 }
             }else{
-                callback(new Error('请输入正确的身份证号'));   
+                callback(new Error('请输入正确的身份证号'));
             }
 
         };
@@ -202,10 +202,10 @@ export default {
             options4: {
                 disabledDate: date => {
                     // this成功指向vue实例
-                    return  date && date.valueOf() < Date.now() - 86400000; 
+                    return  date && date.valueOf() < Date.now() - 86400000;
                 }
             },
-            
+
             tax_id:0,
             isAddressFormShow: false,
             loading: false,
@@ -221,7 +221,7 @@ export default {
             ],
             taxList:[
                  '否',
-                 '是',        
+                 '是',
             ],
             tax:'是',
             title:'2',
@@ -229,7 +229,7 @@ export default {
             userinfo:{},
             date:'',
             formAddress:{
-                memberId: '',                
+                memberId: '',
                 contact: '',    //收货人姓名
                 phone: '',   //收货人电话
                 idNumber:'',  //身份证
@@ -291,7 +291,7 @@ export default {
         demandDate(e){
             this.formAddress.demandBeginDate=e[0]
             this.formAddress.demandEndDate=e[1]
-        } , 
+        } ,
         getSelectCountry(res){
             this.formAddress.countryId = res.countryId
             this.formAddress.state = res.provinceId
@@ -375,7 +375,7 @@ export default {
                         content: '添加成功',
                         duration: 5,
                         closable: true
-                    })         
+                    })
                     this.loading = false
                     this.$emit('unChange', false)
                 }else{
