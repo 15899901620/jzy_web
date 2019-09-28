@@ -21,14 +21,11 @@
             </div>
                 <div class="TableTitle graybg">
                     <span style="width: 15%;">日期</span>
-                    <span style="width: 15%;">合约编号</span>
-                    <span style="width: 15%;">合约类型</span>
                     <span style="width: 15%;">产品</span>
                     <span style="width: 15%;">提货仓库</span>
                     <span style="width: 15%;">数量</span>
                     <span style="width: 15%;">单价</span>
                     <span style="width: 15%;">待转单数量</span>
-                    <span style="width: 15%;">转单倒计时</span>
                     <span style="width: 15%;">尾款支付状态</span>
                     <span style="width: 15%;">合同状态</span>
                     <span style="width: 15%;">转单操作</span>
@@ -40,11 +37,11 @@
 <!--                    <tbody>-->
 <!--                    <tr class="Ttitle graybg">-->
 <!--                        <td colspan="7">-->
-<!--                  <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>-->
+<!--                  <span class="ml10">合约编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>-->
 <!--                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>-->
 <!--                  </span>-->
 <!--                            <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>-->
-<!--                            <span class="fr mr15" v-show="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>-->
+<!--                            <span class="fr mr15" v-show="item.status == 2"><span class="red">转单倒计时：</span> <span class="red">{{item.orderPayLastTime}}</span></span>-->
 <!--                        </td>-->
 <!--                    </tr>-->
 <!--                    <tr class="detailTable">-->
@@ -78,6 +75,50 @@
 <!--                    </tr>-->
 <!--                    </tbody>-->
 <!--                </table>-->
+
+                <table   class="listT mt10" border="" cellspacing=""
+                       cellpadding="">
+                    <tbody>
+                    <tr class="Ttitle graybg">
+                        <td colspan="7">
+                  <span class="ml10">合约编号：<Tag color="success">000000000000000</Tag>
+<!--                    <a :href="" class="mt5 blackFont"><span class="blue">2002222</span></a>-->
+                  </span>
+                            <span class="ml15">合约类型：<span class="gray">12:00</span></span>
+                            <span class="fr mr15"  ><span class="red">转单倒计时：</span> <span class="red">12:00</span></span>
+                        </td>
+                    </tr>
+                    <tr class="detailTable">
+                        <td>在地上一</td>
+                        <td><span class="orangeFont">厂商</span> <span style="color:#999">/吨</span></td>
+                        <td>185236</td>
+                        <td>名字名字</td>
+                    <td>
+                            1561651651
+<!--                            <template v-if="item.depositId > 0"><br><span-->
+<!--                                    style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.depositAmountFormat}}</span>-->
+<!--                            </template>-->
+                        </td>
+                        <td>
+                            <span   class="greenFont">状态</span>
+                            <span   class="gray">基有</span>
+                            <span  class="orangeFont">在有</span>
+                        </td>
+                        <td class="operate">
+                            <div class=""  >
+                                <a class="Paybtn mt15"  >去付款</a>
+                            </div>
+                            <div class=""  >
+                                <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
+                            </div>
+                            <div class=""  >
+                                <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
+                            </div>
+<!--                            <a :href=" " class="mt5 blackFont">查看详情</a>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
 
                 <!--页码-->
