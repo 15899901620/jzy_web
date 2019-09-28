@@ -199,6 +199,23 @@
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
       </div>
+
+    </Modal>
+    <Modal
+            v-model="usersubmitModal"
+            title="请认真再次核对开票资料"
+            @on-ok="ok"
+            @on-cancel="cancel">
+      <ul class="ivulist">
+        <li><span>公司名称</span>:{{formCustom.companyName}}</li>
+        <li><span style="width: 65px; text-align-last: justify">联系人</span>: {{formCustom.contacter}}</li>
+        <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
+        <li><span>开户银行</span>: {{formCustom.invBankName}}</li>
+        <li><span>银行账号</span>: {{formCustom.invBankAccount}}</li>
+        <li><span>公司地址</span>: {{formCustom.invAddress}}</li>
+        <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
+      </ul>
+      <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
     </Modal>
   </div>
 </template>
@@ -357,6 +374,7 @@
 				phoneValid: false,//号码有效
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
+                usersubmitModal:false,         //确认提交框
 				current: 0,
 				uploadUrl: '',
 				companyValid: false,
@@ -762,19 +780,26 @@
 					})
 					return
 				} else {
-					const res = await manageReg(this, this.formCustom)
-					if (res.data === true && res.status === 200) {
-						this.current = 2
-						this.$emit('currData', false)
-					} else {
-						this.$Message.info({
-							content: res.message,
-							duration: 5,
-							closable: true
-						})
-					}
+				  this.usersubmitModal=true
 				}
 			},
+          cancel(){},
+          ok(){
+            this.userSubmit(this.formCustom)
+          },
+          async userSubmit(formCustom){
+            const res = await manageReg(this, formCustom)
+            if (res.data === true && res.status === 200) {
+              this.current = 2
+              this.$emit('currData', false)
+            } else {
+              this.$Message.info({
+                content: res.message,
+                duration: 5,
+                closable: true
+              })
+            }
+          },
 			protocolModalToShow() {
 				this.protocolModalShow = true
 			},

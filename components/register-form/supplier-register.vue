@@ -341,8 +341,8 @@
         <li><span>公司地址</span>: {{formCustom.address}}</li>
         <li><span>公司电话</span>: {{formCustom.telephone}}</li>
       </ul>
-
-    </Modal>
+      <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
+     </Modal>
   </div>
 
 </template>
@@ -1016,27 +1016,10 @@
 					return
 				} else {
                   this.submitModal=true;
-
-
-
-                  // const res = await supplierReg(this, this.formCustom)
-                  // if (res.data && res.status === 200) {
-                  //   this.current = 2
-                  //   this.$emit('currData', false)
-                  //   // this.$router.push({name:'RegisterSuccess'})
-                  // } else {
-                  //   this.$Message.info({
-                  //     content: '注册未成功',
-                  //     duration: 5,
-                  //     closable: true
-                  //   })
-                  //   return
-                  // }
 				}
 			},
           cancel(){},
           ok(){
-            console.log("formCustom",this.formCustom)
             this.supSubmit(this.formCustom)
           },
           async supSubmit(formCustom){
