@@ -22,7 +22,7 @@
 
       methods:{
         WinmemberCenter(){
-          this.$router.push({ path:'./WinBidmember'})
+          this.$router.push({ path:'WinBidmember'})
         }
 
       },
@@ -30,7 +30,7 @@
 
       },
       mounted() {
-      
+
       }
 
     }

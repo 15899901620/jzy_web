@@ -11,7 +11,7 @@
       <Row  index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime" :width="263"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="validWidth"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
@@ -89,6 +89,7 @@ export default {
       btnBoolen: false,
       firstTochar:false,
       bigChar:false,
+      validWidth: this.$router.history.current.name === 'tendering'?247:263,
       loginsupplierform:{
         username: '',
         mobilecode: '',
@@ -110,6 +111,9 @@ export default {
       slidecode: state => state.system.slidecode,
       chackPhone: state => state.login.chackPhone,
     })
+  },
+  mounted(){
+
   },
   methods:{
     trim(x) {

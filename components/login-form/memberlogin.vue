@@ -11,7 +11,7 @@
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify @onChange="onTime" :width="260"></slide-verify>
+            <slide-verify @onChange="onTime" :width="validWidth"></slide-verify>
           </FormItem>
         </Col>
       </Row>
@@ -91,6 +91,7 @@
 				auth_time: 0,
 				bigChar:false,
 				firstTochar:false,
+                validWidth:263,
 				loginform: {
 					username: '',
 					mobilecode: '',
@@ -302,7 +303,10 @@
 		mounted() {
 
 			// this.updateUserInfof('11111')
-		}
+		},
+      watch:{
+
+      }
 	}
 </script>
 

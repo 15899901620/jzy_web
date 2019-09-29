@@ -2,7 +2,7 @@
   <div class="body">
     <Header-small title="招标中心">
       <div slot="headerother">
-        <div
+        <div v-if="!SupplierInfor"
           data-v-228ad150
           class="dflexAlem gray fs14"
           style="color: rgb(102, 102, 102);    margin-top: 50px;"
@@ -76,6 +76,7 @@ import { mapState } from "vuex";
 import login from "../components/login-form";
 import { supplierLogin, supplierValid } from "../api/users";
 import Cookies from "js-cookie";
+
 export default {
   name: "tendering",
   data() {
