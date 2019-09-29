@@ -1,21 +1,21 @@
 <template>
   <div class="supplierlogin">
     <Form ref="loginsupplierform" :model="loginsupplierform" :rules="ruleCustom">
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="username">
-            <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号"/>
+            <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号" id="input1"/>
           </FormItem>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime" :width="260"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="validWidth"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="mobilecode">
             <Input v-model="loginsupplierform.mobilecode"  autocomplete="off" placeholder="短信验证码"/>
@@ -23,15 +23,17 @@
           <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="24">
           <FormItem prop="password">
-            <Input v-model="loginsupplierform.password" type="password" @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
+            <Input v-model="loginsupplierform.password" autocomplete="off" type="password" @keyup.native="loginKeyDown"   @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
+            <div style="height:13px; position: relative"><div v-show="bigChar" style="margin-top: -5px; color: #666;">大写锁定已打开</div></div>
           </FormItem>
+
         </Col>
       </Row>
       <Button type="primary" long v-on:click="LoginsupplyerForm">登录</Button>
-      <Row :gutter="24" index="">
+      <Row  index="">
         <Col span="12" style="text-align:left; margin:10px auto;">
           <a href="/forgotpwd?type=supply">忘记密码</a>
         </Col>
@@ -85,6 +87,9 @@ export default {
       cphones: false,
       btnValue: "发送验证码",
       btnBoolen: false,
+      firstTochar:false,
+      bigChar:false,
+      validWidth: this.$router.history.current.name === 'tendering'?247:263,
       loginsupplierform:{
         username: '',
         mobilecode: '',
@@ -107,7 +112,13 @@ export default {
       chackPhone: state => state.login.chackPhone,
     })
   },
+  mounted(){
+
+  },
   methods:{
+    trim(x) {
+      document.getElementById("input1").value = x.trim();
+    },
     ...mapMutations({
       updateChackPhone: 'login/updateChackPhone'
     }),
@@ -163,12 +174,15 @@ export default {
         })
         return
       }else{
+        console.log("params***")
         let params = {
           username:this.loginsupplierform.username,
           password:this.loginsupplierform.password,
           code: this.loginsupplierform.mobilecode
         }
+      console.log("params:",params)
         const res = await supplierLogin(this, params)
+
         let authres=res.data
         if(res.data.data===null && res.status === 200){
           this.$Modal.info({
@@ -263,7 +277,39 @@ export default {
 
         }
       })
-    }
+    },
+    	loginKeyDown(event){
+				const _that=this;
+				//是否输入过字母键，且判断是否按键为caps lock
+				if(_that.firstTochar){
+					if(event.keyCode===20){
+						_that.bigChar=!_that.bigChar;
+						return;
+					}
+				}
+				//未输入过字母键，或按键不是caps lock，判断每次最后输入的字符的大小写
+				var e = event||window.event;
+				var keyvalue = e.keyCode ? e.keyCode : e.which;
+				var shifKey = e.shiftKey ? e.shiftKey:((keyvalue == 16) ? true : false);
+				if(typeof(_that.loginsupplierform.password)==='undefined'){
+					return;
+				}
+				var strlen = _that.loginsupplierform.password.length;
+				var password=_that.loginsupplierform.password;
+
+				if(strlen){
+					var uniCode =password.charCodeAt(strlen-1);
+					if(keyvalue>=65 && keyvalue<=90){
+						//如果是字母键
+						_that.firstTochar=true;
+						if(((uniCode >= 65 && uniCode <= 90) && !shifKey)||((uniCode >= 97 && uniCode <= 122) && shifKey)){
+							_that.bigChar=true;
+						}else{
+							_that.bigChar=false;
+						}
+					}
+				}
+			},
   }
 }
 </script>
@@ -286,5 +332,9 @@ export default {
   .ivu-form-item-error-tip {
     padding-top:4px;
   }
+}
+.ivu-tag{
+  background: none;
+  border: none;
 }
 </style>

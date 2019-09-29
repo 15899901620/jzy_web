@@ -23,6 +23,10 @@
 						name: '合约管理',
 						children: [
 							{
+								path: '/users/userPlanBill',
+								name: '待办事项'
+							},
+							{
 								path: '/users/spotPlan',
 								name: '现货合约'
 							},
@@ -93,6 +97,10 @@
 							{
 								path: '/users/userAddress',
 								name: '收货地址'
+							},
+							{
+								path: '/users/usereditphone',
+								name: '换绑手机号'
 							}
 						]
 					}

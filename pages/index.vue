@@ -55,6 +55,7 @@
 </template>
 
 <script>
+
 	import {mapState} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
@@ -85,6 +86,7 @@
 				}),
 				//获取轮播图
 				store.dispatch('common/getBannerList', 1),
+                store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
 					current_page: 1,
@@ -94,7 +96,7 @@
 				//获取行业资讯
 				store.dispatch('article/getHotArticle', {
 					current_page: 1,
-					page_size: 5, sortBy: 'add_time', desc: true, isShow: 1
+					page_size: 4, sortBy: 'add_time', desc: true, isShow: 1
 				}),
 				//获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {
@@ -119,6 +121,17 @@
 			])
 		},
 
+
+      head:{
+            script:[
+              {
+                type:"text/javascript",
+                src:"https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f",
+                id:"qd288570929125de54b1b05179506f548d8f6e40700f",
+                async:true
+                }
+            ]
+        },
 		components: {
 			Header,
 			Footer,
@@ -162,6 +175,7 @@
 			})
 		},
 		methods: {},
+
 
 	}
 </script>

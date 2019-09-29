@@ -2,28 +2,43 @@
     <div class="clearfix graybg">
         <div class="w1200 dflex " style="margin-bottom: 40px">
             <usernav></usernav>
-            <div class="memberInfor ml20  whitebg bdccc  mt20">
-                <h1 class="fs16 ml25 mt25 bb1 pb10" >密码管理</h1>
-                <ul class="code_manange mt30 ml20">
-                    <li>
-                        <span class="titleInfor">手机号</span>
-                        <Input type="text" class="inforInput blackFont"  v-model="userinfo.phone" disabled/>
-                    </li>
-                    <li>
-                        <span class="titleInfor">验证码</span>
-                        <Input type="text" class="inforInput" v-model="code"  @on-blur="passwordCodeCheck"  placeholder="请输入验证码"  />
-                        <button class="codeCarrier graybg" :disabled="btnBoolen"  @click="getsupplyNoteValue" >{{this.btnValue}}</button>
-                    </li>
-                    <li>
-                        <span class="titleInfor">新密码</span>
-                        <Input type="password" class="inforInput" v-model="newspassword" @on-blur="repasswordCheck"   />
-                    </li>
-                    <li>
-                        <span class="titleInfor">新密码确认</span>
-                        <Input type="password" class="inforInput"  v-model="repassword"   @on-blur="repasswordCheck"  />
-                        <i class="ml10 gray redFont" v-show="showpassword" >两次密码输入不一致</i>
-                    </li>
-                </ul>
+            <div class="memberInfor ml00  whitebg bdccc  mt20">
+                <h1 class="fs16 ml25 mt25 bb1 pb10" >电商平台密码管理</h1>
+                 <div class="formItem code_manange mt30 ml00" >
+                    <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">         
+                        <Row :gutter="24" index="0">
+                            <Col span="15">
+                            <FormItem  label="手 机 号：">
+                                <Input v-model="userinfo.phone" class="CarrierIput" disabled id="phone" placeholder="请输入手机号"/>
+                            </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="24" index="2">
+                            <Col span="15">
+                            <FormItem prop="mobilecode" label="短信验证：">
+                                <Input class="CarrierImgcode" v-model="formCustom.code"  @click="getsupplyNoteValue" placeholder="请输入验证码"/>
+                            </FormItem>
+                            </Col>
+                            <Col span="6">
+                                <button class="codeCarrier graybg" :disabled="btnBoolen" type="button"  @click="getsupplyNoteValue" >{{this.btnValue}}</button>
+                            </Col>
+                        </Row>
+                        <Row :gutter="24" index="3">
+                            <Col span="15">
+                            <FormItem prop="newspassword" label="密  码：">
+                                <Input type="password" v-model="formCustom.newspassword" class="CarrierIput" placeholder="请输入密码"/>
+                            </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="24" index="4">
+                            <Col span="15">
+                            <FormItem prop="repassword" label="确认密码：">
+                                <Input type="password" v-model="formCustom.repassword" class="CarrierIput" placeholder="请输入确认密码"/>
+                            </FormItem>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
                 <div class="ConfirmSubmit" @click="passwordmodif">确认提交</div>
             </div>
         </div>
@@ -51,6 +66,31 @@ export default {
     ])
     },
     data() {
+        const validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('新密码不能为空'));
+            }
+            var patrn = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/;
+            if (!patrn.exec(value)) {
+                callback(new Error('密码必须是8-20字母和数字组合'));
+            } else {
+                this.passwordValid = true
+                callback();
+            }
+        };
+        const validaterePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('密码不能为空'));
+            } else {
+                if (this.formCustom.repassword !== this.formCustom.newspassword) {
+                    // 对第二个密码框单独验证
+                    callback(new Error('密码两次不相同'));
+                } else {
+                    this.repasswordValid = true
+                    callback();
+                }
+            }
+        };
     return{
         showpassword:false,
         isCodeValid:false,
@@ -65,6 +105,20 @@ export default {
         newspassword:'',
         repassword:'',
         password:'',
+        formCustom:{
+                phone:'',
+                code:'',
+                newspassword:'',
+                repassword:'',
+        },
+         ruleCustom: {
+					newspassword: [
+						{  validator: validatePass, trigger: 'blur'}
+					],
+					repassword: [
+						{validator: validaterePass, trigger: 'blur'}
+					],
+            }
     }
     },
     methods:{
@@ -104,6 +158,7 @@ export default {
 
                 }else {
                     this.btnBoolen = true;
+                    console.log(this.btnBoolen)
                     this.btnValue=`重新获取(${this.auth_time})S`
                     this.btnClassName="btn"
 
@@ -157,21 +212,35 @@ export default {
         },
 
         async passwordmodif(){
-
+            if(!this.formCustom.newspassword){
+                this.$Message.info({
+                    content: '新密码不能为空，请重新填写',
+                    duration: 5,
+                    closable: true
+                })
+                return
+            }else if(!this.formCustom.repassword){
+                this.$Message.info({
+                    content: '确认密码不能为空，请返回重新填写',
+                    duration: 5,
+                    closable: true
+                })
+                return
+            }   
             let params = {
             phone: this.userinfo.phone,
-            password:this.password,
-            code:this.code
+            password: this.formCustom.newspassword,
+            code: this.formCustom.code
             }
             
             const res = await userRepassWd(this, params)
-            
-            if(res.data && res.status ===200){
+            console.log(res)
+            if(res.data==true && res.status ===200){
                 this.$Message.info({content: '修改密码成功'})
-                this.$router.push('/users/user')
+                // this.$router.push('/users/user')
             }else{
             this.$Notice.warning({
-                title: '修改密码失败',
+                title: res.data.message,
                 duration: 5
             });
             }

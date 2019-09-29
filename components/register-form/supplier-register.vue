@@ -15,7 +15,7 @@
             <Col span="21">
               <FormItem prop="Imgcode" label="注册类型：">
                 <Select v-model="formCustom.isLogisticsCompany">
-                  <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                  <Option v-for="item in registType" :value="item.value" :key="item.value" >{{ item.label }}</Option>
                 </Select>
               </FormItem>
             </Col>
@@ -138,6 +138,13 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="21">
+              <FormItem prop="registCapi" label="注册资金：">
+                <Input type="text" class="CarrierIput" v-model="formCustom.registCapi" placeholder="请输入注册资金"/>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row :gutter="24" index="0">
+            <Col span="21">
               <FormItem prop="contacter" label="联系人：">
                 <Input type="text" v-model="formCustom.contacter" class="CarrierIput" placeholder="请输入联系人"/>
               </FormItem>
@@ -147,31 +154,6 @@
             <Col span="21">
               <FormItem prop="contacterEmail" label="邮箱：">
                 <Input type="text" v-model="formCustom.contacterEmail" class="CarrierIput" placeholder="请输入邮箱"/>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row :gutter="24" index="0">
-            <Col span="9">
-              <FormItem label="营业执照：" prop="contacterEmail">
-                <Upload
-                    ref="upload"
-                    :action="uploadUrl"
-                    :on-success="imageSuccess"
-                    :max-size="10240"
-                    :format="['jpg','jpeg','png', 'pdf']"
-                    :on-exceeded-size="handleMaxSize">
-                  <Button icon="ios-cloud-upload-outline">上 传</Button>
-                </Upload>
-              </FormItem>
-            </Col>
-            <Col span="12">
-              <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）</div>
-            </Col>
-          </Row>
-          <Row :gutter="24" index="0">
-            <Col span="21">
-              <FormItem prop="registCapi" label="注册资金：">
-                <Input type="text" v-model="formCustom.registCapi" class="CarrierIput" placeholder="请输入注册资金"/>
               </FormItem>
             </Col>
           </Row>
@@ -188,13 +170,41 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
-              <FormItem label="授 权 书：" prop="businessLicense">
+              <FormItem label="营业执照："  prop="businessLicense" >
+                <Upload
+                    ref="upload"
+                    :action="uploadUrl"
+                    :on-success="imageSuccess"
+                    :max-size="10240"
+                    :format="['jpg','jpeg','png', 'pdf']"
+                    :show-upload-list="false"
+                    :on-exceeded-size="handleMaxSize">
+                  <Button icon="ios-cloud-upload-outline">上 传</Button>
+                </Upload>
+              </FormItem>
+            </Col>
+            <Col span="12">
+              <div class="uploadimg mt5">请点击上传营业执照图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.businessLicense">
+                <img :src="this.formCustom.businessLicense" />
+              </div>
+            </Col>
+          </Row>
+
+
+
+          <Row :gutter="24" index="0">
+            <Col span="9">
+              <FormItem label="授 权 书：" prop="authorizationElc">
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
                     :on-success="handleFileSuccess"
                     :max-size="10240"
                     :format="['jpg','jpeg','png', 'pdf']"
+                    :show-upload-list="false"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
                 </Upload>
@@ -202,6 +212,11 @@
             </Col>
             <Col span="12">
               <div class="uploadimg mt5">请点击上传授权书图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.authorizationElc">
+                <img :src="this.formCustom.authorizationElc" />
+              </div>
             </Col>
           </Row>
           <template v-if="formCustom.isLogisticsCompany == 1">
@@ -211,9 +226,10 @@
                   <Upload
                       ref="upload"
                       :action="uploadUrl"
-                      :on-success="handleOtherFile"
+                      :on-success="handletransportFile"
                       :max-size="10240"
                       :format="['jpg','jpeg','png','pdf']"
+                      :show-upload-list="false"
                       :on-format-error="handleFormatError"
                       :on-exceeded-size="handleMaxSize">
                     <Button icon="ios-cloud-upload-outline">上  传</Button>
@@ -223,8 +239,38 @@
               <Col span="12">
                 <div class="uploadimg mt5">请点击上传运输许可证图片（png、jpeg、jpg和pdf）</div>
               </Col>
+              <Col span="21">
+                <div class="Image" v-if="this.formCustom.transportLicense">
+                  <img :src="this.formCustom.transportLicense" />
+                </div>
+              </Col>
             </Row>
           </template>
+          <Row :gutter="24" index="0">
+            <Col span="9">
+              <FormItem label="危化品经营许可证：">
+                <Upload
+                        ref="upload"
+                        :action="uploadUrl"
+                        :on-success="HazchemiFile"
+                        :max-size="10240"
+                        :show-upload-list="false"
+                        :format="['jpg','jpeg','png', 'pdf']"
+                        :on-format-error="handleFormatError"
+                        :on-exceeded-size="handleMaxSize">
+                  <Button icon="ios-cloud-upload-outline">上 传</Button>
+                </Upload>
+              </FormItem>
+            </Col>
+            <Col span="12">
+              <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.dangerouslicense">
+                <img :src="this.formCustom.dangerouslicense" />
+              </div>
+            </Col>
+          </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
               <FormItem label="其它证件：">
@@ -233,6 +279,7 @@
                     :action="uploadUrl"
                     :on-success="handleOtherFile"
                     :max-size="10240"
+                    :show-upload-list="false"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-format-error="handleFormatError"
                     :on-exceeded-size="handleMaxSize">
@@ -243,11 +290,16 @@
             <Col span="12">
               <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
             </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.otherLicense">
+                <img :src="this.formCustom.otherLicense" />
+              </div>
+            </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
-            <Col span="21" style="text-align:center;">
+            <Col span="21" style="text-align:center; display: flex; margin-left: 90px;width: 72%;">
               <Button class="CarrierRegister" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister" @click="memberReset">提 交</Button>
+              <Button type="primary" class="CarrierRegister ml10" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
@@ -271,13 +323,36 @@
         @on-cancel="protocolModalCancel"
         :width='700'
         class-name="vertical-center-modal">
-      <div class="" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL">
-      </div>
+
+      <template v-if="formCustom.isLogisticsCompany == 0">
+          <div class=""  style="overflow: hidden; overflow-y: auto; height: 360px;" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL"></div>
+      </template>
+      <template v-else>
+          <div class=""  style="overflow: hidden; overflow-y: auto; height: 360px;" v-html="$store.state.common.sysConfig.CARRIER_REGISTRATION_PROTOCOL"></div>
+      </template>
       <div slot="footer" style="text-align: center">
-        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
+
     </Modal>
+    <Modal
+        v-model="submitModal"
+        title="请认真再次核对开票资料"
+        @on-ok="ok"
+        @on-cancel="cancel">
+      <ul class="ivulist">
+        <li><span>公司名称</span>:{{formCustom.companyName}}</li>
+        <li><span style="width: 65px; text-align-last: justify">法人</span>: {{formCustom.corporation}}</li>
+        <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
+        <li><span>开户银行</span>: {{formCustom.bankName}}</li>
+        <li><span>银行账号</span>: {{formCustom.bankAccount}}</li>
+        <li><span>公司地址</span>: {{formCustom.address}}</li>
+        <li><span>公司电话</span>: {{formCustom.telephone}}</li>
+      </ul>
+      <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
+     </Modal>
   </div>
+
 </template>
 
 <script>
@@ -285,7 +360,7 @@
 	import {mapState} from 'vuex'
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
-	import {supplierCodeCheck, supplierCodeSend, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
+	import {supplierCodeCheck, supplierCodeSend, supplierRegCode, carrierRegcode, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
     import SlideVerifysupply from '../slide-verify/slide-verify-supply'
 
 	const appConfig = require('../../config/app.config')
@@ -353,7 +428,9 @@
 			const validatemobilecode = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('手机验证码不能为空'));
-				}
+				}else{
+                  this.mobilecodeChenckValid(value, callback)
+                }
 			};
 			// 供应商名称
 			const validatename = (rule, value, callback) => {
@@ -363,6 +440,7 @@
 					callback();
 				}
 			};
+			//校验公司名称
 			const validateCompanyName = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入公司名称'));
@@ -397,10 +475,11 @@
 
 			//开户银行
 			const validateBankName = (rule, value, callback) => {
+              console.log("value",value)
 				if (value === '') {
 					callback(new Error('开户行不能为空'));
 				} else {
-					this.BankNameValid = true
+				//	this.BankNameValid = true
 					callback();
 				}
 			};
@@ -409,7 +488,7 @@
 				if (value === '') {
 					callback(new Error('账号不能为空'));
 				} else {
-					this.BankAccountValid = true
+				//	this.BankAccountValid = true
 					callback();
 				}
 			};
@@ -417,7 +496,7 @@
 				if (value === '') {
 					callback(new Error('联系人邮箱不能为空'));
 				} else {
-					this.BankAccountValid = true
+					//this.BankAccountValid = true
 					callback();
 				}
 			};
@@ -425,7 +504,7 @@
 				if (value === '') {
 					callback(new Error('公司电话不能为空'));
 				} else {
-					this.TelephoneValid = true
+					//this.TelephoneValid = true
 					callback();
 				}
 			};
@@ -456,9 +535,10 @@
           };
 			return {
 				registType:[
-          {'label': '供应商','value':0},
-          {'label': '承运商','value':1},
-		],
+                  {'label': '供应商','value':0},
+                  {'label': '承运商','value':1},
+                ],
+                registtype:0,
 				title:'供应商注册协议',
 				protocolModalShow: false,
 				CodeCate: 'Codeuserspplier',
@@ -478,6 +558,7 @@
 				phoneValid: false,//号码有效
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
+                codeValid:false,   //验证码有效
 				current: 0,
 				uploadUrl: '',
 				companyValid: false,
@@ -487,6 +568,8 @@
 				BankAccountValid: false,  //账号不能为空
 				TelephoneValid: false,     //公司电话不能空
 				companyinfo: {},
+                submitModal:false,         //确认提交框
+                checkData:false,
 				formCustom: {
 					isLogisticsCompany: 0,
 					code: '',
@@ -500,7 +583,7 @@
 					contacterEmail: '',    //联系人邮箱
 					businessLicense: '',     //营业执照
 					authorizationElc: '',    //授权书
-					other_license: '',      //其他证件
+                    otherLicense: '',      //其他证件
 					transportLicense: '',
 					bankName: '',           //开户银行
 					bankAccount: '',      //银行账号
@@ -509,6 +592,7 @@
 					natureName: '',        //供应商性质
 					natureValue: '',      //供应商性质值
 					registCapi: '',         //注册资金
+                    dangerouslicense:'',       //危化品上传许可证
                     slidecode: 0
 				},
 				ruleCustom: {
@@ -593,6 +677,7 @@
           ])
 		},
 		methods: {
+
           // 滑动验证
           onTimesupply(res) {
             console.log("res",res)
@@ -621,9 +706,8 @@
 					data: value,
 					type: 2
 				}
+
 				const res = await supplierdataCheck(this, params)
-
-
 				if (res.data && res.status === 200) {
 					if (res.data.is_registered === "true") {
 						this.phoneValid = false
@@ -637,26 +721,25 @@
 					callback(new Error('手机号码已注册'));
 				}
 			},
+          //验证手机验证码codeValid
+          async mobilecodeChenckValid(value, callback) {
+            let params = {
+              phone: this.formCustom.phone,
+              code:value
+            }
+            const res = await supplierCodeCheck(this, params)
+            console.log("res",res)
+            if (res.data && res.status === 200) {
+                this.codeValid=true
+                callback()
+            } else {
+              callback(new Error('验证码错误'));
+            }
+          },
 			//获取短信验证码
 			async getNoteValue() {
 				var phone = this.formCustom.phone//验证码
 				//验证验证码是否为空
-				// if (this.Imgcode === '') {
-				// 	this.$Message.info({
-				// 		content: '图形证码不能为空',
-				// 		duration: 5,
-				// 		closable: true
-				// 	})
-				// 	return
-				// }
-				// if (!this.ImgCodeValid) {
-				// 	this.$Message.info({
-				// 		content: '请重新输入图形证码',
-				// 		duration: 5,
-				// 		closable: true
-				// 	})
-				// 	return
-				// }
                 if(!this.isopenSms){
                   this.$Message.info({
                     content: '请滑动验证码',
@@ -671,7 +754,15 @@
 					let params = {
 						phone: phone
 					}
-					const res = await supplierCodeSend(this, params)
+					if(this.formCustom.isLogisticsCompany === 0){
+					 console.log("***supplierRegCode***")
+                      var res = await supplierRegCode(this, params)
+                    }
+                    if(this.formCustom.isLogisticsCompany === 1){
+                      console.log("***carrierRegcode***")
+                      var res = await carrierRegcode(this, params)
+                    }
+
 					if (res.data && res.status === 200) {
 						this.ImgCodeValid = false
 
@@ -700,6 +791,8 @@
 					}
 				}
 			},
+
+
 			//生成随机数
 			randomNum(min, max) {
 				return Math.floor(Math.random() * (max - min) + min);
@@ -779,10 +872,10 @@
 			},
 			//其它文件
 			handleOtherFile(res) {
-				this.formCustom.other_license = res.url
+				this.formCustom.otherLicense = res.url
 
 			},
-			handleOtherFile(res){
+            handletransportFile(res){
 				this.formCustom.transportLicense=res.url
 
 			},
@@ -792,6 +885,10 @@
 					desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg,png,pdf,png 格式的文件。'
 				});
 			},
+          //危化品经营许可证
+          HazchemiFile(res){
+            this.formCustom.dangerouslicense=res.url
+          },
 			// 校验公司名称
 			async companyChenckValid(value, callback) {
 				let params = {
@@ -808,14 +905,15 @@
 						this.companyValid = false
 						callback(new Error('公司名称不存在'))
 					} else if (res.data.is_exist === "true") {
+					  console.log('res',res)
 						this.companyValid = true
 						this.formCustom.taxId = res.data.tax_id
 						this.formCustom.corporation = res.data.operName
 						this.formCustom.registCapi = res.data.registCapi
-						this.formCustom.invBankName = res.data.Bank
-						this.formCustom.invBankAccount = res.data.BankAccount
-						this.formCustom.invAddress = res.data.Address
-						this.formCustom.invTelephone = res.data.Tel
+						this.formCustom.bankName = res.data.Bank
+						this.formCustom.bankAccount = res.data.BankAccount
+						this.formCustom.address = res.data.Address
+						this.formCustom.telephone = res.data.Tel
 						this.companyValid = true
 						callback()
 					}
@@ -825,7 +923,7 @@
 				}
 			},
 			//第二部提交
-			async memberReset(data) {
+          async memberReset(data) {
 				this.formCustom.code = this.formCustom.mobilecode
 				this.formCustom.username = this.formCustom.companyName
 				if (!this.companyValid) {
@@ -852,33 +950,9 @@
 						duration: 5
 					});
 					return
-				} else if (!this.formCustom.contacter) {
+				}  else if (!this.formCustom.corporation) {
 					this.$Notice.warning({
-						title: '联系人不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.businessLicense) {
-					this.$Notice.warning({
-						title: '营业执照不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.authorizationElc) {
-					this.$Notice.warning({
-						title: '授权书不能为空',
-						duration: 5
-					});
-					return
-				}else if (!this.formCustom.transportLicense && this.formCustom.isLogisticsCompany > 0) {
-					this.$Notice.warning({
-						title: '运输许可证不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.corporation) {
-					this.$Notice.warning({
-						title: '法人不能空',
+						title: '公司法人不能空',
 						duration: 5
 					});
 					return
@@ -888,19 +962,13 @@
 						duration: 5
 					});
 					return
-				} else if (!this.formCustom.corporation) {
-					this.$Notice.warning({
-						title: '注册资金不能空',
-						duration: 5
-					});
-					return
-				} else if (!this.BankNameValid) {
+				}  else if (!this.formCustom.bankName) {
 					this.$Notice.warning({
 						title: '开户银行不能空',
 						duration: 5
 					});
 					return
-				} else if (!this.BankAccountValid) {
+				} else if (!this.formCustom.bankAccount) {
 					this.$Notice.warning({
 						title: '银行账号不能空',
 						duration: 5
@@ -912,35 +980,77 @@
 						duration: 5
 					});
 					return
-				} else if (!this.TelephoneValid) {
-					this.$Notice.warning({
-						title: '公司电话不能空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.natureName) {
-					this.$Notice.warning({
-						title: '公司性质不能空',
-						duration: 5
-					});
-					return
-				} else {
-					const res = await supplierReg(this, this.formCustom)
-					if (res.data && res.status === 200) {
-						this.current = 2
-						this.$emit('currData', false)
-						// this.$router.push({name:'RegisterSuccess'})
-					} else {
-						this.$Message.info({
-							content: '注册未成功',
-							duration: 5,
-							closable: true
-						})
-						return
-					}
+				} else if (!this.formCustom.telephone) {
+                  this.$Notice.warning({
+                    title: '公司电话不能空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.registCapi) {
+                  this.$Notice.warning({
+                    title: '注册资金不能空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.contacter) {
+                  this.$Notice.warning({
+                    title: '联系人不能为空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.contacterEmail) {
+                  this.$Notice.warning({
+                    title: '邮箱不能为空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.natureName) {
+                  this.$Notice.warning({
+                    title: '公司性质不能空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.businessLicense) {
+                  this.$Notice.warning({
+                    title: '营业执照不能为空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.authorizationElc) {
+                  this.$Notice.warning({
+                    title: '授权书不能为空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.transportLicense && this.formCustom.isLogisticsCompany > 0) {
+                  this.$Notice.warning({
+                    title: '运输许可证不能为空',
+                    duration: 5
+                  });
+                  return
+                }  else {
+                  this.submitModal=true;
 				}
 			},
-
+          cancel(){},
+          ok(){
+            this.supSubmit(this.formCustom)
+          },
+          async supSubmit(formCustom){
+              const res = await supplierReg(this, formCustom)
+              if (res.data && res.status === 200) {
+                this.current = 2
+                this.$emit('currData', false)
+                // this.$router.push({name:'RegisterSuccess'})
+              } else {
+                this.$Message.info({
+                  content: '注册未成功,请填写重新提交!',
+                  duration: 5,
+                  closable: true
+                })
+                return
+              }
+            },
 			async companyNature(value) {
 				const res = await supplierNature(this, {})
 				if (res.data && res.status === 200) {
@@ -981,6 +1091,27 @@
 		}
 	}
 </script>
-<style>
+<style lang="less">
   .CarrierRegister{width: 83%}
+  .Image{
+    width: 116px;
+    height: 75px;
+    overflow: hidden;
+    margin-left: 130px;
+    margin-bottom: 10px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .ivulist{
+    font-size: 16px;
+    li{
+      display: flex;
+      line-height: 30px;
+      .idsa{
+        width: 68px; text-align-last:justify;
+      }
+    }
+  }
 </style>

@@ -1,73 +1,77 @@
 <template>
     <!--出价提示-->
     <Modal
-        title="新增货物需求"
+        title="填写用车信息"
         v-model="loading"
         @on-cancel="AddressCancel"
         :width='700'
         class-name="vertical-center-modal">
         <p slot="header" style="color:#666; text-align:left; font-size:14px;">
             <Icon type="ios-create" style="font-size:18px;" />
-            <span>新增货物需求</span>
+            <span>填写用车信息</span>
         </p>
         <div class="">
             <Form ref="formAddress" :model="formAddress" :label-width="100"  :rules="ruleValidate">
                 <Row index="0">
-                    <Col span="12">
+                    <Col span="12" >
                         <FormItem label="订单号" >
                             <Input v-model="datalist.orderNo"  disabled  placeholder="请输入订单号"></Input>
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                    <Col span="12" >
                         <FormItem label="货物名称" >
                             <Input v-model="datalist.skuName" disabled  placeholder="请输入货物名称"></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row index="0">
-                    <Col span="12">
+                <Row index="0" >
+                    <Col span="12"  style="margin-top: 5px;">
                         <FormItem label="数量" >
                             <Input v-model="datalist.orderNum"  disabled placeholder="请输入数量"></Input>
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                    <Col span="12" style="margin-top: 5px;" >
                         <FormItem label="提货仓库" >
                             <Input v-model="datalist.warehouseName" disabled  placeholder="请输入提货仓库"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="0">
-                    <Col span="12">
-                        <FormItem label="联系人姓名" prop="name">
+                    <Col span="12" style="margin-top: 5px;">
+                        <FormItem label="联系人" prop="name">
                             <Input v-model="formAddress.contact"   placeholder="请输入收货人的姓名"></Input>
                         </FormItem>
                     </Col>
-                     <Col span="12">
+                     <Col span="12" style="margin-top: 5px;">
                         <FormItem label="联系电话" prop="phone">
                             <Input v-model="formAddress.phone"   placeholder="请输入收货人的联系电话"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="1">
-                    <Col span="22">
+                    <Col span="22" style="margin-top: 5px;">
                         <FormItem label="提货地址" >
                             <Input v-model="formAddress.dispatchFullAddress" disabled ></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="2">
-                    <Col span="12">
-                        <FormItem label="用车时间" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                    <Col span="12" style="margin-top: 5px;">
+                         <FormItem label="用车日期" prop="demandEndDate">
+                                <DatePicker  type="date" transfer :value='formAddress.demandBeginDate'  :options="options4"  format="yyyy-MM-dd"    @on-change="formAddress.demandBeginDate = $event"></DatePicker>
                         </FormItem>
-                    </Col> 
+                    </Col>
+                        <FormItem label="用车日期" prop="demandEndDate">
+                                <DatePicker   type="date" transfer :value='formAddress.demandEndDate'   :options="options4" format="yyyy-MM-dd"    @on-change="formAddress.demandEndDate = $event"></DatePicker>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row index="3">
-                     <Col span="12">
-                     <FormItem label="询价截止时间" >
+                     <Col span="12" style="margin-top: 5px;">
+                     <FormItem label="询价有效时间" >
                          <Dropdown placement="bottom-start" trigger="click" @on-click="selectLang">
                                 <Button type="primary">
-                                    {{title}}分钟
+                                    {{title}}小时
                                     <Icon type="ios-arrow-down"></Icon>
                                 </Button>
                             <DropdownMenu slot="list">
@@ -78,7 +82,7 @@
                         </FormItem>
                     </Col>
                     <Col span="12">
-                     <FormItem label="是否含税" >
+                     <FormItem label="是否含税" style="margin-top: 5px;">
                          <Dropdown placement="bottom-start" trigger="click" @on-click="selectTax">
                                 <Button type="primary">
                                     {{tax}}
@@ -86,17 +90,18 @@
                                 </Button>
                             <DropdownMenu slot="list">
 
-                                <DropdownItem v-for="(value, key) in taxList" :name="key" :key="key">{{value}}</DropdownItem>
+                                <DropdownItem v-for="(value, key) in taxList" :name="key" :key="key" >{{value}}</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row index="4">
-                    <Col>
+                    <Col style="margin-top: 5px;">
                         <FormItem label="收货地址" prop="pickupMode">
                             <address-from
                                 :country="1"
+                                :province="440000"
                                 :isshow="this.isAddressFormShow"
                                 @selectAddress="getSelectCountry"
                             >
@@ -107,7 +112,7 @@
             </Form>
         </div>
         <p slot="footer" style="text-align:center">
-            <Button type="primary" @click="AddressOk">添加货物需求</Button>
+            <Button type="primary" @click="AddressOk">我要找车</Button>
         </p>
     </Modal>
 </template>
@@ -148,9 +153,9 @@ export default {
                     callback('请输入正确手机号或座机电话'); // 校验不通过
                     return false;
                 }
-            }  
+            }
         };
-   
+
         //国家
         const validatecountryId=(rule, value, callback) => {
             if (value === '') {
@@ -163,23 +168,23 @@ export default {
         const validateidNumber=(rule, value, callback) => {
             if (value === '') {
                 callback(new Error('身份证号不能为空'));
-            } 
+            }
             if(value.length == 15){
                 var  patrn= /^[1-9]\d{5}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}$/
                 if (!patrn.exec(value)) {
-                     callback(new Error('请输入正确的身份证号'));   
+                     callback(new Error('请输入正确的身份证号'));
                 }else{
                     callback();
                 }
             }else if(value.length == 18){
                 var  patrn= /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
                 if (!patrn.exec(value)) {
-                    callback(new Error('请输入正确的身份证号'));   
+                    callback(new Error('请输入正确的身份证号'));
                 }else{
                     callback();
                 }
             }else{
-                callback(new Error('请输入正确的身份证号'));   
+                callback(new Error('请输入正确的身份证号'));
             }
 
         };
@@ -201,28 +206,34 @@ export default {
             options4: {
                 disabledDate: date => {
                     // this成功指向vue实例
-                    return  date && date.valueOf() < Date.now() - 86400000; 
+                    return  date && date.valueOf() < Date.now() - 86400000;
                 }
             },
-            
+
             tax_id:0,
             isAddressFormShow: false,
             loading: false,
             localList: [
-                 '30',
-                 '60',
-                 '120'
+                 '1',
+                 '2',
+                 '3',
+                 '4',
+                 '5',
+                 '6',
+                 '7',
+                 '8',
             ],
             taxList:[
                  '否',
-                 '是',        
+                 '是',
             ],
-            tax:'否',
-            title:'60',
+            tax:'是',
+            title:'2',
             OrderList:{},
+            userinfo:{},
             date:'',
             formAddress:{
-                memberId: '',                
+                memberId: '',
                 contact: '',    //收货人姓名
                 phone: '',   //收货人电话
                 idNumber:'',  //身份证
@@ -231,11 +242,12 @@ export default {
                 city: '',     //市
                 district: '',      //区县
                 receiver_district:'',
+                provinceId:'',  
                 dispatchFullAddress:'',
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
-                demandBeginDate:'',
-                demandEndDate:'',
+                demandBeginDate:this.dateFormat(new Date(), 'yyyy-MM-dd'),
+                demandEndDate:this.dateFormat(new Date(), 'yyyy-MM-dd'),
                 alias:''             //别名
             },
             ruleValidate: {
@@ -270,10 +282,20 @@ export default {
         }
     },
     methods:{
+        inLogin(){
+            var  userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
+            if (!userinfo) {
+                this.$router.push('/login')
+            }
+            this.formAddress.contact= userinfo.logistics_contacter
+            this.formAddress.phone  = userinfo.logistics_mobile
+   
+      
+        },
         demandDate(e){
             this.formAddress.demandBeginDate=e[0]
             this.formAddress.demandEndDate=e[1]
-        } , 
+        } ,
         getSelectCountry(res){
             this.formAddress.countryId = res.countryId
             this.formAddress.state = res.provinceId
@@ -294,6 +316,30 @@ export default {
             this.tax=this.taxList[e]
             this.tax_id=e
         },
+        dateFormat(date, fmt) {
+                if (/(y+)/.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+                }
+                let o = {
+                    'M+': date.getMonth() + 1,
+                    'd+': date.getDate(),
+                    'h+': date.getHours(),
+                    'm+': date.getMinutes(),
+                    's+': date.getSeconds()
+                };
+                for (let k in o) {
+                    if (new RegExp(`(${k})`).test(fmt)) {
+                        let str = o[k] + '';
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this.padLeftZero(str));
+                  
+                    }
+                }
+                return fmt;
+        },
+        padLeftZero(str) {
+            return ('00' + str).substr(str.length);
+        },
+
        async dataList(){
             // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
             let t= new Date(this.datalist.deliveryDeadline)
@@ -351,7 +397,7 @@ export default {
                 demandEndDate:this.formAddress.demandEndDate,
               }
               const res = await sendHttp(this, true, server.api.biddding.freightDemand,params,1)
-                if(res.data.data) {
+                if(res.data==true) {
                     this.$Modal.success({
                         title: '提示',
                         content: '添加成功',
@@ -376,6 +422,7 @@ export default {
         isshow: function (e) {
             if (e === true) {
                 this.dataList();
+                this.inLogin();
                 this.loading = true
                 this.isAddressFormShow = true
             } else {

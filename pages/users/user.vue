@@ -8,13 +8,28 @@
           <div class="dflex">
             <div class="headInfor">
               <div class="head">
-                <img :src="!userinfo.avatar ? '~/static/img/head.png': userinfo.avatar"/>
+                <template v-if="Headavatar">
+                  <img :src="Headavatar"   />
+                </template>
+                <template v-else>
+                  <img :src="!$store.state.memberInfo.avatar?'':$store.state.memberInfo.avatar"   />
+                </template>
 
-                <div class="headClick">上传</div>
+
+                <div class="headClick"   >
+<!--                  上传-->
+                  <Upload
+                        ref="upload"
+                        action="/api/upload/image"
+                        :show-upload-list="false"
+                        :on-success="handleSuccess">
+                  <Button  style="width: 86px;height: 25px; padding: 0 10px;line-height: 0;" >上传</Button>
+                  </Upload>
+                </div>
               </div>
-              <span class="mt10">{{showtimeVal}}好，{{userinfo.phone}}</span>
+              <span class="mt10">{{showtimeVal}}好，{{userinfor.phone}}</span>
               <span>欢迎来到巨正源科技交易平台！</span>
-              <div class="gray mt10 mb10 fs12">上次登录时间：{{userinfo.lastLoginTime}}</div>
+              <div class="gray mt10 mb10 fs12">上次登录时间：{{$store.state.memberInfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">
               <div class="dflex"
@@ -49,7 +64,7 @@
 
           </div>
 
-          <ul class="orderlist" style="justify-content: left;">
+          <ul class="orderlist" style="justify-content: centerw;">
             <li @click='payment()' style="cursor: pointer">
               <div class="listIcon01 mt20"></div>
               <div class="mt10">待付款</div>
@@ -69,9 +84,9 @@
           </ul>
         </div>
         <!--广告图-->
-        <div class="pr mt20 mb20">
+        <div class="pr mt20 mb20"  >
           <img src="/img/member_index.png"/>
-          <a href="#.html" class="seeRight">
+          <a   class="seeRight" href="/bidders">
             立即查看
           </a>
         </div>
@@ -139,9 +154,14 @@
 </template>
 
 <script>
+  import { manageEdit,getGainuserInfor } from  '../../api/users'
 	import Navigation from '../../components/navigation'
-	import {orderpage} from '../../api/order'
-	import config from '../../config/config'
+  import Cookies from 'js-cookie'
+  import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
+  import {orderpage} from '../../api/order'
+  import {parse, stringify} from 'qs'
+    import { getCookies } from '../../config/storage'
+    import config from '../../config/config'
 	import paydeposit from '../../components/paydeposit'
 
 	export default {
@@ -172,12 +192,22 @@
 				hotorderinfo: [],
 				total_fund: '',
 				showtimeVal: '',
-				userinfo: {}
+                Headavatar:'',
+                 userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
 			}
 		},
 		methods: {
+          ...mapMutations('login', [
+            'updateUserInfof'
+          ]),
+          //竞拍列表页
+          biddersList(){
+            console.log("***biddersList***biddersList")
+            this.$router.push({name:"bidders"})
+          },
 			//订单类型
 			getOrderType(typeId) {
+              console.log("userinfor", getCookies('userinfor'))
 				if (!typeId) return
 				return config.orderType[typeId]
 			},
@@ -192,7 +222,10 @@
 			},
 			account() {
 				this.$router.push({name: 'users-useraccountinfor'})
-			},
+      },
+      bidders(){
+	        this.$router.push({name: 'bidders-page'})
+      },
 			//订单状态
 			getOrderState(typeId) {
 				if (!typeId) return
@@ -225,11 +258,62 @@
 				}
 				const res = await orderpage(this, params)
 				this.hotorderinfo = res.data.items
-			}
+			},
+
+          handleSuccess (res) {
+            this.Headavatar= res.url
+            this.EditUserinfo(this.Headavatar)
+          },
+          async EditUserinfo(avatarImg){
+            this.userinfor= getCookies('userinfor')
+            let data = {
+              phone: this.userinfor.phone,
+              avatar:avatarImg,
+              companyName: this.userinfor.username,
+              business_license:  this.userinfor.business_license,
+              authorization_elc:  this.userinfor.authorization_elc,
+              taxId: this.userinfor.taxId,
+              invBankName: this.userinfor.invBankName,
+              invBankAccount: this.userinfor.invBankAccount,
+              invAddress: this.userinfor.invAddress,
+              invTelephone: this.userinfor.invTelephone,
+
+            }
+            const res=await manageEdit(this, data)
+            if(res.data===true && res.status ===200){
+              this.$Message.info({
+                content: '修改成功',
+                duration: 5,
+                closable: true
+              })
+              let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
+
+              const res = await getGainuserInfor(this, {})
+              if (res.status === 200 && res.data) {
+                let auth = stringify(res.data)
+                Cookies.set('userinfor', auth, {expires: expires})
+                Cookies.set('memberInfo', res.data, {expires: expires})
+                this.updateUserInfof(res.data)
+
+              } else {
+
+              }
+
+
+            }
+          },
 		},
 		mounted() {
-			this.showtime()
-			this.getOrderList()
-    }
+			 this.showtime()
+			 this.getOrderList()
+      }
 	}
 </script>
+<style lang="less" scoped>
+  .head{
+    img{
+      width: 100%;height: 100%;
+    }
+  }
+
+</style>

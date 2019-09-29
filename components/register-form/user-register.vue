@@ -127,6 +127,7 @@
                     :action="uploadUrl"
                     :on-success="imageSuccess"
                     :max-size="10240"
+                    :show-upload-list="false"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
@@ -136,6 +137,11 @@
             <Col span="12">
               <div class="uploadimg">请点击上传营业执照图片（png、jpeg、jpg和pdf）文件不大于2M</div>
             </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.business_license">
+                <img :src="this.formCustom.business_license" />
+              </div>
+            </Col>
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
@@ -144,6 +150,7 @@
                     ref="upload"
                     :action="uploadUrl"
                     :on-success="handleFileSuccess"
+                    :show-upload-list="false"
                     :max-size="10240"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
@@ -153,6 +160,11 @@
             </Col>
             <Col span="12">
               <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+            </Col>
+            <Col span="21">
+              <div class="Image" v-if="this.formCustom.authorization_elc">
+                <img :src="this.formCustom.authorization_elc" />
+              </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
@@ -182,11 +194,28 @@
         @on-cancel="protocolModalCancel"
         :width='700'
         class-name="vertical-center-modal">
-      <div class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
+      <div style="overflow: hidden; overflow-y: auto; height: 360px;" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
       </div>
       <div slot="footer" style="text-align: center">
-        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
+
+    </Modal>
+    <Modal
+            v-model="usersubmitModal"
+            title="请认真再次核对开票资料"
+            @on-ok="ok"
+            @on-cancel="cancel">
+      <ul class="ivulist">
+        <li><span>公司名称</span>:{{formCustom.companyName}}</li>
+        <li><span style="width: 65px; text-align-last: justify">联系人</span>: {{formCustom.contacter}}</li>
+        <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
+        <li><span>开户银行</span>: {{formCustom.invBankName}}</li>
+        <li><span>银行账号</span>: {{formCustom.invBankAccount}}</li>
+        <li><span>公司地址</span>: {{formCustom.invAddress}}</li>
+        <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
+      </ul>
+      <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
     </Modal>
   </div>
 </template>
@@ -345,6 +374,7 @@
 				phoneValid: false,//号码有效
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
+                usersubmitModal:false,         //确认提交框
 				current: 0,
 				uploadUrl: '',
 				companyValid: false,
@@ -750,19 +780,26 @@
 					})
 					return
 				} else {
-					const res = await manageReg(this, this.formCustom)
-					if (res.data === true && res.status === 200) {
-						this.current = 2
-						this.$emit('currData', false)
-					} else {
-						this.$Message.info({
-							content: res.message,
-							duration: 5,
-							closable: true
-						})
-					}
+				  this.usersubmitModal=true
 				}
 			},
+          cancel(){},
+          ok(){
+            this.userSubmit(this.formCustom)
+          },
+          async userSubmit(formCustom){
+            const res = await manageReg(this, formCustom)
+            if (res.data === true && res.status === 200) {
+              this.current = 2
+              this.$emit('currData', false)
+            } else {
+              this.$Message.info({
+                content: "抱歉、您的信息提交失败，请填写重新提交！",
+                duration: 5,
+                closable: true
+              })
+            }
+          },
 			protocolModalToShow() {
 				this.protocolModalShow = true
 			},
@@ -786,6 +823,8 @@
 
       },
 		mounted() {
+
+
 			// 图形验证码
 			this.identifyCode = '';
 			this.makeCode(this.identifyCodes, 4);

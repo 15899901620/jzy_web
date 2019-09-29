@@ -16,31 +16,46 @@
           </div>
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" value="" class="orderInput"
-                     style="width:140px;"/>
+			<Select v-model="formSearch.orderType" style="width:150px" placeholder="单据类型">
+				<Option v-for="item in registType" :value="item.value" :key="item.value" >{{ item.label }}</Option>
+			</Select>
+			  <DatePicker  type="date"     format="yyyy-MM-dd"  placeholder="输入开始日期"  @on-change="formSearch.start_time = $event"></DatePicker>
+			   <DatePicker  type="date"     format="yyyy-MM-dd" placeholder="输入结束日期"   @on-change="formSearch.end_time = $event"></DatePicker>
+			    <Select v-model="formSearch.status" style="width:150px" placeholder="付款状态">
+                  <Option v-for="item in paystatus" :value="item.value" :key="item.value" >{{ item.label }}</Option>
+                </Select>
+				<Select  style="width:150px" placeholder="提货状态">
+                  <Option v-for="item in pickstatus" :value="item.value" :key="item.value" >{{ item.label }}</Option>
+                </Select>
               <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput"
                      style="width:140px; margin-left:5px;"/>
-              <div class="check" @click="onSearch">查询</div>
+              <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
             </div>
             <!-- <div class="dflexAlem">
             <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
             </div> -->
           </div>
           <div class="TableTitle graybg">
-            <span style="width: 15%;">商品信息</span>
-            <span style="width: 15%;">单价(元)</span>
-            <span style="width: 15%;">数量(吨)</span>
-            <span style="width: 15%;">库区</span>
-            <span style="width: 15%;">订单总金额(元)</span>
-            <span style="width: 15%;">订单状态</span>
-            <span style="width: 15%;">订单操作</span>
+            <span style="width: 10%;">单据类型</span>
+            <span style="width: 10%;">商品信息</span>
+            <span style="width: 10%;">单价(元)</span>
+            <span style="width: 10%;">数量(吨)</span>
+            <span style="width: 10%;">库区</span>
+            <span style="width: 10%;">提货方式</span>
+            <span style="width: 10%;">订单总金额</span>
+			<span style="width: 10%;">物流询价状态</span>
+			<span style="width: 10%;">订单操作</span>
+			<span style="width: 10%;">提货状态</span>
           </div>
           <template v-if="$store.state.member.orderList.length > 0">
             <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
                    cellpadding="">
               <tbody>
               <tr class="Ttitle graybg">
-                <td colspan="7">
+                <td colspan="10">
+				  <span class="ml10">订单总金额:
+                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.sourceSn}}</span></a>
+                  </span>
                   <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
                   </span>
@@ -49,10 +64,19 @@
                 </td>
               </tr>
               <tr class="detailTable">
+				<td>{{detailOrderType(item.orderType)}}</td>
                 <td>{{item.skuName}}</td>
                 <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                 <td>{{item.orderNum}}</td>
                 <td>{{item.warehouseName}}</td>
+				<td>
+					<span v-if="item.isDelivery == 0">
+						自提
+					</span>
+					<span v-if="item.isDelivery == 1">
+						配送
+					</span>
+				</td>
                 <td>
                   {{item.totalAmountFormat}}
                   <template v-if="item.depositId > 0"><br><span
@@ -60,22 +84,25 @@
                   </template>
                 </td>
                 <td>
-                  <span v-if="item.status == 3" class="greenFont">{{getOrderState(item.status)}}</span>
+                  <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
                 </td>
                 <td class="operate">
                   <div class="" v-if="item.status == 2">
-                    <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
+                    <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
                   </div>
-                  <div class="" v-if="item.status == 3 && item.isAddDemand == 0 && item.isDelivery == 0">
+					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
                   </div>
                   <div class="" v-if="item.isAddDemand == 1 && item.isDelivery == 0">
-                    <a class="greenFont mt15" @click="detailLog(item)">查看需求详情</a>
+                    <a class="greenFont mt15" @click="detailLog(item)">查看用车详情</a>
                   </div>
-                  <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">查看详情</a>
+                  <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">订单详情</a>
                 </td>
+				<td>
+					
+				</td>
               </tr>
               </tbody>
             </table>
@@ -123,6 +150,23 @@
 		data() {
 			return {
 				payOrderID: 0,
+				paystatus:[
+                  {'label': '已取消','value':0},
+				  {'label': '待付货款','value':2},
+				  {'label': '已付款','value':3},
+                ],
+				registType:[
+                  {'label': '现货订单','value':1},
+				  {'label': '预售订单','value':2},
+				  {'label': '竞拍订单','value':3},
+				  {'label': '专用料订单','value':4},
+				  {'label': '出口订单','value':5},
+				],
+				pickstatus:[
+                  {'label': '未提货','value':1},
+				  {'label': '部分提货','value':2},
+				  {'label': '已提货','value':3},
+				],
 				detailloading: false,
 				addloading: false,
 				payLoading: false,
@@ -132,6 +176,8 @@
 				page_size: 5,
 				currTabs: 0,
 				formSearch: {
+					start_time:'',
+					end_time:'',
 					orderType: '',
 					status: '',
 					orderNo: '',
@@ -176,7 +222,7 @@
 				this.addloading = true
 			},
 			unaddChange(res) {
-
+				this.getSourceData()
 				this.addloading = res
 			},
 			undetailChange(res) {
@@ -215,6 +261,11 @@
 			getOrderType(typeId) {
 				if (!typeId) return
 				return config.orderType[typeId].substring(0, 1)
+			},
+			//订单类型
+			detailOrderType(typeId) {
+				if (!typeId) return
+				return config.orderType[typeId]
 			},
 			//订单状态
 			getOrderState(typeId) {

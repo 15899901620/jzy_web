@@ -45,6 +45,10 @@ export default {
     tabs,
     tabsPane: tabs.pane
   },
+
+  mounted(){
+
+  },
   computed: {
     classes() {
       return [

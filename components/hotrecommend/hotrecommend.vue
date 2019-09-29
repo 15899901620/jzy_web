@@ -9,14 +9,14 @@
           <img src="../../static/img/index_head.png" />
         </template>
       </div>
-      <div class="ml10" style="width: 66%;">
-        <p class=" ">HI {{$store.state.memberInfo.phone}},上午好！</p>
+      <div class="ml10" style="width: 64%;">
+        <p class=" ">您好！ {{$store.state.memberInfo.phone}}</p>
         <p class="gray">欢迎来到巨正源科技交易平台!</p>
       </div>
     </div>
     <div class="dflex mt25" style="justify-content: center;" v-else>
       <div class="indexHead" @click="User" style="margin-left: 16px"><img src="../../static/img/index_head.png"/></div>
-      <div class="ml10" style="width: 66%;" >
+      <div class="ml10" style="width: 64%;" >
         <p class=" ">HI,上午好！</p>
         <p class="gray" style="width: 88%">
           欢迎来到巨正源科技交易平台!</p>
@@ -27,11 +27,11 @@
       <a href="/register" class="registerbg ml10">注 册</a>
     </div>
     <div v-else class="loginReg mt10">
-      <div @click="User" class="registerbg ml10"
-           style="padding:2px 10px;cursor: default; border:1px solid #ddd;  border-radius:3px;">会员中心
+      <div @click="User" class="registerbg "
+           style="padding:2px 20px;cursor: default; border:1px solid #ddd;  border-radius:3px;">会员中心
       </div>
       <div @click="logout" class="registerbg ml10"
-           style="padding:2px 10px;cursor: default; border:1px solid #ddd;  border-radius:3px;">退出登录
+           style="padding:2px 20px;cursor: default; border:1px solid #ddd;  border-radius:3px;">退出登录
       </div>
     </div>
     <slot></slot>

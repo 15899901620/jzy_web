@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { sendHttp } from  '../../../api/common'
+import { sendCurl } from  '../../../api/common'
 import server from '../../../config/api'
 export default {
         name: "Notice",
@@ -27,7 +27,10 @@ export default {
          },
         methods:{
            async SourceData() {    
-            const res = await sendHttp(this, false, server.api.information.infos)
+             let params={
+                  catId:7
+             }
+            const res = await sendCurl(this,  server.api.information.infos,params,false)
             this.aclist = res.data.items
  
         },

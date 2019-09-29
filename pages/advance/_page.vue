@@ -3,8 +3,13 @@
         <Header title="头部"></Header>
         <div class="container" title="">
             <div class="w1200">
+
                 <div class="mt10">
-                    <a>巨正源首页</a>><span class="gray">预售专栏</span>
+<!--                    <a>巨正源首页</a>><span class="gray">预售专栏</span>-->
+                    <breadcrumb>
+                        <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
+                        <breadcrumb-item>预售专栏</breadcrumb-item>
+                    </breadcrumb>
                 </div>
             </div>
             <div class="w1200 dflex" style="margin-top: 10px;">
@@ -23,7 +28,7 @@
                             </div>
                             <div class="xhBtn" @click="spotData">确定</div>
                         </div>
-                        <div class="mr15 fs14">共搜到<span class="orangeFont">845</span>条数据</div>
+                        <div class="mr15 fs14">共搜到<span class="orangeFont">{{this.$store.state.advance.advanceList.length}}</span>条数据</div>
                     </div>
 
                     <div class="XhlistTitle graybg">
@@ -67,43 +72,43 @@
                     </div>
                     <!--最近交易-->
 
-                    <div class="mt20 whitebg">
-                        <h1 style="padding: 16px 15px;background-color: #fcfcfc;  font-size: 16px;border-bottom:1px solid #DEDEDE">
-                            最近交易
-                            <span class="fr gray dflexAlem"><i class="fresh"></i>换一批</span></h1>
-                        <ul class="currdate">
-                            <li>
-                                <span class="fwb">FB2310 北欧化工</span>
-                                <span class="mt5">价格：￥9400.00/吨</span>
-                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span
-                                        class="redFont">待付款</span><span>2019-04-28</span></div>
-                            </li>
-                            <li>
-                                <span class="fwb">FB2310 北欧化工</span>
-                                <span class="mt5">价格：￥9400.00/吨</span>
-                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span
-                                        class="redFont">待付款</span><span>2019-04-28</span></div>
-                            </li>
-                            <li>
-                                <span class="fwb">FB2310 北欧化工</span>
-                                <span class="mt5">价格：￥9400.00/吨</span>
-                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span
-                                        class="redFont">待付款</span><span>2019-04-28</span></div>
-                            </li>
-                            <li>
-                                <span class="fwb">FB2310 北欧化工</span>
-                                <span class="mt10">价格：￥9400.00/吨</span>
-                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span
-                                        class="redFont">待付款</span><span>2019-04-28</span></div>
-                            </li>
-                            <li>
-                                <span class="fwb">FB2310 北欧化工</span>
-                                <span class="mt10">价格：￥9400.00/吨</span>
-                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span
-                                        class="redFont">待付款</span><span>2019-04-28</span></div>
-                            </li>
-                        </ul>
-                    </div>
+<!--                    <div class="mt20 whitebg">-->
+<!--                        <h1 style="padding: 16px 15px;background-color: #fcfcfc;  font-size: 16px;border-bottom:1px solid #DEDEDE">-->
+<!--                            最近交易-->
+<!--                            <span class="fr gray dflexAlem"><i class="fresh"></i>换一批</span></h1>-->
+<!--                        <ul class="currdate">-->
+<!--                            <li>-->
+<!--                                <span class="fwb">FB2310 北欧化工</span>-->
+<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
+<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
+<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span class="fwb">FB2310 北欧化工</span>-->
+<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
+<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
+<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span class="fwb">FB2310 北欧化工</span>-->
+<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
+<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
+<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span class="fwb">FB2310 北欧化工</span>-->
+<!--                                <span class="mt10">价格：￥9400.00/吨</span>-->
+<!--                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span-->
+<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <span class="fwb">FB2310 北欧化工</span>-->
+<!--                                <span class="mt10">价格：￥9400.00/吨</span>-->
+<!--                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span-->
+<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
                 </div>
 
 
@@ -120,6 +125,7 @@
     import Footer from '../../components/footer'
     import pagination from '../../components/pagination'
     import purchasing from '../../components/purchasing'
+    import breadcrumb from '../../components/breadcrumb'
 
     export default {
         name: "advance",
@@ -142,7 +148,9 @@
             Header,
             Footer,
             pages: pagination.pages,
-            purchasing
+            purchasing,
+            breadcrumbItem:breadcrumb.item,
+            breadcrumb
         },
         data() {
             return {
@@ -190,6 +198,7 @@
         created(){},
         computed: {
             spotList: function () {
+                console.log("advanceList:",this.$store.state.advance.advanceList)
                 return this.$store.state.advance.advanceList
             },
             total: function () {
@@ -279,8 +288,7 @@
         background-color: #f2f8fe;
     }
 
-    .Xhlist li:last-child {
-    }
+
 
     .Xhlist li span {
         text-align: center;

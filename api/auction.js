@@ -301,7 +301,25 @@ export const auctionOrderList = (vm, data) => {
     console.log('manageEditErr', errorInfo)
   })
 }
-
+/**
+ * @description 我的竞拍列表
+ * @param vm
+ * @param data
+ * @returns {*}GET /myAuctionPlanned/page
+ */
+export const myAuctionOrderList = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.Auction.myAuctionOrderList,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}
 
 
 

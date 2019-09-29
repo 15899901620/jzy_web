@@ -77,6 +77,7 @@ import Footer from '../../components/footer'
 import breadcrumb from '../../components/breadcrumb'
 import outpacking from '../../components/outpacking'
 import pagination from '../../components/pagination'
+
 export default {
     name: 'articleList',
     fetch({ store, params, query }) {
@@ -118,7 +119,6 @@ export default {
     },
     data() {
         return {
-
             currCategoryInfo : ''
         };
     },
@@ -134,6 +134,7 @@ export default {
 
     },
     created(){
+
         let id = this.$route.params.id ? this.$route.params.id : 0
         let len = this.articleCat.length
         for (var i=0;i<len;i++)
@@ -152,6 +153,7 @@ export default {
                 seoDescription:'全部',
             }
         }
+
     },
     computed:{
         ...mapState({

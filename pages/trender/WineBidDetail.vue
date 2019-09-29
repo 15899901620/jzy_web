@@ -1,11 +1,27 @@
 <template>
+<div class="body">
+    <Header-small title="招标中心">
+      <div slot="headerother">
+        <div
+          data-v-228ad150
+          class="dflexAlem gray fs14"
+          style="color: rgb(102, 102, 102);    margin-top: 50px;"
+        >
+          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
+          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
+        </div>
+      </div>
+    </Header-small>
 
     <div class="mb40">
-        <pageRoute></pageRoute>
+
     <!--页面路径-->
       <div class="w1200">
         <div class="mt10 fs14">
-          <a class="blackFont">巨正源首页</a> > <span class="gray">招标中心</span>> <span class="gray">中标详情</span>
+          <breadcrumb>
+            <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源首页</nuxt-link></breadcrumb-item>
+            <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>中标详情</breadcrumb-item>
+          </breadcrumb>
         </div>
       </div>
 
@@ -24,7 +40,7 @@
             <!--通知公告-->
             <Notice></Notice>
             <!--常见问题-->
-            <Commonproblem></Commonproblem>
+            <!-- <Commonproblem></Commonproblem> -->
             <!--联系我们-->
             <Contact></Contact>
 
@@ -39,10 +55,11 @@
       </div>
 
     </div>
-
+</div>
 </template>
 
 <script>
+  import Header from "../../components/header";
   import DetailsBidding from './trenderCompontent/DetailsBidding'
   import membercenter from  './trenderCompontent/membercenter'
   import Commonproblem from  './trenderCompontent/Commonproblem'
@@ -53,11 +70,13 @@
     export default {
         name: "WineBidDetail",
       components:{
+        HeaderSmall: Header.small,
         DetailsBidding,
         Contact,
         Commonproblem,
         membercenter,
-        Notice
+        Notice,
+
       },
       data() {
         return{
@@ -66,14 +85,8 @@
         };
       },
       methods:{
-          async SourceData() {    
-              let params = {
-                id: this.id,
-              };
-              const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
-              this.dataList = res.data
-          },
-          // async BySupplier() {    
+
+          // async BySupplier() {
           //     let params = {
           //       biddingId: this.id,
           //     };
@@ -83,10 +96,9 @@
 
       },
       mounted() {
-          this.SourceData()
           // this.BySupplier()
       }
-    
+
     }
 </script>
 

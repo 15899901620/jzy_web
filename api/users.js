@@ -162,8 +162,8 @@ export const supplierReg = (vm, data) => {
 
 /**
  * @description 获取会员信息
- * @param {*} vm 
- * @param {*} data 
+ * @param {*} vm
+ * @param {*} data
  */
 export const getGainuserInfor = (vm, data) => {
   vm.$axios.defaults.headers = {
@@ -292,10 +292,38 @@ export const supplierCodeCheck = (vm, data) => {
 }
 
 
-
-
 /**
- * @description 供应商发送短信
+ * @description 供应商注册发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const supplierRegCode = (vm, data) => {
+    return vm.$axios.post(server.prefix + server.api.user.supplierRegCode,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('supplierRegCodeSendErr', errorInfo)
+    })
+}
+/**
+ * @description 承运商注册发送短信
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const carrierRegcode = (vm, data) => {
+    return vm.$axios.post(server.prefix + server.api.user.carrierRegcode,
+        {
+            ...data
+        }).catch((e) => {
+        let errorInfo = e.response
+        console.log('supplierRegCodeSendErr', errorInfo)
+    })
+}
+/**
+ * @description 供应商登录发送短信
  * @param vm
  * @param data
  * @returns {*}
@@ -397,6 +425,26 @@ export const userSeekPassword = (vm, data) => {
   })
 }
 /**
+ * @description 会员修改手机号短信验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userEditPhoneSend = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.post(server.prefix + server.api.user.userEditPhoneSend,
+    {
+      ...data
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('userRepassWdErr', errorInfo)
+  })
+}
+
+/**
  * @description 会员找回密码
  * @param vm
  * @param data
@@ -409,6 +457,26 @@ export const userRepassWd = (vm, data) => {
     }).catch((e) => {
       let errorInfo = e.response
       console.log('userRepassWdErr', errorInfo)
+    })
+}
+
+/**
+ * @description 会员换绑手机号
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const userRephone = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.put(server.prefix + server.api.user.userRephone,
+    {
+      ...data
+    }).catch((e) => {
+      let errorInfo = e.response
+      console.log('userRephoneErr', errorInfo)
     })
 }
 /**
@@ -636,7 +704,7 @@ export const inspectionlistPage = (vm, data) => {
   })
 }
 
-  
+
 
 
 

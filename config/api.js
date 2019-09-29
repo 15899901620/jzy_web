@@ -18,8 +18,8 @@ let api = {
    * @description 会员
    */
   user:{
-    carriercode: '/user/supplier/c/code',
-    carrierreg: '/user/supplier/c/register',
+    carrierRegcode: '/user/supplier/c/code',   //承运商注册发送短信验证码
+    carrierreg: '/user/supplier/c/register',   //
     carrierreCode: '/user/supplier/c/updatePwd/code',
     manageLogin: '/auth/member/accredit',
     supplierLogin: '/auth/supplier/accredit',
@@ -36,15 +36,18 @@ let api = {
     supplierCheck: '/user/supplier/check',
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',
-    supplierCodeCheck: '/user/supplier/checkCode',
-    supplierCodeSend: '/user/supplier/login/code',
+    supplierCodeCheck: '/user/supplier/checkCode',   //验证手机验证码
+    supplierRegCode: '/user/supplier/code',          //供应商注册发送短信验证码
+    supplierCodeSend: '/user/supplier/login/code', //供应商登录发送短信验证码
     supplierInfor:'/user/supplier/info',
     supplierEdit: '/user/supplier/edit',
     userRepassWd: '/user/m/updatePwd',
     userRECodeSend:'/user/m/updatePwd/code',
+    userEditPhoneSend:'/user/m/editPhone/code',
+    userRephone:'/user/m/editPhone',
     supplierRepssWd: '/user/supplier/updatePwd',
     supplierRECodeSend:'/user/supplier/updatePwd/code',
-    manageEdit: '/user/m/edit',
+    manageEdit: '/user/m/edit',    //会员自己修改会员信息
   },
   /**
    * @description 订单管理
@@ -125,8 +128,9 @@ let api = {
     auctionPlanDetail:'/bill/auctionPlanned/info',    //根据竞拍计划id获取计划详情
     auctionsubmitOrderL:'/bill/orderInfo/auction/create',    //客户通过竞拍计划单下单
     auctionOrderList:'/bill/auctionPlanned/page',        //客户通过竞拍订单列表
-  },
-  /**
+    myAuctionOrderList:'/bill/auctionPlanned/getMyList/page'
+  }, 
+  /**GET /auctionPlanned/getMyList/page
    * @description 资讯管理
    */
   information: {

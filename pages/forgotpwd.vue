@@ -40,13 +40,16 @@
                             </Row>
                             <Row :gutter="24"  index="1">
                                 <Col span="15">
-                                    <FormItem prop="Imgcode" label="验 证 码：">
-                                        <Input class="CarrierImgcode" v-model="formCustom.Imgcode"  placeholder="请输入验证码" />
+<!--                                    <FormItem prop="Imgcode" label="验 证 码：">-->
+<!--&lt;!&ndash;                                        <Input class="CarrierImgcode" v-model="formCustom.Imgcode"  placeholder="请输入验证码" />&ndash;&gt;-->
+<!--                                    </FormItem>-->
+                                    <FormItem prop="slidecode" label="验 证 码：">
+                                        <slide-verify @onChange="onTime" :width="370"></slide-verify>
                                     </FormItem>
                                 </Col>
-                                <Col span="6">
-                                    <div class="captcha" @click="refreshCode"><captcha :CodeCate="CodeCate" :contentWidth='126'  :contentHeight='36' :identifyCode="identifyCode" ></captcha></div>
-                                </Col>
+<!--                                <Col span="6">-->
+<!--                                    <div class="captcha" @click="refreshCode"><captcha :CodeCate="CodeCate" :contentWidth='126'  :contentHeight='36' :identifyCode="identifyCode" ></captcha></div>-->
+<!--                                </Col>-->
                             </Row>
                             <Row :gutter="24"  index="6">
                                 <Col span="12" />
@@ -113,7 +116,7 @@ import Swiper from 'swiper';
 import captcha from '../components/captcha'
 import {steps,step} from '../components/steps'
 import { userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg, userRepassWd, userRECodeSend, supplierdataCheck, supplierRepssWd,supplierReCodeSend, supplierCodeCheck } from '../api/users'
-
+import SlideVerify from '../components/slide-verify'
 
 export default {
     name: "register",
@@ -123,15 +126,17 @@ export default {
         Footer,
         steps,
         step,
-        captcha
+        captcha,
+        SlideVerify
     },
     fetch({ store, params }) {
         return Promise.all([
             store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),             
+            store.dispatch('system/getSystemCnf'),
         ])
     },
     computed: {
+
         ...mapState({
             systeminfo: state => state.system.systeminfo
         })
@@ -156,10 +161,10 @@ export default {
         const validatePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('密码不能为空'));
-            } 
-            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
+            }
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/;
             if (!patrn.exec(value)) {
-                   callback(new Error('密码必须是8-20字母和数字组合'));   
+                   callback(new Error('密码必须是8-20字母和数字组合'));
             }else{
                 this.passwordValid=true
                 callback();
@@ -213,6 +218,7 @@ export default {
             isopenSms: false,
             ImgCodeValid: false,
             identifyImgCode: false,
+            slidecode:0,
             btnBoolen:false,
             btnClassName:"btn",
             btnValue:"获取短信验证码",
@@ -256,6 +262,19 @@ export default {
         }
     },
     methods:{
+        onTime(res) {
+            console.log("res",res)
+            if (res) {
+                this.slidecode = res
+            } else {
+                this.$Modal.warning({
+                    title: '提示',
+                    content: '验证失败！',
+                    duration: 5,
+                    styles: 'top:300px'
+                });
+            }
+        },
         // 验证手机验证码
         async getuserCodeCheck(value, callback){
             let params = {
@@ -350,7 +369,7 @@ export default {
                     phone: phone
                 }
                 if(this.formCustom.type === '会员'){
-                    let res = await userCodeSend(this, params)  
+                    let res = await userCodeSend(this, params)
                     if(res.data && res.status === 200 ){
                         this.ImgCodeValid=false
 
@@ -415,9 +434,9 @@ export default {
                     closable: true
                 })
                 return
-            }else if(!this.identifyImgCode){
+            }else if(!this.slidecode){
                 this.$Message.info({
-                    content: '图形验证码有误',
+                    content: '滑动验有误',
                     duration: 5,
                     closable: true
                 })
@@ -483,7 +502,7 @@ export default {
         if(this.$route.query.type!='users'){
                 this.formCustom.type='供应商&承运商'
         }
-       
+
         this.identifyCode = '';
         this.makeCode(this.identifyCodes, 4);
     },

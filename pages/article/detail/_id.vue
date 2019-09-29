@@ -25,9 +25,21 @@
                             <img src="/img/newsTime.png"/><span class="gray ml5">{{this.articledetail.addTime}}</span>
                             </div>
                         </div>
-                        <div class="newsShare">分享</div>
+                        <div class="newsShare">
+                          <div class="bshare-custom">
+                            <a title="分享到QQ空间" class="bshare-qzone"></a>
+                            <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                            <a title="分享到人人网" class="bshare-renren"></a>
+                            <a title="分享到腾讯微博" class="bshare-qqmb"></a>
+                            <a title="分享到网易微博" class="bshare-neteasemb"></a>
+                            <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+                            <span class="BSHARE_COUNT bshare-share-count">0</span>
+                          </div>
+                          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+                          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
                         </div>
-                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content"></div>
+                        </div>
+                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content" style="min-height: 80vh"></div>
                         <div class="new_other" style="margin-bottom:20px;">
                             <span v-if="!this.articledetail.lastPage.id">【上一篇】{{this.articledetail.lastPage.title}}</span>
                             <span v-else>【上一篇】
@@ -77,6 +89,7 @@ import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import outpacking from '../../../components/outpacking'
 
+
 export default {
   name: 'articleDetailId',
   fetch({ store, params }) {
@@ -92,13 +105,22 @@ export default {
             catId: 0,
             indexShow: 1
           }),
-          
+
         store.dispatch('article/getArticleDetail', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getArticleClick', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10}),
         store.dispatch('article/getArticleCatList',  {parentId: 0}),
     ])
   },
+    head: {
+        script: [
+            { src: 'https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js' }
+        ],
+        link: [
+            { rel: 'stylesheet', href: 'https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css' }
+        ]
+    },
+
   components: {
     Header,
     Footer,

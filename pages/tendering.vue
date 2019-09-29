@@ -2,7 +2,7 @@
   <div class="body">
     <Header-small title="招标中心">
       <div slot="headerother">
-        <div
+        <div v-if="!SupplierInfor"
           data-v-228ad150
           class="dflexAlem gray fs14"
           style="color: rgb(102, 102, 102);    margin-top: 50px;"
@@ -54,12 +54,12 @@
               <span class="tac" style="width: 13%">{{item.statusName}}</span>
               <span class="tar gray pr10" style="width: 17%">{{item.beginTime}}</span>
             </li>
-            
+
           </ul>
           <div style="text-align: center;">
                <sapn v-if='dataList==""'>暂无数据</sapn>
           </div>
-         
+
         </div>
       </div>
     </div>
@@ -76,6 +76,7 @@ import { mapState } from "vuex";
 import login from "../components/login-form";
 import { supplierLogin, supplierValid } from "../api/users";
 import Cookies from "js-cookie";
+
 export default {
   name: "tendering",
   data() {
@@ -120,10 +121,10 @@ export default {
           username: this.loginsupplierform.username,
           password: this.loginsupplierform.password
         };
-
+        console.log("params:",params)
         const res = await supplierLogin(this, params);
         var dataLiat = res;
-
+        console.log("dataLiat:",dataLiat)
         if (res.data.data === null && res.status === 200) {
           this.passwordTip = true;
           this.passwordName = "账号密码错误！";
@@ -154,7 +155,7 @@ export default {
             }
         })
     },
-    async SourceData() {    
+    async SourceData() {
         if(this.SupplierInfor != undefined){
             const res = await sendHttp(this, true, server.api.biddding.bidddingList,2)
             this.dataList = res.data.items
@@ -162,7 +163,7 @@ export default {
              const res = await sendHttp(this, false, server.api.biddding.bidddingList)
             this.dataList = res.data.items
         }
-       
+
     },
 
     WineBid() {
@@ -176,7 +177,7 @@ export default {
         path: "./register",
         query: { toIndex: this.toIndex, pagetitle: "注册" }
       });
-    },  
+    },
 
     WinmemberCenter() {
       this.$router.push({ name: "trender-WinBidmember" });
