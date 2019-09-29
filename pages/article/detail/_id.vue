@@ -77,6 +77,7 @@ import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import outpacking from '../../../components/outpacking'
 
+
 export default {
   name: 'articleDetailId',
   fetch({ store, params }) {
@@ -99,6 +100,15 @@ export default {
         store.dispatch('article/getArticleCatList',  {parentId: 0}),
     ])
   },
+    head: {
+        script: [
+            { src: 'https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js' }
+        ],
+        link: [
+            { rel: 'stylesheet', href: 'https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css' }
+        ]
+    },
+
   components: {
     Header,
     Footer,
