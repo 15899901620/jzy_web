@@ -1,9 +1,29 @@
 <template>
 
   <div class="ovh graybg">
+    <Header-small title="招标中心">
+      <div slot="headerother">
+        <div   v-if="!SupplierInfor"
+                data-v-228ad150
+                class="dflexAlem gray fs14"
+                style="color: rgb(102, 102, 102);    margin-top: 50px;"
+        >
+          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
+          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
+        </div>
+      </div>
+    </Header-small>
     <div class=" mb40">
-      <pageRoute></pageRoute>
+      <div class="w1200">
+        <div class="mt10 fs14 mb10">
+          <breadcrumb>
+            <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源首页</nuxt-link></breadcrumb-item>
+            <breadcrumb-item><nuxt-link to="/tendering">招标列表</nuxt-link></breadcrumb-item>
+          </breadcrumb>
+        </div>
+      </div>
       <div class="w1200 dflex">
+
         <!-- 公告信息-->
         <div class="Notice">
           <div class="title">
@@ -46,7 +66,8 @@
 </template>
 
 <script>
-	import Pagination from '../../components/pagination'
+  import Header from "../../components/header";
+  import Pagination from '../../components/pagination'
 	import pageRoute from './trenderCompontent/pageRoute'
 	import membercenter from './trenderCompontent/membercenter'
 	import Commonproblem from './trenderCompontent/Commonproblem'
@@ -54,12 +75,13 @@
 	import Notice from './trenderCompontent/Notice'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
-
+    import Cookies from "js-cookie";
 	export default {
 		name: "WineBid",
-		layout: 'membercenter',
+		// layout: 'membercenter',
 		components: {
 			pageRoute,
+          HeaderSmall: Header.small,
 			Contact,
 			Commonproblem,
 			membercenter,
@@ -72,7 +94,8 @@
 				dataList: {},
 				current_page: 1,
 				page_size: 10,
-				total: 0
+				total: 0,
+                SupplierInfor:'',
 			};
 		},
 		methods: {
@@ -106,6 +129,7 @@
 			},
 		},
 		mounted() {
+          this.SupplierInfor = Cookies.get("supplierInfor");
 			this.webName = 'supplier'
 			this.SourceData();
 		}

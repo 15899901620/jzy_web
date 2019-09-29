@@ -138,6 +138,13 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="21">
+              <FormItem prop="registCapi" label="注册资金：">
+                <Input type="text" class="CarrierIput" v-model="formCustom.registCapi" placeholder="请输入注册资金"/>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row :gutter="24" index="0">
+            <Col span="21">
               <FormItem prop="contacter" label="联系人：">
                 <Input type="text" v-model="formCustom.contacter" class="CarrierIput" placeholder="请输入联系人"/>
               </FormItem>
@@ -151,8 +158,19 @@
             </Col>
           </Row>
           <Row :gutter="24" index="0">
+            <Col span="21">
+              <FormItem prop="registCapi" label="公司性质：">
+                <Select class="CarrierIput">
+                  <Option v-for="(items, index) in supplierNatureList" @click.native="getItemValue(items)"
+                          :value="items.value" :key="index">{{items.value_name}}
+                  </Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row :gutter="24" index="0">
             <Col span="9">
-              <FormItem label="营业执照：" prop="contacterEmail">
+              <FormItem label="营业执照："  prop="businessLicense" >
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
@@ -176,20 +194,10 @@
           </Row>
 
 
-          <Row :gutter="24" index="0">
-            <Col span="21">
-              <FormItem prop="registCapi" label="公司性质：">
-                <Select class="CarrierIput">
-                  <Option v-for="(items, index) in supplierNatureList" @click.native="getItemValue(items)"
-                          :value="items.value" :key="index">{{items.value_name}}
-                  </Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
+
           <Row :gutter="24" index="0">
             <Col span="9">
-              <FormItem label="授 权 书：" prop="businessLicense">
+              <FormItem label="授 权 书：" prop="authorizationElc">
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
@@ -942,33 +950,9 @@
 						duration: 5
 					});
 					return
-				} else if (!this.formCustom.contacter) {
+				}  else if (!this.formCustom.corporation) {
 					this.$Notice.warning({
-						title: '联系人不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.businessLicense) {
-					this.$Notice.warning({
-						title: '营业执照不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.authorizationElc) {
-					this.$Notice.warning({
-						title: '授权书不能为空',
-						duration: 5
-					});
-					return
-				}else if (!this.formCustom.transportLicense && this.formCustom.isLogisticsCompany > 0) {
-					this.$Notice.warning({
-						title: '运输许可证不能为空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.corporation) {
-					this.$Notice.warning({
-						title: '法人不能空',
+						title: '公司法人不能空',
 						duration: 5
 					});
 					return
@@ -978,13 +962,7 @@
 						duration: 5
 					});
 					return
-				} else if (!this.formCustom.corporation) {
-					this.$Notice.warning({
-						title: '注册资金不能空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.bankName) {
+				}  else if (!this.formCustom.bankName) {
 					this.$Notice.warning({
 						title: '开户银行不能空',
 						duration: 5
@@ -1003,18 +981,54 @@
 					});
 					return
 				} else if (!this.formCustom.telephone) {
-					this.$Notice.warning({
-						title: '公司电话不能空',
-						duration: 5
-					});
-					return
-				} else if (!this.formCustom.natureName) {
-					this.$Notice.warning({
-						title: '公司性质不能空',
-						duration: 5
-					});
-					return
-				} else {
+                  this.$Notice.warning({
+                    title: '公司电话不能空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.registCapi) {
+                  this.$Notice.warning({
+                    title: '注册资金不能空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.contacter) {
+                  this.$Notice.warning({
+                    title: '联系人不能为空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.contacterEmail) {
+                  this.$Notice.warning({
+                    title: '邮箱不能为空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.natureName) {
+                  this.$Notice.warning({
+                    title: '公司性质不能空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.businessLicense) {
+                  this.$Notice.warning({
+                    title: '营业执照不能为空',
+                    duration: 5
+                  });
+                  return
+                } else if (!this.formCustom.authorizationElc) {
+                  this.$Notice.warning({
+                    title: '授权书不能为空',
+                    duration: 5
+                  });
+                  return
+                }else if (!this.formCustom.transportLicense && this.formCustom.isLogisticsCompany > 0) {
+                  this.$Notice.warning({
+                    title: '运输许可证不能为空',
+                    duration: 5
+                  });
+                  return
+                }  else {
                   this.submitModal=true;
 				}
 			},

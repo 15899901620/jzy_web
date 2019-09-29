@@ -1,5 +1,17 @@
 <template>
     <div class="clearfix  graybg">
+      <Header-small title="招标中心">
+        <div slot="headerother">
+          <div      v-if="!SupplierInfor"
+                  data-v-228ad150
+                  class="dflexAlem gray fs14"
+                  style="color: rgb(102, 102, 102);    margin-top: 50px;"
+          >
+            <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
+            <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
+          </div>
+        </div>
+      </Header-small>
       <div class="w1200 dflex " id="app" style="margin-bottom: 40px">
         <!--会员中心列表-->
         <Rightmenu></Rightmenu>
@@ -85,14 +97,17 @@
   import Pagination from '../../components/pagination/pagination'
   import { sendHttp } from "../../api/common";
   import server from "../../config/api";
+ import Cookies from "js-cookie";
+
    export default {
       name: "WinBidmember",
-     layout:'membercenter',
-		 middleware: 'memberAuth',
+
+     middleware: 'supplierAuth',
       components:{
-        Header,
+        HeaderSmall: Header.small,
         Pagination,
-        Rightmenu
+        Rightmenu,
+
       },
       data(){
           return{
@@ -108,7 +123,8 @@
             dataList:{},
             current_page: 1,
             page_size: 10,
-            total: 0
+            total: 0,
+            SupplierInfor: Cookies.get("supplierInfor"),
           }
       },
      methods:{
@@ -116,12 +132,12 @@
          this.changeSelectStyle = index;
          this.SourceData();
        },
-        operate() {    
+        operate() {
             this.SourceData();
         },
-        async SourceData() {    
+        async SourceData() {
            var type =   this.changeSelectStyle;
-           
+
             let params = {
               page_size: this.page_size,
               current_page: this.current_page,
@@ -132,9 +148,9 @@
             this.dataList = res.data.items
             this.total = res.data.total
         },
-        async getMyBiddingListCount() {  
-         
-            let params = {}          
+        async getMyBiddingListCount() {
+
+            let params = {}
             const res = await sendHttp(this, true, server.api.biddding.bidddingCount,params,2)
             var count = res.data
              this.cateName[0].count= count.all
@@ -144,6 +160,7 @@
         },
      },
      mounted(){
+
        this.Totile=this.$router.history.current.query.category
        this.SourceData();
        this.getMyBiddingListCount()
