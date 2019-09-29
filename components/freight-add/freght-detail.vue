@@ -4,7 +4,7 @@
         title="需求详情"
         v-model="loading"
         @on-cancel="AddressCancel"
-        :width='700'
+        :width='800'
         class-name="vertical-center-modal">
         <p slot="header" style="color:#666; text-align:left; font-size:14px;">
             <Icon type="ios-create" style="font-size:18px;" />
@@ -14,71 +14,90 @@
             <Form ref="formAddress" :model="formAddress" :label-width="100" style="font-size:14px; padding-left:18px;"  >
                 <Row index="0" >
                     <Col span="12">
-                        <span>订单号:</span>
-                         <span>{{OrderList.orderNo}}</span>
+                        <FormItem label="订单号" >
+                                <span>{{OrderList.orderNo}}</span>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                        <span>需求编号:</span>
-                         <span>{{OrderList.billNo}}</span>
-                    </Col>
+                         <FormItem label="需求编号" >
+                                <span>{{OrderList.billNo}}</span>
+                        </FormItem>
+                    </Col>           
                 </Row>
                 <Row index="0">
                      <Col span="12">
-                        <span>货物名称:</span>
-                         <span>{{OrderList.freightGoods}}</span>
+                        <FormItem label="货物名称" >
+                                <span>{{OrderList.freightGoods}}</span>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                        <span>数量:</span>
-                        <span>{{OrderList.weight}}吨</span>
+                         <FormItem label="数量" >
+                                <span>{{OrderList.weight}}</span>
+                        </FormItem>
                     </Col>
 
                 </Row>
                 <Row index="0">
                     <Col span="12">
-                         <span>联系人:</span>
-                        <span>{{OrderList.contact}}</span>
+                       <FormItem label="联系人" >
+                                <span>{{OrderList.contact}}</span>
+                        </FormItem>
+
                     </Col>
                      <Col span="12">
-                       <span>联系电话:</span>
-                        <span>{{OrderList.phone}}</span>
+                         <FormItem label="联系电话" >
+                                <span>{{OrderList.phone}}</span>
+                        </FormItem>
+
                     </Col>
                 </Row>
                 <Row index="2">
-                    <Col span="12">
-                        <span>用车开始日期:</span>
-                        <span>{{OrderList.demandBeginDate}}</span>
+                     <Col span="12">
+                        <FormItem label="用车开始日期" >
+                                <span>{{OrderList.demandBeginDate}}</span>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                        <span>用车结束日期:</span>
-                        <span>{{OrderList.demandEndDate}}</span>
-
+                         <FormItem label="用车结束日期" label-width="110">
+                                    <span>{{OrderList.demandEndDate}}</span>
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row index="3">
                      <Col span="12">
-                        <span>询价有效时间:</span>
-                        <span>{{OrderList.inquiryMinute}}小时</span>
+                        <FormItem label="询价有效时间" >
+                                <span>询价有效时间:</span>
+                              <span>{{OrderList.inquiryMinute}}小时</span>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                        <span>是否含税:</span>
-                        <span v-if='OrderList.isTax==0'>否</span>
-                        <span v-else>是</span>
+                        <FormItem label="是否含税" >
+                                <span v-if='OrderList.isTax==0'>否</span>
+                                 <span v-else>是</span>
+                        </FormItem>
                     </Col>
+                    
                 </Row>
                 <Row index="4">
                     <Col span="12">
-                        <span>收货地址:</span>
-                        <span>{{OrderList.receiptFullAddress}}</span>
+                        <FormItem label="收货地址" >
+                              {{OrderList.receiptFullAddress}}
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                        <span>提货仓库:</span>
-                        <span>{{OrderList.dispatchFullAddress}}</span>
+                        <FormItem label="提货仓库" >
+                              {{OrderList.dispatchFullAddress}}
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row index='5'>
-                     <Col span="24">
-                        <span>确定承运商倒计时:{{OrderList.inquiryEndTime}}</span>
-                        <TimeDown :endTime="OrderList.inquiryEndTime" hoursShow  :onTimeOver="reloadPage"></TimeDown>
+                    
+                     <Col>
+                        <FormItem label="确定承运商倒计时" label-width="110">
+                               <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="OrderList.inquiryEndTime" hoursShow  :onTimeOver="reloadPage"></TimeDown>
+                        </FormItem>
+             
+                    
                      </Col>
                 </Row>
             </Form>
@@ -89,19 +108,21 @@
                         <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
                             <Col span="4">货物名称</Col>
                             <Col span="3">单价（元/吨）</Col>
-                            <Col span="6">承运商</Col>
-                            <Col span="4">承运商电话</Col>
-                            <Col span="3">状态</Col>
+                            <Col span="3">总运费</Col>
+                            <Col span="5">承运商</Col>
+                            <Col span="3">承运商电话</Col>
+                            <Col span="2">状态</Col>
                             <Col span="3">操作</Col>
 
                         </Row>
                         <Row   v-for="(item, index) in OrderList.freightOffers" :key='index' index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
                             <Col span="4">{{item.freightGoods}}</Col>
                             <Col span="3">{{item.price}}</Col>
-                            <Col span="6">{{item.supplierName}}</Col>
-                            <Col span="4">{{item.supplierMobile}}</Col>
+                            <Col span="3">¥{{item.price*OrderList.weight}}</Col>
+                            <Col span="5">{{item.supplierName}}</Col>
+                            <Col span="3">{{item.supplierMobile}}</Col>
+                            <Col span="2" >
 
-                            <Col span="3" >
                                  <span v-if="item.status==0">取消</span>
                                  <span v-if="item.status==1">待报价</span>
                                  <span v-if="item.status==2">已选择</span>
@@ -129,13 +150,15 @@ import AddressFrom from "../address-from";
 import { getCookies } from '../../config/storage'
 import { sendHttp } from "../../api/common";
 import TimeDown from '../../components/timeDown'
+import countdown from '../../components/countdown'
 import server from "../../config/api";
 
 export default {
     name: 'AddressDetail',
     components:{
         AddressFrom,
-        TimeDown
+        TimeDown,
+        countdown
     },
     data() {
 
@@ -147,6 +170,7 @@ export default {
                     return date && date.valueOf() > this.date  ||  date && date.valueOf() < Date.now() - 86400000;
                 }
             },
+            Timeloading:false,
             detailloading:false,
             tax_id:0,
             isAddressFormShow: false,
@@ -163,7 +187,6 @@ export default {
             tax:'否',
             title:'60',
             OrderList:{
-                inquiryEndTime: '2019-01-01'
             },
             date:'',
             formAddress:{
@@ -359,5 +382,8 @@ export default {
             }
         }
     }
+}
+.ivu-form-item {
+    margin-bottom: 5px;
 }
 </style>
