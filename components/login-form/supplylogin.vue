@@ -11,7 +11,7 @@
       <Row  index="">
         <Col span="24">
           <FormItem prop="slidecode">
-            <slide-verify-supply @onChange="onTime" :width="246"></slide-verify-supply>
+            <slide-verify-supply @onChange="onTime" :width="263"></slide-verify-supply>
           </FormItem>
         </Col>
       </Row>

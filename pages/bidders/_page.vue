@@ -193,6 +193,11 @@
 				}
 
 			},
+          MoreCancel(){},
+          //去登录
+          goLogin(){
+            this.$router.push({name:'login'});
+          },
 		},
 		watch: {
 			'$route'(to, from) {

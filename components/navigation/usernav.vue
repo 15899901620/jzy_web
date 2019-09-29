@@ -26,7 +26,7 @@ export default {
                             name: '全部订单'
                         },
                         {
-                            path: '/users/PlanBill',
+                            path: '/users/userPlanBill',
                             name: '计划单据'
                         },
                     ]

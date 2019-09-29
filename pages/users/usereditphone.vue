@@ -6,7 +6,7 @@
                         <div class="TableList code_manange mt30 ml20">
                             <h1 class="fs16  mt25 bb1 pb10">换绑手机号</h1>
                              <div class="formItem code_manange mt30 ml20" >
-                                <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">         
+                                <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
                                     <Row :gutter="24" index="0">
                                         <Col span="21">
                                         <FormItem  label="手机号：">
@@ -42,13 +42,13 @@
                                         </Col>
                                     </Row>
                                 </Form>
-                              
+
                             <div class="ConfirmSubmit" @click='butmodif' >确认提交</div>
                               </div>
-                        </div>  
-                    
+                        </div>
+
                    </div>
-                     
+
             </div>
         </div>
 </template>
@@ -103,7 +103,7 @@ export default {
                 btn2Value:'请输入新手机号',
                 newphone:'',
                 formCustom:{
-                      newphone:'',  
+                      newphone:'',
                       code:'',
                       newcode:'',
                 },
@@ -136,11 +136,11 @@ export default {
                 phone: phone
             }
             const res = await userEditPhoneSend(this, params)
-       
+
             if(res.data && res.status === 200 ){
                 this.$Message.info("短信发送成功")
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                window.localStorage.setItem("note", sj)
+               // window.localStorage.setItem("note", sj)
                 this.auth_time = 60;
                 var timer = setInterval(()=>{
                 this.auth_time--;
@@ -160,7 +160,7 @@ export default {
             }else {
                 this.$Message.info("短信发送失败")
             }
-            
+
         },
        async getuserNoteValue(){
         var phone = this.formCustom.newphone//验证码
@@ -177,7 +177,7 @@ export default {
             if(res.data && res.status === 200 ){
                 this.$Message.info("短信发送成功")
                 var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                window.localStorage.setItem("note", sj)
+                //window.localStorage.setItem("note", sj)
                 this.auth_time = 60;
                 var timer = setInterval(()=>{
                 this.auth_time--;
@@ -199,7 +199,7 @@ export default {
             }
        },
         async butmodif(){
-         
+
             if(this.formCustom.code==''){
                 this.$Message.info("请输入原手机号验证码")
                 return ;
@@ -218,9 +218,9 @@ export default {
                 code:this.formCustom.code,
                 newCode:this.formCustom.newcode
             }
-          
+
             const res = await userRephone(this, params)
-            
+
             if(res.data && res.status ===200){
                 this.$Message.info({content: '换绑手机号成功'})
                 // this.$router.push('/users/user')
@@ -251,9 +251,9 @@ export default {
             this.inLogin()
     },
     mounted(){
-    
+
     }
-    
+
 }
 </script>
 <style  >
