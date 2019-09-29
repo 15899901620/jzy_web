@@ -2,12 +2,12 @@
     <div class="clearfix graybg">
         <div class="w1200 dflex " style="margin-bottom: 40px">
             <usernav></usernav>
-            <div class="memberInfor ml20  whitebg bdccc  mt20">
-                <h1 class="fs16 ml25 mt25 bb1 pb10" >密码管理</h1>
-                 <div class="formItem code_manange mt30 ml20" >
+            <div class="memberInfor ml00  whitebg bdccc  mt20">
+                <h1 class="fs16 ml25 mt25 bb1 pb10" >电商平台密码管理</h1>
+                 <div class="formItem code_manange mt30 ml00" >
                     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">         
                         <Row :gutter="24" index="0">
-                            <Col span="21">
+                            <Col span="15">
                             <FormItem  label="手 机 号：">
                                 <Input v-model="userinfo.phone" class="CarrierIput" disabled id="phone" placeholder="请输入手机号"/>
                             </FormItem>
@@ -24,14 +24,14 @@
                             </Col>
                         </Row>
                         <Row :gutter="24" index="3">
-                            <Col span="21">
+                            <Col span="15">
                             <FormItem prop="newspassword" label="密  码：">
                                 <Input type="password" v-model="formCustom.newspassword" class="CarrierIput" placeholder="请输入密码"/>
                             </FormItem>
                             </Col>
                         </Row>
                         <Row :gutter="24" index="4">
-                            <Col span="21">
+                            <Col span="15">
                             <FormItem prop="repassword" label="确认密码：">
                                 <Input type="password" v-model="formCustom.repassword" class="CarrierIput" placeholder="请输入确认密码"/>
                             </FormItem>
