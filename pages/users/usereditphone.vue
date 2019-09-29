@@ -8,7 +8,7 @@
                              <div class="formItem code_manange mt30 ml20" >
                                 <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
                                     <Row :gutter="24" index="0">
-                                        <Col span="21">
+                                        <Col span="15">
                                         <FormItem  label="手机号：">
                                             <Input v-model="userinfo.phone" class="CarrierIput" disabled id="phone" placeholder="请输入手机号"/>
                                         </FormItem>
@@ -25,9 +25,9 @@
                                         </Col>
                                     </Row>
                                     <Row :gutter="24" index="3">
-                                        <Col span="21">
+                                        <Col span="15">
                                         <FormItem prop="newphone" label="新手机号：">
-                                            <Input  v-model="formCustom.newphone" class="CarrierIput" />
+                                            <Input  v-model="formCustom.newphone" class="CarrierIput"  placeholder="请输入新手机号"/>
                                         </FormItem>
                                         </Col>
                                     </Row>
