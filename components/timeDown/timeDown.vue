@@ -1,6 +1,6 @@
 <template>
   <!-- 倒计时组件 -->
-  <div>
+  <div style="display: inline-block;">
     <template v-if="timeStyleType == 1" class="downTime-wrapper">
       <!-- 这里是显示还未结束时的内容，这里只是我这得布局，你可以随意。 -->
       <div class="time" v-show="!isStop">

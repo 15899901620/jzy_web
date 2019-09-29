@@ -1,24 +1,22 @@
 <template>
   <div class="body">
     <Header-small title="现货超市">
-<!--      <div slot="headerother">-->
-<!--        <ul class="sp_cat_title_list">-->
-<!--          <li class="curr"><i>1</i>-->
-<!--            <p>编辑详细信息</p></li>-->
-<!--          <li><i>2</i>-->
-<!--            <p>提交订单成功</p></li>-->
-<!--          <li><i>3</i>-->
-<!--            <p>支付货款</p></li>-->
-<!--          <li><i>4</i>-->
-<!--            <p>下单完成</p></li>-->
-<!--        </ul>-->
-<!--      </div>-->
+      <div slot="headerother">
+        <ul class="sp_cat_title_list">
+          <li class="curr"><i>1</i><p>编辑详细信息</p></li>
+          <li><i>2</i><p>生成合约</p></li>
+          <li><i>3</i><p>合约转单</p></li>
+          <li><i>4</i><p>生成订单</p></li>
+          <li><i>5</i><p>支付货款</p></li>
+          <li><i>6</i><p>下单完成</p></li>
+        </ul>
+      </div>
     </Header-small>
     <div class="container" title="">
       <div class="w1200 whitebg bdccc" style="margin-top: 20px; margin-bottom: 40px;">
         <!--公司信息-->
         <div class="mt30 fs16 ml15 fwb">公司信息</div>
-        <div class="ml35 mt20 mb20 fs14">{{$store.state.memberInfo.username}}</div>
+        <div class="ml35 mt20 mb20 fs18">{{$store.state.memberInfo.username}}</div>
         <div class="lineborder"></div>
 
         <!-- 商品信息 -->
@@ -37,11 +35,11 @@
             <span class="title" style="width: 9%;">小计</span>
           </li>
           <li>
-            <div style="width: 13%;">{{spotDetail.sku_name}}</div>
-            <div style="width: 12%;">{{spotDetail.warehouse_name}}</div>
-            <div style="width: 12%;">{{spotDetail.finalPriceFormat}}</div>
-            <div style="width: 12%;">+ {{this.orderinfo.freightFee}}元/吨</div>
-            <div style="width: 12%;">+ {{this.orderinfo.jryCost}}元/吨</div>
+            <div style="width: 13%;">{{spotInfo.sku_name}}</div>
+            <div style="width: 12%;">{{spotInfo.warehouse_name}}</div>
+            <div style="width: 12%;">{{spotInfo.finalPriceFormat}}</div>
+            <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
+            <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
             <div style="width: 14%;">
               <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
@@ -54,24 +52,32 @@
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
         <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
           <ul class="DeliveryMethod mb20">
-            <li v-for="(item, index) in methodList" v-if="index != 1 || $store.state.common.sysConfig.IS_CAN_DELIVERY == 1"
-                @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index">
-              <div style="background-color: #fff;">{{item.name}}</div>
+            <li @click="chooseDelieryType(0)" :class="{'curr':0 === currentIndex}" :key="0">
+              <div style="background-color: #fff;">自提</div>
             </li>
-            <div class="gray">
-              <template v-if="this.orderinfo.isDelivery == 1">
-                （您选择交货方式为配送，配送起订量为<span class="orangeFont">{{spotDetail.delivery_min}}吨</span>，数量加量幅度为<span
-                  class="orangeFont">{{spotDetail.delivery_bid_increment}}吨</span>）
-              </template>
-              <template v-else>
-                （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotDetail.take_their_min}}吨</span>，数量加量幅度为<span
-                  class="orangeFont">{{spotDetail.take_bid_increment}}吨</span>）
-              </template>
-            </div>
+            <li @click="chooseDelieryType(1)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':1 === currentIndex}" :key="1">
+              <div style="background-color: #fff;">配送</div>
+            </li>
+            <li @click="chooseDelieryType(2)" :class="{'curr':2 === currentIndex}" :key="2">
+              <div style="background-color: #fff;">待定</div>
+            </li>
           </ul>
-          <div class="blueFont mr30 cp fs14" v-show="currentIndex" id="newAdd" @click="addNewAddress">新增收货地址</div>
+          <div class="blueFont mr30 cp fs14" v-show="currentIndex == 1" id="newAdd" @click="addNewAddress">新增收货地址</div>
         </div>
-        <div class="AddList" v-if="this.orderinfo.isDelivery == 1">
+        <div class="gray" style="margin-left: 35px;">
+          <template v-if="orderinfo.isDelivery == 0">
+            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotInfo.take_their_min}}吨</span>，数量加量幅度为<span
+              class="orangeFont">{{spotInfo.take_bid_increment}}吨</span>）
+          </template>
+          <template v-else-if="orderinfo.isDelivery == 1">
+            （您选择交货方式为配送，配送起订量为<span class="orangeFont">{{spotInfo.delivery_min}}吨</span>，数量加量幅度为<span
+              class="orangeFont">{{spotInfo.delivery_bid_increment}}吨</span>）
+          </template>
+          <template v-else-if="orderinfo.isDelivery == -1">
+            （您选择交货方式为待定，则提交后只生成合约单，必须在<span class="orangeFont">{{spotInfo.last_ordered_date}}</span>之前确认并转订单，否则会扣除交纳的保证金）
+          </template>
+        </div>
+        <div class="AddList" v-if="orderinfo.isDelivery == 1">
           <template v-if="addressList.length > 0">
             <ul class="addListSelect ovh">
               <li v-for="(item,i) in addressList" :key="i" :class="item.id === orderinfo.addressId ? 'curr' : ''"
@@ -94,8 +100,8 @@
           </template>
           <template v-else><p>暂无任何收货地址，请您添加！</p></template>
         </div>
-        <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+        <div class="mt30 fs16 ml15 fwb" v-if="orderinfo.isDelivery == 1">运费</div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择承运商
           <div class="ml35" v-if="carrierList.length > 0">
             <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
@@ -104,7 +110,7 @@
           </div>
           <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
         </div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择运输方式
           <ul class="DeliveryMethod ml35 mb20">
             <template v-if="logisticsfreight.length > 0">
@@ -122,32 +128,36 @@
         <div class="lineborder"></div>
         <div class="mt30 fs16 ml15 fwb">支付选择</div>
         <ul class="DeliveryMethod ml35">
-          <li v-for="(item, index) in payList" @click="choosePayType(index)"
-              :class="{'curr':index === orderinfo.payIndex}" :key="index">{{item.name}}
+          <li @click="choosePayType(0)" v-if="orderinfo.isDelivery != -1" :class="{'curr':0 === orderinfo.payIndex}" :key="0">
+            支付全款
+          </li>
+          <li @click="choosePayType(1)" :class="{'curr':1 === orderinfo.payIndex}" :key="1">
+            支付保证金
           </li>
           <div class="ml10 fs14">可用余额：<span class="orangeFont">{{$store.state.member.capitalInfo.available_amount_format}}</span></div>
           <a class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
         </ul>
-        <div class="orderCzTip" v-if="this.orderinfo.payIndex == 1">
+
+        <div class="orderCzTip" v-if="orderinfo.payIndex == 1 && orderinfo.isDelivery != -1">
           <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 1">*
-            如仅支付保证金，在提交订单后当天{{$store.state.memberInfo.CLOSED_TIME}}前完成付款，逾期将扣除保证金
+            如仅支付保证金，在提交订单后当天{{$store.state.common.sysConfig.CLOSED_TIME}}前完成付款，逾期将扣除保证金
           </template>
           <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 2">* 如仅支付保证金，在提交订单后30分钟内完成付款，逾期扣除保证金</template>
           <template v-if="$store.state.common.sysConfig.SPOT_PAYMENT_TIME == 3">* 如仅支付保证金，在提交订单后60分钟内完成付款，逾期扣除保证金</template>
         </div>
 
         <!--优选服务-->
-        <div class="mt30 fs16 ml15 fwb" id="test2" v-if="orderinfo.payIndex==1 && is_jry">优选服务</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.payIndex==1 && is_jry">
+        <div class="mt30 fs16 ml15 fwb" id="test2" v-if="orderinfo.payIndex==1 && orderinfo.isDelivery != -1 && spotInfo.is_jry">优选服务</div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.payIndex==1 && orderinfo.isDelivery != -1 && spotInfo.is_jry">
           巨融易
           <div class="ml5">
             <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" style="width:200px" placeholder="需要请选择">
-              <i-option v-for="(item, index) in ServiceTimeList" :value="item" :key="index">{{ item }}天</i-option>
+              <i-option v-for="(item, index) in spotInfo.jry_days.split(',')" :value="item" :key="index">{{ item }}天</i-option>
             </Select>
           </div>
           <div class="ml20 orangeFont">* 费率=天数*吨数*{{$store.state.common.sysConfig.JRY_COST}}元</div>
         </div>
-        <div class="orderCzTip" v-if="orderinfo.payIndex==1 && is_jry">
+        <div class="orderCzTip" v-if="orderinfo.payIndex==1 && orderinfo.isDelivery != -1 && spotInfo.is_jry">
           * 选择巨融易产品，提交订单后必须在有效期内支付尾款完成，逾期将扣除保证金。<br/>
           （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{$store.state.common.sysConfig.CLOSED_TIME}}:00前完成尾款付款）
         </div>
@@ -186,12 +196,14 @@
 <script>
 	import Header from '../../../components/header'
 	import Footer from '../../../components/footer'
-	import {spotDetail, submitOrder, getFreightList} from '../../../api/spot'
+	import { submitOrder, getFreightList} from '../../../api/spot'
 	import InputSpecial from '../../../components/input-special'
 	import {addressList} from '../../../api/users'
 	import AddressDialog from '../../../components/address-dialog'
 	import spotPay from '../../../components/paydeposit/spotPay'
 	import { mapState } from 'vuex'
+	import { sendCurl } from '../../../api/common'
+	import server from '../../../config/api'
 
 	export default {
 		name: "spot-order-id",
@@ -212,34 +224,20 @@
         //获取资金情况
 				store.dispatch('member/getCapitalInfo'),
         //获取报价信息
-				//store.dispatch('spot/getSpotInfo'),
+				store.dispatch('spot/getSpotInfo', {id: params.id||0}),
 			])
 		},
-		/*computed: {
-			...mapState({
-				helpCatInfo: state => state.spot.helpCatInfo,
-			}),
-			classes() {
-				return [
-					`${prefixCls}`,
-					{ [`${prefixCls}-shortcut`]: this.vertical },
-				];
-			},
-		}*/
 		computed: {
+			...mapState({
+				spotInfo: state => state.spot.spotInfo,
+			}),
 			totalPrice: function () {
-              console.log("final_price",this.spotDetail.final_price)
-              console.log("freightFee",this.orderinfo.freightFee)
-              console.log("jryCost",this.orderinfo.jryCost)
-				return parseFloat(this.spotDetail.final_price) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
+				return parseFloat(this.spotInfo.final_price) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
 			},
 			totalPriceFormat: function () {
-			  console.log("totalPrice:",this.totalPrice)
 				return parseFloat(this.totalPrice).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
 			},
 			totalAmount: function () {
-              console.log("totalPrice:",this.totalPrice)
-              console.log("orderNum:",this.orderinfo.orderNum)
 				return parseFloat(this.totalPrice) * parseInt(this.orderinfo.orderNum)
 			},
 			totalAmountFormat: function () {
@@ -247,7 +245,7 @@
 			},
 			payAmount: function () {
 				if (this.orderinfo.payIndex == 1) {
-					return parseFloat(this.totalAmount) * parseInt(this.spotDetail.margin_ratio) / 100
+					return parseFloat(this.totalAmount) * parseInt(this.spotInfo.margin_ratio) / 100
 				} else {
 					return this.totalAmount;
 				}
@@ -261,7 +259,7 @@
 			return {
 				addAddressLoading: false,
 				payModalShow: false,
-				payModalTitle: '支付全款',
+				payModalTitle: '支付',
 				payData: {},
 				orderinfo: {
 					spot_id: 0,
@@ -280,14 +278,10 @@
 				currMin: 0,
 				currMax: 0,
 				currsetp: 1,
-				is_jry: false,
 				ServiceTimeList: [],
-				methodList: [
-					{value: 1, name: '自提'},
-					{value: 2, name: '配送'}
-				],
 				payList: [
-					{value: 1, name: '支付全款'}
+					{value: 1, name: '支付全款'},
+					{value: 2, name: '支付保证金'}
 				],
 				carrierList: [],
 				//carrierListDesc: '',
@@ -297,52 +291,37 @@
 				defaultAdd: {},
 				logisticsfreight: {},
 				curraddress: 0,
-				spotDetail: {},
 				addressList: [],
 
 				RegisterName: 'member',
 				nowIndex: 0,
 				index: 0,
-
-				spotId: !this.$route.params.id ? 0 : this.$route.params.id
+				spotId: this.$route.params.id || 0
 			}
 		},
 		methods: {
-			//基础数据
-			async getSpotData() {
-				let params = {
-					id: this.spotId
-				}
-				const res = await spotDetail(this, params)
-				if (res.data == '') {
-					//记录异常
-					window.location.href = '/spot'
-				}
-				this.spotDetail = res.data
-				this.orderinfo.spot_id = this.spotDetail.id,
-
-					this.currMin = this.spotDetail.take_their_min
-				this.currMax = this.spotDetail.available_num
-				this.currsetp = this.spotDetail.take_bid_increment
-				if (this.currMin < this.currMax) {
-					this.orderinfo.orderNum = this.currMin
-				}
-
-				this.is_jry = this.spotDetail.is_jry
-				this.ServiceTimeList = this.spotDetail.jry_days.split(',')
-
-			},
 			//选择提货或者配置
 			chooseDelieryType(index) {
 				this.currentIndex = index
-				if (index == 1) {
-					this.orderinfo.isDelivery = index
-					this.currMin = this.spotDetail.delivery_min
-					this.currsetp = this.spotDetail.delivery_bid_increment
-				} else {
+				if (index == 0) {
 					this.orderinfo.isDelivery = 0
-					this.currMin = this.spotDetail.take_their_min
-					this.currsetp = this.spotDetail.take_bid_increment
+					this.currMin = this.spotInfo.take_their_min
+					this.currsetp = this.spotInfo.take_bid_increment
+				} else if (index == 1) {
+					this.orderinfo.isDelivery = 1
+					this.currMin = this.spotInfo.delivery_min
+					this.currsetp = this.spotInfo.delivery_bid_increment
+				} else if (index == 2) {
+					this.orderinfo.isDelivery = -1
+					this.currMin = Math.min(this.spotInfo.delivery_min,this.spotInfo.take_their_min)
+					this.currsetp = 1
+
+					this.orderinfo.transportationMode = ''
+					this.orderinfo.freightFee = 0
+					this.currfreight = -1
+          this.orderinfo.jryDays = 0
+					this.setJry()
+					this.choosePayType(1)
 				}
 				if (this.currMin <= this.currMax) {
 					this.orderinfo.orderNum = this.currMin
@@ -383,8 +362,8 @@
 			//获取物流费用
 			async getFreight() {
 				let data = {
-					sku_id: this.spotDetail.sku_id,
-					warehouse_id: this.spotDetail.warehouse_id,
+					sku_id: this.spotInfo.sku_id,
+					warehouse_id: this.spotInfo.warehouse_id,
 					country_id: this.defaultAdd.countryId,
 					state_id: this.defaultAdd.state,
 					city_id: this.defaultAdd.city,
@@ -409,10 +388,9 @@
 				this.orderinfo.payIndex = index
 			},
 			//选择巨融易
-			setJry(value) {
+			setJry() {
 				if (this.orderinfo.jryDays > 0) {
 					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
-
 				} else {
 					this.orderinfo.jryCost = 0
 				}
@@ -430,12 +408,12 @@
 					carrierId: this.orderinfo.carrierId,
 					transportationMode: this.orderinfo.transportationMode,
 					payIndex: this.orderinfo.payIndex,
-					jryDays: this.orderinfo.jryDays,
+					jryDays: this.orderinfo.jryDays || 0,
 					orderNum: this.orderinfo.orderNum
 				}
 				if (params.isDelivery == 1 && params.addressId == 0) {
 					this.showWarning('配送请维护选择收货地址！');
-					return;
+					return
 				}
 				/*if(params.isDelivery == 1 && params.carrierId == 0){
             this.showWarning('配送承运商不能为空！');
@@ -450,18 +428,15 @@
 					return;
 				}
 				this.payData = {
-					skuNo: this.spotDetail.sku_no,
-					skuName: this.spotDetail.sku_name,
+					skuNo: this.spotInfo.sku_no,
+					skuName: this.spotInfo.sku_name,
 					orderNum: params.orderNum,
 					totalAmount: this.payAmount,
 					totalAmountFormat: parseFloat(this.payAmount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
 
 				}
-				if (params.payIndex == 1) {
-					this.payModalTitle = '支付保证金'
-				} else {
-					this.payModalTitle = '支付全款'
-				}
+
+        this.payModalTitle = '支付'
 
 				this.showPayment()
 			},
@@ -473,7 +448,6 @@
 				this.payModalShow = row
 			},
 			PayedOrder(smsCode) {
-				//this.payModalShow = false
 				this.createOrder(smsCode)
 			},
 			//提交订单
@@ -489,15 +463,18 @@
 					order_num: this.orderinfo.orderNum,
 					sms_code: smsCode
 				}
-				const res = await submitOrder(this, params)
-				if (typeof res.data.errorcode == "undefined") {
-					location.href = '/spot/order/success?id=' + res.data.id + '&orderNo=' + res.data.orderNo + '&isPayed=' + (res.data.status == '3')
-					//this.$router.push({name:'spot-order-success', query:{id:res.data.id,orderNo:res.data.orderNo,isPayed:res.data.status=='3'}})
-				} else {
-					this.$Modal.warning({
-						title: '提示',
-						content: res.data.message
-					});
+
+				let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
+				if (res.status === 200) {
+					if ((res.data.errorcode || 0) == 0) {
+						location.href = '/spot/order/success?plan_no=' + res.data.plan_no + '&last_ordered_date='+ (res.data.last_ordered_date||'') + '&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
+					} else {
+						this.$Modal.warning({
+							title: '提示',
+							content: res.data.message
+						})
+            return
+					}
 				}
 			},
 			showWarning(msg, okCallback) {
@@ -517,7 +494,20 @@
 			}
 		},
 		mounted() {
-			this.getSpotData()
+			if(!this.spotInfo){
+				this.showWarning('报价信息不存在，请重新操作！', function(){
+					location.href = '/spot'
+        });
+				return
+      }
+
+			this.orderinfo.spot_id = this.spotInfo.id
+      if(this.spotInfo.limit_num > 0){
+				this.currMax = Math.min(this.spotInfo.limit_num, this.spotInfo.available_num)
+      }else{
+				this.currMax = this.spotInfo.available_num
+      }
+			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
 		head() {

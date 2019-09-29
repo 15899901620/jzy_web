@@ -74,7 +74,10 @@
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
-                <span style="width: 9%;">{{item.available_num}}</span>
+                <span style="width: 9%;">
+                  {{item.available_num}}
+                  <Tag v-if="item.available_num > 0 && item.limit_num > 0" color="error">限{{item.limit_num}}</Tag>
+                </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
                       style="width: 9%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
@@ -119,7 +122,6 @@
       </div>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
-    <CheckType :record_id="selectRecordID" :isShow="checkTypeShow" @cancel="checkTypeCancel"></CheckType>
   </div>
 </template>
 
@@ -128,7 +130,6 @@
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
-	import CheckType from '../../components/spot-list/checkType'
 
 	export default {
 		name: "spot",
@@ -157,7 +158,6 @@
 			])
 		},
 		components: {
-			CheckType,
 			Header,
 			Footer,
 			pages: pagination.pages,
@@ -184,8 +184,7 @@
 		},
 		methods: {
 			addOrder(id) {
-				this.selectRecordID = id
-        this.checkTypeShow = true
+				location.href = '/spot/order/' + id
 			},
 			categoryClick(id) {
 				this.categoryId = id
