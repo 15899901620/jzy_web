@@ -399,8 +399,8 @@ a {
 	font-size:14px;
 }
 .NewsDetail_tip .newsShare {
-	width:60px;
-	background:url(/img/icon.png)no-repeat 0px -409px;
+	width: 217px;
+	background:url(/img/icon.png)no-repeat -2px -411px;
 	padding-left:20px;
 	color:#999;
 }

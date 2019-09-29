@@ -823,6 +823,8 @@
 
       },
 		mounted() {
+
+
 			// 图形验证码
 			this.identifyCode = '';
 			this.makeCode(this.identifyCodes, 4);
