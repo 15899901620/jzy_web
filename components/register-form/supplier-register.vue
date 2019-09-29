@@ -317,13 +317,13 @@
         class-name="vertical-center-modal">
 
       <template v-if="formCustom.isLogisticsCompany == 0">
-          <div class="" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL"></div>
+          <div class=""  style="overflow: hidden; overflow-y: auto; height: 360px;" v-html="$store.state.common.sysConfig.SUPPLIER_REGISTRATION_PROTOCOL"></div>
       </template>
       <template v-else>
-          <div class="" v-html="$store.state.common.sysConfig.CARRIER_REGISTRATION_PROTOCOL"></div>
+          <div class=""  style="overflow: hidden; overflow-y: auto; height: 360px;" v-html="$store.state.common.sysConfig.CARRIER_REGISTRATION_PROTOCOL"></div>
       </template>
       <div slot="footer" style="text-align: center">
-        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
 
     </Modal>
@@ -1030,7 +1030,7 @@
                 // this.$router.push({name:'RegisterSuccess'})
               } else {
                 this.$Message.info({
-                  content: '注册未成功',
+                  content: '注册未成功,请填写重新提交!',
                   duration: 5,
                   closable: true
                 })

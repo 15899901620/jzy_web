@@ -197,7 +197,7 @@
       <div style="overflow: hidden; overflow-y: auto; height: 360px;" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
       </div>
       <div slot="footer" style="text-align: center">
-        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
+        <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
 
     </Modal>
@@ -794,7 +794,7 @@
               this.$emit('currData', false)
             } else {
               this.$Message.info({
-                content: "抱歉、您的信息提交失败，请再次填写重新提交！",
+                content: "抱歉、您的信息提交失败，请填写重新提交！",
                 duration: 5,
                 closable: true
               })
