@@ -86,7 +86,7 @@
                                 </Button>
                             <DropdownMenu slot="list">
 
-                                <DropdownItem v-for="(value, key) in taxList" :name="key" :key="key">{{value}}</DropdownItem>
+                                <DropdownItem v-for="(value, key) in taxList" :name="key" :key="key" >{{value}}</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         </FormItem>
