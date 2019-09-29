@@ -260,7 +260,7 @@ export default {
         this.dataList=res.data.items;
         this.total=res.data.total
 
-    }
+    },
   },
   created(){
 
