@@ -1765,7 +1765,7 @@ gAccount {
 	padding:10px 0;
 }
 .listT td {
-	width:15%;
+	width:10%;
 }
 .detailTable {
 	height:80px;
@@ -1776,7 +1776,7 @@ gAccount {
 	padding:10px 0;
 }
 .detailTable .operate .Paybtn {
-	width:64%;
+	width:76%;
 	margin:0 auto;
 	padding:2px 6px;
 	color:#ffff;

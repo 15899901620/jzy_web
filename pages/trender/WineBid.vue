@@ -1,8 +1,18 @@
 <template>
 
-  <div class="ovh graybg">
-    <div class=" mb40">
-      <pageRoute></pageRoute>
+  <div class="body">
+     <Header-small title="招标中心">
+      <div slot="headerother">
+        <div
+          data-v-228ad150
+          class="dflexAlem gray fs14"
+          style="color: rgb(102, 102, 102);    margin-top: 50px;"
+        >
+          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
+          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
+        </div>
+      </div>
+    </Header-small>
       <div class="w1200 dflex">
         <!-- 公告信息-->
         <div class="Notice">
@@ -33,12 +43,9 @@
           <membercenter :webSource="webName"></membercenter>
           <!--通知公告-->
           <Notice></Notice>
-          <!--常见问题-->
-          <Commonproblem></Commonproblem>
           <!--联系我们-->
           <Contact></Contact>
         </div>
-      </div>
     </div>
   </div>
 
@@ -46,10 +53,10 @@
 </template>
 
 <script>
+  import Header from "../../components/header";
 	import Pagination from '../../components/pagination'
 	import pageRoute from './trenderCompontent/pageRoute'
 	import membercenter from './trenderCompontent/membercenter'
-	import Commonproblem from './trenderCompontent/Commonproblem'
 	import Contact from './trenderCompontent/Contact'
 	import Notice from './trenderCompontent/Notice'
 	import {sendHttp} from "../../api/common";
@@ -59,9 +66,9 @@
 		name: "WineBid",
 		layout: 'membercenter',
 		components: {
+      HeaderSmall: Header.small,
 			pageRoute,
 			Contact,
-			Commonproblem,
 			membercenter,
 			Notice,
 			pages: Pagination.pages
