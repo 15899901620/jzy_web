@@ -6,7 +6,8 @@ export const state = () => {
 		capitalInfo: {},
 		orderList:[],
 		orderListTotal: 0,
-		orderCount: {}
+		orderCount: {},
+		orderPayInfo: {}
 	}
 }
 
@@ -22,7 +23,10 @@ export const mutations = {
 	},
 	updateOrderCount(state, data) {
 		state.orderCount = data
-	}
+	},
+	updateOrderPayInfo(state, data){
+		state.orderPayInfo = data
+	},
 }
 
 export const actions = {
@@ -42,8 +46,15 @@ export const actions = {
 	async getOrderCount({commit}) {
 		let res = await sendCurl(this, server.api.order.getMemberOrderCount, {})
 		if (res.status === 200) {
-			console.log(res)
 			commit('updateOrderCount', res.data)
 		}
 	},
+	async getOrderPayInfo({commit}, params) {
+		let res = await sendCurl(this, server.api.order.getOrderPayInfo, params)
+		if (res.status === 200) {
+			console.log(res)
+			commit('updateOrderPayInfo', res.data)
+		}
+	},
+
 }

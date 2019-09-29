@@ -7,28 +7,36 @@
       class-name="vertical-center-modal">
     <p slot="header" style="color:#666; text-align:left; font-size:14px;">
       <Icon type="md-chatboxes" style="font-size:18px;"/>
-      <span>{{title}}</span>
+      <span>订单支付</span>
     </p>
 
     <div class="Bond_Popup">
-      <div style="line-height:32px;" v-if="datalist.orderNo">
+      <div style="line-height:32px;" v-if="dataList.orderNo">
         <span class="Bond_Popup_title">订单编号：</span>
-        <span class="ml10">{{datalist.orderNo}}</span>
+        <span class="ml10">{{dataList.orderNo}}</span>
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单商品：</span>
-        <span class="ml10">{{datalist.skuNo}} {{datalist.skuName}}</span>
+        <span class="ml10">{{dataList.skuNo}} {{dataList.skuName}}</span>
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{datalist.orderNum}}</span>
+        <span class="ml10">{{dataList.orderNum}}</span>
+      </div>
+      <div style="line-height:32px;">
+        <span class="Bond_Popup_title">订单总金额：</span>
+        <span class="ml10">￥{{amountFormat(dataList.totalAmount)}}</span>
       </div>
       <!--需冻结保证金-->
       <div class="PricePopup">
         <div style="line-height: 28px; padding:20px">
+          <p v-if="dataList.deductAmount > 0">
+            <span class="PricePopup_title">使用已冻结保证金额：</span>
+            <span class="orangeFont fwb fs16"> ￥{{amountFormat(dataList.deductAmount)}}</span>
+          </p>
           <p>
             <span class="PricePopup_title">需支付金额：</span>
-            <span class="orangeFont fwb fs16"> ￥{{amountFormat(datalist.totalAmount - datalist.depositAmount)}}</span>
+            <span class="orangeFont fwb fs16"> ￥{{amountFormat(dataList.payAmount)}}</span>
           </p>
           <p>
             <Checkbox :disabled="true" :value="true"></Checkbox>
@@ -52,17 +60,23 @@
     </div>
 
     <div slot="footer" style="text-align:center">
-      <Button type="warning" size="large">查看充值方式</Button>
-      <Button type="primary" size="large" @click="bidersOK">确认支付</Button>
+      <Button type="warning" size="large" @click="showInvestCapital">查看充值方式</Button>
+      <Button type="primary" size="large" @click="sumitOK">确认支付</Button>
     </div>
   </Modal>
 </template>
 
 <script>
 	import {orderPayCode, orderPayment} from '../../api/users'
+	import { mapState } from 'vuex'
 
 	export default {
-		name: 'payorder',
+		name: 'orderPay',
+		computed:{
+			...mapState({
+				dataList: state => state.member.orderPayInfo,
+			})
+		},
 		data() {
 			return {
 				loading: false,
@@ -77,25 +91,21 @@
 			}
 		},
 		props: {
-			title: {
-				type: String,
-				default: '支付货款'
-			},
-			isshow: {
+			isShow: {
 				type: Boolean,
 				default: false
 			},
-			datalist: {
-				type: Object
+			order_id: {
+				type: Number
 			}
 		},
 		methods: {
-			async getCapital() {
-				this.$store.dispatch('member/getCapitalInfo')
-			},
 			biderscancel() {
 				this.$emit('unChange', false)
 			},
+			showInvestCapital(){
+				location.href = '/users/investCapital'
+      },
 			amountFormat(amount) {
 				return parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 			},
@@ -104,7 +114,7 @@
 				const res = await orderPayCode(this, params)
 				if (res.data && res.status === 200) {
 					this.auth_time = 60;
-					var timer = setInterval(() => {
+					let timer = setInterval(() => {
 						this.auth_time--;
 						if (this.auth_time <= 0) {
 							clearInterval(timer)
@@ -124,8 +134,8 @@
 					});
 				}
 			},
-			//提交缴纳保证金
-			async bidersOK() {
+			//确认支付
+			async sumitOK() {
 				if (!this.Bonddeposit.BondCode) {
 					this.TipCode = '验证码不能为空'
 					return
@@ -133,19 +143,23 @@
 				this.TipCode = ''
 
 				let params = {
-					id: this.datalist.id,
+					id: this.order_id,
 					code: this.Bonddeposit.BondCode
 				}
 				let res = await orderPayment(this, params)
 
-				if (!res.data.errorcode && res.status === 200 && res.data) {
-					this.Bonddeposit.BondCode = ''
-					this.$Message.info("支付成功")
-					this.$emit('unChange', false)
+				if (res.status === 200) {
+					if(res.data && !res.data.errorcode){
+						this.Bonddeposit.BondCode = ''
+						this.$Message.info("支付成功")
+						this.$emit('unChange', false)
+          }else{
+						this.$Modal.alert(res.data.message)
+          }
 				} else {
 					this.$Modal.confirm({
 						title: '失败提示',
-						content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+						content: '<p style="font-size: 16px; margin-top: 10px">支付失败，请联系客服</p>',
 						okText: '确定',
 						styles: 'top:30px;',
 						onOk: () => {
@@ -154,21 +168,17 @@
 						onCancel: () => {
 
 						}
-					});
+					})
 				}
 
 			}
 		},
 		watch: {
-			datalist: {
-				handler(newValue, oldValue) {
-				},
-				deep: true
-			},
-			isshow: function (e) {
+			isShow: function (e) {
 				if (e === true) {
+					this.$store.dispatch('member/getOrderPayInfo', {order_id: this.order_id})
+					this.$store.dispatch('member/getCapitalInfo')
 					this.loading = true
-					this.getCapital()
 				} else {
 					this.loading = false
 				}

@@ -54,7 +54,7 @@ export default {
             store.dispatch('system/getSystemCnf'),
         ])
     },
-    
+
     data() {
         return {
             orderNo:'',
