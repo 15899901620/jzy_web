@@ -52,6 +52,8 @@ let api = {
   order: {
 		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
 		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
+		getOrderPayInfo:{'url':'/bill/orderInfo/getOrderPayInfo', 'method':'get'} ,
+		orderPayment:{'url':'/bill/orderInfo/payment', 'method':'get'} ,
     orderlist: '/bill/orderInfo/list',
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
@@ -90,6 +92,8 @@ let api = {
     getSpotInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
     freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create',
+    createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
+		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
   },
   /**
    * @description 预售商口

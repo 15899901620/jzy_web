@@ -9,7 +9,9 @@ export const state = () => {
 			category: [],
 			process: [],
 		},
-		spotInfo: {}
+		spotInfo: '',
+		createOrderRs: {},
+		spotPlanList: [],
 	}
 }
 
@@ -25,6 +27,12 @@ export const mutations = {
 	},
 	updateSpotInfo(state, data) {
 		state.spotInfo = data
+	},
+	updateCreateOrderRs(state, data) {
+		state.createOrderRs = data
+	},
+	updateSpotPlanList(state, data) {
+		state.spotPlanList = data
 	}
 }
 
@@ -49,7 +57,21 @@ export const actions = {
 	async getSpotInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.spot.getSpotInfoToOrder, params)
 		if (res.status === 200) {
-			commit('updateSpotInfo', res.data.items)
+			commit('updateSpotInfo', res.data)
 		}
-	}
+	},
+	async createOrderByQuote({commit}, params) {
+		let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
+		if (res.status === 200) {
+			commit('updateCreateOrderRs', res.data)
+		}
+	},
+	async getSpotPlanList({commit}, params) {
+		let res = await sendCurl(this, server.api.spot.spotPlanList, params)
+		console.log(res)
+		if (res.status === 200) {
+			commit('updateSpotPlanList', res.data.items)
+			commit('updateTotal', res.data.total)
+		}
+	},
 }

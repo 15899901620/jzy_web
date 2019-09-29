@@ -89,7 +89,7 @@
         </div>
       </div>
     </div>
-    <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
+    <OrderPay :isShow='payLoading' :order_id='payOrderID' @unChange="unPayOrder"></OrderPay>
     <FreightAdd :isshow="addloading" @unChange="unaddChange" :datalist='addList'></FreightAdd>
     <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
   </div>
@@ -97,10 +97,8 @@
 
 <script>
 	import Navigation from '../../components/navigation'
-	import {orderpage, orderCount} from '../../api/order'
-	import pagination from '../../components/pagination'
 	import config from '../../config/config'
-	import paydeposit from '../../components/paydeposit'
+	import OrderPay from '../../components/paydeposit/orderPay'
 	import FreightAdd from '../../components/freight-add/freight-add'
 	import FreightDetail from '../../components/freight-add/freght-detail'
 
@@ -112,7 +110,7 @@
 			FreightAdd,
 			FreightDetail,
 			usernav: Navigation.user,
-			payorder: paydeposit.order
+			OrderPay
 		},
 		fetch({store}) {
 			return Promise.all([
@@ -124,10 +122,11 @@
 		},
 		data() {
 			return {
+				payOrderID: 0,
 				detailloading: false,
 				addloading: false,
-				payloading: false,
-				dataRow: {},
+				payLoading: false,
+				payInfo: {},
 				addList: {},
 				current_page: 1,
 				page_size: 5,
@@ -138,7 +137,6 @@
 					orderNo: '',
 					skuName: ''
 				},
-				userinfo: {}
 			}
 		},
 		methods: {
@@ -155,13 +153,23 @@
 			},
 
 			paymentBut(row) {
-				this.payloading = true
-				this.dataRow = {
-					...row
-				}
+				//检查是否可以使用合约的保证金
+
+				this.payLoading = true
+        this.payOrderID = row.id
+				/*this.payInfo = {
+					'id': row.id,
+					'orderNo' : row.orderNo,
+					'skuNo' : row.skuNo,
+					'skuName' : row.skuName,
+					'orderNum' : row.orderNum,
+					'totalAmount' : row.totalAmount,
+					'payAmount' : row.payAmount,
+					'deductAmount' : row.deductAmount,
+				}*/
 			},
 			unPayOrder(row) {
-				this.payloading = row
+				this.payLoading = row
 				this.getSourceData()
 			},
 			addAddress() {
@@ -172,7 +180,6 @@
 				this.addloading = res
 			},
 			undetailChange(res) {
-
 				this.detailloading = res
 			},
 
@@ -234,7 +241,7 @@
 			}
 		},
 		mounted() {
-			var status = this.$route.query.status
+			let status = this.$route.query.status
 			if (status == 2) {
 				this.formSearch.status = 2
 				this.currTabs = 1

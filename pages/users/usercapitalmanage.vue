@@ -10,7 +10,7 @@
           <div class="dflexAlem" style="justify-content: space-between; margin: 25px auto; font-size: 14px ">
             <div>可用余额<span class="fs24 orangeFont fwb ml10">{{available_amount_format}}</span></div>
             <div class="opePrice">
-              <a class="orangesbg" href="/help/9" target="_blank" style="padding: 10px 15px; border-radius: 3px;">查看充值方式</a>
+              <a class="orangesbg" href="/users/investCapital" target="_blank" style="padding: 10px 15px; border-radius: 3px;">查看充值方式</a>
               <!-- <span class="orangeFont CashAdvBg ml15" href="">申请提现</span> -->
             </div>
           </div>

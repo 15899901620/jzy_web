@@ -22,7 +22,10 @@
           <span style="width: 10%;">{{item.warehouse_name}}</span>
           <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
           <span style="width: 6%;" v-else>非标准包装</span>
-          <span style="width: 9%;">{{item.available_num}}</span>
+          <span style="width: 9%;">
+            {{item.available_num}}
+            <Tag v-if="item.available_num > 0 && item.limit_num > 0" color="error">限{{item.limit_num}}</Tag>
+          </span>
           <span v-if="$store.state.memberToken" class="orangeFont"
                 style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
@@ -49,7 +52,6 @@
                 style="color: #000;background: #e7e7e7; cursor: pointer;width: 76px;line-height: 30px;margin: 0 auto; border-radius: 3px;">下单</div>
             <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                  @click="addOrder(item.id)">下单</div>
-
             <div v-else class="ListBtn" @click="goLogin">登录</div>
           </span>
         </li>
@@ -62,38 +64,29 @@
         </li>
       </template>
     </ul>
-    <CheckType :record_id="selectRecordID" :isShow="checkTypeShow" @cancel="checkTypeCancel"></CheckType>
   </div>
 </template>
 
 <script>
 	import TimeDown from '../../components/timeDown'
-	import CheckType from '../../components/spot-list/checkType'
 
 	export default {
 		name: 'SpotList',
 		components: {
 			TimeDown,
-			CheckType
 		},
 		data() {
 			return {
 				modal_loading: false,
-				selectRecordID: 0,
-				checkTypeShow: false,
 			}
 		},
 
 		methods: {
 			addOrder(id) {
-				this.selectRecordID = id
-				this.checkTypeShow = true
+				location.href='/spot/order/' + id
 			},
 			reloadPage() {
 				this.$router.go(0)
-			},
-			checkTypeCancel(){
-				this.checkTypeShow = false
 			},
 			goLogin(){
 				location.href='/login'
