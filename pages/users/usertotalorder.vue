@@ -37,15 +37,15 @@
           </div>
           <div class="TableTitle graybg">
             <!-- <span style="width: 10%;">单据类型</span> -->
-            <span style="width: 10%;">商品信息</span>
-            <span style="width: 10%;">单价(元)</span>
-            <span style="width: 10%;">数量(吨)</span>
-            <span style="width: 10%;">库区</span>
-            <span style="width: 10%;">提货方式</span>
-            <span style="width: 10%;">订单总金额</span>
-			<span style="width: 10%;">订单状态</span>
-			<span style="width: 10%;">订单操作</span>
-			<span style="width: 10%;">提货状态</span>
+            <span style="width: 12%;">商品信息</span>
+            <span style="width: 12%;">单价(元)</span>
+            <span style="width: 12%;">数量(吨)</span>
+            <span style="width: 12%;">库区</span>
+            <span style="width: 12%;">提货方式</span>
+            <span style="width: 12%;">订单总金额</span>
+			<span style="width: 12%;">订单状态</span>
+			<span style="width: 12%;">订单操作</span>
+			<span style="width: 12%;">提货状态</span>
           </div>
           <template v-if="$store.state.member.orderList.length > 0">
             <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
