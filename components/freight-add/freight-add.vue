@@ -57,8 +57,12 @@
                 </Row>
                 <Row index="2">
                     <Col span="12" style="margin-top: 5px;">
+                         <FormItem label="用车日期" prop="demandEndDate">
+                                <DatePicker  type="date" transfer :value='formAddress.demandBeginDate'  :options="options4"  format="yyyy-MM-dd"    @on-change="formAddress.demandBeginDate = $event"></DatePicker>
+                        </FormItem>
+                    </Col>
                         <FormItem label="用车日期" prop="demandEndDate">
-                                <Date-picker    format="yyyy-MM-dd" :options='options4'  type="daterange" placement="bottom-end" on-change='' style="width: 168px" @on-change="demandDate"></Date-picker>
+                                <DatePicker   type="date" transfer :value='formAddress.demandEndDate'   :options="options4" format="yyyy-MM-dd"    @on-change="formAddress.demandEndDate = $event"></DatePicker>
                         </FormItem>
                     </Col>
                 </Row>
@@ -242,8 +246,8 @@ export default {
                 dispatchFullAddress:'',
                 address: '',//详细地址
                 defaultAddress: false,    //设置默认地址
-                demandBeginDate:'',
-                demandEndDate:'',
+                demandBeginDate:this.dateFormat(new Date(), 'yyyy-MM-dd'),
+                demandEndDate:this.dateFormat(new Date(), 'yyyy-MM-dd'),
                 alias:''             //别名
             },
             ruleValidate: {
@@ -312,6 +316,30 @@ export default {
             this.tax=this.taxList[e]
             this.tax_id=e
         },
+        dateFormat(date, fmt) {
+                if (/(y+)/.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+                }
+                let o = {
+                    'M+': date.getMonth() + 1,
+                    'd+': date.getDate(),
+                    'h+': date.getHours(),
+                    'm+': date.getMinutes(),
+                    's+': date.getSeconds()
+                };
+                for (let k in o) {
+                    if (new RegExp(`(${k})`).test(fmt)) {
+                        let str = o[k] + '';
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this.padLeftZero(str));
+                  
+                    }
+                }
+                return fmt;
+        },
+        padLeftZero(str) {
+            return ('00' + str).substr(str.length);
+        },
+
        async dataList(){
             // var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
             let t= new Date(this.datalist.deliveryDeadline)
