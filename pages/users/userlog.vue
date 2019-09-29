@@ -176,7 +176,8 @@ export default {
             return `全部 ${total} 条`;
         },
     changePage (row) {
-              this.$router.push({name:'users-userlog',query:{page:row}})
+				this.current_page = row
+				this.freight()
     },
     undetailChange(res) {
 
