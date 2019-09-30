@@ -15,8 +15,12 @@
               <Col span="12">有效提货时间：{{this.datalist.deliveryStart}} 至 {{this.datalist.deliveryDeadline}}</Col>
             </Row>
             <Row index="">
-              <Col span="12">提货方式：{{this.datalist.orderNo}}</Col>
-              <Col span="12">状态：{{this.datalist.orderNo}}</Col>
+              <Col span="12">提货方式：
+                <template v-if="this.datalist.isDelivery == 0">自提
+                  <template v-if="(datalist.isAddDemand) || 0 == 0">(待发送物流询价)</template>
+                </template>
+                <template v-else-if="this.datalist.isDelivery == 1">配送</template>
+              </Col>
             </Row>
             <Row index="">
               <Col span="12">仓库名称：{{this.datalist.warehouseName}}</Col>
@@ -51,15 +55,14 @@
         </div>
 
         <div class="whitebg mt20" style="padding:0px 18px 18px;">
-          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">价格与支付信息</h3>
+          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">商品信息</h3>
           <div style="line-height:32px; ">
-            <Row index=""
-                 style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
+            <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
               <Col span="4">数量</Col>
               <Col span="3">商品单价</Col>
               <Col span="2">运费</Col>
               <Col span="2">巨融易</Col>
-              <Col span="4">合计单价（元/吨）</Col>
+              <Col span="4">出厂单价（元/吨）</Col>
               <Col span="3">保证金金额</Col>
               <Col span="4">本单总金额</Col>
             </Row>
