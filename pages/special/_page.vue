@@ -82,15 +82,17 @@ export default {
     }) {
         return Promise.all([
 
-			//获取顶部、中部、底部导航信息
-			store.dispatch('common/getNavList'),
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('helper/getHelpCate', {
-                parentId: 0,
-                indexShow: 1
-            }),
-            store.dispatch('system/getLinksInfo'),
+				//获取顶部、中部、底部导航信息
+				store.dispatch('common/getNavList'),
+				//获取系统配置
+				store.dispatch('common/getSysConfig'),
+				//获取友情链接
+				store.dispatch('common/getFriendlyList'),
+				//获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {
+					catId: 0,
+					indexShow: 1
+				}),
             store.dispatch('system/getBannerInfo', {
                 positionId: 2
             }),

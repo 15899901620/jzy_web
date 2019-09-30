@@ -131,8 +131,11 @@ export default {
     },
     fetch({ store, params }) {
         return Promise.all([
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
+          //获取顶部、中部、底部导航信息
+          store.dispatch('common/getNavList'),
+          //获取系统配置
+          store.dispatch('common/getSysConfig'),
+      
         ])
     },
     computed: {
