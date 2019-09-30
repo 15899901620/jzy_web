@@ -86,7 +86,7 @@ export default {
       passwordTip: false,
       NameText: "",
       passwordName: "",
-      SupplierInfor: "",
+      SupplierInfor: Cookies.get("supplierInfor"),
       loginsupplierform: {
         username: "",
         password: ""
@@ -156,11 +156,12 @@ export default {
         })
     },
     async SourceData() {
-        if(this.SupplierInfor != undefined){
-            const res = await sendHttp(this, true, server.api.biddding.bidddingList,2)
+         if(this.SupplierInfor != undefined){
+            const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
+
             this.dataList = res.data.items
         }else{
-             const res = await sendHttp(this, false, server.api.biddding.bidddingList)
+           const res = await sendHttp(this, false, server.api.biddding.bidddingList)
             this.dataList = res.data.items
         }
 
@@ -184,7 +185,7 @@ export default {
     }
   },
   mounted() {
-    this.SupplierInfor = Cookies.get("supplierInfor");
+
     this.SourceData()
   }
 };

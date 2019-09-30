@@ -76,9 +76,9 @@
           </div>
           <div>
              <p style="line-height:42px; text-align:left; font-size:15px; padding-right:10px;"><span >物料：{{this.datalist.skuName}}</span> <span class="ml15">数量：{{this.datalist.orderNum}}天</span></p>
-            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"> <span>已支付：{{this.datalist.total_amount-this.datalist.deposit_amount}} </span><span class="ml15">支付时间：{{this.datalist.orderPayTime}}</span></p>
+            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"> <span>已支付：</span><span class="ml15">支付时间：{{this.datalist.orderPayTime}}</span></p>
             <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额:{{this.datalist.skuName}} </span><span class="ml15">最迟付款时间:{{this.datalist.orderPayLastTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"><span>账户金额:{{this.datalist.skuName}} </span> <span class="ml15">保证金钱包余额:{{this.datalist.skuName}}</span></p>
+            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"><span>账户金额:{{this.capit.total_amount_format}} </span> <span class="ml15">保证金钱包余额:{{this.capit.freeze_amount_format}}</span></p>
             <p style="line-height:32px; text-align:right; font-size:15px; padding-right:10px;"
                v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天</p>
             <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;">
@@ -104,7 +104,9 @@
 	import {orderpage, getorderDetail} from '../../../../api/order'
 	import {getCookies} from '../../../../config/storage'
 	import config from '../../../../config/config'
-	import utils from '../../../../plugins/common'
+  import utils from '../../../../plugins/common'
+  import {sendHttp} from "../../../../api/common";
+  	import server from "../../../../config/api";
 
 	export default {
 		name: "usertotalorder",
@@ -130,7 +132,8 @@
 					status: '',
 					OrderList: '',
 					orderNo: '',
-					skuName: ''
+          skuName: '',
+          capit:'',
 				},
 				orderid: !this.$route.params.id ? 0 : this.$route.params.id,
 				userinfo: {}
@@ -159,10 +162,16 @@
 			},
 			amountFormat: function (amount, sign) {
 				return utils.amountFormat(amount, sign)
-			},
+      },
+       async capit(){
+        const res = await sendHttp(this, true, server.api.capital.myCapital)
+        console.log(res)
+        this.capit=res.data
+     }
 		},
 		mounted(){
-			this.sourceDeta()
+      this.sourceDeta()
+      this.capit();
     },
 		watch: {
 			'$route'(to, from) {

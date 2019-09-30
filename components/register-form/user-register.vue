@@ -789,9 +789,12 @@
           },
           async userSubmit(formCustom){
             const res = await manageReg(this, formCustom)
+
             if (res.data === true && res.status === 200) {
               this.current = 2
+
               this.$emit('currData', false)
+             // this.$router.push({name:'RegisterSuccess'})
             } else {
               this.$Message.info({
                 content: "抱歉、您的信息提交失败，请填写重新提交！",
