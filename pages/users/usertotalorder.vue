@@ -151,7 +151,7 @@
 			return {
 				payOrderID: 0,
 				paystatus:[
-                  {'label': '已取消','value':0},
+          {'label': '已取消','value':0},
 				  {'label': '待付货款','value':2},
 				  {'label': '已付款','value':3},
                 ],

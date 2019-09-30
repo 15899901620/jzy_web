@@ -39,7 +39,7 @@
 				default: 1
 			},
 			endTime: {
-				type: String
+				type: String,
 			},
 			endMsg: {
 				type: String
@@ -67,6 +67,7 @@
 		},
 		methods:{
 			restart(){
+				console.log("restart")
 				let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
 				// 计算时间差
 				let timeLag = (end - new Date().getTime()) / 1000
@@ -106,6 +107,7 @@
 			}
 		},
 		mounted() {
+			this.restart()
 		},
 		watch: {
 			endTime: function (e) {

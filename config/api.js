@@ -97,6 +97,7 @@ let api = {
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
 		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
+		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
   },
   /**
    * @description 预售商口
