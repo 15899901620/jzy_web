@@ -39,7 +39,7 @@
 				default: 1
 			},
 			endTime: {
-				type: String
+				type: String,
 			},
 			endMsg: {
 				type: String
@@ -67,45 +67,49 @@
 		},
 		methods:{
 			restart(){
-				let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
-				// 计算时间差
-				let timeLag = (end - new Date().getTime()) / 1000
-				// 判断当前是否时分秒的值是否大于10
-				let add = num => {
-					return num < 10 ? '0' + num : num
-				}
-				//let self = this
-				// 时间倒计时运算的方法
-				let timeFunction = () => {
-					let time = timeLag--
-					this.timeObj = { // 时间对象
-						seconds: Math.floor(time % 60),
-						minutes: Math.floor(time / 60) % 60,
-						hours: Math.floor(time / 60 / 60) % 24,
-						days: Math.floor(time / 60 / 60 / 24)
+				console.log("restart")
+        if(this.endTime){
+					let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
+					// 计算时间差
+					let timeLag = (end - new Date().getTime()) / 1000
+					// 判断当前是否时分秒的值是否大于10
+					let add = num => {
+						return num < 10 ? '0' + num : num
 					}
-					// 计算出时分秒
-					this.myDay = `${add(this.timeObj.days)}`
-					this.myHours = `${add(this.timeObj.hours)}`
-					this.myMinutes = `${add(this.timeObj.minutes)}`
-					this.mySeconds = `${add(this.timeObj.seconds)}`
-					// 当时间差小于等于0时,停止倒计时
-					if (time <= 0) {
-						
-						this.isStop = true
-						this.clocker = this.endMsg || '已结束'
-						//this.$emit('onTimeOver')
-					} else {
-						setTimeout(function () {
-							timeFunction();
-						}, 1000)
+					//let self = this
+					// 时间倒计时运算的方法
+					let timeFunction = () => {
+						let time = timeLag--
+						this.timeObj = { // 时间对象
+							seconds: Math.floor(time % 60),
+							minutes: Math.floor(time / 60) % 60,
+							hours: Math.floor(time / 60 / 60) % 24,
+							days: Math.floor(time / 60 / 60 / 24)
+						}
+						// 计算出时分秒
+						this.myDay = `${add(this.timeObj.days)}`
+						this.myHours = `${add(this.timeObj.hours)}`
+						this.myMinutes = `${add(this.timeObj.minutes)}`
+						this.mySeconds = `${add(this.timeObj.seconds)}`
+						// 当时间差小于等于0时,停止倒计时
+						if (time <= 0) {
+
+							this.isStop = true
+							this.clocker = this.endMsg || '已结束'
+							//this.$emit('onTimeOver')
+						} else {
+							setTimeout(function () {
+								timeFunction();
+							}, 1000)
+						}
 					}
-				}
-				// 开始执行倒计时
-				timeFunction()
+					// 开始执行倒计时
+					timeFunction()
+        }
 			}
 		},
 		mounted() {
+			this.restart()
 		},
 		watch: {
 			endTime: function (e) {

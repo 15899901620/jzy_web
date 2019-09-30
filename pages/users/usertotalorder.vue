@@ -38,14 +38,14 @@
           <div class="TableTitle graybg">
             <!-- <span style="width: 10%;">单据类型</span> -->
             <span style="width: 12%;">商品信息</span>
-            <span style="width: 12%;">单价(元)</span>
+            <span style="width: 12%;">单价(元/吨)</span>
             <span style="width: 12%;">数量(吨)</span>
             <span style="width: 12%;">库区</span>
             <span style="width: 12%;">提货方式</span>
             <span style="width: 12%;">订单总金额</span>
-			<span style="width: 12%;">订单状态</span>
-			<span style="width: 12%;">订单操作</span>
-			<span style="width: 12%;">提货状态</span>
+            <span style="width: 12%;">订单状态</span>
+            <span style="width: 12%;">订单操作</span>
+            <span style="width: 12%;">提货状态</span>
           </div>
           <template v-if="$store.state.member.orderList.length > 0">
             <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
@@ -60,13 +60,13 @@
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
                   </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
-                  <span class="fr mr15" v-show="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>
+                  <span class="fr mr15" v-if="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>
                 </td>
               </tr>
               <tr class="detailTable">
 				<!-- <td>{{detailOrderType(item.orderType)}}</td> -->
                 <td>{{item.skuName}}</td>
-                <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
+                <td><span class="orangeFont">{{item.finalPriceFormat}}</span></td>
                 <td>{{item.orderNum}}</td>
                 <td>{{item.warehouseName}}</td>
 				<td>
@@ -151,7 +151,7 @@
 			return {
 				payOrderID: 0,
 				paystatus:[
-                  {'label': '已取消','value':0},
+          {'label': '已取消','value':0},
 				  {'label': '待付货款','value':2},
 				  {'label': '已付款','value':3},
                 ],
