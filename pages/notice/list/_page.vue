@@ -63,12 +63,19 @@ export default {
     name: 'noticeList',
     fetch({ store, params }) {
         return Promise.all([
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('helper/getHelpCate', {parentId: 0,indexShow: 1}),
-            store.dispatch('system/getLinksInfo'),
-            store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'add_time', desc: true, isShow: 1}),
-            store.dispatch('notice/getNoticeHotList',  {current_page: 1, page_size: 10, sortBy: 'click', desc: true, isShow: 1}),
+          //获取顶部、中部、底部导航信息
+          store.dispatch('common/getNavList'),
+          //获取系统配置
+          store.dispatch('common/getSysConfig'),
+          //获取友情链接
+          store.dispatch('common/getFriendlyList'),
+          //获取底部帮助分类
+          store.dispatch('helper/getHelpCate', {
+            catId: 0,
+            indexShow: 1
+          }),
+          store.dispatch('notice/getNoticeList', {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'add_time', desc: true, isShow: 1}),
+          store.dispatch('notice/getNoticeHotList',  {current_page: 1, page_size: 10, sortBy: 'click', desc: true, isShow: 1}),
         ])
     },
     components: {

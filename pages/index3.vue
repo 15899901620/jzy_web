@@ -80,39 +80,7 @@ export default {
             })
     },*/
     fetch({ store }) {
-        /*return Promise.all([
-            store.dispatch('menu/getMenuList'),
-            store.dispatch('system/getSystemCnf'),
-            store.dispatch('helper/getHelpCate', {
-                parentId: 0,
-                indexShow: 1
-            }),
-            store.dispatch('system/getLinksInfo'),
-            store.dispatch('system/getBannerInfo', {
-                positionId: 1
-            }),
-            store.dispatch('article/getHomeNotice', {
-                current_page: 1,
-                page_size: 8,
-                sortBy: 'add_time', desc: true,isShow: 1
-            }),
-            store.dispatch('article/getHomeArticle', {
-                current_page: 1,
-                page_size: 8,sortBy: 'add_time', desc: true,isShow: 1
-            }),
-            store.dispatch('article/getHotArticle', {
-                current_page: 1,
-                page_size: 4
-            }),
-            store.dispatch('bidders/getHotBidderList', {
-                current_page: 1,
-                page_size: 20
-            }),
-            store.dispatch('spot/getSpotList', {
-                current_page: 1,
-                page_size: 20
-            })
-        ])*/
+       
     },
 
     components: {
