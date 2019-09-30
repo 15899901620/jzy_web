@@ -105,7 +105,6 @@ export default {
             catId: 0,
             indexShow: 1
           }),
-
         store.dispatch('article/getArticleDetail', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getArticleClick', {id: !params.id ? 0 : params.id}),
         store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10}),
