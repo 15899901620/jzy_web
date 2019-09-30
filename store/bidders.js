@@ -34,14 +34,21 @@ export const mutations = {
 	},
 	updateendData(state, data) {
 		state.biddersendData = data
-	}
+	},
+	updateCurrPage(state, data) {
+		state.currPage = data
+	},
+	updatebidderDetail(state,data){
 
+	},
 }
 
 export const actions = {
 	async getAuctionList({commit}, params) {
+		commit('updateCurrPage', parseInt(params.current_page))
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+
 			commit('updateAuctionList', res.data.items)
 		}
 	},

@@ -792,7 +792,6 @@
 
             if (res.data === true && res.status === 200) {
               this.current = 2
-
               this.$emit('currData', false)
              // this.$router.push({name:'RegisterSuccess'})
             } else {
