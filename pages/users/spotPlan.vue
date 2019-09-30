@@ -56,8 +56,8 @@
                 <td style="width: 15%;">待签合同</td>
                 <td style="width: 15%;" class="operate">
                   <div v-if="item.available_num > 0">
-                    <!--<a class="Paybtn mt15 CarCurr" @click="qrOrder(item.id)">转单</a>
-                    <a class="Paybtn mt15 CarCurr" @click="qrOrder(item.id)">结束</a>-->
+                    <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toCreateOrder(item.id)">转单</a>
+                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px" @click="cancelPlan(item)">申请结束</a>
                   </div>
                 </td>
               </tr>
@@ -123,6 +123,21 @@
 			},
 			reloadPage (){
 				location.reload(true)
+      },
+			toCreateOrder(id){
+
+      },
+      cancelPlan(row){
+				this.$Modal.confirm({
+					title: '合约申请结束',
+					content: '<p style="font-size:14px;">您确认申请结束当前合约单？申请取消执行剩余'+row.available_num+'吨货物转订单</p>',
+					onOk: () => {
+
+					},
+					onCancel: () => {
+
+					}
+				})
       }
 		},
 		mounted() {
