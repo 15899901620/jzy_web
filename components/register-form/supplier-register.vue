@@ -1038,13 +1038,13 @@
           },
           async supSubmit(formCustom){
               const res = await supplierReg(this, formCustom)
-              if (res.data && res.status === 200) {
+              if (!res.errorcode && res.status === 200) {
                 this.current = 2
                 this.$emit('currData', false)
                 // this.$router.push({name:'RegisterSuccess'})
               } else {
                 this.$Message.info({
-                  content: '注册未成功,请填写重新提交!',
+                  content: '注册未成功,请重新填写提交!',
                   duration: 5,
                   closable: true
                 })
