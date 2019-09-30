@@ -36,16 +36,16 @@
             </div> -->
           </div>
           <div class="TableTitle graybg">
-            <span style="width: 10%;">单据类型</span>
-            <span style="width: 10%;">商品信息</span>
-            <span style="width: 10%;">单价(元)</span>
-            <span style="width: 10%;">数量(吨)</span>
-            <span style="width: 10%;">库区</span>
-            <span style="width: 10%;">提货方式</span>
-            <span style="width: 10%;">订单总金额</span>
-			<span style="width: 10%;">物流询价状态</span>
-			<span style="width: 10%;">订单操作</span>
-			<span style="width: 10%;">提货状态</span>
+            <!-- <span style="width: 10%;">单据类型</span> -->
+            <span style="width: 12%;">商品信息</span>
+            <span style="width: 12%;">单价(元)</span>
+            <span style="width: 12%;">数量(吨)</span>
+            <span style="width: 12%;">库区</span>
+            <span style="width: 12%;">提货方式</span>
+            <span style="width: 12%;">订单总金额</span>
+			<span style="width: 12%;">订单状态</span>
+			<span style="width: 12%;">订单操作</span>
+			<span style="width: 12%;">提货状态</span>
           </div>
           <template v-if="$store.state.member.orderList.length > 0">
             <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
@@ -53,8 +53,8 @@
               <tbody>
               <tr class="Ttitle graybg">
                 <td colspan="10">
-				  <span class="ml10">订单总金额:
-                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.sourceSn}}</span></a>
+				  <span class="ml10">合约编号:
+                    <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a>
                   </span>
                   <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
@@ -64,7 +64,7 @@
                 </td>
               </tr>
               <tr class="detailTable">
-				<td>{{detailOrderType(item.orderType)}}</td>
+				<!-- <td>{{detailOrderType(item.orderType)}}</td> -->
                 <td>{{item.skuName}}</td>
                 <td><span class="orangeFont">{{item.finalPriceFormat}}</span> <span style="color:#999">/吨</span></td>
                 <td>{{item.orderNum}}</td>
