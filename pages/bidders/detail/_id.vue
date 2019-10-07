@@ -335,7 +335,7 @@ export default {
           store.dispatch('helper/getHelpCate', {
             catId: 0,
             indexShow: 1
-          }),
+          })
     },
     components:{
         Header,

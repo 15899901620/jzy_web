@@ -5,23 +5,15 @@
         <ul class="sp_cat_title_list">
           <li class="curr"><i>1</i><p>编辑信息</p></li>
           <li class="curr"><i>2</i><p>生成合约</p></li>
-          <template v-if="order_no">
-            <li class="curr"><i>3</i><p>合约转单</p></li>
-            <li class="curr"><i>4</i><p>生成订单</p></li>
-            <template v-if="order_status == 2">
-              <li><i>5</i><p>支付货款</p></li>
-              <li><i>6</i><p>下单完成</p></li>
-            </template>
-            <template v-else>
-              <li class="curr"><i>5</i><p>支付货款</p></li>
-              <li class="curr"><i>6</i><p>下单完成</p></li>
-            </template>
-          </template>
-          <template v-else>
-            <li><i>3</i><p>合约转单</p></li>
-            <li><i>4</i><p>生成订单</p></li>
+          <li class="curr"><i>3</i><p>合约转单</p></li>
+          <li class="curr"><i>4</i><p>生成订单</p></li>
+          <template v-if="order_status == 2">
             <li><i>5</i><p>支付货款</p></li>
             <li><i>6</i><p>下单完成</p></li>
+          </template>
+          <template v-else>
+            <li class="curr"><i>5</i><p>支付货款</p></li>
+            <li class="curr"><i>6</i><p>下单完成</p></li>
           </template>
         </ul>
       </div>
@@ -30,59 +22,43 @@
       <div class="w1200 whitebg" style="margin-top: 20px; margin-bottom: 40px; border:1px solid #eee;">
         <div class="submit"></div>
         <h1 class="tac fs24 mt25 mb15">
-          <template v-if="order_no">
-            订单提交成功
-            <template v-if="order_status == 2">
-              ,请及时支付货款
-            </template>
-          </template>
-          <template v-else>
-            合约已生成，请尽快转订单
+          订单提交成功
+          <template v-if="order_status == 2">
+            ,请及时支付货款
           </template>
         </h1>
         <div class="tac fs14">
-          <span>合约号：<span>{{plan_no}}</span></span>
-          <template v-if="last_ordered_date">
-            <div>请在约定的时间<span class="orangeFont">{{last_ordered_date}}</span>内尽快转订单，否则会扣除保证金</div>
+          <span>订单号：<span>{{order_no}}</span></span>
+          <template v-if="order_pay_last_time">
+            <div>请在限定的时间<span class="orangeFont">{{order_pay_last_time}}</span>内尽快支付货款，否则系统会自动取消订单<br>（注：超过合约转单时间，则会扣除保证金）</div>
           </template>
-          <template v-else>
-            <span>订单号：<span>{{order_no}}</span></span>
-            <template v-if="order_pay_last_time">
-              <div>请在限定的时间<span class="orangeFont">{{order_pay_last_time}}</span>内尽快支付货款，否则系统会自动取消订单<br>（注：超过合约转单时间，则会扣除保证金）</div>
-            </template>
-          </template>
-
         </div>
         <div class="tac gray">
           <p>如有疑问您可以通过以下联系方式与我们取得联系</p>
           <p>联系电话：{{$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
         </div>
         <div class="orderbtn">
-          <a class="submitBtn btnBg" href="/spot">继续采购</a>
-          <template v-if="order_no">
-            <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
-          </template>
-          <template v-else>
-            <a class="submitBtn btnBorderBg ml30" href="/users/spotPlan">我的合约</a>
-          </template>
+          <a class="submitBtn btnBg" href="/spot">立即支付</a>
+          <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
         </div>
       </div>
     </div>
     <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
+    <OrderPay :isShow='payLoading' :order_id='order_id' @unChange="unPayOrder"></OrderPay>
   </div>
 </template>
 
 <script>
 	import Header from '../../../components/header'
 	import Footer from '../../../components/footer'
-	import {mapState} from 'vuex'
-	import {specialDetail, getWeek, submitOrder} from '../../../api/special'
+	import OrderPay from '../../../components/paydeposit/orderPay'
 
 	export default {
 		name: "spot-order-success",
 		components: {
 			HeaderSmall: Header.small,
 			Footer,
+			OrderPay
 		},
 		fetch({store, params}) {
 			return Promise.all([
@@ -93,13 +69,18 @@
 			])
 		},
 		asyncData ({ params, query }) {
-      return { plan_no:  query.plan_no, last_ordered_date: query.last_ordered_date, order_no: query.order_no, order_status:query.order_status, order_pay_last_time: query.order_pay_last_time}
+      return { order_id: query.order_id,order_no: query.order_no, order_status:query.order_status, order_pay_last_time: query.order_pay_last_time}
 		},
 		data() {
 			return {
+				payLoading: false,
 			}
 		},
 		methods: {
+			unPayOrder(row) {
+				this.payLoading = row
+				location.href = '/users/usertotalorder'
+			},
 		},
 		computed: {
 			classes() {

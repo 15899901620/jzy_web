@@ -63,7 +63,8 @@ let api = {
     orderDetail: '/bill/orderInfo/detail',
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
-    paycode: '/bill/orderInfo/payment/code'
+    paycode: '/bill/orderInfo/payment/code',
+    cancel: {'url':'/bill/orderInfo/cancel', 'method':'get'}
   },
   /**
    * @description 会员地址
@@ -98,6 +99,8 @@ let api = {
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
 		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
 		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
+		spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},
+		createOrderByPlan: {'url':'/bill/spotPlan/order/create', 'method':'post'},
   },
   /**
    * @description 预售商口
