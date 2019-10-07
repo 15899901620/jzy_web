@@ -1103,22 +1103,25 @@ gAccount {
 }
 .acuList li {
 	background-color:#fff;
-	width:49%;
-	margin-top:15px;
+	width:100%;
+	margin-top: 15px;
 	display:flex;
+	border: 1px solid #dfdfdf;
+	position: relative;
 }
 .acuList li:nth-child(even) {
-	margin-left:2%;
+
 }
 .acuList li .acuProduct {
-	width:300px;
+	width:62%;
 	border-right:1px solid #ccc;
 	margin:35px 0;
 	margin-left:45px;
+	position: relative;
 }
 .acuList li .acuOpear {
 	font-size:18px;
-	width:245px;
+	width:32%;
 	margin-top:35px;
 	display:flex;
 	flex-direction:column;
@@ -1126,7 +1129,7 @@ gAccount {
 }
 .acuList li .acuOpear .btnStart {
 	color:#fff;
-	padding:10px 50px;
+	padding:7px 43px;
 	border-radius:5px;
 	margin-top:20px;
 	cursor:pointer;
@@ -1142,12 +1145,12 @@ gAccount {
 }
 .acuList li .acuOpear .endauction {
 	background-color:#dbdcde;
-	color:#999;
+	color:#fff;
 }
 .acuList li .acuProduct h1 {
-	margin-top:5px;
+	margin-top:40px;
 	font-weight:bold;
-	font-size:16px;
+	font-size:20px;
 }
 .biddersRecord {
 	background:#fff;
@@ -1159,6 +1162,7 @@ gAccount {
 	width:575px;
 }
 .Bidders_record .Bidders_record_title {
+	width: 100%;
 	line-height:50px;
 	border-left:1px solid #ddd;
 	border-right:1px solid #eee;

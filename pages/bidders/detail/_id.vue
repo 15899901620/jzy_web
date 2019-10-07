@@ -9,6 +9,118 @@
                     <breadcrumb-item> {{detailDatabrid.skuName}}</breadcrumb-item>
                 </breadcrumb>
             </div>
+            <div class="status_product">
+                <div class="statusTime">
+                    <div class="status statusIngbg">正在竞拍</div>
+                    <template v-if="detailDatabrid.statusType == '1'">
+                        <div class="status statusIngbg">正在竞拍</div>
+                    </template>
+                    <template v-if="detailDatabrid.statusType == '2'">
+                        <div class="status statusVcbg">即将开始</div>
+                    </template>
+                    <template v-if="detailDatabrid.statusType == '3'">
+                        <div class="status statusEndbg">竞拍结束</div>
+                    </template>
+                    <div class="cutTime cutTimeIngbg">
+                        <div class="cutDown_time ml35"><img src="/img/cutDown_icon.png" /></div><div class="ml10"><span class="fs16">结束时间：</span><span class="fs16">2019-09-28  12:00:00</span></div>
+                    </div>
+                    <template v-if="detailDatabrid.statusType == '1'">
+                        <div class="cutTime cutTimeIngbg">正在竞拍</div>
+                    </template>
+                    <template v-if="detailDatabrid.statusType == '2'">
+                        <div class="cutTime cutTimeVcbg">即将开始</div>
+                    </template>
+                    <template v-if="detailDatabrid.statusType == '3'">
+                        <div class="cutTime cutTimeEndbg">竞拍结束</div>
+                    </template>
+                </div>
+            <div class="birdtable">
+
+                <div class="birdtabletitle">巨正源 东莞  聚丙烯 PPH-Y25L  现货 100吨 </div>
+                <table class="table">
+                    <tr class="tableTitle"><td>竞拍编号</td><td>品种</td><td>牌号</td><td>厂商</td><td>数量</td><td>提货仓库</td><td>包装方式</td><td>开始提货日期</td><td>截至提货日期</td></tr>
+                    <tr  ><td>8548921</td><td>PP</td><td>L5E89</td><td>巨正源</td><td>100吨</td><td>东莞市</td><td>散货带托</td><td>2019-09-27</td><td>2019-09-27</td></tr>
+                </table>
+            </div>
+
+            </div>
+            <!--竞拍记录-我的出价-->
+            <div class="whitebg " style="width: 1200px; margin: 0 auto; display: flex">
+            <div class="recodelist"  >
+                <div class="recordTitle">竞拍记录</div>
+                <table class="Bidders_record_title">
+                    <tbody>
+                    <tr>
+                        <th>当前状态</th>
+                        <th>竞拍人</th>
+                        <th>出价金额</th>
+                        <th>数量（吨）</th>
+                        <th style="width: 160px">出价时间</th>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--表格-->
+                <div  class="Bidders_record_list" style="text-align: center;">
+                    <!--暂无记录-->
+                    <table v-if="auctionRd.length > 0">
+                        <tbody>
+                        <tr class="Bidders_record_tr " v-for="(item,index) in auctionRd" :key="index" :class="{orangeFont:item.outStatus===1 || item.outStatus===2}">
+                            <td>
+                                <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>
+                                <span class="Bidders_record_curr" v-if="item.outStatus===2">入围</span>
+                                <span class="tac gray" v-if="item.outStatus===3">出局</span>
+                            </td>
+                            <td><span>{{item.nickName}}</span></td>
+                            <td><span>{{item.bidPrice}}</span></td>
+                            <td><span>{{item.bidNum}}</span></td>
+                            <td style="width: 120px"><span>{{ subtime(item.createTime, 11, 19)}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无任何竞拍记录!</span>
+                </div>
+            </div>
+
+
+
+
+
+                <div class="recodelist">
+                     <div class="recordTitle">我的出价</div>
+                    <table class="Bidders_record_title">
+                        <tbody>
+                        <tr>
+                            <th>当前状态</th>
+
+                            <th>出价金额</th>
+                            <th>数量（吨）</th>
+                            <th style="width: 160px">出价时间</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--表格-->
+                    <div  class="Bidders_record_list" style="text-align: center;">
+                        <!--暂无记录-->
+                        <table v-if="MineOfferRecord.length > 0">
+                            <tbody>
+                            <tr class="Bidders_record_tr"  v-for="(items,index) in MineOfferRecord" :key="index" :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">
+                                <td>
+                                    <span class="Bidders_record_curr" v-if="items.outStatus===1 && items.isActive === 1">领先</span>
+                                    <span class="Bidders_record_curr" v-if="items.outStatus===2 && items.isActive === 1">入围</span>
+                                    <span class="tac gray" v-if="items.outStatus===3 && items.isActive === 1">出局</span>
+                                </td>
+
+                                <td><span>{{items.bidPrice}}</span></td>
+                                <td><span>{{items.bidNum}}</span></td>
+                                <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无您的出价记录!</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="biddersRecord" style="display: flex;">
                 <div style="width:50%">
                     <div class="Bidders_record">
@@ -623,6 +735,7 @@ export default {
 
     },
     mounted() {
+        console.log("statusType:",this.$store.state.bidders.auctionList)
         this.getAuctionRecord()
         this.getGainauctionRecord()
         this.getauctionDetail()
@@ -666,5 +779,83 @@ export default {
                  }
             }
         }
+    }
+    .status_product{
+        width: 1200px; margin: 20px auto;
+        .statusTime{
+            display: flex;
+            .status{
+                width: 5%;
+                font-size: 18px;
+                padding: 0 12px;
+                color: #fff;
+            }
+            .cutTime{
+                color: #fff;
+                width: 95%;
+                display: flex;
+                align-items: center;
+                .cutDown_time{
+                    width: 22px;
+                    height: 22px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+            .cutTimeVcbg{
+                background: url("/img/vc_bg.png");
+            }
+            .cutTimeIngbg{background: url("/img/ingBg.png");}
+            .cutTimeEndbg{background: url("/img/EndBg.png");}
+            .statusVcbg{
+                background-color: #1b962c;
+            }
+            .statusIngbg{
+                background-color: #ed5400;
+            }
+            .statusEndbg{
+                background-color: #797979;
+            }
+        }
+        .birdtable{
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+            .table{width: 97%;
+                margin: 20px auto;
+
+                tr td{
+                    border:1px solid #e6e6e6;
+                    padding: 10px 0;
+                    text-align: center;
+                }
+            .tableTitle{
+
+                background-color: #f5f5f5;
+                color: #999999;
+            }
+            }
+            .birdtabletitle{
+                font-size: 20px;
+                margin-top: 25px;
+                margin-left: 20px;
+            }
+        }
+    }
+.recodelist{
+    width: 50%; border: 1px solid #dfdfdf;
+}
+    .recordTitle{
+        font-size: 16px;
+        text-align: center;
+        padding: 10px 0;
+
+    }
+    .Bidders_record_title{
+        line-height: 40px;
+        border-top: 1px solid #dfdfdf;
+        border-bottom: 1px solid #dfdfdf;
     }
 </style>

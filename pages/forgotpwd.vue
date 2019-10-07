@@ -61,7 +61,6 @@
                             </Row>
                         </div>
                         <div v-else-if="current == 1">
-
                              <Row :gutter="24" index="0" v-if="isopenSms && phoneValid" >
                                         <Col span="15">
                                     <FormItem prop="mobilecode" label="短信验证：">
@@ -75,14 +74,14 @@
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="password" label="重置密码：">
-                                        <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码："/>
+                                        <Input type="password" v-model="formCustom.password"  class="CarrierIput"   placeholder="请输入重置密码"/>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="24" index="0">
                                 <Col span="21">
                                     <FormItem prop="repassword" label="确认重置密码：">
-                                        <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码："/>
+                                        <Input type="password" v-model="formCustom.repassword"  class="CarrierIput"   placeholder="请输入确认重置密码"/>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -269,6 +268,7 @@ export default {
             console.log("res",res)
             if (res) {
                 this.slidecode = res
+                this.isopenSms=true
             } else {
                 this.$Modal.warning({
                     title: '提示',
@@ -348,22 +348,22 @@ export default {
             }
             var phone = this.formCustom.phone//验证码
             //验证验证码是否为空
-            if(this.Imgcode === ''){
-                this.$Message.info({
-                    content: '图形证码不能为空',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            }
-            if(!this.ImgCodeValid){
-                this.$Message.info({
-                    content: '图形验证码不正确',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            }
+            // if(this.Imgcode === ''){
+            //     this.$Message.info({
+            //         content: '图形证码不能为空',
+            //         duration: 5,
+            //         closable: true
+            //     })
+            //     return
+            // }
+            // if(!this.ImgCodeValid){
+            //     this.$Message.info({
+            //         content: '图形验证码不正确',
+            //         duration: 5,
+            //         closable: true
+            //     })
+            //     return
+            // }
             if (phone === "") {
                 this.$Message.info("手机号不能为空")
                 return
