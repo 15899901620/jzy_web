@@ -307,6 +307,7 @@
 					this.orderinfo.isDelivery = 0
 					this.currMin = this.spotInfo.take_their_min
 					this.currsetp = this.spotInfo.take_bid_increment
+          this.setFreight(-1)
 				} else if (index == 1) {
 					this.orderinfo.isDelivery = 1
 					this.currMin = this.spotInfo.delivery_min
@@ -380,12 +381,22 @@
 			},
 			//选择运费
 			setFreight(i, row) {
-				this.orderinfo.transportationMode = row.transportation
-				this.orderinfo.freightFee = row.freight_fee
-				this.currfreight = i
+				if(i == -1){
+					this.orderinfo.transportationMode = ''
+					this.orderinfo.freightFee = 0
+					this.currfreight = -1
+        }else{
+					this.orderinfo.transportationMode = row.transportation
+					this.orderinfo.freightFee = row.freight_fee
+					this.currfreight = i
+        }
 			},
 			choosePayType(index) {
 				this.orderinfo.payIndex = index
+        if(index == 0){
+					this.orderinfo.jryDays = 0
+					this.setJry()
+        }
 			},
 			//选择巨融易
 			setJry() {

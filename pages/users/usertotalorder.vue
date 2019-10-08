@@ -91,6 +91,7 @@
                 <td class="operate">
                   <div class="" v-if="item.status == 2">
                     <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
+                    <a class="blackFont mt15" @click="closeBut(item)">取消订单</a>
                   </div>
 					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
@@ -128,6 +129,8 @@
 	import OrderPay from '../../components/paydeposit/orderPay'
 	import FreightAdd from '../../components/freight-add/freight-add'
 	import FreightDetail from '../../components/freight-add/freght-detail'
+	import { sendCurl } from '../../api/common'
+	import server from '../../config/api'
 
 	export default {
 		name: "usertotalorder",
@@ -218,7 +221,30 @@
 				this.payLoading = row
 				this.getSourceData()
 			},
-			addAddress() {
+			closeBut(row){
+				this.$Modal.confirm({
+					title: '取消订单',
+					content: '<p style="font-size:14px;">您确认想取消当前订单？</p>',
+					onOk:async () => {
+						let rs = await sendCurl(this, server.api.order.cancel, {id: row.id})
+						if (rs.status === 200) {
+							if ((rs.data.errorcode || 0) == 0) {
+								location.reload()
+							} else {
+								this.$Modal.warning({
+									title: '提示',
+									content: rs.data.message
+								})
+								return
+							}
+						}
+					},
+					onCancel: () => {
+
+					}
+				})
+      },
+      addAddress() {
 				this.addloading = true
 			},
 			unaddChange(res) {

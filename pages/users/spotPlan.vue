@@ -36,16 +36,24 @@
                 <td colspan="8">
                   <span class="ml10">合约编号：
                     <a :href="`/users/plan/spot/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
+                    <template v-if="item.status == 1">(待转单)</template>
+                    <template v-else-if="item.status == 2">(已转单)</template>
+                    <template v-else-if="item.status == 3">(已违约)</template>
                   </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
-                  <span class="fr mr15" v-if="item.available_num > 0"><span class="red">转单倒计时：</span>
+                  <span class="fr mr15" v-if="item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)"><span class="red">转单倒计时：</span>
                     <span class="red"><TimeDown :endTime="item.last_ordered_date" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown></span></span>
                 </td>
               </tr>
               <tr class="detailTable">
                 <td style="width: 15%;">{{item.sku_name}}</td>
                 <td style="width: 15%;">{{item.warehouse_name}}</td>
-                <td style="width: 10%;">{{item.total_num}}</td>
+                <td style="width: 10%;">
+                  {{item.total_num}}
+                  <template v-if="item.cancel_num > 0"><br>
+                    <Tag color="error">取消{{item.cancel_num}}</Tag>
+                  </template>
+                </td>
                 <td style="width: 10%;">{{amountFormat(item.final_price)}}</td>
                 <td style="width: 10%;">{{item.available_num}}</td>
                 <td style="width: 10%;">
@@ -55,9 +63,24 @@
                 </td>
                 <td style="width: 15%;">待签合同</td>
                 <td style="width: 15%;" class="operate">
-                  <div v-if="item.available_num > 0">
-                    <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toCreateOrder(item.id)">转单</a>
-                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px" @click="cancelPlan(item)">申请结束</a>
+                  <div v-if="item.status == 3">
+                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">已违约</a>
+                  </div>
+                  <div v-else-if="item.available_num > 0">
+                    <template v-if="item.close_apply_status == 1">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toCreateOrder(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px" @click="cancelPlan(item)">申请取消</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 2">
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 3">
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消同意</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 4">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toCreateOrder(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
+                    </template>
                   </div>
                 </td>
               </tr>
@@ -80,6 +103,8 @@
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
 	import Utils from '../../plugins/common'
+	import { sendCurl } from '../../api/common'
+	import server from '../../config/api'
 
 	export default {
 		name: "spotPlan",
@@ -125,14 +150,29 @@
 				location.reload(true)
       },
 			toCreateOrder(id){
-
+        location.href = '/spot/change/'+id
       },
       cancelPlan(row){
 				this.$Modal.confirm({
 					title: '合约申请结束',
 					content: '<p style="font-size:14px;">您确认申请结束当前合约单？申请取消执行剩余'+row.available_num+'吨货物转订单</p>',
 					onOk: () => {
+						let params = {
+							id: row.id
+						}
 
+						let res = sendCurl(this, server.api.spot.spotPlanCloseApply, params)
+						if (res.status === 200) {
+							if ((res.data.errorcode || 0) == 0) {
+								this.$router.go(0)
+							} else {
+								this.$Modal.warning({
+									title: '提示',
+									content: res.data.message
+								})
+								return
+							}
+						}
 					},
 					onCancel: () => {
 
