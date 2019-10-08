@@ -358,10 +358,12 @@
     }
   }
 
-
+.startauction{background-color: #ff6c00}
+.vcauction{background-color: #25a96d}
+.endauction{background-color: #cccccc}
   .statusicon{
     width: 80px;
-    background-color: #ccc;
+
     text-align: center;
     line-height: 40px;
     border-top-right-radius: 22px;

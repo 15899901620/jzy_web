@@ -26,7 +26,6 @@
                         <div class="ml10 dflex">
                             <span class="fs16">结束时间：</span>
                             <span class="fs16">
-<!--                                <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="detailDatabrid.realEndTime" hoursShow></TimeDown>-->
                                 <countdown
                                     v-on:start_callback="countDownS_cb(1)"
                                     v-on:end_callback="countDownE_cb(1)"
@@ -61,6 +60,7 @@
                     <div class="tranfont">东莞</div>
                 </div>
                 <table class="table">
+                    <tbody>
                     <tr class="tableTitle"><td>竞拍编号</td><td>品种</td><td>牌号</td><td>厂商</td><td>数量</td><td>提货仓库</td><td>包装方式</td><td>开始提货日期</td><td>截至提货日期</td></tr>
                     <tr ><td>{{detailDatabrid.billNo}}</td><td>{{detailDatabrid.skuCategoryName1}}</td>
                         <td>{{detailDatabrid.skuName}}</td><td>{{detailDatabrid.manufacturer}}</td>
@@ -70,6 +70,7 @@
                             <template v-if="detailDatabrid.packingModes===2">非标准包装</template>
                         </td>
                         <td>{{detailDatabrid.deliveryStart}}</td><td>{{detailDatabrid.lastDeliveryTime}}</td></tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -414,6 +415,7 @@
                 <h1 class="paipinacu fs20">正在参与</h1>
 
                 <table class="parttable">
+                    <tbody>
                     <tr class="tableTitle"><td>品种</td><td>牌号</td><td>厂商</td><td>起拍价</td><td>竞拍总量</td><td>距离结束</td><td>我的排名</td><td>我的出价</td><td>出价数量</td>
                         <td>入局数量</td><td>当前状态</td><td>我的状态</td><td>操作</td></tr>
                     <tr>
@@ -425,6 +427,7 @@
                         <td>东莞市</td><td>散货带托</td><td>2019-09-27</td>
                         <td><div class="seeTable">查看</div></td>
                     </tr>
+                    </tbody>
                 </table>
 
             </div>
@@ -434,6 +437,7 @@
                 <h1 class="paipinacu fs20">我的关注</h1>
 
                 <table class="parttable">
+                    <tbody>
                     <tr class="tableTitle"><td>竞拍编号</td><td>开始时间</td><td>竞拍时长</td><td>竞拍状态</td><td>品种</td><td>牌号</td><td>厂商</td><td>城市</td><td>起拍价</td>
                         <td>竞拍总量</td><td>提货仓库</td><td>操作</td></tr>
                     <tr>
@@ -441,6 +445,7 @@
                         <td>东莞市</td><td>散货带托</td>
                         <td><div class="seeTable">查看</div></td>
                     </tr>
+                    </tbody>
                 </table>
             <div style="display: flex; justify-content: center">
                 <div class="addbiders" @click="addFollow">添加其他竞拍</div>
@@ -555,18 +560,15 @@
 
         <!-- 添加其他竞拍关注-->
         <Modal
-                v-model="addfollow"
-                title="Title"
-                width="80"
-
+            v-model="addfollow"
+            title="Title"
+            width="80"
         >
-            <div slot="header"> <div>添加其他竞拍关注</div></div>
-
+            <div slot="header">添加其他竞拍关注</div>
             <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-
-            <div slot="close"></div>
-            <div>添加其他竞拍关注</div>
-            <div slot="footer"></div>
+            <div slot="footer">
+                <div class="addbtn">添加竞拍关注</div>
+            </div>
         </Modal>
 
         <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
@@ -584,7 +586,7 @@ import paydeposit from '../../../components/paydeposit'
 import TimeDown from '../../../components/timeDown'
 import countdown from '../../../components/countdown'
 import {setCookies, getCookies} from '../../../config/storage'
-
+import { bidfollowColumns } from './bidfollow'
 
 export default {
     name: "bidders-detail-id",
@@ -620,57 +622,8 @@ export default {
                 currentTime:0,
                 endtimessss:0
             },
-            columns4: [
-                {
-                    type: 'selection',
-                    width: 60,
-                    align: 'center'
-                },
-                {
-                    title: 'Name',
-                    key: 'name'
-                },
-                {
-                    title: 'Age',
-                    key: 'age'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                },
-                {
-                    title: 'Address',
-                    key: 'address'
-                }
-            ],
+            columns4: bidfollowColumns,
+            data1: [],
             istrue: 0,
             MineOfferRecord: [],
             MineOfferacr:{},
@@ -1008,6 +961,11 @@ export default {
             }
         }
     }
+    .ivu-modal{
+        .ivu-modal-header{
+            background-color: #f9f9f9;
+        }
+    }
     .status_product{
         width: 1200px; margin: 20px auto;
         .statusTime{
@@ -1133,6 +1091,7 @@ export default {
         }
 
     }
+    .addbtn{width: 160px;text-align: center;background-color: #ff7300;color: #fff;border-radius: 3px;font-size: 16px;padding: 10px;margin: 0 auto;}
 .addbiders{
     padding: 10px 30px;background-color: #ff7300;
     color: #fff;border-radius: 3px;margin-top: 15px;cursor: pointer;
