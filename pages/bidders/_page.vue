@@ -322,15 +322,10 @@
     }
   }
 
-<<<<<<< HEAD
-
-  .statusicon {
-=======
 .startauction{background-color: #ff6c00}
 .vcauction{background-color: #25a96d}
 .endauction{background-color: #cccccc}
   .statusicon{
->>>>>>> fa60cdc796c1cf2f3441a3a90765c2a5aaf833e3
     width: 80px;
 
     text-align: center;
@@ -339,10 +334,6 @@
     border-bottom-right-radius: 22px;
     color: #ffff;
   }
-<<<<<<< HEAD
-
-  .Notice {
-=======
   .btmunv{display: flex;width: 250px; }
   .iv_title{
     width: 60px;
@@ -356,7 +347,6 @@
 
   }
   .Notice{
->>>>>>> fa60cdc796c1cf2f3441a3a90765c2a5aaf833e3
     border: 1px solid #dfdfdf;
 
     .NoticeTitle {

@@ -92,7 +92,6 @@ export default {
 		}else if(diffValue >= 0 && diffValue <= minute){
 			result = "刚刚"
 		}
-		console.log('result:', result)
 		return result
 	},
 	amountFormat: function(amount, sign){
