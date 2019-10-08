@@ -78,16 +78,16 @@
 
         </Row>
         <Row index="4">
-          <Col span="12">
-            <FormItem label="收货地址">
-              {{OrderList.receiptFullAddress}}
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="提货仓库">
-              {{OrderList.dispatchFullAddress}}
-            </FormItem>
-          </Col>
+			<Col span="12">
+				<FormItem label="提货仓库">
+				{{OrderList.dispatchFullAddress}}
+				</FormItem>
+			</Col>
+			<Col span="12">
+				<FormItem label="收货地址">
+				{{OrderList.receiptFullAddress}}
+				</FormItem>
+         	</Col>
         </Row>
       </Form>
     </div>
