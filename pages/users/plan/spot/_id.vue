@@ -44,7 +44,11 @@
               <Col span="12">商品编码：{{dataInfo.sku_no}}</Col>
             </Row>
             <Row index="">
-              <Col span="12">单位：{{dataInfo.uom_name}}</Col>
+              <Col span="12">产品等级：
+                <template v-if="dataInfo.product_grade == 1">优等品</template>
+                <template v-else-if="dataInfo.product_grade == 2">一等品</template>
+                <template v-else-if="dataInfo.product_grade == 3">合格品</template>
+              </Col>
               <Col span="12">生产厂商：{{dataInfo.manufacturer}}</Col>
             </Row>
             <Row index="">
@@ -52,11 +56,7 @@
                 <template v-if="dataInfo.packing_modes == 1">标准包装</template>
                 <template v-else-if="dataInfo.packing_modes == 2">非标准包装</template>
               </Col>
-              <Col span="12">产品等级：
-                <template v-if="dataInfo.product_grade == 1">优等品</template>
-                <template v-else-if="dataInfo.product_grade == 2">一等品</template>
-                <template v-else-if="dataInfo.product_grade == 3">合格品</template>
-              </Col>
+              <Col span="12">单位：{{dataInfo.uom_name}}</Col>
             </Row>
           </div>
         </div>

@@ -39,8 +39,8 @@
               <td><span>{{item.weight}}</span>吨</td>
               <td>{{item.demandBeginDate}}至{{item.demandEndDate}}</td>
               <td class="operate">
-                <div class="check mt5 blackFont" style="margin-left:50px" v-if='item.isQuote==1'>已报价</div>
-                <div class="check mt5 blackFont" style="margin-left:50px" v-else @click="oldtime(item)">立即出价</div>
+                <div class="check mt5 blackFont" style="margin-left:50px;cursor: pointer;" v-if='item.isQuote==1'>已报价</div>
+                <div class="check mt5 blackFont" style="margin-left:50px;cursor: pointer;" v-else @click="oldtime(item)">立即出价</div>
               </td>
             </tr>
             </tbody>
@@ -159,7 +159,8 @@
 				return `全部 ${total} 条`;
 			},
 			changePage(row) {
-				this.$router.push({name: 'supply-Supplier', query: {page: row}})
+				this.current_page=row
+				this.getOrderList();
 			},
 			check() {
 				this.getOrderList()

@@ -27,7 +27,7 @@
             ,请及时支付货款
           </template>
         </h1>
-        <div class="tac fs14">
+        <div class="tac fs17">
           <span>订单号：<span>{{order_no}}</span></span>
           <template v-if="order_pay_last_time">
             <div>请在限定的时间<span class="orangeFont">{{order_pay_last_time}}</span>内尽快支付货款，否则系统会自动取消订单<br>（注：超过合约转单时间，则会扣除保证金）</div>
@@ -38,7 +38,7 @@
           <p>联系电话：{{$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
         </div>
         <div class="orderbtn">
-          <a class="submitBtn btnBg" href="/spot">立即支付</a>
+          <a class="submitBtn btnBg" href="/spot">查看合约</a>
           <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
         </div>
       </div>
