@@ -214,7 +214,7 @@
 				return `全部 ${total} 条`;
 			},
 			reloadPage() {
-				this.$router.go(0)
+				location.reload()
 			},
 			async spotData() {
 				let params = {
