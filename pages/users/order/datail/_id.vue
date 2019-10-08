@@ -9,17 +9,24 @@
               v-if="this.datalist.status == 2" style="float:right;color:red; font-size:16px;">最迟付款时间： {{this.datalist.orderPayLastTime}}</span>
           </h3>
           <div style="line-height:32px;">
+             <Row index="">
+              <Col span="12">合约编号：{{this.datalist.sourceSn}}</Col>
+              <Col span="12">订单标号：{{this.datalist.orderNo}}</Col>
+            </Row>
             <Row index="">
               <Col span="6">下单时间：{{this.datalist.createTime}}</Col>
               <Col span="6">巨融易天数：{{this.datalist.jryDays}}</Col>
               <Col span="12">有效提货时间：{{this.datalist.deliveryStart}} 至 {{this.datalist.deliveryDeadline}}</Col>
             </Row>
-            <Row index="">
-              <Col span="12">提货方式：
-                <template v-if="this.datalist.isDelivery == 0">自提
-                  <template v-if="(datalist.isAddDemand) || 0 == 0">(待发送物流询价)</template>
-                </template>
-                <template v-else-if="this.datalist.isDelivery == 1">配送</template>
+             <Row index="">
+              <Col span="12">包装方式： 
+              <template v-if="this.datalist.packingModes == 1">标准包装</template>
+              <template v-else>非标准包装</template>
+              </Col>
+              <Col span="12">产品等级：   
+                  <template v-if="this.datalist.productGrade == 1">优等品</template>
+                  <template v-else-if="this.datalist.productGrade == 2">一等品</template>
+                  <template v-else>合格品</template>
               </Col>
             </Row>
             <Row index="">
@@ -29,7 +36,11 @@
           </div>
         </div>
         <div v-if="this.datalist.isDelivery === 1" class="whitebg mt20" style="padding:0px 18px 18px;">
-          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">配送信息</h3>
+          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">配送信息<span style="margin-left: 100px">提货方式：</span>
+          <template v-if="this.datalist.isDelivery == 0">自提
+              <template v-if="(datalist.isAddDemand) || 0 == 0">(待发送物流询价)</template>
+          </template>
+          <template v-else-if="this.datalist.isDelivery == 1">配送</template></h3>
           <div style="line-height:32px;">
             <Row index="">
               <Col span="12">联系人：{{this.datalist.memberContacter}}</Col>
@@ -55,7 +66,7 @@
         </div>
 
         <div class="whitebg mt20" style="padding:0px 18px 18px;">
-          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">商品信息</h3>
+          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">产品及支付信息</h3>
           <div style="line-height:32px; ">
             <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
               <Col span="4">数量</Col>
@@ -78,19 +89,19 @@
             </Row>
           </div>
           <div>
-             <p style="line-height:42px; text-align:left; font-size:15px; padding-right:10px;"><span >物料：{{this.datalist.skuName}}</span> <span class="ml15">数量：{{this.datalist.orderNum}}天</span></p>
-            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"> <span>已支付：</span><span class="ml15">支付时间：{{this.datalist.orderPayTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额:{{this.datalist.skuName}} </span><span class="ml15">最迟付款时间:{{this.datalist.orderPayLastTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:15px; padding-right:10px;"><span>账户金额:{{this.capit.total_amount_format}} </span> <span class="ml15">保证金钱包余额:{{this.capit.freeze_amount_format}}</span></p>
+             <p style="line-height:42px; text-align:left; font-size:17px; padding-right:9px;"><span style="    padding-left: 20px;">物料：{{this.datalist.skuName}}</span> <span class="ml15">数量：{{this.datalist.orderNum}}天</span></p>
+            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:9px;"> <span >已支付：{{this.datalist.depositAmountFormat}}</span><span class="ml15" style="padding-left: 95px;">支付时间：{{this.datalist.orderPayTime}}</span></p>
+            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额:{{this.datalist.skuName}} </span><span class="ml15" >最迟付款时间:{{this.datalist.orderPayLastTime}}</span></p>
+            <p style="line-height:42px; text-align:right; font-size:16px; padding-right: 16px;"><span>账户金额：{{this.formSearch.capit.total_amount_format}} </span> <span class="ml15" style="margin-left: 44px;">保证金钱包余额：{{this.formSearch.capit.freeze_amount_format}}</span></p>
             <p style="line-height:32px; text-align:right; font-size:15px; padding-right:10px;"
                v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天</p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;">
+            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px; font-weight: bold;color: #ff0000b3;">
               订单总额：{{this.datalist.totalAmountFormat}}</p>
             <p v-if="this.datalist.status == 2"
                style="line-height:42px;color:red; text-align:right; font-size:17px; padding-right:10px;">
               待付金额：{{this.amountFormat(this.datalist.totalAmount - this.datalist.depositAmount)}}</p>
             <p  style="line-height:42px;color:red; text-align:right; font-size:20px; padding-right:10px;">
-            确定 <a @click='back'>返回</a></p>
+             <Button type="success" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;">确定</Button>      <Button class="submitback ml10" @click='back'>返回</Button></p>
             </p>
             
           </div>
@@ -169,12 +180,13 @@
        async capit(){
         const res = await sendHttp(this, true, server.api.capital.myCapital)
         console.log(res)
-        this.capit=res.data
+        this.formSearch.capit=res.data
      }
 		},
 		mounted(){
+       this.capit();
       this.sourceDeta()
-      this.capit();
+     
     },
 		watch: {
 			'$route'(to, from) {
@@ -183,3 +195,6 @@
 		}
 	}
 </script>
+<style scoped>
+  .submitback{border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;border:1px solid #ff7300; color:#ff7300;}
+</style>
