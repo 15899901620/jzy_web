@@ -591,17 +591,17 @@ import { bidfollowColumns } from './bidfollow'
 export default {
     name: "bidders-detail-id",
     fetch({ store, params, query }) {
-             //获取顶部、中部、底部导航信息
-          store.dispatch('common/getNavList'),
-          //获取系统配置
-          store.dispatch('common/getSysConfig'),
-          //获取友情链接
-          store.dispatch('common/getFriendlyList'),
-          //获取底部帮助分类
-          store.dispatch('helper/getHelpCate', {
-            catId: 0,
-            indexShow: 1
-          })
+      //获取顶部、中部、底部导航信息
+      store.dispatch('common/getNavList'),
+      //获取系统配置
+      store.dispatch('common/getSysConfig'),
+      //获取友情链接
+      store.dispatch('common/getFriendlyList'),
+      //获取底部帮助分类
+      store.dispatch('helper/getHelpCate', {
+        catId: 0,
+        indexShow: 1
+      })
     },
     components:{
         Header,
@@ -761,6 +761,7 @@ export default {
             let res =await gainauctionrecord(this,params)
             if(res.data){
               this.MineOfferRecord= res.data
+                console.log('MineOfferRecord',this.MineOfferRecord)
             }
           }else{
             this.OfferRecordTip=''
@@ -776,7 +777,6 @@ export default {
             let res =await auctionInfor(this, params)
             console.log("res",res)
             if(!res.data.errorcode && res.status === 200){
-
                 this.detailDatabrid = res.data
             }
             this.auctionNum=this.detailDatabrid.minOrder
@@ -836,16 +836,17 @@ export default {
                 skuNo: skuid,
                 type:2
             }
-            let res =await priceListInfo(this, params)
+             let res =await priceListInfo(this, params)
             if(res){
                 this.MinPrice = res.data.minSellingPrice
                 this.auctionOffer = this.MinPrice
+                console.log('auctionOffer:',this.auctionOffer)
             }
         },
         //获取最新的竞拍价
         async getNewPrice(id){
             let params={
-                auctionId: this.auctionId
+                auctionId: this.auctionId20
             }
             let res=await newprice(this,params)
             if(res.data){
@@ -1026,6 +1027,9 @@ export default {
                     top: 10px;
                     left: 18px;
                     font-weight: bold;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
             .table{
