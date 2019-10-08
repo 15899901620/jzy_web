@@ -11,6 +11,7 @@ import server from '../config/api'
 
 export const state = () => {
 	return {
+		auctionTotal: 0,
 		auctionList:[],
 		hotbidderList: [],
 		biddersbeingData: {},
@@ -20,6 +21,9 @@ export const state = () => {
 }
 
 export const mutations = {
+	updateAuctionTotal(state, data) {
+		state.auctionTotal = data
+	},
 	updateAuctionList(state, data) {
 		state.auctionList = data
 	},
@@ -48,8 +52,8 @@ export const actions = {
 		commit('updateCurrPage', parseInt(params.current_page))
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
-
 			commit('updateAuctionList', res.data.items)
+			commit('updateAuctionTotal', res.data.total)
 		}
 	},
 

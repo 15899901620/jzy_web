@@ -18,13 +18,13 @@
     </template>
     <template v-if="timeStyleType == 2">
       <template v-if="dayShow">
-        <span class="hour">{{myDay}}</span> 天
+        <span class="hour orangeFont">{{myDay}}</span> 天
       </template>
       <template v-if="hoursShow">
-        <span class="hour">{{myHours}}</span> 小时
+        <span class="hour orangeFont">{{myHours}}</span> 时
       </template>
-      <span class="minute">{{myMinutes}}</span> 分
-      <span class="second">{{mySeconds}}</span> 秒
+      <span class="minute orangeFont">{{myMinutes}}</span> 分
+      <span class="second orangeFont">{{mySeconds}}</span> 秒
     </template>
   </div>
 </template>
