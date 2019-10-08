@@ -38,8 +38,8 @@
           <p>联系电话：{{$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
         </div>
         <div class="orderbtn">
-          <a class="submitBtn btnBg" href="/spot">立即支付</a>
-          <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
+          <a class="submitBtn btnBg" href="/spot">继续转单</a>
+          <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">查看订单</a>
         </div>
       </div>
     </div>
