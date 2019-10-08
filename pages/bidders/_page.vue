@@ -12,7 +12,7 @@
         <table class="bidersTable" style="width: 100%; border: 1px solid #dfdfdf;">
           <tr class="table_title" style="">
             <th style="width: 8%">竞拍编号</th>
-            <th style="width: 6%">品种</th>
+
             <th style="width: 7%">牌号</th>
             <th style="width: 7%">厂商</th>
             <th style="width: 11%">结束倒计时</th>
@@ -21,13 +21,13 @@
             <th style="width: 6%">出价数量</th>
             <th style="width: 6%">入局数量</th>
             <th style="width: 7%">当前状态</th>
-            <th style="width: 5%">我的排名</th>
+
             <th style="width: 8%">我的状态</th>
             <th style="width: 10%">操作</th>
           </tr>
           <tr>
             <td>0000012</td>
-            <td>PP</td>
+
             <td class="blue">L5E89</td>
             <td>巨正源</td>
             <td>0天23时12分36秒</td>
@@ -36,13 +36,13 @@
             <td>50吨</td>
             <td>30吨</td>
             <td>竞拍结束</td>
-            <td>8</td>
+
             <td>出局</td>
             <td><button class="see">查看</button></td>
           </tr>
           <tr>
             <td>0000012</td>
-            <td>PP</td>
+
             <td class="blue">L5E89</td>
             <td>巨正源</td>
             <td>0天23时12分36秒</td>
@@ -51,13 +51,13 @@
             <td>50吨</td>
             <td>30吨</td>
             <td>竞拍结束</td>
-            <td>8</td>
+
             <td>出局</td>
             <td><button class="see">查看</button></td>
           </tr>
           <tr>
             <td>0000012</td>
-            <td>PP</td>
+
             <td class="blue">L5E89</td>
             <td>巨正源</td>
             <td>0天23时12分36秒</td>
@@ -66,7 +66,7 @@
             <td>50吨</td>
             <td>30吨</td>
             <td>竞拍结束</td>
-            <td>8</td>
+
             <td>出局</td>
             <td><button class="see">查看</button></td>
           </tr>

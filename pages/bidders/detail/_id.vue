@@ -22,7 +22,27 @@
                         <div class="status statusEndbg">竞拍结束</div>
                     </template>
                     <div class="cutTime cutTimeIngbg">
-                        <div class="cutDown_time ml35"><img src="/img/cutDown_icon.png" /></div><div class="ml10"><span class="fs16">结束时间：</span><span class="fs16">2019-09-28  12:00:00</span></div>
+                        <div class="cutDown_time ml35"><img src="/img/cutDown_icon.png" /></div>
+                        <div class="ml10 dflex">
+                            <span class="fs16">结束时间：</span>
+                            <span class="fs16">
+<!--                                <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="detailDatabrid.realEndTime" hoursShow></TimeDown>-->
+                                <countdown
+                                    v-on:start_callback="countDownS_cb(1)"
+                                    v-on:end_callback="countDownE_cb(1)"
+                                    :currentTime="getData.currentTime"
+                                    :startTime="getData.currentTime"
+                                    :endTime="getData.endtimessss"
+                                    :tipText="'距离最后付款还剩'"
+                                    :tipTextEnd="'倒计时'"
+                                    :endText="'距离最后付款还剩'"
+                                    :dayTxt="'天'"
+                                    :hourTxt="'小时'"
+                                    :minutesTxt="'分钟'"
+                                    :secondsTxt="'秒'">
+			                    </countdown>
+                            </span>
+                        </div>
                     </div>
                     <template v-if="detailDatabrid.statusType == '1'">
                         <div class="cutTime cutTimeIngbg">正在竞拍</div>
@@ -36,10 +56,20 @@
                 </div>
             <div class="birdtable">
 
-                <div class="birdtabletitle">巨正源 东莞  聚丙烯 PPH-Y25L  现货 100吨 </div>
+                <div class="birdtabletitle">{{detailDatabrid.manufacturer}} {{detailDatabrid.warehouseName}} {{detailDatabrid.skuName}}  {{detailDatabrid.totalNum}}{{detailDatabrid.uomName}} </div>
+                <div class="kailong">
+                    <div class="tranfont">东莞</div>
+                </div>
                 <table class="table">
                     <tr class="tableTitle"><td>竞拍编号</td><td>品种</td><td>牌号</td><td>厂商</td><td>数量</td><td>提货仓库</td><td>包装方式</td><td>开始提货日期</td><td>截至提货日期</td></tr>
-                    <tr  ><td>8548921</td><td>PP</td><td>L5E89</td><td>巨正源</td><td>100吨</td><td>东莞市</td><td>散货带托</td><td>2019-09-27</td><td>2019-09-27</td></tr>
+                    <tr ><td>{{detailDatabrid.billNo}}</td><td>{{detailDatabrid.skuCategoryName1}}</td>
+                        <td>{{detailDatabrid.skuName}}</td><td>{{detailDatabrid.manufacturer}}</td>
+                        <td>{{detailDatabrid.totalNum}}</td><td>{{detailDatabrid.warehouseName}}</td>
+                        <td>
+                            <template v-if="detailDatabrid.packingModes===1">标准包装</template>
+                            <template v-if="detailDatabrid.packingModes===2">非标准包装</template>
+                        </td>
+                        <td>{{detailDatabrid.deliveryStart}}</td><td>{{detailDatabrid.lastDeliveryTime}}</td></tr>
                 </table>
             </div>
 
@@ -121,200 +151,302 @@
                 </div>
             </div>
 
-            <div class="biddersRecord" style="display: flex;">
-                <div style="width:50%">
-                    <div class="Bidders_record">
-                        <ul class="Bidders_record_tab">
-                            <li v-for="(item,index) in aucTab"  :class="{curr:istrue==index}"  @click="istrue=index" :key="index">{{item.name}}</li>
-                        </ul>
-                        <ul class="news_items">
-                             <!--竞拍记录-->
-                            <li v-show="istrue===0">
-                                <table class="Bidders_record_title">
-                                    <tbody>
-                                        <tr>
-                                            <th style="width: 160px">出价时间</th>
-                                            <th>竞拍人</th>
-                                            <th>出价金额</th>
-                                            <th>数量（吨）</th>
-                                            <th>当前状态</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!--表格-->
-                                <div  class="Bidders_record_list" style="text-align: center;">
-                                    <!--暂无记录-->
-                                    <table v-if="auctionRd.length > 0">
-                                        <tbody>
-                                            <tr class="Bidders_record_tr " v-for="(item,index) in auctionRd" :key="index" :class="{orangeFont:item.outStatus===1 || item.outStatus===2}">
-                                                <td style="width: 120px"><span>{{ subtime(item.createTime, 11, 19)}}</span></td>
-                                                <td><span>{{item.nickName}}</span></td>
-                                                <td><span>{{item.bidPrice}}</span></td>
-                                                <td><span>{{item.bidNum}}</span></td>
-                                                <td>
-                                                    <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>
-                                                    <span class="Bidders_record_curr" v-if="item.outStatus===2">入围</span>
-                                                    <span class="tac gray" v-if="item.outStatus===3">出局</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无任何竞拍记录!</span>
-                                </div>
-                            </li>
-                            <!--我的出价-->
-                            <li v-show="istrue === 1">
-                                <table class="Bidders_record_title">
-                                    <tbody>
-                                        <tr>
-                                            <th style="width: 160px">出价时间</th>
-                                            <th>出价金额</th>
-                                            <th>数量（吨）</th>
-                                            <th>当前状态</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                 <!--表格-->
-                                <div  class="Bidders_record_list" style="text-align: center;">
-                                    <!--暂无记录-->
-                                    <table v-if="MineOfferRecord.length > 0">
-                                        <tbody>
-                                            <tr class="Bidders_record_tr"  v-for="(items,index) in MineOfferRecord" :key="index" :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">
-                                                <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>
+            <div class="biddersRecord" style="display: flex; flex-direction: column">
+                <table class="paipin_table">
+                    <tbody>
+                    <tr><th>竞拍底价</th><th>保证金比例</th><th>当前入局最低报价</th><th>当前入局最高报价</th><th>未出价数量</th><th>竞拍类型</th></tr>
+                    <tr><td>{{MinPrice}}</td><td>{{detailDatabrid.marginRatio}}%</td><td>{{detailDatabrid.manufacturer}}</td><td>{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</td><td>{{MinPrice}}</td><td>{{detailDatabrid.warehouseName}}</td>  </tr>
+                    </tbody>
+                </table>
+                <!-- 竞拍出价***竞拍数量 -->
+                <div>
+                    <!-- 竞拍出价-->
+                    <div class="ml30 dflex mt30" style="align-items: center;">
+                        <span class="inputTitle">竞拍出价</span>
+                        <span class="bodeRed cp" @click="cutsOffer()">-</span>
+                        <input type="text" v-model="auctionOffer" class="textInput" style="" />
+                        <span class="bodeRed orangeFont fwb whitebg cp" @click="addOffer()">+</span>
+                        <span class="ml10 gray fs14">加价幅度：{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span>
+                    </div>
+                    <!--竞拍数量-->
+                    <div class="ml30 dflex mt25" style="align-items: center;">
+                        <span class="inputTitle">竞拍数量</span>
+                        <div class="dflexAlem pr">
+                            <span class="bodeRed cp"  @click="cutsNum()">-</span>
+                            <input type="text" v-model="auctionNum" class="textInput" style="" />
+                            <span class="bodeRed orangeFont fwb whitebg cp" @click="addNum()">+</span>
+                            <span class="ml10 gray fs14">{{detailDatabrid.minOrder}}吨起</span>
+                            <span class="orangeFont ml15">*如需配送，则竞拍数量为28吨的倍数增减</span>
+                            <i class="redFont" style="position: absolute;bottom: -20px" v-show="auctionNumShow">{{auctionNumTip}}</i>
+                        </div>
+                    </div>
+                    <div class="MustSee"><a href="/help/17" target="_blank" >竞拍必看</a></div>
+                    <div class="acuBtn" v-if="detailDatabrid.statusType === 2">
+                        <a class="oncebg" @click="addauctionPrice()">立即出价</a>
+                        <a class="Paybg ml15" @click="PayCost()">追加保证金</a>
+                    </div>
+                    <div class="acuBtn" v-if="detailDatabrid.statusType === 1">
+                        <a class="startbg" @click="StartOrder()">即将开始</a>
+                        <a class="Paybg ml15" @click="PayCost">缴纳保证金</a>
+                    </div>
+                </div>
+                <!--竞拍结果-->
+                <div class="biderResult">
 
-                                                <td><span>{{items.bidPrice}}</span></td>
-                                                <td><span>{{items.bidNum}}</span></td>
-                                                <td>
-                                                <span class="Bidders_record_curr" v-if="items.outStatus===1 && items.isActive === 1">领先</span>
-                                                <span class="Bidders_record_curr" v-if="items.outStatus===2 && items.isActive === 1">入围</span>
-                                                <span class="tac gray" v-if="items.outStatus===3 && items.isActive === 1">出局</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无您的出价记录!</span>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
+                    <div class="orangeFont fs20 tac">恭喜您竞拍中得 T03 现货 60吨</div>
+                    <div class="orangeFont fs14 tac mt5">剩余付款时间：05时20分，逾期将扣除保证金</div>
+                    <div class="dflex fs18" style="justify-content: center; margin: 25px auto">
+                        <div class="Winbtn orangebg whiteFont">提 货</div>
+                        <div class="Winbtn whitebg ml15 orangeFont">查看详情</div>
                     </div>
-                    <div class="Bidders_record_detail">
-                        <ul class="Bidders_record_con">
-                            <li><span class="orangeFont">竞拍编号：</span><span class="gray">{{detailDatabrid.billNo}}</span></li>
-                            <li><span class="orangeFont">品种：</span><span class="gray">{{detailDatabrid.skuCategoryName3}}</span></li>
-                            <li><span class="orangeFont">牌号：</span><span class="gray">{{detailDatabrid.skuName}}</span></li>
-                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">厂商：</span><span class="gray">{{detailDatabrid.manufacturer}}</span></li>
-                            <li><span class="orangeFont">仓库：</span><span class="gray">{{detailDatabrid.warehouseName}}</span></li>
-                        </ul>
+                    <div class="winbider"></div>
+
+
+                    <div class="WinBid gray failWinBidbg">未中标</div>
+                    <div style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
+                        <div class="dflex mt5"  ><span class="titleWin" >最高中标价</span>: <span class="orangeFont ml5 mr5">¥1060.00</span> / 吨</div>
+                        <div class="dflex mt5"  ><span class="titleWin" >最低中标价</span>: <span class="orangeFont ml5 mr5">¥1060.00</span> / 吨</div>
+                        <div class="dflex mt5"  ><span class="titleWin" >一共拍出</span>: <span class="orangeFont ml5 mr5">¥1060.00</span> / 吨</div>
+                        <div class="dflex mt5"  ><span class="titleWin" >中 标 人 数</span>:  <span class="orangeFont ml5 mr5">3</span>人</div>
+                        <div class="failwinbider"></div>
                     </div>
-                    <!----出价记录---->
+
+
                 </div>
-                <div style="width:50%">
-                    <!----详情信息---->
-                    <div class="Bidders_record_result"  v-if="detailDatabrid">
-                        <div class="pr">
-                            <h1><span class="fwb">{{detailDatabrid.manufacturer}}</span> {{detailDatabrid.warehouseName}} {{detailDatabrid.skuName}} {{detailDatabrid.totalNum}}{{detailDatabrid.uom_name}}</h1>
-                            <div class="Bidders_record_Time">
-                                <div class="Bidders_record_result_over " :class="{Bidders_record_result_overbluebg:detailDatabrid.type===1,Bidders_record_result_overorangebg:detailDatabrid.type===2}">
-                                    <span v-if="detailDatabrid.type === 1">即将开始</span>
-                                    <span v-if="detailDatabrid.type === 2">正在竞拍</span>
-                                </div>
-                                <div class="ml10">
-                                    <span v-if="detailDatabrid.type === 1">距离开始</span>
-                                    <span v-if="detailDatabrid.type === 2">距离结束</span>
-                                </div>
-                                <span class="fs16 ml15" v-if="detailDatabrid.type === 1 || detailDatabrid.type === 2">{{`${day}天 ${hr}小时 ${min}分钟 ${sec}秒`}}</span>
-                            </div>
-                            <div class="Bidders_record_Time fs14" v-if="detailDatabrid.type === 3">
-                                <span  class="ml10 gray">中标价</span> <span class="fs16 ml15"><span class="orangeFont">￥<span class="fs20 fwb">{{auctionHighPrice}}</span></span> 元/吨</span>
-                            </div>
-                            <div class="Bidders_record_Time dflex mt20 fs14" v-if="detailDatabrid.type === 3">
-                                <span class="ml10 gray">结束时间</span>
-                                <span class="fs16 ml15">{{detailDatabrid.reservationEndTime}}</span>
-                            </div>
-                            <div class="Bidders_record_result_icon"  v-if="detailDatabrid.type === 3"></div>
-                        </div>
-                        <!--恭喜中标-->
-                        <div class="Bidders_record_result_list orangebg  mt10" v-show="WinBidShow">
-                            <span class="gxzb">恭喜中标</span>
-                            <div class="tac whiteFont fs24 mt20">恭喜您拍得：<span class="ml10 mr10">{{WinBid.skuName}}</span>，<span class="ml10 mr10">{{WinBid.totalNum}}</span>吨</div>
-                            <span class="db tac whiteFont">截止提货时间：{{this.detailDatabrid.lastDeliveryTime}}，逾期将扣除保证金</span>
-                            <div class="dflex mb20">
-                                <div class="zb_btn whitebg orangeFont" @click="auctionOrder">提 货</div>
-                                <!-- <div class="zb_btn whitebg orangeFont" @click="acuDetailmember">查看详情</div> -->
-                            </div>
-                        </div>
-                        <!-- 竞拍结束 未中标 -->
-                        <div class="Bidders_record_result_list graybg  mt30" v-show="NotWinBidShow && detailDatabrid.type === 3">
-                            <div class="fontScalend fontScalendbg">
-                                <span>未中标</span>
-                            </div>
-                            <div class="dflex" style="flex-direction: column;margin: 39px 0;">
-                                <div class="LoserList"><span class="failureTitle">最高中标价：</span><span class="fs20 ml15 orangeFont fwb mr5">￥{{auctionHighPrice}}</span>元/吨</div>
-                                <div class="LoserList"><span class="failureTitle">最低中标价：</span><span class="fs20 ml15 orangeFont fwb mr5">￥{{auctionLowPrice}}</span>元/吨</div>
-                                <div class="LoserList"><span class="failureTitle">一共拍出：</span><span class="fs20 ml15 orangeFont fwb mr5">{{auctionTotal}}</span>吨</div>
-                                <div class="LoserList"><span class="failureTitle">中标人数：</span><span class="fs20 ml15 orangeFont fwb mr5">{{auctionWin}}</span>人</div>
-                            </div>
-                        </div>
-                        <ul class="Bidders_record_con graybg" style="margin-top: 17px; width: 564px;" v-show="detailDatabrid.type === 3">
-                            <li><span class="orangeFont">起拍单价：</span><span class="gray">￥{{MinPrice}}元/吨</span></li>
-                            <li><span class="orangeFont">保证金比例：</span><span class="gray">{{detailDatabrid.marginRatio}}%</span></li>
-                            <li><span class="orangeFont">加价幅度：</span><span class="gray">{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>
-                            <li><span class="orangeFont">数量幅度：</span><span class="gray">1吨起</span></li>
-                        </ul>
-                        <!--正在竞拍-->
-                        <div class="Bidders_record_result_list graybg  mt25" v-show="detailDatabrid.type === 2 ||  detailDatabrid.type === 1">
-                            <div class="fontScale fontScalebg">
-                                <span>东莞</span>
-                            </div>
-                            <div class="ml30 mt40 dflex" style="align-items: center" >
-                                <template v-if="bidePrice">
-                                <span class="inputTitle">当前价</span><span class="fs18 fwb orangeFont">￥{{bidePrice}} </span>元/吨
-                                </template>
-                                <template v-else>
-                                <span class="inputTitle">起拍价</span><span class="fs18 fwb orangeFont">￥{{MinPrice}} </span>元/吨
-                                </template>
-                            </div>
-                            <!--竞拍出价-->
-                            <div class="ml30 dflex mt30" style="align-items: center;">
-                                <span class="inputTitle">竞拍出价</span>
-                                <span class="bodeRed cp" @click="cutsOffer()">-</span>
-                                <input type="text" v-model="auctionOffer" class="textInput" style="" />
-                                <span class="bodeRed orangeFont fwb whitebg cp" @click="addOffer()">+</span>
-                                <span class="ml10 gray fs14">加价幅度：{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span>
-                            </div>
-                            <!--竞拍数量-->
-                            <div class="ml30 dflex mt25" style="align-items: center;">
-                                <span class="inputTitle">竞拍数量</span>
-                                <div class="dflexAlem pr">
-                                    <span class="bodeRed cp"  @click="cutsNum()">-</span>
-                                    <input type="text" v-model="auctionNum" class="textInput" style="" />
-                                    <span class="bodeRed orangeFont fwb whitebg cp" @click="addNum()">+</span>
-                                    <span class="ml10 gray fs14">{{detailDatabrid.minOrder}}吨起</span>
-                                    <i class="redFont" style="position: absolute;bottom: -20px" v-show="auctionNumShow">{{auctionNumTip}}</i>
-                                </div>
-                            </div>
-                            <!--保证金比例-->
-                            <div class="ml30 dflex mt20" style="align-items: center;">
-                                <span class="inputTitle">保证金比例</span>
-                                <span class="">{{detailDatabrid.marginRatio}}% </span>
-                            </div>
-                            <!--竞拍必看-->
-                            <div class="MustSee"><a href="/help/17" target="_blank" >竞拍必看</a></div>
-                            <div class="acuBtn" v-if="detailDatabrid.type === 2">
-                                <a class="oncebg" @click="addauctionPrice()">立即出价</a>
-                                <a class="Paybg ml15" @click="PayCost()">追加保证金</a>
-                            </div>
-                            <div class="acuBtn" v-if="detailDatabrid.type === 1">
-                                <a class="startbg" @click="StartOrder()">即将开始</a>
-                                <a class="Paybg ml15" @click="PayCost">缴纳保证金</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else>暂无任何信息！</div>
-                </div>
+
+<!--                <div style="width:50%">-->
+<!--                    <div class="Bidders_record">-->
+<!--                        <ul class="Bidders_record_tab">-->
+<!--                            <li v-for="(item,index) in aucTab"  :class="{curr:istrue==index}"  @click="istrue=index" :key="index">{{item.name}}</li>-->
+<!--                        </ul>-->
+<!--                        <ul class="news_items">-->
+<!--                             &lt;!&ndash;竞拍记录&ndash;&gt;-->
+<!--                            <li v-show="istrue===0">-->
+<!--                                <table class="Bidders_record_title">-->
+<!--                                    <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <th style="width: 160px">出价时间</th>-->
+<!--                                            <th>竞拍人</th>-->
+<!--                                            <th>出价金额</th>-->
+<!--                                            <th>数量（吨）</th>-->
+<!--                                            <th>当前状态</th>-->
+<!--                                        </tr>-->
+<!--                                    </tbody>-->
+<!--                                </table>-->
+<!--                                &lt;!&ndash;表格&ndash;&gt;-->
+<!--                                <div  class="Bidders_record_list" style="text-align: center;">-->
+<!--                                    &lt;!&ndash;暂无记录&ndash;&gt;-->
+<!--                                    <table v-if="auctionRd.length > 0">-->
+<!--                                        <tbody>-->
+<!--                                            <tr class="Bidders_record_tr " v-for="(item,index) in auctionRd" :key="index" :class="{orangeFont:item.outStatus===1 || item.outStatus===2}">-->
+<!--                                                <td style="width: 120px"><span>{{ subtime(item.createTime, 11, 19)}}</span></td>-->
+<!--                                                <td><span>{{item.nickName}}</span></td>-->
+<!--                                                <td><span>{{item.bidPrice}}</span></td>-->
+<!--                                                <td><span>{{item.bidNum}}</span></td>-->
+<!--                                                <td>-->
+<!--                                                    <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>-->
+<!--                                                    <span class="Bidders_record_curr" v-if="item.outStatus===2">入围</span>-->
+<!--                                                    <span class="tac gray" v-if="item.outStatus===3">出局</span>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
+<!--                                    <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无任何竞拍记录!</span>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            &lt;!&ndash;我的出价&ndash;&gt;-->
+<!--                            <li v-show="istrue === 1">-->
+<!--                                <table class="Bidders_record_title">-->
+<!--                                    <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <th style="width: 160px">出价时间</th>-->
+<!--                                            <th>出价金额</th>-->
+<!--                                            <th>数量（吨）</th>-->
+<!--                                            <th>当前状态</th>-->
+<!--                                        </tr>-->
+<!--                                    </tbody>-->
+<!--                                </table>-->
+<!--                                 &lt;!&ndash;表格&ndash;&gt;-->
+<!--                                <div  class="Bidders_record_list" style="text-align: center;">-->
+<!--                                    &lt;!&ndash;暂无记录&ndash;&gt;-->
+<!--                                    <table v-if="MineOfferRecord.length > 0">-->
+<!--                                        <tbody>-->
+<!--                                            <tr class="Bidders_record_tr"  v-for="(items,index) in MineOfferRecord" :key="index" :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">-->
+<!--                                                <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>-->
+
+<!--                                                <td><span>{{items.bidPrice}}</span></td>-->
+<!--                                                <td><span>{{items.bidNum}}</span></td>-->
+<!--                                                <td>-->
+<!--                                                <span class="Bidders_record_curr" v-if="items.outStatus===1 && items.isActive === 1">领先</span>-->
+<!--                                                <span class="Bidders_record_curr" v-if="items.outStatus===2 && items.isActive === 1">入围</span>-->
+<!--                                                <span class="tac gray" v-if="items.outStatus===3 && items.isActive === 1">出局</span>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
+<!--                                    <span v-else class="Bidders_record_zwjl" style="line-height:100px; color:#999">暂无您的出价记录!</span>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <div class="Bidders_record_detail">-->
+<!--                        <ul class="Bidders_record_con">-->
+<!--                            <li><span class="orangeFont">竞拍编号：</span><span class="gray">{{detailDatabrid.billNo}}</span></li>-->
+<!--                            <li><span class="orangeFont">品种：</span><span class="gray">{{detailDatabrid.skuCategoryName3}}</span></li>-->
+<!--                            <li><span class="orangeFont">牌号：</span><span class="gray">{{detailDatabrid.skuName}}</span></li>-->
+<!--                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>-->
+<!--                            <li><span class="orangeFont">厂商：</span><span class="gray">{{detailDatabrid.manufacturer}}</span></li>-->
+<!--                            <li><span class="orangeFont">仓库：</span><span class="gray">{{detailDatabrid.warehouseName}}</span></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;&#45;&#45;出价记录&#45;&#45;&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div style="width:50%">-->
+<!--                    &lt;!&ndash;&#45;&#45;详情信息&#45;&#45;&ndash;&gt;-->
+<!--                    <div class="Bidders_record_result"  v-if="detailDatabrid">-->
+<!--                        <div class="pr">-->
+<!--                            <h1><span class="fwb">{{detailDatabrid.manufacturer}}</span> {{detailDatabrid.warehouseName}} {{detailDatabrid.skuName}} {{detailDatabrid.totalNum}}{{detailDatabrid.uom_name}}</h1>-->
+<!--                            <div class="Bidders_record_Time">-->
+<!--                                <div class="Bidders_record_result_over " :class="{Bidders_record_result_overbluebg:detailDatabrid.type===1,Bidders_record_result_overorangebg:detailDatabrid.type===2}">-->
+<!--                                    <span v-if="detailDatabrid.type === 1">即将开始</span>-->
+<!--                                    <span v-if="detailDatabrid.type === 2">正在竞拍</span>-->
+<!--                                </div>-->
+<!--                                <div class="ml10">-->
+<!--                                    <span v-if="detailDatabrid.type === 1">距离开始</span>-->
+<!--                                    <span v-if="detailDatabrid.type === 2">距离结束</span>-->
+<!--                                </div>-->
+<!--                                <span class="fs16 ml15" v-if="detailDatabrid.type === 1 || detailDatabrid.type === 2">{{`${day}天 ${hr}小时 ${min}分钟 ${sec}秒`}}</span>-->
+<!--                            </div>-->
+<!--                            <div class="Bidders_record_Time fs14" v-if="detailDatabrid.type === 3">-->
+<!--                                <span  class="ml10 gray">中标价</span> <span class="fs16 ml15"><span class="orangeFont">￥<span class="fs20 fwb">{{auctionHighPrice}}</span></span> 元/吨</span>-->
+<!--                            </div>-->
+<!--                            <div class="Bidders_record_Time dflex mt20 fs14" v-if="detailDatabrid.type === 3">-->
+<!--                                <span class="ml10 gray">结束时间</span>-->
+<!--                                <span class="fs16 ml15">{{detailDatabrid.reservationEndTime}}</span>-->
+<!--                            </div>-->
+<!--                            <div class="Bidders_record_result_icon"  v-if="detailDatabrid.type === 3"></div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;恭喜中标&ndash;&gt;-->
+<!--                        <div class="Bidders_record_result_list orangebg  mt10" v-show="WinBidShow">-->
+<!--                            <span class="gxzb">恭喜中标</span>-->
+<!--                            <div class="tac whiteFont fs24 mt20">恭喜您拍得：<span class="ml10 mr10">{{WinBid.skuName}}</span>，<span class="ml10 mr10">{{WinBid.totalNum}}</span>吨</div>-->
+<!--                            <span class="db tac whiteFont">截止提货时间：{{this.detailDatabrid.lastDeliveryTime}}，逾期将扣除保证金</span>-->
+<!--                            <div class="dflex mb20">-->
+<!--                                <div class="zb_btn whitebg orangeFont" @click="auctionOrder">提 货</div>-->
+<!--                                &lt;!&ndash; <div class="zb_btn whitebg orangeFont" @click="acuDetailmember">查看详情</div> &ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; 竞拍结束 未中标 &ndash;&gt;-->
+<!--                        <div class="Bidders_record_result_list graybg  mt30" v-show="NotWinBidShow && detailDatabrid.type === 3">-->
+<!--                            <div class="fontScalend fontScalendbg">-->
+<!--                                <span>未中标</span>-->
+<!--                            </div>-->
+<!--                            <div class="dflex" style="flex-direction: column;margin: 39px 0;">-->
+<!--                                <div class="LoserList"><span class="failureTitle">最高中标价：</span><span class="fs20 ml15 orangeFont fwb mr5">￥{{auctionHighPrice}}</span>元/吨</div>-->
+<!--                                <div class="LoserList"><span class="failureTitle">最低中标价：</span><span class="fs20 ml15 orangeFont fwb mr5">￥{{auctionLowPrice}}</span>元/吨</div>-->
+<!--                                <div class="LoserList"><span class="failureTitle">一共拍出：</span><span class="fs20 ml15 orangeFont fwb mr5">{{auctionTotal}}</span>吨</div>-->
+<!--                                <div class="LoserList"><span class="failureTitle">中标人数：</span><span class="fs20 ml15 orangeFont fwb mr5">{{auctionWin}}</span>人</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <ul class="Bidders_record_con graybg" style="margin-top: 17px; width: 564px;" v-show="detailDatabrid.type === 3">-->
+<!--                            <li><span class="orangeFont">起拍单价：</span><span class="gray">￥{{MinPrice}}元/吨</span></li>-->
+<!--                            <li><span class="orangeFont">保证金比例：</span><span class="gray">{{detailDatabrid.marginRatio}}%</span></li>-->
+<!--                            <li><span class="orangeFont">加价幅度：</span><span class="gray">{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span></li>-->
+<!--                            <li><span class="orangeFont">竞拍数量：</span><span class="gray">{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</span></li>-->
+<!--                            <li><span class="orangeFont">数量幅度：</span><span class="gray">1吨起</span></li>-->
+<!--                        </ul>-->
+<!--                        &lt;!&ndash;正在竞拍&ndash;&gt;-->
+<!--                        <div class="Bidders_record_result_list graybg  mt25" v-show="detailDatabrid.type === 2 ||  detailDatabrid.type === 1">-->
+<!--                            <div class="fontScale fontScalebg">-->
+<!--                                <span>东莞</span>-->
+<!--                            </div>-->
+<!--                            <div class="ml30 mt40 dflex" style="align-items: center" >-->
+<!--                                <template v-if="bidePrice">-->
+<!--                                <span class="inputTitle">当前价</span><span class="fs18 fwb orangeFont">￥{{bidePrice}} </span>元/吨-->
+<!--                                </template>-->
+<!--                                <template v-else>-->
+<!--                                <span class="inputTitle">起拍价</span><span class="fs18 fwb orangeFont">￥{{MinPrice}} </span>元/吨-->
+<!--                                </template>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;竞拍出价&ndash;&gt;-->
+<!--                            <div class="ml30 dflex mt30" style="align-items: center;">-->
+<!--                                <span class="inputTitle">竞拍出价</span>-->
+<!--                                <span class="bodeRed cp" @click="cutsOffer()">-</span>-->
+<!--                                <input type="text" v-model="auctionOffer" class="textInput" style="" />-->
+<!--                                <span class="bodeRed orangeFont fwb whitebg cp" @click="addOffer()">+</span>-->
+<!--                                <span class="ml10 gray fs14">加价幅度：{{detailDatabrid.bidIncrement}} {{detailDatabrid.base_price}}/{{detailDatabrid.uomName}}</span>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;竞拍数量&ndash;&gt;-->
+<!--                            <div class="ml30 dflex mt25" style="align-items: center;">-->
+<!--                                <span class="inputTitle">竞拍数量</span>-->
+<!--                                <div class="dflexAlem pr">-->
+<!--                                    <span class="bodeRed cp"  @click="cutsNum()">-</span>-->
+<!--                                    <input type="text" v-model="auctionNum" class="textInput" style="" />-->
+<!--                                    <span class="bodeRed orangeFont fwb whitebg cp" @click="addNum()">+</span>-->
+<!--                                    <span class="ml10 gray fs14">{{detailDatabrid.minOrder}}吨起</span>-->
+<!--                                    <i class="redFont" style="position: absolute;bottom: -20px" v-show="auctionNumShow">{{auctionNumTip}}</i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;保证金比例&ndash;&gt;-->
+<!--                            <div class="ml30 dflex mt20" style="align-items: center;">-->
+<!--                                <span class="inputTitle">保证金比例</span>-->
+<!--                                <span class="">{{detailDatabrid.marginRatio}}% </span>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;竞拍必看&ndash;&gt;-->
+<!--                            <div class="MustSee"><a href="/help/17" target="_blank" >竞拍必看</a></div>-->
+<!--                            <div class="acuBtn" v-if="detailDatabrid.type === 2">-->
+<!--                                <a class="oncebg" @click="addauctionPrice()">立即出价</a>-->
+<!--                                <a class="Paybg ml15" @click="PayCost()">追加保证金</a>-->
+<!--                            </div>-->
+<!--                            <div class="acuBtn" v-if="detailDatabrid.type === 1">-->
+<!--                                <a class="startbg" @click="StartOrder()">即将开始</a>-->
+<!--                                <a class="Paybg ml15" @click="PayCost">缴纳保证金</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div v-else>暂无任何信息！</div>-->
+<!--                </div>-->
             </div>
+            <!--  正在参与-->
+            <div class="biddersRecord">
+
+                <h1 class="paipinacu fs20">正在参与</h1>
+
+                <table class="parttable">
+                    <tr class="tableTitle"><td>品种</td><td>牌号</td><td>厂商</td><td>起拍价</td><td>竞拍总量</td><td>距离结束</td><td>我的排名</td><td>我的出价</td><td>出价数量</td>
+                        <td>入局数量</td><td>当前状态</td><td>我的状态</td><td>操作</td></tr>
+                    <tr>
+                        <td>PP</td><td class="blue">L5E89</td><td>巨正源</td><td>巨正源</td><td>100吨</td>
+                        <td>00天23时12分36秒</td>
+                        <td class="orangeFont">3</td>
+                        <td>2019-09-27</td>
+                        <td>2019-09-27</td>
+                        <td>东莞市</td><td>散货带托</td><td>2019-09-27</td>
+                        <td><div class="seeTable">查看</div></td>
+                    </tr>
+                </table>
+
+            </div>
+            <!--  我的关注-->
+            <div class="biddersRecord">
+
+                <h1 class="paipinacu fs20">我的关注</h1>
+
+                <table class="parttable">
+                    <tr class="tableTitle"><td>竞拍编号</td><td>开始时间</td><td>竞拍时长</td><td>竞拍状态</td><td>品种</td><td>牌号</td><td>厂商</td><td>城市</td><td>起拍价</td>
+                        <td>竞拍总量</td><td>提货仓库</td><td>操作</td></tr>
+                    <tr>
+                        <td>PP</td><td class="blue">L5E89</td><td>巨正源</td><td>巨正源</td><td>100吨</td><td>00天23时12分36秒</td><td class="orangeFont">3</td><td>2019-09-27</td><td>2019-09-27</td>
+                        <td>东莞市</td><td>散货带托</td>
+                        <td><div class="seeTable">查看</div></td>
+                    </tr>
+                </table>
+            <div style="display: flex; justify-content: center">
+                <div class="addbiders" @click="addFollow">添加其他竞拍</div>
+            </div>
+            </div>
+
 
             <div class="biddersRecord">
                 <!--拍品信息-->
@@ -322,8 +454,8 @@
                     <h1 class="paipinacu fs20">拍品信息</h1>
                     <table class="paipin_table">
                     <tbody>
-                    <tr><th>品种</th><th>牌号</th><th>厂商</th><th>竞拍总量</th><th>起拍价</th><th>发货仓库</th></tr>
-                    <tr><td>{{detailDatabrid.skuCategoryName3}}</td><td>{{detailDatabrid.skuName}}</td><td>{{detailDatabrid.manufacturer}}</td><td>{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</td><td>{{MinPrice}}</td><td>{{detailDatabrid.warehouseName}}</td>  </tr>
+                    <tr><th>品种</th><th>牌号</th><th>厂商</th><th>竞拍总量</th><th>市场价</th><th>交易地点</th><th>交货时间</th></tr>
+                    <tr><td>{{detailDatabrid.skuCategoryName3}}</td><td>{{detailDatabrid.skuName}}</td><td>{{detailDatabrid.manufacturer}}</td><td>{{detailDatabrid.totalNum}}{{detailDatabrid.uomName}}</td><td>{{MinPrice}}</td><td>{{detailDatabrid.warehouseName}}</td><td>{{detailDatabrid.lastDeliveryTime}}</td>  </tr>
                     </tbody>
                     </table>
                 </div>
@@ -421,6 +553,22 @@
             <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>￥{{this.auctionOffer}}</p>
         </Modal>
 
+        <!-- 添加其他竞拍关注-->
+        <Modal
+                v-model="addfollow"
+                title="Title"
+                width="80"
+
+        >
+            <div slot="header"> <div>添加其他竞拍关注</div></div>
+
+            <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+
+            <div slot="close"></div>
+            <div>添加其他竞拍关注</div>
+            <div slot="footer"></div>
+        </Modal>
+
         <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
@@ -433,7 +581,10 @@ import Header from '../../../components/header'
 import Footer from '../../../components/footer'
 import { auctionInfor, priceListInfo, newprice, auctionRecord, auctionMineRecord, AddauctionPrice, gainauctionrecord, WinningBid } from '../../../api/auction'
 import paydeposit from '../../../components/paydeposit'
+import TimeDown from '../../../components/timeDown'
+import countdown from '../../../components/countdown'
 import {setCookies, getCookies} from '../../../config/storage'
+
 
 export default {
     name: "bidders-detail-id",
@@ -453,7 +604,9 @@ export default {
     components:{
         Header,
         Footer,
-        paydeposit
+        paydeposit,
+        TimeDown,
+        countdown
     },
     data () {
         return {
@@ -463,9 +616,65 @@ export default {
                 {name:'竞拍记录'},
                 {name:'我的出价'}
             ],
+            getData:{
+                currentTime:0,
+                endtimessss:0
+            },
+            columns4: [
+                {
+                    type: 'selection',
+                    width: 60,
+                    align: 'center'
+                },
+                {
+                    title: 'Name',
+                    key: 'name'
+                },
+                {
+                    title: 'Age',
+                    key: 'age'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                },
+                {
+                    title: 'Address',
+                    key: 'address'
+                }
+            ],
             istrue: 0,
             MineOfferRecord: [],
             MineOfferacr:{},
+            Timeloading: false,
             WinBidShow:false,
             NotWinBidShow:false,
             WinBid:{},
@@ -480,6 +689,7 @@ export default {
             auctionBond:'',   //保证金比例
             OfferRecordTip:'',   //出价记录提示
             auctionRd: [],
+            addfollow:false,    //添加竞拍关注
             DepositData:{
                 auctionId:'',
                 MinePrice:0,
@@ -500,6 +710,8 @@ export default {
         }
     },
     methods:{
+        countDownS_cb(){},
+        countDownE_cb(){},
         subtime (time, start, end) {
             if(!time) return
             return time.substring(start,end)
@@ -523,6 +735,10 @@ export default {
                     that.countdown()
                 }, 1000)
             }
+        },
+        //显示添加竞拍框
+        addFollow(){
+          this.addfollow=true
         },
         //查看详情_跳转会员-我的竞拍页
         acuDetailmember(){
@@ -612,6 +828,17 @@ export default {
             }
             this.auctionNum=this.detailDatabrid.minOrder
             this.auctionBond=this.detailDatabrid.marginRatio
+
+            var dateObj = new Date();
+            var currentTime = dateObj.getTime();
+             this.getData.currentTime=currentTime
+            let date=this.detailDatabrid.realEndTime
+            let subdate=date.substring(0,19)
+            let sbueim=subdate.replace(/-/g,'/')
+            let jiandic=new Date(sbueim).getTime()
+            this.getData.endtimessss=jiandic
+
+            console.log("getData:",this.getData)
             if(this.detailDatabrid.type===1){    //即将开始
                 this.countTime = Date.parse(new Date(this.detailDatabrid.beginTime))
             }
@@ -824,9 +1051,28 @@ export default {
             background-color: #fff;
             position: relative;
             overflow: hidden;
-            .table{width: 97%;
+            .kailong{
+                width:0;
+                height:0;
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-top:0px solid transparent;
+                border-bottom:53px solid transparent;
+                border-right:50px solid #a3cf3c;
+                .tranfont{
+                    transform: rotate(47deg);
+                    width: 35px;
+                    color: #fff;
+                    position: absolute;
+                    top: 10px;
+                    left: 18px;
+                    font-weight: bold;
+                }
+            }
+            .table{
+                width: 97%;
                 margin: 20px auto;
-
                 tr td{
                     border:1px solid #e6e6e6;
                     padding: 10px 0;
@@ -845,6 +1091,80 @@ export default {
             }
         }
     }
+    .biderResult{
+        position: relative;
+        background-color: #f3f3f3;
+        .WinBid{
+            font-size: 28px;text-align: center;
+        }
+        .winbider{
+            width: 110px;height: 110px;
+            position: absolute;
+            top: 63px;
+            right: 317px;
+            background: url("/img/winbidTipbg.png")no-repeat;
+        }
+        .failwinbider{
+            width: 110px;height: 110px;
+            position: absolute;
+            top: 6px;
+            right: 386px;
+            background: url("/img/fail.png")no-repeat;
+        }
+        .WinBidbg{
+            width: 175px;
+            margin: 25px auto 0;
+            background: url("/img/winbid.png")no-repeat 2px 10px;
+        }
+        .titleWin{
+            color: #a2a2a2;
+            width: 95px; text-align-last: justify; margin-right: 3px
+        }
+        .failWinBidbg{
+            width: 175px;
+            margin: 25px auto 0;
+            background: url("/img/failwinbid.png")no-repeat 12px 10px;
+        }
+        .Winbtn{
+            width: 165px;
+            text-align: center;
+            line-height: 42px;
+            border-radius: 3px;
+        }
+
+    }
+.addbiders{
+    padding: 10px 30px;background-color: #ff7300;
+    color: #fff;border-radius: 3px;margin-top: 15px;cursor: pointer;
+}
+        .parttable{
+            width: 100%;
+            margin: 5px auto;
+            .seeTable{
+                width: 65px;
+                margin: 0 auto;
+                background-color: #007de4;
+                border-radius: 3px;
+                color: #ffffff;
+                cursor: pointer;
+            }
+            tr td{
+                border:1px solid #e6e6e6;
+                padding: 10px 0;
+                text-align: center;
+            }
+            .tableTitle{
+
+                background-color: #f5f5f5;
+                color: #999999;
+            }
+        }
+        .birdtabletitle{
+            font-size: 20px;
+            margin-top: 25px;
+            margin-left: 20px;
+        }
+
 .recodelist{
     width: 50%; border: 1px solid #dfdfdf;
 }
