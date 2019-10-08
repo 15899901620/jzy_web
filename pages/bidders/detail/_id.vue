@@ -315,6 +315,7 @@
                     <div v-else>暂无任何信息！</div>
                 </div>
             </div>
+
             <div class="biddersRecord">
                 <!--拍品信息-->
                 <div class="">
@@ -447,7 +448,7 @@ export default {
           store.dispatch('helper/getHelpCate', {
             catId: 0,
             indexShow: 1
-          }),
+          })
     },
     components:{
         Header,

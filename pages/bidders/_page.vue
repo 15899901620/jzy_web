@@ -99,19 +99,19 @@
                 <div class="acuProduct ">
                   <h1 class=" fs20 mt20">{{items.skuName}}</h1>
                   <div class="mt10 fs14 dflex">
-                    <div>起拍价 ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span></div>
-                    <div class="fs14 ml20">竞拍数量 ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}</div>
+                    <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span></div>
+                    <div class="fs14 dflex"><span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}</div>
                   </div>
                   <div class="mt10 fs14 dflex">
-                    <div>竞拍编号 ：<span class=" fs16">{{items.billNo}}</span></div>
-                    <div class="fs14 ml20">厂商 ：<span class="orangeFont fs16">{{items.manufacturer}}</span></div>
+                    <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span></div>
+                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class="orangeFont fs16">{{items.manufacturer}}</span></div>
                   </div>
 
                 </div>
                 <div class="acuOpear">
-                  <div style="display: flex; flex-direction: column; justify-content: flex-end">
-                    <span class="mt10 ">库区：{{items.warehouseName}}</span>
-                    <span class="mt5">城市：{{items.manufacturer}}</span>
+                  <div style="display: flex; flex-direction: column; justify-content: center">
+                    <span class="mt10 ixebm ">库区：{{items.warehouseName}}</span>
+                    <span class="mt5 ixebm ">城市：{{items.manufacturer}}</span>
                   </div>
                   <template v-if="items.statusType == '1'">
                     <div class="btnStart startauction" @click="BidersDetail(items.id)">
@@ -367,6 +367,18 @@
     border-top-right-radius: 22px;
     border-bottom-right-radius: 22px;
     color: #ffff;
+  }
+  .btmunv{display: flex;width: 250px; }
+  .iv_title{
+    width: 60px;
+    text-align-last: justify;
+  }
+  .ixebm{
+    width: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
   }
   .Notice{
     border: 1px solid #dfdfdf;
