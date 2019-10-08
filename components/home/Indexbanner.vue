@@ -7,7 +7,7 @@
             :height="BannerSet.height"
   >
     <Carousel-item v-for="(item, index) in items" :key="index">
-      <div class="demo-carousel"><img :src="item.adImg" /></div>
+      <div class="demo-carousel" style="display: flex; justify-content: center;"><img :src="item.adImg" /></div>
     </Carousel-item>
   </Carousel>
 </template>

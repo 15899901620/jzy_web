@@ -145,7 +145,7 @@
           msTime.minutes = Math.floor(timeDistance / 60000);
           timeDistance -= msTime.minutes * 60000;
           //是否开启秒表倒计,未完成
-//                    this.secondsFixed ? msTime.seconds = new Number(timeDistance / 1000).toFixed(2) : msTime.seconds = Math.floor( timeDistance / 1000 ).toFixed(0);
+          //this.secondsFixed ? msTime.seconds = new Number(timeDistance / 1000).toFixed(2) : msTime.seconds = Math.floor( timeDistance / 1000 ).toFixed(0);
           msTime.seconds = Math.floor(timeDistance / 1000).toFixed(0);
           timeDistance -= msTime.seconds * 1000;
           if (msTime.hour < 10) {

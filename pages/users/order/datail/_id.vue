@@ -89,27 +89,28 @@
             </Row>
           </div>
           <div>
-             <p style="line-height:42px; text-align:left; font-size:17px; padding-right:9px;"><span style="    padding-left: 20px;">物料：{{this.datalist.skuName}}</span> <span class="ml15">数量：{{this.datalist.orderNum}}天</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:9px;"> <span >已支付：{{this.datalist.depositAmountFormat}}</span><span class="ml15" style="padding-left: 95px;">支付时间：{{this.datalist.orderPayTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额:{{this.datalist.skuName}} </span><span class="ml15" >最迟付款时间:{{this.datalist.orderPayLastTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right: 16px;"><span>账户金额：{{this.formSearch.capit.total_amount_format}} </span> <span class="ml15" style="margin-left: 44px;">保证金钱包余额：{{this.formSearch.capit.freeze_amount_format}}</span></p>
-            <p style="line-height:32px; text-align:right; font-size:15px; padding-right:10px;"
-               v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天</p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px; font-weight: bold;color: #ff0000b3;">
-              订单总额：{{this.datalist.totalAmountFormat}}</p>
-            <p v-if="this.datalist.status == 2"
-               style="line-height:42px;color:red; text-align:right; font-size:17px; padding-right:10px;">
-              待付金额：{{this.amountFormat(this.datalist.totalAmount - this.datalist.depositAmount)}}</p>
-            <p  style="line-height:42px;color:red; text-align:right; font-size:20px; padding-right:10px;">
-             <Button type="success" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;">确定</Button>      <Button class="submitback ml10" @click='back'>返回</Button></p>
-            </p>
+             <div style="line-height:42px; text-align:right; font-size:16px;  padding-right: 47px;"><span >物料：{{this.datalist.skuName}}</span> <span class="ml15" style="padding-left: 105px;">数量：{{this.datalist.orderNum}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:9px;" v-if="this.datalist.status == 3"> <span >已支付：{{this.datalist.totalAmountFormat}}</span><span class="ml15" style="padding-left: 50px;">支付时间：{{this.datalist.orderPayTime}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额：{{this.datalist.totalAmountFormat}} </span><span class="ml15" style="padding-left: 50px;">最迟付款时间：{{this.datalist.orderPayLastTime}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right: 16px;"><span>账户金额：{{this.formSearch.capit.total_amount_format}} </span> <span class="ml15" style="margin-left: 44px;">保证金钱包余额：{{this.formSearch.capit.package_amount_format}}</span></div>
+            <div style="line-height:32px; text-align:right; font-size:16px; padding-right:20px;"
+               v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天
+               </div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:20px; font-weight: bold;color: #ff0000b3;">
+              订单总额：{{this.datalist.totalAmountFormat}}</div>
+            <div  style="line-height:42px;color:red; text-align:right; font-size:20px; padding-right:10px;">
+                  <Button type="success" v-if="this.datalist.status == 2" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;" @click="paymentBut()">去支付</Button> 
+                  <Button class="submitback ml10" @click='back'>返回</Button>
+            </div>
+       
+       
             
           </div>
         </div>
 
       </div>
     </div>
-    
+    <OrderPay :isShow='payLoading' :order_id='payOrderID' @unChange="unPayOrder"></OrderPay>
   </div>
 </template>
 
@@ -119,6 +120,7 @@
 	import {getCookies} from '../../../../config/storage'
 	import config from '../../../../config/config'
   import utils from '../../../../plugins/common'
+  import OrderPay from '../../../../components/paydeposit/orderPay'
   import {sendHttp} from "../../../../api/common";
   	import server from "../../../../config/api";
 
@@ -127,7 +129,8 @@
 		layout: 'membercenter',
 		middleware: 'memberAuth',
 		components: {
-			usernav: Navigation.user,
+      usernav: Navigation.user,
+      OrderPay
 		},
 		fetch({store}) {
 			return Promise.all([
@@ -139,8 +142,10 @@
 		},
 		data() {
 			return {
-				payloading: false,
-				datalist: [],
+        payloading: false,
+        payLoading:false,
+        datalist: [],
+        payOrderID:0,
 				formSearch: {
 					orderType: '',
 					status: '',
@@ -173,7 +178,11 @@
 				}
 				let res = await getorderDetail(this, params)
 				this.datalist = res.data
-			},
+      },
+      unPayOrder(row) {
+				this.payLoading = row
+				this.sourceDeta()
+      },
 			amountFormat: function (amount, sign) {
 				return utils.amountFormat(amount, sign)
       },
@@ -181,10 +190,19 @@
         const res = await sendHttp(this, true, server.api.capital.myCapital)
         console.log(res)
         this.formSearch.capit=res.data
-     }
-		},
+      },
+      paymentBut() {
+            //检查是否可以使用合约的保证金
+           
+            this.payOrderID = this.orderid
+            this.payLoading = true
+           console.log(this.payOrderID)
+        },	
+    },
+
+    
 		mounted(){
-       this.capit();
+      this.capit();
       this.sourceDeta()
      
     },

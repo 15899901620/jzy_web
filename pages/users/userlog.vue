@@ -31,8 +31,8 @@
             <span style="width: 12%;">重量/吨</span>
             <span style="width: 12%;">承运商</span>
             <span style="width: 12%;">联系电话</span>
-            <span style="width: 12%;">订单状态</span>
-            <span style="width: 12%;">订单操作</span>
+            <span style="width: 12%;">运单状态</span>
+            <span style="width: 12%;">运单操作</span>
           </div>
 
           <ul class="logistics mt10" v-for="(item, index) in dataList" :key="index">
@@ -43,17 +43,13 @@
               <div class="priOpen">
                 <span>{{item.dispatchFullAddress}} </span><span>{{item.receiptFullAddress}}</span><span>{{item.freightGoods}}</span><span>{{item.weight}}</span>
                 <span>{{item.supplierName}}</span><span>{{item.supplierMobile}}</span>
-                <div v-if='item.status==0'>
-                      <span>取消</span>
-                </div>
-                <div v-if='item.status==1'>
-                      <span>报价中</span>
-                </div>
-                <div v-if='item.status==2'>
-                      <span>已选择</span>
-                </div>
-                <span><a class="logBtn redbg" @click='cancel(item)'>取消</a></span>
-                <span><a class="logBtn greenbg" @click="detailLog(item)">用车详情</a></span>
+                      <span v-if='item.status==0'>取消</span>
+                      <span v-if='item.status==1'>报价中</span>
+                      <span v-if='item.status==2'>已选择</span>
+                <span>
+                  <a class="logBtn greenbg" @click="detailLog(item)">用车详情</a>
+                  <a class="logBtn redbg" @click='cancel(item)' style="line-height: 40px;" v-if='item.status!=0' >取消</a>
+                </span>
               </div>
               <div class="pro_jmts">
                 <ul>
@@ -304,7 +300,7 @@ export default {
     .logistics li>span{margin: 20px 4px;width: 18%;text-align: center;}
     .logBtn{padding: 4px 18px; color: #fff; border-radius: 3px;}
     .logistics li .priOpen{display: flex;align-items: center;width: 100%;}
-    .logistics li .priOpen span{margin: 20px 4px;width: 18%; text-align: center;}
+    .logistics li .priOpen span{margin: 20px 0px;width: 12%; text-align: center;}
     .greenbg{background-color: #23aa36;}
 
     .pro_jmts ul{ background-color: #fff; border: 1px solid #e6f1f7;width: 95%;margin: 0 auto;margin-bottom: 10px;}

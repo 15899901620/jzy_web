@@ -210,7 +210,7 @@ export default {
                 }
             },
 
-            tax_id:0,
+            tax_id:1,
             isAddressFormShow: false,
             loading: false,
             localList: [
@@ -228,7 +228,7 @@ export default {
                  '是',
             ],
             tax:'是',
-            title:'2',
+            title:'1',
             OrderList:{},
             userinfo:{},
             date:'',

@@ -69,6 +69,7 @@
 			restart(){
 				console.log("restart")
         if(this.endTime){
+          console.log("endTime:",this.endTime)
 					let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
 					// 计算时间差
 					let timeLag = (end - new Date().getTime()) / 1000
