@@ -75,8 +75,8 @@
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
                 <span style="width: 9%;">
-                  {{item.available_num}}
                   <Tag v-if="item.available_num > 0 && item.limit_num > 0" color="error">限{{item.limit_num}}</Tag>
+                  {{item.available_num}}
                 </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
                       style="width: 9%;position:relative;text-align:right;padding-right:18px;">

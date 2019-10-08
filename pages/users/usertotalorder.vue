@@ -83,15 +83,18 @@
                       style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.depositAmountFormat}}</span>
                   </template>
                 </td>
-                <td>
+                <td style="width: 11%;">
                   <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
+				  <template v-if="item.depositId > 0"><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount - item.depositAmount)}}</span>
+                  </template>
                 </td>
                 <td class="operate">
                   <div class="" v-if="item.status == 2">
                     <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
-                    <a class="blackFont mt15" @click="closeBut(item)">取消订单</a>
+                    <a class="blackFont mt15" @click="closeBut(item)">重开订单</a>
                   </div>
 					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
@@ -130,6 +133,7 @@
 	import FreightAdd from '../../components/freight-add/freight-add'
 	import FreightDetail from '../../components/freight-add/freght-detail'
 	import { sendCurl } from '../../api/common'
+	import utils from '../../plugins/common'
 	import server from '../../config/api'
 
 	export default {
@@ -154,7 +158,7 @@
 			return {
 				payOrderID: 0,
 				paystatus:[
-          {'label': '已取消','value':0},
+				{'label': '已取消','value':0},
 				  {'label': '待付货款','value':2},
 				  {'label': '已付款','value':3},
                 ],
@@ -200,12 +204,14 @@
 			async getCountData() {
 				this.$store.dispatch('member/getOrderCount')
 			},
-
+			amountFormat: function (amount, sign) {
+				return utils.amountFormat(amount, sign)
+      		},
 			paymentBut(row) {
 				//检查是否可以使用合约的保证金
 
 				this.payLoading = true
-        this.payOrderID = row.id
+				this.payOrderID = row.id
 				/*this.payInfo = {
 					'id': row.id,
 					'orderNo' : row.orderNo,
@@ -216,7 +222,7 @@
 					'payAmount' : row.payAmount,
 					'deductAmount' : row.deductAmount,
 				}*/
-			},
+			},		
 			unPayOrder(row) {
 				this.payLoading = row
 				this.getSourceData()
