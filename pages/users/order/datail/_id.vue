@@ -89,18 +89,21 @@
             </Row>
           </div>
           <div>
-             <p style="line-height:42px; text-align:right; font-size:16px;  padding-right: 131px;"><span >物料：{{this.datalist.skuName}}</span> <span class="ml15" style="padding-left: 55px;">数量：{{this.datalist.orderNum}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:9px;" v-if="this.datalist.status == 3"> <span >已支付：{{this.datalist.totalAmountFormat}}</span><span class="ml15" style="padding-left: 50px;">支付时间：{{this.datalist.orderPayTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额：{{this.datalist.totalAmountFormat}} </span><span class="ml15" style="padding-left: 50px;">最迟付款时间：{{this.datalist.orderPayLastTime}}</span></p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right: 16px;"><span>账户金额：{{this.formSearch.capit.total_amount_format}} </span> <span class="ml15" style="margin-left: 44px;">保证金钱包余额：{{this.formSearch.capit.package_amount_format}}</span></p>
-            <p style="line-height:32px; text-align:right; font-size:16px; padding-right:20px;"
-               v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天</p>
-            <p style="line-height:42px; text-align:right; font-size:16px; padding-right:20px; font-weight: bold;color: #ff0000b3;">
-              订单总额：{{this.datalist.totalAmountFormat}}</p>
-            <p  style="line-height:42px;color:red; text-align:right; font-size:20px; padding-right:10px;">
+             <div style="line-height:42px; text-align:right; font-size:16px;  padding-right: 47px;"><span >物料：{{this.datalist.skuName}}</span> <span class="ml15" style="padding-left: 105px;">数量：{{this.datalist.orderNum}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:9px;" v-if="this.datalist.status == 3"> <span >已支付：{{this.datalist.totalAmountFormat}}</span><span class="ml15" style="padding-left: 50px;">支付时间：{{this.datalist.orderPayTime}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:10px;" v-if="this.datalist.status == 2"><span>待付金额：{{this.datalist.totalAmountFormat}} </span><span class="ml15" style="padding-left: 50px;">最迟付款时间：{{this.datalist.orderPayLastTime}}</span></div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right: 16px;"><span>账户金额：{{this.formSearch.capit.total_amount_format}} </span> <span class="ml15" style="margin-left: 44px;">保证金钱包余额：{{this.formSearch.capit.package_amount_format}}</span></div>
+            <div style="line-height:32px; text-align:right; font-size:16px; padding-right:20px;"
+               v-if="this.datalist.isJryService">巨融易：{{this.datalist.jryDays}}天
+               </div>
+            <div style="line-height:42px; text-align:right; font-size:16px; padding-right:20px; font-weight: bold;color: #ff0000b3;">
+              订单总额：{{this.datalist.totalAmountFormat}}</div>
+            <div  style="line-height:42px;color:red; text-align:right; font-size:20px; padding-right:10px;">
                   <Button type="success" v-if="this.datalist.status == 2" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;" @click="paymentBut()">去支付</Button> 
-                  <Button class="submitback ml10" @click='back'>返回</Button></p>
-            </p>
+                  <Button class="submitback ml10" @click='back'>返回</Button>
+            </div>
+       
+       
             
           </div>
         </div>
