@@ -25,7 +25,7 @@
             <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size:24px;     color: #007de4;"></i>
             <span style="width: 11%;" >到达地</span>
             <span style="width: 15%;">货物名称</span>
-            <span style="width: 13%;">货物价格</span>
+            <span style="width: 13%;">单价</span>
             <span style="width: 12%;">分类</span>
             <span style="width: 12%;">会员名称</span>
             <span style="width: 12%;">电话</span>

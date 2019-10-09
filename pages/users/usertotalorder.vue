@@ -37,13 +37,13 @@
           </div>
           <div class="TableTitle graybg">
             <!-- <span style="width: 10%;">单据类型</span> -->
-            <span style="width: 12%;">商品信息</span>
-            <span style="width: 12%;">单价(元/吨)</span>
-            <span style="width: 12%;">数量(吨)</span>
-            <span style="width: 12%;">库区</span>
-            <span style="width: 12%;">提货方式</span>
-            <span style="width: 12%;">订单总金额</span>
-            <span style="width: 12%;">订单状态</span>
+            <span style="width: 10%;">商品信息</span>
+            <span style="width: 10%;">单价(元/吨)</span>
+            <span style="width: 10%;">数量(吨)</span>
+            <span style="width: 10%;">库区</span>
+            <span style="width: 10%;">提货方式</span>
+            <span style="width: 13%;">订单总金额</span>
+            <span style="width: 14%;">订单状态</span>
             <span style="width: 12%;">订单操作</span>
             <span style="width: 12%;">提货状态</span>
           </div>
@@ -77,13 +77,13 @@
 						配送
 					</span>
 				</td>
-                <td>
+                <td style="width: 13%;">
                   {{item.totalAmountFormat}}
                   <template v-if="item.status == 3 || item.status == 4 "><br><span
-                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.totalAmount}}</span>
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{amountFormat(item.totalAmount)}}</span>
                   </template>
                 </td>
-                <td style="width: 11%;">
+                <td style="width: 14%;">
                   <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
@@ -91,7 +91,7 @@
                       style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount)}}</span>
                   </template>
                 </td>
-                <td class="operate">
+                <td class="operate" style="width: 11%;">
                   <div class="" v-if="item.status == 2">
                     <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
                     <a class="blackFont mt15" @click="closeBut(item)">重开订单</a>

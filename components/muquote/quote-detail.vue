@@ -11,92 +11,74 @@
       <span>查看报价</span>
     </p>
     <div>
-      <Form ref="formAddress" :model="formAddress" :label-width="100" >
-        <Row index="0">
-          <Col span="12">
-            <FormItem label="订单号">
-              <span style="line-height:40px">{{OrderList.orderNo}}</span>
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="需求编号">
-              {{OrderList.billNo}}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row index="0">
-          <Col span="12">
-            <FormItem label="货物名称">
-              {{OrderList.freightGoods}}
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="货运数量">
-              {{OrderList.weight}}吨
-            </FormItem>
-          </Col>
-
-        </Row>
-        <Row index="0">
-          <Col span="12">
-            <FormItem label="联系人">
-              {{OrderList.contact}}
-            </FormItem>
-
-          </Col>
-          <Col span="12">
-            <FormItem label="联系电话">
-              {{OrderList.phone}}
-            </FormItem>
-
-          </Col>
-        </Row>
-        <Row index="2">
-          <Col span="12">
-            <FormItem label="货物价格">
-              {{price}}/吨
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="分类">
-              {{freightGoodsCname}}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row index="3">
-          <Col span="12">
-            <FormItem label="询价有效时间">
-              {{OrderList.inquiryMinute}}小时
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="是否含税">
-              <span v-if='OrderList.isTax==0'>否</span>
-              <span v-else>是</span>
-            </FormItem>
-          </Col>
-
-        </Row>
-        <Row index="4">
-			<Col span="12">
-				<FormItem label="出发地">
-				{{dispatchFullAddress}}
-				</FormItem>
-			</Col>
-			<Col span="12">
-				<FormItem label="到达地">
-				{{receiptFullAddress}}
-				</FormItem>
-         	</Col>
-        </Row>
-      </Form>
+		<div style="line-height:32px; margin-left: 40px">
+             <Row index="">
+              <Col span="12">询价编号 : {{OrderList.billNo}}</Col>
+			  <Col span="12">发布时间 : {{OrderList.createTime}}</Col>
+           
+            </Row>
+            <Row index="">
+              <Col span="12">出发地：{{dispatchFullAddress}}</Col>
+              <Col span="12">到达地：{{dispatchFullAddress}}</Col>
+            </Row>
+             <Row index="">
+              <Col span="12">询价有效时间: {{OrderList.inquiryMinute}}小时
+              </Col>
+              <Col span="12">报价倒计时:   
+                  <span class='red'>
+					<TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="OrderList.inquiryEndTime" hoursShow></TimeDown>
+				</span>	
+              </Col>
+			  
+            </Row>
+			<Row index="">
+			   <Col span="12">订单状态 :  
+					<span    v-if='OrderList.status==2'      >已入选</span>
+					<span   v-else-if='OrderList.status==1' >已报价</span>
+					<span   v-else  >未入选</span> 				
+			   </Col>
+			    <Col span="12">是否含税 :   
+					<span v-if='OrderList.isTax==0'>否</span>
+					<span v-else>是</span>
+			   </Col>
+            </Row>
+			
+          </div>
     </div>
     <div class="whitebg mt20" style="padding:0px 18px 18px;">
-        <span class="fr mr15 red">
-          报价倒计时：
-          <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="OrderList.inquiryEndTime" hoursShow></TimeDown>
-        </span>
+			<div style="line-height:32px; ">
+				<Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
+				<Col span="4">货物名称</Col>
+				<Col span="3">分类</Col>
+				<Col span="2">货物数量</Col>
+				<Col span="3">单价（元/吨）</Col>
+				<Col span="3">总金额</Col>
+				<Col span="4">询价人</Col>
+				<Col span="2">联系人</Col>
+				<Col span="3">联系电话</Col>
+			
+		
+				<Col span="3"></Col>
 
+				</Row>
+				<Row   style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
+				<Col span="4">{{OrderList.freightGoods}}</Col>
+				<Col span="3"> {{freightGoodsCname}}</Col>
+				<Col span="2">{{OrderList.weight}}吨</Col>
+				<Col span="3">{{price}}</Col>
+				<Col span="3">¥{{price*OrderList.weight}}</Col>
+				<Col span="4">{{OrderList.memberName}}</Col>
+				<Col span="2">{{OrderList.contact}}</Col>
+				<Col span="3">{{OrderList.phone}}</Col>
+		
+		
+			
+				</Row>
+				<Row>
+				<Col v-if='this.datalist==null'><p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p></Col>
+
+				</Row>
+		</div>
 
     
     </div>
@@ -212,7 +194,7 @@
 				let params = {
 					id: this.datalist.demandId,
 				}
-				const res = await sendHttp(this, true, server.api.freight.freightDemand, params, 1)
+				const res = await sendHttp(this, true, server.api.freight.freightDemand, params, 2)
 				this.dispatchFullAddress=this.datalist.dispatchFullAddress
 				this.receiptFullAddress=this.datalist.receiptFullAddress
 				this.freightGoodsCname=this.datalist.freightGoodsCname
