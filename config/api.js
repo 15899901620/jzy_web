@@ -115,6 +115,8 @@ let api = {
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
     getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
+    getAuctionInfo:{'url':'/bill/auction/sale/info','method':'get'},
+		getAuctionRecord:{'url':'/bill/auctionBid/page','method':'get'},    //获取竞拍记录
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍
