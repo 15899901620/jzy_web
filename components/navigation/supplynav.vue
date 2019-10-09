@@ -23,7 +23,7 @@ export default {
                     children: [
                         {
                             path: '/supply/Supplier',
-                            name: '优质货源需求'
+                            name: '优质货运需求'
                         },
                          {
                             path: '/supply/myquote',
