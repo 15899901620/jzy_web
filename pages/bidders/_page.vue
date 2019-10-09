@@ -147,7 +147,7 @@
               暂无任何信息！
             </p>
             <div class="  ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-              <pages :total="$store.state.bidders.auctionTotal" :show-total="showTotal" :value="current_page"
+              <pages :total="this.auctionTotal" :show-total="showTotal" :value="current_page"
                      :pageSize="page_size"></pages>
             </div>
           </div>

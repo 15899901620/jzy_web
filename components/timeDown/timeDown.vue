@@ -17,14 +17,18 @@
       <span class="second" v-show="isStop">{{clocker}}</span>
     </template>
     <template v-if="timeStyleType == 2">
-      <template v-if="dayShow">
-        <span class="hour orangeFont">{{myDay}}</span> 天
-      </template>
-      <template v-if="hoursShow">
-        <span class="hour orangeFont">{{myHours}}</span> 时
-      </template>
-      <span class="minute orangeFont">{{myMinutes}}</span> 分
-      <span class="second orangeFont">{{mySeconds}}</span> 秒
+      <div class="time" v-show="!isStop">
+        <template v-if="dayShow">
+          <span class="hour orangeFont">{{myDay}}</span> 天
+        </template>
+        <template v-if="hoursShow">
+          <span class="hour orangeFont">{{myHours}}</span> 时
+        </template>
+        <span class="minute orangeFont">{{myMinutes}}</span> 分
+        <span class="second orangeFont">{{mySeconds}}</span> 秒
+      </div>
+      <!-- 这里是显示结束后的内容 -->
+      <span class="second" v-show="isStop">{{clocker}}</span>
     </template>
   </div>
 </template>
@@ -67,9 +71,7 @@
 		},
 		methods:{
 			restart(){
-				console.log("restart")
         if(this.endTime){
-          console.log("endTime:",this.endTime)
 					let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
 					// 计算时间差
 					let timeLag = (end - new Date().getTime()) / 1000
@@ -97,7 +99,7 @@
 
 							this.isStop = true
 							this.clocker = this.endMsg || '已结束'
-							//this.$emit('onTimeOver')
+							this.$emit('onTimeOver')
 						} else {
 							setTimeout(function () {
 								timeFunction();

@@ -13,6 +13,9 @@ export const state = () => {
 	return {
 		auctionTotal: 0,
 		auctionList:[],
+		auctionInfo:{},
+		recordTotal: 0,
+		recordList:[],
 		hotbidderList: [],
 		biddersbeingData: {},
 		bidderssoonData: {},
@@ -27,6 +30,17 @@ export const mutations = {
 	updateAuctionList(state, data) {
 		state.auctionList = data
 	},
+	updateAuctionInfo(state, data) {
+		state.auctionInfo = data
+	},
+	updateRecordTotal(state, data) {
+		state.recordTotal = data
+	},
+	updateRecordList(state, data) {
+		state.recordList = data
+	},
+
+
 	updateHotBidderData(state, data) {
 		state.hotbidderList = data
 	},
@@ -39,9 +53,6 @@ export const mutations = {
 	updateendData(state, data) {
 		state.biddersendData = data
 	},
-	updateCurrPage(state, data) {
-		state.currPage = data
-	},
 	updatebidderDetail(state,data){
 
 	},
@@ -49,11 +60,24 @@ export const mutations = {
 
 export const actions = {
 	async getAuctionList({commit}, params) {
-		commit('updateCurrPage', parseInt(params.current_page))
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
 			commit('updateAuctionList', res.data.items)
 			commit('updateAuctionTotal', res.data.total)
+		}
+	},
+	async getAuctionInfo({commit}, params) {
+		let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
+		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			commit('updateAuctionInfo', res.data)
+		}
+	},
+	async getAuctionRecordList({commit}, params) {
+		let res = await sendCurl(this, server.api.Auction.getAuctionRecord, params)
+		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			console.log(res.data.items)
+			commit('updateRecordList', res.data.items)
+			commit('updateRecordTotal', res.data.total)
 		}
 	},
 
