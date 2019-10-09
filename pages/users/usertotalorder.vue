@@ -79,16 +79,16 @@
 				</td>
                 <td>
                   {{item.totalAmountFormat}}
-                  <template v-if="item.depositId > 0"><br><span
-                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.depositAmountFormat}}</span>
+                  <template v-if="item.status == 3 || item.status == 4 "><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{item.totalAmount}}</span>
                   </template>
                 </td>
                 <td style="width: 11%;">
                   <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
-				  <template v-if="item.depositId > 0"><br><span
-                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount - item.depositAmount)}}</span>
+				  <template v-if="item.status == 2"><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount)}}</span>
                   </template>
                 </td>
                 <td class="operate">
