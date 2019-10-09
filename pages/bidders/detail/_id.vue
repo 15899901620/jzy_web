@@ -162,7 +162,9 @@
             <td></td>
             <td></td>
             <td>
-              <template v-if="auctionInfo.totalNum > auctionInfo.totalBidNum">{{auctionInfo.totalNum - auctionInfo.totalBidNum}}</template>
+              <template v-if="auctionInfo.totalNum > auctionInfo.totalBidNum">{{auctionInfo.totalNum -
+                auctionInfo.totalBidNum}}
+              </template>
               <template v-else>0</template>
             </td>
             <td>
@@ -495,7 +497,6 @@
 </template>
 
 <script>
-
 	import {mapState} from 'vuex'
 	import Header from '../../../components/header'
 	import Footer from '../../../components/footer'
@@ -518,18 +519,18 @@
 		middleware: 'memberAuth',
 		fetch({store, params, query}) {
 			return Promise.all([
-        //获取顶部、中部、底部导航信息
-        store.dispatch('common/getNavList'),
-        //获取系统配置
-        store.dispatch('common/getSysConfig'),
-        //获取友情链接
-        store.dispatch('common/getFriendlyList'),
-        //获取底部帮助分类
-        store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-        //获取竞拍信息
-        store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
+				//获取顶部、中部、底部导航信息
+				store.dispatch('common/getNavList'),
+				//获取系统配置
+				store.dispatch('common/getSysConfig'),
+				//获取友情链接
+				store.dispatch('common/getFriendlyList'),
+				//获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
+				//获取竞拍信息
+				store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
 				//获取竞拍记录
-				store.dispatch('bidders/getAuctionRecordList', {auctionId:params.id ,current_page: 1, page_size: 10}),
+				store.dispatch('bidders/getAuctionRecordList', {auctionId: params.id, current_page: 1, page_size: 10}),
 			])
 		},
 		components: {
@@ -540,7 +541,7 @@
 		},
 		computed: {
 			...mapState({
-        auctionInfo: state => state.bidders.auctionInfo,
+				auctionInfo: state => state.bidders.auctionInfo,
 				systeminfo: state => state.common.sysConfig,
 				auctionRd: state => state.bidders.recordList,
 			})
@@ -666,10 +667,10 @@
 				let params = {
 					auctionId: this.auctionId
 				}
-        let res = await gainauctionrecord(this, params)
-        if (res.data) {
-          this.MineOfferRecord = res.data
-        }
+				let res = await gainauctionrecord(this, params)
+				if (res.data) {
+					this.MineOfferRecord = res.data
+				}
 
 			},
 			//中标信息
@@ -677,14 +678,14 @@
 				let params = {
 					auctionId: this.auctionId
 				}
-					let res = await WinningBid(this, params)
-					if (res.data && res.status === 200) {
-						this.WinBidShow = true
-						this.WinBid = res.data
-						this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
-					} else {
-						this.NotWinBidShow = true
-					}
+				let res = await WinningBid(this, params)
+				if (res.data && res.status === 200) {
+					this.WinBidShow = true
+					this.WinBid = res.data
+					this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
+				} else {
+					this.NotWinBidShow = true
+				}
 			},
 			//获取最新的竞拍价
 			async getNewPrice(id) {
@@ -732,9 +733,10 @@
 				}
 			},
 			addauctionPrice() {
-					this.bidersloading = true
+				this.bidersloading = true
 			},
-		},
+		}
+		,
 		head() {
 			return {
 				title: this.auctionInfo.skuName + '限时竞拍-巨正源',
@@ -743,9 +745,11 @@
 					{hid: 'description', name: 'description', content: '物性表-巨正源'}
 				]
 			}
-		},
+		}
+		,
 		created() {
-		},
+		}
+		,
 		mounted() {
 			console.log('mounted:', this.auctionInfo)
 			console.log('minOrder:', this.auctionInfo.minOrder)
@@ -753,12 +757,14 @@
 			//this.getAuctionRecord()
 			//this.getGainauctionRecord()
 			//this.getNewPrice()
-		},
+		}
+		,
 
 		watch: {
 			'$route'(to, from) {
 				this.$router.go(0);
-			},
+			}
+			,
 		}
 	}
 </script>
@@ -789,11 +795,115 @@
         }
       }
     }
-  }
 
-  .ivu-modal {
-    .ivu-modal-header {
-      background-color: #f9f9f9;
+    .status_product {
+      width: 1200px;
+      margin: 20px auto;
+
+      .statusTime {
+        display: flex;
+
+        .status {
+          width: 5%;
+          font-size: 18px;
+          padding: 0 12px;
+          color: #fff;
+        }
+
+        .cutTime {
+          color: #fff;
+          width: 95%;
+          display: flex;
+          align-items: center;
+
+          .cutDown_time {
+            width: 22px;
+            height: 22px;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+
+        .cutTimeVcbg {
+          background: url("/img/vc_bg.png");
+        }
+
+        .cutTimeIngbg {
+          background: url("/img/ingBg.png");
+        }
+
+        .cutTimeEndbg {
+          background: url("/img/EndBg.png");
+        }
+
+        .statusVcbg {
+          background-color: #1b962c;
+        }
+
+        .statusIngbg {
+          background-color: #ed5400;
+        }
+
+        .statusEndbg {
+          background-color: #797979;
+        }
+      }
+
+      .birdtable {
+        background-color: #fff;
+        position: relative;
+        overflow: hidden;
+
+        .kailong {
+          width: 0;
+          height: 0;
+          position: absolute;
+          top: 0;
+          right: 0;
+          border-top: 0px solid transparent;
+          border-bottom: 53px solid transparent;
+          border-right: 50px solid #a3cf3c;
+
+          .tranfont {
+            transform: rotate(47deg);
+            width: 35px;
+            color: #fff;
+            position: absolute;
+            top: 10px;
+            left: 18px;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .table {
+          width: 97%;
+          margin: 20px auto;
+
+          tr td {
+            border: 1px solid #e6e6e6;
+            padding: 10px 0;
+            text-align: center;
+          }
+
+          .tableTitle {
+
+            background-color: #f5f5f5;
+            color: #999999;
+          }
+        }
+
+        .birdtabletitle {
+          font-size: 20px;
+          margin-top: 25px;
+          margin-left: 20px;
+        }
+      }
     }
   }
 
