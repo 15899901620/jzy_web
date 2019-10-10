@@ -200,6 +200,7 @@
 					...this.formSearch
 				}
 				this.$store.dispatch('member/getOrderList', params)
+				this.$store.dispatch('member/getOrderCount')
 			},
 			async getCountData() {
 				this.$store.dispatch('member/getOrderCount')

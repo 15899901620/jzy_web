@@ -149,6 +149,8 @@
 				}
 				sendHttp(this, true, server.api.freightOffer.save, params, 2).then(response => {
 					this.loading = false
+					this.dispatchFull=''
+					this.receiptFull=''
 					this.$Notice.warning({
 						title: '报价成功',
 					})

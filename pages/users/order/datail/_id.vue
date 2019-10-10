@@ -64,7 +64,7 @@
             </Row>
           </div>
         </div>
-        <div v-if="this.datalist.isDelivery === 0" class="whitebg mt20" style="padding:0px 18px 18px;">
+        <div v-if="this.datalist.isDelivery === 0 && datalist.isAddDemand == 1" class="whitebg mt20" style="padding:0px 18px 18px;">
           <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">用车信息<span style="margin-left: 100px">提货方式：</span>
           <template v-if="this.datalist.isDelivery == 0">自提
               <template v-if="(datalist.isAddDemand) || 0 == 0">(待发送物流询价)</template>

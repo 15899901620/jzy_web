@@ -24,8 +24,8 @@
 				<ul class="indexXhlist">
 					<template v-if="!userinfo">
 						<li>
-							<p style="width:100%; text-align:center">查看专料信息，请先 [ <router-link to="/login">登录
-								</router-link> ] 或 [ <router-link to="/register">注册</router-link> ] 会员</p>
+							<p style="width:100%; text-align:center">查看专料信息，请先 [ <router-link to="/login"><span style="color:#017de4">登录</span>
+								</router-link> ] 或 [ <router-link to="/register"><span style="color:#017de4">注册</span></router-link> ] 会员</p>
 						</li>
 					</template>
 					<template v-else>
