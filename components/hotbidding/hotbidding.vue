@@ -31,8 +31,8 @@
               <span>数量 : {{items.totalNum}}{{items.uomName}}</span>
               <span>库区 : {{items.warehouseName}}</span>
             </div>
-            <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">竞拍中</div>
-            <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">竞拍中即将开始</div>
+            <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">正在竞拍</div>
+            <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">即将开始</div>
             <div class="Timebtn endbg" v-if="items.statusType == '3'" @click="acutionDetail(items.id)">竞拍结束</div>
           </li>
         </ul>
