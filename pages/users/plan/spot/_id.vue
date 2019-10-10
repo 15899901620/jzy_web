@@ -146,6 +146,7 @@
 		},
 		data() {
 			return {
+        id:!this.$route.params.id ? 0 : this.$route.params.id
 			}
 		},
 		methods: {
@@ -156,7 +157,7 @@
 				history.go(-1)
       },
 			toCreateOrder(){
-
+         location.href = '/spot/change/'+this.id
       }
 		},
 		mounted(){

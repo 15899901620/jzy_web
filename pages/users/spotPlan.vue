@@ -11,8 +11,8 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入竞拍计划编号查询" ref="searchval" class="orderInput"/>
-              <div class="check">查看</div>
+              <input type="text" v-model="formSearch.planNo" placeholder="输入竞拍计划编号查询" ref="searchval" class="orderInput"/>
+              <div class="check" @click='checked()' style="cursor: pointer;">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
               <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
@@ -49,15 +49,16 @@
                 <td style="width: 15%;">{{item.sku_name}}</td>
                 <td style="width: 15%;">{{item.warehouse_name}}</td>
                 <td style="width: 10%;">
-                  {{item.total_num}}
+                  {{item.total_num}}吨
                   <template v-if="item.cancel_num > 0"><br>
-                    <Tag color="error">取消{{item.cancel_num}}</Tag>
+                    <Tag color="error">取消{{item.cancel_num}}吨</Tag>
                   </template>
                 </td>
                 <td style="width: 10%;">{{amountFormat(item.final_price)}}</td>
                 <td style="width: 10%;">{{item.available_num}}</td>
                 <td style="width: 10%;">
-                  <span class="gray" v-if="item.taken_num === 0">待支付</span>
+                  <span class="gray" v-if="item.cancel_num > 0">已取消</span>
+                  <span class="gray" v-else-if="item.taken_num === 0">待支付</span>
                   <span class="gray" v-else-if="item.taken_num > 0 && item.taken_num < item.total_num">部分支付</span>
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
@@ -105,7 +106,7 @@
 	import Utils from '../../plugins/common'
 	import { sendCurl } from '../../api/common'
 	import server from '../../config/api'
-
+  import {sendHttp} from "../../api/common";
 	export default {
 		name: "spotPlan",
 		middleware: 'memberAuth',
@@ -122,13 +123,13 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
         //获取会员合约列表
-				store.dispatch('spot/getSpotPlanList', {current_page:query.page||1, page_size: 6})
+				store.dispatch('spot/getSpotPlanList', {current_page:query.page||1, page_size: 6,plan_no:query.plan_no ? query.plan_no: ''})
 			])
 		},
 		data() {
 			return {
 				current_page: this.$route.query.page ? parseInt(this.$route.query.page) : 1,
-				page_size: 10,
+        page_size: 10,
 				formSearch: {
 					planNo: '',
 					skuNo: '',
@@ -152,6 +153,10 @@
 			toCreateOrder(id){
         location.href = '/spot/change/'+id
       },
+      checked(){
+          console.log(this.formSearch.planNo)
+            this.$router.push({name:'users-spotPlan',query:{plan_no:this.formSearch.planNo}})
+      },
       cancelPlan(row){
 				this.$Modal.confirm({
 					title: '合约申请结束',
@@ -160,19 +165,34 @@
 						let params = {
 							id: row.id
 						}
-
-						let res = sendCurl(this, server.api.spot.spotPlanCloseApply, params)
-						if (res.status === 200) {
-							if ((res.data.errorcode || 0) == 0) {
-								this.$router.go(0)
-							} else {
-								this.$Modal.warning({
-									title: '提示',
-									content: res.data.message
-								})
-								return
-							}
+          sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
+                  if (response.status === 200) {
+                  if ((response.data.errorcode || 0) == 0) {
+                    window.location.reload()
+                  } else {
+                    this.$Modal.warning({
+                      title: '提示',
+                      content: res.data.message
+                    })
+                    return
+                  } 
 						}
+                
+            })
+            // let res = sendCurl(this, server.api.spot.spotPlanCloseApply, params)
+            // console.log(res)
+            // console.log(res.status)
+						// if (res.status === 200) {
+						// 	if ((res.data.errorcode || 0) == 0) {
+						// 		window.location.reload()
+						// 	} else {
+						// 		this.$Modal.warning({
+						// 			title: '提示',
+						// 			content: res.data.message
+						// 		})
+						// 		return
+						// 	}
+						// }
 					},
 					onCancel: () => {
 
