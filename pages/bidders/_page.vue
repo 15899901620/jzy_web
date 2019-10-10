@@ -99,7 +99,7 @@
                     <div class="statusicon endauction">竞拍结束</div>
                     <div class="ml20">
                       <span>竞拍时间 ：</span>
-                      <span class="fs18">{{items.beginTime}}</span>
+                      <span class="fs16">{{items.beginTime}}</span>
                     </div>
                   </template>
 
@@ -261,9 +261,8 @@
 			//跳转详情页
 			BidersDetail(id) {
 				if (this.$store.state.memberToken) {
-					this.$router.push({name: 'bidders-detail-id', params: {id: id}})
+					location.href = '/bidders/detail/' + id
 				} else {
-					//this.loginInfo = true
 					this.$Modal.confirm({
 						title: '提示',
 						content: '<p>请登录后参数竞拍！</p>',

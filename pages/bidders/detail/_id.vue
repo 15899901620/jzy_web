@@ -41,11 +41,13 @@
                 <span class="fs16">已结束</span>
               </template>
             </div>
+            <div>
+              <span class="fs16">竞拍编号：{{auctionInfo.billNo}}</span>
+            </div>
           </div>
         </div>
         <div class="birdtable">
-          <div class="birdtabletitle">{{auctionInfo.manufacturer}} {{auctionInfo.warehouseName}}
-            {{auctionInfo.skuName}} {{auctionInfo.totalNum}}{{auctionInfo.uomName}}
+          <div class="birdtabletitle">{{auctionInfo.skuName}}&nbsp;&nbsp;&nbsp;&nbsp;{{auctionInfo.manufacturer}}&nbsp;&nbsp;{{auctionInfo.totalNum}}{{auctionInfo.uomName}}
           </div>
           <div class="kailong">
             <div class="tranfont">{{auctionInfo.warehouseProvince}}</div>
@@ -53,10 +55,9 @@
           <table class="table">
             <tbody>
             <tr class="tableTitle">
-              <td>竞拍编号</td>
-              <td>品种</td>
               <td>牌号</td>
               <td>厂商</td>
+              <td>产品等级</td>
               <td>数量({{auctionInfo.uomName}})</td>
               <td>提货仓库</td>
               <td>包装方式</td>
@@ -64,15 +65,20 @@
               <td>截至提货日期</td>
             </tr>
             <tr>
-              <td>{{auctionInfo.billNo}}</td>
-              <td>{{auctionInfo.skuCategoryName1}}</td>
               <td>{{auctionInfo.skuName}}</td>
               <td>{{auctionInfo.manufacturer}}</td>
-              <td>{{auctionInfo.totalNum}}</td>
+              <td>
+                <template v-if="auctionInfo.productGrade===1">优等品</template>
+                <template v-else-if="auctionInfo.productGrade===2">一等品</template>
+                <template v-else-if="auctionInfo.productGrade===3">合格品</template>
+              </td>
+              <td>
+                {{auctionInfo.totalNum}}
+              </td>
               <td>{{auctionInfo.warehouseName}}</td>
               <td>
                 <template v-if="auctionInfo.packingModes===1">标准包装</template>
-                <template v-if="auctionInfo.packingModes===2">非标准包装</template>
+                <template v-else-if="auctionInfo.packingModes===2">非标准包装</template>
               </td>
               <td>{{auctionInfo.deliveryStart}}</td>
               <td>{{auctionInfo.lastDeliveryTime}}</td>
@@ -176,8 +182,8 @@
           <tr>
             <td>{{$utils.amountFormat(auctionInfo.finalPrice)}}</td>
             <td>{{auctionInfo.marginRatio}}%</td>
-            <td>{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</td>
             <td>{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</td>
+            <td>{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</td>
             <td>
               <template v-if="auctionInfo.totalNum > auctionInfo.totalBidNum">{{auctionInfo.totalNum -
                 auctionInfo.totalBidNum}}
@@ -192,7 +198,7 @@
           </tbody>
         </table>
         <!-- 竞拍出价***竞拍数量 -->
-        <div>
+        <div v-if="auctionInfo.statusType != '3'">
           <!-- 竞拍出价-->
           <div class="ml30 dflex mt30" style="align-items: center;">
             <span class="inputTitle">竞拍出价</span>
@@ -203,48 +209,46 @@
           <!--竞拍数量-->
           <div class="ml30 dflex mt25" style="align-items: center;">
             <span class="inputTitle">竞拍数量</span>
-            <input-special :min="minNum" :max="auctionInfo.depositNum" :step="1" v-model="auctionNum"></input-special>
+            <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.minOrder)" :step="1" v-model="auctionNum"></input-special>
             <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
             <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
           </div>
           <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
           <div class="acuBtn" v-if="auctionInfo.statusType == '1'">
-            <a class="oncebg" @click="addauctionPrice">立即出价</a>
-            <a class="Paybg ml15" @click="PayCost">追加保证金</a>
+            <a class="Paybg ml15" @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
+            <a class="Paybg ml15" @click="PayCost" v-else>缴纳保证金</a>
+            <a class="oncebg" @click="addauctionPrice" v-if="auctionInfo.depositNum > 0">立即出价</a>
+            <a style="background-color: #b3aea9" v-else>立即出价</a>
           </div>
           <div class="acuBtn" v-if="auctionInfo.statusType == '2'">
+            <a class="Paybg ml15" @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
+            <a class="Paybg ml15" @click="PayCost" v-else>缴纳保证金</a>
             <a class="startbg">即将开始</a>
-            <a class="Paybg ml15" @click="PayCost">缴纳保证金</a>
           </div>
         </div>
         <!--竞拍结果-->
-        <div class="biderResult" v-if="auctionInfo.statusType == '3'">
-          <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
-          <div class="orangeFont fs20 tac">恭喜您竞拍中得 T03 现货 60吨</div>
-          <div class="orangeFont fs14 tac mt5">剩余付款时间：05时20分，逾期将扣除保证金</div>
-          <div class="dflex fs18" style="justify-content: center; margin: 25px auto">
-            <div class="Winbtn orangebg whiteFont">提 货</div>
-            <div class="Winbtn whitebg ml15 orangeFont">查看详情</div>
-          </div>
-          <div class="winbider"></div>
-
-
-          <div class="WinBid gray failWinBidbg">未中标</div>
-          <div
-              style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
-            <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">¥1060.00</span>
-              / 吨
+        <div class="biderResult" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL'">
+          <template v-if="auctionInfo.auctionPlanned">
+            <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
+            <div class="orangeFont fs20 tac">恭喜您竞拍中得 {{auctionInfo.skuName}} {{auctionInfo.auctionPlanned.totalNum}}吨</div>
+            <div class="orangeFont fs14 tac mt5">请在{{auctionInfo.auctionPlanned.lastOrderedDate}}之前进行转单，逾期将扣除保证金</div>
+            <div class="acuBtn fs18" style="justify-content: center; margin: 25px auto">
+              <a class="Winbtn orangebg whiteFont">转 单</a>
+              <a class="Winbtn whitebg ml15 orangeFont" href=""><span class="orangeFont">查看合约</span></a>
             </div>
-            <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">¥1060.00</span>
-              / 吨
+            <div class="winbider"></div>
+          </template>
+          <template v-else>
+            <div class="WinBid gray failWinBidbg">未中标</div>
+            <div
+                style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
+              <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</span>/ 吨</div>
+              <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</span>/ 吨</div>
+              <div class="dflex mt5"><span class="titleWin">一 共 拍 出</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanNum}}</span>吨</div>
+              <div class="dflex mt5"><span class="titleWin">中 标 企 业</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanCompany}}</span>家</div>
+              <div class="failwinbider"></div>
             </div>
-            <div class="dflex mt5"><span class="titleWin">一共拍出</span>: <span class="orangeFont ml5 mr5">¥1060.00</span>
-              / 吨
-            </div>
-            <div class="dflex mt5"><span class="titleWin">中 标 人 数</span>: <span class="orangeFont ml5 mr5">3</span>人
-            </div>
-            <div class="failwinbider"></div>
-          </div>
+          </template>
         </div>
       </div>
       <!--  正在参与-->
@@ -290,7 +294,7 @@
       </div>
       <!--  我的关注-->
       <div class="biddersRecord">
-        <h1 class="paipinacu fs20">我的关注</h1>
+        <h1 class="paipinacu fs20">我关注的其他竞拍</h1>
         <table class="parttable">
           <tbody>
           <tr class="tableTitle">
@@ -332,32 +336,6 @@
 
 
       <div class="biddersRecord">
-        <!--拍品信息-->
-        <div class="">
-          <h1 class="paipinacu fs20">拍品信息</h1>
-          <table class="paipin_table">
-            <tbody>
-            <tr>
-              <th>品种</th>
-              <th>牌号</th>
-              <th>厂商</th>
-              <th>竞拍总量</th>
-              <th>起拍价</th>
-              <th>提货仓库</th>
-              <th>最迟提货时间</th>
-            </tr>
-            <tr>
-              <td>{{auctionInfo.skuCategoryName1}}</td>
-              <td>{{auctionInfo.skuName}}</td>
-              <td>{{auctionInfo.manufacturer}}</td>
-              <td>{{auctionInfo.totalNum}}{{auctionInfo.uomName}}</td>
-              <td>{{$utils.amountFormat(auctionInfo.finalPrice)}}</td>
-              <td>{{auctionInfo.warehouseName}}</td>
-              <td>{{auctionInfo.lastDeliveryTime}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
         <!--竞拍流程-->
         <div class=" mt30">
           <h1 class="paipinacu fs20">竞拍流程</h1>
@@ -425,14 +403,6 @@
             为了更好的服务巨正源会员，推出了竞拍活动，巨正源竞拍活动的货品来自全国生产商和大贸易商， 质量值得信赖，
             目前我们正与其他供应商洽谈合作，加大货物品类及范围。</p>
           <img src="/img/serve.png" class="mt30"/>
-        </div>
-        <!--合同模板-->
-        <div class=" mt30">
-          <h1 class="paipinacu fs20">合同模板</h1>
-          <div class="dflex ml10 mt10">
-            <span class="contract">提</span><a :href="systeminfo.CARRYCONTRAT" target="_blank">自提合同模板</a>
-            <span class="contract ml15">送</span><a :href="systeminfo.DELIVERYCONTRAT" target="_blank">配送合同模板</a>
-          </div>
         </div>
         <!--联系方式-->
         <div class=" mt30 mb40">
@@ -732,10 +702,11 @@
 			let reloadActionInfo = () =>{
 				//获取竞拍信息
 				this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
-
-				setTimeout(function () {
-					reloadActionInfo();
-				}, 15000)
+        if(this.auctionInfo.statusType != '3'){
+					setTimeout(function () {
+						reloadActionInfo();
+					}, 15000)
+        }
       }
 			setTimeout(function () {
 				reloadActionInfo();

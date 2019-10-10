@@ -66,11 +66,17 @@
 				myDay: 0, // 我定义来接收计算出来的 天 的
 				myHours: 0, // 我定义来接收计算出来的 小时 的
 				myMinutes: 0, // 我定义来接收计算出来的 分钟 的
-				mySeconds: 0// 我定义来接收计算出来的 秒钟 的
+				mySeconds: 0, // 我定义来接收计算出来的 秒钟 的
+
+        t: ''
 			}
 		},
 		methods:{
 			restart(){
+				if(this.t){
+					clearTimeout(this.t)
+        }
+
         if(this.endTime){
 					let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
 					// 计算时间差
@@ -101,7 +107,7 @@
 							this.clocker = this.endMsg || '已结束'
 							this.$emit('onTimeOver')
 						} else {
-							setTimeout(function () {
+							this.t = setTimeout(function () {
 								timeFunction();
 							}, 1000)
 						}
