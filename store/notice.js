@@ -57,7 +57,7 @@ export const actions = {
             console.log('err', error)
         })
     },
-    async getNoticeHotList({ commit }, {params}) {
+    async getNoticeHotList({ commit }, params) {
         return await this.$axios.$get(api.prefix + api.api.information.announcement, { params })
         .then(response => {
             commit('updateNoticeHotList', response.items)

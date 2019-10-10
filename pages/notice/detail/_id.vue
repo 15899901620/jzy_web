@@ -64,7 +64,7 @@ export default {
 				}),
       store.dispatch('notice/getNoticeDetail', {id: !params.id ? 0 : params.id}),
       store.dispatch('notice/getNoticeDetailClick', {id: !params.id ? 0 : params.id}),
-      store.dispatch('notice/getNoticeHotList',  {current_page: !params.page ? 1 : params.page, page_size: 10, sortBy: 'click', desc: 'desc'}),
+      store.dispatch('notice/getNoticeHotList',  {isShow:1 ,current_page: 1,sortBy: 'click',}),
     ])
   },
   components: {
