@@ -21,28 +21,28 @@
           </div>    
           <!--表格标题-->
           <div class="TableTitle graybg">
-            <span style="width: 12%;">出发地</span>
+            <span style="width: 11%;">出发地</span>
             <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size:24px;     color: #007de4;"></i>
-            <span style="width: 12%;">到达地</span>
-            <span style="width: 12%;">货物名称</span>
-            <span style="width: 12%;">货物价格</span>
+            <span style="width: 11%;" >到达地</span>
+            <span style="width: 15%;">货物名称</span>
+            <span style="width: 13%;">单价</span>
             <span style="width: 12%;">分类</span>
-            <span style="width: 12%;">联系人</span>
+            <span style="width: 12%;">会员名称</span>
             <span style="width: 12%;">电话</span>
             <span style="width: 12%;">订单状态</span>
           </div>
           
            <table class="listT mt10" border="" cellspacing="" cellpadding="">
-                    <tbody v-for="(item, index) in dataList" :key="index">
+                    <tbody v-for="(item, index) in dataList" :key="index" @click="detailLog(item)">
                         <tr class=" graybg" style="height:40px;text-align: left;">
                             <th  colspan="7"  style="padding-left: 10px;">发布时间 : {{item.createTime}}</th>
                         </tr>
                         <tr class="detailTable" >  
-                            <td  style="width: 25%;">{{item.dispatchFullAddress}}
+                            <td  style="width: 30%;" >{{item.dispatchFullAddress}}
                                 <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size: 32px;     color: #007de4;"></i>
                                     {{item.receiptFullAddress}}
                             </td>
-                            <td>{{item.freightGoods}}</td>
+                            <td >{{item.freightGoods}}</td>
                             <td><span>¥{{item.price}}</span>/吨</td> 
                             <td><span>{{item.freightGoodsCname}}</span></td>                          
                             <td>{{item.memberName}}</td>
@@ -60,13 +60,14 @@
 
   
 
-            <!-- <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages>
-   -->
+            <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages>
+  
 
 
         </div>
             </div>    
         </div>
+         <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
             <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
     </div>
 </template>
@@ -81,11 +82,13 @@ import paydeposit from '../../components/paydeposit'
 import { sendHttp } from "../../api/common";
 import server from "../../config/api";
 import pagination from '../../components/pagination'
+import FreightDetail from '../../components/muquote/quote-detail'   
 export default {
     name: "index",
 	middleware: 'carrierAuth',
     layout:'membercenter',
     components:{
+        FreightDetail,
         pages: pagination.pages,
         supplynav: Navigation.supply,
         payorder: paydeposit.order
@@ -102,9 +105,11 @@ export default {
         return {
             id:'',
             dataList: {},
+            addList:{},
             price:'',
             modal1:false,
             freightGoods:'',
+            detailloading:false,
             payloading: false,
             total_amount_format:'',
             freeze_amount_format:'',
@@ -149,6 +154,15 @@ export default {
         },
         check(){
                this.getOrderList()
+        },
+        undetailChange(res){
+            	this.detailloading = res
+        },
+        detailLog(row) {
+            this.addList = {
+                ...row
+            }
+            this.detailloading = true
         },
          setTabs(res){
             if(res == '0'){

@@ -4,7 +4,7 @@
       <supplynav></supplynav>
       <div class="memberInfor ml20  mt20" style="background: white;">
         <div style='font-size: 16px;margin: 20px 10px 10px 10px;'>
-          优质货源需求
+          优质货运需求
         </div>
         <div style="width: 100%; height: 2px; background-color: #f7f7f7;"></div>
         <div class="" style="width: 95%; margin: 0 auto;">
@@ -21,10 +21,10 @@
 
           </div>
           <div class="TableTitle graybg">
-            <span style="width: 25%;">出发地</span>
+            <span style="width: 42%;">出发地</span>
             <span style="width: 20%;">货物名称  </span>
             <span style="width: 15%;">货物重量</span>
-            <span style="width: 20%;">装货时间</span>
+            <span style="width: 20%;">运输时间</span>
             <span style="width: 20%;">操作</span>
           </div>
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
@@ -53,7 +53,7 @@
     </div>
     <Modal
         v-model="modal1"
-        title="发布找车"
+        title="我的报价"
         @on-ok="delay"
         @on-cancel="cancelDelay" :width='340'>
       <Row>
@@ -71,8 +71,8 @@
         <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
       </Row>
       <Row style=" margin-top: 10px;">
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">价 格</span>：
-        <Input v-model="price" placeholder="立即出价" style="width: 150px"/>
+        <span style="margin-top: 10px   margin-left: 40px; font-size:14px" >单 价</span>：
+        <Input v-model="price" placeholder="立即出价"  style="width: 150px" /> / 每吨
       </Row>
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
@@ -105,6 +105,7 @@
 		},
 		data() {
 			return {
+				totalnum:'',
 				id: '',
 				dataList: {},
 				price: '',
@@ -136,6 +137,11 @@
 			cancelDelay() {
 
 			},
+			gross(){
+				console.log(111)
+				this.totalnum=this.price*this.weight
+				console.log(this.totalnum)
+			},
 			delay() {
 				let params = {
 					demandId: this.id,
@@ -143,6 +149,8 @@
 				}
 				sendHttp(this, true, server.api.freightOffer.save, params, 2).then(response => {
 					this.loading = false
+					this.dispatchFull=''
+					this.receiptFull=''
 					this.$Notice.warning({
 						title: '报价成功',
 					})

@@ -128,8 +128,7 @@
             <span v-if='item.status==1'><a
                 style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;"
                 @click='setSelected(items)'>入 选</a></span>
-            <span v-else><a
-                style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
+            <span v-else><a  style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
           </Col>
         </Row>
         <Row>

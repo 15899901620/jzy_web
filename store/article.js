@@ -82,19 +82,19 @@ export const actions = {
 		let cate=6
 		let dataarray=[]
 		console.log('cate:',cate)
-		for(var i=0;i<=6; i++){
-			let params={
-				current_page:  1, page_size: 4, catId: i,sortBy: 'add_time', desc: true, isShow: 1
-			}
-			console.log('params:',params)
-
-			sendCurl(this, server.api.information.getArticleList, params).then(res=>{
-			console.log('res',res)
-				dataarray[i]=res.data.items
-
-				commit('updateindexarticelist', dataarray)
-			})
-		}
+		// for(var i=0;i<=6; i++){
+		// 	let params={
+		// 		current_page:  1, page_size: 4, catId: i,sortBy: 'add_time', desc: true, isShow: 1
+		// 	}
+		// 	console.log('params:',params)
+		//
+		// 	sendCurl(this, server.api.information.getArticleList, params).then(res=>{
+		// 	console.log('res',res)
+		// 		dataarray[i]=res.data.items
+		//
+		// 		commit('updateindexarticelist', dataarray)
+		// 	})
+		// }
 
 		// cate.forEach((item,index)=>{
 		// 	let params={

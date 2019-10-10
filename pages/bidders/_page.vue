@@ -97,7 +97,10 @@
                   </template>
                   <template v-if="items.statusType == '3'">
                     <div class="statusicon endauction">竞拍结束</div>
-                    <div class="ml20" style="width: 220px;"><span></span></div>
+                    <div class="ml20">
+                      <span>竞拍时间 ：</span>
+                      <span class="fs16">{{items.beginTime}}</span>
+                    </div>
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
@@ -147,7 +150,7 @@
               暂无任何信息！
             </p>
             <div class="  ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-              <pages :total="$store.state.bidders.auctionTotal" :show-total="showTotal" :value="current_page"
+              <pages :total="this.auctionTotal" :show-total="showTotal" :value="current_page"
                      :pageSize="page_size"></pages>
             </div>
           </div>
@@ -258,9 +261,8 @@
 			//跳转详情页
 			BidersDetail(id) {
 				if (this.$store.state.memberToken) {
-					this.$router.push({name: 'bidders-detail-id', params: {id: id}})
+					location.href = '/bidders/detail/' + id
 				} else {
-					//this.loginInfo = true
 					this.$Modal.confirm({
 						title: '提示',
 						content: '<p>请登录后参数竞拍！</p>',

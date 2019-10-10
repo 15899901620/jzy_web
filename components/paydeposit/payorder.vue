@@ -28,7 +28,7 @@
         <div style="line-height: 28px; padding:20px">
           <p>
             <span class="PricePopup_title">需支付金额：</span>
-            <span class="orangeFont fwb fs16"> ￥{{amountFormat(datalist.totalAmount - datalist.depositAmount)}}</span>
+            <span class="orangeFont fwb fs16"> {{$utils.amountFormat(datalist.totalAmount - datalist.depositAmount)}}</span>
           </p>
           <p>
             <Checkbox :disabled="true" :value="true"></Checkbox>
@@ -95,9 +95,6 @@
 			},
 			biderscancel() {
 				this.$emit('unChange', false)
-			},
-			amountFormat(amount) {
-				return parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 			},
 			async getNoteValue() {
 				let params = {}
@@ -176,7 +173,3 @@
 		}
 	}
 </script>
-
-<style>
-
-</style>

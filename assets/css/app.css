@@ -1365,7 +1365,7 @@ gAccount {
 .acuBtn {
 	margin-top:30px;
 	margin-bottom:50px;
-	margin-left:130px;
+	flex-direction: column;
 	display:flex;
 }
 .acuBtn a {
