@@ -203,7 +203,7 @@
           <!--竞拍数量-->
           <div class="ml30 dflex mt25" style="align-items: center;">
             <span class="inputTitle">竞拍数量</span>
-            <input-special :min="minNum" :max="auctionInfo.totalNum" :step="1" v-model="auctionNum"></input-special>
+            <input-special :min="minNum" :max="auctionInfo.depositNum" :step="1" v-model="auctionNum"></input-special>
             <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
             <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
           </div>
