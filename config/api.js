@@ -189,6 +189,7 @@ let api = {
     },
 
     freight:{
+      freightDemand:{'url': '/bill/freightDemand/detail', 'method': 'get'},
       freightMyList:{'url': '/bill/freightDemand/myList/page', 'method': 'get'},
       InfoByOrderId:{'url': '/bill/freightDemand/getDemandInfoByOrderId', 'method': 'get'},
       cancel:{'url': '/bill/freightDemand/cancel', 'method': 'post'},
