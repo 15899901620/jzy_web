@@ -188,7 +188,12 @@
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.businessLicense">
-                <img :src="this.formCustom.businessLicense" />
+                <template v-if="this.License_filextension === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.businessLicense" />
+                </template>
               </div>
             </Col>
           </Row>
@@ -215,7 +220,12 @@
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.authorizationElc">
-                <img :src="this.formCustom.authorizationElc" />
+                 <template v-if="this.Elc_filextension === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.authorizationElc" />
+                </template>
               </div>
             </Col>
           </Row>
@@ -241,7 +251,12 @@
               </Col>
               <Col span="21">
                 <div class="Image" v-if="this.formCustom.transportLicense">
-                  <img :src="this.formCustom.transportLicense" />
+                  <template v-if="this.transport_filextension === '.pdf'">
+                    <img src="../../static/img/pdf.jpg" />
+                  </template>
+                  <template v-else>
+                    <img :src="this.formCustom.transportLicense" />
+                  </template>
                 </div>
               </Col>
             </Row>
@@ -267,8 +282,13 @@
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.dangerouslicense">
-                <img :src="this.formCustom.dangerouslicense" />
-              </div>
+                <template v-if="this.danger_filextension === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.dangerouslicense" />
+                </template>
+               </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0">
@@ -292,14 +312,19 @@
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.otherLicense">
-                <img :src="this.formCustom.otherLicense" />
-              </div>
+                <template v-if="this.other_filextension === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.otherLicense" />
+                </template>
+               </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
-            <Col span="21" style="text-align:center; display: flex; margin-left: 90px;width: 72%;">
-              <Button class="CarrierRegister" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister ml10" @click="memberReset">提 交</Button>
+            <Col span="21" style="text-align:center; display: flex; margin-left: 90px;width: 72%; margin-top: 40px">
+              <Button class="UserRegister" @click="handleUp">上一步</Button>
+              <Button type="primary" class="UserRegister ml10" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
@@ -570,6 +595,11 @@
 				companyinfo: {},
                 submitModal:false,         //确认提交框
                 checkData:false,
+                License_filextension:'',    //营业执照
+                Elc_filextension:'',         //授权书
+                other_filextension:'',        //其它文件
+                danger_filextension:'',       //危险品
+                transport_filextension:'',    //交通运输
 				formCustom: {
 					isLogisticsCompany: 0,
 					code: '',
@@ -698,7 +728,7 @@
 			},
 			getItemValue(items) {
 				this.formCustom.natureName = items.value,           //供应商性质
-					this.formCustom.natureValue = items.value_name      //供应商性质值
+               this.formCustom.natureValue = items.value_name      //供应商性质值
 			},
 			//验证手机是否存在
 			async userPhoneCheck(value, callback) {
@@ -849,6 +879,7 @@
 				} else {
 					this.current = 1
 					this.$emit('currData', true)
+                    this.$emit('supplyTab',true)
 					//this.$router.push({name:'userPerInfor', params:{params:userFormData}})
 				}
 			},
@@ -856,13 +887,16 @@
 			handleUp() {
 				this.current = 0
 				this.$emit('currData', false)
+                this.$emit('supplyTab',false)
 			},
 			//图片成功
 			imageSuccess(res) {
 				this.formCustom.businessLicense = res.url
+                this.License_filextension = this.formCustom.businessLicense.substring(this.formCustom.businessLicense.lastIndexOf("."), this.formCustom.businessLicense.length);
 			},
 			handleFileSuccess(res) {
 				this.formCustom.authorizationElc = res.url
+                this.Elc_filextension = this.formCustom.authorizationElc.substring(this.formCustom.authorizationElc.lastIndexOf("."), this.formCustom.authorizationElc.length);
 			},
 			handleMaxSize(file) {
 				this.$Notice.warning({
@@ -872,11 +906,13 @@
 			},
 			//其它文件
 			handleOtherFile(res) {
-				this.formCustom.otherLicense = res.url
+              this.formCustom.otherLicense = res.url
+              this.other_filextension = this.formCustom.otherLicense.substring(this.formCustom.otherLicense.lastIndexOf("."), this.formCustom.otherLicense.length);
 
 			},
             handletransportFile(res){
-				this.formCustom.transportLicense=res.url
+              this.formCustom.transportLicense=res.url
+              this.transport_filextension = this.formCustom.transportLicense.substring(this.formCustom.transportLicense.lastIndexOf("."), this.formCustom.transportLicense.length);
 
 			},
 			handleFormatError(file) {
@@ -888,6 +924,8 @@
           //危化品经营许可证
           HazchemiFile(res){
             this.formCustom.dangerouslicense=res.url
+            this.danger_filextension = this.formCustom.dangerouslicense.substring(this.formCustom.dangerouslicense.lastIndexOf("."), this.formCustom.dangerouslicense.length);
+
           },
 			// 校验公司名称
 			async companyChenckValid(value, callback) {
@@ -1093,12 +1131,13 @@
 </script>
 <style lang="less">
   .CarrierRegister{width: 83%}
+  .UserRegister{width: 44%}
   .Image{
     width: 116px;
     height: 75px;
     overflow: hidden;
     margin-left: 130px;
-    margin-bottom: 10px;
+    margin-bottom: 10px;5
     img{
       width: 100%;
       height: 100%;

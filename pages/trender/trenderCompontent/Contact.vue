@@ -5,9 +5,9 @@
     </div>
     <div class="ml15">
       <p class="mt10 mb10">客户服务</p>
-      <p class="mt5 "><span class="gray">咨询、投诉及建议：</span>{{systeminfo.SERVICEHOTLINE}}</p>
-      <p class="mt5 "><span class="gray">邮箱：</span>{{systeminfo.SERVICEEMAIL}}</p>
-      <p class="mt5 "><span class="gray">在线客服：</span>{{systeminfo.ONLINESERVICE}}</p>
+      <p class="mt5 "><span class="gray">咨询、投诉及建议：</span>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
+      <p class="mt5 "><span class="gray">邮箱：</span>{{this.$store.state.common.sysConfig.SERVICEEMAIL}}</p>
+      <p class="mt5 "><span class="gray">在线客服：</span>{{this.$store.state.common.sysConfig.ONLINESERVICE}}</p>
     </div>
     <div class="dflexAlemJust mt20 mb20">
       <button class="serviceBtn"  @click="OnlineService()"  alt="点击这里给我发消息" title="点击这里给我发消息">在线客服</button>
@@ -21,19 +21,15 @@
 
 <script>
   import { mapState } from 'vuex'
-  
+
   export default {
-       name: "Contact", 
+       name: "Contact",
        fetch({ store }) {
           return Promise.all([
               store.dispatch('system/getSystemCnf'),
           ])
-       }, 
-       computed:{
-          ...mapState({
-              systeminfo: state => state.system.systeminfo,
-          })
        },
+
        methods: {
         OnlineService () {
             let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'

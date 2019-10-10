@@ -42,14 +42,21 @@
         </outpacking>
       </div> -->
       <div class="hot-industry">
-        <outpacking title="行业资讯" cpadding="0px" :more="moreData">
+        <tabpacking title="行业资讯" cpadding="0px" :more="moreData">
           <div slot="content">
             <hottrade></hottrade>
           </div>
-        </outpacking>
+        </tabpacking>
       </div>
       <sidebar></sidebar>
     </div>
+    <div class="hot-industry">
+
+<!--      <indexnewstabs>-->
+        <newsinfo></newsinfo>
+<!--      </indexnewstabs>-->
+    </div>
+
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
 </template>
@@ -68,6 +75,8 @@
 	import sidebar from '../components/sidebar'
 	import SpotList from '../components/spot-list'
 	import LogisticsList from '../components/logistics-list'
+    import indexnewstabs from '../components/indexnewstabs'
+    import newsinfo from '../components/indexnews/newsinfo'
 
 
 	export default {
@@ -86,7 +95,11 @@
 				}),
 				//获取轮播图
 				store.dispatch('common/getBannerList', 1),
+
                 store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
+                store.dispatch('article/getArticleCatList',{parentId: 0}),
+                store.dispatch('article/getindexArticleList',{catId:this.articleCat}),
+
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
 					current_page: 1,
@@ -109,6 +122,7 @@
 					page_size: 20
 				}),
 
+               store.dispatch('article/getArticleCatList',  {parentId: 0}),
 				/*store.dispatch('article/getHotArticle', {
 					current_page: 1,
 					page_size: 4
@@ -140,11 +154,14 @@
 			hotinfo: hotrecommend.hotinfo,
 			hotbidding,
 			outpacking,
+            tabpacking:outpacking.tab,
 			cobrands,
 			hottrade,
 			sidebar,
 			LogisticsList,
-			SpotList
+			SpotList,
+            indexnewstabs,
+            newsinfo
 		},
 		data() {
 			return {
@@ -172,6 +189,7 @@
 		computed: {
 			...mapState({
 				bannerinfo: state => state.system.bannerinfo,
+                articleCat: state => state.article.articleCat
 			})
 		},
 		methods: {},

@@ -134,14 +134,12 @@ export default {
           store.dispatch('common/getNavList'),
           //获取系统配置
           store.dispatch('common/getSysConfig'),
-      
+
         ])
     },
     computed: {
 
-        ...mapState({
-            systeminfo: state => state.system.systeminfo
-        })
+
     },
     data(){
         const validatePhone=(rule, value, callback) => {

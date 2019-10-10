@@ -228,7 +228,7 @@
             @on-cancel="protocolModalCancel"
             :width='700'
             class-name="vertical-center-modal">
-            <div class="" v-html="systeminfo.CARRIER_REGISTRATION_PROTOCOL">
+            <div class="" v-html="this.$store.state.common.sysConfig.CARRIER_REGISTRATION_PROTOCOL">
             </div>
             <div slot="footer" style="text-align: center">
                 <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500;" @click='protocol()'>同意协议</Button>
@@ -269,9 +269,9 @@ export default {
            if (value === '') {
                 callback(new Error('密码不能为空'));
             }
-            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/;
             if (!patrn.exec(value)) {
-                   callback(new Error('密码必须是8-20字母和数字组合'));   
+                   callback(new Error('密码必须是8-20字母和数字组合'));
             }else{
                 this.passwordValid=true
                 callback();
@@ -336,7 +336,7 @@ export default {
         };
         //联系人
         const validateContacter = (rule, value, callback) => {
-         
+
           if (value === '') {
             callback(new Error('联系人名称不能为空'));
           } else {
@@ -501,9 +501,7 @@ export default {
         captcha
     },
     computed: {
-         ...mapState({
-            systeminfo: state => state.system.systeminfo,
-        }),
+
         classes() {
             return [
                 `${prefixCls}`,
@@ -695,7 +693,7 @@ export default {
          //其它文件
         handleOtherFile(res){
           this.formCustom.transportLicense=res.url
-        
+
         },
         handleFormatError (file) {
           this.$Notice.warning({
@@ -717,7 +715,7 @@ export default {
                 this.formCustom.taxId = res.data.creditCode
                 this.formCustom.corporation = res.data.operName
                 this.formCustom.registCapi = res.data.registCapi
-     
+
                 callback()
             }else{
                 this.companyValid=false;

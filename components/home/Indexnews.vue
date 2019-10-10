@@ -2,21 +2,23 @@
   <div class="w1200 ">
     <div class="ListTitle  whitebg mt20">
       <div class="TitleName">行业资讯</div>
+
       <div @click="News()" class="mr20 mt15 mb15 gray fs14" >更多 ></div>
     </div>
+
     <ul class="Indexnews">
       <li v-for="(item, index) in Newsdatalist" :key="index"  >
         <div class="ml15 mr15 mt15 NewsImage">
           <img :src="item.image" />
         </div>
-        <div class="newsTile">
-          <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">{{item.title}}</nuxt-link></div>
+        <div class="newsTile"><nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">{{item.title}}</nuxt-link></div>
         <div class="newsTimeLink">
           <span class="dflexAlem"><img src="../../static/img/time_icon.png" class="mr5"/>2019-05-05</span>
            <nuxt-link :to="{name:'article-detail-id', params:{id:item.id}}">【查看全文】</nuxt-link>
         </div>
       </li>
     </ul>
+
   </div>
 </template>
 
@@ -28,6 +30,17 @@
       return{
         Newsdatalist:[],
       }
+    },
+    fetch({ store, params, query }) {
+      return Promise.all([
+        store.dispatch('article/getArticleCatList',  {parentId: 0}),
+
+      ])
+    },
+    computed:{
+      ...mapState({
+        articleCat: state => state.article.articleCat,
+      })
     },
     methods:{
       News(){

@@ -26,7 +26,7 @@
                 </div>
                 <div class="tac gray">
                     <p>如有疑问您可以通过一下联系方式与我们取得联系</p>
-                    <p>联系电话：{{systeminfo.SERVICEHOTLINE}}</p>
+                    <p>联系电话：{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
                 </div>
                 <div class="orderbtn">
                     <a class="submitBtn btnBg" href="/special">继续采购</a><a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
@@ -59,10 +59,10 @@ export default {
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig')
-			
+
         ])
     },
-    
+
     data() {
         return {
             orderNo:'',
@@ -76,9 +76,7 @@ export default {
         }
     },
     computed: {
-        ...mapState({
-            systeminfo: state => state.system.systeminfo,
-        }),
+
         classes() {
             return [
                 `${prefixCls}`,

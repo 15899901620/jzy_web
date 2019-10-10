@@ -52,7 +52,7 @@
 			Search,
 			Navigation,
 			coolapse,
-          qqserivce
+            qqserivce
 		},
 		computed: {
 			classes() {

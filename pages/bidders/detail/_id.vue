@@ -509,8 +509,8 @@
                 <div class=" mt30">
                     <h1 class="paipinacu fs20">合同模板</h1>
                     <div class="dflex ml10 mt10">
-                        <span class="contract">提</span><a :href="systeminfo.CARRYCONTRAT" target="_blank">自提合同模板</a>
-                        <span class="contract ml15">送</span><a :href="systeminfo.DELIVERYCONTRAT" target="_blank">配送合同模板</a>
+                        <span class="contract">提</span><a :href="this.$store.state.common.sysConfig.CARRYCONTRAT" target="_blank">自提合同模板</a>
+                        <span class="contract ml15">送</span><a :href="this.$store.state.common.sysConfig.DELIVERYCONTRAT" target="_blank">配送合同模板</a>
                     </div>
                 </div>
                 <!--联系方式-->
@@ -522,7 +522,7 @@
                             <tr>
                                 <td>
                                     <div style="display: flex;justify-content: center; margin: 10px auto;">
-                                        <div class="contactTime contactTable1"></div>工作日（{{systeminfo.OPENING_TIME}}-{{systeminfo.CLOSED_TIME}}）
+                                        <div class="contactTime contactTable1"></div>工作日（{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}）
                                     </div>
                                 </td>
                                 <td>
@@ -532,7 +532,7 @@
                                 </td>
                                 <td>
                                     <div style="display: flex;justify-content: center; margin: 10px auto;">
-                                        <div class="contactTime contactTable3"></div>{{systeminfo.SERVICEHOTLINE}}
+                                        <div class="contactTime contactTable3"></div>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}
                                     </div>
                                 </td>
                             </tr>
@@ -591,17 +591,20 @@ import { bidfollowColumns } from './bidfollow'
 export default {
     name: "bidders-detail-id",
     fetch({ store, params, query }) {
-      //获取顶部、中部、底部导航信息
-      store.dispatch('common/getNavList'),
-      //获取系统配置
-      store.dispatch('common/getSysConfig'),
-      //获取友情链接
-      store.dispatch('common/getFriendlyList'),
-      //获取底部帮助分类
-      store.dispatch('helper/getHelpCate', {
-        catId: 0,
-        indexShow: 1
-      })
+        return Promise.all([
+        //获取顶部、中部、底部导航信息
+        store.dispatch('common/getNavList'),
+        //获取系统配置
+        store.dispatch('common/getSysConfig'),
+        //获取友情链接
+        store.dispatch('common/getFriendlyList'),
+        //获取底部帮助分类
+        store.dispatch('helper/getHelpCate', {
+            catId: 0,
+            indexShow: 1
+        })
+    ])
+
     },
     components:{
         Header,
@@ -924,11 +927,7 @@ export default {
         this.countdown()
         this.getNewPrice()
     },
-    computed: {
-        ...mapState({
-            systeminfo: state => state.system.systeminfo,
-        })
-    },
+
     watch: {
         '$route' (to, from) {
             this.$router.go(0);

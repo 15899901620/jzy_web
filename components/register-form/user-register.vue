@@ -139,7 +139,12 @@
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.business_license">
-                <img :src="this.formCustom.business_license" />
+                <template v-if="this.license_filextension === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.business_license" />
+                </template>
               </div>
             </Col>
           </Row>
@@ -159,18 +164,24 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M</div>
+              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M。<a class="orangeFont fs16" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">下载模板</a></div>
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.authorization_elc">
-                <img :src="this.formCustom.authorization_elc" />
+                <template v-if="this.filextension_elc === '.pdf'">
+                  <img src="../../static/img/pdf.jpg" />
+                </template>
+                <template v-else>
+                  <img :src="this.formCustom.authorization_elc" />
+                </template>
+
               </div>
             </Col>
           </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
             <Col span="21" style="text-align:center;">
-              <Button class="CarrierRegister mt20" @click="handleUp">上一步</Button>
-              <Button type="primary" class="CarrierRegister mt20" @click="memberReset">提 交</Button>
+              <Button class="UserRegister mt20" style="margin-left: 42px;" @click="handleUp">上一步</Button>
+              <Button type="primary" class="UserRegister mt20 ml15" @click="memberReset">提 交</Button>
             </Col>
           </Row>
         </div>
@@ -378,6 +389,8 @@
 				current: 0,
 				uploadUrl: '',
 				companyValid: false,
+                license_filextension:'',   //营业执照图片格式
+                filextension_elc:'',       //授权书格式
 				formCustom: {
 					phone: '',
 					password: '',
@@ -646,22 +659,26 @@
 					return
 				} else {
 					this.current = 1
-					this.$emit('currData', true)
+                    this.$emit('userTab',true)
 					//this.$router.push({name:'userPerInfor', params:{params:userFormData}})
 				}
 			},
 			//触发上一步
 			handleUp() {
 				this.current = 0
-				this.$emit('currData', false)
-			},
+                this.$emit('userTab',false)
+
+            },
 			//图片成功
 			imageSuccess(res) {
 				this.formCustom.business_license = res.url
-			},
+                this.license_filextension = this.formCustom.business_license.substring(this.formCustom.business_license.lastIndexOf("."), this.formCustom.business_license.length);
+
+ 			},
 			handleFileSuccess(res) {
 				this.formCustom.authorization_elc = res.url
-			},
+                this.filextension_elc = this.formCustom.authorization_elc.substring(this.formCustom.authorization_elc.lastIndexOf("."), this.formCustom.authorization_elc.length);
+            },
 			handleMaxSize(file) {
 				this.$Notice.warning({
 					title: '超出文件大小限制',
@@ -792,7 +809,7 @@
 
             if (res.data === true && res.status === 200) {
               this.current = 2
-              this.$emit('currData', false)
+
              // this.$router.push({name:'RegisterSuccess'})
             } else {
               this.$Message.info({
@@ -825,8 +842,6 @@
 
       },
 		mounted() {
-
-
 			// 图形验证码
 			this.identifyCode = '';
 			this.makeCode(this.identifyCodes, 4);
@@ -835,6 +850,7 @@
 	}
 </script>
 <style scoped>
-  .CarrierRegister{width: 83%}
+  .CarrierRegister{width: 84%}
+  .UserRegister{width: 44%}
 
  </style>

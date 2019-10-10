@@ -8,7 +8,7 @@
             <div class="cndns-right-box">
                 <div class="box-border">
                     <div class="sev-t">
-                        <img src="../../static/img/erweima.png" />
+                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" />
                         <p><i>巨正源交易平台</i>
                             <i>微信扫码下单</i></p>
                     </div>
@@ -24,7 +24,7 @@
             <div class="cndns-right-box">
                 <div class="box-border">
                     <div class="sev-t">
-                        <p>{{systeminfo.SERVICEHOTLINE}}</p>
+                        <p>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
                     </div>
                     <span class="arrow-right"></span>
                 </div>
@@ -63,11 +63,7 @@ export default {
             totop: false
         }
     },
-    computed: {
-        ...mapState({
-            systeminfo: state => state.system.systeminfo
-        })
-    },
+
     methods: {
         handleScroll () {
             this.totop = window.pageYOffset > 200;
