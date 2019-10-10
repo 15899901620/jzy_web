@@ -23,11 +23,23 @@
           <div class="cutTime cutTimeIngbg">
             <div class="cutDown_time ml35"><img src="/img/cutDown_icon.png"/></div>
             <div class="ml10 dflex">
-              <span class="fs16">距离结束：</span>
-              <span class="fs16">
-                <TimeDown :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
-                          :onTimeOver="reloadPage"></TimeDown>
-              </span>
+              <template v-if="auctionInfo.statusType == '1'">
+                <span class="fs16">距离结束：</span>
+                <span class="fs16">
+                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
+                            :onTimeOver="reloadPage"></TimeDown>
+                </span>
+              </template>
+              <template v-else-if="auctionInfo.statusType == '2'">
+                <span class="fs16">距离开始：</span>
+                <span class="fs16">
+                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
+                            :onTimeOver="reloadPage"></TimeDown>
+                </span>
+              </template>
+              <template v-else>
+                <span class="fs16">已结束</span>
+              </template>
             </div>
           </div>
         </div>
@@ -98,7 +110,7 @@
                   <span class="tac gray" v-if="item.outStatus===3">出局</span>
                 </td>
                 <td><span>{{item.nickName}}</span></td>
-                <td><span>{{item.bidPrice}}</span></td>
+                <td><span>{{$utils.amountFormat(item.bidPrice)}}</span></td>
                 <td><span>{{item.bidNum}}</span></td>
                 <td style="width: 120px"><span>{{ $utils.dateStrFormat(item.createTime, 'hh:mm:ss')}}</span></td>
               </tr>
@@ -114,9 +126,9 @@
             <tbody>
             <tr>
               <th>当前状态</th>
-
               <th>出价金额</th>
-              <th>数量（吨）</th>
+              <th>竞拍数量（吨）</th>
+              <th>入围数量（吨）</th>
               <th style="width: 160px">出价时间</th>
             </tr>
             </tbody>
@@ -124,19 +136,24 @@
           <!--表格-->
           <div class="Bidders_record_list" style="text-align: center;">
             <!--暂无记录-->
-            <table v-if="MineOfferRecord.length > 0">
+            <table v-if="auctionInfo.myBidList.length > 0">
               <tbody>
-              <tr class="Bidders_record_tr" v-for="(items,index) in MineOfferRecord" :key="index"
+              <tr class="Bidders_record_tr" v-for="(items,index) in auctionInfo.myBidList" :key="index"
                   :class="{orangeFont:items.outStatus===1 || items.outStatus===2}">
                 <td>
-                  <span class="Bidders_record_curr" v-if="items.outStatus===1 && items.isActive === 1">领先</span>
-                  <span class="Bidders_record_curr" v-if="items.outStatus===2 && items.isActive === 1">入围</span>
-                  <span class="tac gray" v-if="items.outStatus===3 && items.isActive === 1">出局</span>
+                  <template v-if="items.isActive === 1">
+                    <span class="Bidders_record_curr" v-if="items.outStatus===1">领先</span>
+                    <span class="Bidders_record_curr" v-else-if="items.outStatus===2">入围</span>
+                    <span class="tac gray" v-else-if="items.outStatus===3">出局</span>
+                  </template>
+                  <template v-else>
+                    <span class="tac gray">失效</span>
+                  </template>
                 </td>
-
-                <td><span>{{items.bidPrice}}</span></td>
+                <td><span>{{$utils.amountFormat(items.bidPrice)}}</span></td>
                 <td><span>{{items.bidNum}}</span></td>
-                <td style="width: 120px"><span>{{ subtime(items.createTime, 11, 19)}}</span></td>
+                <td><span>{{items.selectedNum}}</span></td>
+                <td style="width: 120px"><span>{{ $utils.dateStrFormat(items.createTime, 'hh:mm:ss')}}</span></td>
               </tr>
               </tbody>
             </table>
@@ -159,8 +176,8 @@
           <tr>
             <td>{{$utils.amountFormat(auctionInfo.finalPrice)}}</td>
             <td>{{auctionInfo.marginRatio}}%</td>
-            <td></td>
-            <td></td>
+            <td>{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</td>
+            <td>{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</td>
             <td>
               <template v-if="auctionInfo.totalNum > auctionInfo.totalBidNum">{{auctionInfo.totalNum -
                 auctionInfo.totalBidNum}}
@@ -179,35 +196,29 @@
           <!-- 竞拍出价-->
           <div class="ml30 dflex mt30" style="align-items: center;">
             <span class="inputTitle">竞拍出价</span>
-            <span class="bodeRed cp" @click="cutsOffer()">-</span>
-            <input type="text" v-model="auctionOffer" class="textInput" style=""/>
-            <span class="bodeRed orangeFont fwb whitebg cp" @click="addOffer()">+</span>
+            <input-special :min="minPrice" :max="99999" :step="auctionInfo.bidIncrement" v-model="auctionOffer"
+                           ></input-special>
             <span class="ml10 gray fs14">加价幅度：{{auctionInfo.bidIncrement}}元</span>
           </div>
           <!--竞拍数量-->
           <div class="ml30 dflex mt25" style="align-items: center;">
             <span class="inputTitle">竞拍数量</span>
-            <div class="dflexAlem pr">
-              <span class="bodeRed cp" @click="cutsNum()">-</span>
-              <input type="text" v-model="auctionNum" class="textInput" style=""/>
-              <span class="bodeRed orangeFont fwb whitebg cp" @click="addNum()">+</span>
-              <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
-              <i class="redFont" style="position: absolute;bottom: -20px" v-show="auctionNumShow">{{auctionNumTip}}</i>
-            </div>
+            <input-special :min="minNum" :max="auctionInfo.depositNum" :step="1" v-model="auctionNum"></input-special>
+            <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
+            <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
           </div>
           <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
-          <div class="acuBtn" v-if="auctionInfo.statusType === 2">
-            <a class="oncebg" @click="addauctionPrice()">立即出价</a>
-            <a class="Paybg ml15" @click="PayCost()">追加保证金</a>
+          <div class="acuBtn" v-if="auctionInfo.statusType == '1'">
+            <a class="oncebg" @click="addauctionPrice">立即出价</a>
+            <a class="Paybg ml15" @click="PayCost">追加保证金</a>
           </div>
-          <div class="acuBtn" v-if="auctionInfo.statusType === 1">
-            <a class="startbg" @click="StartOrder()">即将开始</a>
+          <div class="acuBtn" v-if="auctionInfo.statusType == '2'">
+            <a class="startbg">即将开始</a>
             <a class="Paybg ml15" @click="PayCost">缴纳保证金</a>
           </div>
         </div>
         <!--竞拍结果-->
-        <div class="biderResult">
-
+        <div class="biderResult" v-if="auctionInfo.statusType == '3'">
           <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
           <div class="orangeFont fs20 tac">恭喜您竞拍中得 T03 现货 60吨</div>
           <div class="orangeFont fs14 tac mt5">剩余付款时间：05时20分，逾期将扣除保证金</div>
@@ -470,12 +481,13 @@
         <Icon type="md-chatboxes" style="font-size:18px;"/>
         <span>出价提示</span>
       </p>
-      <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{auctionInfo.manufacturer}}
-        {{auctionInfo.warehouseName}} {{this.auctionInfo.skuName}} {{this.auctionInfo.totalNum}}
-        {{auctionInfo.uomName}} </p>
-      <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}} <span
-          style="color:#999;">(吨)</span></p>
-      <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>￥{{this.auctionOffer}}</p>
+      <div>
+        <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{auctionInfo.manufacturer}}
+          {{this.auctionInfo.skuName}}</p>
+        <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}} <span
+            style="color:#999;">(吨)</span></p>
+        <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
+      </div>
     </Modal>
 
     <!-- 添加其他竞拍关注-->
@@ -491,7 +503,7 @@
       </div>
     </Modal>
 
-    <!--<paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>-->
+    <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
 </template>
@@ -501,17 +513,15 @@
 	import Header from '../../../components/header'
 	import Footer from '../../../components/footer'
 	import {
-		auctionInfor,
-		priceListInfo,
 		newprice,
 		auctionRecord,
-		auctionMineRecord,
 		AddauctionPrice,
 		gainauctionrecord,
 		WinningBid
 	} from '../../../api/auction'
 	import paydeposit from '../../../components/paydeposit'
 	import TimeDown from '../../../components/timeDown'
+	import InputSpecial from '../../../components/input-special'
 	import {bidfollowColumns} from './bidfollow'
 
 	export default {
@@ -529,76 +539,70 @@
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
 				//获取竞拍信息
 				store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
-				//获取竞拍记录
-				store.dispatch('bidders/getAuctionRecordList', {auctionId: params.id, current_page: 1, page_size: 10}),
 			])
 		},
 		components: {
 			Header,
 			Footer,
 			paydeposit,
-			TimeDown
+			TimeDown,
+			InputSpecial
 		},
 		computed: {
 			...mapState({
 				auctionInfo: state => state.bidders.auctionInfo,
 				systeminfo: state => state.common.sysConfig,
-				auctionRd: state => state.bidders.recordList,
-			})
+			}),
+			minPrice: function () {
+				if(this.auctionInfo.myBidList.length > 0){
+					return this.auctionInfo.myBidList[0].bidPrice
+				}else{
+					return this.auctionInfo.finalPrice
+				}
+			},
+			minNum: function () {
+				if(this.auctionInfo.myBidList.length > 0){
+					return this.auctionInfo.myBidList[0].bidNum
+				}else{
+					return this.auctionInfo.minOrder
+				}
+			}
 		},
 		data() {
 			return {
 				auctionId: !this.$route.params.id ? 0 : this.$route.params.id,
-				aucTab: [
-					{name: '竞拍记录'},
-					{name: '我的出价'}
-				],
-				getData: {
-					currentTime: 0,
-					endtimessss: 0
-				},
 				columns4: bidfollowColumns,
+
+				auctionOffer: 0,  //竞拍出价
+				auctionNum: 0,  //竞拍数量
+
 				data1: [],
-				istrue: 0,
-				MineOfferRecord: [],
-				MineOfferacr: {},
-				Timeloading: false,
 				WinBidShow: false,
 				NotWinBidShow: false,
 				WinBid: {},
 				auctionNumShow: false,
 				auctionNumTip: '',   //竞拍价提示
-				auctionOffer: '',  //竞拍出价
-				auctionNum: 0,  //竞拍数量
-				auctionHighPrice: 0,//最高中标价
-				auctionLowPrice: 0,//最低中标价
+
 				auctionWin: 0,     //中标人数
 				auctionTotal: 0,  //竞拍结束—竞拍总数量
 				OfferRecordTip: '',   //出价记录提示
 				addfollow: false,    //添加竞拍关注
 				DepositData: {
 					auctionId: '',
-					MinePrice: 0,
-					aucteNum: 0,
+					basePrice: 0,
+					depositNum: 0,
 					Bond: 0,   //保证金比例
 				},
 				DepositShow: false,
 				DatabridTip: '',
-				countTime: 0,    //倒计时
-				MinPrice: '',     //最小起拍价
-				bidePrice: '',     //当前价
+
 				bidersloading: false,
-				day: 0,
-				hr: 0,
-				min: 0,
-				sec: 0
 			}
 		},
 		methods: {
 			reloadPage() {
 				location.reload()
 			},
-
 			//显示添加竞拍框
 			addFollow() {
 				this.addfollow = true
@@ -613,10 +617,10 @@
 			},
 			// 竞拍出价
 			cutsOffer() {
-				if (this.auctionOffer > this.MinPrice) {
+				if (this.auctionOffer > this.auctionInfo.finalPrice) {
 					this.auctionOffer = Number(this.auctionOffer) - Number(this.auc.bidIncrement)
 				} else {
-					this.auctionOffer = this.MinPrice
+					this.auctionOffer = this.auctionInfo.finalPrice
 				}
 			},
 			addOffer() {
@@ -641,12 +645,14 @@
 			PayCost() {
 				this.DepositShow = true
 				this.DepositData.auctionId = this.auctionInfo.id
-				this.DepositData.MinePrice = this.MinPrice
-				this.DepositData.aucteNum = this.auctionInfo.minOrder
+				this.DepositData.basePrice = this.auctionInfo.finalPrice
+				this.DepositData.addNum = this.auctionInfo.minOrder
+				this.DepositData.depositNum = this.auctionInfo.depositNum
 				this.DepositData.Bond = this.auctionInfo.marginRatio
 			},
 			unDepositShow(row) {
 				this.DepositShow = row
+        location.reload()
 			},
 			//所有竞拍记录
 			async getAuctionRecord() {
@@ -661,18 +667,6 @@
 					this.auctionRd = res.data.items
 				}
 			},
-
-			//获取我的出价记录
-			async getGainauctionRecord() {
-				let params = {
-					auctionId: this.auctionId
-				}
-				let res = await gainauctionrecord(this, params)
-				if (res.data) {
-					this.MineOfferRecord = res.data
-				}
-
-			},
 			//中标信息
 			async getwinningbid() {
 				let params = {
@@ -682,19 +676,8 @@
 				if (res.data && res.status === 200) {
 					this.WinBidShow = true
 					this.WinBid = res.data
-					this.countTime = Date.parse(new Date(this.WinBid.lastDeliveryTime))
 				} else {
 					this.NotWinBidShow = true
-				}
-			},
-			//获取最新的竞拍价
-			async getNewPrice(id) {
-				let params = {
-					auctionId: this.auctionId
-				}
-				let res = await newprice(this, params)
-				if (res.data) {
-					this.bidePrice = res.data.bidPrice
 				}
 			},
 			//提交出价
@@ -705,19 +688,19 @@
 						content: '价格不能为空！',
 						duration: 5,
 						styles: 'top:300px'
-					});
+					})
 				}
 
 				let params = {
-					auctionId: this.detailDatabrid.id,
+					auctionId: this.auctionId,
 					bidNum: this.auctionNum,
-					bidPrice: this.auctionOffer,
+					bidPrice: this.auctionOffer
 				}
 				let res = await AddauctionPrice(this, params)
 				if (res.data.data === null && res.status === 200) {
 					this.$Modal.warning({
 						title: '提示',
-						content: res.data.message + '!!! ' + '请联系客服。',
+						content: res.data.message + '!!! ',
 						duration: 5,
 						styles: 'top:300px'
 					});
@@ -726,17 +709,14 @@
 						title: '提示',
 						content: '出价成功！',
 						duration: 5
-					});
-					// this.GainauctionRecord()
-					// this.AuctionRecord()
-					// this.auctionMineRecord()
+					})
+					location.reload()
 				}
 			},
 			addauctionPrice() {
 				this.bidersloading = true
 			},
-		}
-		,
+		},
 		head() {
 			return {
 				title: this.auctionInfo.skuName + '限时竞拍-巨正源',
@@ -745,26 +725,29 @@
 					{hid: 'description', name: 'description', content: '物性表-巨正源'}
 				]
 			}
-		}
-		,
+		},
 		created() {
-		}
-		,
+		},
 		mounted() {
-			console.log('mounted:', this.auctionInfo)
-			console.log('minOrder:', this.auctionInfo.minOrder)
-			this.auctionNum = this.auctionInfo.minOrder
-			//this.getAuctionRecord()
-			//this.getGainauctionRecord()
-			//this.getNewPrice()
-		}
-		,
+			let reloadActionInfo = () =>{
+				//获取竞拍信息
+				this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
 
+				setTimeout(function () {
+					reloadActionInfo();
+				}, 15000)
+      }
+			setTimeout(function () {
+				reloadActionInfo();
+			}, 15000)
+
+			this.auctionNum = this.minNum
+      this.auctionOffer = this.minPrice
+		},
 		watch: {
 			'$route'(to, from) {
 				this.$router.go(0);
-			}
-			,
+			},
 		}
 	}
 </script>

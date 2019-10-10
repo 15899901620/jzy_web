@@ -97,7 +97,10 @@
                   </template>
                   <template v-if="items.statusType == '3'">
                     <div class="statusicon endauction">竞拍结束</div>
-                    <div class="ml20" style="width: 220px;"><span></span></div>
+                    <div class="ml20">
+                      <span>竞拍时间 ：</span>
+                      <span class="fs18">{{items.beginTime}}</span>
+                    </div>
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
