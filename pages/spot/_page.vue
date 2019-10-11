@@ -58,7 +58,7 @@
             <span style="width: 10%;">交货仓</span>
             <span style="width: 6%;">包装方式</span>
             <span style="width: 9%;">剩余数量（吨）</span>
-            <span style="width: 9%;">单价（元/吨）</span>
+            <span style="width: 11%;">单价（元/吨）</span>
             <span style="width: 8%;">距下架时间</span>
             <span style="width: 7%;">提货期限</span>
             <span style="width: 12%;">操作</span>

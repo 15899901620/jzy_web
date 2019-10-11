@@ -738,9 +738,10 @@
       display: flex;
 
       .status {
-        width: 5%;
-        font-size: 18px;
-        padding: 0 12px;
+        width: 6%;
+        font-size: 17px;
+        text-align: center;
+        padding: 3px 15px;
         color: #fff;
       }
 
