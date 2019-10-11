@@ -27,7 +27,7 @@
 				<Select  style="width:150px" placeholder="提货状态">
                   <Option v-for="item in pickstatus" :value="item.value" :key="item.value" >{{ item.label }}</Option>
                 </Select>
-              <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput"
+              <input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value="" class="orderInput"
                      style="width:140px; margin-left:5px;"/>
               <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
             </div>

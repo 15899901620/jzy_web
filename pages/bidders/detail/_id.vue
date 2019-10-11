@@ -213,7 +213,7 @@
             <!--竞拍数量-->
             <div class="ml30 dflex mt25" style="align-items: center;">
               <span class="inputTitle">竞拍数量</span>
-              <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.minOrder)" :step="1" v-model="auctionNum"></input-special>
+              <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.totalNum)" :step="1" v-model="auctionNum"></input-special>
               <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
               <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
             </div>
@@ -242,9 +242,8 @@
             <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
             <div class="orangeFont fs20 tac">恭喜您竞拍中得 {{auctionInfo.skuName}} {{auctionInfo.auctionPlanned.totalNum}}吨</div>
             <div class="orangeFont fs14 tac mt5">请在{{auctionInfo.auctionPlanned.lastOrderedDate}}之前进行转单，逾期将扣除保证金</div>
-            <div class="acuBtn fs18" style="justify-content: center; margin: 25px auto">
-              <a class="Winbtn orangebg whiteFont">转 单</a>
-              <a class="Winbtn whitebg ml15 orangeFont" href=""><span class="orangeFont">查看合约</span></a>
+            <div class="acuBtn fs18" style="justify-content: center; margin: 25px auto;flex-direction: row;">
+              <a class="Winbtn orangebg whiteFont" href="/users/auctionPlan">查看合约</a>
             </div>
             <div class="winbider"></div>
           </template>
@@ -259,6 +258,9 @@
               <div class="failwinbider"></div>
             </div>
           </template>
+        </div>
+        <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CO'">
+          <div class="WinBid orangeFont ">等待计算结果</div>
         </div>
       </div>
       <!--  正在参与-->
@@ -712,7 +714,7 @@
       let reloadActionInfo = () =>{
         //获取竞拍信息
         this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
-        if(this.auctionInfo.statusType != '3'){
+        if(this.auctionInfo.status != 'CL'){
           setTimeout(function () {
             reloadActionInfo();
           }, 15000)

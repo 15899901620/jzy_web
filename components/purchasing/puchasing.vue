@@ -24,7 +24,7 @@
       <Row :gutter="24" index="1">
         <Col span="24">
           <FormItem prop="phone" label="数       量">
-            <Input v-model="formItem.intentionNum"  class="CarrierIput"   placeholder="请输入产品名称" style="width:90%"/>
+            <Input v-model="formItem.intentionNum"  class="CarrierIput"   placeholder="请输入商品名称" style="width:90%"/>
           </FormItem>
         </Col>
       </Row>

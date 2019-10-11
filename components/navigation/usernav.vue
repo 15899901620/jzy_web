@@ -31,7 +31,7 @@
 								name: '现货合约'
 							},
 							{
-								path: '/users/userauction',
+								path: '/users/auctionPlan',
 								name: '竞拍合约'
 							},
 							{

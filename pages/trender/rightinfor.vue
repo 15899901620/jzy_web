@@ -20,7 +20,7 @@
 
       <div class="order_operate">
         <div class="dflex">
-          <input type="text" placeholder="输入订单号/产品名称查询" name="" id="" value="" class="orderInput" />
+          <input type="text" placeholder="输入订单号/商品名称查询" name="" id="" value="" class="orderInput" />
           <div class="check">查看</div>
         </div>
         <div class="dflex" style="align-items: center;">

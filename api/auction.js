@@ -125,24 +125,6 @@ export const AddauctionPrice = (vm, data) => {
   })
 }
 /**
- * @description 我的出价信息
- * @param vm
- * @param data
- * @returns {*}
- */
-export const auctionMineRecord = (vm, data) => {
-  vm.$axios.defaults.headers = {
-    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
-  }
-  return vm.$axios.get(server.prefix + server.api.Auction.auctionMineRecord,
-    {
-      params: {...data}
-    }).catch((e) => {
-    let errorInfo = e.response
-    console.log('manageEditErr', errorInfo)
-  })
-}
-/**
  * @description 竞拍个人信息
  * @param vm
  * @param data
