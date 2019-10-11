@@ -3,7 +3,10 @@
  * @module store/article
  * @author hmymingyu <fgf67@163.com>
  */
+import Cookies from 'js-cookie'
 import api from '../config/api'
+import { getCookies } from '../config/storage'
+
 import { sendCurl } from '../api/common'
 import server from '../config/api'
 
@@ -33,9 +36,9 @@ export const mutations = {
 	updateNoticeList(state, data) {
 		state.noticeList = data
 	},
-
 	updateArticleCatList(state, data) {
 		state.articleCat = data
+
 	},
 	updateNoticeInfo(state, data) {
 		state.noticeInfo = data
@@ -57,7 +60,6 @@ export const mutations = {
 		state.articecatDetail = data
 	},
 	updateindexarticelist(state, data){
-		console.log("data",data)
 		state.indexarticelist=data
 	},
 }
@@ -77,11 +79,27 @@ export const actions = {
 	},
 	//首页行情资讯
 	async getindexArticleList({getters,commit},catId) {
+		var  dataarray=[]
+		await this.$axios.$get(api.prefix + api.api.information.infocate, {parentId: 0})
+			.then(response => {
 
+					response.forEach((item,index)=>{
+						let params={
+							current_page:  1, page_size: 4, catId: item.id,sortBy: 'add_time', desc: true, isShow: 1
+						}
+						sendCurl(this, server.api.information.getArticleList, params).then(res=>{
 
-		let cate=6
-		let dataarray=[]
-		console.log('cate:',cate)
+							dataarray[item.id]=res.data.items
+
+							commit('updateindexarticelist', dataarray)
+						})
+					})
+
+			})
+			.catch(error => {
+				console.log('err', error)
+			})
+
 		// for(var i=0;i<=6; i++){
 		// 	let params={
 		// 		current_page:  1, page_size: 4, catId: i,sortBy: 'add_time', desc: true, isShow: 1
@@ -155,7 +173,15 @@ export const actions = {
 	async getArticleCatList({commit}, params) {
  		return await this.$axios.$get(api.prefix + api.api.information.infocate, {params})
 			.then(response => {
+
+
+
  				commit('updateArticleCatList', response)
+
+
+
+
+
 			})
 			.catch(error => {
 				console.log('err', error)

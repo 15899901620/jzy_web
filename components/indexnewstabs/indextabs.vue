@@ -130,12 +130,12 @@ export default {
 	watch: {
 
 		value: function(val) {
-		    console.log("***val***",val)
+
 			this.currentValue = val;
 		},
 
 		currentValue: function() {
-		    console.log("*****currentValue******")
+
 			//tab发生变化时，更新pane的显示状态
 			this.updateStatus();
 		}
