@@ -71,7 +71,7 @@
                 <td style="width: 15%;">待签合同</td>
                 <td style="width: 15%;" class="operate">
                   <div v-if="item.status == 3">
-                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">已违约</a>
+                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px;background-color:#ed4014">已违约</a>
                   </div>
                   <div v-else-if="item.available_num > 0">
                     <template v-if="item.close_apply_status == 1">

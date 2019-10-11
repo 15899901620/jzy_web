@@ -93,7 +93,7 @@ let api = {
     initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
-    getplanInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
+    getSpotInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
     freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
