@@ -14,8 +14,7 @@
               <Col span="12">订单标号：{{this.datalist.orderNo}}</Col>
             </Row>
             <Row index="">
-              <Col span="6">下单时间：{{this.datalist.createTime}}</Col>
-              <Col span="6">巨融易天数：{{this.datalist.jryDays}}</Col>
+              <Col span="12">下单时间：{{this.datalist.createTime}}</Col>
               <Col span="12">有效提货时间：<span style="color:#ff2222">{{this.datalist.deliveryStart}}</span>至<span style="color:#ff2222">{{this.datalist.deliveryDeadline}}</span>  </Col>
             </Row>
              <Row index="">
@@ -137,13 +136,13 @@
           </div>
           <div>
 
-            <div style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               订单总额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                 <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+                 <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div  v-if="this.datalist.status == 3" style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+                <div  v-if="this.datalist.status == 3" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               已支付：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div style="line-height:32px; text-align:right; font-size:16px; padding-right:50px; background: #f2f2f2;" 
+                <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;" 
                v-if="this.datalist.isJryService">巨融易：<span class="red">{{this.datalist.jryDays}}</span>天
                  <span class="fr mr15 " style="margin-left:120px">
                   最后付款时间：
@@ -258,13 +257,17 @@
       },
       addLog(row) {
 				this.addList = {
-				  id:this.orderid
+          id:this.orderid,
+          orderNo:this.datalist.orderNo,
+          skuName:this.datalist.skuName,
+          orderNum:this.datalist.orderNum,
+          warehouseName:this.datalist.warehouseName
 				}
 				this.addloading = true
       },
       detailLog(row) {
 				this.addList = {
-					id:this.orderid
+          id:this.orderid  
 				}
 				this.detailloading = true
 			},
