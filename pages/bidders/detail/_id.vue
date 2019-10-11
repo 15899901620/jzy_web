@@ -21,7 +21,6 @@
             <div class="status statusEndbg">竞拍结束</div>
           </template>
           <div class="cutTime cutTimeIngbg">
-
             <div class="ml35 dflex">
               <div class="cutDown_time"><img src="/img/cutDown_icon.png"/></div>
               <template v-if="auctionInfo.statusType == '1'">
@@ -60,9 +59,9 @@
               <td>牌号</td>
               <td>厂商</td>
               <td>产品等级</td>
+              <td>包装方式</td>
               <td>数量({{auctionInfo.uomName}})</td>
               <td>提货仓库</td>
-              <td>包装方式</td>
               <td>开始提货日期</td>
               <td>截至提货日期</td>
             </tr>
@@ -75,13 +74,13 @@
                 <template v-else-if="auctionInfo.productGrade===3">合格品</template>
               </td>
               <td>
-                {{auctionInfo.totalNum}}
-              </td>
-              <td>{{auctionInfo.warehouseName}}</td>
-              <td>
                 <template v-if="auctionInfo.packingModes===1">标准包装</template>
                 <template v-else-if="auctionInfo.packingModes===2">非标准包装</template>
               </td>
+              <td>
+                {{auctionInfo.totalNum}}
+              </td>
+              <td>{{auctionInfo.warehouseName}}</td>
               <td>{{auctionInfo.deliveryStart}}</td>
               <td>{{auctionInfo.lastDeliveryTime}}</td>
             </tr>
@@ -464,7 +463,7 @@
         <span>出价提示</span>
       </p>
       <div>
-        <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{auctionInfo.manufacturer}}
+        <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价商品：</span>{{auctionInfo.manufacturer}}
           {{this.auctionInfo.skuName}}</p>
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}} <span
                 style="color:#999;">(吨)</span></p>
@@ -589,40 +588,6 @@
       addFollow() {
         this.addfollow = true
       },
-      //查看详情_跳转会员-我的竞拍页
-      acuDetailmember() {
-        this.$router.push({name: 'users-userauction'})
-      },
-      //提货_跳转到下单页
-      auctionOrder() {
-        this.$router.push({name: "bidders-order-id", params: {id: this.WinBid.id}})
-      },
-      // 竞拍出价
-      cutsOffer() {
-        if (this.auctionOffer > this.auctionInfo.finalPrice) {
-          this.auctionOffer = Number(this.auctionOffer) - Number(this.auc.bidIncrement)
-        } else {
-          this.auctionOffer = this.auctionInfo.finalPrice
-        }
-      },
-      addOffer() {
-        this.auctionOffer = Number(this.auctionOffer) + Number(this.auctionInfo.bidIncrement)
-      },
-      // 竞拍数量
-      cutsNum() {
-        if (this.auctionNum > this.auctionInfo.minOrder) {
-          this.auctionNumShow = false
-          this.auctionNum--
-        } else {
-          this.auctionNumShow = true
-          this.auctionNumTip = '不得小于' + this.auctionInfo.minOrder
-        }
-      },
-      addNum() {
-        this.auctionNumShow = false
-        this.auctionNum++
-      },
-
       //显示追加保证金的弹窗
       PayCost() {
         this.DepositShow = true
