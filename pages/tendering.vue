@@ -14,7 +14,7 @@
     </Header-small>
     <div class="container" title="">
       <div class="tac fs0">
-        <img src="/img/Tenderingbanner.png" />
+        <img src="/img/Tenderingbanner.png"  style="width: 100%" />
       </div>
       <div class="trenderCenter">
         <div class="trendLogin fs14">

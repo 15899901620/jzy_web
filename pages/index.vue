@@ -41,21 +41,21 @@
           </div>
         </outpacking>
       </div> -->
+<!--      <div class="hot-industry">-->
+<!--        <tabpacking title="行业资讯" cpadding="0px" :more="moreData">-->
+<!--          <div slot="content">-->
+<!--            <hottrade></hottrade>-->
+<!--          </div>-->
+<!--        </tabpacking>-->
+<!--      </div>-->
+
       <div class="hot-industry">
-        <tabpacking title="行业资讯" cpadding="0px" :more="moreData">
-          <div slot="content">
-            <hottrade></hottrade>
-          </div>
-        </tabpacking>
+        <newsinfo></newsinfo>
       </div>
+
       <sidebar></sidebar>
     </div>
-    <div class="hot-industry">
 
-<!--      <indexnewstabs>-->
-        <newsinfo></newsinfo>
-<!--      </indexnewstabs>-->
-    </div>
 
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>

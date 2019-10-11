@@ -3,7 +3,7 @@
 		<Header title="头部"></Header>
 		<div class="container" title="">
 			<div class="tac">
-				<img src="/img/logisticsBanner.png" />
+				<img src="/img/logisticsBanner.png" style="width: 100%" />
 			</div>
 			<!--询价找车-->
 <!--			<div class="inquirybg">-->
