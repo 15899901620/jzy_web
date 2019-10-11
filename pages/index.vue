@@ -63,8 +63,10 @@
 
 <script>
 
-	import {mapState} from 'vuex'
-	import Header from '../components/header'
+	import { mapState } from 'vuex'
+    import Cookies from 'js-cookie'
+    // import { setStore, getStore } from '../plugins/storage'
+    import Header from '../components/header'
 	import Footer from '../components/footer'
 	import Banner from '../components/banner'
 	import hotrecommend from '../components/hotrecommend'
@@ -77,6 +79,8 @@
 	import LogisticsList from '../components/logistics-list'
     import indexnewstabs from '../components/indexnewstabs'
     import newsinfo from '../components/indexnews/newsinfo'
+    import {setCookies} from "../config/storage";
+    import { getCookies } from '../config/storage'
 
 
 	export default {
@@ -98,8 +102,7 @@
 
                 store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
                 store.dispatch('article/getArticleCatList',{parentId: 0}),
-                store.dispatch('article/getindexArticleList',{catId:this.articleCat}),
-
+                store.dispatch('article/getindexArticleList',{catId:this.articleCates}),
 				//获取网站公告
 				store.dispatch('article/getNoticeList', {
 					current_page: 1,
@@ -181,15 +184,22 @@
 					title: '更多',
 					url: '/logistics'
 				},
-				heightNum: 320
+				heightNum: 320,
+                articleCates:{},
 			}
 		},
 		created() {
+
+          this.articleCates = !getCookies('articleCat') ? '' : getCookies('articleCat')
+
+          let expires = new Date((new Date()).getTime() + 10 * 60 * 60000);
+          setCookies('articleCat', this.articleCat,expires)
+
 		},
 		computed: {
 			...mapState({
 				bannerinfo: state => state.system.bannerinfo,
-                articleCat: state => state.article.articleCat
+
 			})
 		},
 		methods: {},
