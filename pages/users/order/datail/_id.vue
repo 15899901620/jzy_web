@@ -136,13 +136,13 @@
           </div>
           <div>
 
-            <div style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               订单总额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                 <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+                 <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div  v-if="this.datalist.status == 3" style="line-height:30px; text-align:right; font-size:16px; padding-right:50px; font-weight: bold;">
+                <div  v-if="this.datalist.status == 3" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               已支付：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div style="line-height:32px; text-align:right; font-size:16px; padding-right:50px; background: #f2f2f2;" 
+                <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;" 
                v-if="this.datalist.isJryService">巨融易：<span class="red">{{this.datalist.jryDays}}</span>天
                  <span class="fr mr15 " style="margin-left:120px">
                   最后付款时间：
