@@ -60,16 +60,16 @@
               <Col span="12">收货人姓名：<span v-if="this.datalist.receiverName">{{this.datalist.receiverName}}</span><span v-else>--</span></Col>
             </Row>
             <Row index="">
-              <Col span="12">承运商：<span v-if="this.datalist.carrierName">{{this.datalist.carrierName}}</span><span v-else>待供方指定</span>
+              <Col span="12">承运商：<span v-if="this.datalist.carrierName">{{this.datalist.carrierName}}</span><span v-else-if="this.datalist.isDelivery == 0">待需方指定</span><span v-else>待供方指定</span>
               </Col>
               <Col span="12">收货人电话：<span v-if="this.datalist.receiverPhone">{{this.datalist.receiverPhone}}</span><span v-else>--</span></Col>
             </Row>
             <Row index="">
-              <Col span="12">承运商联系人：<span v-if="this.datalist.carrierContacts">{{this.datalist.carrierContacts}}</span><span v-else>待供方指定</span></Col>
+              <Col span="12">承运商联系人：<span v-if="this.datalist.carrierContacts">{{this.datalist.carrierContacts}}</span><span v-else-if="this.datalist.isDelivery == 0">待需方指定</span><span v-else>待供方指定</span></Col>
               <Col span="12">收货人身份证：<span v-if="this.datalist.receiverIdNumber">{{this.datalist.receiverIdNumber}}</span><span v-else>--</span></Col>
             </Row>
             <Row index="">
-              <Col span="12">承运商联系电话：<span v-if="this.datalist.carrierContactsMobile">{{this.datalist.carrierContactsMobile}}</span><span v-else>待供方指定</span></Col>
+              <Col span="12">承运商联系电话：<span v-if="this.datalist.carrierContactsMobile">{{this.datalist.carrierContactsMobile}}</span><span v-else-if="this.datalist.isDelivery == 0">待需方指定</span><span v-else>待供方指定</span></Col>
               <Col span="12">详细地址：<span v-if="this.datalist.receiverFullAddress">{{this.datalist.receiverFullAddress}}</span><span v-else>--</span></Col>
             </Row>
       
@@ -128,9 +128,9 @@
               <Col span="3">{{this.amountFormat(this.datalist.finalPrice - this.datalist.shippingFee -
                 this.datalist.jryAdd)}}</Col>
               <Col span="2">+ {{this.datalist.shippingFee}}</Col>
-              <Col span="2">+ {{this.datalist.jryDays}}</Col>
+              <Col span="2">¥{{this.datalist.jryAdd}}/吨</Col>
               <Col span="4">{{this.datalist.finalPriceFormat}}</Col>
-              <Col span="3">{{this.formSearch.capit.package_amount_format}}</Col>
+              <Col span="3">{{this.datalist.depositAmountFormat}}</Col>
               <Col span="4">{{this.datalist.totalAmountFormat}}</Col>
             </Row>
           </div>
@@ -140,14 +140,14 @@
               订单总额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                  <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div  v-if="this.datalist.status == 3" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
+                <div  v-if="this.datalist.status == 3 || this.datalist.status == 4" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               已支付：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                 <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;" 
-               v-if="this.datalist.isJryService">巨融易：<span class="red">{{this.datalist.jryDays}}</span>天
+               v-if="this.datalist.isJryService && this.datalist.status != 3 && this.datalist.status != 4">巨融易：<span class="red">{{this.datalist.jryDays}}</span>天
                  <span class="fr mr15 " style="margin-left:120px">
                   最后付款时间：
                   <span class="red">
-                  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="this.datalist.orderPayLastTime" hoursShow></TimeDown>
+                  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="this.datalist.orderPayLastTime" hoursShow dayShow></TimeDown>
                    </span>
                 </span>
                </div>
@@ -274,11 +274,6 @@
 			amountFormat: function (amount, sign) {
 				return utils.amountFormat(amount, sign)
       },
-      async capit(){
-        const res = await sendHttp(this, true, server.api.capital.myCapital)
-        console.log(res)
-        this.formSearch.capit=res.data
-      },
       paymentBut() {
             //检查是否可以使用合约的保证金
            
@@ -300,7 +295,6 @@
 
     
 		mounted(){
-      this.capit();
       this.sourceDeta()
       this.orderlist();
      
