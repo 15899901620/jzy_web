@@ -2,7 +2,6 @@
     <div :class="classes">
         <div class="title">
             <h3>{{title}}</h3>
-
             <span v-if="total>0">共 {{total}} 条数据</span>
             <span v-if="more"><a :href="more.url">{{more.title}}<span class="el-icon-newfont-menu"></span></a></span>
         </div>
@@ -17,7 +16,7 @@
 const prefixCls = 'ant-pack'
 import '../../static/icon/iconfont.css'
 export default {
-    name: 'packOne',
+    name: 'packTab',
     props:{
         title:{
             type:String

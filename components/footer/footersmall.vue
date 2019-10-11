@@ -2,7 +2,7 @@
     <div :class="classes">
         <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
             <div class="copyright">
-                {{ systeminfo.COPYRIGHT }}
+                {{ this.$store.state.common.sysConfig.COPYRIGHT }}
             </div>
         </div>
 	</div>
@@ -18,9 +18,7 @@ import links from './links'
 export default {
     name: 'FooterSmall',
     computed: {
-        ...mapState({
-            systeminfo: state => state.system.systeminfo
-        }),
+
         classes() {
             return [
                 `${prefixCls}`,

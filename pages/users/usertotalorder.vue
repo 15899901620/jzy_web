@@ -43,7 +43,7 @@
             <span style="width: 10%;">库区</span>
             <span style="width: 10%;">提货方式</span>
             <span style="width: 13%;">订单总金额</span>
-            <span style="width: 14%;">订单状态</span>
+            <span style="width: 14%;">付款状态</span>
             <span style="width: 12%;">订单操作</span>
             <span style="width: 12%;">提货状态</span>
           </div>

@@ -21,8 +21,9 @@
             <div class="status statusEndbg">竞拍结束</div>
           </template>
           <div class="cutTime cutTimeIngbg">
-            <div class="cutDown_time ml35"><img src="/img/cutDown_icon.png"/></div>
-            <div class="ml10 dflex">
+
+            <div class="ml35 dflex">
+              <div class="cutDown_time"><img src="/img/cutDown_icon.png"/></div>
               <template v-if="auctionInfo.statusType == '1'">
                 <span class="fs16">距离结束：</span>
                 <span class="fs16">
@@ -39,9 +40,10 @@
               </template>
               <template v-else>
                 <span class="fs16">已结束</span>
+
               </template>
             </div>
-            <div>
+            <div class="mr30">
               <span class="fs16">竞拍编号：{{auctionInfo.billNo}}</span>
             </div>
           </div>
@@ -197,37 +199,45 @@
           </tr>
           </tbody>
         </table>
-        <!-- 竞拍出价***竞拍数量 -->
-        <div v-if="auctionInfo.statusType != '3'">
-          <!-- 竞拍出价-->
-          <div class="ml30 dflex mt30" style="align-items: center;">
-            <span class="inputTitle">竞拍出价</span>
-            <input-special :min="minPrice" :max="99999" :step="auctionInfo.bidIncrement" v-model="auctionOffer"
-                           ></input-special>
-            <span class="ml10 gray fs14">加价幅度：{{auctionInfo.bidIncrement}}元</span>
+        <!-- 竞拍出价***竞拍数量***提交按钮 -->
+        <div class="dflex"  >
+          <!-- 竞拍出价***竞拍数量-->
+          <div style="margin-left: 130px" v-if="auctionInfo.statusType != '3'">
+            <!-- 竞拍出价-->
+            <div class="ml30 dflex mt30" style="align-items: center;">
+              <span class="inputTitle">竞拍出价</span>
+              <input-special :min="minPrice" :max="99999" :step="auctionInfo.bidIncrement" v-model="auctionOffer"
+              ></input-special>
+              <span class="ml10 gray fs14">加价幅度：{{auctionInfo.bidIncrement}}元</span>
+            </div>
+            <!--竞拍数量-->
+            <div class="ml30 dflex mt25" style="align-items: center;">
+              <span class="inputTitle">竞拍数量</span>
+              <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.minOrder)" :step="1" v-model="auctionNum"></input-special>
+              <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
+              <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
+            </div>
+            <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
           </div>
-          <!--竞拍数量-->
-          <div class="ml30 dflex mt25" style="align-items: center;">
-            <span class="inputTitle">竞拍数量</span>
-            <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.minOrder)" :step="1" v-model="auctionNum"></input-special>
-            <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
-            <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
+          <!-- 提交按钮 -->
+          <div class="ml35">
+            <div class="acuBtn"  v-if="auctionInfo.statusType == '1'">
+              <a class="Paybg " @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
+              <a class="Paybg " @click="PayCost" v-else>缴纳保证金</a>
+              <a class="oncebg mt15" @click="addauctionPrice" v-if="auctionInfo.depositNum > 0">立即出价</a>
+              <a class="mt15" style="background-color: #b3aea9" v-else>立即出价</a>
+            </div>
+            <div class="acuBtn"  v-if="auctionInfo.statusType == '2'">
+              <a class="Paybg " @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
+              <a class="Paybg  mt20" @click="PayCost" v-else>缴纳保证金</a>
+              <a class="startbg mt15">即将开始</a>
+            </div>
           </div>
-          <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
-          <div class="acuBtn" v-if="auctionInfo.statusType == '1'">
-            <a class="Paybg ml15" @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
-            <a class="Paybg ml15" @click="PayCost" v-else>缴纳保证金</a>
-            <a class="oncebg" @click="addauctionPrice" v-if="auctionInfo.depositNum > 0">立即出价</a>
-            <a style="background-color: #b3aea9" v-else>立即出价</a>
-          </div>
-          <div class="acuBtn" v-if="auctionInfo.statusType == '2'">
-            <a class="Paybg ml15" @click="PayCost" v-if="auctionInfo.depositNum > 0">追加保证金</a>
-            <a class="Paybg ml15" @click="PayCost" v-else>缴纳保证金</a>
-            <a class="startbg">即将开始</a>
-          </div>
+
         </div>
+
         <!--竞拍结果-->
-        <div class="biderResult" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL'">
+        <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL'">
           <template v-if="auctionInfo.auctionPlanned">
             <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
             <div class="orangeFont fs20 tac">恭喜您竞拍中得 {{auctionInfo.skuName}} {{auctionInfo.auctionPlanned.totalNum}}吨</div>
@@ -241,7 +251,7 @@
           <template v-else>
             <div class="WinBid gray failWinBidbg">未中标</div>
             <div
-                style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
+                    style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
               <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</span>/ 吨</div>
               <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</span>/ 吨</div>
               <div class="dflex mt5"><span class="titleWin">一 共 拍 出</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanNum}}</span>吨</div>
@@ -442,11 +452,11 @@
 
     <!--出价提示-->
     <Modal
-        title="出价提示"
-        v-model="bidersloading"
-        ok-text="确认出价"
-        @on-ok="addBidding"
-        class-name="vertical-center-modal">
+            title="出价提示"
+            v-model="bidersloading"
+            ok-text="确认出价"
+            @on-ok="addBidding"
+            class-name="vertical-center-modal">
       <p slot="header" style="color:#666; text-align:left; font-size:14px;">
         <Icon type="md-chatboxes" style="font-size:18px;"/>
         <span>出价提示</span>
@@ -455,16 +465,16 @@
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">您出价商品：</span>{{auctionInfo.manufacturer}}
           {{this.auctionInfo.skuName}}</p>
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价数量为：</span>{{this.auctionNum}} <span
-            style="color:#999;">(吨)</span></p>
+                style="color:#999;">(吨)</span></p>
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
       </div>
     </Modal>
 
     <!-- 添加其他竞拍关注-->
     <Modal
-        v-model="addfollow"
-        title="Title"
-        width="80"
+            v-model="addfollow"
+            title="Title"
+            width="80"
     >
       <div slot="header">添加其他竞拍关注</div>
       <Table border ref="selection" :columns="columns4" :data="data1"></Table>
@@ -479,248 +489,248 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
-	import Header from '../../../components/header'
-	import Footer from '../../../components/footer'
-	import {
-		newprice,
-		auctionRecord,
-		AddauctionPrice,
-		gainauctionrecord,
-		WinningBid
-	} from '../../../api/auction'
-	import paydeposit from '../../../components/paydeposit'
-	import TimeDown from '../../../components/timeDown'
-	import InputSpecial from '../../../components/input-special'
-	import {bidfollowColumns} from './bidfollow'
+  import {mapState} from 'vuex'
+  import Header from '../../../components/header'
+  import Footer from '../../../components/footer'
+  import {
+    newprice,
+    auctionRecord,
+    AddauctionPrice,
+    gainauctionrecord,
+    WinningBid
+  } from '../../../api/auction'
+  import paydeposit from '../../../components/paydeposit'
+  import TimeDown from '../../../components/timeDown'
+  import InputSpecial from '../../../components/input-special'
+  import {bidfollowColumns} from './bidfollow'
 
-	export default {
-		name: "bidders-detail-id",
-		middleware: 'memberAuth',
-		fetch({store, params, query}) {
-			return Promise.all([
-				//获取顶部、中部、底部导航信息
-				store.dispatch('common/getNavList'),
-				//获取系统配置
-				store.dispatch('common/getSysConfig'),
-				//获取友情链接
-				store.dispatch('common/getFriendlyList'),
-				//获取底部帮助分类
-				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-				//获取竞拍信息
-				store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
-			])
-		},
-		components: {
-			Header,
-			Footer,
-			paydeposit,
-			TimeDown,
-			InputSpecial
-		},
-		computed: {
-			...mapState({
-				auctionInfo: state => state.bidders.auctionInfo,
-				systeminfo: state => state.common.sysConfig,
-			}),
-			minPrice: function () {
-				if(this.auctionInfo.myBidList.length > 0){
-					return this.auctionInfo.myBidList[0].bidPrice
-				}else{
-					return this.auctionInfo.finalPrice
-				}
-			},
-			minNum: function () {
-				if(this.auctionInfo.myBidList.length > 0){
-					return this.auctionInfo.myBidList[0].bidNum
-				}else{
-					return this.auctionInfo.minOrder
-				}
-			}
-		},
-		data() {
-			return {
-				auctionId: !this.$route.params.id ? 0 : this.$route.params.id,
-				columns4: bidfollowColumns,
-
-				auctionOffer: 0,  //竞拍出价
-				auctionNum: 0,  //竞拍数量
-
-				data1: [],
-				WinBidShow: false,
-				NotWinBidShow: false,
-				WinBid: {},
-				auctionNumShow: false,
-				auctionNumTip: '',   //竞拍价提示
-
-				auctionWin: 0,     //中标人数
-				auctionTotal: 0,  //竞拍结束—竞拍总数量
-				OfferRecordTip: '',   //出价记录提示
-				addfollow: false,    //添加竞拍关注
-				DepositData: {
-					auctionId: '',
-					basePrice: 0,
-					depositNum: 0,
-					Bond: 0,   //保证金比例
-				},
-				DepositShow: false,
-				DatabridTip: '',
-
-				bidersloading: false,
-			}
-		},
-		methods: {
-			reloadPage() {
-				location.reload()
-			},
-			//显示添加竞拍框
-			addFollow() {
-				this.addfollow = true
-			},
-			//查看详情_跳转会员-我的竞拍页
-			acuDetailmember() {
-				this.$router.push({name: 'users-userauction'})
-			},
-			//提货_跳转到下单页
-			auctionOrder() {
-				this.$router.push({name: "bidders-order-id", params: {id: this.WinBid.id}})
-			},
-			// 竞拍出价
-			cutsOffer() {
-				if (this.auctionOffer > this.auctionInfo.finalPrice) {
-					this.auctionOffer = Number(this.auctionOffer) - Number(this.auc.bidIncrement)
-				} else {
-					this.auctionOffer = this.auctionInfo.finalPrice
-				}
-			},
-			addOffer() {
-				this.auctionOffer = Number(this.auctionOffer) + Number(this.auctionInfo.bidIncrement)
-			},
-			// 竞拍数量
-			cutsNum() {
-				if (this.auctionNum > this.auctionInfo.minOrder) {
-					this.auctionNumShow = false
-					this.auctionNum--
-				} else {
-					this.auctionNumShow = true
-					this.auctionNumTip = '不得小于' + this.auctionInfo.minOrder
-				}
-			},
-			addNum() {
-				this.auctionNumShow = false
-				this.auctionNum++
-			},
-
-			//显示追加保证金的弹窗
-			PayCost() {
-				this.DepositShow = true
-				this.DepositData.auctionId = this.auctionInfo.id
-				this.DepositData.basePrice = this.auctionInfo.finalPrice
-				this.DepositData.addNum = this.auctionInfo.minOrder
-				this.DepositData.depositNum = this.auctionInfo.depositNum
-				this.DepositData.Bond = this.auctionInfo.marginRatio
-			},
-			unDepositShow(row) {
-				this.DepositShow = row
-        location.reload()
-			},
-			//所有竞拍记录
-			async getAuctionRecord() {
-				let params = {
-					current_page: '1',
-					page_size: '50',
-					isActive: 1,
-					auctionId: this.auctionId
-				}
-				let res = await auctionRecord(this, params)
-				if (res) {
-					this.auctionRd = res.data.items
-				}
-			},
-			//中标信息
-			async getwinningbid() {
-				let params = {
-					auctionId: this.auctionId
-				}
-				let res = await WinningBid(this, params)
-				if (res.data && res.status === 200) {
-					this.WinBidShow = true
-					this.WinBid = res.data
-				} else {
-					this.NotWinBidShow = true
-				}
-			},
-			//提交出价
-			async addBidding() {
-				if (!this.auctionOffer) {
-					this.$Modal.warning({
-						title: '提示',
-						content: '价格不能为空！',
-						duration: 5,
-						styles: 'top:300px'
-					})
-				}
-
-				let params = {
-					auctionId: this.auctionId,
-					bidNum: this.auctionNum,
-					bidPrice: this.auctionOffer
-				}
-				let res = await AddauctionPrice(this, params)
-				if (res.data.data === null && res.status === 200) {
-					this.$Modal.warning({
-						title: '提示',
-						content: res.data.message + '!!! ',
-						duration: 5,
-						styles: 'top:300px'
-					});
-				} else {
-					this.$Modal.success({
-						title: '提示',
-						content: '出价成功！',
-						duration: 5
-					})
-					location.reload()
-				}
-			},
-			addauctionPrice() {
-				this.bidersloading = true
-			},
-		},
-		head() {
-			return {
-				title: this.auctionInfo.skuName + '限时竞拍-巨正源',
-				meta: [
-					{hid: 'keywords', name: 'keywords', content: '物性表,巨正源'},
-					{hid: 'description', name: 'description', content: '物性表-巨正源'}
-				]
-			}
-		},
-		created() {
-		},
-		mounted() {
-			let reloadActionInfo = () =>{
-				//获取竞拍信息
-				this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
-        if(this.auctionInfo.statusType != '3'){
-					setTimeout(function () {
-						reloadActionInfo();
-					}, 15000)
+  export default {
+    name: "bidders-detail-id",
+    middleware: 'memberAuth',
+    fetch({store, params, query}) {
+      return Promise.all([
+        //获取顶部、中部、底部导航信息
+        store.dispatch('common/getNavList'),
+        //获取系统配置
+        store.dispatch('common/getSysConfig'),
+        //获取友情链接
+        store.dispatch('common/getFriendlyList'),
+        //获取底部帮助分类
+        store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
+        //获取竞拍信息
+        store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
+      ])
+    },
+    components: {
+      Header,
+      Footer,
+      paydeposit,
+      TimeDown,
+      InputSpecial
+    },
+    computed: {
+      ...mapState({
+        auctionInfo: state => state.bidders.auctionInfo,
+        systeminfo: state => state.common.sysConfig,
+      }),
+      minPrice: function () {
+        if(this.auctionInfo.myBidList.length > 0){
+          return this.auctionInfo.myBidList[0].bidPrice
+        }else{
+          return this.auctionInfo.finalPrice
+        }
+      },
+      minNum: function () {
+        if(this.auctionInfo.myBidList.length > 0){
+          return this.auctionInfo.myBidList[0].bidNum
+        }else{
+          return this.auctionInfo.minOrder
         }
       }
-			setTimeout(function () {
-				reloadActionInfo();
-			}, 15000)
+    },
+    data() {
+      return {
+        auctionId: !this.$route.params.id ? 0 : this.$route.params.id,
+        columns4: bidfollowColumns,
 
-			this.auctionNum = this.minNum
+        auctionOffer: 0,  //竞拍出价
+        auctionNum: 0,  //竞拍数量
+
+        data1: [],
+        WinBidShow: false,
+        NotWinBidShow: false,
+        WinBid: {},
+        auctionNumShow: false,
+        auctionNumTip: '',   //竞拍价提示
+
+        auctionWin: 0,     //中标人数
+        auctionTotal: 0,  //竞拍结束—竞拍总数量
+        OfferRecordTip: '',   //出价记录提示
+        addfollow: false,    //添加竞拍关注
+        DepositData: {
+          auctionId: '',
+          basePrice: 0,
+          depositNum: 0,
+          Bond: 0,   //保证金比例
+        },
+        DepositShow: false,
+        DatabridTip: '',
+
+        bidersloading: false,
+      }
+    },
+    methods: {
+      reloadPage() {
+        location.reload()
+      },
+      //显示添加竞拍框
+      addFollow() {
+        this.addfollow = true
+      },
+      //查看详情_跳转会员-我的竞拍页
+      acuDetailmember() {
+        this.$router.push({name: 'users-userauction'})
+      },
+      //提货_跳转到下单页
+      auctionOrder() {
+        this.$router.push({name: "bidders-order-id", params: {id: this.WinBid.id}})
+      },
+      // 竞拍出价
+      cutsOffer() {
+        if (this.auctionOffer > this.auctionInfo.finalPrice) {
+          this.auctionOffer = Number(this.auctionOffer) - Number(this.auc.bidIncrement)
+        } else {
+          this.auctionOffer = this.auctionInfo.finalPrice
+        }
+      },
+      addOffer() {
+        this.auctionOffer = Number(this.auctionOffer) + Number(this.auctionInfo.bidIncrement)
+      },
+      // 竞拍数量
+      cutsNum() {
+        if (this.auctionNum > this.auctionInfo.minOrder) {
+          this.auctionNumShow = false
+          this.auctionNum--
+        } else {
+          this.auctionNumShow = true
+          this.auctionNumTip = '不得小于' + this.auctionInfo.minOrder
+        }
+      },
+      addNum() {
+        this.auctionNumShow = false
+        this.auctionNum++
+      },
+
+      //显示追加保证金的弹窗
+      PayCost() {
+        this.DepositShow = true
+        this.DepositData.auctionId = this.auctionInfo.id
+        this.DepositData.basePrice = this.auctionInfo.finalPrice
+        this.DepositData.addNum = this.auctionInfo.minOrder
+        this.DepositData.depositNum = this.auctionInfo.depositNum
+        this.DepositData.Bond = this.auctionInfo.marginRatio
+      },
+      unDepositShow(row) {
+        this.DepositShow = row
+        location.reload()
+      },
+      //所有竞拍记录
+      async getAuctionRecord() {
+        let params = {
+          current_page: '1',
+          page_size: '50',
+          isActive: 1,
+          auctionId: this.auctionId
+        }
+        let res = await auctionRecord(this, params)
+        if (res) {
+          this.auctionRd = res.data.items
+        }
+      },
+      //中标信息
+      async getwinningbid() {
+        let params = {
+          auctionId: this.auctionId
+        }
+        let res = await WinningBid(this, params)
+        if (res.data && res.status === 200) {
+          this.WinBidShow = true
+          this.WinBid = res.data
+        } else {
+          this.NotWinBidShow = true
+        }
+      },
+      //提交出价
+      async addBidding() {
+        if (!this.auctionOffer) {
+          this.$Modal.warning({
+            title: '提示',
+            content: '价格不能为空！',
+            duration: 5,
+            styles: 'top:300px'
+          })
+        }
+
+        let params = {
+          auctionId: this.auctionId,
+          bidNum: this.auctionNum,
+          bidPrice: this.auctionOffer
+        }
+        let res = await AddauctionPrice(this, params)
+        if (res.data.data === null && res.status === 200) {
+          this.$Modal.warning({
+            title: '提示',
+            content: res.data.message + '!!! ',
+            duration: 5,
+            styles: 'top:300px'
+          });
+        } else {
+          this.$Modal.success({
+            title: '提示',
+            content: '出价成功！',
+            duration: 5
+          })
+          location.reload()
+        }
+      },
+      addauctionPrice() {
+        this.bidersloading = true
+      },
+    },
+    head() {
+      return {
+        title: this.auctionInfo.skuName + '限时竞拍-巨正源',
+        meta: [
+          {hid: 'keywords', name: 'keywords', content: '物性表,巨正源'},
+          {hid: 'description', name: 'description', content: '物性表-巨正源'}
+        ]
+      }
+    },
+    created() {
+    },
+    mounted() {
+      let reloadActionInfo = () =>{
+        //获取竞拍信息
+        this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
+        if(this.auctionInfo.statusType != '3'){
+          setTimeout(function () {
+            reloadActionInfo();
+          }, 15000)
+        }
+      }
+      setTimeout(function () {
+        reloadActionInfo();
+      }, 15000)
+
+      this.auctionNum = this.minNum
       this.auctionOffer = this.minPrice
-		},
-		watch: {
-			'$route'(to, from) {
-				this.$router.go(0);
-			},
-		}
-	}
+    },
+    watch: {
+      '$route'(to, from) {
+        this.$router.go(0);
+      },
+    }
+  }
 </script>
 <style lang="less">
   .vertical-center-modal {
@@ -750,115 +760,7 @@
       }
     }
 
-    .status_product {
-      width: 1200px;
-      margin: 20px auto;
 
-      .statusTime {
-        display: flex;
-
-        .status {
-          width: 5%;
-          font-size: 18px;
-          padding: 0 12px;
-          color: #fff;
-        }
-
-        .cutTime {
-          color: #fff;
-          width: 95%;
-          display: flex;
-          align-items: center;
-
-          .cutDown_time {
-            width: 22px;
-            height: 22px;
-
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-        }
-
-        .cutTimeVcbg {
-          background: url("/img/vc_bg.png");
-        }
-
-        .cutTimeIngbg {
-          background: url("/img/ingBg.png");
-        }
-
-        .cutTimeEndbg {
-          background: url("/img/EndBg.png");
-        }
-
-        .statusVcbg {
-          background-color: #1b962c;
-        }
-
-        .statusIngbg {
-          background-color: #ed5400;
-        }
-
-        .statusEndbg {
-          background-color: #797979;
-        }
-      }
-
-      .birdtable {
-        background-color: #fff;
-        position: relative;
-        overflow: hidden;
-
-        .kailong {
-          width: 0;
-          height: 0;
-          position: absolute;
-          top: 0;
-          right: 0;
-          border-top: 0px solid transparent;
-          border-bottom: 53px solid transparent;
-          border-right: 50px solid #a3cf3c;
-
-          .tranfont {
-            transform: rotate(47deg);
-            width: 35px;
-            color: #fff;
-            position: absolute;
-            top: 10px;
-            left: 18px;
-            font-weight: bold;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-
-        .table {
-          width: 97%;
-          margin: 20px auto;
-
-          tr td {
-            border: 1px solid #e6e6e6;
-            padding: 10px 0;
-            text-align: center;
-          }
-
-          .tableTitle {
-
-            background-color: #f5f5f5;
-            color: #999999;
-          }
-        }
-
-        .birdtabletitle {
-          font-size: 20px;
-          margin-top: 25px;
-          margin-left: 20px;
-        }
-      }
-    }
   }
 
   .status_product {
@@ -880,11 +782,11 @@
         width: 95%;
         display: flex;
         align-items: center;
-
+        justify-content: space-between;
         .cutDown_time {
           width: 22px;
           height: 22px;
-
+          margin-right: 5px;
           img {
             width: 100%;
             height: 100%;

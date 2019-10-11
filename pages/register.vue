@@ -11,8 +11,8 @@
     <div class="container" title="">
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
         <Tabs  v-model="nowIndex" >
-          <TabPane label="会员注册" name="users"><user-register @currData="currData"></user-register></TabPane>
-          <TabPane label="供应/承运商注册" name="supply"><supplier-register @currData="currData"></supplier-register></TabPane>
+          <TabPane label="会员注册" name="users" :disabled="userdisable"><user-register @currData="currData" @userTab="userTab"></user-register></TabPane>
+          <TabPane label="供应/承运商注册" name="supply" :disabled="supplydisable"><supplier-register @currData="currData"  @supplyTab="supplyTab"></supplier-register></TabPane>
         </Tabs>
       </div>
     </div>
@@ -44,6 +44,8 @@
 		},
 		data() {
 			return {
+			    supplydisable:false,
+                userdisable:false,
 				RegisterName: 'member',
 				nowIndex: 0,
 				index: 0,
@@ -53,8 +55,15 @@
 		},
 		methods: {
 			currData(res) {
+			  console.log("res",res)
 				this.current = res
 			},
+            userTab(res){
+              this.supplydisable=res
+            },
+            supplyTab(res){
+                this.userdisable=res
+            },
 			// 点击切换
 			tabClick(index, registerName) {
 				this.registerName = registerName

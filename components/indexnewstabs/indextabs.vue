@@ -1,12 +1,13 @@
 <template>
     <div :class="classes">
-        <div class="tabs-bar">
+        <div class="indextabs-bar">
               <!--标题页的标题 v-for遍历, :class 动态绑定class-->
-            <div :class="tabCls(item)" v-for="(item,index) in navList" @click="handleChange(index)">
-                {{item.label}}
+            <div class="tabe-title">{{title}}</div>
+            <div :class="tabCls(item)" v-for="(item, index) in articleCat" :key="index" @click="handleChange(index)">
+                {{item.title}}
             </div>
         </div>
-        <div class="tabs-content">
+        <div class="indextabs-content">
             <!--这里的slot就是嵌套的pane组件的内容-->
             <slot></slot>
         </div>
@@ -14,17 +15,22 @@
 </template>
 <script>
 const prefixCls = 'ant-tabs'
+import { mapState } from 'vuex'
+ // import { infolist } from '/api/info'
 
 export default {
-    name: 'tabs',
+    name: 'indextabs',
     data: function() {
 		return {
 			//将pane的标题保存到数组中
 			navList: [],
+            Newsdatalist:[{title:1},{title:2},{title:3},{title:4},{title:5},{title:6}],
+            title:'行业资讯',
 			//保存父组件的value到currentValue变量中，以便在本地维护
-			currentValue: this.value
+			currentValue: this.value,
 		}
     },
+
     props: {
 		//接收父组件的value
 		value: {
@@ -32,14 +38,36 @@ export default {
 		}
 	},
     computed: {
+
+        ...mapState({
+            articleCat: state => state.article.articleCat,
+        }),
+
         classes() {
             return [
                 `${prefixCls}`,
                 { [`${prefixCls}-tabs`]: this.vertical },
             ];
         },
+
+    },
+    created(){
+        this.updateStatus();
+    },
+    mounted() {
+       // this.sourceData()
     },
     methods: {
+         async sourceData() {
+             let params = {
+                 current_page: 1,
+                 page_size: 4,
+             }
+             console.log("params",params)
+             const res = await infolist(this, params)
+
+             this.Newsdatalist = res.data.items
+         },
 		//使用$children遍历子组件，得到所有的pane组件
 		getTabs: function() {
 			return this.$children.filter(function(item) {
@@ -48,7 +76,7 @@ export default {
 		},
 		//更新tabs
 		updateNav() {
-			this.navList = [];
+ 			this.navList = [];
 			var _this = this;
 			this.getTabs().forEach(function(pane, index) {
 				_this.navList.push({
@@ -69,42 +97,54 @@ export default {
 			this.updateStatus();
 		},
 		updateStatus() {
+
 			var tabs = this.getTabs();
 			var _this = this;
 			//显示当前选中的tab对应的pane组件，隐藏没有选中的
 			tabs.forEach(function(tab) {
+
 				return tab.show = tab.name === _this.currentValue;
 			})
 		},
 		tabCls: function(item) {
+
 			return [
-				'tabs-tab',
+				'indextabs-tab',
 				{
 					//为当前选中的tab加一个tabs-tab-active class
-					'tabs-tab-active': item.name === this.currentValue
+					'indextabs-tab-active': item.id === parseInt(this.currentValue)
 				}
 			]
 		},
 		//点击tab标题触发
 		handleChange: function(index) {
+
 			var nav = this.navList[index];
 			var name = nav.name;
 			//改变当前选中的tab，触发watch
 			this.currentValue = name;
-			//实现子组件与父组件通信
-			this.$emit('input', name);
+			// //实现子组件与父组件通信
+			// this.$emit('input', name);
 		}
 	},
 	watch: {
+
 		value: function(val) {
-
+		    console.log("***val***",val)
 			this.currentValue = val;
- 		},
-		currentValue: function() {
+		},
 
+		currentValue: function() {
+		    console.log("*****currentValue******")
 			//tab发生变化时，更新pane的显示状态
 			this.updateStatus();
 		}
+
 	}
 }
 </script>
+<style>
+    .indextabs-bar{
+        display: flex;
+    }
+</style>

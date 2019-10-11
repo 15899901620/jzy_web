@@ -866,7 +866,7 @@ a {
 /*下单按钮*/
 .ListBtn {
 	cursor:pointer;
-	width:80px;
+	width:50px;
 	line-height:24px;
 	margin:0 auto;
 	color:#007de4;
@@ -880,7 +880,7 @@ a {
 }
 .materials_banner {
 	width:100%;
-	height:390px;
+	height:494px;
 	font-size:0;
 	overflow:hidden;
 }
@@ -1365,7 +1365,7 @@ gAccount {
 .acuBtn {
 	margin-top:30px;
 	margin-bottom:50px;
-	margin-left:130px;
+	flex-direction: column;
 	display:flex;
 }
 .acuBtn a {

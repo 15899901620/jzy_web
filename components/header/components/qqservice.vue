@@ -1,7 +1,7 @@
 <template>
     <div class="QQ_service">
         <a rel="nofollow" target="_blank" @v-on::click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">
-            <img src="../../../static/img/qq_service.png" style="width: 100%; height: 100%;" />
+             <img src="../../../static/img/QQ_service.png" style="width: 100%; height: 100%;" />
         </a>
     </div>
 </template>
@@ -21,8 +21,8 @@
 
 <style scoped>
    .QQ_service{
-       width: 50px;
-       height: 62px;
-       margin-top: 30px;
+       width: 134px;
+       height: 40px;
+       margin-top: 40px;
    }
 </style>

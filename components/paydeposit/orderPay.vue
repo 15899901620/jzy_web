@@ -154,7 +154,7 @@
 						this.$Message.info("支付成功")
 						this.$emit('unChange', false)
           }else{
-						this.$Modal.alert(res.data.message)
+						this.$Message.info(res.data.message)
           }
 				} else {
 					this.$Modal.confirm({
