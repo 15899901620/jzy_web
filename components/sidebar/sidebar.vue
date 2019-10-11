@@ -9,7 +9,8 @@
                 <div class="box-border">
                     <div class="sev-t">
                         <img :src="this.$store.state.common.sysConfig.ERWEIMA" />
-                        <p><i>巨正源交易平台</i>
+                        <p>
+                            <i>巨正源交易平台</i>
                             <i>微信扫码下单</i></p>
                     </div>
                     <span class="arrow-right"></span>

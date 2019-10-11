@@ -6,7 +6,7 @@
             <template v-if="$store.state.article.noticeList.length > 0">
               <li v-for="(item, index) in $store.state.article.noticeList" :key="index">
                 <span>{{item.time}}</span>
-                <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}">
+                <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
                   {{item.title}}
                 </nuxt-link>
               </li>
@@ -21,7 +21,7 @@
             <template v-if="$store.state.article.articleList.length > 0">
             <li v-for="(item, index) in $store.state.article.articleList" :key="index">
               <span>{{item.time}}</span>
-              <a :href="`/article/detail/${item.id}`">
+              <a :href="`/article/detail/${item.id}`" :title="item.title">
                 {{item.title}}
               </a>
             </li>

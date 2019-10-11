@@ -49,7 +49,7 @@
 <!--        </tabpacking>-->
 <!--      </div>-->
 
-      <div class="hot-industry">
+      <div class="hot-industry" style="height: 350px;overflow: hidden">
         <newsinfo></newsinfo>
       </div>
 

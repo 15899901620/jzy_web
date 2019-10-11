@@ -1,5 +1,5 @@
 <template>
-    <div class="pane" v-show="show">		
+    <div class="pane" v-show="show">
 		<slot></slot>
 	</div>
 </template>
@@ -13,8 +13,8 @@ export default {
         }
     },
     props:{
-		name:{
-			type:String
+		name: {
+			type: String
 		},
 		label:{
 			type:String,

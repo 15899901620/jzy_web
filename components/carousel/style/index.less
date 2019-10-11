@@ -16,11 +16,11 @@
       display: block;
       margin: 0;
       padding: 0;
-  
+
       &:focus {
         outline: none;
       }
-  
+
       &.dragging {
         cursor: pointer;
       }
@@ -29,23 +29,23 @@
     .slick-slider .slick-list {
       transform: translate3d(0, 0, 0);
     }
-  
+
     .slick-track {
       position: relative;
       left: 0;
       top: 0;
       display: block;
-  
+
       &:before,
       &:after {
         content: "";
         display: table;
       }
-  
+
       &:after {
         clear: both;
       }
-  
+
       .slick-loading & {
         visibility: hidden;
       }
@@ -57,28 +57,32 @@
       [dir="rtl"] & {
         float: right;
       }
-      img {
-        display: block;
+      .demo-carousel{
+        img {
+          width: 100%;height: 100%;
+          display: block;
+        }
       }
+
       &.slick-loading img {
         display: none;
       }
-  
+
       display: none;
-  
+
       &.dragging img {
         pointer-events: none;
       }
     }
-  
+
     .slick-initialized .slick-slide {
       display: block;
     }
-  
+
     .slick-loading .slick-slide {
       visibility: hidden;
     }
-  
+
     .slick-vertical .slick-slide {
       display: block;
       height: auto;
@@ -87,7 +91,7 @@
     .slick-arrow.slick-hidden {
       display: none;
     }
-  
+
     // Arrows
     .slick-prev,
     .slick-next {
@@ -118,21 +122,21 @@
         opacity: 0.25;
       }
     }
-  
+
     .slick-prev {
       left: -25px;
       &:before {
         content: "←";
       }
     }
-  
+
     .slick-next {
       right: -25px;
       &:before {
         content: "→";
       }
     }
-  
+
     // Dots
     .slick-dots {
       position: absolute;
@@ -180,7 +184,7 @@
       }
     }
   }
-  
+
   .@{ant-prefix}-carousel-vertical {
     .slick-dots {
       width: @carousel-dot-height;
@@ -203,5 +207,5 @@
       }
     }
   }
-  
+
   @import "./carousel_vb";
