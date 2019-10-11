@@ -24,8 +24,7 @@ export default {
 		return {
 			//将pane的标题保存到数组中
 			navList: [],
-            Newsdatalist:[{title:1},{title:2},{title:3},{title:4},{title:5},{title:6}],
-            title:'行业资讯',
+             title:'行业资讯',
 			//保存父组件的value到currentValue变量中，以便在本地维护
 			currentValue: this.value,
 		}
@@ -38,36 +37,24 @@ export default {
 		}
 	},
     computed: {
-
         ...mapState({
             articleCat: state => state.article.articleCat,
         }),
-
         classes() {
             return [
                 `${prefixCls}`,
                 { [`${prefixCls}-tabs`]: this.vertical },
             ];
         },
-
     },
     created(){
         this.updateStatus();
     },
     mounted() {
-       // this.sourceData()
+
     },
     methods: {
-         async sourceData() {
-             let params = {
-                 current_page: 1,
-                 page_size: 4,
-             }
-             console.log("params",params)
-             const res = await infolist(this, params)
 
-             this.Newsdatalist = res.data.items
-         },
 		//使用$children遍历子组件，得到所有的pane组件
 		getTabs: function() {
 			return this.$children.filter(function(item) {
@@ -130,12 +117,10 @@ export default {
 	watch: {
 
 		value: function(val) {
-
 			this.currentValue = val;
 		},
 
 		currentValue: function() {
-
 			//tab发生变化时，更新pane的显示状态
 			this.updateStatus();
 		}

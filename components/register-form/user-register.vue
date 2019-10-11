@@ -703,7 +703,9 @@
 						this.formCustom.invBankAccount = res.data.BankAccount
 						this.formCustom.invAddress = res.data.Address
 						this.formCustom.invTelephone = res.data.Tel
+                      callback()
 					}
+
 				} else {
 					callback(new Error('公司名称不存在'))
 				}
@@ -849,8 +851,18 @@
 		}
 	}
 </script>
-<style scoped>
+<style lang="less" scoped>
   .CarrierRegister{width: 84%}
   .UserRegister{width: 44%}
-
+  .Image{
+    width: 116px;
+    height: 75px;
+    overflow: hidden;
+    margin-left: 130px;
+    margin-bottom: 10px;5
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
  </style>

@@ -10,6 +10,7 @@
           我的竞拍
         </div>
         <table class="bidersTable" style="width: 100%; border: 1px solid #dfdfdf;">
+          <tbody>
           <tr class="table_title" style="">
             <th style="width: 8%">竞拍编号</th>
             <th style="width: 7%">牌号</th>
@@ -68,6 +69,7 @@
               <button class="see">查看</button>
             </td>
           </tr>
+          </tbody>
         </table>
         <div class="titlelist mt15">
           竞拍列表
