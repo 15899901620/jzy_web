@@ -14,6 +14,9 @@ export const state = () => {
 		auctionTotal: 0,
 		auctionList:[],
 		auctionInfo:{},
+		planTotal: 0,
+		planList:[],
+		planDetail: {},
 		hotbidderList: [],
 		biddersbeingData: {},
 		bidderssoonData: {},
@@ -30,6 +33,15 @@ export const mutations = {
 	},
 	updateAuctionInfo(state, data) {
 		state.auctionInfo = data
+	},
+	updatePlanTotal(state, data) {
+		state.planTotal = data
+	},
+	updatePlanList(state, data) {
+		state.planList = data
+	},
+	updatePlanDetail(state, data) {
+		state.planDetail = data
 	},
 
 
@@ -61,8 +73,20 @@ export const actions = {
 	async getAuctionInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
-			//console.log(res.data)
 			commit('updateAuctionInfo', res.data)
+		}
+	},
+	async getPlanList({commit}, params) {
+		let res = await sendCurl(this, server.api.Auction.getAuctionPlan, params)
+		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			commit('updatePlanList', res.data.items)
+			commit('updatePlanTotal', res.data.total)
+		}
+	},
+	async getPlanDetail({commit}, params) {
+		let res = await sendCurl(this, server.api.Auction.getPlanDetail, params)
+		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			commit('updatePlanDetail', res.data)
 		}
 	},
 

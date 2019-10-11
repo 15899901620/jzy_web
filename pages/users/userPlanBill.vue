@@ -11,7 +11,7 @@
                 <div class="dflex">
                     <input type="text" v-model="formSearch.orderNo" placeholder="输入订单号" name="" value="" class="orderInput"
                            style="width:140px;"/>
-                    <input type="text" v-model="formSearch.skuName" placeholder="输入产品名称" name="" value="" class="orderInput"
+                    <input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value="" class="orderInput"
                            style="width:140px; margin-left:5px;"/>
                     <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
                 </div>
@@ -21,7 +21,7 @@
             </div>
                 <div class="TableTitle graybg">
                     <span style="width: 15%;">日期</span>
-                    <span style="width: 15%;">产品</span>
+                    <span style="width: 15%;">商品</span>
                     <span style="width: 15%;">提货仓库</span>
                     <span style="width: 15%;">数量</span>
                     <span style="width: 15%;">单价</span>

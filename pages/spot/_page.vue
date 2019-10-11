@@ -1,11 +1,11 @@
 <template>
   <div class="body">
-    <Header title="头部"></Header>
+    <Header title=""></Header>
     <div class="container">
       <div class="w1200">
         <div class="mt10 fs14">
           <a>巨正源首页</a> > <span class="gray">现货超市</span>
-          <span class="fr">共<span class="orangeFont">{{$store.state.spot.total}}</span>件相关产品</span>
+          <span class="fr">共<span class="orangeFont">{{$store.state.spot.total}}</span>件相关商品</span>
         </div>
 
         <div class="screenList">

@@ -11,7 +11,7 @@
                     <div class="dflex">
                         <Form :model="formSearch" style="float:left;" >
                             <FormItem prop='skuName' style="width:160px; display: inline-block;float:left;margin-right: 5px;margin-bottom:0px;">
-                                <Input placeholder="输入订单号/产品名称查询" clearable v-model="formSearch.skuName" style="width: 160px" />
+                                <Input placeholder="输入订单号/商品名称查询" clearable v-model="formSearch.skuName" style="width: 160px" />
                             </FormItem>
                             <span @click="onSearch" style="margin: 0 10px;"><Button type="primary" icon="search">搜索</Button></span>
                             <Button @click="closeSearch" >重置</Button>

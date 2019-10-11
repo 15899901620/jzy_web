@@ -93,7 +93,7 @@ let api = {
     initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
-    getSpotInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
+    getplanInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
     freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
@@ -116,7 +116,9 @@ let api = {
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
     getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
     getAuctionInfo:{'url':'/bill/auction/sale/info','method':'get'},
-		getAuctionRecord:{'url':'/bill/auctionBid/page','method':'get'},    //获取竞拍记录
+		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
+		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
+		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍

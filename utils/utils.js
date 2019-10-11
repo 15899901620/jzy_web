@@ -122,4 +122,7 @@ export default {
 		let date = new Date(Date.parse(dateStr.replace(/-/g, "/")))
 		return this.dateFormat(date, fmt)
 	},
+	reload(){
+		location.reload(true)
+	}
 }
