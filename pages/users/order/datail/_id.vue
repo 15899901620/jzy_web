@@ -14,8 +14,7 @@
               <Col span="12">订单标号：{{this.datalist.orderNo}}</Col>
             </Row>
             <Row index="">
-              <Col span="6">下单时间：{{this.datalist.createTime}}</Col>
-              <Col span="6">巨融易天数：{{this.datalist.jryDays}}</Col>
+              <Col span="12">下单时间：{{this.datalist.createTime}}</Col>
               <Col span="12">有效提货时间：<span style="color:#ff2222">{{this.datalist.deliveryStart}}</span>至<span style="color:#ff2222">{{this.datalist.deliveryDeadline}}</span>  </Col>
             </Row>
              <Row index="">
@@ -258,13 +257,17 @@
       },
       addLog(row) {
 				this.addList = {
-				  id:this.orderid
+          id:this.orderid,
+          orderNo:this.datalist.orderNo,
+          skuName:this.datalist.skuName,
+          orderNum:this.datalist.orderNum,
+          warehouseName:this.datalist.warehouseName
 				}
 				this.addloading = true
       },
       detailLog(row) {
 				this.addList = {
-					id:this.orderid
+          id:this.orderid  
 				}
 				this.detailloading = true
 			},
