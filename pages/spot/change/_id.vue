@@ -19,37 +19,6 @@
         <div class="ml35 mt20 mb20 fs18">{{$store.state.memberInfo.username}}</div>
         <div class="lineborder"></div>
 
-        <!-- 商品信息 -->
-        <div class="mt30 fs16 ml15" id="test1">
-          <span class="fwb">商品信息</span>
-        </div>
-        <ul class="orderPorList">
-          <li>
-            <span class="title" style="width: 13%;">货物信息</span>
-            <span class="title" style="width: 12%;">交货仓</span>
-            <span class="title" style="width: 10%;">单价（元/吨）</span>
-            <span class="title" style="width: 10%;">运费</span>
-            <span class="title" style="width: 10%;">巨融易</span>
-            <span class="title" style="width: 12%;">合计单价（元/吨）</span>
-            <span class="title" style="width: 12%;">可转数量（吨）</span>
-            <span class="title" style="width: 12%;">数量（吨）</span>
-            <span class="title" style="width: 9%;">小计</span>
-          </li>
-          <li>
-            <div style="width: 13%;">{{spotInfo.sku_name}}</div>
-            <div style="width: 12%;">{{spotInfo.warehouse_name}}</div>
-            <div style="width: 10%;">{{amountFormat(spotInfo.final_price)}}</div>
-            <div style="width: 10%;">+ {{orderinfo.freightFee}}元/吨</div>
-            <div style="width: 10%;">+ {{orderinfo.jryCost}}元/吨</div>
-            <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
-            <div style="width: 12%;"> {{spotInfo.available_num}}</div>
-            <div style="width: 12%;">
-              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
-                             @change="changeNum"></input-special>
-            </div>
-            <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
-          </li>
-        </ul>
         <!--交货方式-->
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
         <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
@@ -120,6 +89,38 @@
             </template>
           </ul>
         </div>
+
+        <!-- 商品信息 -->
+        <div class="mt30 fs16 ml15" id="test1">
+          <span class="fwb">商品信息</span>
+        </div>
+        <ul class="orderPorList">
+          <li>
+            <span class="title" style="width: 13%;">货物信息</span>
+            <span class="title" style="width: 12%;">交货仓</span>
+            <span class="title" style="width: 10%;">单价（元/吨）</span>
+            <span class="title" style="width: 10%;">运费</span>
+            <span class="title" style="width: 10%;">巨融易</span>
+            <span class="title" style="width: 12%;">合计单价（元/吨）</span>
+            <span class="title" style="width: 12%;">可转数量（吨）</span>
+            <span class="title" style="width: 12%;">数量（吨）</span>
+            <span class="title" style="width: 9%;">小计</span>
+          </li>
+          <li>
+            <div style="width: 13%;">{{spotInfo.sku_name}}</div>
+            <div style="width: 12%;">{{spotInfo.warehouse_name}}</div>
+            <div style="width: 10%;">{{amountFormat(spotInfo.final_price)}}</div>
+            <div style="width: 10%;">+ {{orderinfo.freightFee}}元/吨</div>
+            <div style="width: 10%;">+ {{orderinfo.jryCost}}元/吨</div>
+            <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
+            <div style="width: 12%;"> {{spotInfo.available_num}}</div>
+            <div style="width: 12%;">
+              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
+                             @change="changeNum"></input-special>
+            </div>
+            <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
+          </li>
+        </ul>
 
         <!--优选服务-->
         <div class="mt30 fs16 ml15 fwb" v-if="spotInfo.is_jry">优选服务</div>
@@ -399,11 +400,7 @@
 							if ((rs.data.errorcode || 0) == 0) {
 								location.href = '/spot/change/success?&order_no=' + (rs.data.order_no||'') + '&order_status=' + (rs.data.order_status||'') + '&order_pay_last_time=' + (rs.data.order_pay_last_time||'')
 							} else {
-								this.$Modal.warning({
-									title: '提示',
-									content: rs.data.message
-								})
-								return
+								alert(rs.data.message)
 							}
 						}
 					},
