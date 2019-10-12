@@ -98,6 +98,7 @@ export default {
 	 */
 	build: {
     analyze: false,
+    extractCSS: true,
     //是否允许 vue-devtools 调试
     devtools: false,
     // transpile: [/^iview/],
@@ -121,45 +122,45 @@ export default {
     /**
      * 配置代码压缩规则，提升速度
      */
-    optimization: {
-      minimize: true,
-      minimizer: [
-        // terser-webpack-plugin
-        new TerserPlugin({
-          terserOptions: {
-            warnings: false,
-            compress: {
-              drop_console: true,
-              pure_funcs: ['console.log']
-            },
-            output: {
-              //是否保留注释，编译后无需保留
-              comments: false
-            },
-            cache: true,
-            parallel: true,
-            sourceMap: true
-          }
-        })
-      ],
-      //代码打包分割规则
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          libs: {
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            chunks: 'initial' // only package third parties that are initially dependent
-          },
-          iview: {
-            name: 'chunk-ui',
-            priority: 20,
-            test: /[\\/]node_modules[\\/]_?iview(.*)/
-          }
-        }
-      }
-    },
+    // optimization: {
+    //   minimize: true,
+    //   minimizer: [
+    //     // terser-webpack-plugin
+    //     new TerserPlugin({
+    //       terserOptions: {
+    //         warnings: false,
+    //         compress: {
+    //           drop_console: true,
+    //           pure_funcs: ['console.log']
+    //         },
+    //         output: {
+    //           //是否保留注释，编译后无需保留
+    //           comments: false
+    //         },
+    //         cache: true,
+    //         parallel: true,
+    //         // sourceMap: true
+    //       }
+    //     })
+    //   ],
+    //   //代码打包分割规则
+    //   splitChunks: {
+    //     chunks: 'all',
+    //     cacheGroups: {
+    //       libs: {
+    //         name: 'chunk-libs',
+    //         test: /[\\/]node_modules[\\/]/,
+    //         priority: 10,
+    //         chunks: 'initial' // only package third parties that are initially dependent
+    //       },
+    //       iview: {
+    //         name: 'chunk-ui',
+    //         priority: 20,
+    //         test: /[\\/]node_modules[\\/]_?iview(.*)/
+    //       }
+    //     }
+    //   }
+    // },
 		/*
 		 ** You can extend webpack config here
 		 */
