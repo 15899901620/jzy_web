@@ -2,7 +2,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const appConfig = require('./config/app.config')
 
 //是否生产环境
-const proxy_url = process.env.NODE_ENV === 'production'? appConfig.system.BASE_URL.pro : appConfig.system.BASE_URL.dev 
+const proxy_url = process.env.NODE_ENV === 'production'? appConfig.system.BASE_URL.pro : appConfig.system.BASE_URL.dev
 
 let Version = new Date().getTime()
 export default {
@@ -98,7 +98,9 @@ export default {
 	 */
 	build: {
     analyze: false,
-    extractCSS: true,
+    extractCSS: {
+			allChunks: true
+		},
     //是否允许 vue-devtools 调试
     devtools: false,
     // transpile: [/^iview/],
@@ -111,7 +113,7 @@ export default {
     },
     // SourceMap: false,
     // cssSourceMap: false,
-		publicPath: './', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
+		// publicPath: './', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
 		filenames: { // css 和 js img 打包时指定文件夹
 			app: ({isDev}) => isDev ? '[name].js' :'[name].[contenthash].'+Version+'.js',
 			chunk:({isDev}) => isDev ? '[name].js' : '[name].[contenthash].'+Version+'.js',
