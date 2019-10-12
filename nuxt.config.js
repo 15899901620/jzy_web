@@ -100,7 +100,7 @@ export default {
     analyze: false,
     //是否允许 vue-devtools 调试
     devtools: false,
-    transpile: [/^iview/],
+    // transpile: [/^iview/],
 		transition: {
 			name: 'page',
 			mode: 'out-in',
@@ -150,6 +150,11 @@ export default {
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
             chunks: 'initial' // only package third parties that are initially dependent
+          },
+          iview: {
+            name: 'chunk-ui',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?iview(.*)/
           }
         }
       }
