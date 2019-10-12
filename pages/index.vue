@@ -58,7 +58,7 @@
     </div>
 
 
-    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    <Footer size="default"   style="margin-top:18px;"></Footer>
   </div>
 </template>
 

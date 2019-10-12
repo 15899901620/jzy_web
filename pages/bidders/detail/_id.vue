@@ -236,30 +236,36 @@
         </div>
 
         <!--竞拍结果-->
-        <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL'">
-          <template v-if="auctionInfo.auctionPlanned">
-            <div class="WinBid orangeFont WinBidbg">恭喜中标</div>
-            <div class="orangeFont fs20 tac">恭喜您竞拍中得 {{auctionInfo.skuName}} {{auctionInfo.auctionPlanned.totalNum}}吨</div>
-            <div class="orangeFont fs14 tac mt5">请在{{auctionInfo.auctionPlanned.lastOrderedDate}}之前进行转单，逾期将扣除保证金</div>
-            <div class="acuBtn fs18" style="justify-content: center; margin: 25px auto;flex-direction: row;">
-              <a class="Winbtn orangebg whiteFont" href="/users/auctionPlan">查看合约</a>
-            </div>
-            <div class="winbider"></div>
-          </template>
-          <template v-else>
-            <div class="WinBid gray failWinBidbg">未中标</div>
-            <div
-                    style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
-              <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</span>/ 吨</div>
-              <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</span>/ 吨</div>
-              <div class="dflex mt5"><span class="titleWin">一 共 拍 出</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanNum}}</span>吨</div>
-              <div class="dflex mt5"><span class="titleWin">中 标 企 业</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanCompany}}</span>家</div>
-              <div class="failwinbider"></div>
-            </div>
-          </template>
+        <div class="biderResult mt20" style="background-color: #ff6f17;" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL' && auctionInfo.auctionPlanned">
+          <div class="WinBid whiteFont WinBidbg">恭喜中标</div>
+          <div class="whiteFont fs20 tac">恭喜您竞拍中得 {{auctionInfo.skuName}} {{auctionInfo.auctionPlanned.totalNum}}吨</div>
+          <div class="whiteFont fs14 tac mt5">请在<span style="color: #fbff00;">{{auctionInfo.auctionPlanned.lastOrderedDate}}</span>之前进行转单，逾期将扣除保证金</div>
+          <div class="acuBtn fs18" style="justify-content: center; margin: 25px auto;flex-direction: row;">
+            <a class="Winbtn whitebg orangeFont" style="color: #ff7300;" href="/users/auctionPlan">查看合约</a>
+          </div>
+          <div class="winbider"></div>
+        </div>
+        <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL' && !auctionInfo.auctionPlanned && auctionInfo.myBidList.length > 0">
+          <div class="WinBid gray failWinBidbg">未中标</div>
+          <div style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
+            <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</span>/ 吨</div>
+            <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</span>/ 吨</div>
+            <div class="dflex mt5"><span class="titleWin">一 共 拍 出</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanNum}}</span>吨</div>
+            <div class="dflex mt5"><span class="titleWin">中 标 企 业</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanCompany}}</span>家</div>
+            <div class="failwinbider"></div>
+          </div>
+        </div>
+        <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CL' && !auctionInfo.auctionPlanned && auctionInfo.myBidList.length == 0">
+          <div class="WinBid gray failWinBidbg">未参与</div>
+          <div style="display: flex;justify-content: center; flex-direction: column;margin-left: 458px; font-size: 18px; color: #a2a2a2; position: relative; margin-bottom: 20px">
+            <div class="dflex mt5"><span class="titleWin">最高中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.maxBidPrice)}}</span>/ 吨</div>
+            <div class="dflex mt5"><span class="titleWin">最低中标价</span>: <span class="orangeFont ml5 mr5">{{$utils.amountFormat(auctionInfo.lowBidPrice)}}</span>/ 吨</div>
+            <div class="dflex mt5"><span class="titleWin">一 共 拍 出</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanNum}}</span>吨</div>
+            <div class="dflex mt5"><span class="titleWin">中 标 企 业</span>: <span class="orangeFont ml5 mr5">{{auctionInfo.totalPlanCompany}}</span>家</div>
+          </div>
         </div>
         <div class="biderResult mt20" v-if="auctionInfo.statusType == '3' && auctionInfo.status == 'CO'">
-          <div class="WinBid orangeFont ">等待计算结果</div>
+          <div class="WinBid orangeFont ">等开结果</div>
         </div>
       </div>
       <!--  正在参与-->
