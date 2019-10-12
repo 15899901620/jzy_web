@@ -3,7 +3,10 @@
     <Header title="头部"></Header>
     <div class="container" title="">
       <div class="materials_banner">
-        <img src="/img/auctionBanner.png"/>
+        <template v-for="(item,index) in $store.state.common.adList.ad4">
+          <img :src="item.adImg"/>
+        </template>
+
       </div>
       <div class="w1200" style="margin-top: 20px">
         <div class="titlelist">
@@ -220,7 +223,9 @@
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
 				store.dispatch('common/getFriendlyList'),
-				//获取底部帮助分类
+              //获取轮播图
+              store.dispatch('common/getBannerList', 4),
+              //获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
 				//获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
@@ -243,16 +248,18 @@
 				]
 			}
 		},
-		computed: {
+      created(){},
+      computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
 				auctionList: state => state.bidders.auctionList,
 				biddersbeingData: state => state.bidders.biddersbeingData,
 				bidderssoonData: state => state.bidders.bidderssoonData,
-				biddersendData: state => state.bidders.biddersendData
+				biddersendData: state => state.bidders.biddersendData,
+                bannerinfo: state => state.system.bannerinfo,
 			})
 
-		},
+      },
 		methods: {
 			showTotal(total) {
 				return `全部 ${total} 条`;

@@ -38,7 +38,7 @@
           <p>联系电话：{{$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
         </div>
         <div class="orderbtn">
-          <a class="submitBtn btnBg" href="/spot">查看合约</a>
+          <a class="submitBtn btnBg" href="/users/spotPlan">查看合约</a>
           <a class="submitBtn btnBorderBg ml30" href="/users/usertotalorder">我的订单</a>
         </div>
       </div>

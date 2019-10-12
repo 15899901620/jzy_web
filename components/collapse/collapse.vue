@@ -4,7 +4,7 @@
       <div class="menu_items_text">
         <i class="see_icon"></i><span class="ml10" style="width: 80%;">查产品</span><i class="next"></i>
       </div>
-      <div class="product_assortment assortment" v-show="seen" style="display: block;">
+      <div class="product_assortment assortment" v-show="seen" style="display: block; height: 320px; overflow:hidden;">
         <ul class="AssProduct">
           <li>
             <div class="ass-ty2-p 1">
