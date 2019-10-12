@@ -7,8 +7,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>巨正源移动端</h2><img src="~/static/img/code.png" ></li>
-                            <li><h2>巨正源公众号</h2><img src="~/static/img/code.png"> </li>
+                            <li><h2>微信发货平台</h2><img src="~/static/img/jzy_erweima.png" ></li>
+                            <li><h2>微信公众号</h2><img src="~/static/img/jzygzh_erweima.png"> </li>
                         </ul>
                     </div>
                     <div class="tel">
@@ -35,8 +35,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>巨正源移动端</h2><img src="~/static/img/code.png" ></li>
-                            <li><h2>巨正源公众号</h2><img src="~/static/img/code.png"> </li>
+                            <li><h2>微信发货平台</h2><img src="~/static/img/jzy_erweima.png" ></li>
+                            <li><h2>微信公众号</h2><img src="~/static/img/jzygzh_erweima.png"> </li>
                         </ul>
                     </div>
                     <div class="tel">
@@ -99,7 +99,7 @@ export default {
         OnlineService () {
             let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
             // window.open(url)
-        } 
+        }
     }
 }
 </script>
