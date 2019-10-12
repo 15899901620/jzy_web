@@ -1,20 +1,23 @@
 <template>
     <div :class="classes">
-        <div class="indextabs-bar">
-              <!--标题页的标题 v-for遍历, :class 动态绑定class-->
-            <div class="tabe-title">{{title}}</div>
-            <div :class="tabCls(item)" v-for="(item, index) in articleCat" :key="index" @click="handleChange(index)">
-                {{item.title}}
+        <div class="whitebg" style="width: 19.5%">111111111111</div>
+        <div class="whitebg" style="width: 79.5%">
+            <div class="indextabs-bar">
+                <!--标题页的标题 v-for遍历, :class 动态绑定class-->
+                <!-- <div class="tabe-title">{{title}}</div>-->
+                <div :class="tabCls(item)" v-for="(item, index) in articleCat" :key="index" @click="handleChange(index)">
+                    {{item.title}}
+                </div>
             </div>
-        </div>
-        <div class="indextabs-content">
-            <!--这里的slot就是嵌套的pane组件的内容-->
-            <slot></slot>
+            <div class="indextabs-content">
+                <!--这里的slot就是嵌套的pane组件的内容-->
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
 <script>
-const prefixCls = 'ant-tabs'
+const prefixCls = 'ant-indextabs'
 import { mapState } from 'vuex'
  // import { infolist } from '/api/info'
 
@@ -43,7 +46,7 @@ export default {
         classes() {
             return [
                 `${prefixCls}`,
-                { [`${prefixCls}-tabs`]: this.vertical },
+                { [`${prefixCls}-indextabs`]: this.vertical },
             ];
         },
     },

@@ -49,11 +49,12 @@
 <!--        </tabpacking>-->
 <!--      </div>-->
 
-      <div class="hot-industry" style="height: 350px;overflow: hidden">
+      <div class="hot-industry" style=" overflow: hidden">
         <newsinfo></newsinfo>
       </div>
 
       <sidebar></sidebar>
+
     </div>
 
 
@@ -78,7 +79,7 @@
 	import SpotList from '../components/spot-list'
 	import LogisticsList from '../components/logistics-list'
     import indexnewstabs from '../components/indexnewstabs'
-    import newsinfo from '../components/indexnews/newsinfo'
+    import newsinfo from '../components/indexnews'
     import {setCookies} from "../config/storage";
     import { getCookies } from '../config/storage'
 
