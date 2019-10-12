@@ -280,7 +280,7 @@
            
             this.payOrderID = this.orderid
             this.payLoading = true
-           console.log(this.payOrderID)
+           
         },	
       async orderlist() {
 				let params = {
@@ -289,7 +289,7 @@
 				const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 
         this.OrderList = res.data
-        console.log(this.OrderList)
+     
 
 			},  
     },

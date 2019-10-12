@@ -32,24 +32,18 @@
                                 </Col>
                             </Row>
                             <Row :gutter="24" index="0">
-                                <Col span="21">
-                                    <FormItem prop="phone" label="手 机 号：">
-                                        <Input v-model="formCustom.phone"  class="CarrierIput"   placeholder="请输入手机号"/>
-                                    </FormItem>
-                                </Col>
+                              <Col span="21">
+                                <FormItem prop="phone" label="手 机 号：">
+                                  <Input v-model="formCustom.phone"  class="CarrierIput"   placeholder="请输入手机号"/>
+                                </FormItem>
+                              </Col>
                             </Row>
                             <Row :gutter="24"  index="1">
-                                <Col span="15">
-<!--                                    <FormItem prop="Imgcode" label="验 证 码：">-->
-<!--&lt;!&ndash;                                        <Input class="CarrierImgcode" v-model="formCustom.Imgcode"  placeholder="请输入验证码" />&ndash;&gt;-->
-<!--                                    </FormItem>-->
-                                    <FormItem prop="slidecode" label="验 证 码：">
-                                        <slide-verify @onChange="onTime" :width="370"></slide-verify>
-                                    </FormItem>
-                                </Col>
-<!--                                <Col span="6">-->
-<!--                                    <div class="captcha" @click="refreshCode"><captcha :CodeCate="CodeCate" :contentWidth='126'  :contentHeight='36' :identifyCode="identifyCode" ></captcha></div>-->
-<!--                                </Col>-->
+                              <Col span="15">
+                                <FormItem prop="slidecode" label="验 证 码：">
+                                  <slide-verify @onChange="onTime" :width="370"></slide-verify>
+                                </FormItem>
+                              </Col>
                             </Row>
                             <Row :gutter="24"  index="6">
                                 <Col span="12" />
@@ -262,242 +256,241 @@ export default {
         }
     },
     methods:{
-        onTime(res) {
-            console.log("res",res)
-            if (res) {
-                this.slidecode = res
-                this.isopenSms=true
-            } else {
-                this.$Modal.warning({
-                    title: '提示',
-                    content: '验证失败！',
-                    duration: 5,
-                    styles: 'top:300px'
-                });
-            }
-        },
-        // 验证手机验证码
-        async getuserCodeCheck(value, callback){
-            let params = {
-                phone:this.formCustom.phone,
-                code:value
-            }
-            if (this.formCustom.type === '会员') {
-                let res = await userCodeCheck(this, params)
-                if(res.data && res.status === 200){
-                    this.isrefreshpic=true
-                    callback();
-                }else{
-                    callback(new Error('手机验证码错误'));
-                }
-            }else{
-                let res = await supplierCodeCheck(this, params)
-                if(res.data && res.status === 200){
-                    this.isrefreshpic=true
-                    callback();
-                }else{
-                    callback(new Error('手机验证码错误'));
-                }
-            }
-        },
-        //验证手机是否存在
-        async getuserPhoneCheck(value, callback){
-            let params = {
-                phone:value
-            }
-            const res = await userPhoneCheck(this, params)
-            if(res.data && res.status === 200){
-                this.phoneValid=true;
-                callback()
-            }else{
-                this.phoneValid=false;
-                callback(new Error('该手机号码未注册'));
-            }
-        },
-        currData (res) {
-            this.current = res
-        },
-        // 点击切换
-        tabClick(index,registerName) {
-            this.registerName=registerName
-            this.nowIndex = index
-            this.mySwiper.slideTo(index,500,false)
-        },
-        //生成随机数
-        randomNum(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
-        },
-        //点击触发验证码
-        refreshCode() {
-            this.identifyCode = "";
-            this.makeCode(this.identifyCodes, 4);
-        },
-        //拼装验证码
-        makeCode(o, l) {
-            for (let i = 0; i < l; i++) {
-                this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)];
-            }
-            window.localStorage.setItem("captchaCode", this.identifyCode)
-        },
-          //获取短信验证码
-        async getNoteValue () {
-            if(this.btnBoolen){
-                return
-            }
-            var phone = this.formCustom.phone//验证码
-            //验证验证码是否为空
-            // if(this.Imgcode === ''){
-            //     this.$Message.info({
-            //         content: '图形证码不能为空',
-            //         duration: 5,
-            //         closable: true
-            //     })
-            //     return
-            // }
-            // if(!this.ImgCodeValid){
-            //     this.$Message.info({
-            //         content: '图形验证码不正确',
-            //         duration: 5,
-            //         closable: true
-            //     })
-            //     return
-            // }
-            if (phone === "") {
-                this.$Message.info("手机号不能为空")
-                return
-            }else{
-                let params = {
-                    phone: phone
-                }
-                if(this.formCustom.type === '会员'){
-                    let res = await userCodeSend(this, params)
-                    if(res.data && res.status === 200 ){
-                        this.ImgCodeValid=false
-
-                        this.$Message.info("短信发送成功")
-
-                        var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                        window.localStorage.setItem("note", sj)
-                        var timer = setInterval(()=>{
-                            this.smsTotalTime--
-                            if(this.smsTotalTime<=0){
-                                clearInterval(timer)
-                                this.btnBoolen = false;
-                                this.btnClassName="btns"
-                                this.btnValue="获取短信验证码"
-
-                            }else {
-                                this.btnBoolen = true;
-                                this.btnValue=`${this.smsTotalTime}s后重新获取`
-                                this.btnClassName="btn"
-                            }
-                        },1000)
-
-                    }else {
-                        this.$Message.info("短信发送失败")
-                    }
-                } else {
-                    let res = await supplierReCodeSend(this, params)
-                    if(res.data && res.status === 200 ){
-                        this.ImgCodeValid=false
-                        this.$Message.info("短信发送成功")
-                        var sj = Math.ceil(Math.random(10 + 1) * 100000)
-                        window.localStorage.setItem("note", sj)
-                        this.auth_time = 60;
-                        var timer = setInterval(()=>{
-                            this.auth_time;
-                            if(this.auth_time<=0){
-                                clearInterval(timer)
-                                this.btnBoolen = false;
-                                this.btnClassName="btns"
-                                this.btnValue="获取短信验证码"
-
-                            }else {
-                                this.btnBoolen = true;
-                                this.btnValue=`重新获取(${this.auth_time})S`
-                                this.btnClassName="btn"
-                            }
-                        },1000)
-
-                    }else {
-                        this.$Message.info("短信发送失败")
-                    }
-                }
-            }
-        },
-        //触发第一步的下一步
-        handleSubmit (name) {
-            var userFormData={}
-            if(!this.phoneValid){
-                this.$Message.info({
-                    content: '手机号有误',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            }else if(!this.slidecode){
-                this.$Message.info({
-                    content: '滑动验有误',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            } else {
-                this.current = 1
-            }
-        },
-        //第二部提交
-        async forgotpwdReset(data){
-            this.formCustom.code = this.formCustom.mobilecode
-            if(!this.formCustom.phone){
-                this.$Message.info({
-                    content: '手机号不能为空，请返回重新填写',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            }else if(!this.formCustom.password){
-                this.$Message.info({
-                    content: '密码不能为空，请返回重新填写',
-                    duration: 5,
-                    closable: true
-                })
-                return
-            }else {
-                let params={
-                    phone: this.formCustom.phone,
-                    password:this.formCustom.password,
-                    code: this.formCustom.code
-                }
-                if(this.formCustom.type === '会员'){
-                    let res =await userRepassWd(this,params)
-                    if(res.data === true && res.status === 200){
-                        this.current = 2
-                    }else{
-                        this.$Message.info({
-                            content: res.message,
-                            duration: 5,
-                            closable: true
-                        })
-                    }
-                }else{
-                    let res =await supplierRepssWd(this,params)
-                    if(res.data === true && res.status === 200){
-                        this.current = 2
-                    }else{
-                        this.$Message.info({
-                            content: res.message,
-                            duration: 5,
-                            closable: true
-                        })
-                    }
-                }
-            }
-        },
-        //触发上一步
-        handleUp () {
-            this.current = 0
+      onTime(res) {
+        if (res) {
+            this.slidecode = res
+            this.isopenSms=true
+        } else {
+            this.$Modal.warning({
+                title: '提示',
+                content: '验证失败！',
+                duration: 5,
+                styles: 'top:300px'
+            });
         }
+      },
+      // 验证手机验证码
+      async getuserCodeCheck(value, callback){
+          let params = {
+              phone:this.formCustom.phone,
+              code:value
+          }
+          if (this.formCustom.type === '会员') {
+              let res = await userCodeCheck(this, params)
+              if(res.data && res.status === 200){
+                  this.isrefreshpic=true
+                  callback();
+              }else{
+                  callback(new Error('手机验证码错误'));
+              }
+          }else{
+              let res = await supplierCodeCheck(this, params)
+              if(res.data && res.status === 200){
+                  this.isrefreshpic=true
+                  callback();
+              }else{
+                  callback(new Error('手机验证码错误'));
+              }
+          }
+      },
+      //验证手机是否存在
+      async getuserPhoneCheck(value, callback){
+          let params = {
+              phone:value
+          }
+          const res = await userPhoneCheck(this, params)
+          if(res.data && res.status === 200){
+              this.phoneValid=true;
+              callback()
+          }else{
+              this.phoneValid=false;
+              callback(new Error('该手机号码未注册'));
+          }
+      },
+      currData (res) {
+          this.current = res
+      },
+      // 点击切换
+      tabClick(index,registerName) {
+          this.registerName=registerName
+          this.nowIndex = index
+          this.mySwiper.slideTo(index,500,false)
+      },
+      //生成随机数
+      randomNum(min, max) {
+          return Math.floor(Math.random() * (max - min) + min);
+      },
+      //点击触发验证码
+      refreshCode() {
+          this.identifyCode = "";
+          this.makeCode(this.identifyCodes, 4);
+      },
+      //拼装验证码
+      makeCode(o, l) {
+          for (let i = 0; i < l; i++) {
+              this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)];
+          }
+          window.localStorage.setItem("captchaCode", this.identifyCode)
+      },
+        //获取短信验证码
+      async getNoteValue () {
+          if(this.btnBoolen){
+              return
+          }
+          var phone = this.formCustom.phone//验证码
+          //验证验证码是否为空
+          // if(this.Imgcode === ''){
+          //     this.$Message.info({
+          //         content: '图形证码不能为空',
+          //         duration: 5,
+          //         closable: true
+          //     })
+          //     return
+          // }
+          // if(!this.ImgCodeValid){
+          //     this.$Message.info({
+          //         content: '图形验证码不正确',
+          //         duration: 5,
+          //         closable: true
+          //     })
+          //     return
+          // }
+          if (phone === "") {
+              this.$Message.info("手机号不能为空")
+              return
+          }else{
+              let params = {
+                  phone: phone
+              }
+              if(this.formCustom.type === '会员'){
+                  let res = await userCodeSend(this, params)
+                  if(res.data && res.status === 200 ){
+                      this.ImgCodeValid=false
+
+                      this.$Message.info("短信发送成功")
+
+                      var sj = Math.ceil(Math.random(10 + 1) * 100000)
+                      window.localStorage.setItem("note", sj)
+                      var timer = setInterval(()=>{
+                          this.smsTotalTime--
+                          if(this.smsTotalTime<=0){
+                              clearInterval(timer)
+                              this.btnBoolen = false;
+                              this.btnClassName="btns"
+                              this.btnValue="获取短信验证码"
+
+                          }else {
+                              this.btnBoolen = true;
+                              this.btnValue=`${this.smsTotalTime}s后重新获取`
+                              this.btnClassName="btn"
+                          }
+                      },1000)
+
+                  }else {
+                      this.$Message.info("短信发送失败")
+                  }
+              } else {
+                  let res = await supplierReCodeSend(this, params)
+                  if(res.data && res.status === 200 ){
+                      this.ImgCodeValid=false
+                      this.$Message.info("短信发送成功")
+                      var sj = Math.ceil(Math.random(10 + 1) * 100000)
+                      window.localStorage.setItem("note", sj)
+                      this.auth_time = 60;
+                      var timer = setInterval(()=>{
+                          this.auth_time;
+                          if(this.auth_time<=0){
+                              clearInterval(timer)
+                              this.btnBoolen = false;
+                              this.btnClassName="btns"
+                              this.btnValue="获取短信验证码"
+
+                          }else {
+                              this.btnBoolen = true;
+                              this.btnValue=`重新获取(${this.auth_time})S`
+                              this.btnClassName="btn"
+                          }
+                      },1000)
+
+                  }else {
+                      this.$Message.info("短信发送失败")
+                  }
+              }
+          }
+      },
+      //触发第一步的下一步
+      handleSubmit (name) {
+          var userFormData={}
+          if(!this.phoneValid){
+              this.$Message.info({
+                  content: '手机号有误',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          }else if(!this.slidecode){
+              this.$Message.info({
+                  content: '滑动验有误',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else {
+              this.current = 1
+          }
+      },
+      //第二部提交
+      async forgotpwdReset(data){
+          this.formCustom.code = this.formCustom.mobilecode
+          if(!this.formCustom.phone){
+              this.$Message.info({
+                  content: '手机号不能为空，请返回重新填写',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          }else if(!this.formCustom.password){
+              this.$Message.info({
+                  content: '密码不能为空，请返回重新填写',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          }else {
+              let params={
+                  phone: this.formCustom.phone,
+                  password:this.formCustom.password,
+                  code: this.formCustom.code
+              }
+              if(this.formCustom.type === '会员'){
+                  let res =await userRepassWd(this,params)
+                  if(res.data === true && res.status === 200){
+                      this.current = 2
+                  }else{
+                      this.$Message.info({
+                          content: res.message,
+                          duration: 5,
+                          closable: true
+                      })
+                  }
+              }else{
+                  let res =await supplierRepssWd(this,params)
+                  if(res.data === true && res.status === 200){
+                      this.current = 2
+                  }else{
+                      this.$Message.info({
+                          content: res.message,
+                          duration: 5,
+                          closable: true
+                      })
+                  }
+              }
+          }
+      },
+      //触发上一步
+      handleUp () {
+          this.current = 0
+      }
     },
     mounted(){
         if(this.$route.query.type!='users'){

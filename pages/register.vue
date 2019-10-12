@@ -55,7 +55,6 @@
 		},
 		methods: {
 			currData(res) {
-			  console.log("res",res)
 				this.current = res
 			},
             userTab(res){
