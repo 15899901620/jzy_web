@@ -7,8 +7,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>微信发货平台</h2><img src="~/static/img/jzy_erweima.png" ></li>
-                            <li><h2>微信公众号</h2><img src="~/static/img/jzygzh_erweima.png"> </li>
+                            <li><h2>微信发货平台</h2><img :src="this.$store.state.common.sysConfig.ERWEIMA"></li>
+                            <li><h2>微信公众号</h2><img :src="this.$store.state.common.sysConfig.GZH_ERWEIMA"></li>
                         </ul>
                     </div>
                     <div class="tel">
@@ -35,8 +35,8 @@
                     <helpnav></helpnav>
                     <div class="qr-code">
                         <ul>
-                            <li><h2>微信发货平台</h2><img src="~/static/img/jzy_erweima.png" ></li>
-                            <li><h2>微信公众号</h2><img src="~/static/img/jzygzh_erweima.png"> </li>
+                            <li><h2>微信发货平台</h2><img :src="this.$store.state.common.sysConfig.ERWEIMA" ></li>
+                            <li><h2>微信公众号</h2><img :src="this.$store.state.common.sysConfig.GZH_ERWEIMA" > </li>
                         </ul>
                     </div>
                     <div class="tel">
