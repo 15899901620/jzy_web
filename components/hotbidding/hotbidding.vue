@@ -23,13 +23,14 @@
             <div class="endTime graybg" v-if="items.statusType == '3'">
               竞拍结束
             </div>
-            <h3 class="fs16 fwb mt20">{{items.skuName}}</h3>
+            <h3 class="fs16 fwb mt10">{{items.skuName}}</h3>
             <div class="limitedPrice">
               <span class="fs18" style="color: #ff6600;">{{items.finalPriceFormat}}元/吨</span><span class="fs14"> 起</span>
             </div>
             <div class="NumStore">
               <span>数量 : {{items.totalNum}}{{items.uomName}}</span>
               <span>库区 : {{items.warehouseName}}</span>
+              <span>开始时间 : {{$utils.dateStrFormat(items.beginTime,'yyyy-MM-dd')}}</span>
             </div>
             <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">正在竞拍</div>
             <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">即将开始</div>

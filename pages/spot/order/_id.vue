@@ -19,35 +19,6 @@
         <div class="ml35 mt20 mb20 fs18">{{$store.state.memberInfo.username}}</div>
         <div class="lineborder"></div>
 
-        <!-- 商品信息 -->
-        <div class="mt30 fs16 ml15" id="test1">
-          <span class="fwb">商品信息</span>
-        </div>
-        <ul class="orderPorList">
-          <li>
-            <span class="title" style="width: 13%;">货物信息</span>
-            <span class="title" style="width: 12%;">交货仓</span>
-            <span class="title" style="width: 12%;">单价（元/吨）</span>
-            <span class="title" style="width: 12%;">运费</span>
-            <span class="title" style="width: 12%;">巨融易</span>
-            <span class="title" style="width: 12%;">合计单价（元/吨）</span>
-            <span class="title" style="width: 14%;">数量（吨）</span>
-            <span class="title" style="width: 9%;">小计</span>
-          </li>
-          <li>
-            <div style="width: 13%;">{{spotInfo.sku_name}}</div>
-            <div style="width: 12%;">{{spotInfo.warehouse_name}}</div>
-            <div style="width: 12%;">{{spotInfo.finalPriceFormat}}</div>
-            <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
-            <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
-            <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
-            <div style="width: 14%;">
-              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
-                             @change="changeNum"></input-special>
-            </div>
-            <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
-          </li>
-        </ul>
         <!--交货方式-->
         <div class="mt30 fs16 ml15 fwb">交货方式</div>
         <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
@@ -124,6 +95,36 @@
             </template>
           </ul>
         </div>
+
+        <!-- 商品信息 -->
+        <div class="mt30 fs16 ml15" id="test1">
+          <span class="fwb">商品信息</span>
+        </div>
+        <ul class="orderPorList">
+          <li>
+            <span class="title" style="width: 13%;">货物信息</span>
+            <span class="title" style="width: 12%;">交货仓</span>
+            <span class="title" style="width: 12%;">单价（元/吨）</span>
+            <span class="title" style="width: 12%;">运费</span>
+            <span class="title" style="width: 12%;">巨融易</span>
+            <span class="title" style="width: 12%;">合计单价（元/吨）</span>
+            <span class="title" style="width: 14%;">数量（吨）</span>
+            <span class="title" style="width: 9%;">小计</span>
+          </li>
+          <li>
+            <div style="width: 13%;">{{spotInfo.sku_name}}</div>
+            <div style="width: 12%;">{{spotInfo.warehouse_name}}</div>
+            <div style="width: 12%;">{{spotInfo.finalPriceFormat}}</div>
+            <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
+            <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
+            <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
+            <div style="width: 14%;">
+              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
+                             @change="changeNum"></input-special>
+            </div>
+            <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
+          </li>
+        </ul>
 
         <div class="lineborder"></div>
         <div class="mt30 fs16 ml15 fwb">支付选择</div>

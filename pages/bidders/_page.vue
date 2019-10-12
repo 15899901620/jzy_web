@@ -90,7 +90,7 @@
                   </template>
                   <template v-if="items.statusType == '2'">
                     <div class="statusicon vcauction">即将开始</div>
-                    <div class="ml20"><span class="gray">距离结束 ：</span>
+                    <div class="ml20"><span class="gray">距离开始 ：</span>
                       <span class="fs18">
                         <TimeDown :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
                                   :onTimeOver="reloadPage"></TimeDown>

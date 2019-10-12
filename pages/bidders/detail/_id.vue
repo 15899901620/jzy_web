@@ -92,7 +92,7 @@
       <!--竞拍记录-我的出价-->
       <div class="whitebg " style="width: 1200px; margin: 0 auto; display: flex">
         <div class="recodelist">
-          <div class="recordTitle">竞拍记录</div>
+          <div class="recordTitle" style="background: #007de4;color: #fff;">竞拍记录</div>
           <table class="Bidders_record_title">
             <tbody>
             <tr>
@@ -105,12 +105,12 @@
             </tbody>
           </table>
           <!--表格-->
-          <div class="Bidders_record_list" style="text-align: center;">
+          <div class="Bidders_record_list" style="text-align: center;height: 200px;overflow-y: auto;">
             <!--暂无记录-->
             <table v-if="auctionInfo.bidList.length > 0">
               <tbody>
               <tr class="Bidders_record_tr " v-for="(item,index) in auctionInfo.bidList" :key="index"
-                  :class="{orangeFont:item.outStatus===1 || item.outStatus===2}">
+                  :class="[{orangeFont:item.outStatus===1 || item.outStatus===2},{myclore:item.nickName == '我的出价'}]" >
                 <td>
                   <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>
                   <span class="Bidders_record_curr" v-if="item.outStatus===2">入围</span>
@@ -128,7 +128,7 @@
         </div>
 
         <div class="recodelist">
-          <div class="recordTitle">我的出价</div>
+          <div class="recordTitle" style="background: #ff7300;">我的出价</div>
           <table class="Bidders_record_title">
             <tbody>
             <tr>
@@ -141,7 +141,7 @@
             </tbody>
           </table>
           <!--表格-->
-          <div class="Bidders_record_list" style="text-align: center;">
+          <div class="Bidders_record_list" style="text-align: center;height: 200px;overflow-y: auto;">
             <!--暂无记录-->
             <table v-if="auctionInfo.myBidList.length > 0">
               <tbody>
@@ -700,6 +700,7 @@
   }
 </script>
 <style lang="less">
+  .myclore {background: #ffdfb0}
   .vertical-center-modal {
     display: flex;
     align-items: center;
@@ -738,9 +739,10 @@
       display: flex;
 
       .status {
-        width: 5%;
-        font-size: 18px;
-        padding: 0 12px;
+        width: 6%;
+        font-size: 17px;
+        text-align: center;
+        padding: 3px 15px;
         color: #fff;
       }
 
