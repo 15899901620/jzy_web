@@ -21,7 +21,7 @@
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{dataList.orderNum}}</span>
+        <span class="ml10">{{dataList.orderNum}}吨</span>
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单总金额：</span>
