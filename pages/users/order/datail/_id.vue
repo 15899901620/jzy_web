@@ -136,7 +136,7 @@
           </div>
           <div>
 
-            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
+            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;    margin-top: 15px;">
               订单总额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                  <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
