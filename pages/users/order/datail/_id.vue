@@ -124,10 +124,10 @@
             </Row>
             <Row index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
               <Col span="4">{{this.datalist.skuName}}</Col>
-              <Col span="2">{{this.datalist.orderNum}}</Col>
+              <Col span="2">{{this.datalist.orderNum}}吨</Col>
               <Col span="3">{{this.amountFormat(this.datalist.finalPrice - this.datalist.shippingFee -
-                this.datalist.jryAdd)}}</Col>
-              <Col span="2">+ {{this.datalist.shippingFee}}</Col>
+                this.datalist.jryAdd)}} </Col>
+              <Col span="2">+ {{this.datalist.shippingFee}}元</Col>
               <Col span="2">¥{{this.datalist.jryAdd}}/吨</Col>
               <Col span="4">{{this.datalist.finalPriceFormat}}</Col>
               <Col span="3">{{this.datalist.depositAmountFormat}}</Col>
