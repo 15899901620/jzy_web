@@ -117,21 +117,6 @@ export default {
 			css: ({isDev}) => isDev ? '[name].css' : '[name].[contenthash].'+Version+'.css',
 			img: ({isDev}) => isDev ? '[path][name].[ext]' :  '[hash:7].[ext]'
 		},
-		loaderOptions: { // 向 CSS 相关的 loader 传递选项
-			less: {
-				javascriptEnabled: true
-			}
-		},
-		loaders: [
-			{
-				test: /\.(png|jpe?g|gif|svg)$/,
-				loader: "url-loader",
-				query: {
-					limit: 10000,
-					name: 'img/[name].[hash].[ext]'
-				}
-			}
-    ],
     /**
      * 配置代码压缩规则，提升速度
      */
