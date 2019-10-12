@@ -21,7 +21,7 @@
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{datalist.orderNum}}</span>
+        <span class="ml10">{{datalist.orderNum}}吨</span>
       </div>
       <!--需冻结保证金-->
       <div class="PricePopup">

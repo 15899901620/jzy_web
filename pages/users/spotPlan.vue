@@ -44,7 +44,7 @@
                   </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
                   <span class="fr mr15"
-                        v-if="item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)">
+                        v-if="item.available_num > 0 && item.status == 1">
                     <span class="red">转单倒计时：</span>
                     <span class="red"><TimeDown :endTime="item.last_ordered_date" hoursShow endMsg="已失效"
                                                 :onTimeOver="reloadPage"></TimeDown></span>
@@ -179,15 +179,13 @@
 							id: row.id
 						}
 						sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
+              console.log(response)
 							if (response.status === 200) {
+                       
 								if ((response.data.errorcode || 0) == 0) {
 									window.location.reload()
 								} else {
-									this.$Modal.warning({
-										title: '提示',
-										content: res.data.message
-									})
-									return
+                   alert(response.data.message)						
 								}
 							}
 						})
