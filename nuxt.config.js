@@ -150,11 +150,6 @@ export default {
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
             chunks: 'initial' // only package third parties that are initially dependent
-          },
-          iview: {
-            name: 'chunk-ui',
-            priority: 20,
-            test: /[\\/]node_modules[\\/]_?iview(.*)/
           }
         }
       }
