@@ -107,7 +107,8 @@ export default {
 			beforeEnter(el) {
 				console.log('Before enter...');
 			}
-		},
+    },
+    SourceMap: false,
     cssSourceMap: false,
 		publicPath: './', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
 		filenames: { // css 和 js img 打包时指定文件夹
@@ -120,45 +121,45 @@ export default {
     /**
      * 配置代码压缩规则，提升速度
      */
-    optimization: {
-      minimize: true,
-      minimizer: [
-        // terser-webpack-plugin
-        new TerserPlugin({
-          terserOptions: {
-            warnings: false,
-            compress: {
-              drop_console: true,
-              pure_funcs: ['console.log']
-            },
-            output: {
-              //是否保留注释，编译后无需保留
-              comments: false
-            },
-            cache: true,
-            parallel: true,
-            sourceMap: false
-          }
-        })
-      ],
-      //代码打包分割规则
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          libs: {
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            chunks: 'initial' // only package third parties that are initially dependent
-          },
-          iview: {
-            name: 'chunk-ui',
-            priority: 20,
-            test: /[\\/]node_modules[\\/]_?iview(.*)/
-          }
-        }
-      }
-    },
+    // optimization: {
+    //   minimize: true,
+    //   minimizer: [
+    //     // terser-webpack-plugin
+    //     new TerserPlugin({
+    //       terserOptions: {
+    //         warnings: false,
+    //         compress: {
+    //           drop_console: true,
+    //           pure_funcs: ['console.log']
+    //         },
+    //         output: {
+    //           //是否保留注释，编译后无需保留
+    //           comments: false
+    //         },
+    //         cache: true,
+    //         parallel: true,
+    //         sourceMap: false
+    //       }
+    //     })
+    //   ],
+    //   //代码打包分割规则
+    //   splitChunks: {
+    //     chunks: 'all',
+    //     cacheGroups: {
+    //       libs: {
+    //         name: 'chunk-libs',
+    //         test: /[\\/]node_modules[\\/]/,
+    //         priority: 10,
+    //         chunks: 'initial' // only package third parties that are initially dependent
+    //       },
+    //       iview: {
+    //         name: 'chunk-ui',
+    //         priority: 20,
+    //         test: /[\\/]node_modules[\\/]_?iview(.*)/
+    //       }
+    //     }
+    //   }
+    // },
 		/*
 		 ** You can extend webpack config here
 		 */
