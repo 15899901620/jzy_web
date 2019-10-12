@@ -1,6 +1,9 @@
+const TerserPlugin = require('terser-webpack-plugin');
 const appConfig = require('./config/app.config')
 
-const proxy_url = process.env.NODE_ENV === 'development' ? appConfig.system.BASE_URL.dev : appConfig.system.BASE_URL.pro
+//是否生产环境
+const proxy_url = process.env.NODE_ENV === 'production'? appConfig.system.BASE_URL.pro : appConfig.system.BASE_URL.dev 
+
 let Version = new Date().getTime()
 export default {
 	mode: 'universal',
@@ -57,9 +60,7 @@ export default {
 	css: [
 		'~/assets/css/global.css',
 		'~/assets/css/app.css',
-
 		{src: "swiper/dist/css/swiper.css"}
-
 	],
 	/*
 	 ** Plugins to load before mounting the App
@@ -96,7 +97,10 @@ export default {
 	 ** Build configuration
 	 */
 	build: {
-		analyze: true,
+    analyze: false,
+    //是否允许 vue-devtools 调试
+    devtools: false,
+    transpile: [/^iview/],
 		transition: {
 			name: 'page',
 			mode: 'out-in',
@@ -104,27 +108,21 @@ export default {
 				console.log('Before enter...');
 			}
 		},
-		extractCSS: {
-			allChunks: true
-		},
-		publicPath: '/sample/assets/', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
+    cssSourceMap: false,
+		publicPath: './', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
 		filenames: { // css 和 js img 打包时指定文件夹
-			/*app: ({isDev}) => isDev ? '[name].js' : '[chunkhash].js',
-			chunk: ({isDev}) => isDev ? '[name].js' : '[chunkhash].js',
-			css: ({isDev}) => isDev ? '[name].js' : '[contenthash].css',
-			img: ({isDev}) => isDev ? '[path][name].[ext]' : '[hash:7].[ext]'*/
-			app: '[name].[contenthash].'+Version+'.js',
-			chunk: '[name].[contenthash].'+Version+'.js',
-			js: '[name].[contenthash].'+Version+'.js',
-			css: '[name].[contenthash].'+Version+'.css',
-			img: '[hash:7].[ext]'
+			app: ({isDev}) => isDev ? '[name].js' :'[name].[contenthash].'+Version+'.js',
+			chunk:({isDev}) => isDev ? '[name].js' : '[name].[contenthash].'+Version+'.js',
+			js: ({isDev}) => isDev ? '[name].js' : '[name].[contenthash].'+Version+'.js',
+			css: ({isDev}) => isDev ? '[name].css' : '[name].[contenthash].'+Version+'.css',
+			img: ({isDev}) => isDev ? '[path][name].[ext]' :  '[hash:7].[ext]'
 		},
-		/*loaderOptions: { // 向 CSS 相关的 loader 传递选项
+		loaderOptions: { // 向 CSS 相关的 loader 传递选项
 			less: {
 				javascriptEnabled: true
 			}
-		},*/
-		/*loaders: [
+		},
+		loaders: [
 			{
 				test: /\.(png|jpe?g|gif|svg)$/,
 				loader: "url-loader",
@@ -133,94 +131,62 @@ export default {
 					name: 'img/[name].[hash].[ext]'
 				}
 			}
-		],*/
-		/*optimization:
-			{
-				minimize: true,
-				minimizer:
-					[
-						// terser-webpack-plugin
-						// optimize-css-assets-webpack-plugin
-					],
-				splitChunks:
-					{
-						chunks: "all",
-						minSize:
-							30000,
-						minChunks:
-							1,
-						maxAsyncRequests:
-							5,
-						maxInitialRequests:
-							3,
-						automaticNameDelimiter:
-							'~',
-						name:
-							true,
-						cacheGroups:
-							{
-								vendors: {
-									test: /[\\/]node_modules[\\/]/,
-									name:
-										"vendors",
-									chunks:
-										"all",
-									priority:
-										-10
-								}
-								,
-								extern: {
-									test: /[\\/]extern[\\/]/,
-									name:
-										"extern",
-									chunks:
-										"all",
-									priority:
-										-10
-								}
-								,
-								styles: {
-									name: 'styles',
-									test:
-										/\.css$/,
-									chunks:
-										'all',
-									priority:
-										-10,
-									enforce:
-										true
-								}
-								,
-								sass: {
-									name: 'sass',
-									test:
-										/\.(sa|sc|)ss$/,
-									chunks:
-										'all',
-									priority:
-										-10,
-									enforce:
-										true
-								}
-								,
-
-								default:
-									{
-										minChunks: 1,
-										priority:
-											-20,
-										reuseExistingChunk:
-											true
-									}
-							}
-					}
-			}
-		,*/
+    ],
+    /**
+     * 配置代码压缩规则，提升速度
+     */
+    optimization: {
+      minimize: true,
+      minimizer: [
+        // terser-webpack-plugin
+        new TerserPlugin({
+          terserOptions: {
+            warnings: false,
+            compress: {
+              drop_console: true,
+              pure_funcs: ['console.log']
+            },
+            output: {
+              //是否保留注释，编译后无需保留
+              comments: false
+            },
+            cache: true,
+            parallel: true,
+            sourceMap: false
+          }
+        })
+      ],
+      //代码打包分割规则
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // only package third parties that are initially dependent
+          },
+          iview: {
+            name: 'chunk-ui',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?iview(.*)/
+          }
+        }
+      }
+    },
 		/*
 		 ** You can extend webpack config here
 		 */
 		extend(config, ctx) {
-
+      // Run ESLint on save
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        });
+      }
 		}
 	}
 }
