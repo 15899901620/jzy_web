@@ -24,8 +24,7 @@
             </div>
             <links></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
+                <div class="copyright" v-html='this.$store.state.common.sysConfig.COPYRIGHT'>
                 </div>
             </div>
         </template>
@@ -52,15 +51,13 @@
             </div>
             <links :linksData="linksinfo"></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
+                <div class="copyright" v-html='this.$store.state.common.sysConfig.COPYRIGHT'>
                 </div>
             </div>
         </template>
         <template v-if="size === 'small'">
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
+                <div class="copyright" v-html='this.$store.state.common.sysConfig.COPYRIGHT'>
                 </div>
             </div>
         </template>

@@ -80,7 +80,7 @@
 		methods: {
 			reloadPage(){
 				location.href.reload()
-            },
+      },
 			mouseEnter() {
 				var ul = document.getElementById('TimeL-ul')
 				var li = ul.getElementsByTagName('li')

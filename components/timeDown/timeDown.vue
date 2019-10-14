@@ -96,7 +96,7 @@
 							days: Math.floor(time / 60 / 60 / 24)
 						}
 						// 计算出时分秒
-						this.myDay = `${add(this.timeObj.days)}`
+						this.myDay = this.timeObj.days
 						this.myHours = `${add(this.timeObj.hours)}`
 						this.myMinutes = `${add(this.timeObj.minutes)}`
 						this.mySeconds = `${add(this.timeObj.seconds)}`

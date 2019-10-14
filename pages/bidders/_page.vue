@@ -6,67 +6,59 @@
         <img src="/img/auctionBanner.png"/>
       </div>
       <div class="w1200" style="margin-top: 20px">
-        <div class="titlelist">
+        <div class="titlelist" v-if="partakeList.length > 0">
           我的竞拍
         </div>
-        <table class="bidersTable" style="width: 100%; border: 1px solid #dfdfdf;">
+        <table class="bidersTable" style="width: 100%; border: 1px solid #dfdfdf;" v-if="partakeList.length > 0">
           <tbody>
           <tr class="table_title" style="">
-            <th style="width: 8%">竞拍编号</th>
-            <th style="width: 7%">牌号</th>
-            <th style="width: 7%">厂商</th>
+            <th style="width: 10%">竞拍编号</th>
+            <th style="width: 10%">牌号</th>
+            <th style="width: 11%">厂商</th>
             <th style="width: 11%">结束倒计时</th>
-            <th style="width: 10%">起拍价</th>
-            <th style="width: 10%">我的出价</th>
+            <th style="width: 8%">起拍价</th>
+            <th style="width: 8%">我的出价</th>
             <th style="width: 6%">出价数量</th>
             <th style="width: 6%">入局数量</th>
-            <th style="width: 7%">当前状态</th>
-            <th style="width: 8%">我的状态</th>
-            <th style="width: 10%">操作</th>
+            <th style="width: 7%">竞拍状态</th>
+            <th style="width: 6%">我的状态</th>
+            <th style="width: 7%">操作</th>
           </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
+
+          <tr v-for="(item,index) in partakeList">
+            <td>{{item.billNo}}</td>
+            <td class="blue">{{item.skuName}}</td>
+            <td>{{item.manufacturer}}</td>
+            <td><TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
+                          :onTimeOver="reloadPage"></TimeDown></td>
+            <td>{{$utils.amountFormat(item.finalPrice)}}</td>
             <td>
-              <button class="see">查看</button>
+              <span v-if="item.bidList.length > 0">{{$utils.amountFormat(item.bidList[0].bidPrice)}}</span>
+              <span v-else> - </span>
             </td>
-          </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
             <td>
-              <button class="see">查看</button>
+              <span v-if="item.bidList.length > 0">{{item.bidList[0].bidNum}}</span>
+              <span v-else> - </span>
             </td>
-          </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
             <td>
-              <button class="see">查看</button>
+              <span v-if="item.bidList.length > 0">{{item.bidList[0].selectedNum}}</span>
+              <span v-else> - </span>
+            </td>
+            <td>
+              <span v-if="item.statusType == 1">正在竞拍</span>
+              <span v-else-if="item.statusType == 2">即将开始</span>
+              <span v-else-if="item.statusType == 3">竞拍结束</span>
+            </td>
+            <td>
+              <span v-if="item.bidList.length > 0">
+                <span v-if="item.bidList[0].outStatus == 1">领先</span>
+                <span v-else-if="item.bidList[0].outStatus == 2">入围</span>
+                <span v-else-if="item.bidList[0].outStatus == 3">出局</span>
+              </span>
+              <span v-else> 未出价 </span>
+            </td>
+            <td>
+              <a :href="`/bidders/detail/${item.id}`"><span class="see">查看</span></a>
             </td>
           </tr>
           </tbody>
@@ -112,7 +104,12 @@
                   <h1 class=" fs20 mt20">{{items.skuName}}</h1>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span></div>
-                    <div class="fs14 dflex"><span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}</div>
+                    <div class="fs14 dflex">
+                      <span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}
+                      <template v-if="items.isAll == 1">
+                        <span class="orangeFont fs16 ml30">整单</span>
+                      </template>
+                    </div>
                   </div>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span></div>
@@ -224,6 +221,8 @@
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
 				//获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
+        //获取用户参与列表
+				store.dispatch('bidders/getPartakeList'),
 			])
 		},
 		data() {
@@ -247,9 +246,7 @@
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
 				auctionList: state => state.bidders.auctionList,
-				biddersbeingData: state => state.bidders.biddersbeingData,
-				bidderssoonData: state => state.bidders.bidderssoonData,
-				biddersendData: state => state.bidders.biddersendData
+				partakeList: state => state.bidders.partakeList,
 			})
 
 		},

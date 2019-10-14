@@ -48,6 +48,14 @@
             （您选择交货方式为待定，则提交后只生成合约单，必须在<span class="orangeFont">{{spotInfo.last_ordered_date}}</span>之前确认并转订单，否则会扣除交纳的保证金）
           </template>
         </div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
+          选择运输方式
+          <div class="ml5">
+            <Select v-model="orderinfo.transportationModeTake" style="width:200px">
+              <i-option v-for="(item, index) in spotInfo.take_their_transportations.split(',')" :value="item" :key="index">{{ item }}</i-option>
+            </Select>
+          </div>
+        </div>
         <div class="AddList" v-if="orderinfo.isDelivery == 1">
           <template v-if="addressList.length > 0">
             <ul class="addListSelect ovh">
@@ -72,15 +80,6 @@
           <template v-else><p>暂无任何收货地址，请您添加！</p></template>
         </div>
         <div class="mt30 fs16 ml15 fwb" v-if="orderinfo.isDelivery == 1">运费</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
-          选择承运商
-          <div class="ml35" v-if="carrierList.length > 0">
-            <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
-              <i-option v-for="(item, index) in carrierList" :value="item.id" :key="index">{{ item.name }}</i-option>
-            </Select>
-          </div>
-          <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-        </div>
         <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择运输方式
           <ul class="DeliveryMethod ml35 mb20">
@@ -267,6 +266,7 @@
 					isDelivery: 0,
 					addressId: 0,
 					carrierId: 0,
+					transportationModeTake: '公路运输',
 					transportationMode: '',
 					payIndex: 0,
 					jryDays: 0,
@@ -306,16 +306,16 @@
 				this.currentIndex = index
 				if (index == 0) {
 					this.orderinfo.isDelivery = 0
-					this.currMin = this.spotInfo.take_their_min
+					this.currMin = Math.max(this.spotInfo.take_their_min, this.spotInfo.min_order)
 					this.currsetp = this.spotInfo.take_bid_increment
           this.setFreight(-1)
 				} else if (index == 1) {
 					this.orderinfo.isDelivery = 1
-					this.currMin = this.spotInfo.delivery_min
+					this.currMin = Math.max(this.spotInfo.delivery_min, this.spotInfo.min_order)
 					this.currsetp = this.spotInfo.delivery_bid_increment
 				} else if (index == 2) {
 					this.orderinfo.isDelivery = -1
-					this.currMin = Math.min(this.spotInfo.delivery_min,this.spotInfo.take_their_min)
+					this.currMin = this.spotInfo.min_order
 					this.currsetp = 1
 
 					this.orderinfo.transportationMode = ''
@@ -475,6 +475,9 @@
 					order_num: this.orderinfo.orderNum,
 					sms_code: smsCode
 				}
+				if(params.is_delivery == 0){
+					params.transportation_mode = this.orderinfo.transportationModeTake
+        }
 
 				let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
 				if (res.status === 200) {

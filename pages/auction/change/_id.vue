@@ -65,15 +65,6 @@
         </div>
         <div class="mt30 fs16 ml15 fwb" v-if="orderinfo.isDelivery == 1">运费</div>
         <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
-          选择承运商
-          <div class="ml35" v-if="carrierList.length > 0">
-            <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
-              <i-option v-for="(item, index) in carrierList" :value="item.id" :key="index">{{ item.name }}</i-option>
-            </Select>
-          </div>
-          <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-        </div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择运输方式
           <ul class="DeliveryMethod ml35 mb20">
             <template v-if="logisticsfreight.length > 0">

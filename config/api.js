@@ -119,6 +119,7 @@ let api = {
 		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
 		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
 		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
+		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍
