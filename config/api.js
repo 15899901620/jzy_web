@@ -53,6 +53,7 @@ let api = {
    * @description 订单管理
    */
   order: {
+    getContractInfo:{'url':'/bill/orderInfo/getContractInfo', 'method':'get'} ,
 		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
 		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
 		getOrderPayInfo:{'url':'/bill/orderInfo/getOrderPayInfo', 'method':'get'} ,
