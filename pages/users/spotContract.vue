@@ -19,7 +19,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr><td height="40"></td></tr>
+						<tr><td height="20"></td></tr>
 						<tr width="100%">
 							<td>
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
