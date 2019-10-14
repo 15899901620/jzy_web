@@ -180,7 +180,7 @@
 				let params = {
 					id: this.id,
 				}
-				const res = await sendHttp(this, true, server.api.order.getContractInfo, params, 1)
+				const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
 				this.OrderList = res.data
 
 			},

@@ -39,7 +39,7 @@
             <Checkbox :disabled="true"></Checkbox>
             <span class="PricePopup_title">保证金钱包余额：</span>
             <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-            <a class="PricePopup_btn" href="/help/9" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
+            <a class="PricePopup_btn" @click="wallet()" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
           </p>
         </div>
       </div>
@@ -52,7 +52,7 @@
     </div>
 
     <div slot="footer" style="text-align:center">
-      <Button type="warning" size="large">查看充值方式</Button>
+      <Button type="warning" size="large" @click="showInvestCapital">查看充值方式</Button>
       <Button type="primary" size="large" @click="bidersOK">确认支付</Button>
     </div>
   </Modal>
@@ -101,6 +101,9 @@
 			biderscancel() {
 				this.$emit('unChange', false)
 			},
+			showInvestCapital(){
+				location.href = '/users/investCapital'
+			},
 			async getNoteValue() {
 				let params = {}
 				const res = await BondMessSend(this, params)
@@ -125,6 +128,9 @@
 						duration: 5
 					});
 				}
+			},
+			wallet(){
+				alert('该功能正在维护')
 			},
 			//提交缴纳保证金
 			async bidersOK() {

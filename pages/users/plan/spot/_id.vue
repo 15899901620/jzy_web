@@ -110,6 +110,79 @@
             <Button v-if="dataInfo.available_num > 0 && dataInfo.status == 1" class="submitspotOrder" @click='toCreateOrder'>转订单</Button>
             <Button class="submitspotback ml10" @click='goBack'>返回</Button>
           </div>
+          <div class="TableTitle graybg">
+            <!-- <span style="width: 10%;">单据类型</span> -->
+            <span style="width: 10%;">商品信息</span>
+            <span style="width: 10%;">单价(元/吨)</span>
+            <span style="width: 10%;">数量(吨)</span>
+            <span style="width: 10%;">库区</span>
+            <span style="width: 10%;">提货方式</span>
+            <span style="width: 13%;">订单总金额</span>
+            <span style="width: 14%;">付款状态</span>
+            <span style="width: 12%;">订单操作</span>
+            <span style="width: 12%;">提货状态</span>
+          </div>
+          <table v-for="(item, index) in dataInfo.orderInfoList" :key="index" class="listT mt10" border="" cellspacing=""cellpadding="">
+              <tbody>
+              <tr class="Ttitle graybg">
+                <td colspan="10">
+				          <span class="ml10">合约编号:
+                    <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a>
+                  </span>
+                  <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
+                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
+                  </span>
+                  <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
+                  <span class="fr mr15" v-if="item.status == 2"><span class="red">最迟付款时间：</span> <span class="red">{{item.orderPayLastTime}}</span></span>
+                </td>
+              </tr>
+              <tr class="detailTable">
+				<!-- <td>{{detailOrderType(item.orderType)}}</td> -->
+                <td>{{item.skuName}}</td>
+                <td><span class="orangeFont">{{item.finalPriceFormat}}</span></td>
+                <td>{{item.orderNum}}</td>
+                <td>{{item.warehouseName}}</td>
+                  <td>
+                    <span v-if="item.isDelivery == 0">
+                      自提
+                    </span>
+                    <span v-if="item.isDelivery == 1">
+                      配送
+                    </span>
+                </td>
+                <td style="width: 13%;">
+                  {{item.totalAmountFormat}}
+                  <template v-if="item.status == 3 || item.status == 4 "><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{amountFormat(item.totalAmount)}}</span>
+                  </template>
+                </td>
+                <td style="width: 14%;">
+                  <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
+                  <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
+                  <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
+				           <template v-if="item.status == 2"><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount)}}</span>
+                  </template>
+                </td>
+                <td class="operate" style="width: 11%;">
+                  <!-- <div class="" v-if="item.status == 2">
+                    <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
+                    <a class="blackFont mt15" @click="closeBut(item)">重开订单</a>
+                  </div>
+					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
+                    <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
+                  </div>
+                  <div class="" v-if="item.isAddDemand == 1 && item.isDelivery == 0">
+                    <a class="greenFont mt15" @click="detailLog(item)">查看用车详情</a>
+                  </div> -->
+                  <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">订单详情</a>
+                </td>
+				<td>
+					
+				</td>
+              </tr>
+              </tbody>
+            </table>
         </div>
       </div>
     </div>
@@ -118,9 +191,11 @@
 
 <script>
 	import Navigation from '../../../../components/navigation'
-	import TimeDown from '../../../../components/timeDown'
+  import TimeDown from '../../../../components/timeDown'
+  import config from '../../../../config/config'
 	import { mapState } from 'vuex'
-
+	import { sendHttp } from '../../../../api/common'
+	import server from '../../../../config/api'
 	export default {
 		name: "spotPlanDetail",
 		layout: 'membercenter',
@@ -145,7 +220,8 @@
 		},
 		data() {
 			return {
-        id:!this.$route.params.id ? 0 : this.$route.params.id
+        id:!this.$route.params.id ? 0 : this.$route.params.id,
+        OrderList:{},
 			}
 		},
 		methods: {
@@ -154,9 +230,33 @@
       },
 			toCreateOrder(){
          location.href = '/spot/change/'+this.id
-      }
+      },
+      getOrderState(typeId) {
+				return config.orderState[typeId]
+      },
+      //订单类型
+			getOrderType(typeId) {
+				if (!typeId) return
+				return config.orderType[typeId].substring(0, 1)
+			},
+			//订单类型
+			detailOrderType(typeId) {
+				if (!typeId) return
+				return config.orderType[typeId]
+      },
+      async getSpotPlanDetail() {
+        	let params = {
+					id: this.id,
+				  }
+				const res = await sendHttp(this, false, server.api.spot.spotPlanDetail, params, 1)
+        this.OrderList = res.data
+        console.log('111111',this.OrderList)
+         console.log('222222',this.OrderList.orderInfoList)
+
+      },
 		},
 		mounted(){
+      this.getSpotPlanDetail();
     },
 		watch: {
 			'$route'(to, from) {
