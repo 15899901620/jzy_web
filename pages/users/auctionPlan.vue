@@ -63,7 +63,11 @@
                     <span class="gray" v-else-if="item.takenNum > 0 && item.takenNum < item.totalNum">部分支付</span>
                     <span class="gray" v-else-if="item.takenNum == item.totalNum">已支付</span>
                   </td>
-                  <td style="width: 15%;">待签合同</td>
+                  <td style="width: 15%;">
+                     <div>待签合同</div>
+                    <div><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
+                  </td>
+                  
                   <td style="width: 15%;" class="operate">
                     <div v-if="item.status == 3">
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">已违约</a>
@@ -146,7 +150,13 @@ export default {
     },
 		toCreateOrder(id){
 			location.href = '/auction/change/'+id
-		}
+    },
+    Spot(id){
+        this.$router.push({
+					name: 'users-spotContract',
+					query: {id: id,type:2}
+				})
+    },
   },
   mounted(){
   },

@@ -9,7 +9,7 @@
 							<td height="80">
 								<div style="padding-bottom:5px;clear:both;position:relative;">
 									<p class="ffw fl fs16p" style="width:20%;">塑米信息　</p>
-									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">居正源现货合同</span> <span class="red fs00p"></span></p>
+									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
 									<div style="height: 40px;position: absolute;right:0px;top: 41px;display: flex;text-align: right;flex-direction: column;">
 										<div style=" " class="bcTarget">合约编号:{{OrderList.orderNo}}</div>
 										<div style=" " class="bcTarget mt5p">合同签订地点：东莞市</div>
@@ -170,7 +170,9 @@
 		data() {
 			return {
                 id: this.$route.query.id ? parseInt(this.$route.query.id) : 1,
+                type: this.$route.query.type ? parseInt(this.$route.query.type) : 1,
                 OrderList:{},
+                title:'居正源现货合同'
 			}
 		},
 		methods: {
@@ -179,13 +181,15 @@
 					id: this.id,
 				}
 				const res = await sendHttp(this, true, server.api.order.getContractInfo, params, 1)
-                console.log(res)
 				this.OrderList = res.data
 
 			},
 		
         },
         mounted() {
+            if(this.type==2){
+                this.title='居正源竞拍合同'
+            }
             this.dataList();
 		},
 		created() {

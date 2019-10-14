@@ -70,7 +70,7 @@
                 </td>
                 <td style="width: 15%;">
                   <div>待签合同</div>
-                  <div  ><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
+                  <div><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
                 </td>
                 <td style="width: 15%;" class="operate">
                   <div v-if="item.status == 3">
