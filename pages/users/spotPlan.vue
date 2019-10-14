@@ -179,7 +179,7 @@
 							id: row.id
 						}
 						sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
-              console.log(response)
+            
 							if (response.status === 200) {
                        
 								if ((response.data.errorcode || 0) == 0) {

@@ -212,7 +212,7 @@
 
 				this.reaList=res.data.items;
 				this.total=res.data.total
-        		console.log(this.reaList)
+        	
 			  },
             async initData(){
                 const res = await getWarehouseList(this, {})

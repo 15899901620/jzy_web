@@ -158,7 +158,7 @@ export default {
 
                 }else {
                     this.btnBoolen = true;
-                    console.log(this.btnBoolen)
+                  
                     this.btnValue=`重新获取(${this.auth_time})S`
                     this.btnClassName="btn"
 
@@ -234,7 +234,7 @@ export default {
             }
             
             const res = await userRepassWd(this, params)
-            console.log(res)
+           
             if(res.data==true && res.status ===200){
                 this.$Message.info({content: '修改密码成功'})
                 // this.$router.push('/users/user')

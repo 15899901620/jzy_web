@@ -123,10 +123,8 @@ export default {
           username: this.loginsupplierform.username,
           password: this.loginsupplierform.password
         };
-        console.log("params:",params)
         const res = await supplierLogin(this, params);
         var dataLiat = res;
-        console.log("dataLiat:",dataLiat)
         if (res.data.data === null && res.status === 200) {
           this.passwordTip = true;
           this.passwordName = "账号密码错误！";

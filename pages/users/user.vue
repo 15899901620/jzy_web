@@ -202,12 +202,12 @@
           ]),
           //竞拍列表页
           biddersList(){
-            console.log("***biddersList***biddersList")
+            
             this.$router.push({name:"bidders"})
           },
 			//订单类型
 			getOrderType(typeId) {
-              console.log("userinfor", getCookies('userinfor'))
+           
 				if (!typeId) return
 				return config.orderType[typeId]
 			},

@@ -138,9 +138,7 @@
 
 			},
 			gross(){
-				console.log(111)
 				this.totalnum=this.price*this.weight
-				console.log(this.totalnum)
 			},
 			delay() {
 				let params = {

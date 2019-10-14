@@ -197,13 +197,12 @@
         },
         created(){},
         computed: {
-            spotList: function () {
-                console.log("advanceList:",this.$store.state.advance.advanceList)
-                return this.$store.state.advance.advanceList
-            },
-            total: function () {
-                return this.$store.state.advance.total
-            }
+          spotList: function () {
+            return this.$store.state.advance.advanceList
+          },
+          total: function () {
+              return this.$store.state.advance.total
+          }
         },
         head() {
             return {
