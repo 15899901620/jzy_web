@@ -44,7 +44,7 @@
                   </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
                   <span class="fr mr15"
-                        v-if="item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)">
+                        v-if="item.available_num > 0 && item.status == 1">
                     <span class="red">转单倒计时：</span>
                     <span class="red"><TimeDown :endTime="item.last_ordered_date" hoursShow endMsg="已失效"
                                                 :onTimeOver="reloadPage"></TimeDown></span>
@@ -68,7 +68,10 @@
                   <span class="gray" v-else-if="item.taken_num > 0 && item.taken_num < item.total_num">部分支付</span>
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
-                <td style="width: 15%;">待签合同</td>
+                <td style="width: 15%;">
+                  <div>待签合同</div>
+                  <div><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
+                </td>
                 <td style="width: 15%;" class="operate">
                   <div v-if="item.status == 3">
                     <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px;background-color:#ed4014">已违约</a>
@@ -160,7 +163,13 @@
 			},
 			checked() {
 				location.href = '/users/spotPlan?plan_no=' + this.formSearch.planNo
-			},
+      },
+      Spot(id){
+        this.$router.push({
+					name: 'users-spotContract',
+					query: {id: id}
+				})
+      },
 			cancelPlan(row) {
 				this.$Modal.confirm({
 					title: '合约申请结束',
@@ -170,15 +179,13 @@
 							id: row.id
 						}
 						sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
+            
 							if (response.status === 200) {
+                       
 								if ((response.data.errorcode || 0) == 0) {
 									window.location.reload()
 								} else {
-									this.$Modal.warning({
-										title: '提示',
-										content: res.data.message
-									})
-									return
+                   alert(response.data.message)						
 								}
 							}
 						})

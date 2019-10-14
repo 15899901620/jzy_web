@@ -17,7 +17,7 @@
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{datalist.orderNum}}</span>
+        <span class="ml10">{{datalist.orderNum}}吨</span>
       </div>
       <!--需冻结保证金-->
       <div class="PricePopup">
@@ -29,7 +29,7 @@
           <p>
             <span class="PricePopup_title">可用余额：</span>
             <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.available_amount_format }}</span>
-            <a class="PricePopup_btn" href="/help/9" target="_blank" style="float: right;line-height: 16px;">查看充值方式</a>
+            <a class="PricePopup_btn" @click="showInvestCapital" target="_blank" style="float: right;line-height: 16px;">查看充值方式</a>
           </p>
         </div>
       </div>
@@ -80,6 +80,9 @@
 			datalist: {
 				type: Object
 			}
+		},
+		showInvestCapital(){
+			location.href = '/users/investCapital'
 		},
 		methods: {
 			async getCapital() {

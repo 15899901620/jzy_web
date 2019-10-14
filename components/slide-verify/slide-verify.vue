@@ -76,7 +76,7 @@ export default {
   mounted(){
     var o=document.getElementById("dragDiv")
     this.Width=o.clientWidth||o.offsetWidth;
-    this.maxwidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth;
+    this.maxwidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth-2;
     document.getElementsByTagName('html')[0].addEventListener('mousemove',this.mouseMoveFn);
     document.getElementsByTagName('html')[0].addEventListener('mouseup',this.moseUpFn)
   }

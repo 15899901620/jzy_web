@@ -263,21 +263,15 @@ export default {
     },
     computed: {
         totalPrice: function () {
-            console.log("totalPrice",this.specialDetail.finalPrice)
-            console.log("freightFee",this.orderinfo.freightFee)
-            console.log("jryCost",this.orderinfo.jryCost)
             return parseFloat(this.specialDetail.finalPrice) + parseFloat(this.orderinfo.freightFee) + parseFloat(this.orderinfo.jryCost)
         },
         totalPriceFormat: function () {
             return parseFloat(this.totalPrice).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
         },
         totalAmountes: function () {
-            console.log("totalPrice",this.totalPrice)
-            console.log("orderNum:",this.orderinfo.orderNum)
             return parseFloat(this.totalPrice) * parseInt(this.orderinfo.orderNum)
         },
         totalAmountFormat: function () {
-            console.log("totalAmountes",this.totalAmountes)
             return parseFloat(this.totalAmountes).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
         },
         payAmount: function () {
@@ -305,8 +299,6 @@ export default {
         },
         //选择运费
         setFreight(i, row){
-            console.log("i",i)
-            console.log("row",row)
             // this.currfreight = i
             // if(row){
             //     this.currfreightdata =row
@@ -336,45 +328,36 @@ export default {
         },
         //选择提货或者配置
         chooseDelieryType (index) {
-            console.log("index",index)
-            this.currentIndex = index
-            // if(index==1){
-            //     this.orderinfo.isDelivery = index
-            //     this.getFreight();
-            // }else{
-            //     this.orderinfo.isDelivery = 0
-            // }
-            // this.setCosting();
+          this.currentIndex = index
+          // if(index==1){
+          //     this.orderinfo.isDelivery = index
+          //     this.getFreight();
+          // }else{
+          //     this.orderinfo.isDelivery = 0
+          // }
+          // this.setCosting();
 
-            if (index == 1) {
-                this.orderinfo.isDelivery = index
-                this.currMin = this.specialDetail.deliveryMin
-                this.currsetp = this.specialDetail.deliveryMin
-            console.log("specialDetail:",this.specialDetail)
-                console.log("currMin:",this.currMin)
-            } else {
-                this.orderinfo.isDelivery = 0
-                this.currMin = this.specialDetail.takeTheirMin
-                this.currsetp = this.specialDetail.deliveryMin
-            }
-            if (this.currMin <= this.currMax) {
-                this.orderinfo.orderNum = this.currMin
-            } else {
-                console.log("currMin",this.currMin)
-                this.showWarning("剩余库存(" + this.currMax + ")不满足当前交货方式的起订量(" + this.currMin + ")要求，请重新下单！", function () {
-                    window.location.href = '/special'
-                })
-            }
-
-
-
-
+          if (index == 1) {
+            this.orderinfo.isDelivery = index
+            this.currMin = this.specialDetail.deliveryMin
+            this.currsetp = this.specialDetail.deliveryMin
+          } else {
+            this.orderinfo.isDelivery = 0
+            this.currMin = this.specialDetail.takeTheirMin
+            this.currsetp = this.specialDetail.deliveryMin
+          }
+          if (this.currMin <= this.currMax) {
+            this.orderinfo.orderNum = this.currMin
+          } else {
+            this.showWarning("剩余库存(" + this.currMax + ")不满足当前交货方式的起订量(" + this.currMin + ")要求，请重新下单！", function () {
+              window.location.href = '/special'
+            })
+          }
         },
         //资金
         async getMyCapital () {
             const res3=await capitalinfo(this, {})
             if(res3){
-                console.log("res3",res3)
                 this.capitalinfo = res3.data
             }
         },
@@ -385,7 +368,6 @@ export default {
             }
             const res = await specialDetail(this, params)
             this.specialDetail = res.data
-            console.log("specialDetail:",this.specialDetail)
             this.setCosting()
             this.getWeekDetail()
         },
@@ -417,9 +399,9 @@ export default {
                 addressId: this.orderinfo.addressId,
                 carrierId: this.carrierId
             }
-            console.log("params:",params)
+            
             const res = await submitOrder(this, params)
-            console.log("res",res)
+            
             if (typeof res.data.errorcode == "undefined"){
 
                 this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
@@ -456,7 +438,7 @@ export default {
             }
             const res= await devDetail(this, data)
             if(res.data){
-                console.log("rescarriers",res.data.carriers)
+                
                 this.carrierList = res.data.carriers
 
                  this.logisticsfreight = res.data.freightList
@@ -572,8 +554,6 @@ export default {
 <style lang="css" scoped>
 .ivu-checkbox-checked .ivu-checkbox-inner:after {font-size: 6px;}
 .ivu-checkbox-wrapper {line-height: 17px;}
-.ivu-radio-group-vertical .ivu-radio-wrapper {
-    height: 32px;
-}
+.ivu-radio-group-vertical .ivu-radio-wrapper {height: 32px;}
 .ivu-radio {margin-bottom: 2px;}
 </style>

@@ -1,6 +1,8 @@
 <template>
     <div :class="classes">
-        <div class="whitebg" style="width: 19.5%">111111111111</div>
+        <div class="whitebg" style="width: 19.5%">
+            <router-link :to="{name:'article-id'}"  ><img src="../../static/img/newsImages.jpg" width="234" height="210"></router-link>
+        </div>
         <div class="whitebg" style="width: 79.5%">
             <div class="indextabs-bar">
                 <!--标题页的标题 v-for遍历, :class 动态绑定class-->

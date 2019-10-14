@@ -124,10 +124,10 @@
             </Row>
             <Row index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
               <Col span="4">{{this.datalist.skuName}}</Col>
-              <Col span="2">{{this.datalist.orderNum}}</Col>
+              <Col span="2">{{this.datalist.orderNum}}吨</Col>
               <Col span="3">{{this.amountFormat(this.datalist.finalPrice - this.datalist.shippingFee -
-                this.datalist.jryAdd)}}</Col>
-              <Col span="2">+ {{this.datalist.shippingFee}}</Col>
+                this.datalist.jryAdd)}} </Col>
+              <Col span="2">+ {{this.datalist.shippingFee}}元</Col>
               <Col span="2">¥{{this.datalist.jryAdd}}/吨</Col>
               <Col span="4">{{this.datalist.finalPriceFormat}}</Col>
               <Col span="3">{{this.datalist.depositAmountFormat}}</Col>
@@ -136,14 +136,14 @@
           </div>
           <div>
 
-            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
+            <div style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;    margin-top: 15px;">
               订单总额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                  <div  v-if="this.datalist.status == 2" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                 <div  v-if="this.datalist.status == 3 || this.datalist.status == 4" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               已支付：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                 <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;" 
-               v-if=" this.datalist.status != 3 && this.datalist.status != 4">巨融易：<span class="red" v-if='this.datalist.isJryService'>{{this.datalist.jryDays}}天</span>
+               v-if=" this.datalist.status == 2">巨融易：<span class="red" v-if='this.datalist.isJryService'>{{this.datalist.jryDays}}天</span>
                <span class="red" v-else>--</span>
                  <span class="fr mr15 " style="margin-left:120px">
                   最后付款时间：
@@ -280,7 +280,7 @@
            
             this.payOrderID = this.orderid
             this.payLoading = true
-           console.log(this.payOrderID)
+           
         },	
       async orderlist() {
 				let params = {
@@ -289,7 +289,7 @@
 				const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 
         this.OrderList = res.data
-        console.log(this.OrderList)
+     
 
 			},  
     },

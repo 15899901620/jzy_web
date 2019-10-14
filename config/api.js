@@ -97,6 +97,7 @@ let api = {
     freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
+    getContractInfo:{'url':'/bill/spotPlan/getContractInfo', 'method':'get'} ,
 		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
 		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
 		spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},

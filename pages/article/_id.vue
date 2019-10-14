@@ -124,7 +124,6 @@ export default {
     },
     methods: {
         showTotal(total) {
-            console.log('total',total)
             return `全部 ${total} 条`;
         },
         changePage (row) {

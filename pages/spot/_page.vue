@@ -29,6 +29,7 @@
             <dl class="fl filter_item">
               <dt class="scTitle">加工级别：</dt>
               <dd class="pro_brand_list" :class="processMore ? 'h50' : ''">
+                <a  @click="processClick()">显示全部</a>
                 <a v-for="(item, index) in $store.state.spot.condition.process" :key="index"
                    @click="processClick(item.id)">
                   {{item.name}}

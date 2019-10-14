@@ -21,7 +21,7 @@
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{dataList.orderNum}}</span>
+        <span class="ml10">{{dataList.orderNum}}吨</span>
       </div>
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单总金额：</span>
@@ -47,7 +47,7 @@
             <Checkbox :disabled="true"></Checkbox>
             <span class="PricePopup_title">保证金钱包余额：</span>
             <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-            <a class="PricePopup_btn" href="/help/9" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
+            <a class="PricePopup_btn" @click="wallet()" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
           </p>
         </div>
       </div>
@@ -105,7 +105,7 @@
 			},
 			showInvestCapital(){
 				location.href = '/users/investCapital'
-      },
+			},
 			amountFormat(amount) {
 				return parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 			},
@@ -133,6 +133,9 @@
 						duration: 5
 					});
 				}
+			},
+			wallet(){
+				alert('该功能正在维护')
 			},
 			//确认支付
 			async sumitOK() {
