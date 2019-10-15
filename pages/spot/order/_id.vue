@@ -221,8 +221,6 @@
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
-        //获取资金情况
-				store.dispatch('member/getCapitalInfo'),
         //获取报价信息
 				store.dispatch('spot/getSpotInfo', {id: params.id||0}),
 			])
@@ -515,6 +513,8 @@
         });
 				return
       }
+			//获取资金情况
+			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
       if(this.spotInfo.limit_num > 0){
