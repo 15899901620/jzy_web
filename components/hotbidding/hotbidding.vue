@@ -82,13 +82,16 @@
 				location.href.reload()
             },
 			mouseEnter() {
-				var ul = document.getElementById('TimeL-ul')
-				var li = ul.getElementsByTagName('li')
-				if (li.length >= 5) {
-					this.display = "flex";
-				} else {
-					this.display = "none";
-				}
+              if ( this.$store.state.bidders.auctionList.length > 0 ) {
+                var ul = document.getElementById('TimeL-ul')
+                var li = ul.getElementsByTagName('li')
+                if (li.length >= 5) {
+                  this.display = "flex";
+                } else {
+                  this.display = "none";
+                }
+              }
+
 			},
 			mouseLeave() {
 				this.display = "none";

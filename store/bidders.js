@@ -43,8 +43,6 @@ export const mutations = {
 	updatePlanDetail(state, data) {
 		state.planDetail = data
 	},
-
-
 	updateHotBidderData(state, data) {
 		state.hotbidderList = data
 	},
@@ -63,6 +61,7 @@ export const mutations = {
 }
 
 export const actions = {
+	//我的出价
 	async getAuctionList({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {

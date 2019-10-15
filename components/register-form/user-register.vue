@@ -48,7 +48,14 @@
               </FormItem>
             </Col>
           </Row>
-          <Row :gutter="24" index="5">
+          <Row :gutter="24" index="5" style="margin: 0">
+            <Col span="21">
+              <div style="width: 53%; margin: -15px auto 0; cursor: pointer">
+                <a class="orangeFont fs14" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">授权书下载模板</a>
+              </div>
+            </Col>
+          </Row>
+          <Row :gutter="24" index="5" >
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">
                 <FormItem prop="single">
@@ -164,7 +171,7 @@
               </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M。<a class="orangeFont fs16" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">下载模板</a></div>
+              <div class="uploadimg">请点击上传授权书图片（png、jpeg、jpg和pdf）文件不大于2M。</div>
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.authorization_elc">

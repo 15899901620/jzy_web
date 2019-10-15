@@ -17,16 +17,14 @@
                         <p>交易时间(工作日)</p>
                         <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
                         <p class="mt10">
-                            <a rel="nofollow" target="_blank"  @v-on::click="OnlineService()"  class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
+                            <a rel="nofollow" target="_blank"  v-on:click="OnlineService()"  class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
                         </p>
                     </div>
                 </div>
             </div>
             <links></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
-                </div>
+                <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
             </div>
         </template>
         <template v-else-if="size === 'large'">
@@ -45,23 +43,19 @@
                         <p>交易时间(工作日)</p>
                         <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
                         <p class="mt10">
-                            <a rel="nofollow" target="_blank" @v-on::click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
+                            <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
                         </p>
                     </div>
                 </div>
             </div>
             <links :linksData="linksinfo"></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
-                </div>
+                <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
             </div>
         </template>
         <template v-if="size === 'small'">
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright">
-                    {{ this.$store.state.common.sysConfig.COPYRIGHT }}
-                </div>
+                <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
             </div>
         </template>
 	</div>
@@ -97,8 +91,10 @@ export default {
     },
     methods: {
         OnlineService () {
+            console.log("OnlineService")
             let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
-            // window.open(url)
+            console.log("url:",url)
+             window.open(url)
         }
     }
 }

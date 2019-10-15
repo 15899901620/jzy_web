@@ -193,7 +193,7 @@
 							const res = await getGainuserInfor(this, {})
 							if (res.status === 200 && res.data) {
 								let auth = stringify(res.data)
-								Cookies.set('userinfor', auth, {expires: expires})
+ 								Cookies.set('userinfor', auth, {expires: expires})
 								Cookies.set('memberInfo', res.data, {expires: expires})
 								this.updateUserInfof(res.data)
                                   location.href = '/'

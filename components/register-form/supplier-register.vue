@@ -67,6 +67,13 @@
               </FormItem>
             </Col>
           </Row>
+          <Row :gutter="24" index="5" style="margin: 0">
+            <Col span="21">
+              <div style="width: 53%; margin: -15px auto 0; cursor: pointer">
+                <a class="orangeFont fs14" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">授权书下载模板</a>
+              </div>
+            </Col>
+          </Row>
           <Row :gutter="24" index="5">
             <Col span="21" @click="protocolModalToShow">
               <div @click="protocolModalToShow">

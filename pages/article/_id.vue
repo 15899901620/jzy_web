@@ -98,6 +98,7 @@ export default {
           store.dispatch('article/getArticleCatList',  {parentId: 0}),
           store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
 
+
         ])
     },
     components: {
@@ -133,7 +134,6 @@ export default {
 
     },
     created(){
-
         let id = this.$route.params.id ? this.$route.params.id : 0
         let len = this.articleCat.length
         for (var i=0;i<len;i++)
@@ -142,7 +142,6 @@ export default {
                 this.currCategoryInfo = this.articleCat[i]
                 break
             }
-
         }
         if(this.currCategoryInfo == ''){
             this.currCategoryInfo = {
@@ -159,7 +158,8 @@ export default {
             currPage:  state => state.article.currPage,
             hotarticleInfo: state => state.article.hotarticleInfo,
             articleCat: state => state.article.articleCat,
-            articecatDetail: state => state.article.articecatDetail
+            articecatDetail: state => state.article.articecatDetail,
+
         })
     },
     watch: {
