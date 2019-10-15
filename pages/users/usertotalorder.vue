@@ -42,7 +42,7 @@
             <span style="width: 10%;">数量(吨)</span>
             <span style="width: 10%;">库区</span>
             <span style="width: 10%;">提货方式</span>
-            <span style="width: 13%;">订单总金额</span>
+            <span style="width: 14%;">订单总金额</span>
             <span style="width: 14%;">付款状态</span>
             <span style="width: 12%;">订单操作</span>
             <span style="width: 12%;">提货状态</span>
@@ -77,7 +77,7 @@
 						配送
 					</span>
 				</td>
-                <td style="width: 13%;">
+                <td style="width: 14%;">
                   {{item.totalAmountFormat}}
                   <template v-if="item.status == 3 || item.status == 4 "><br><span
                       style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">已付{{amountFormat(item.totalAmount)}}</span>
