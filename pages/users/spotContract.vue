@@ -25,8 +25,8 @@
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
 									<tr>
 										<td class="pb5p ">合同生效日期：{{OrderList.orderDate}}</td>
-										<td class="pb5p ">合同终止日期：{{OrderList.deliveryDeadline}}</td>
-										<td class="pb5p ">合同签订日期：{{OrderList.orderDate}}</td>
+										<td class="pb5p ">提货起始日期：{{OrderList.deliveryDeadline}}</td>
+										<td class="pb5p ">提货截止日期：{{OrderList.orderDate}}</td>
 									</tr>
 								</table>
 							</td>
@@ -59,7 +59,7 @@
 										<th>税率%</th>
 									</tr>
 									<tr>
-										<th style="padding:5px 0;">pph</th>
+										<th style="padding:5px 0;">{{OrderList.skuName}}</th>
 										<th>{{OrderList.manufacturer}}</th>
 										<th>{{OrderList.skuType}}</th>
 										<th>{{OrderList.orderNum}}</th>
@@ -79,7 +79,12 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">履约保证金率%</th><th>/</th><th>履约保证金金额</th><th>/</th></tr>
+									<tr>
+									<th style="padding:5px 0;">履约保证金率</th>
+									<th>{{OrderList.marginRatio}}%</th>
+									<th>履约保证金金额</th>
+									<th colspan="3">¥{{OrderList.depositAmount}}</th>
+									</tr>
 								</table>
 							</td>
 						</tr>
@@ -87,8 +92,8 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">支付方式：</th><th>电汇</th><th>付款方式：</th><th>款到发货</th></tr>
-									<tr><th style="padding:5px 0;">计价方式：</th><th>现货基价</th><th>其他约定：</th><th>/</th></tr>
+									<tr><th style="padding:5px 0;">支付方式：</th><th>电汇或银行承兑自贴息</th><th>付款方式：</th><th>款到发货</th></tr>
+									<tr><th style="padding:5px 0;">计价方式：</th><th>现货价</th><th>其他约定：</th><th>/</th></tr>
 									<tr>
 										<th style="padding:5px 0;">支付条款约定：</th>
 										<th colspan="3">支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定</th>
@@ -102,25 +107,25 @@
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
 									<tr>
 										<th style="padding:5px 0;">包装方式：</th>
-										<th>在实际执行订单中确定·</th>
+										<th><span v-if="OrderList.packingModes==1">标准包装</span><span v-else>非标准包装</span></th>
 										<th>运输方式：</th>
 										<th>在实际执行订单中确定·</th>
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">装运点：</th>
-										<th>在实际执行订单中确定·</th>
+										<th>{{OrderList.pointName}}</th>
 										<th>提货仓库：</th>
-										<th>在实际执行订单中确定·</th>
+										<th>{{OrderList.warehouseName}}</th>
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">交/提货方式：</th>
-										<th>在实际执行订单中确定·</th>
+										<th>待定</th>
 										<th>承运商：</th>
 										<th>在实际执行订单中确定·</th>
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">送货详细地址：</th>
-										<th colspan="3">需方自提的提货地址为供方指定仓库，供方配送的交货地址为合同约定地址，其他约定按照实际执行订单确定</th>
+										<th colspan="3">待定</th>
 									</tr>
 								</table>
 							</td>
@@ -174,7 +179,7 @@
                 id: this.$route.query.id ? parseInt(this.$route.query.id) : 1,
                 type: this.$route.query.type ? parseInt(this.$route.query.type) : 1,
                 OrderList:{},
-                title:'巨正源现货合同'
+                title:'化工产品购销（现货）合同'
 			}
 		},
 		methods: {
@@ -190,7 +195,7 @@
         },
         mounted() {
             if(this.type==2){
-                this.title='巨正源竞拍合同'
+                this.title='化工产品购销（竞拍）合同'
             }
             this.dataList();
 		},
