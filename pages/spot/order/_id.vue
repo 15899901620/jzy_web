@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <Header-small title="现货超市">
-      <div slot="headerother">
+      <div slot="headerother" style="margin-right: 20px;">
         <ul class="sp_cat_title_list">
           <li class="curr"><i>1</i><p>编辑详细信息</p></li>
           <li><i>2</i><p>生成合约</p></li>
@@ -171,8 +171,7 @@
           </div>
           <div style="display: flex; flex-direction: column; width: 300px; ">
             <div class="mt20 tar mr20 dflex " style="align-items: center;">
-              <span class="totalprice">应付总额：</span><span class="tar"
-                                                         style="width: 150px;">￥{{this.totalAmountFormat}}</span>
+              <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.totalAmountFormat}}</span>
             </div>
             <div class="mt20 mb20 tar mr20 dflexAlem">
               <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.payAmountFormat}}</span>
@@ -182,7 +181,10 @@
 
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-          <div class="submitOrder" @click='beginCreateOrder'>提交订单</div>
+			 <div class="submitOrder" @click='beginCreateOrder' v-if=" this.currMin>= PlanNum">提交订单</div>
+			 <div class="submitOrder" style='background:gray'  v-else>提交订单</div>	  
+			   
+		
         </div>
       </div>
     </div>
@@ -202,7 +204,7 @@
 	import AddressDialog from '../../../components/address-dialog'
 	import spotPay from '../../../components/paydeposit/spotPay'
 	import { mapState } from 'vuex'
-	import { sendCurl } from '../../../api/common'
+	import { sendCurl ,sendHttp} from '../../../api/common'
 	import server from '../../../config/api'
 
 	export default {
@@ -276,6 +278,7 @@
 				createInfo: false,
 				currMin: 0,
 				currMax: 0,
+				PlanNum:0,
 				currsetp: 1,
 				ServiceTimeList: [],
 				payList: [
@@ -306,7 +309,7 @@
 					this.orderinfo.isDelivery = 0
 					this.currMin = Math.max(this.spotInfo.take_their_min, this.spotInfo.min_order)
 					this.currsetp = this.spotInfo.take_bid_increment
-          this.setFreight(-1)
+          			this.setFreight(-1)
 				} else if (index == 1) {
 					this.orderinfo.isDelivery = 1
 					this.currMin = Math.max(this.spotInfo.delivery_min, this.spotInfo.min_order)
@@ -319,7 +322,7 @@
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
 					this.currfreight = -1
-          this.orderinfo.jryDays = 0
+					this.orderinfo.jryDays = 0
 					this.setJry()
 					this.choosePayType(1)
 				}
@@ -384,11 +387,11 @@
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
 					this.currfreight = -1
-        }else{
+				}else{
 					this.orderinfo.transportationMode = row.transportation
 					this.orderinfo.freightFee = row.freight_fee
 					this.currfreight = i
-        }
+				}
 			},
 			choosePayType(index) {
 				this.orderinfo.payIndex = index
@@ -446,7 +449,7 @@
 
 				}
 
-        this.payModalTitle = '支付'
+        		this.payModalTitle = '支付'
 
 				this.showPayment()
 			},
@@ -486,7 +489,7 @@
 							title: '提示',
 							content: res.data.message
 						})
-            return
+				return
 					}
 				}
 			},
@@ -504,9 +507,18 @@
 					})
 				}
 
+			},
+			async PlanTotalNum(){
+				let params = {
+					quoteId: this.spotId,
+				}
+				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
+				this.PlanNum=res.data
+				console.log('1111111111',res)
 			}
 		},
-		mounted() {
+		mounted() {	
+			
 			if(!this.spotInfo){
 				this.showWarning('报价信息不存在，请重新操作！', function(){
 					location.href = '/spot'
@@ -517,11 +529,12 @@
 			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
-      if(this.spotInfo.limit_num > 0){
+			if(this.spotInfo.limit_num > 0){			
 				this.currMax = Math.min(this.spotInfo.limit_num, this.spotInfo.available_num)
-      }else{
+			}else{
 				this.currMax = this.spotInfo.available_num
-      }
+			}
+			this.PlanTotalNum();
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
@@ -544,7 +557,7 @@
 					}
 				]
 			}
-		}
+		},
 	}
 </script>
 <style lang="css" scoped>

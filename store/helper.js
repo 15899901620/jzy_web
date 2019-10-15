@@ -40,6 +40,7 @@ export const actions = {
 					indexShow: 1
 				}
 				const rest = await sendCurl(this, server.api.helper.getHelpPage, params2)
+
 				let restdata = rest.data
 				cateData[k]['clist'] = restdata
 			}

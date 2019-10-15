@@ -105,6 +105,9 @@ export default {
         Banner,
         pages: pagination.pages
     },
+	mounted(){
+    	console.log("bannerinfo:",this.bannerinfo)
+	},
     computed: {
         ...mapState({
             bannerinfo: state => state.system.bannerinfo,

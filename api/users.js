@@ -598,9 +598,9 @@ export const addressDelete = (vm, data) => {
     'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
   }
   console.log('data', data)
-  return vm.$axios.delete(server.prefix + server.api.Address.addressDelete,
+  return vm.$axios.post(server.prefix + server.api.Address.addressDelete,
     {
-      params:{...data}
+      ...data
     }).catch((e) => {
     let errorInfo = e.response
     console.log('manageEditErr', errorInfo)

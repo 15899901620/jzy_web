@@ -4,40 +4,82 @@
 .@{ant-prefix}-cobrands {
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .coorperatTitle{
+        display: flex;
+        flex-direction: row;
+        background-color: #fff;
+        >li{
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            padding: 11px;
 
+        }
+        .tabs_tab_active{
+            color: #3399ff;
+            border-bottom: 2px solid #3399ff;
+        }
+
+    }
     .coorperList{
-        display: flex; 
-        flex-wrap: wrap; 
-        position: relative; 
-        
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+
         > li {
-            display: flex; 
+            display: flex;
             flex-wrap: wrap;
             border-bottom:1px solid #eee;
             border-right:1px solid #eee;
             overflow: hidden;
             width: 171.4px;
             height: 87px;
-         
-          
+
             & a {
-                margin-top: 1px; 
-                margin-right: 1px; 
-                width: 169.5px; 
-                height: 85px; 
-                background-color: #fff; 
+                margin-top: 1px;
+                margin-right: 1px;
+                width: 169.5px;
+                height: 85px;
+                background-color: #fff;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 &:hover {
                   background-color: rgba(31, 45, 61, 0.41);
                 }
-                & img{ 
+                & img{
                     height: 65%;
                 }
             }
         }
-      
-    
+
+
+    }
+    .Link{
+        display: flex;
+        > li {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+            width: 171.4px;
+
+            & a {
+                margin-top: 1px;
+                margin-right: 1px;
+                height: 45px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover {
+                    color: #2d8cf0;
+                }
+                & img{
+                    height: 65%;
+                }
+            }
+        }
     }
 }

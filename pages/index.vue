@@ -33,19 +33,17 @@
           </div>
         </outpacking>
       </div> -->
-      <div class="co-brands">
-        <outpacking title="合作品牌" cpadding="0px">
-          <div slot="content">
-            <cobrands></cobrands>
-          </div>
-        </outpacking>
-      </div>
+
       <div class="hot-industry" style=" overflow: hidden">
         <newsinfo></newsinfo>
+      </div>
+      <div class="co-brands">
+        <cobrands></cobrands>
       </div>
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
+    <script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8" async defer></script>
   </div>
 </template>
 

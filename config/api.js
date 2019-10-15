@@ -98,6 +98,7 @@ let api = {
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
     getContractInfo:{'url':'/bill/spotPlan/getContractInfo', 'method':'get'} ,
+    getPlanTotalNumByQuoteId: {'url':'/bill/spotPlan/getPlanTotalNumByQuoteId', 'method':'get'},
 		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
 		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
 		spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},
@@ -115,6 +116,7 @@ let api = {
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
+
     getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
     getAuctionInfo:{'url':'/bill/auction/sale/info','method':'get'},
 		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
@@ -128,7 +130,7 @@ let api = {
     priceListInfo:'/bill/priceList/getPrice', //查询物料价目信息
     NewPrice:'/bill/auctionBid/getCurrBid',   //获取最新的竞拍价
     auctionRecord:'/bill/auctionBid/page',    //获取竞拍记录
-    AddauctionPrice:'/bill/auctionBid',    //添加我的出价记录
+    AddauctionPrice:'/bill/auctionBid',        // 添加我的出价记录
     gainauctionrecord:'/bill/auctionBid/getMyBid',  //获取出价记录
     AddBondRecord:'/bill/auctionDeposit',           //添加保证金记录
     WinningBid:'/bill/auctionPlanned/getWinBid',  //中标信息
@@ -137,8 +139,9 @@ let api = {
     auctionPlanDetail:'/bill/auctionPlanned/info',    //根据竞拍计划id获取计划详情
     auctionsubmitOrderL:'/bill/orderInfo/auction/create',    //客户通过竞拍计划单下单
     auctionOrderList:'/bill/auctionPlanned/page',        //客户通过竞拍订单列表
-    myAuctionOrderList:'/bill/auctionPlanned/getMyList/page'
-  }, 
+    myAuctionOrderList:'/bill/auctionPlanned/getMyList/page',
+
+  },
   /**GET /auctionPlanned/getMyList/page
    * @description 资讯管理
    */
@@ -156,6 +159,7 @@ let api = {
     articleCatDetail:'/web/article_cat/detail',
     getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
     getNoticeCatList:{'url': '/web/announcement/page', 'method': 'get'},
+
 
   },
   /**
