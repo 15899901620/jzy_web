@@ -81,15 +81,15 @@
 				type: Object
 			}
 		},
-		showInvestCapital(){
-			location.href = '/users/investCapital'
-		},
 		methods: {
 			async getCapital() {
 				this.$store.dispatch('member/getCapitalInfo')
 			},
 			biderscancel() {
 				this.$emit('unChange', false)
+			},
+			showInvestCapital(){
+				location.href = '/users/investCapital'
 			},
 			async getNoteValue() {
 				let params = {}
