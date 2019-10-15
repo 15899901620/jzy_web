@@ -65,7 +65,7 @@
                   </td>
                   <td style="width: 15%;">
                      <div>待签合同</div>
-                    <div><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
+                    <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
                   </td>
                   
                   <td style="width: 15%;" class="operate">
@@ -152,10 +152,7 @@ export default {
 			location.href = '/auction/change/'+id
     },
     Spot(id){
-        this.$router.push({
-					name: 'users-spotContract',
-					query: {id: id,type:2}
-				})
+			location.href = '/users/spotContract?type=2&id=' + id
     },
   },
   mounted(){

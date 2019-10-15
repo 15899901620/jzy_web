@@ -56,7 +56,7 @@
                   <div class="Frozen_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>冻结金额</span>
-                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}</span>
+                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}+{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
                   </div>
                 </div>
               </div>

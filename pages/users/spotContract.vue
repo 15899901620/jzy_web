@@ -132,7 +132,7 @@
 						</tr>
 						<tr><td class="pt5p">6·质量标准：执行供方产品出厂质量标准·</td></tr>
 						<tr style="margin-top: 10px;display: block" >
-							<td style="border-bottom:2px solid #000;padding-bottom:5px; margin-top: 20px;overflow: hidden">7·本合同作为双方已签订的化工产品年度销量合同（编号为2019）的附件，双方的化工产品销售行为受本合同和年度销量合同的法律效力约束，本合同规定与年度销量合同不一致的，以本合同为主·</td>
+							<td style="border-bottom:2px solid #000;padding-bottom:5px; margin-top: 20px;overflow: hidden">7·本合同与后附《合同条款及规则》构成合同整体，一经双方签署，本合同后附《合同条款及规则》即同时生效。</td>
 						</tr>
 					</table>
 					<div class="supplyname">
@@ -176,14 +176,14 @@
 		},
 		data() {
 			return {
-                id: this.$route.query.id ? parseInt(this.$route.query.id) : 1,
-                type: this.$route.query.type ? parseInt(this.$route.query.type) : 1,
-                OrderList:{},
-                title:'化工产品购销（现货）合同'
+        id: this.$route.query.id ? parseInt(this.$route.query.id) : 1,
+        type: this.$route.query.type ? parseInt(this.$route.query.type) : 1,
+        OrderList:{},
+        title:'化工产品购销（现货）合同'
 			}
 		},
 		methods: {
-	        async dataList() {
+      async dataList() {
 				let params = {
 					id: this.id,
 				}
@@ -191,13 +191,12 @@
 				this.OrderList = res.data
 
 			},
-		
-        },
-        mounted() {
-            if(this.type==2){
-                this.title='化工产品购销（竞拍）合同'
-            }
-            this.dataList();
+    },
+    mounted() {
+      if(this.type==2){
+          this.title='化工产品购销（竞拍）合同'
+      }
+      this.dataList();
 		},
 		created() {
 		},
