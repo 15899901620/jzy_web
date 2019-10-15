@@ -2,12 +2,11 @@
   <div class="body">
     <Header title="头部"></Header>
     <div class="container" title="">
-      <div class="materials_banner">
-        <template v-for="(item,index) in $store.state.common.adList.ad4">
-          <img :src="item.adImg"/>
-        </template>
-
+      <template v-for="(item,index) in $store.state.common.adList.ad4">
+      <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
+          <!-- <img :src="item.adImg"/>-->
       </div>
+      </template>
       <div class="w1200" style="margin-top: 20px">
         <div class="titlelist">
           我的竞拍
@@ -27,47 +26,18 @@
             <th style="width: 8%">我的状态</th>
             <th style="width: 10%">操作</th>
           </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
-            <td>
-              <button class="see">查看</button>
-            </td>
-          </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
-            <td>
-              <button class="see">查看</button>
-            </td>
-          </tr>
-          <tr>
-            <td>0000012</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>0天23时12分36秒</td>
-            <td>￥10400.00/吨</td>
-            <td>￥10400.00/吨</td>
-            <td>50吨</td>
-            <td>30吨</td>
-            <td>竞拍结束</td>
-            <td>出局</td>
+          <tr v-for="(item,index) in MinAuctioin" :key="index">
+            <td>{{item.bill_no}}</td>
+            <td class="blue">{{item.product}}</td>
+            <td>{{item.manufacturer}}</td>
+            <td>{{item.real_end_time}}</td>
+            <td>￥{{item.min_price}}/吨</td>
+            <td>￥{{item.min_offerprice}}/吨</td>
+            <td>{{item.min_num}}吨</td>
+            <td>{{item.ru_num}}吨</td>
+            <td>{{item.current_stute}}</td>
+            <td v-if="item.min_stute"  @click="stuts_out(item,index)">入局</td>
+            <td v-else  @click="stuts(item,index)">出局</td>
             <td>
               <button class="see">查看</button>
             </td>
@@ -81,7 +51,7 @@
           <div style="width: 77%">
             <ul class="acuList" v-if="this.auctionTotal > 0">
               <li v-for="(items,index) in this.auctionList" :key="index">
-                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px">
+                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 10;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span class="gray">距离结束 ：</span>
@@ -109,7 +79,9 @@
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
-                </div>
+                  <div class="cancel_follow " v-if="items.isFollow ? 1 : 0 " @click="AddFollow()">已关注</div>
+                  <div class="follow" v-else  @click="BidersAdd(items,index)">关注</div>
+                 </div>
 
                 <div class="acuProduct ">
                   <h1 class=" fs20 mt20">{{items.skuName}}</h1>
@@ -152,7 +124,7 @@
 
             </ul>
             <p v-else style="background: none; font-size: 20px;text-align: center; margin:80px auto;">
-              暂无任何信息！
+              目前暂无竞拍活动！
             </p>
             <div class="  ovh text-xs-center" style="padding: 18px 0; text-align: center;">
               <pages :total="this.auctionTotal" :show-total="showTotal" :value="current_page"
@@ -164,26 +136,15 @@
             <!--  竞拍公告-->
             <div class="Notice whitebg mt15">
               <div class="NoticeTitle">
-                <span class="fs16">竞拍公告</span><span class="gray freshicon">换一组</span>
+                <span class="fs16">竞拍公告</span>
+                <!--  <span class="gray freshicon">换一组</span>-->
               </div>
               <ul class="NoticeList">
-                <li>
-                  <span style="width: 17%">LLDPE</span>
+                <li v-for="(item,index) in noticeList" :key="index" >
+                  <span style="width: 18%">{{item.seoKeywords}}</span>
                   <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">中海壳牌约216.0吨</span>
-                  <span style="width:16%;" class="gray">09-26</span>
-                </li>
-                <li>
-                  <span style="width: 17%">LLDPE</span>
-                  <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">中海壳牌约216.0吨</span>
-                  <span style="width:16%;">09-26</span>
-                </li>
-                <li>
-                  <span style="width: 17%">LLDPE</span>
-                  <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">中海壳牌约216.0吨</span>
-                  <span style="width:16%;" class="gray">09-26</span>
+                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{item.title}}</span>
+                  <span style="width:16%;" class="gray">{{item.time}}</span>
                 </li>
               </ul>
             </div>
@@ -201,13 +162,16 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
+	import { mapState } from 'vuex'
 	import Header from '../../components/header'
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
+    import server from "../../config/api";
+    import { sendCurl } from '../../api/common'
 
-	export default {
+
+    export default {
 		name: 'bidders',
 		components: {
 			Header,
@@ -216,19 +180,25 @@
 			TimeDown
 		},
 		fetch({store, params, query}) {
+		    this.page=query.page
+            console.log("page:",this.page)
 			return Promise.all([
-				//获取顶部、中部、底部导航信息
+				// 获取顶部、中部、底部导航信息
 				store.dispatch('common/getNavList'),
-				//获取系统配置
+				// 获取系统配置
 				store.dispatch('common/getSysConfig'),
-				//获取友情链接
+				// 获取友情链接
 				store.dispatch('common/getFriendlyList'),
-              //获取轮播图
-              store.dispatch('common/getBannerList', 4),
-              //获取底部帮助分类
+                // 获取轮播图
+                store.dispatch('common/getBannerList', 4),
+                // 获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-				//获取竞拍列表
+                store.dispatch('article/getindexArticleList',{catId: 8}),
+
+                // 获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
+                // 网站公告
+                store.dispatch('article/getNoticeList',  {typeId: 4, current_page: 1, page_size: 15}),
 			])
 		},
 		data() {
@@ -236,19 +206,35 @@
 				CurrSelect: 0,
 				current_page: parseInt(this.$route.query.page) || 1,
 				page_size: 6,
+                page:'',
 				NowTime: '',
 				Auctionlist: '',
 				AuctionTip: '暂无竞拍活动',
 				tabMain: ['1', '2', '3'],
 				status: 2,
 				index: 0,
+                isFollow:0,
+                aclist:'',
+                MinAuctioin:[
+                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
+                  current_stute:'结束',min_stute:0},
+                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
+                    current_stute:'结束',min_stute:0},
+                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
+                    current_stute:'结束',min_stute:0},
+                ],
 				AuctionTab: [
 					{AuctionName: '竞拍列表', status: 1},
 					{AuctionName: '我的竞拍', status: 2}
 				]
 			}
 		},
-      created(){},
+      created(){
+        this.SourceData()
+      },
+      mounted(){
+		  console.log("noticeList",this.noticeList)
+      },
       computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
@@ -257,19 +243,61 @@
 				bidderssoonData: state => state.bidders.bidderssoonData,
 				biddersendData: state => state.bidders.biddersendData,
                 bannerinfo: state => state.system.bannerinfo,
-			})
-
+                noticeList: state => state.article.noticeList
+ 			})
       },
 		methods: {
+
+          stuts(item,index){
+            console.log("item:",item)
+            console.log("index:",index)
+            this.$set(item,'min_stute',1)
+          },
+
+          stuts_out(item,index){
+            this.$set(item,'min_stute',0)
+          },
+
+          see(){},
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
 			reloadPage() {
 				location.reload()
 			},
+          AddFollow(){
+			  console.log("***AddFollow***")
+          },
+          async BidersAdd(items,index){
+            console.log("***items",items)
+            console.log("index",index)
+
+            console.log("items",items)
+            //  let params={
+            //   auctionIds:id
+            // }
+            // console.log("page:",this.page)
+            // //获取竞拍列表
+            // this.$store.dispatch('bidders/getAuctionList', {current_page: this.page || 1, page_size: 6})
+
+            // const res = await sendCurl(this,server.api.Auction.addAuctionfollow,params,false)
+            //  if(!res.data.errorCode && res.data){
+            //   //获取竞拍列表
+            //    this.auctionList= this.$store.state.bidders.auctionList
+            //  }
+
+          },
+          async SourceData() {
+            let params={
+              catId:8
+            }
+             const res = await sendCurl(this,server.api.information.getArticleList,params,false)
+            this.aclist = res.data.items
+          },
 			//跳转详情页
 			BidersDetail(id) {
-				if (this.$store.state.memberToken) {
+
+ 				if (this.$store.state.memberToken) {
 					location.href = '/bidders/detail/' + id
 				} else {
 					this.$Modal.confirm({
@@ -395,5 +423,23 @@
   .NoticeTitleAdv {
     height: 135px;
     margin-top: 15px;
+  }
+  .follow{
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    margin-left: 15px;
+    padding: 1px 12px;
+    font-size: 12px;
+    background: url("/img/add_follow.png")no-repeat 9px 5px;
+    padding-left: 25px;
+  }
+  .cancel_follow{
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    margin-left: 15px;
+    padding: 1px 10px;
+    font-size: 12px;
+    background: url("/img/cancel_follow.png")no-repeat 6px 5px;
+    padding-left: 22px;
   }
 </style>
