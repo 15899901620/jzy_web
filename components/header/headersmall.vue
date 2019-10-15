@@ -4,8 +4,8 @@
 		<!--头部-logo/搜索/电话-->
         <div class="searchLogo">
             <!--logo-->
-            <Logo class="mt20 mb20" style="border-right: 1px solid rgb(210, 210, 210);padding-right: 30px;"></Logo>
-            <div class="fs20 pl25 gray" style="position: absolute; top: 82px; margin-left: 230px;">{{title}}</div>
+            <Logo class="mt20 mb20" style="border-right: 1px solid rgb(210, 210, 210);padding-right: 30px; "></Logo>
+            <div class="fs22 pl25" style="position: absolute; top: 82px; margin-left: 230px;font-weight: bold;">{{title}}</div>
             <slot class="topother" name="headerother"></slot>
         </div>
     </div>
