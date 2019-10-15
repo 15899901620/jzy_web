@@ -24,7 +24,12 @@
             </div>
             <links></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
+<<<<<<< HEAD
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
+=======
+                <div class="copyright" v-html='this.$store.state.common.sysConfig.COPYRIGHT'>
+                </div>
+>>>>>>> 00d0b062275d6aec506362f2ce8ecfa522c06ba1
             </div>
         </template>
         <template v-else-if="size === 'large'">
@@ -51,11 +56,13 @@
             <links :linksData="linksinfo"></links>
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
+
             </div>
         </template>
         <template v-if="size === 'small'">
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
+
             </div>
         </template>
 	</div>

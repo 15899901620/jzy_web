@@ -53,7 +53,6 @@ let api = {
    * @description 订单管理
    */
   order: {
-    getContractInfo:{'url':'/bill/orderInfo/getContractInfo', 'method':'get'} ,
 		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
 		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
 		getOrderPayInfo:{'url':'/bill/orderInfo/getOrderPayInfo', 'method':'get'} ,
@@ -98,6 +97,8 @@ let api = {
     freightList: '/bill/freightList/orderFreightInfo',
     spotSubmitOrder: '/bill/spot/order/create',
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
+    getContractInfo:{'url':'/bill/spotPlan/getContractInfo', 'method':'get'} ,
+    getPlanTotalNumByQuoteId: {'url':'/bill/spotPlan/getPlanTotalNumByQuoteId', 'method':'get'},
 		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
 		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
 		spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},
@@ -115,13 +116,13 @@ let api = {
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
     auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
-    getAuctionList: {'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
-    getAuctionInfo: {'url':'/bill/auction/sale/info','method':'get'},
-    getAuctionPlan: {'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
-    getPlanDetail: {'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
-    createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
-    addAuctionfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},           // 添加竞拍关注
-    delAuctionfollow: {'url':'/bill/auctionFollow/delete', 'method':'post'},           // 添加删除信息
+
+    getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
+    getAuctionInfo:{'url':'/bill/auction/sale/info','method':'get'},
+		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
+		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
+		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
+		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍

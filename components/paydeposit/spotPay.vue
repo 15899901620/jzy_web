@@ -29,7 +29,7 @@
           <p>
             <span class="PricePopup_title">可用余额：</span>
             <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.available_amount_format }}</span>
-            <a class="PricePopup_btn" href="/help/9" target="_blank" style="float: right;line-height: 16px;">查看充值方式</a>
+            <a class="PricePopup_btn" @click="showInvestCapital" target="_blank" style="float: right;line-height: 16px;">查看充值方式</a>
           </p>
         </div>
       </div>
@@ -87,6 +87,9 @@
 			},
 			biderscancel() {
 				this.$emit('unChange', false)
+			},
+			showInvestCapital(){
+				location.href = '/users/investCapital'
 			},
 			async getNoteValue() {
 				let params = {}

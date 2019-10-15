@@ -80,7 +80,7 @@
 		methods: {
 			reloadPage(){
 				location.href.reload()
-            },
+      },
 			mouseEnter() {
               if ( this.$store.state.bidders.auctionList.length > 0 ) {
                 var ul = document.getElementById('TimeL-ul')
