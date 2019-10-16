@@ -63,9 +63,11 @@
                             </ul>
                         </div>
                     </outpacking>
-                    <div class="mt20"  @click="Tospot"  style="cursor: pointer">
-                        <img src="/img/phyAdv.png" />
-                    </div>
+                    <template v-if="this.bannerinfo.length>0">
+                        <div class="mt20" style="cursor: pointer" v-for="(item, index) in this.bannerinfo" :key="index" @click="Tospot(item.adLink)" >
+                            <img :src="item.adImg" />
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -102,6 +104,9 @@ export default {
                 level_id: !query.attr ? 0 : query.attr,
                 }),
             store.dispatch('physical/getphysicalHotList'),
+            store.dispatch('system/getBannerInfo', {
+                positionId: 5
+            }),
         ])
     },
     components: {
@@ -135,11 +140,15 @@ export default {
             specList: []
         }
     },
+    mounted(){
+        console.log("bannerinfo",this.bannerinfo)
+    },
     computed:{
         ...mapState({
             currPage:  state => state.physical.currPage,
             physicallist: state => state.physical.physicallist,
             physicalHotlist: state => state.physical.physicalHotlist,
+            bannerinfo: state => state.system.bannerinfo,
         })
     },
     created(){
@@ -147,8 +156,10 @@ export default {
         this.initAttrListData()
     },
     methods: {
-        Tospot(){
-            this.$router.push({name:"spot-page"})
+        Tospot(link){
+            if(link){
+                this.$router.push({name:link})
+            }
         },
         async initCategoryListData(){
             const res = await sendHttp(this, false, server.api.product.categoryList, {'pid': 0})

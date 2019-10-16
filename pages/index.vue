@@ -43,9 +43,8 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
-<!--    <div v-html="$store.state.common.sysConfig.SERVERONLINE"></div>-->
-
-  <script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8" async defer></script>
+<!--<div v-html="$store.state.common.sysConfig.SERVERONLINE"></div>-->
+    <script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8" async defer></script>
   </div>
 </template>
 

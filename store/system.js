@@ -32,7 +32,7 @@ export const mutations = {
       state.hotsearch = data
     }
 }
-  
+
 export const actions = {
     async getSystemCnf({ commit },  params = {}) {
         return await this.$axios.$get(api.prefix + api.api.sysconf.systemcof, { params })
@@ -44,7 +44,6 @@ export const actions = {
         })
     },
     async getHotSearch({ commit },  params = {}) {
-        ('tag', '')
         return await this.$axios.$get(api.prefix + api.api.search.hotsearch, { params })
         .then(response => {
             commit('updateHotSearch', response)
@@ -71,5 +70,5 @@ export const actions = {
         })
     }
 
-    
+
 }
