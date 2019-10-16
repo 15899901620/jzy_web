@@ -58,6 +58,11 @@ export default {
 
         ])
     },
+    mounted(){
+        console.log('helpCatList:',this.helpCatList)
+        console.log('helpDetail:',this.helpDetail)
+    },
+
     computed:{
         ...mapState({
             helpCatList: state => state.helper.helpCatList,
@@ -71,5 +76,4 @@ export default {
     }
 }
 </script>
-</script>
-</script>
+

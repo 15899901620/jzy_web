@@ -22,7 +22,7 @@ export default {
         ])
     },
 
-    computed: {
+     computed: {
         selected() {
             return !this.$route.path ? '/' : this.$route.path
         },

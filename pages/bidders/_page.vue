@@ -101,7 +101,7 @@
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
-                  <div class="cancel_follow " v-if="items.isFollow ? 1 : 0 " @click="AddFollow()">已关注</div>
+                  <div class="cancel_follow " v-if="items.isFollow ? 1 : 0 " >已关注</div>
                   <div class="follow" v-else  @click="BidersAdd(items,index)">关注</div>
                  </div>
 
@@ -168,9 +168,9 @@
               </div>
               <ul class="NoticeList">
                 <li v-for="(item,index) in noticeList" :key="index" >
-                  <span style="width: 18%">{{item.seoKeywords}}</span>
+                  <span style="width: 18%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="item.seoKeywords">{{item.seoKeywords}}</span>
                   <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{item.title}}</span>
+                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="item.title">{{item.title}}</span>
                   <span style="width:16%;" class="gray">{{item.time}}</span>
                 </li>
               </ul>
@@ -206,32 +206,7 @@
 			pages: pagination.pages,
 			TimeDown
 		},
-		fetch({store, params, query}) {
-		    this.page=query.page
-            console.log("page:",this.page)
-			return Promise.all([
-				// 获取顶部、中部、底部导航信息
-				store.dispatch('common/getNavList'),
-				// 获取系统配置
-				store.dispatch('common/getSysConfig'),
-				// 获取友情链接
-				store.dispatch('common/getFriendlyList'),
-                // 获取轮播图
-                store.dispatch('common/getBannerList', 4),
-                // 获取底部帮助分类
-				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-                store.dispatch('article/getindexArticleList',{catId: 8}),
 
-                // 获取竞拍列表
-				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
-
-                // 网站公告
-                store.dispatch('article/getNoticeList',  {typeId: 4, current_page: 1, page_size: 15}),
-
-        //获取用户参与列表
-				store.dispatch('bidders/getPartakeList'),
- 			])
-		},
 		data() {
 			return {
 				CurrSelect: 0,
@@ -260,12 +235,36 @@
 				]
 			}
 		},
+        fetch({store, params, query}) {
+
+            console.log("page:",this.page)
+            return Promise.all([
+                // 获取顶部、中部、底部导航信息
+                store.dispatch('common/getNavList'),
+                // 获取系统配置
+                store.dispatch('common/getSysConfig'),
+                // 获取友情链接
+                store.dispatch('common/getFriendlyList'),
+                // 获取轮播图
+                store.dispatch('common/getBannerList', 4),
+                // 获取底部帮助分类
+                store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
+                store.dispatch('article/getindexArticleList',{catId: 8}),
+
+                // 获取竞拍列表
+                store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
+
+                // 网站公告
+                store.dispatch('article/getNoticeList',  {typeId: 4, current_page: 1, page_size: 15}),
+
+                //获取用户参与列表
+                store.dispatch('bidders/getPartakeList'),
+            ])
+        },
       created(){
         this.SourceData()
       },
-      mounted(){
-		  console.log("noticeList",this.noticeList)
-      },
+      mounted(){},
       computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
@@ -282,46 +281,32 @@
 
       },
 		methods: {
-
-          stuts(item,index){
-            console.log("item:",item)
-            console.log("index:",index)
-            this.$set(item,'min_stute',1)
-          },
-
-          stuts_out(item,index){
-            this.$set(item,'min_stute',0)
-          },
-
-          see(){},
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
 			reloadPage() {
 				location.reload()
 			},
-          AddFollow(){
-			  console.log("***AddFollow***")
-          },
+
           async BidersAdd(items,index){
             console.log("***items",items)
             console.log("index",index)
+             let params={
+              auctionIds:items.id
+            }
+            console.log("page:",this.page)
 
-            console.log("items",items)
-            //  let params={
-            //   auctionIds:id
-            // }
-            // console.log("page:",this.page)
-            // //获取竞拍列表
-            // this.$store.dispatch('bidders/getAuctionList', {current_page: this.page || 1, page_size: 6})
 
-            // const res = await sendCurl(this,server.api.Auction.addAuctionfollow,params,false)
-            //  if(!res.data.errorCode && res.data){
-            //   //获取竞拍列表
-            //    this.auctionList= this.$store.state.bidders.auctionList
-            //  }
+            const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
+             if(!res.data.errorCode && res.data){
+
+                 this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+              //获取竞拍列表
+               //this.auctionList= this.$store.state.bidders.auctionList
+             }
 
           },
+
           async SourceData() {
             let params={
               catId:8

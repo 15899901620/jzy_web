@@ -12,7 +12,7 @@
         methods:{
             OnlineService () {
                 let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
-                // window.open(url)
+                 window.open(url)
             },
         }
 
