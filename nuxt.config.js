@@ -99,9 +99,9 @@ export default {
 
 	build: {
     analyze: false,
-    extractCSS: {
-			allChunks: true
-		},
+    // extractCSS: {
+		// 	allChunks: true
+		// },
     //是否允许 vue-devtools 调试
     devtools: false,
     // transpile: [/^iview/],
