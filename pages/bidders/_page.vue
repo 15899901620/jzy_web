@@ -132,9 +132,6 @@
                       <template v-if="items.depositNum > 0">
                         正在竞拍
                       </template>
-                      <template v-else-if="items.isFollow > 0">
-                        已关注
-                      </template>
                       <template v-else>
                         参与竞拍
                       </template>
