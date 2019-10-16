@@ -4,7 +4,7 @@
             <usernav></usernav>
             <div class="memberInfor ml20  whitebg bdccc  mt20">
                 <h1 class="fs16 ml25 mt25 bb1 pb10" >充值方式</h1>
-
+                <div></div>
             </div>
         </div>
     </div>
@@ -14,6 +14,7 @@
 import Navigation from '../../components/navigation'
 import { userSeekPassword, userRepassWd, userCodeCheck } from '../../api/users'
 import { getCookies } from '../../config/storage'
+import { mapState } from 'vuex'
 
 export default {
     name: "userCodeManage",
@@ -22,13 +23,22 @@ export default {
     components:{
     usernav: Navigation.user
     },
-    fetch({ store }) {
-    return Promise.all([
-			//获取顶部、中部、底部导航信息
-			store.dispatch('common/getNavList'),
-			//获取系统配置
-			store.dispatch('common/getSysConfig'),
-    ])
+    fetch({ store, params }) {
+        return Promise.all([
+                //获取顶部、中部、底部导航信息
+                store.dispatch('common/getNavList'),
+                //获取系统配置
+                store.dispatch('common/getSysConfig'),
+                store.dispatch('helper/gethelpDetail',{id:params.id}),
+        ])
+    },
+    mounted(){
+        console.log('helpDetail',this.helpDetail)
+     },
+    computed:{
+        ...mapState({
+             helpDetail: state => state.helper.helpDetail,
+        })
     },
     data() {
     return{
@@ -59,7 +69,7 @@ export default {
         //获取短信验证码
         async getsupplyNoteValue () {
             var phone = this.userinfo.phone//验证码
-     
+
             //验证验证码是否为空
             if (phone === "") {
                 this.$Message.info("手机号不能为空")
@@ -93,7 +103,7 @@ export default {
             }else {
                 this.$Message.info("短信发送失败")
             }
-            
+
         },
 
         repasswordCheck(){
@@ -104,7 +114,7 @@ export default {
             });
             return
             }
-            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/; 
+            var patrn=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/;
             if (!patrn.exec(this.newspassword)) {
                   this.$Notice.warning({
                         title: '密码必须是8-20字母和数字组合',
@@ -143,9 +153,9 @@ export default {
             password:this.password,
             code:this.code
             }
-            
+
             const res = await userRepassWd(this, params)
-            
+
             if(res.data && res.status ===200){
                 this.$Message.info({content: '修改密码成功'})
                 this.$router.push('/users/user')
@@ -158,11 +168,10 @@ export default {
         }
     },
     created(){
+
         this.inLogin()
     },
-    mounted(){
-        
-    }
+
 }
 </script>
 
