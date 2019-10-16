@@ -514,7 +514,6 @@
 				}
 				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
 				this.PlanNum=res.data
-				console.log('1111111111',res)
 			}
 		},
 		mounted() {	
@@ -529,12 +528,12 @@
 			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
-			if(this.spotInfo.limit_num > 0){			
+			if(this.spotInfo.limit_num > 0){		
+				this.PlanTotalNum();	
 				this.currMax = Math.min(this.spotInfo.limit_num, this.spotInfo.available_num)
 			}else{
 				this.currMax = this.spotInfo.available_num
 			}
-			this.PlanTotalNum();
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
