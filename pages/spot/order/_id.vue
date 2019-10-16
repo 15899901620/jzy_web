@@ -521,16 +521,16 @@
 			if(!this.spotInfo){
 				this.showWarning('报价信息不存在，请重新操作！', function(){
 					location.href = '/spot'
-        });
-				return
-      }
+			});
+						return
+			}
 			//获取资金情况
 			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
 			if(this.spotInfo.limit_num > 0){		
-				this.PlanTotalNum();	
-				this.currMax = Math.min(this.spotInfo.limit_num, this.spotInfo.available_num)
+				this.PlanTotalNum()	
+				this.currMax = Math.min(this.spotInfo.limit_num-this.PlanNum, this.spotInfo.available_num)
 			}else{
 				this.currMax = this.spotInfo.available_num
 			}

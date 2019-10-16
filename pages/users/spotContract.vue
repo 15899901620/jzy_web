@@ -1,5 +1,8 @@
 <template>
 <div class="wrap">
+		<div style="position: absolute;right: 660px;top: 15px;">
+			<Button type="error" id='printBtn'  @click="print_page()">打印</Button>
+		</div>
     <div class="right">
         <div class="right-wrap" style="background: #ffffff">
 			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;">
@@ -13,9 +16,11 @@
 									</a></p>
 									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
 									<div style="height: 40px;position: absolute;right:0px;top: 41px;display: flex;text-align: right;flex-direction: column;">
-										<div style=" " class="bcTarget">合约编号:{{OrderList.planNo}}</div>
+										<div style=" " class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 										<div style=" " class="bcTarget mt5p">合同签订地点：东莞市</div>
 									</div>
+								
+									
 								</div>
 							</td>
 						</tr>
@@ -75,7 +80,7 @@
 								</table>
 							</td>
 						</tr>
-						<tr><td class="pt5p pb5p">2·履约条数·</td></tr>
+						<tr><td class="pt5p pb5p">3·履约条数·</td></tr>
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
@@ -83,12 +88,12 @@
 									<th style="padding:5px 0;">履约保证金率</th>
 									<th>{{OrderList.marginRatio}}%</th>
 									<th>履约保证金金额</th>
-									<th colspan="3">¥{{OrderList.depositAmount}}</th>
+									<th colspan="3">{{OrderList.depositAmount}}元</th>
 									</tr>
 								</table>
 							</td>
 						</tr>
-						<tr><td class="pt5p pb5p">2·付款条款及结算方式·</td></tr>
+						<tr><td class="pt5p pb5p">4·付款条款及结算方式·</td></tr>
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
@@ -96,12 +101,12 @@
 									<tr><th style="padding:5px 0;">计价方式：</th><th>现货价</th><th>其他约定：</th><th>/</th></tr>
 									<tr>
 										<th style="padding:5px 0;">支付条款约定：</th>
-										<th colspan="3">支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定支付条款约定</th>
+										<th colspan="3">银行承兑自贴息指需方按照供方要求支付承兑贴息，银行范围及贴息利率按供方要求可接收银行清单范围收取，贴息率按供方当期公开贴息率执行。</th>
 									</tr>
 								</table>
 							</td>
 						</tr>
-						<tr><td class="pt5p pb5p">2·包装及交提货方式·</td></tr>
+						<tr><td class="pt5p pb5p">5·包装及交提货方式·</td></tr>
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
@@ -149,9 +154,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;">
+			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;margin-top: 30px">
 				<div style="padding-bottom:5px;clear:both;position:relative;">
-				<p class="ffw fs20p tac" style="margin-bottom: 15px;"><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
+				<p class="ffw fs20p tac" ><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 				</div>
 				<div style="margin: 0 auto;width: 730px;">
 <pre>
@@ -252,6 +257,24 @@
 				this.OrderList = res.data
 
 			},
+			print_page() {
+				document.getElementById('printBtn').style.display="none";
+				if (!!window.ActiveXObject || "ActiveXObject" in window) {
+					remove_ie_header_and_footer();
+				}
+				window.print();
+			},
+			
+			remove_ie_header_and_footer() {
+				var hkey_root, hkey_path, hkey_key;
+				hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+				try {
+					var RegWsh = new ActiveXObject("WScript.Shell");
+					RegWsh.RegWrite(hkey_path + "header", "");
+					RegWsh.RegWrite(hkey_path + "footer", "");
+				} catch (e) {}
+			}
+
     },
 	mounted() {
 		if(this.type==2){
