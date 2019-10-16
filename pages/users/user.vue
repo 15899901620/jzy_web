@@ -28,7 +28,7 @@
                 </div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfor.phone}}</span>
-              <span>欢迎来到巨正源科技交易平台！</span>
+              <span>欢迎来到巨正源科技官方交易平台！</span>
               <div class="gray mt10 mb10 fs12">上次登录时间：{{$store.state.memberInfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">
@@ -202,12 +202,12 @@
           ]),
           //竞拍列表页
           biddersList(){
-            
+
             this.$router.push({name:"bidders"})
           },
 			//订单类型
 			getOrderType(typeId) {
-           
+
 				if (!typeId) return
 				return config.orderType[typeId]
 			},
