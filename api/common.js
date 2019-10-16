@@ -15,6 +15,7 @@ const getCookie = name => {
 };
 
 export const sendCurl = (vm, apiName, params, isMember) => {
+
 	isMember = isMember || true
 	let authorization = ''
 

@@ -77,12 +77,12 @@
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
-                <span style="width: 9%;">
-                  <Tag v-if="item.available_num > 0 && item.limit_num > 0" color="error">限{{item.limit_num}}</Tag>
+                <span style="width: 9%; display: flex; justify-content: center; align-items: center;">
+                  <Tag :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" color="error">限</Tag>
                   {{item.available_num}}
                 </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
-                      style="width: 9%;position:relative;text-align:right;padding-right:18px;">
+                      style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                     <Tag v-if="item.is_jry" color="error"
                          style="padding:1px 5px;line-height:20px;float:left;position:absolute;left:5px;top:-3px;">易</Tag>
                     <i style="padding-left:30px;">{{item.finalPriceFormat}}</i>

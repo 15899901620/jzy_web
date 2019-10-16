@@ -5,6 +5,7 @@
  */
 import {auctionInfor, auctionPage} from '../api/auction'
 import api from '../config/api'
+import utils from '~/utils/utils'
 
 import { sendCurl } from '../api/common'
 import server from '../config/api'
@@ -15,12 +16,12 @@ export const state = () => {
 		auctionList:[],
 		auctionInfo:{},
 		planTotal: 0,
+		partakeList:[],
 		planList:[],
 		planDetail: {},
-		hotbidderList: [],
-		biddersbeingData: {},
-		bidderssoonData: {},
-		biddersendData: {}
+
+
+		hotbidderList: []
 	}
 }
 
@@ -43,26 +44,13 @@ export const mutations = {
 	updatePlanDetail(state, data) {
 		state.planDetail = data
 	},
-
-
-	updateHotBidderData(state, data) {
-		state.hotbidderList = data
-	},
-	updatebeingData(state, data) {
-		state.biddersbeingData = data
-	},
-	updatesoonData(state, data) {
-		state.bidderssoonData = data
-	},
-	updateendData(state, data) {
-		state.biddersendData = data
-	},
-	updatebidderDetail(state,data){
-
+	updatePartakeList(state, data) {
+		state.partakeList = data
 	},
 }
 
 export const actions = {
+	//我的出价
 	async getAuctionList({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
@@ -73,7 +61,24 @@ export const actions = {
 	async getAuctionInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			console.log(res.data)
 			commit('updateAuctionInfo', res.data)
+		}
+	},
+	async getPartakeList({commit}) {
+		let authorization = ''
+		if(process.server){
+			authorization = utils.getMemberTokenInVm(this)
+		}else{
+			authorization = utils.getMemberTokenInClient()
+		}
+		if(authorization !== false && authorization != ''){
+			console.log('getPartakeList has ')
+			let res = await sendCurl(this, server.api.Auction.getPartakeList)
+			console.log('getPartakeList', res)
+			if (res.status === 200 && (res.data.errorcode||0) == 0) {
+				commit('updatePartakeList', res.data)
+			}
 		}
 	},
 	async getPlanList({commit}, params) {
@@ -90,18 +95,6 @@ export const actions = {
 		}
 	},
 
-	async getHotBidderList({commit}, {params}) {
-		let res = await auctionPage(this, params)
-		if (res.status === 200) {
-			commit('updateHotBidderData', res.data.items)
-		}
-	},
-
-	async getBidderDetail({commit}, {params}) {
-		const res = await auctionInfor(this, params)
-		commit('updatebidderDetail', res)
-	},
-
 	async gethelpDetail({commit}, params) {
 		return await this.$axios.$get(api.prefix + api.api.helper.helpdetail, {params})
 			.then(response => {
@@ -111,26 +104,4 @@ export const actions = {
 				console.log('err', error)
 			})
 	},
-
-	async getBiddersList({commit}, params) {
-		let res = await auctionPage(this, params)
-		let datalist = res.data.items;
-		let beingData = []
-		let soonData = []
-		let endData = []
-		datalist.forEach((item, index) => {
-			if (item.type == 2) {
-				beingData.push(item)
-			}
-			if (item.type == 1) {
-				soonData.push(item)
-			}
-			if (item.type == 3) {
-				endData.push(item)
-			}
-		});
-		commit('updatebeingData', beingData)
-		commit('updatesoonData', soonData)
-		commit('updateendData', endData)
-	}
 }

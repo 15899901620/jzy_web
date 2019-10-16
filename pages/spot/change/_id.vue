@@ -42,6 +42,14 @@
               class="orangeFont">{{spotInfo.delivery_bid_increment}}吨</span>）
           </template>
         </div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
+          选择运输方式
+          <div class="ml5">
+            <Select v-model="orderinfo.transportationModeTake" style="width:200px">
+              <i-option v-for="(item, index) in spotInfo.take_their_transportations.split(',')" :value="item" :key="index">{{ item }}</i-option>
+            </Select>
+          </div>
+        </div>
         <div class="AddList" v-if="orderinfo.isDelivery == 1">
           <template v-if="addressList.length > 0">
             <ul class="addListSelect ovh">
@@ -66,15 +74,6 @@
           <template v-else><p>暂无任何收货地址，请您添加！</p></template>
         </div>
         <div class="mt30 fs16 ml15 fwb" v-if="orderinfo.isDelivery == 1">运费</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
-          选择承运商
-          <div class="ml35" v-if="carrierList.length > 0">
-            <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
-              <i-option v-for="(item, index) in carrierList" :value="item.id" :key="index">{{ item.name }}</i-option>
-            </Select>
-          </div>
-          <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-        </div>
         <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择运输方式
           <ul class="DeliveryMethod ml35 mb20">
@@ -237,6 +236,7 @@
 					isDelivery: 0,
 					addressId: 0,
 					carrierId: 0,
+					transportationModeTake: '公路运输',
 					transportationMode: '',
 					jryDays: 0,
 					orderNum: 0,
@@ -377,6 +377,9 @@
 					transportation_mode: this.orderinfo.transportationMode,
 					jry_days: this.orderinfo.jryDays || 0,
 					order_num: this.orderinfo.orderNum
+				}
+				if(params.is_delivery == 0){
+					params.transportation_mode = this.orderinfo.transportationModeTake
 				}
 				if (params.is_delivery == 1 && params.address_id == 0) {
 					this.showWarning('配送请维护选择收货地址！');

@@ -70,7 +70,7 @@
                 </td>
                 <td style="width: 15%;">
                   <div>待签合同</div>
-                  <div><a @click='Spot(item.id)' class="greenFont">查看合约</a></div>
+                  <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
                 </td>
                 <td style="width: 15%;" class="operate">
                   <div v-if="item.status == 3">
@@ -165,10 +165,7 @@
 				location.href = '/users/spotPlan?plan_no=' + this.formSearch.planNo
       },
       Spot(id){
-        this.$router.push({
-					name: 'users-spotContract',
-					query: {id: id}
-				})
+				location.href = '/users/spotContract?id=' + id
       },
 			cancelPlan(row) {
 				this.$Modal.confirm({

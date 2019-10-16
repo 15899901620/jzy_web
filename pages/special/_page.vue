@@ -2,7 +2,7 @@
 	<div class="body">
 		<Header title="头部"></Header>
 		<div class="container" title="">
-			<div class="materials_banner">
+			<div class="materials_banner" style="height: auto">
 				<Banner :bannerData="this.bannerinfo" :heightNum="this.heightNum"></Banner>
 			</div>
 			<div class="w1200" style="margin-top: 20px">
@@ -93,9 +93,7 @@ export default {
 					catId: 0,
 					indexShow: 1
 				}),
-            store.dispatch('system/getBannerInfo', {
-                positionId: 2
-            }),
+                store.dispatch('system/getBannerInfo', { positionId: 3 }),
 
          ])
     },
@@ -105,6 +103,9 @@ export default {
         Banner,
         pages: pagination.pages
     },
+	mounted(){
+    	console.log("bannerinfo:",this.bannerinfo)
+	},
     computed: {
         ...mapState({
             bannerinfo: state => state.system.bannerinfo,

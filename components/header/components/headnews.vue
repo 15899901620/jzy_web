@@ -5,7 +5,7 @@
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
 
-        <p class="gray">欢迎来到巨正源科技交易平台!</p>
+        <p class="gray">欢迎来到巨正源科技官方交易平台!</p>
 
       </div>
     </div>

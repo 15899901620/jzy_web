@@ -5,7 +5,9 @@
             :height= heightNum
             :autoplay-speed="10000">
             <carousel-item v-for="(item, index) in bannerData" :key="index">
-                <div class="demo-carousel" style="display: flex; justify-content: center;"><img :src="item.adImg"/></div>
+                <div class="demo-carousel" style="display: flex; justify-content: center;"   >
+                    <img :src="item.adImg"/>
+                </div>
             </carousel-item>
         </carousel>
     </div>

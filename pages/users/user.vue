@@ -28,7 +28,7 @@
                 </div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfor.phone}}</span>
-              <span>欢迎来到巨正源科技交易平台！</span>
+              <span>欢迎来到巨正源科技官方交易平台！</span>
               <div class="gray mt10 mb10 fs12">上次登录时间：{{$store.state.memberInfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">
@@ -56,7 +56,7 @@
                   <div class="Frozen_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>冻结金额</span>
-                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}</span>
+                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}+{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
                   </div>
                 </div>
               </div>
@@ -202,12 +202,12 @@
           ]),
           //竞拍列表页
           biddersList(){
-            
+
             this.$router.push({name:"bidders"})
           },
 			//订单类型
 			getOrderType(typeId) {
-           
+
 				if (!typeId) return
 				return config.orderType[typeId]
 			},

@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <Header-small title="现货超市">
-      <div slot="headerother">
+      <div slot="headerother" style="margin-right: 20px;">
         <ul class="sp_cat_title_list">
           <li class="curr"><i>1</i><p>编辑详细信息</p></li>
           <li><i>2</i><p>生成合约</p></li>
@@ -48,6 +48,14 @@
             （您选择交货方式为待定，则提交后只生成合约单，必须在<span class="orangeFont">{{spotInfo.last_ordered_date}}</span>之前确认并转订单，否则会扣除交纳的保证金）
           </template>
         </div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
+          选择运输方式
+          <div class="ml5">
+            <Select v-model="orderinfo.transportationModeTake" style="width:200px">
+              <i-option v-for="(item, index) in spotInfo.take_their_transportations.split(',')" :value="item" :key="index">{{ item }}</i-option>
+            </Select>
+          </div>
+        </div>
         <div class="AddList" v-if="orderinfo.isDelivery == 1">
           <template v-if="addressList.length > 0">
             <ul class="addListSelect ovh">
@@ -72,15 +80,6 @@
           <template v-else><p>暂无任何收货地址，请您添加！</p></template>
         </div>
         <div class="mt30 fs16 ml15 fwb" v-if="orderinfo.isDelivery == 1">运费</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
-          选择承运商
-          <div class="ml35" v-if="carrierList.length > 0">
-            <Select v-model="orderinfo.carrierId" size="default" style="width:300px">
-              <i-option v-for="(item, index) in carrierList" :value="item.id" :key="index">{{ item.name }}</i-option>
-            </Select>
-          </div>
-          <div class="ml20 orangeFont" v-else>* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
-        </div>
         <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 1">
           选择运输方式
           <ul class="DeliveryMethod ml35 mb20">
@@ -172,8 +171,7 @@
           </div>
           <div style="display: flex; flex-direction: column; width: 300px; ">
             <div class="mt20 tar mr20 dflex " style="align-items: center;">
-              <span class="totalprice">应付总额：</span><span class="tar"
-                                                         style="width: 150px;">￥{{this.totalAmountFormat}}</span>
+              <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">￥{{this.totalAmountFormat}}</span>
             </div>
             <div class="mt20 mb20 tar mr20 dflexAlem">
               <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">￥{{this.payAmountFormat}}</span>
@@ -183,7 +181,10 @@
 
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-          <div class="submitOrder" @click='beginCreateOrder'>提交订单</div>
+			 <div class="submitOrder" @click='beginCreateOrder' v-if=" this.currMin>= PlanNum">提交订单</div>
+			 <div class="submitOrder" style='background:gray'  v-else>提交订单</div>	  
+			   
+		
         </div>
       </div>
     </div>
@@ -203,7 +204,7 @@
 	import AddressDialog from '../../../components/address-dialog'
 	import spotPay from '../../../components/paydeposit/spotPay'
 	import { mapState } from 'vuex'
-	import { sendCurl } from '../../../api/common'
+	import { sendCurl ,sendHttp} from '../../../api/common'
 	import server from '../../../config/api'
 
 	export default {
@@ -222,8 +223,6 @@
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
-        //获取资金情况
-				store.dispatch('member/getCapitalInfo'),
         //获取报价信息
 				store.dispatch('spot/getSpotInfo', {id: params.id||0}),
 			])
@@ -267,6 +266,7 @@
 					isDelivery: 0,
 					addressId: 0,
 					carrierId: 0,
+					transportationModeTake: '公路运输',
 					transportationMode: '',
 					payIndex: 0,
 					jryDays: 0,
@@ -278,6 +278,7 @@
 				createInfo: false,
 				currMin: 0,
 				currMax: 0,
+				PlanNum:0,
 				currsetp: 1,
 				ServiceTimeList: [],
 				payList: [
@@ -306,22 +307,22 @@
 				this.currentIndex = index
 				if (index == 0) {
 					this.orderinfo.isDelivery = 0
-					this.currMin = this.spotInfo.take_their_min
+					this.currMin = Math.max(this.spotInfo.take_their_min, this.spotInfo.min_order)
 					this.currsetp = this.spotInfo.take_bid_increment
-          this.setFreight(-1)
+          			this.setFreight(-1)
 				} else if (index == 1) {
 					this.orderinfo.isDelivery = 1
-					this.currMin = this.spotInfo.delivery_min
+					this.currMin = Math.max(this.spotInfo.delivery_min, this.spotInfo.min_order)
 					this.currsetp = this.spotInfo.delivery_bid_increment
 				} else if (index == 2) {
 					this.orderinfo.isDelivery = -1
-					this.currMin = Math.min(this.spotInfo.delivery_min,this.spotInfo.take_their_min)
+					this.currMin = this.spotInfo.min_order
 					this.currsetp = 1
 
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
 					this.currfreight = -1
-          this.orderinfo.jryDays = 0
+					this.orderinfo.jryDays = 0
 					this.setJry()
 					this.choosePayType(1)
 				}
@@ -386,11 +387,11 @@
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
 					this.currfreight = -1
-        }else{
+				}else{
 					this.orderinfo.transportationMode = row.transportation
 					this.orderinfo.freightFee = row.freight_fee
 					this.currfreight = i
-        }
+				}
 			},
 			choosePayType(index) {
 				this.orderinfo.payIndex = index
@@ -448,7 +449,7 @@
 
 				}
 
-        this.payModalTitle = '支付'
+        		this.payModalTitle = '支付'
 
 				this.showPayment()
 			},
@@ -475,6 +476,9 @@
 					order_num: this.orderinfo.orderNum,
 					sms_code: smsCode
 				}
+				if(params.is_delivery == 0){
+					params.transportation_mode = this.orderinfo.transportationModeTake
+        }
 
 				let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
 				if (res.status === 200) {
@@ -485,7 +489,7 @@
 							title: '提示',
 							content: res.data.message
 						})
-            return
+				return
 					}
 				}
 			},
@@ -503,28 +507,39 @@
 					})
 				}
 
+			},
+			async PlanTotalNum(){
+				let params = {
+					quoteId: this.spotId,
+				}
+				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
+				this.PlanNum=res.data
 			}
 		},
-		mounted() {
+		mounted() {	
+			
 			if(!this.spotInfo){
 				this.showWarning('报价信息不存在，请重新操作！', function(){
 					location.href = '/spot'
         });
 				return
       }
+			//获取资金情况
+			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
-      if(this.spotInfo.limit_num > 0){
+			if(this.spotInfo.limit_num > 0){		
+				this.PlanTotalNum();	
 				this.currMax = Math.min(this.spotInfo.limit_num, this.spotInfo.available_num)
-      }else{
+			}else{
 				this.currMax = this.spotInfo.available_num
-      }
+			}
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
 		head() {
 			return {
-				title: '会员注册-巨正源',
+				title: '会员下单-巨正源',
 				page: 10,
 				meta: [{
 					name: 'viewport',
@@ -541,7 +556,7 @@
 					}
 				]
 			}
-		}
+		},
 	}
 </script>
 <style lang="css" scoped>

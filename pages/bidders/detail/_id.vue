@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="birdtable">
-          <div class="birdtabletitle">{{auctionInfo.skuName}}&nbsp;&nbsp;&nbsp;&nbsp;{{auctionInfo.manufacturer}}&nbsp;&nbsp;{{auctionInfo.totalNum}}{{auctionInfo.uomName}}
+          <div class="birdtabletitle">{{auctionInfo.skuName}}&nbsp;&nbsp;&nbsp;&nbsp;{{auctionInfo.manufacturer}}&nbsp;&nbsp;<span class="orangeFont">{{auctionInfo.totalNum}}</span>{{auctionInfo.uomName}}
           </div>
           <div class="kailong">
             <div class="tranfont">{{auctionInfo.warehouseProvince}}</div>
@@ -109,7 +109,7 @@
             <!--暂无记录-->
             <table v-if="auctionInfo.bidList.length > 0">
               <tbody>
-              <tr class="Bidders_record_tr " v-for="(item,index) in auctionInfo.bidList" :key="index"
+              <tr class="Bidders_record_tr" v-for="(item,index) in auctionInfo.bidList" :key="index"
                   :class="[{orangeFont:item.outStatus===1 || item.outStatus===2},{myclore:item.nickName == '我的出价'}]" >
                 <td>
                   <span class="Bidders_record_curr" v-if="item.outStatus===1">领先</span>
@@ -128,7 +128,7 @@
         </div>
 
         <div class="recodelist">
-          <div class="recordTitle" style="background: #ff7300;">我的出价</div>
+          <div class="recordTitle whiteFont" style="background: #ff7300;">我的出价</div>
           <table class="Bidders_record_title">
             <tbody>
             <tr>
@@ -269,40 +269,58 @@
         </div>
       </div>
       <!--  正在参与-->
-      <div class="biddersRecord">
+      <div class="biddersRecord" v-if="auctionInfo.partakeList && auctionInfo.partakeList.length > 0">
         <h1 class="paipinacu fs20">正在参与</h1>
-        <table class="parttable">
+        <table class="parttable" >
           <tbody>
-          <tr class="tableTitle">
-            <td>品种</td>
-            <td>牌号</td>
-            <td>厂商</td>
-            <td>起拍价</td>
-            <td>竞拍总量</td>
-            <td>距离结束</td>
-            <td>我的排名</td>
-            <td>我的出价</td>
-            <td>出价数量</td>
-            <td>入局数量</td>
-            <td>当前状态</td>
-            <td>我的状态</td>
-            <td>操作</td>
+          <tr class="tableTitle" style="">
+            <td style="width: 10%">竞拍编号</td>
+            <td style="width: 10%">牌号</td>
+            <td style="width: 11%">厂商</td>
+            <td style="width: 11%">结束倒计时</td>
+            <td style="width: 8%">起拍价</td>
+            <td style="width: 8%">我的出价</td>
+            <td style="width: 6%">出价数量</td>
+            <td style="width: 6%">入局数量</td>
+            <td style="width: 7%">竞拍状态</td>
+            <td style="width: 6%">我的状态</td>
+            <td style="width: 7%">操作</td>
           </tr>
-          <tr>
-            <td>PP</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>巨正源</td>
-            <td>100吨</td>
-            <td>00天23时12分36秒</td>
-            <td class="orangeFont">3</td>
-            <td>2019-09-27</td>
-            <td>2019-09-27</td>
-            <td>东莞市</td>
-            <td>散货带托</td>
-            <td>2019-09-27</td>
+
+          <tr v-for="(item,index) in auctionInfo.partakeList">
+            <td>{{item.billNo}}</td>
+            <td class="blue">{{item.skuName}}</td>
+            <td>{{item.manufacturer}}</td>
+            <td><TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
+                          :onTimeOver="reloadPage"></TimeDown></td>
+            <td>{{$utils.amountFormat(item.finalPrice)}}</td>
             <td>
-              <div class="seeTable">查看</div>
+              <span v-if="item.bidList && item.bidList.length > 0">{{$utils.amountFormat(item.bidList[0].bidPrice)}}</span>
+              <span v-else> - </span>
+            </td>
+            <td>
+              <span v-if="item.bidList && item.bidList.length > 0">{{item.bidList[0].bidNum}}</span>
+              <span v-else> - </span>
+            </td>
+            <td>
+              <span v-if="item.bidList && item.bidList.length > 0">{{item.bidList[0].selectedNum}}</span>
+              <span v-else> - </span>
+            </td>
+            <td>
+              <span v-if="item.statusType == 1">正在竞拍</span>
+              <span v-else-if="item.statusType == 2">即将开始</span>
+              <span v-else-if="item.statusType == 3">竞拍结束</span>
+            </td>
+            <td>
+              <span v-if="item.bidList && item.bidList.length > 0">
+                <span v-if="item.bidList[0].outStatus == 1">领先</span>
+                <span v-else-if="item.bidList[0].outStatus == 2">入围</span>
+                <span v-else-if="item.bidList[0].outStatus == 3">出局</span>
+              </span>
+              <span v-else> 未出价 </span>
+            </td>
+            <td>
+              <a :href="`/bidders/detail/${item.id}`"><div class="seeTable">查看</div></a>
             </td>
           </tr>
           </tbody>
