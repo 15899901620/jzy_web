@@ -75,7 +75,7 @@
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
-                <span style="width: 9%;">
+                <span style="width: 9%; display: flex; justify-content: center; align-items: center;">
                   <Tag :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" color="error">限</Tag>
                   {{item.available_num}}
                 </span>

@@ -173,9 +173,11 @@
               </ul>
             </div>
 
-            <div class="NoticeTitleAdv">
-              <img src="img/advImg.png">
-            </div>
+            <template v-if="this.sideadvImg.length>0">
+              <div class="NoticeTitleAdv" v-for="(item, index) in this.sideadvImg" :key="index" @click="Tospot(item.adLink)">
+                <img :src="item.adImg">
+              </div>
+            </template>
 
           </div>
         </div>
@@ -254,14 +256,20 @@
                 // 网站公告
                 store.dispatch('article/getNoticeList',  {typeId: 4, current_page: 1, page_size: 15}),
 
-                //获取用户参与列表
+                // 获取用户参与列表
                 store.dispatch('bidders/getPartakeList'),
+                // 侧边广告栏
+                store.dispatch('system/getBannerInfo', {
+                  positionId: 6
+                }),
             ])
         },
       created(){
         this.SourceData()
       },
-      mounted(){},
+      mounted(){
+		  console.log("sideadvImg:",this.sideadvImg)
+      },
       computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
@@ -270,14 +278,20 @@
 				biddersbeingData: state => state.bidders.biddersbeingData,
 				bidderssoonData: state => state.bidders.bidderssoonData,
 				biddersendData: state => state.bidders.biddersendData,
-                bannerinfo: state => state.system.bannerinfo,
-                noticeList: state => state.article.noticeList,
+                bannerinfo: state => state.system.bannerinfo,      // 页面banner
+                noticeList: state => state.article.noticeList,     // 侧边竞拍广告
 
-				partakeList: state => state.bidders.partakeList,
-			})
+				partakeList: state => state.bidders.partakeList,  // 我的竞拍
+                sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
+ 			})
 
       },
 		methods: {
+          Tospot(link){
+            if(link){
+              this.$router.push({name:link})
+            }
+          },
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
