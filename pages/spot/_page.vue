@@ -3,9 +3,11 @@
     <Header title=""></Header>
     <div class="container">
       <div class="w1200">
-        <div class="mt10 fs14">
-          <a>巨正源首页</a> > <span class="gray">现货超市</span>
-          <span class="fr">共<span class="orangeFont">{{$store.state.spot.total}}</span>件相关商品</span>
+        <div class="breadcrumb">
+          <breadcrumb>
+              <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
+              <breadcrumb-item>现货超市</breadcrumb-item>
+          </breadcrumb>
         </div>
 
         <div class="screenList">
