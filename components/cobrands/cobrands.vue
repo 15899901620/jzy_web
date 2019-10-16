@@ -26,13 +26,10 @@
             </ul>
 
             <ul class="Link" v-show="currentValue === 1">
-
-                    <li v-for="(item, index) in $store.state.common.friendlyList" :key="index">
-                        <a :href="item.linkUrl" target="_blank">{{ item.name }}</a>
-                    </li>
-
+                <li v-for="(item, index) in $store.state.common.friendlyList" :key="index">
+                    <a :href="item.linkUrl" target="_blank">{{ item.name }}</a>
+                </li>
             </ul>
-
 
     </div>
 </template>
