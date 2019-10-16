@@ -22,8 +22,7 @@
                     </div>
                 </div>
             </div>
-            <links></links>
-            <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
+             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
 
             </div>
@@ -49,16 +48,13 @@
                     </div>
                 </div>
             </div>
-            <links :linksData="linksinfo"></links>
-            <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
+             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
-
             </div>
         </template>
         <template v-if="size === 'small'">
             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
-
             </div>
         </template>
 	</div>
@@ -68,14 +64,13 @@
 const prefixCls = 'ant-footer'
 import slogen from './slogen'
 import helpnav from '../helper'
-import links from './links'
-
+ 
 export default {
     name: 'Footer',
     components:{
         slogen,
         helpnav,
-        links
+
     },
     props:{
         size: {
@@ -94,10 +89,8 @@ export default {
     },
     methods: {
         OnlineService () {
-            console.log("OnlineService")
-            let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
-            console.log("url:",url)
-             window.open(url)
+             let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ this.$store.state.common.sysConfig.ONLINESERVICE +'&site=qq&menu=yes'
+              window.open(url)
         }
     }
 }
