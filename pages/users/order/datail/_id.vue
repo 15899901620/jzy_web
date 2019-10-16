@@ -11,8 +11,12 @@
           </h3>
           <div style="line-height:32px;">
              <Row index="">
-                 <Col span="12"><a :href="`/users/plan/spot/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：<span class="blue">{{this.datalist.sourceSn}}</span></a></Col>
-              <Col span="12">ERP订单号：{{this.datalist.erpOrderSn}}</Col>
+
+              <Col span="12">
+              <span v-if="this.datalist.orderType==1"><a :href="`/users/plan/spot/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
+              <span v-if="this.datalist.orderType==3"><a :href="`/users/plan/aution/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
+              </Col>
+                 <Col span="12">ERP订单号：{{this.datalist.erpOrderSn}}</Col>
             </Row>
             <Row index="">
               <Col span="12">下单时间：{{this.datalist.createTime}}</Col>
@@ -126,7 +130,7 @@
             <Row index="" style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
               <Col span="4">{{this.datalist.skuName}}</Col>
               <Col span="2">{{this.datalist.orderNum}}吨</Col>
-              <Col span="3">{{this.amountFormat(this.datalist.finalPrice - this.datalist.shippingFee -
+              <Col span="3">{{$utils.amountFormat(this.datalist.finalPrice - this.datalist.shippingFee -
                 this.datalist.jryAdd)}} </Col>
               <Col span="2">+ {{this.datalist.shippingFee}}元</Col>
               <Col span="2">¥{{this.datalist.jryAdd}}/吨</Col>
@@ -177,7 +181,6 @@
 	import {orderpage, getorderDetail} from '../../../../api/order'
 	import {getCookies} from '../../../../config/storage'
 	import config from '../../../../config/config'
-  import utils from '../../../../plugins/common'
   import TimeDown from '../../../../components/timeDown'
   import OrderPay from '../../../../components/paydeposit/orderPay'
   import {sendHttp} from "../../../../api/common";
@@ -274,9 +277,6 @@
 				}
 				this.detailloading = true
 			},
-			amountFormat: function (amount, sign) {
-				return utils.amountFormat(amount, sign)
-      },
       paymentBut() {
             //检查是否可以使用合约的保证金
 

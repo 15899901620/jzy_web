@@ -54,7 +54,9 @@
               <tr class="Ttitle graybg">
                 <td colspan="10">
 				  <span class="ml10">合约编号:
-                    <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a>
+						<span  v-if="item.orderType==1"><a :href="`/users/plan/spot/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
+              			<span  v-if="item.orderType==3"><a :href="`/users/plan/aution/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
+                    <!-- <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a> -->
                   </span>
                   <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
