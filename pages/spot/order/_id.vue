@@ -540,7 +540,7 @@
 		},
 		head() {
 			return {
-				title: '会员注册-巨正源',
+				title: '会员下单-巨正源',
 				page: 10,
 				meta: [{
 					name: 'viewport',
