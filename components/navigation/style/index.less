@@ -4,29 +4,34 @@
 
 // default theme
 .@{menu-prefix-cls} {
-  background: #fff; 
+  background: #fff;
   display: flex;
-  align-items: center;  
-  
+  align-items: center;
+
   & li {
-    float: left; 
-    position: relative; 
-    font-size: 16px; 
+    float: left;
+    position: relative;
+    font-size: 16px;
     margin: 0 22px;
     > a {
-      line-height:33px; 
+      line-height:33px;
       color: #333;
       &:hover {
-        color: @blue-1
+        //color: @blue-1
+        color: #ff6c00;
+
       }
     }
   }
   & .curr {
     a {
-      color:#007de4;
-      text-decoration:none;  
-      padding-bottom: 7px; 
-      border-bottom:2px solid #007de4;
+      font-weight: bold;
+      color:#ff6c00;
+      text-decoration:none;
+      padding-bottom: 7px;
+      //border-bottom:2px solid #007de4;
+      border-bottom:2px solid #ff6c00;
+
     }
   }
   & li:last-child {

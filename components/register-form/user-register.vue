@@ -147,10 +147,10 @@
             <Col span="21">
               <div class="Image" v-if="this.formCustom.business_license">
                 <template v-if="this.license_filextension === '.pdf'">
-                  <img src="../../static/img/pdf.jpg" />
+                  <img src="../../static/img/pdf.jpg"  style="width: 100%" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.business_license" />
+                  <img :src="this.formCustom.business_license"  style="width: 100%" />
                 </template>
               </div>
             </Col>
@@ -176,10 +176,10 @@
             <Col span="21">
               <div class="Image" v-if="this.formCustom.authorization_elc">
                 <template v-if="this.filextension_elc === '.pdf'">
-                  <img src="../../static/img/pdf.jpg" />
+                  <img src="../../static/img/pdf.jpg" style="width: 100%" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.authorization_elc" />
+                  <img :src="this.formCustom.authorization_elc" style="width: 100%" />
                 </template>
 
               </div>
@@ -212,7 +212,7 @@
         @on-cancel="protocolModalCancel"
         :width='700'
         class-name="vertical-center-modal">
-      <div style="overflow: hidden; overflow-y: auto; height: 360px;" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
+      <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
       </div>
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
@@ -277,6 +277,13 @@
 					this.passwordValid = true
 					callback();
 				}
+                if (this.formCustom.repassword !== this.formCustom.password) {
+                  // 对第二个密码框单独验证
+                  callback(new Error('密码两次不相同'));
+                } else {
+                  this.repasswordValid = true
+                  callback();
+                }
 			};
 			const validaterePass = (rule, value, callback) => {
 				if (value === '') {
@@ -818,7 +825,6 @@
 
             if (res.data === true && res.status === 200) {
               this.current = 2
-
              // this.$router.push({name:'RegisterSuccess'})
             } else {
               this.$Message.info({

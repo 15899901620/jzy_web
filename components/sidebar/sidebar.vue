@@ -32,12 +32,14 @@
             </div>
         </div>
         <!--竞拍-->
-        <div class="cndns-right-meau meau-acution">
-            <nuxt-link to="/bidders">
+        <div class="cndns-right-meau meau-acution" >
+<!--            <nuxt-link to="/bidders">-->
+            <a  @click="addFavorite" >
                 <div class="cndns-right-btn">
                     <img src="../../static/img/siderbar_03.png" />
                 </div>
-            </nuxt-link>
+            </a>
+<!--            </nuxt-link>-->
 
         </div>
         <!--置顶-->
@@ -66,6 +68,41 @@ export default {
     },
 
     methods: {
+        // addFavorite() {
+        //     var url = window.location;
+        //     var title = document.title;
+        //     var ua = navigator.userAgent.toLowerCase();
+        //     console.log("url:",url)
+        //     console.log("title:",title)
+        //     console.log("ua:",ua)
+        //     if (ua.indexOf("msie 8") > -1) {
+        //         external.AddToFavoritesBar(url, title, '');//IE8
+        //     } else {
+        //         try {
+        //             window.external.addFavorite(url, title);
+        //         } catch (e) {
+        //             try {
+        //                 window.sidebar.addPanel(title, url, "");//firefox
+        //             } catch (e) {
+        //                 alert("加入收藏失败，请使用Ctrl+D进行添加");
+        //             }
+        //         }
+        //     }
+        // },
+        addFavorite () {
+            if (window.sidebar) {        // Firefox
+                window.sidebar.addPanel ('Dottoro help page', 'http://help.dottoro.com', '');
+            }
+            else {
+                if (window.external && ('AddFavorite' in window.external)) {
+                    // Internet Explorer
+                    window.external.AddFavorite ('http://help.dottoro.com', 'Dottoro help page');
+                }
+                else {  // Opera, Google Chrome and Safari
+                    alert ("加入收藏失败，请使用Ctrl+D进行添加");
+                }
+            }
+        },
         handleScroll () {
             this.totop = window.pageYOffset > 200;
         },
