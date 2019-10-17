@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header title="头部"></Header>
+		<Header></Header>  // 头部
 		<div class="container" title="">
             <div class="w1200 fs14" style="margin-top:18px">
                 <outpacking title="质检单" cpadding="0px">
@@ -67,8 +67,8 @@
 				</outpacking>
             </div>
 		</div>
-        <Modal 
-            v-model="showmodal"  
+        <Modal
+            v-model="showmodal"
             :title="rowData.title"
             @on-cancel="cancel"
             width="1200">
@@ -108,7 +108,7 @@ export default {
             catId: 0,
             indexShow: 1
           }),
-            
+
         ])
     },
     components: {
@@ -165,7 +165,7 @@ export default {
             this.formSearch.skuTitle = ''
             this.formSearch.batchNo = ''
             this.formSearch.productionDate = ''
-            
+
             this.SourceData();
         },
         showTotal(total) {
