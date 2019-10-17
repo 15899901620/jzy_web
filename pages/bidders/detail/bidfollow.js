@@ -6,46 +6,46 @@ export const bidfollowColumns =[
     },
     {
         title: '竞拍编号',
-        key: 'name'
+        key: 'billNo'
     },
     {
         title: '开始时间',
-        key: 'age'
+        key: 'beginTime'
     },
     {
         title: '竞拍时长',
-        key: 'address'
+        slot: 'lastTime' 
     },
     {
         title: '竞拍状态',
-        key: 'address'
+        key: 'status'
     },
     {
         title: '品种',
-        key: 'address'
+        key: 'skuName'
     },
     {
         title: '牌号',
-        key: 'address'
+        key: 'catName'
     },
     {
         title: '厂商',
-        key: 'address'
+        key: 'manufacturer'
     },
     {
         title: '城市',
-        key: 'address'
+        key: 'cityName'
     },
     {
         title: '起拍价',
-        key: 'address'
+        key: 'finalPrice'
     },
     {
         title: '竞拍总量',
-        key: 'address'
+        key: 'totalNum'
     },
     {
         title: '提货仓库',
-        key: 'address'
+        key: 'warehouseName'
     }
 ]
