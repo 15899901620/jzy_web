@@ -164,8 +164,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;margin-top: 30px">
+			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;margin-top: 30px">
 				<div style="padding-bottom:5px;clear:both;position:relative;">
+					<div style="text-align: right;margin-right: 20px;margin-top: 10px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 				<p class="ffw fs20p tac" ><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 				</div>
 				<div style="margin: 0 auto;width: 730px;">
