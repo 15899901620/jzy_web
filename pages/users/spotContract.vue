@@ -105,7 +105,7 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">支付方式：</th><th>电汇或银行承兑自贴息</th><th>付款方式：</th><th>款到发货</th></tr>
+									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th>电汇或银行承兑自贴息</th><th>付款方式：</th><th>款到发货</th></tr>
 									<tr><th style="padding:5px 0;">计价方式：</th><th>现货价</th><th>其他约定：</th><th>/</th></tr>
 									<tr>
 										<th style="padding:5px 0;">支付条款约定：</th>
