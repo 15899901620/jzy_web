@@ -1,7 +1,12 @@
 <template>
     <div :class="classes">
-        <shortcut :showNav='showNav'></shortcut>
-		<!--头部-logo/搜索/电话-->
+        <template v-if="shortType === 'suppler'">
+          <suppler :showNav='showNav'></suppler>
+        </template>
+        <template v-else>
+          <shortcut :showNav='showNav'></shortcut>
+        </template>
+		    <!--头部-logo/搜索/电话-->
         <div class="searchLogo">
             <!--logo-->
             <Logo class="mt20 mb20" style="border-right: 1px solid rgb(210, 210, 210);padding-right: 30px; "></Logo>
@@ -28,10 +33,15 @@ export default {
         }
     },
     props: {
-        title: String,
+      title: String,
+      shortType:{
+        type: String,
+        default: 'carrier'
+      }
     },
     components: {
         shortcut,
+        suppler: shortcut.suppler,
         Logo,
         Search,
         Navigation,

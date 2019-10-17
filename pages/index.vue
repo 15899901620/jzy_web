@@ -43,7 +43,6 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
-    <div name="SERVERONLINE"  v-html="$store.state.common.sysConfig.SERVERONLINE"></div>
   </div>
 </template>
 
