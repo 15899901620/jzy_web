@@ -13,8 +13,8 @@
              <Row index="">
 
               <Col span="12">
-              <span v-if="this.datalist.orderType==1"><a :href="`/users/plan/spot/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
-              <span v-if="this.datalist.orderType==3"><a :href="`/users/plan/aution/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
+                  <span v-if="this.datalist.orderType==1"><a :href="`/users/plan/spot/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：<span class="blue">{{this.datalist.sourceSn}}</span></a></span>
+              <span v-if="this.datalist.orderType==3"><a :href="`/users/plan/aution/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：<span class="blue">{{this.datalist.sourceSn}}</span></a></span>
               </Col>
                  <Col span="12">ERP订单号：{{this.datalist.erpOrderSn}}</Col>
             </Row>
