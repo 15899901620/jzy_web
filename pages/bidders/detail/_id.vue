@@ -330,7 +330,7 @@
       <!--  我的关注-->
       <div class="biddersRecord">
         <h1 class="paipinacu fs20">我关注的其他竞拍</h1>
-        <table class="parttable">
+        <table class="parttable" :key='index' v-for="(item,index) in followList ">
           <tbody>
           <tr class="tableTitle">
             <td>竞拍编号</td>
@@ -347,26 +347,32 @@
             <td>操作</td>
           </tr>
           <tr>
-            <td>PP</td>
-            <td class="blue">L5E89</td>
-            <td>巨正源</td>
-            <td>巨正源</td>
-            <td>100吨</td>
-            <td>00天23时12分36秒</td>
-            <td class="orangeFont">3</td>
-            <td>2019-09-27</td>
-            <td>2019-09-27</td>
-            <td>东莞市</td>
-            <td>散货带托</td>
+            <td>{{item.billNo}}</td>
+            <td class="blue">{{item.beginTime}}</td>
+            <td>{{$utils.timeBetween(item.beginTime,item.lastDeliveryTime)}}</td>
             <td>
-              <div class="seeTable">查看</div>
+                <span v-if="item.status=='VO'">已取消</span>
+                <span v-if="item.status=='DR'">起草</span>
+                <span v-if="item.status=='AP'">审批中</span>
+                <span v-if="item.status=='CO'">已审核</span>
+                <span v-if="item.status=='CL'">已结束</span>
+            </td>
+            <td>{{item.skuName}}</td>
+            <td>{{item.catName}}</td>
+            <td class="orangeFont">{{item.manufacturer}}</td>
+            <td>{{item.cityName}}</td>
+            <td>{{item.finalPrice}}</td>
+            <td>{{item.totalNum}}</td>
+            <td>{{item.warehouseName}}</td>
+            <td>
+              <div class="seeTable" @click='BidersDetail(item.id)'>查看</div>
             </td>
           </tr>
           </tbody>
         </table>
-        <div style="display: flex; justify-content: center">
+        <!-- <div style="display: flex; justify-content: center">
           <div class="addbiders" @click="addFollow">添加其他竞拍</div>
-        </div>
+        </div> -->
       </div>
 
 
@@ -494,19 +500,21 @@
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
       </div>
     </Modal>
-
+ 
     <!-- 添加其他竞拍关注-->
-    <Modal
+    <!-- <Modal
             v-model="addfollow"
             title="Title"
             width="80"
     >
+      
+    
       <div slot="header">添加其他竞拍关注</div>
-      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+      <Table border ref="selection" :columns="columns4" :data="unfollowList"></Table>
       <div slot="footer">
-        <div class="addbtn">添加竞拍关注</div>
+        <div class="addbtn" >添加竞拍关注</div>
       </div>
-    </Modal>
+    </Modal> -->
 
     <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
@@ -520,6 +528,8 @@
   import {
     newprice,
     auctionRecord,
+    getAuctionfollow,
+    getAuctionunfollow,
     AddauctionPrice,
     gainauctionrecord,
     WinningBid
@@ -580,8 +590,6 @@
 
         auctionOffer: 0,  //竞拍出价
         auctionNum: 0,  //竞拍数量
-
-        data1: [],
         WinBidShow: false,
         NotWinBidShow: false,
         WinBid: {},
@@ -592,6 +600,8 @@
         auctionTotal: 0,  //竞拍结束—竞拍总数量
         OfferRecordTip: '',   //出价记录提示
         addfollow: false,    //添加竞拍关注
+        followList:{},
+        unfollowList:[],
         DepositData: {
           auctionId: '',
           basePrice: 0,
@@ -624,6 +634,42 @@
       unDepositShow(row) {
         this.DepositShow = row
         location.reload()
+      },
+      BidersDetail(id) {
+
+ 				if (this.$store.state.memberToken) {
+					location.href = '/bidders/detail/' + id
+				} else {
+					this.$Modal.confirm({
+						title: '提示',
+						content: '<p>请登录后参数竞拍！</p>',
+						okText: '去登录',
+						onOk: () => {
+							location.href = '/login'
+						}
+					});
+				}
+
+			},
+      //所有关注竞拍记录
+      async getfollow() {
+        let params = {
+
+        }
+        let res = await getAuctionfollow(this, params)
+          console.log('1',res)
+        if (res) {
+          this.followList = res.data
+        }
+      },
+      //所有未关注竞拍记录
+      async getunfollow() {
+        let params = {
+        }
+        let res = await getAuctionunfollow(this, params)
+      console.log('2',res)
+
+          this.unfollowList = res.data
       },
       //所有竞拍记录
       async getAuctionRecord() {
@@ -715,6 +761,8 @@
 
       this.auctionNum = this.minNum
       this.auctionOffer = this.minPrice
+      this.getfollow()
+      this.getunfollow();
     },
     watch: {
       '$route'(to, from) {

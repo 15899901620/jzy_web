@@ -21,26 +21,41 @@
 
           </div>
           <div class="TableTitle graybg">
-            <span style="width: 42%;">出发地</span>
-            <span style="width: 20%;">货物名称  </span>
-            <span style="width: 15%;">货物重量</span>
-            <span style="width: 20%;">运输时间</span>
-            <span style="width: 20%;">操作</span>
+			<span style="width: 10%;">询价日期</span>
+			<span style="width: 10%;">出发地</span>
+			<span style="width: 10%;">到达地</span>
+			<span style="width: 10%;">货物名称</span>
+            <span style="width: 10%;">货物重量</span>
+            <span style="width: 10%;">装货时间</span>
+            <span style="width: 10%;">询价倒计时</span>
+			<span style="width: 10%;">是否含税</span>
+			<span style="width: 10%;">报价状态</span>
+			<span style="width: 10%;">操作</span>
           </div>
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
             <tbody>
             <tr class="detailTable" v-for="(item, index) in dataList" :key="index">
-              <td style="width: 25%;">{{item.dispatchFullAddress}}
-                <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
-                   style="font-size: 32px;     color: #007de4;"></i>
-                {{item.receiptFullAddress}}
+				<td style="width: 10%;">{{item.createTime}}</td>
+				<td style="width: 10%;">{{item.dispatchFullAddress}}</td>
+				<td style="width: 10%;">{{item.receiptFullAddress}}</td>
+				<td style="width: 10%;">{{item.freightGoods}}</td>
+				<td style="width: 10%;">{{item.weight}}吨</td>
+				<td style="width: 10%;">  
+					<span v-if='item.isTax==0'>否</span>
+              		<span v-else>是</span>
+			   </td >
+				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
+				<td style="width: 10%;">{{item.demandBeginDate}}</td>
+			  <td class="operate" style="width: 10%;">
+                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==0' >已取消</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 &&  item.isWin == 0'>已中标 </div>
               </td>
-              <td>{{item.freightGoods}}</td>
-              <td><span>{{item.weight}}</span>吨</td>
-              <td>{{item.demandBeginDate}}至{{item.demandEndDate}}</td>
-              <td class="operate">
-                <div class="check mt5 blackFont" style="margin-left:50px;cursor: pointer;" v-if='item.isQuote==1'>已报价</div>
-                <div class="check mt5 blackFont" style="margin-left:50px;cursor: pointer;" v-else @click="oldtime(item)">立即出价</div>
+              <td class="operate" style="width: 10%;">
+                <div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  @click="detailLog(item)">查看详情</div>
               </td>
             </tr>
             </tbody>
@@ -66,8 +81,12 @@
         <Input v-model="receiptFull" :disabled='true' placeholder="Enter something..."
                style="width: 150px; margin-top: 10px;"/>
       </Row>
+	   <Row>
+        	<span style="margin-top: 10px   margin-left: 40px; font-size:14px">是否含税</span>：
+			<span v-if='isTaxs==0'>否</span>
+			<span v-else>是</span>
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数</span>：
+        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
         <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
       </Row>
       <Row style=" margin-top: 10px;">
@@ -82,18 +101,22 @@
 <script>
 	import Navigation from '../../components/navigation'
 	import paydeposit from '../../components/paydeposit'
+	import FreightDetail from '../../components/freight-add/freght-detail'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
 	import pagination from '../../components/pagination'
+	import TimeDown from '../../components/timeDown'
 
 	export default {
 		name: "index",
 		middleware: 'carrierAuth',
-		layout: 'membercenter',
+		layout: 'supplercenter',
 		components: {
 			pages: pagination.pages,
 			supplynav: Navigation.supply,
-			payorder: paydeposit.order
+			FreightDetail,
+			payorder: paydeposit.order,
+			TimeDown
 		},
 		fetch({store}) {
 			return Promise.all([
@@ -107,10 +130,12 @@
 			return {
 				totalnum:'',
 				id: '',
+				Timeloading: false,
 				dataList: {},
 				price: '',
 				modal1: false,
 				payloading: false,
+				detailloading: false,
 				total_amount_format: '',
 				freeze_amount_format: '',
 				available_amount_format: '',
@@ -118,6 +143,7 @@
 				receiptFull: '',
 				hotorderinfo: [],
 				total: 0,
+				isTaxs:0,
 				total_fund: '',
 				showtimeVal: '',
 				userinfo: {},
@@ -133,6 +159,7 @@
 				this.weight = row.weight
 				this.dispatchFull = row.dispatchFullAddress
 				this.receiptFull = row.receiptFullAddress
+				this.isTaxs = row.isTax
 			},
 			cancelDelay() {
 
@@ -160,6 +187,12 @@
 					})
 					this.loading = false
 				})
+			},
+			detailLog(row) {
+				this.addList = {
+					...row
+				}
+				this.detailloading = true
 			},
 			showTotal(total) {
 				return `全部 ${total} 条`;

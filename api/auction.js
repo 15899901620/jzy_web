@@ -65,6 +65,42 @@ vm.$axios.defaults.headers = {
     console.log('manageEditErr', errorInfo)
   })
 }
+/**
+ * @description 竞拍列表，获取当前登录用户已关注列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const getAuctionfollow = (vm, data) => {
+  vm.$axios.defaults.headers = {
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+      }
+    return vm.$axios.get(server.prefix + server.api.Auction.getAuctionfollow,
+      {
+        params: {...data}
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }
+  /**
+ * @description 竞拍列表，获取当前登录用户未关注列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const getAuctionunfollow = (vm, data) => {
+  vm.$axios.defaults.headers = {
+      'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+      }
+    return vm.$axios.get(server.prefix + server.api.Auction.getAuctionunfollow,
+      {
+        params: {...data}
+      }).catch((e) => {
+      let errorInfo = e.response
+      console.log('manageEditErr', errorInfo)
+    })
+  }
 
 /**
  * @description 最小竞拍价信息
