@@ -76,8 +76,8 @@
                     style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
 
-                <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
-                <span style="width: 6%;" v-else>非标准包装</span>
+                <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
+                <span style="width: 7%;" v-else>非标准包装</span>
                 <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
                   <span style="position: relative">{{item.available_num}}
                   <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">限</i>
