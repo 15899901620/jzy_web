@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <Header title="头部"></Header>
+        <Header name="头部"></Header>   // 头部
         <div class="container" title="">
             <div class="breadcrumb">
                 <breadcrumb>

@@ -4,7 +4,7 @@
       title="需求详情"
       v-model="loading"
       @on-cancel="AddressCancel"
-      :width='800'
+      :width='1000'
       class-name="vertical-center-modal">
     <p slot="header" style="color:#666; text-align:left; font-size:14px;">
       <Icon type="ios-create" style="font-size:18px;"/>
@@ -101,7 +101,8 @@
       </div>
 
       <div style="line-height:32px; ">
-        <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
+
+        <Row :gutter="24"  index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
           <Col span="4">货物名称</Col>
           <Col span="3">单价（元/吨）</Col>
           <Col span="3">总运费</Col>
@@ -111,23 +112,58 @@
           <Col span="3">操作</Col>
 
         </Row>
-        <Row v-for="(item, index) in OrderList.freightOffers" :key='index' index=""
+        <Row :gutter="24"  v-for="(item, index) in OrderList.freightOffers" :key='index' index=""
              style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
-          <Col span="4">{{item.freightGoods}}</Col>
-          <Col span="3">{{item.price}}</Col>
-          <Col span="3">¥{{item.price*OrderList.weight}}</Col>
-          <Col span="5">{{item.supplierName}}</Col>
-          <Col span="3">{{item.supplierMobile}}</Col>
-          <Col span="2">
+          <Col span="4">
+            <template v-if="item.freightGoods">
+              {{item.freightGoods}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price*OrderList.weight}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+            </Col>
+          <Col span="5">
+            <template v-if="item.supplierName">
+              {{item.supplierName}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.supplierMobile">
+              {{item.supplierMobile}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
 
+          </Col>
+          <Col span="2">
             <span v-if="item.status==0">取消</span>
             <span v-if="item.status==1">待报价</span>
             <span v-if="item.status==2">已选择</span>
           </Col>
           <Col span="3">
-            <span v-if='item.status==1'><a
+            <span v-if='item.status==1 '><a
                 style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;"
-                @click='setSelected(items)'>入 选</a></span>
+                @click='setSelected(item)'>入 选</a></span>
             <span v-else><a  style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
           </Col>
         </Row>
@@ -258,17 +294,24 @@
 
 			},
 			setSelected(row) {
+				console.log(row)
 				this.$Modal.confirm({
 					content: '<p>是否选择该承运商，确认后无法取消</p>',
 					onOk: () => {
-						sendHttp(this, true, server.api.freight.setSelected, {id: row.id}, 1).then(response => {
-							this.loading = false
+						let params = {
+							id: row.id,
+						}
+						sendHttp(this, true, server.api.freight.setSelected, params, 1).then(response => {
+							if(response.errorcode==501106){
+								alert(response.message)
+							}else{
+								this.AddressCancel();
+							}
+
 						}).catch(err => {
 							this.$Notice({
 								desc: err.response.data.message
 							})
-							this.freight();
-							this.loading = false
 						})
 
 					}

@@ -1,8 +1,6 @@
 <template>
 <div class="wrap">
-		<div style="position: absolute;right: 660px;top: 15px;">
-			<Button type="error" id='printBtn'  @click="print_page()">打印</Button>
-		</div>
+
     <div class="right">
         <div class="right-wrap" style="background: #ffffff">
 			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;">
@@ -16,12 +14,17 @@
 											<img src="~/static/img/logo.png" alt="巨正源">
 									</a></p>
 									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
-									<div style="height: 40px;position: absolute;right:0px;top: 41px;display: flex;text-align: right;flex-direction: column;">
+
+                                    <div style="position: absolute;right: 0px;top: 1px;">
+                                        <Button type="error" id='printBtn' class="printBtn"  @click="print_page()">打印</Button>
+                                    </div>
+
+                                    <div style="height: 40px;position: absolute;right:0px;top: 41px;display: flex;text-align: right;flex-direction: column;">
 										<div style=" " class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 										<div style=" " class="bcTarget mt5p">合同签订地点：东莞市</div>
 									</div>
-								
-									
+
+
 								</div>
 							</td>
 						</tr>
@@ -31,11 +34,12 @@
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
 									<tr>
 										<td class="pb5p ">合同生效日期：{{OrderList.orderDate}}</td>
-										<td class="pb5p tar">合同生效截止日期：{{OrderList.orderDate}}</td>
+										<td class="pb5p tar">合同生效截止日期：{{OrderList.deliveryDeadline}}</td>
 									</tr>
 									<tr class="mt20">
-										<td class="pb5p ">提货起始日期：{{OrderList.deliveryDeadline}}</td>
-										<td class="pb5p tar">提货截止日期：{{OrderList.orderDate}}</td>
+
+										<td class="pb5p ">提货起始日期：{{OrderList.deliveryStart}}</td>
+										<td class="pb5p tar">提货截止日期：{{OrderList.deliveryDeadline}}</td>
 									</tr>
 								</table>
 							</td>
@@ -76,8 +80,8 @@
 										<th>{{OrderList.taxRate}}</th>
 									</tr>
 									<tr>
-										<th style="padding:5px 0;">含税总金额</th>
-										<th>{{OrderList.totalAmount}}</th>
+										<th style="padding:5px 0;">含税总金额（元）</th>
+										<th>{{OrderList.totalAmount}}元</th>
 										<th>总金额大写</th>
 										<th colspan="3">{{$utils.moneyFormat(OrderList.totalAmount)}}</th>
 									</tr>
@@ -101,7 +105,7 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">支付方式：</th><th>电汇或银行承兑自贴息</th><th>付款方式：</th><th>款到发货</th></tr>
+									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th style="    width: 205px;">电汇或银行承兑自贴息</th><th style="    width: 140px;">付款方式：</th><th>款到发货</th></tr>
 									<tr><th style="padding:5px 0;">计价方式：</th><th>现货价</th><th>其他约定：</th><th>/</th></tr>
 									<tr>
 										<th style="padding:5px 0;">支付条款约定：</th>
@@ -161,33 +165,28 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;margin-top: 30px">
+			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;margin-top: 30px">
 				<div style="padding-bottom:5px;clear:both;position:relative;">
-				<p class="ffw fs20p tac" ><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
+					<div style="text-align: right;margin-right: 20px;margin-top: 10px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
+				<p class="ffw fs20p tac" ><span style="padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
+
 				</div>
 				<div style="margin: 0 auto;width: 730px;">
-<pre style=" width: 95%; margin: 0 auto; overflow: hidden; white-space: pre-wrap;">
+<pre style=" width: 100%; margin: 0 auto; overflow: hidden; white-space: pre-wrap;">
 第一条  产品交付：（需方接受供方对产品资源的配置并根据供方开具的提货单进行产品交接）：
 1.产品交付方式:
 1）需方自行提货的，由需方自派运输工具到供方指定的地点提货，以产品交付需方运输工具为交付点。
 2）供方送货的，供方将产品送至需方指定的地点，以产品送至需方指定地点为交付点。
 2.在交付点之前产品的风险由供方承担，在交付点之后产品的风险由需方承担。
 第二条  计量及标准：
-产品交付数量以供方产品出厂的法定计量为准，如果计量结果超过规定的范围，需方应在24小时内通知供方，供方派人与
-需方共同计量，所用计量器具必须经过有资质的计量技术机构检定合格，并在有效期内。
+产品交付数量以供方产品出厂的法定计量为准，如果计量结果超过规定的范围，需方应在24小时内通知供方，供方派人与需方共同计量，所用计量器具必须经过有资质的计量技术机构检定合格，并在有效期内。
 第三条  验收：
-1.供需双方共同指定供方产品生产企业质量及计量部门作为货物交货的检验部门。产品交付时，双方共同按规定提取产品
-样品，以备复检。
-2.需方在接收供方产品同时对产品进行确认，如与合同约定不符，须在24小时内向供方提出异议，逾期不提出视为供方所
-交付的产品符合合同约定。特殊情况由双方协商后妥善解决。
-3.在验收期内，如需方认为产品质量或数量不符合合同约定，供需双方共同指定具有国家认可资质的第三方检验机构作为
-检验方。该方对留样进行复检，复检结果是最终的，双方均受其约束。如检验结果符合合同约定标准，检验费及相关费用
-由需方承担。否则，检验费由供方承担。
-第四条  保密条款：
-供需双方对在履行本合同过程中所知悉的对方的商业秘密（包括但不限于各自提交给对方的合同、文件、资料、数据等或，
-其他使用对方处于有利竞争地位的信息）负有保密义务。任何一方不得将对方商业秘密披露给任何第三方或不当使用但经，
-对方书面同意或按法律规定除外。不论本合同是否变更、解除或终止，本合同保密条款将持续有效。
-第五条  保证条款：
+1.供需双方共同指定供方产品生产企业质量及计量部门作为货物交货的检验部门。产品交付时，双方共同按规定提取产品样品，以备复检。
+2.需方在接收供方产品同时对产品进行确认，如与合同约定不符，须在24小时内向供方提出异议，逾期不提出视为供方所交付的产品符合合同约定。特殊情况由双方协商后妥善解决。
+3.在验收期内，如需方认为产品质量或数量不符合合同约定，供需双方共同指定具有国家认可资质的第三方检验机构作为检验方。该方对留样进行复检，复检结果是最终的，双方均受其约束。如检验结果符合合同约定标准，检验费及相关费用由需方承担。否则，检验费由供方承担。
+<p style="font-weight: bold;">第四条  保密条款：</p>
+供需双方对在履行本合同过程中所知悉的对方的商业秘密（包括但不限于各自提交给对方的合同、文件、资料、数据等或，其他使用对方处于有利竞争地位的信息）负有保密义务。任何一方不得将对方商业秘密披露给任何第三方或不当使用但经，对方书面同意或按法律规定除外。不论本合同是否变更、解除或终止，本合同保密条款将持续有效。
+<p style="font-weight: bold;">第五条  保证条款：</p>
 1.供方保证：
 (1)销售的产品质量符合合同规定的指标要求。
 (2)供方已授予其授权代表签署本合同的权利，从生效日开始，本合同的条款对其具有法律约束力。
@@ -195,29 +194,23 @@
 (1)需方是依法定程序设立（自然人）、有效存续、且相关手续完备。
 (2)需方已授予其授权代表签署本合同的权利，从生效日开始，本合同的条款对其具有法律约束力。
 (3)需方履行相关义务，保证做到合法经营。
-第六条  健康、安全和环境保护：
-供需双方须确保在销售、运输、存储、加工、使用等过程中，遵守质量、安全、环境与健康等法律法规及装卸货地的管理
-规定，并承担质量、安全、环境与健康责任。
-第七条  合同变更与解除：
+<p style="font-weight: bold;">第六条  健康、安全和环境保护：</p>
+供需双方须确保在销售、运输、存储、加工、使用等过程中，遵守质量、安全、环境与健康等法律法规及装卸货地的管理规定，并承担质量、安全、环境与健康责任。
+<p style="font-weight: bold;">第七条  合同变更与解除：</p>
 1.合同双方当事人协商一致可变更或解除本合同。合同变更或解除须采取书面形式。
-2.本合同的一方当事人因过错致使合同无法继续履行，无过错方有权解除合同，由此引起的后果由过错方承担。解除合同
-方在解除合同时，须履行通知对方义务。
-第八条  免责条款：
-1. 由于不可抗力，如火灾、地震、台风、洪水等自然灾害及其它不可预见、不可避免、不可克服的事件，或政府行为导
-致不能完全或部分履行本合同义务，受上述情形影响的一方或双方不承担违约责任但有义务采取措施将造成的损失降低到
-最低程度。
+2.本合同的一方当事人因过错致使合同无法继续履行，无过错方有权解除合同，由此引起的后果由过错方承担。解除合同方在解除合同时，须履行通知对方义务。
+<p style="font-weight: bold;">第八条  免责条款：</p>
+1. 由于不可抗力，如火灾、地震、台风、洪水等自然灾害及其它不可预见、不可避免、不可克服的事件，或政府行为导致不能完全或部分履行本合同义务，受上述情形影响的一方或双方不承担违约责任但有义务采取措施将造成的损失降低到最低程度。
 2.因供方非计划停产、减产、检修使供方产品不能及时交付的，供方不承担责任但应及时通知需方。
-第九条  违约责任：
-1.由于不可抗力或其他特殊原因导致供方未能及时履行合同，供方应及时通知需方。如果供方没有及时通知需方，应当承
-担需方因防止损失扩大而支付的合理费用。
+<p style="font-weight: bold;">第九条  违约责任：</p>
+1.由于不可抗力或其他特殊原因导致供方未能及时履行合同，供方应及时通知需方。如果供方没有及时通知需方，应当承担需方因防止损失扩大而支付的合理费用。
 2.需方未按照供需双方约定的日期或数量提货的，供方有权终止合同，同时需方应当承担由此对供方造成的损失。
 3.发生其它违约情形，违约方应赔偿由此给对方造成的损失。如属双方过错，应各自承担相应责任。
-第十条  争议解决：
+<p style="font-weight: bold;">第十条  争议解决：</p>
 因本合同发生争议，由合同双方当事人协商解决，协商不成的，.向供方所在地人民法院提起诉讼。
-第十一条  效力及其它
+<p style="font-weight: bold;">第十一条  效力及其它</p>
 1.本合同自双方签字并盖章之日起生效。
-2.本合同未尽事宜，由双方当事人协商签订补充协议，补充协议是本合同组成部分，具有同等法律效力，补充协议与本合
-同内容不一致，以补充协议为准。
+2.本合同未尽事宜，由双方当事人协商签订补充协议，补充协议是本合同组成部分，具有同等法律效力，补充协议与本合同内容不一致，以补充协议为准。
 </pre>
 				</div>
 			</div>
@@ -270,7 +263,7 @@
 				}
 				window.print();
 			},
-			
+
 			remove_ie_header_and_footer() {
 				var hkey_root, hkey_path, hkey_key;
 				hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
@@ -316,4 +309,8 @@
 			margin: 10px auto;
 		}
 		.listsupply{width: 50%;display: flex;align-items: center;}
+	.printBtn{
+		line-height: 11px;
+		cursor: pointer;
+	}
 </style>

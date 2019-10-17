@@ -34,18 +34,18 @@
 								path: '/users/auctionPlan',
 								name: '竞拍合约'
 							},
-							{
-								path: '/users/useradvsale',
-								name: '预售合约'
-							},
-							{
-								path: '/users/userSpecmat',
-								name: '年度合约'
-							},
-							{
-								path: '/users/userSpecmat',
-								name: '月度合约'
-							},
+							// {
+							// 	path: '/users/useradvsale',
+							// 	name: '预售合约'
+							// },
+							// {
+							// 	path: '/users/userSpecmat',
+							// 	name: '年度合约'
+							// },
+							// {
+							// 	path: '/users/userSpecmat',
+							// 	name: '月度合约'
+							// },
 						]
 					},
 					{

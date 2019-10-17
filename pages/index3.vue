@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header title="头部"></Header>
+		<Header name="头部"></Header>
 		<div class="container" title="">
 			<!--内容-->
 			<Banner title="广告" :bannerData="this.bannerinfo" :heightNum="this.heightNum"
@@ -80,7 +80,7 @@ export default {
             })
     },*/
     fetch({ store }) {
-       
+
     },
 
     components: {

@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header title="头部"></Header>
+		<Header></Header>
 		<div class="container" title="">
 			<div class="materials_banner" style="height: auto">
 				<Banner :bannerData="this.bannerinfo" :heightNum="this.heightNum"></Banner>

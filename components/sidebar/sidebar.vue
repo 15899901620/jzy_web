@@ -1,5 +1,33 @@
 <template>
     <div class="cndns-right">
+        <!--电话-->
+        <div class="cndns-right-meau meau-tel" title="在线电话">
+            <div class="cndns-right-btn">
+                <img src="../../static/img/siderbar_02.png" />
+            </div>
+            <div class="cndns-right-box">
+                <div class="box-border">
+                    <div class="sev-t" >
+                        <p>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
+                    </div>
+                    <span class="arrow-right"></span>
+                </div>
+            </div>
+        </div>
+        <!--收藏-->
+        <div class="cndns-right-meau meau-acution"  title="收藏本站">
+<!--            <a  @click="addFavorite();"  title='巨正源' rel="sidebar" href="http://192.168.10.63:3000/">-->
+<!--                <div class="cndns-right-btn">-->
+<!--                    <img src="../../static/img/siderbar_03.png" />-->
+<!--                </div>-->
+<!--            </a>-->
+            <a  href="javascript:addBookmark('脚本之家','http://192.168.10.63:3000/')"  >
+                <div class="cndns-right-btn">
+                    <img src="../../static/img/siderbar_03.png" />
+                </div>
+            </a>
+
+        </div>
         <!--关注官方微信-->
         <div class="cndns-right-meau ">
             <div class="cndns-right-btn ">
@@ -8,7 +36,7 @@
             <div class="cndns-right-box">
                 <div class="box-border">
                     <div class="sev-t">
-                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" />
+                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />
                         <p>
                             <i>巨正源交易平台</i>
                             <i>微信扫码下单</i></p>
@@ -17,31 +45,8 @@
                 </div>
             </div>
         </div>
-        <!--电话-->
-        <div class="cndns-right-meau meau-tel">
-            <div class="cndns-right-btn">
-                <img src="../../static/img/siderbar_02.png" />
-            </div>
-            <div class="cndns-right-box">
-                <div class="box-border">
-                    <div class="sev-t">
-                        <p>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
-                    </div>
-                    <span class="arrow-right"></span>
-                </div>
-            </div>
-        </div>
-        <!--竞拍-->
-        <div class="cndns-right-meau meau-acution" >
-<!--            <nuxt-link to="/bidders">-->
-            <a  @click="addFavorite" >
-                <div class="cndns-right-btn">
-                    <img src="../../static/img/siderbar_03.png" />
-                </div>
-            </a>
-<!--            </nuxt-link>-->
 
-        </div>
+
         <!--置顶-->
         <div class="cndns-right-meau meau-top" v-show="totop"  id="to-top-btn" @click="back">
             <a class="cndns-right-btn">
@@ -68,6 +73,15 @@ export default {
     },
 
     methods: {
+        addBookmark(title,url) {
+            if (window.sidebar) {
+                window.sidebar.addPanel(title,url,"");
+            } else if( document.all ) {
+                window.external.AddFavorite(url,title);
+            } else if( window.opera && window.print ) {
+                return true;
+            }
+        },
         // addFavorite() {
         //     var url = window.location;
         //     var title = document.title;
@@ -89,20 +103,38 @@ export default {
         //         }
         //     }
         // },
+        // addFavorite () {
+        //     var url = window.location
+        //     console.log("url", url)
+        //     console.log("sidebar",window.sidebar)
+        //     if (window.sidebar) {        // Firefox
+        //         window.sidebar.addPanel ('Dottoro help page', url, '');
+        //     }
+        //     else {
+        //         if (window.external && ('AddFavorite' in window.external)) {
+        //             // Internet Explorer
+        //             window.external.AddFavorite ('http://help.dottoro.com', 'Dottoro help page');
+        //         }
+        //         else {  // Opera, Google Chrome and Safari
+        //             alert ("加入收藏失败，请使用Ctrl+D进行添加");
+        //         }
+        //     }
+        // },
+
         addFavorite () {
-            if (window.sidebar) {        // Firefox
-                window.sidebar.addPanel ('Dottoro help page', 'http://help.dottoro.com', '');
+            var url = window.location.href;
+            var title = document.title;
+           console.log("url",url)
+            console.log("title",title)
+            console.log("all",document.all)
+            if(document.all){
+                window.external.addFavorite(url, title);
+            }else if(window.sidebar){
+                window.sidebar.addPanel(title, url,'');
             }
-            else {
-                if (window.external && ('AddFavorite' in window.external)) {
-                    // Internet Explorer
-                    window.external.AddFavorite ('http://help.dottoro.com', 'Dottoro help page');
-                }
-                else {  // Opera, Google Chrome and Safari
-                    alert ("加入收藏失败，请使用Ctrl+D进行添加");
-                }
-            }
+
         },
+
         handleScroll () {
             this.totop = window.pageYOffset > 200;
         },

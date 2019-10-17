@@ -13,12 +13,12 @@
       </div>
     </Header-small>
     <div class="container" title="">
-      <div class="tac fs0">
-        <img src="/img/Tenderingbanner.png"  style="width: 100%" />
+      <div class="tac fs0 Tenderbanner" style="background: url('/img/Tenderingbanner.png')no-repeat center" >
+      <!--&lt;!&ndash;        <img src="/img/Tenderingbanner.png"  style="width: 100%" />&ndash;&gt;-->
       </div>
       <div class="trenderCenter">
         <div class="trendLogin fs14">
-          <div class="trendLoginCenter" v-if="!SupplierInfor" style="margin:20px 32px;">
+          <div class="trendLoginCenter" v-if="!SupplierInfor" style="margin:20px 32px;">16
             <p class="trendTitle">招标登录</p>
             <login-supply></login-supply>
           </div>
@@ -348,4 +348,7 @@ export default {
   overflow: hidden;
   background: url("/img/icon.png") -314px -5px no-repeat;
 }
+  .Tenderbanner{
+     height: 400px;
+  }
 </style>

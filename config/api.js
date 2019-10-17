@@ -115,9 +115,10 @@ let api = {
    */
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
-    auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
-
+    auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页 
     getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
+    getAuctionfollow:'/bill/auction/followList',    //竞拍列表，获取当前登录用户已关注列表
+    getAuctionunfollow:'/bill/auction/unFollowList',    //竞拍列表，获取当前登录用户未关注列表
     getAuctionInfo:{'url':'/bill/auction/sale/info','method':'get'},
 		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
 		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
@@ -227,6 +228,8 @@ let api = {
   product: {
     productlist: '/item/goods/list/page',
     productdetail: '/item/goods/sku/info',
+    skuInfoBIddetail: '/item/goods/querySkuInfoById',
+    skuInfoBId: {'url': '/item/goods/querySkuInfoById', 'method': 'get'},
     inspectionCheck: '/item/inspection_sheet/list/page',
     demandadd: '/bill/goodsDemand/add',
     // goodsHot: '/item/goods/hotGoods',

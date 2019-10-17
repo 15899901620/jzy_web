@@ -44,12 +44,12 @@
 <style scoped>
   /*左侧菜单*/
   .memberList{border:1px solid #DEDEDE;border-top: 3px solid #007de4; width: 215px;}
-  .memberList ul{margin-left: 45px;}
+  .memberList ul{margin-left: 35px;}
   .memberList ul li{color: #999;margin-top: 10px;font-size: 14px;}
   .memberList ul li a{color: #999}
   .memberList ul li:hover{color: #007de4;}
   .memberList ul li.curr{color: #007de4;}
-  .memberList h1{font-size: 18px;margin-bottom: 10px; padding-bottom: 10px; position: relative;}
+  .memberList h1{font-size: 16px;margin-bottom: 0px; padding-bottom: 0px; position: relative;}
 
   .memberList ul li .nuxt-link-active{color: #007de4}
 </style>

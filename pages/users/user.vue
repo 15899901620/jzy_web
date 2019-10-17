@@ -33,7 +33,7 @@
             </div>
             <div class="pricebg">
               <div class="dflex"
-                   style="width: 85%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
+                   style="width: 90%;margin: 0 auto;border-bottom: 1px dashed #eac6b8;justify-content: space-between;">
                 <div class="Av_balance">
                   <span>可用余额：</span>
                   <span class="fs24 fwb orangeFont">{{available_amount_format}}</span>
@@ -42,23 +42,31 @@
                     <a href="/users/usercapitalpaycheck" class="pricebtnbg brd1 orangeFont ml15">查看我的资金</a>
                 </div> -->
               </div>
-              <div class="" style="display: flex;width: 85%;margin: 20px auto;">
+              <div class="" style="display: flex;width: 90%;margin: 35px auto 0;">
                 <div class="dflexPrice">
-
                   <div class="account_icon "></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>账户余额</span>
                     <span class="fs18 fwb">{{$store.state.member.capitalInfo.available_amount_format}}</span>
                   </div>
-
                 </div>
+
                 <div class="dflexPrice">
                   <div class="Frozen_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
-                    <span>冻结金额</span>
-                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}+{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
+                    <span>合约冻结金额</span>
+                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.freeze_amount_format}}</span>
                   </div>
                 </div>
+
+                <div class="dflexPrice">
+                  <div class="Frozen_icon"></div>
+                  <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
+                    <span>竞拍冻结金额</span>
+                    <span class="fs18 fwb">{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -305,6 +313,7 @@
           },
 		},
 		mounted() {
+		  console.log("capitalInfo",this.$store.state.member.capitalInfo)
 			 this.showtime()
 			 this.getOrderList()
       }

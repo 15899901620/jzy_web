@@ -1563,7 +1563,7 @@ gAccount {
 	color:#999;
 }
 .memberList ul {
-	margin-left:45px;
+	margin-left:30px;
 }
 .memberList ul li {
 	margin-top:10px;
@@ -1579,10 +1579,10 @@ gAccount {
 	color:#007de4;
 }
 .memberList h1 {
-	font-size:18px;
-	margin-bottom:10px;
-	padding-bottom:10px;
-	position:relative;
+	font-size: 16px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	position: relative;
 }
 .memberList h1.curr{border-bottom: 1px solid #DEDEDE;}
 .memberInfor {
@@ -1594,9 +1594,9 @@ gAccount {
 	align-items:center;
 	flex-direction:column;
 	text-align:center;
-	margin-left:65px;
-	font-size:14px;
-	margin-top:30px;
+	margin-left: 45px;
+	font-size: 14px;
+	margin-top: 30px;
 }
 .head {
 	width:95px;
@@ -1616,9 +1616,10 @@ gAccount {
 	color:#fff;
 }
 .pricebg {
-	width:600px;
+	width:630px;
 	background:url(/img/pricebg.png)no-repeat;
-	margin-left:60px;
+	background-size: 100% 100%;
+	margin-left:30px;
 	margin-top:25px;
 	font-size:14px;
 }
@@ -1666,7 +1667,7 @@ gAccount {
 	background:url(/img/icon.png)no-repeat -764px -83px;
 }
 .Frozen_icon {
-	margin-left:50px;
+	margin-left:15px;
 	width:44px;
 	height:44px;
 	background:url(/img/icon.png)no-repeat -754px -38px;
