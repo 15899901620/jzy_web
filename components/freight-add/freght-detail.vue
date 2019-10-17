@@ -119,13 +119,12 @@
           <Col span="5">{{item.supplierName}}</Col>
           <Col span="3">{{item.supplierMobile}}</Col>
           <Col span="2">
-
             <span v-if="item.status==0">取消</span>
             <span v-if="item.status==1">待报价</span>
             <span v-if="item.status==2">已选择</span>
           </Col>
           <Col span="3">
-            <span v-if='item.status==1'><a
+            <span v-if='item.status==1 '><a
                 style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;"
                 @click='setSelected(item)'>入 选</a></span>
             <span v-else><a  style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
@@ -266,7 +265,12 @@
 							id: row.id,
 						}
 						sendHttp(this, true, server.api.freight.setSelected, params, 1).then(response => {
-							this.AddressCancel();
+							if(response.errorcode==501106){
+								alert(response.message)
+							}else{
+								this.AddressCancel();
+							}
+							
 						}).catch(err => {
 							this.$Notice({
 								desc: err.response.data.message
