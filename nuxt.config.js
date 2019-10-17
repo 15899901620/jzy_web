@@ -146,23 +146,23 @@ export default {
           }
         })
       ],
-    //   //代码打包分割规则
-      // splitChunks: {
-      //   chunks: 'all',
-      //   cacheGroups: {
-      //     libs: {
-      //       name: 'chunk-libs',
-      //       test: /[\\/]node_modules[\\/]/,
-      //       priority: 10,
-      //       chunks: 'initial' // only package third parties that are initially dependent
-      //     },
-      //     iview: {
-      //       name: 'chunk-ui',
-      //       priority: 20,
-      //       test: /[\\/]node_modules[\\/]_?iview(.*)/
-      //     }
-      //   }
-      // }
+      //代码打包分割规则
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial' // only package third parties that are initially dependent
+          },
+          iview: {
+            name: 'chunk-ui',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?iview(.*)/
+          }
+        }
+      }
     },
 		/*
 		 ** You can extend webpack config here

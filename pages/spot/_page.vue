@@ -75,17 +75,20 @@
                 <span
                     style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
-                <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
-                <span style="width: 7%;" v-else>非标准包装</span>
-                <span style="width: 9%; display: flex; justify-content: center; align-items: center;">
-                  <Tag :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" color="error">限</Tag>
-                  {{item.available_num}}
+
+                <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
+                <span style="width: 6%;" v-else>非标准包装</span>
+                <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
+                  <span style="position: relative">{{item.available_num}}
+                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">限</i>
+                  </span>
                 </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
                       style="width: 11%;position:relative;text-align:right;padding-right:18px;">
-                    <Tag v-if="item.is_jry" color="error"
-                         style="padding:1px 5px;line-height:20px;float:left;position:absolute;left:5px;top:-3px;">易</Tag>
-                    <i style="padding-left:30px;">{{item.finalPriceFormat}}</i>
+                     <span style="position: relative">
+                       {{item.finalPriceFormat}}
+                        <i v-if="item.is_jry"  style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">易</i>
+                     </span>
                 </span>
                 <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
                 <span style="width: 8%;">

@@ -4,7 +4,7 @@
         <tabs-pane label="网站公告" name='1'>
           <ul class="newscont">
             <template v-if="$store.state.article.noticeList.length > 0">
-              <li v-for="(item, index) in $store.state.article.noticeList" :key="index">
+              <li v-for="(item, index) in $store.state.article.noticeList" :key="index" v-if="index<4">
                 <span>{{item.time}}</span>
                 <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
                   {{item.title}}
@@ -19,7 +19,7 @@
         <tabs-pane label="公司动态" name='2' style="display: none;">
           <ul class="newscont">
             <template v-if="$store.state.article.articleList.length > 0">
-            <li v-for="(item, index) in $store.state.article.articleList" :key="index">
+            <li v-for="(item, index) in $store.state.article.articleList" :key="index" v-if="index<4">
               <span>{{item.time}}</span>
               <a :href="`/article/detail/${item.id}`" :title="item.title">
                 {{item.title}}

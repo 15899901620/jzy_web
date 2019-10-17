@@ -5,27 +5,29 @@
       <div class="memberInfor ml20 mt20">
         <!--个人信息-->
         <div class="whitebg" style="padding:0px 18px 18px;">
-          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">订单详情 
+          <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">订单详情
             <span v-if="this.datalist.status == 2" style="float:right;color:red; font-size:16px;">最迟付款时间： {{this.datalist.orderPayLastTime}}</span>
+              <span class="fr">订单编号：{{this.datalist.orderNo}}</span>
           </h3>
           <div style="line-height:32px;">
              <Row index="">
+
               <Col span="12">
               <span v-if="this.datalist.orderType==1"><a :href="`/users/plan/spot/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
               <span v-if="this.datalist.orderType==3"><a :href="`/users/plan/aution/${this.datalist.sourceId}`" class="mt5 blackFont">合约编号：{{this.datalist.sourceSn}}</a></span>
               </Col>
-              <Col span="12">订单标号：{{this.datalist.orderNo}}</Col>
+                 <Col span="12">ERP订单号：{{this.datalist.erpOrderSn}}</Col>
             </Row>
             <Row index="">
               <Col span="12">下单时间：{{this.datalist.createTime}}</Col>
               <Col span="12">有效提货时间：<span style="color:#ff2222">{{this.datalist.deliveryStart}}</span>至<span style="color:#ff2222">{{this.datalist.deliveryDeadline}}</span>  </Col>
             </Row>
              <Row index="">
-              <Col span="12">包装方式： 
+              <Col span="12">包装方式：
               <template v-if="this.datalist.packingModes == 1">标准包装</template>
               <template v-else>非标准包装</template>
               </Col>
-              <Col span="12">产品等级：   
+              <Col span="12">产品等级：
                   <template v-if="this.datalist.productGrade == 1">优等品</template>
                   <template v-else-if="this.datalist.productGrade == 2">一等品</template>
                   <template v-else>合格品</template>
@@ -52,7 +54,7 @@
               <span style="cursor: pointer;"  @click="detailLog(datalist)" v-if="datalist.isDelivery==0 && datalist.isAddDemand==1 && datalist.status!=2">查看物流询价</span><span v-else style="color:#e8e8e8">查看物流询价</span>
             </span>
           </h3>
-     
+
           <div style="line-height:32px;">
             <Row index="" style="font-weight: bold;">
               <Col span="12">联系人：<span v-if="this.datalist.memberContacter">{{this.datalist.memberContacter}}</span><span v-else>--</span></Col>
@@ -75,8 +77,8 @@
               <Col span="12">承运商联系电话：<span v-if="this.datalist.carrierContactsMobile">{{this.datalist.carrierContactsMobile}}</span><span v-else-if="this.datalist.isDelivery == 0">待需方指定</span><span v-else>待供方指定</span></Col>
               <Col span="12">详细地址：<span v-if="this.datalist.receiverFullAddress">{{this.datalist.receiverFullAddress}}</span><span v-else>--</span></Col>
             </Row>
-      
-         
+
+
           </div>
         </div>
         <!-- <div v-if="this.datalist.isDelivery === 0 && datalist.isAddDemand == 1" class="whitebg mt20" style="padding:0px 18px 18px;">
@@ -145,7 +147,7 @@
               待付金额：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
                 <div  v-if="this.datalist.status == 3 || this.datalist.status == 4" style="line-height:30px; text-align:right; font-size:18px; padding-right:50px; font-weight: bold;">
               已支付：<span style="color: #ff0000b3;margin-left: 30px;">{{this.datalist.totalAmountFormat}}</span></div>
-                <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;" 
+                <div style="line-height:32px; text-align:right; font-size:18px; padding-right:50px; background: #f2f2f2;"
                v-if=" this.datalist.status == 2">巨融易：<span class="red" v-if='this.datalist.isJryService'>{{this.datalist.jryDays}}天</span>
                <span class="red" v-else>--</span>
                  <span class="fr mr15 " style="margin-left:120px">
@@ -156,13 +158,13 @@
                 </span>
                </div>
             <div  style="line-height:42px;font-weight: bold; text-align:right; font-size:20px; padding-right:10px;     margin: 40px;">
-                 <span >{{this.datalist.skuName}}</span> <span class="ml50" style="margin-right: 50px;">{{this.datalist.orderNum}}吨</span>  
-                  <Button type="success" v-if="this.datalist.status == 2" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;" @click="paymentBut()">去支付</Button> 
+                 <span >{{this.datalist.skuName}}</span> <span class="ml50" style="margin-right: 50px;">{{this.datalist.orderNum}}吨</span>
+                  <Button type="success" v-if="this.datalist.status == 2" style="border-radius: 5px;padding: 10px 40px;font-size: 18px;align-items: center;  cursor: pointer;" @click="paymentBut()">去支付</Button>
                   <Button class="submitback ml10" @click='back'>返回</Button>
             </div>
-       
-       
-            
+
+
+
           </div>
         </div>
 
@@ -248,6 +250,7 @@
 				}
 				let res = await getorderDetail(this, params)
 				this.datalist = res.data
+                console.log("datalist",this.datalist)
       },
       unPayOrder(row) {
 				this.payLoading = row
@@ -270,17 +273,17 @@
       },
       detailLog(row) {
 				this.addList = {
-          id:this.orderid  
+          id:this.orderid
 				}
 				this.detailloading = true
 			},
       paymentBut() {
             //检查是否可以使用合约的保证金
-           
+
             this.payOrderID = this.orderid
             this.payLoading = true
-           
-        },	
+
+        },
       async orderlist() {
 				let params = {
 					orderId: this.orderid,
@@ -288,16 +291,17 @@
 				const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 
         this.OrderList = res.data
-     
 
-			},  
+
+			},
     },
 
-    
+
 		mounted(){
       this.sourceDeta()
       this.orderlist();
-     
+
+
     },
 		watch: {
 			'$route'(to, from) {

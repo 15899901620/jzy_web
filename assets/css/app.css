@@ -463,11 +463,14 @@ a {
 	color:#999;
 	margin-top:15px;
 	height:40px;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	display:-webkit-box;
-	-webkit-box-orient:vertical;
-	-webkit-line-clamp:2;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+	word-break: break-all;
 }
 .News_content a:hover {
 	color:#00a1e9
@@ -478,9 +481,7 @@ a {
 */
 /*资讯分类*/
 .newsCate {
-	margin-left:20px;
-	margin-top:20px;
-	margin-bottom:20px;
+	margin: 5px;
 }
 .newsCate li {
 	margin-top:10px;

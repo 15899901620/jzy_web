@@ -8,6 +8,7 @@
 			<div class="PrintArea" id="PrintArea" style="font-family:'宋体';margin:0 auto;width: 800px;border: 1px dashed #d3d3d3;padding: 5px;">
 				<div style="margin: 0 auto;width: 690px;">
 					<table  border="0" cellspacing="0" cellpadding="0" style="margin: 0 auto;width: 100%">
+						<tbody>
 						<tr>
 							<td height="80">
 								<div style="padding-bottom:5px;clear:both;position:relative;">
@@ -30,8 +31,11 @@
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
 									<tr>
 										<td class="pb5p ">合同生效日期：{{OrderList.orderDate}}</td>
+										<td class="pb5p tar">合同生效截止日期：{{OrderList.orderDate}}</td>
+									</tr>
+									<tr class="mt20">
 										<td class="pb5p ">提货起始日期：{{OrderList.deliveryDeadline}}</td>
-										<td class="pb5p ">提货截止日期：{{OrderList.orderDate}}</td>
+										<td class="pb5p tar">提货截止日期：{{OrderList.orderDate}}</td>
 									</tr>
 								</table>
 							</td>
@@ -58,7 +62,7 @@
 									<tr>
 										<th style="padding:5px 0;">产品名称</th>
 										<th>生产工厂</th>
-										<th>规格型号</th>
+<!--										<th>规格型号</th>-->
 										<th>数量（吨）</th>
 										<th>售价（元/吨）</th>
 										<th>税率%</th>
@@ -66,7 +70,7 @@
 									<tr>
 										<th style="padding:5px 0;">{{OrderList.skuName}}</th>
 										<th>{{OrderList.manufacturer}}</th>
-										<th>{{OrderList.skuType}}</th>
+<!--									<th>{{OrderList.skuType}}</th>-->
 										<th>{{OrderList.orderNum}}</th>
 										<th>{{OrderList.finalPrice}}</th>
 										<th>{{OrderList.taxRate}}</th>
@@ -112,7 +116,9 @@
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
 									<tr>
 										<th style="padding:5px 0;">包装方式：</th>
-										<th><span v-if="OrderList.packingModes==1">标准包装</span><span v-else>非标准包装</span></th>
+										<th>
+											<span>{{OrderList.packingModes}}</span>
+										</th>
 										<th>运输方式：</th>
 										<th>在实际执行订单中确定·</th>
 									</tr>
@@ -139,6 +145,7 @@
 						<tr style="margin-top: 10px;display: block" >
 							<td style="border-bottom:2px solid #000;padding-bottom:5px; margin-top: 20px;overflow: hidden">7·本合同与后附《合同条款及规则》构成合同整体，一经双方签署，本合同后附《合同条款及规则》即同时生效。</td>
 						</tr>
+						</tbody>
 					</table>
 					<div class="supplyname">
 						<div class="listsupply"><span>供方名称:</span><span class="ml5p">{{OrderList.companyName}}</span></div>
@@ -159,7 +166,7 @@
 				<p class="ffw fs20p tac" ><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 				</div>
 				<div style="margin: 0 auto;width: 730px;">
-<pre>
+<pre style=" width: 95%; margin: 0 auto; overflow: hidden; white-space: pre-wrap;">
 第一条  产品交付：（需方接受供方对产品资源的配置并根据供方开具的提货单进行产品交接）：
 1.产品交付方式:
 1）需方自行提货的，由需方自派运输工具到供方指定的地点提货，以产品交付需方运输工具为交付点。
@@ -194,7 +201,7 @@
 第七条  合同变更与解除：
 1.合同双方当事人协商一致可变更或解除本合同。合同变更或解除须采取书面形式。
 2.本合同的一方当事人因过错致使合同无法继续履行，无过错方有权解除合同，由此引起的后果由过错方承担。解除合同
-方在解除合同时，须履行通知对方义务。 
+方在解除合同时，须履行通知对方义务。
 第八条  免责条款：
 1. 由于不可抗力，如火灾、地震、台风、洪水等自然灾害及其它不可预见、不可避免、不可克服的事件，或政府行为导
 致不能完全或部分履行本合同义务，受上述情形影响的一方或双方不承担违约责任但有义务采取措施将造成的损失降低到
@@ -207,13 +214,13 @@
 3.发生其它违约情形，违约方应赔偿由此给对方造成的损失。如属双方过错，应各自承担相应责任。
 第十条  争议解决：
 因本合同发生争议，由合同双方当事人协商解决，协商不成的，.向供方所在地人民法院提起诉讼。
-第十一条  效力及其它 
+第十一条  效力及其它
 1.本合同自双方签字并盖章之日起生效。
 2.本合同未尽事宜，由双方当事人协商签订补充协议，补充协议是本合同组成部分，具有同等法律效力，补充协议与本合
 同内容不一致，以补充协议为准。
 </pre>
 				</div>
-			</div>	
+			</div>
         </div>
     </div>
 </div>
@@ -255,7 +262,6 @@
 				}
 				const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
 				this.OrderList = res.data
-
 			},
 			print_page() {
 				document.getElementById('printBtn').style.display="none";

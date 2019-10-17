@@ -12,7 +12,7 @@
                   <img :src="Headavatar"   />
                 </template>
                 <template v-else>
-                  <img :src="!$store.state.memberInfo.avatar?'':$store.state.memberInfo.avatar"   />
+                  <img :src="!$store.state.memberInfo.avatar?this.headImage:$store.state.memberInfo.avatar"   />
                 </template>
 
 
@@ -192,6 +192,7 @@
 				hotorderinfo: [],
 				total_fund: '',
 				showtimeVal: '',
+                headImage:'/img/headImage.png',
                 Headavatar:'',
                  userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
 			}
