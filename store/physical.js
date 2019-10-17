@@ -27,7 +27,7 @@ export const mutations = {
     updateCurrPage (state, data) {
         state.currPage = data
     }
-    
+
 }
 
 export const actions = {
@@ -42,7 +42,7 @@ export const actions = {
         })
     },
     async getphysicalDetail({ commit }, params) {
-        return await this.$axios.$get(api.prefix + api.api.product.productdetail, { params })
+        return await this.$axios.$get(api.prefix + api.api.product.skuInfoBIddetail, { params })
         .then(response => {
             commit('updatephysicalDetail', response)
         })

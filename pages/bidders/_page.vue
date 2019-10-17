@@ -397,7 +397,7 @@
 .endauction{background-color: #cccccc}
   .statusicon{
     width: 80px;
-
+    cursor:pointer;
     text-align: center;
     line-height: 40px;
     border-top-right-radius: 22px;
