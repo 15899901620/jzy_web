@@ -250,9 +250,6 @@
 				  }
 				const res = await sendHttp(this, false, server.api.spot.spotPlanDetail, params, 1)
         this.OrderList = res.data
-        console.log('111111',this.OrderList)
-         console.log('222222',this.OrderList.orderInfoList)
-
       },
 		},
 		mounted(){

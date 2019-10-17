@@ -52,7 +52,7 @@
                 <ul class="DeliveryMethod ml35">
                     <li v-for="(item, index) in payList" :class="{'curr':index === payIndex}" :key="index">{{item.name}}</li>
                     <div class="ml10 fs14">可用余额：<span class="orangeFont">￥{{capitalinfo.total_fund - this.userinfo.freezeAmount}}</span>元</div>
-                    <a  class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
+                    <a  class="licz" href="/users/investCapital" style="cursor: pointer" target="_blank">查看充值方式</a>
                 </ul>
                 <div class="orderCzTip">
                     * 提交订单后当天17：00前完成付款，逾期扣除保证金

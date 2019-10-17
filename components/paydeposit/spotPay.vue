@@ -45,7 +45,8 @@
     </div>
 
     <div slot="footer" style="text-align:center">
-      <Button type="primary" size="large" v-if="$store.state.member.capitalInfo.available_amount > datalist.totalAmount" @click="bidersOK">确认支付</Button>
+      <Button type="primary" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && isCanPay" @click="bidersOK">确认支付</Button>
+      <Button type="default" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && !isCanPay">正在提交</Button>
     </div>
   </Modal>
 </template>
@@ -61,6 +62,7 @@
 				btnValue: "获取短信验证码",
 				btnBoolen: false,
 				TipCode: '',
+        isCanPay: true,
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -79,6 +81,10 @@
 			},
 			datalist: {
 				type: Object
+			},
+      isPay: {
+				type: Boolean,
+				default: true
 			}
 		},
 		methods: {
@@ -138,6 +144,9 @@
 				} else {
 					this.loading = false
 				}
+			},
+			isPay: function (e) {
+				this.isCanPay = e
 			}
 		}
 	}
