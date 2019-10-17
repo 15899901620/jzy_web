@@ -59,7 +59,7 @@
             <span style="width: 16%;">牌号</span>
             <span style="width: 16%;">厂商</span>
             <span style="width: 10%;">交货仓</span>
-            <span style="width: 6%;">包装方式</span>
+            <span style="width: 7%;">包装方式</span>
             <span style="width: 9%;">剩余数量（吨）</span>
             <span style="width: 11%;">单价（元/吨）</span>
             <span style="width: 8%;">距下架时间</span>
@@ -75,6 +75,7 @@
                 <span
                     style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
+
                 <span style="width: 6%;" v-if='item.packing_modes=="1"'>标准包装</span>
                 <span style="width: 6%;" v-else>非标准包装</span>
                 <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
