@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <Header title="头部"></Header>
+        <Header name="头部"></Header>
         <div class="container" title="">
           <div class="breadcrumb">
             <breadcrumb>
@@ -27,7 +27,7 @@
                       <div class="News_content">
                         <nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
                         <div class="NewsList_text">{{items.seoDescription}}</div>
-                        <div class=" mt20">
+                        <div class="mt25">
                           <div class="dflexAlem fl"><img src="/img/newsTime.png"/><span class="gray ml10">{{items.addTime}}</span></div><div class="gray fl ml30">来源：<nuxt-link to="/">巨正源</nuxt-link></div>
                           <nuxt-link class="blueFont fr" :to="{name:'article-detail-id', params:{id:items.id}}">阅读更多</nuxt-link>
                         </div>
@@ -109,15 +109,15 @@ export default {
         breadcrumbItem:breadcrumb.item,
         pages: pagination.pages
     },
-    head () {
-        return {
-            title:    this.currCategoryInfo.seoTitle+'-巨正源',
-            meta: [
-                { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.seoKeywords +',巨正源' },
-                { hid: 'description', name: 'description', content:    this.currCategoryInfo.seoDescription +'-巨正源' }
-            ]
-        }
-    },
+    // head () {
+    //     return {
+    //         title:    this.currCategoryInfo.seoTitle+'-巨正源',
+    //         meta: [
+    //             { hid: 'keywords', name: 'keywords', content:   this.currCategoryInfo.seoKeywords +',巨正源' },
+    //             { hid: 'description', name: 'description', content:    this.currCategoryInfo.seoDescription +'-巨正源' }
+    //         ]
+    //     }
+    // },
     data() {
         return {
             currCategoryInfo : ''

@@ -32,6 +32,6 @@
   .memberList ul{margin-left: 45px;}
   .memberList ul li{color: #999;margin-top: 10px;}
   .memberList ul li.curr{color: #007de4;}
-  .memberList h1{font-size: 18px;margin-bottom: 10px; padding-bottom: 10px; position: relative;}
+  .memberList h1{font-size: 16px;margin-bottom: 0px; padding-bottom: 0px; position: relative;}
 
 </style>

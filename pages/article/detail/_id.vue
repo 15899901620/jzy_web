@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <Header title="头部"></Header>
+        <Header name="头部"></Header>
         <div v-if="!articledetail">
           <p style="width:100%; text-align:center">
             <img src="../../../static/img/Nothing.png"/>

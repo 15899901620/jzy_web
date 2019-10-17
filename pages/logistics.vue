@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header title="头部"></Header>
+		<Header name="头部"></Header>   // 头部
 		<div class="container" title="">
 			<div class="tac">
 				<img src="/img/logisticsBanner.png" style="width: 100%" />
@@ -212,7 +212,7 @@
 
 				this.reaList=res.data.items;
 				this.total=res.data.total
-        	
+
 			  },
             async initData(){
                 const res = await getWarehouseList(this, {})

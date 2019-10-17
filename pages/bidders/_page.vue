@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header title="头部"></Header>
+    <Header name="头部"></Header>
     <div class="container" title="">
       <template v-for="(item,index) in $store.state.common.adList.ad4">
       <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
