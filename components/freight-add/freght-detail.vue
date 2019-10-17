@@ -101,6 +101,7 @@
       </div>
 
       <div style="line-height:32px; ">
+
         <Row index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
           <Col span="4">货物名称</Col>
           <Col span="3">单价（元/吨）</Col>
@@ -113,11 +114,47 @@
         </Row>
         <Row v-for="(item, index) in OrderList.freightOffers" :key='index' index=""
              style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
-          <Col span="4">{{item.freightGoods}}</Col>
-          <Col span="3">{{item.price}}</Col>
-          <Col span="3">¥{{item.price*OrderList.weight}}</Col>
-          <Col span="5">{{item.supplierName}}</Col>
-          <Col span="3">{{item.supplierMobile}}</Col>
+          <Col span="4">
+            <template v-if="item.freightGoods">
+              {{item.freightGoods}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price*OrderList.weight}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+            </Col>
+          <Col span="5">
+            <template v-if="item.supplierName">
+              {{item.supplierName}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.supplierMobile">
+              {{item.supplierMobile}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+
+          </Col>
           <Col span="2">
 
             <span v-if="item.status==0">取消</span>

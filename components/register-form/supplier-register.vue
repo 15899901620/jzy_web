@@ -69,7 +69,7 @@
           </Row>
           <Row :gutter="24" index="5" style="margin: 0">
             <Col span="21">
-              <div style="width: 53%; margin: -15px auto 0; cursor: pointer">
+              <div style="width: 53%; margin: -7px auto 0; cursor: pointer">
                 <a class="orangeFont fs14" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">授权书下载模板</a>
               </div>
             </Col>
@@ -199,7 +199,7 @@
                   <img src="../../static/img/pdf.jpg" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.businessLicense" />
+                  <img :src="this.formCustom.businessLicense" style="width: 100%" />
                 </template>
               </div>
             </Col>
@@ -231,7 +231,7 @@
                   <img src="../../static/img/pdf.jpg" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.authorizationElc" />
+                  <img :src="this.formCustom.authorizationElc" style="width: 100%" />
                 </template>
               </div>
             </Col>
@@ -262,7 +262,7 @@
                     <img src="../../static/img/pdf.jpg" />
                   </template>
                   <template v-else>
-                    <img :src="this.formCustom.transportLicense" />
+                    <img :src="this.formCustom.transportLicense" style="width: 100%" />
                   </template>
                 </div>
               </Col>
@@ -293,7 +293,7 @@
                   <img src="../../static/img/pdf.jpg" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.dangerouslicense" />
+                  <img :src="this.formCustom.dangerouslicense" style="width: 100%" />
                 </template>
                </div>
             </Col>
@@ -323,7 +323,7 @@
                   <img src="../../static/img/pdf.jpg" />
                 </template>
                 <template v-else>
-                  <img :src="this.formCustom.otherLicense" />
+                  <img :src="this.formCustom.otherLicense" style="width: 100%" />
                 </template>
                </div>
             </Col>
@@ -1086,7 +1086,7 @@
               if (!res.errorcode && res.status === 200) {
                 this.current = 2
                 this.$emit('currData', false)
-                // this.$router.push({name:'RegisterSuccess'})
+                 //this.$router.push({name:'RegisterSuccess'})
               } else {
                 this.$Message.info({
                   content: '注册未成功,请重新填写提交!',

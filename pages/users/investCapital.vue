@@ -4,7 +4,7 @@
             <usernav></usernav>
             <div class="memberInfor ml20  whitebg bdccc  mt20">
                 <h1 class="fs16 ml25 mt25 bb1 pb10" >充值方式</h1>
-                <div></div>
+                <div v-html="helpDetail.content" style="margin-top: 30px"></div>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@ export default {
                 store.dispatch('common/getNavList'),
                 //获取系统配置
                 store.dispatch('common/getSysConfig'),
-                store.dispatch('helper/gethelpDetail',{id:params.id}),
+                store.dispatch('helper/gethelpDetail',{id:9}),
         ])
     },
     mounted(){
@@ -179,7 +179,7 @@ export default {
   .memberInfor{width: 83%}
 
   .code_manange li{display: flex;margin-top: 20px; align-items: center;}
-  .ConfirmSubmit{margin-left: 140px;margin-top: 40px;display: inline-block;padding: 11px 0px;color: #fff;width: 330px;text-align: center;
+  .ConfirmSubmit{margin-left: 131px;margin-top: 19px;display: inline-block;padding: 11px 0px;color: #fff;width: 420px;text-align: center;
     border-radius: 5px;background-color: #007de4;cursor: pointer;font-size: 14px;box-sizing: border-box;}
   .titleInfor{width: 85px;color:#999; margin-right: 25px; text-align: right;  font-size: 14px;}
   .inforInput{width: 340px;height: 40px;border-radius: 3px;  padding-left: 10px;
@@ -187,5 +187,5 @@ export default {
   .ivu-input{height: 42px;}
 
 
-  .codeCarrier{ border: none; cursor: pointer; width:102px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
+  .codeCarrier{ border: none; cursor: pointer; width:145px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
  </style>

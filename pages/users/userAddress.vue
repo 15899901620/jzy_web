@@ -136,7 +136,7 @@ export default {
         showEdit(row){
             this.editloading = true
             this.formAddress = row
-       
+
             // this.addressDetail(id)
         },
 
@@ -212,5 +212,5 @@ export default {
   .address_content li .address_title{color: #999; width: 75px;}
 
   .defaultAdress:hover{color: #007de4}
-
+  .ivu-form >>> .ivu-row{margin-top: 20px}
 </style>
