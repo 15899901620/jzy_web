@@ -110,7 +110,7 @@
 	export default {
 		name: "index",
 		middleware: 'carrierAuth',
-		layout: 'membercenter',
+		layout: 'supplercenter',
 		components: {
 			pages: pagination.pages,
 			supplynav: Navigation.supply,

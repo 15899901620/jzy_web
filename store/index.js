@@ -19,6 +19,16 @@ export const mutations = {
 	resetMemberState(state) {
 		state.memberAuth = null
 		state.memberInfo = null
+  },
+  setSupplierToken(state, auth) {
+		state.supplierToken = auth
+	},
+	setSupplier: function (state, user) {
+		state.supplierInfo = user
+	},
+	resetSupplierState(state) {
+		state.supplierToken = null
+		state.supplierInfo = null
 	}
 }
 
@@ -32,7 +42,9 @@ export const actions = {
 	nuxtServerInit({commit, state}, {req}) {
 		if (req.headers.cookie) {
 			commit('setMemberToken', utils.getMemberTokenInServer(req))
-			commit('setMember', utils.getMemberInfoInServer(req))
+      commit('setMember', utils.getMemberInfoInServer(req))
+      commit('setSupplierToken', utils.getSupperTokenInServer(req))
+			commit('setSupplier', utils.getSupperInfoInServer(req))
 		}
 	}
 }

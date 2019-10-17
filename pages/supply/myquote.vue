@@ -86,7 +86,7 @@ import FreightDetail from '../../components/muquote/quote-detail'
 export default {
     name: "index",
 	middleware: 'carrierAuth',
-    layout:'membercenter',
+    layout:'supplercenter',
     components:{
         FreightDetail,
         pages: pagination.pages,
