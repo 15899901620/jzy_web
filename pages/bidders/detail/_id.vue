@@ -349,16 +349,14 @@
           <tr>
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.beginTime}}</td>
-            <td>{{$utils.timeBetween(item.beginTime,item.lastDeliveryTime)}}</td>
+            <td>{{$utils.timeBetween(item.beginTime,item.realEndTime)}}</td>
             <td>
-                <span v-if="item.status=='VO'">已取消</span>
-                <span v-if="item.status=='DR'">起草</span>
-                <span v-if="item.status=='AP'">审批中</span>
-                <span v-if="item.status=='CO'">已审核</span>
-                <span v-if="item.status=='CL'">已结束</span>
+                <span v-if="item.statusType=='1'">正在竞拍</span>
+                <span v-if="item.statusType=='2'">即将开始</span>
+                <span v-if="item.statusType=='3'">竞拍结束</span>
             </td>
-            <td>{{item.skuName}}</td>
             <td>{{item.catName}}</td>
+            <td>{{item.skuName}}</td>
             <td class="orangeFont">{{item.manufacturer}}</td>
             <td>{{item.cityName}}</td>
             <td>{{item.finalPrice}}</td>

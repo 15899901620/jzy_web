@@ -73,7 +73,7 @@
           <div style="width: 77%">
             <ul class="acuList" v-if="this.auctionTotal > 0">
               <li v-for="(items,index) in this.auctionList" :key="index">
-                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 10;">
+                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span class="gray">距离结束 ：</span>
@@ -106,7 +106,7 @@
                  </div>
 
                 <div class="acuProduct ">
-                  <h1 class=" fs20 mt20">{{items.skuName}}</h1>
+                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i v-if="items.is_jry" style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span></div>
                     <div class="fs14 dflex">
@@ -118,7 +118,7 @@
                   </div>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span></div>
-                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class="orangeFont fs16">{{items.manufacturer}}</span></div>
+                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class=" fs16">{{items.manufacturer}}</span></div>
                   </div>
 
                 </div>
@@ -267,9 +267,7 @@
       created(){
         this.SourceData()
       },
-      mounted(){
-		  console.log("sideadvImg:",this.sideadvImg)
-      },
+      mounted(){ },
       computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
@@ -292,32 +290,37 @@
               this.$router.push({name:link})
             }
           },
-			showTotal(total) {
-				return `全部 ${total} 条`;
-			},
-			reloadPage() {
-				location.reload()
-			},
+          showTotal(total) {
+              return `全部 ${total} 条`;
+          },
+          reloadPage() {
+              location.reload()
+          },
 
           async BidersAdd(items,index){
-            console.log("***items",items)
-            console.log("index",index)
              let params={
               auctionIds:items.id
             }
-            console.log("page:",this.page)
-
-
             const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
              if(!res.data.errorCode && res.data){
-
                  this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-              //获取竞拍列表
-               //this.auctionList= this.$store.state.bidders.auctionList
              }
 
           },
+          async BidersCancel(items,index){
+            let params={
+              auctionId:items.id
+            }
+            const res = await sendCurl(this,server.api.Auction.cancelfollow,params,false)
+            if(!res.data.errorCode && res.data){
+              this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+            }else{
+              this.$Notice.warning({
+                title: res.message,
+               });
+            }
 
+          },
           async SourceData() {
             let params={
               catId:8

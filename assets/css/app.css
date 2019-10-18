@@ -21,7 +21,9 @@
 .Time_Banner {
 	width:234px;
 	height:242px;
+
 }
+
 .Time-limited_list {
 	display:flex;
 	position:relative;
@@ -163,12 +165,13 @@
 }
 .check {
 	color:#fff;
-	width:60px;
-	line-height:32px;
+	padding: 4px 5px;
 	background-color:#007de4;
 	text-align:center;
 	margin-left:10px;
+	margin-right: 10px;
 	border-radius:3px;
+	cursor: pointer;
 }
 .qualityTitle {
 	background-color:#f8f8f8;
@@ -1115,9 +1118,11 @@ gAccount {
 .acuList li .acuProduct {
 	width:62%;
 	border-right:1px solid #ccc;
-	margin:35px 0;
+	margin: 60px 0 35px;
 	margin-left:45px;
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 .acuList li .acuOpear {
 	font-size:18px;
@@ -1668,13 +1673,19 @@ gAccount {
 .account_icon {
 	width:32px;
 	height:32px;
-	background:url(/img/icon.png)no-repeat -764px -83px;
+	background:url(/img/capita_01.png)no-repeat 3px 3px;
 }
 .Frozen_icon {
 	margin-left:15px;
 	width:44px;
 	height:44px;
-	background:url(/img/icon.png)no-repeat -754px -38px;
+	background:url(/img/capita_02.png)no-repeat 7px 7px;
+}
+.auction_icon {
+	margin-left:15px;
+	width:44px;
+	height:44px;
+	background:url(/img/capita_03.png)no-repeat 8px 5px;
 }
 /*订单操作列表*/
   .orderlist {

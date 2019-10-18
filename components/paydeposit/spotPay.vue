@@ -9,7 +9,7 @@
       <Icon type="md-chatboxes" style="font-size:18px;"/>
       <span>{{title}}</span>
     </p>
-
+<template v-if="ProgressShow ===false ">
     <div class="Bond_Popup">
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单商品：</span>
@@ -48,6 +48,14 @@
       <Button type="primary" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && isCanPay" @click="bidersOK">确认支付</Button>
       <Button type="default" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && !isCanPay">正在提交</Button>
     </div>
+</template>
+    <template v-else>
+      <div style="width: 120px; height: 120px; margin: 0 auto">
+        <img src="/img/process_icon.gif" style="width: 100%">
+      </div>
+      <p class="mt20 mb10 tac fs16" style="color: #666">正在支付中，请稍等！！！</p>
+      <div slot="footer" style="text-align:center"></div>
+    </template>
   </Modal>
 </template>
 
@@ -62,7 +70,7 @@
 				btnValue: "获取短信验证码",
 				btnBoolen: false,
 				TipCode: '',
-        isCanPay: true,
+                isCanPay: true,
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -82,10 +90,14 @@
 			datalist: {
 				type: Object
 			},
-      isPay: {
-				type: Boolean,
-				default: true
-			}
+          isPay: {
+                    type: Boolean,
+                    default: true
+                },
+          ProgressShow: {
+            type: Boolean,
+            default: false
+          },
 		},
 		methods: {
 			async getCapital() {
@@ -127,9 +139,11 @@
 				if (!this.Bonddeposit.BondCode) {
 					this.TipCode = '验证码不能为空'
 					return
-				}
-				this.$emit('payedChange', this.Bonddeposit.BondCode)
-			}
+				}else{
+                  this.$emit('payedChange', this.Bonddeposit.BondCode)
+                }
+            }
+
 		},
 		watch: {
 			datalist: {
@@ -145,6 +159,9 @@
 					this.loading = false
 				}
 			},
+          ProgressShow:function(e){
+            console.log("ProgressShow",e)
+          },
 			isPay: function (e) {
 				this.isCanPay = e
 			}

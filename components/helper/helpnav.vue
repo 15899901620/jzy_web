@@ -16,9 +16,7 @@ import { mapState } from 'vuex'
 
 export default {
     name: 'helpnav',
-    mounted(){
-      console.log("helpCatInfo",this.helpCatInfo)
-    },
+    mounted(){},
     computed: {
         ...mapState({
             helpCatInfo: state => state.helper.helpCatInfo,

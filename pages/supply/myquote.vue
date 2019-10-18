@@ -18,7 +18,7 @@
               <input type="text" placeholder="输入商品名称" name="" id="" value=""  v-model='freightGoods'  class="orderInput" /><div class="check" @click='check()'>查看</div>
             </div>
 
-          </div>    
+          </div>
           <!--表格标题-->
           <div class="TableTitle graybg">
             <span style="width: 11%;">出发地</span>
@@ -31,20 +31,20 @@
             <span style="width: 12%;">电话</span>
             <span style="width: 12%;">订单状态</span>
           </div>
-          
+
            <table class="listT mt10" border="" cellspacing="" cellpadding="">
                     <tbody v-for="(item, index) in dataList" :key="index" @click="detailLog(item)">
                         <tr class=" graybg" style="height:40px;text-align: left;">
                             <th  colspan="7"  style="padding-left: 10px;">发布时间 : {{item.createTime}}</th>
                         </tr>
-                        <tr class="detailTable" >  
+                        <tr class="detailTable" >
                             <td  style="width: 30%;" >{{item.dispatchFullAddress}}
                                 <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward" style="font-size: 32px;     color: #007de4;"></i>
                                     {{item.receiptFullAddress}}
                             </td>
                             <td >{{item.freightGoods}}</td>
-                            <td><span>¥{{item.price}}</span>/吨</td> 
-                            <td><span>{{item.freightGoodsCname}}</span></td>                          
+                            <td><span>¥{{item.price}}</span>/吨</td>
+                            <td><span>{{item.freightGoodsCname}}</span></td>
                             <td>{{item.memberName}}</td>
                             <td class="operate">
                                 {{item.memberPhone}}
@@ -58,14 +58,14 @@
                     </tbody>
             </table>
 
-  
+
 
             <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages>
-  
+
 
 
         </div>
-            </div>    
+            </div>
         </div>
          <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
             <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
@@ -82,7 +82,7 @@ import paydeposit from '../../components/paydeposit'
 import { sendHttp } from "../../api/common";
 import server from "../../config/api";
 import pagination from '../../components/pagination'
-import FreightDetail from '../../components/muquote/quote-detail'   
+import FreightDetail from '../../components/muquote/quote-detail'
 export default {
     name: "index",
 	middleware: 'carrierAuth',
@@ -142,7 +142,7 @@ export default {
             this.dispatchFull=row.dispatchFullAddress
             this.receiptFull=row.receiptFullAddress
         },
-    
+
         bidder(){
 
         },
@@ -196,7 +196,7 @@ export default {
             if(this.freightGoods){
                 params.freightGoods=this.freightGoods
             }
-        
+
             params.current_page=this.current_page
             params.page_size=this.page_size
             params.desc=true
@@ -220,7 +220,7 @@ export default {
 
   .order_operate{display: flex;justify-content: space-between; align-items: center; margin: 20px auto;}
   .orderInput{width: 286px; border: 1px solid #DEDEDE; padding-left: 10px;box-sizing: border-box;}
-  .check{ color: #fff; width: 60px;line-height: 32px; background-color: #007de4;text-align: center;margin-left: 5px;border-radius: 3px;}
+  .check{ color: #fff; padding: 4px 9px;  background-color: #007de4;text-align: center;margin-left: 5px;border-radius: 3px;}
 
 
     .TableTitle{margin: 10px auto; padding: 10px 0; display: flex;}
