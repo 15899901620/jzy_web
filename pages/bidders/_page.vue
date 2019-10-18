@@ -118,7 +118,7 @@
                   </div>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span></div>
-                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class="orangeFont fs16">{{items.manufacturer}}</span></div>
+                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class=" fs16">{{items.manufacturer}}</span></div>
                   </div>
 
                 </div>

@@ -1668,13 +1668,19 @@ gAccount {
 .account_icon {
 	width:32px;
 	height:32px;
-	background:url(/img/icon.png)no-repeat -764px -83px;
+	background:url(/img/capita_01.png)no-repeat 3px 3px;
 }
 .Frozen_icon {
 	margin-left:15px;
 	width:44px;
 	height:44px;
-	background:url(/img/icon.png)no-repeat -754px -38px;
+	background:url(/img/capita_02.png)no-repeat 7px 7px;
+}
+.auction_icon {
+	margin-left:15px;
+	width:44px;
+	height:44px;
+	background:url(/img/capita_03.png)no-repeat 8px 5px;
 }
 /*订单操作列表*/
   .orderlist {
