@@ -4,7 +4,9 @@
       @on-cancel="biderscancel"
       :mask-closable='false'
       width="500"
+      :closable="closeShow"
       class-name="vertical-center-modal">
+    <template v-if="proShow ===false ">
     <p slot="header" style="color:#666; text-align:left; font-size:14px;">
       <Icon type="md-chatboxes" style="font-size:18px;"/>
       <span>订单支付</span>
@@ -63,6 +65,18 @@
       <Button type="warning" size="large" @click="showInvestCapital">查看充值方式</Button>
       <Button type="primary" size="large" @click="sumitOK">确认支付</Button>
     </div>
+    </template>
+    <template v-else>
+      <p slot="header" style="color:#666; text-align:left; font-size:14px;" >
+        <Icon type="md-chatboxes" style="font-size:18px;"/>
+        <span>{{title}}</span>
+      </p>
+      <div style="width: 120px; height: 120px; margin: 0 auto">
+        <img src="/img/process_icon.gif" style="width: 100%">
+      </div>
+      <p class="mt20 mb10 tac fs16" style="color: #666">正在支付中，请稍等！！！</p>
+      <div slot="footer" style="text-align:center"></div>
+    </template>
   </Modal>
 </template>
 
@@ -83,6 +97,8 @@
 				btnValue: "获取短信验证码",
 				btnBoolen: false,
 				TipCode: '',
+                proShow:false,
+                closeShow:true,
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -139,6 +155,8 @@
 			},
 			//确认支付
 			async sumitOK() {
+
+
 				if (!this.Bonddeposit.BondCode) {
 					this.TipCode = '验证码不能为空'
 					return
@@ -149,17 +167,28 @@
 					id: this.order_id,
 					code: this.Bonddeposit.BondCode
 				}
-				let res = await orderPayment(this, params)
 
+				let res = await orderPayment(this, params)
+              this.proShow=true
+              this.closeShow=false
 				if (res.status === 200) {
+
 					if(res.data && !res.data.errorcode){
+
 						this.Bonddeposit.BondCode = ''
 						this.$Message.info("支付成功")
 						this.$emit('unChange', false)
-          }else{
-						this.$Message.info(res.data.message)
-          }
+                         this.proShow=false
+                         this.closeShow=true
+                  }else{
+                      this.proShow=false
+                      this.closeShow=true
+                      console.log("**proShow")
+                      console.log("**closeShow")
+                      this.$Message.info(res.data.message)
+                  }
 				} else {
+
 					this.$Modal.confirm({
 						title: '失败提示',
 						content: '<p style="font-size: 16px; margin-top: 10px">支付失败，请联系客服</p>',

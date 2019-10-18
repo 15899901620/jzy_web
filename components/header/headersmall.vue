@@ -10,7 +10,7 @@
         <div class="searchLogo">
             <!--logo-->
             <Logo class="mt20 mb20" style="border-right: 1px solid rgb(210, 210, 210);padding-right: 30px; "></Logo>
-            <div class="fs22 pl25" style="position: absolute; top: 69px; margin-left: 261px; color:#ccc;">{{title}}</div>
+            <div class="fs22 pl25" style="position: absolute; top: 69px; margin-left: 299px; color:#ccc;">{{title}}</div>
             <slot class="topother" name="headerother"></slot>
         </div>
     </div>
