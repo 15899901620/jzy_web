@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header name="头部"></Header>   // 头部
+		<Header name="头部"></Header>
 		<div class="container" title="">
 			<div class="tac">
 				<img src="/img/logisticsBanner.png" style="width: 100%" />

@@ -21,41 +21,41 @@
 
           </div>
           <div class="TableTitle graybg">
-            <span style="width: 10%;">询价日期</span>
-            <span style="width: 10%;">出发地</span>
-            <span style="width: 10%;">到达地</span>
-            <span style="width: 10%;">货物名称</span>
+			<span style="width: 10%;">询价日期</span>
+			<span style="width: 10%;">出发地</span>
+			<span style="width: 10%;">到达地</span>
+			<span style="width: 10%;">货物名称</span>
             <span style="width: 10%;">货物重量</span>
             <span style="width: 10%;">装货时间</span>
             <span style="width: 10%;">询价倒计时</span>
-            <span style="width: 10%;">是否含税</span>
-            <span style="width: 10%;">报价状态</span>
-            <span style="width: 10%;">操作</span>
+			<span style="width: 10%;">是否含税</span>
+			<span style="width: 10%;">报价状态</span>
+			<span style="width: 10%;">操作</span>
           </div>
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
             <tbody>
             <tr class="detailTable" v-for="(item, index) in dataList" :key="index">
-              <td style="width: 10%;">{{item.createTime}}</td>
-              <td style="width: 10%;">{{item.dispatchFullAddress}}</td>
-              <td style="width: 10%;">{{item.receiptFullAddress}}</td>
-              <td style="width: 10%;">{{item.freightGoods}}</td>
-              <td style="width: 10%;">{{item.weight}}吨</td>
-              <td style="width: 10%;">
-					      <span v-if='item.isTax==0'>否</span>
-                <span v-else>是</span>
-			        </td >
-              <td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
-              <td style="width: 10%;">{{item.demandBeginDate}}</td>
-              <td class="operate" style="width: 10%;">
+				<td style="width: 10%;">{{item.createTime}}</td>
+				<td style="width: 10%;">{{item.dispatchFullAddress}}</td>
+				<td style="width: 10%;">{{item.receiptFullAddress}}</td>
+				<td style="width: 10%;">{{item.freightGoods}}</td>
+				<td style="width: 10%;">{{item.weight}}吨</td>
+				<td style="width: 10%;">
+					<span v-if='item.isTax==0'>否</span>
+              		<span v-else>是</span>
+			   </td >
+				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
+				<td style="width: 10%;">{{item.demandBeginDate}}</td>
+			  <td class="operate" style="width: 10%;">
                 <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==0' >已取消</div>
-                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
-                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
-                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
-                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 &&  item.isWin == 0'>已中标 </div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 &&  item.isWin == 0'>已中标 </div>
               </td>
               <td class="operate" style="width: 10%;">
                 <div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
-				        <div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  @click="detailLog(item)">查看详情</div>
+				<div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  @click="detailLog(item)">查看详情</div>
               </td>
             </tr>
             </tbody>
@@ -72,28 +72,30 @@
         @on-ok="delay"
         @on-cancel="cancelDelay" :width='340'>
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">起 点</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">起 点</span>：
         <Input v-model="dispatchFull" :disabled='true' placeholder="Enter something..."
                style="width: 150px; margin-top: 10px;"/>
       </Row>
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">终 点</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">终 点</span>：
         <Input v-model="receiptFull" :disabled='true' placeholder="Enter something..."
                style="width: 150px; margin-top: 10px;"/>
       </Row>
 	   <Row>
-        	<span style="margin-top: 10px   margin-left: 40px; font-size:14px">是否含税</span>：
+        	<span style="margin-top: 10px;   margin-left: 40px; font-size:14px">是否含税</span>：
 			<span v-if='isTaxs==0'>否</span>
 			<span v-else>是</span>
-     </Row>
+       </Row>
+
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
         <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
       </Row>
       <Row style=" margin-top: 10px;">
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px" >单 价</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px" >单 价</span>：
         <Input v-model="price" placeholder="立即出价"  style="width: 150px" /> / 每吨
       </Row>
+
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
   </div>
