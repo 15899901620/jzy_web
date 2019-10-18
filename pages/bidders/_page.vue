@@ -73,7 +73,7 @@
           <div style="width: 77%">
             <ul class="acuList" v-if="this.auctionTotal > 0">
               <li v-for="(items,index) in this.auctionList" :key="index">
-                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 10;">
+                <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span class="gray">距离结束 ：</span>
