@@ -102,7 +102,7 @@
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
                   <template>
-                    <div class="cancel_follow " v-if="items.isFollow === 1 " >已关注</div>
+                    <div class="cancel_follow " v-if="items.isFollow === 1 "  @click="BidersCancel(items,index)">已关注</div>
                     <div class="follow" v-else="items.isFollow === 0 " @click="BidersAdd(items,index)">关注</div>
                   </template>
 
@@ -296,33 +296,37 @@
               this.$router.push({name:link})
             }
           },
-			showTotal(total) {
-				return `全部 ${total} 条`;
-			},
-			reloadPage() {
-				location.reload()
-			},
+          showTotal(total) {
+              return `全部 ${total} 条`;
+          },
+          reloadPage() {
+              location.reload()
+          },
 
           async BidersAdd(items,index){
-            console.log("***items",items)
-            console.log("index",index)
              let params={
               auctionIds:items.id
             }
-            console.log("page:",this.page)
-
-
             const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
-            console.log("res",res)
              if(!res.data.errorCode && res.data){
-
                  this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-              //获取竞拍列表
-               //this.auctionList= this.$store.state.bidders.auctionList
              }
 
           },
+          async BidersCancel(items,index){
+            let params={
+              auctionId:items.id
+            }
+            const res = await sendCurl(this,server.api.Auction.cancelfollow,params,false)
+            if(!res.data.errorCode && res.data){
+              this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+            }else{
+              this.$Notice.warning({
+                title: res.message,
+               });
+            }
 
+          },
           async SourceData() {
             let params={
               catId:8
