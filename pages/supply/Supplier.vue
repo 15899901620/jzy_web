@@ -49,14 +49,14 @@
               		<span v-else>是</span>
 				</td>
 			  <td class="operate" style="width: 10%;">
-                <div class="check mt5 blackFont" style="margin-left:15px; background-color: gainsboro;" v-if='item.status==0' >已失效</div>
-				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
-				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
-				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
-				<div class="check mt5 blackFont" style="margin-left:15px;background-color: #f13a39" v-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
+                <div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==0' >已失效</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #25a96d;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #ff6c00;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #f13a39" v-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
               </td>
               <td class="operate" style="width: 10%;">
- 
+
                 <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
                   <div class="check mt5 blackFont" v-else-if='item.status==0'   >查看详情</div>
 				<div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
@@ -93,6 +93,9 @@
       <Row >
         <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 每吨</span>
       </Row>
+        <Row >
+            <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input   placeholder=""  style="width: 230px" />
+        </Row>
 
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
