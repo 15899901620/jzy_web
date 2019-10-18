@@ -101,8 +101,8 @@
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
-                  <div class="cancel_follow " v-if="items.isFollow ? 1 : 0 " >已关注</div>
-                  <div class="follow" v-else  @click="BidersAdd(items,index)">关注</div>
+                  <div class="cancel_follow " v-if="items.statusType != '3' && items.isFollow ? 1 : 0 " >已关注</div>
+                  <div class="follow" v-else-if="items.statusType != '3' && items.isFollow ? 0 : 1 " @click="BidersAdd(items,index)">关注</div>
                  </div>
 
                 <div class="acuProduct ">

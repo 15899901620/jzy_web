@@ -135,7 +135,7 @@
             支付保证金
           </li>
           <div class="ml10 fs14">可用余额：<span class="orangeFont">{{$store.state.member.capitalInfo.available_amount_format}}</span></div>
-          <a class="licz" href="/help/9" style="cursor: pointer" target="_blank">查看充值方式</a>
+          <a class="licz" href="/users/investCapital" style="cursor: pointer" target="_blank">查看充值方式</a>
         </ul>
 
         <div class="orderCzTip" v-if="orderinfo.payIndex == 1 && orderinfo.isDelivery != -1">
@@ -190,7 +190,7 @@
     </div>
     <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
     <address-dialog :isshow="addAddressLoading" @unChange="unaddAddressChange"></address-dialog>
-    <spotPay :isshow='payModalShow' :datalist='payData' :title="payModalTitle" @unChange="unPayOrder"
+    <spotPay :isshow='payModalShow' :datalist='payData' :isPay="isCanPay" :title="payModalTitle" @unChange="unPayOrder"
              @payedChange="PayedOrder"></spotPay>
   </div>
 </template>
@@ -260,6 +260,7 @@
 				addAddressLoading: false,
 				payModalShow: false,
 				payModalTitle: '支付',
+        isCanPay: true,
 				payData: {},
 				orderinfo: {
 					spot_id: 0,
@@ -461,7 +462,9 @@
 				this.payModalShow = row
 			},
 			PayedOrder(smsCode) {
+				this.isCanPay = false
 				this.createOrder(smsCode)
+				this.isCanPay = true
 			},
 			//提交订单
 			async createOrder(smsCode) {

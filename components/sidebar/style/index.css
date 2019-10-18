@@ -14,6 +14,6 @@
 .cndns-right-meau:hover .cndns-right-box{display:block}
 .cndns-right-box .box-border .sev-t{display: flex;flex-direction: column; align-items: center;}
 .cndns-right-box .box-border .sev-t p{font-size:14px; color:#007de4; font-weight: bold;}
-.cndns-right-box .box-border .sev-t p i{text-align: center; display:block;font-size:14px;color:#007de4; margin-bottom: 5px;}
+.cndns-right-box .box-border .sev-t p i{text-align: center; display:block;font-size:14px;color:#007de4;  }
 
 .meau-tel .cndns-right-box .box-border{width:144px;}

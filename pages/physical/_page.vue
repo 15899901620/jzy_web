@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <Header name="头部"></Header>   // 头部
+        <Header name="头部"></Header>
         <div class="container" title="">
             <div class="breadcrumb">
                 <breadcrumb>
@@ -100,6 +100,7 @@ export default {
                 current_page: !query.page ? 1 : query.page,
                 page_size: 10,
                 title: !query.name ? '' : query.name,
+                enable:1,
                 cid1: !query.cate_id ? 0 : query.cate_id,
                 level_id: !query.attr ? 0 : query.attr,
                 }),

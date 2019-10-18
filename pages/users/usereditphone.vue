@@ -2,10 +2,10 @@
         <div class="clearfix graybg">
             <div class="w1200 dflex " style="margin-bottom: 40px">
                   <usernav></usernav>
-                   <div class="memberInfor ml00  whitebg bdccc  mt20">
+                   <div class="memberInfor ml20  whitebg bdccc  mt20">
                         <div class="TableList code_manange mt30 ml00">
                             <h1 class="fs16  mt25 bb1 pb10">换绑手机号</h1>
-                             <div class="formItem code_manange mt30 ml00" >
+                             <div class="formItem code_manange mt30 ml20" >
                                 <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="130">
                                     <Row :gutter="24" index="0">
                                         <Col span="15">
@@ -16,7 +16,7 @@
                                     </Row>
                                     <Row :gutter="24" index="2">
                                         <Col span="15">
-                                        <FormItem prop="mobilecode" label="短信验证：">
+                                        <FormItem prop="420mobilecode" label="短信验证：">
                                             <Input class="CarrierImgcode" v-model="formCustom.code"   placeholder="请输入验证码"/>
                                         </FormItem>
                                         </Col>
@@ -220,13 +220,17 @@ export default {
             }
 
             const res = await userRephone(this, params)
-
-            if(res.data && res.status ===200){
+              console.log("res",res)
+            if(!res.data.errorcode && res.status ===200){
                 this.$Message.info({content: '换绑手机号成功'})
+                this.formCustom.newcode=''
+                this.formCustom.newphone=''
+                this.formCustom.code=''
                 // this.$router.push('/users/user')
             }else{
+
             this.$Notice.warning({
-                title: '换绑手机号失败',
+                title: '换绑手机号失败,'+res.data.message,
                 duration: 5
             });
             }
@@ -260,7 +264,7 @@ export default {
   .memberInfor{width: 83%}
 
   .code_manange li{display: flex;margin-top: 20px; align-items: center;}
-  .ConfirmSubmit{margin-left: 140px;margin-top: 40px;display: inline-block;padding: 11px 0px;color: #fff;width: 330px;text-align: center;
+  .ConfirmSubmit{margin-left: 131px;margin-top: 19px;display: inline-block;padding: 11px 0px;color: #fff;width: 420px;text-align: center;
     border-radius: 5px;background-color: #007de4;cursor: pointer;font-size: 14px;box-sizing: border-box;}
   .titleInfor{width: 85px;color:#999; margin-right: 25px; text-align: right;  font-size: 14px;}
   .inforInput{width: 340px;height: 40px;border-radius: 3px;  padding-left: 10px;
@@ -268,5 +272,5 @@ export default {
   .ivu-input{height: 42px;}
 
 
-  .codeCarrier{ border: none; cursor: pointer; width:102px;margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
+  .codeCarrier{ border: none; cursor: pointer; padding: 0 20px;  margin-left: 8px;  height: 42px; border-radius: 5px; display: flex; align-items: center; justify-content: center}
  </style>

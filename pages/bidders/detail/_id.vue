@@ -517,6 +517,7 @@
     </Modal> -->
 
     <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
+
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
 </template>
@@ -635,6 +636,9 @@
         this.DepositShow = row
         location.reload()
       },
+      undetailChange(res) {
+				this.detailloading = res
+			},
       BidersDetail(id) {
 
  				if (this.$store.state.memberToken) {

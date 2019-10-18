@@ -101,6 +101,7 @@
       </div>
 
       <div style="line-height:32px; ">
+
         <Row :gutter="24"  index="" style="background: #fafafa;line-height: 42px;text-align: center; border-bottom: 1px solid #eee;">
           <Col span="4">货物名称</Col>
           <Col span="3">单价（元/吨）</Col>
@@ -113,19 +114,54 @@
         </Row>
         <Row :gutter="24"  v-for="(item, index) in OrderList.freightOffers" :key='index' index=""
              style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
-          <Col span="4">{{item.freightGoods}}</Col>
-          <Col span="3">{{item.price}}</Col>
-          <Col span="3">¥{{item.price*OrderList.weight}}</Col>
-          <Col span="5">{{item.supplierName}}</Col>
-          <Col span="3">{{item.supplierMobile}}</Col>
-          <Col span="2">
+          <Col span="4">
+            <template v-if="item.freightGoods">
+              {{item.freightGoods}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.price">
+              ¥{{item.price*OrderList.weight}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+            </Col>
+          <Col span="5">
+            <template v-if="item.supplierName">
+              {{item.supplierName}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
+          </Col>
+          <Col span="3">
+            <template v-if="item.supplierMobile">
+              {{item.supplierMobile}}
+            </template>
+            <template v-else>
+              <span class="gray">&nbsp;</span>
+            </template>
 
+          </Col>
+          <Col span="2">
             <span v-if="item.status==0">取消</span>
             <span v-if="item.status==1">待报价</span>
             <span v-if="item.status==2">已选择</span>
           </Col>
           <Col span="3">
-            <span v-if='item.status==1'><a
+            <span v-if='item.status==1 '><a
                 style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;"
                 @click='setSelected(item)'>入 选</a></span>
             <span v-else><a  style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;">已入选</a></span>
@@ -212,6 +248,10 @@
 			},
 			datalist: {
 				type: Object
+			},
+			type: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
@@ -243,10 +283,19 @@
 				this.tax_id = e
 			},
 			async dataList() {
-				let params = {
+				
+				if(this.type==2){
+					let params = {
+					orderId: this.datalist.orderId,
+					}
+					const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 2)
+				}else{
+					let params = {
 					orderId: this.datalist.id,
+					}
+					const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 				}
-				const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
+			
 
 				this.OrderList = res.data
 				this.formAddress.phone = res.data.phone
@@ -266,7 +315,12 @@
 							id: row.id,
 						}
 						sendHttp(this, true, server.api.freight.setSelected, params, 1).then(response => {
-							this.AddressCancel();
+							if(response.errorcode==501106){
+								alert(response.message)
+							}else{
+								this.AddressCancel();
+							}
+
 						}).catch(err => {
 							this.$Notice({
 								desc: err.response.data.message
