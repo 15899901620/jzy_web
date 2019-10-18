@@ -174,14 +174,12 @@ export default {
         })
         return
       }else{
-        console.log("params***")
-        let params = {
+         let params = {
           username:this.loginsupplierform.username,
           password:this.loginsupplierform.password,
           code: this.loginsupplierform.mobilecode
         }
-      console.log("params:",params)
-        const res = await supplierLogin(this, params)
+         const res = await supplierLogin(this, params)
 
         let authres=res.data
         if(res.data.data===null && res.status === 200){

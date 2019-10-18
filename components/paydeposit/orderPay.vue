@@ -169,8 +169,8 @@
 				}
 
 				let res = await orderPayment(this, params)
-              this.proShow=true
-              this.closeShow=false
+                this.proShow=true
+                this.closeShow=false
 				if (res.status === 200) {
 
 					if(res.data && !res.data.errorcode){
@@ -183,8 +183,6 @@
                   }else{
                       this.proShow=false
                       this.closeShow=true
-                      console.log("**proShow")
-                      console.log("**closeShow")
                       this.$Message.info(res.data.message)
                   }
 				} else {
