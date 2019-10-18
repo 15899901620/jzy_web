@@ -483,16 +483,21 @@
 				if(params.is_delivery == 0){
 					params.transportation_mode = this.orderinfo.transportationModeTake
                 }
-
  				 let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
-                    this.progressShow=false
+
 				if (res.status === 200) {
+
  					if ((res.data.errorcode || 0) == 0) {
+                      //this.progressShow=false
 						location.href = '/spot/order/success?plan_no=' + res.data.plan_no + '&last_ordered_date='+ (res.data.last_ordered_date||'') + '&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
-					} else {
+
+ 					} else {
 						this.$Modal.warning({
 							title: '提示',
-							content: res.data.message
+							content: res.data.message,
+                            onOk: () => {
+                              this.$router.push({name: "spot-page"})
+                            }
 						})
 				return
 					}

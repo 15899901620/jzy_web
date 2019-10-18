@@ -4,12 +4,13 @@
       @on-cancel="biderscancel"
       :mask-closable='false'
       width="480"
+      :closable="closable"
       class-name="vertical-center-modal">
-    <p slot="header" style="color:#666; text-align:left; font-size:14px;">
-      <Icon type="md-chatboxes" style="font-size:18px;"/>
-      <span>{{title}}</span>
-    </p>
 <template v-if="ProgressShow ===false ">
+  <p slot="header" style="color:#666; text-align:left; font-size:14px;">
+    <Icon type="md-chatboxes" style="font-size:18px;"/>
+    <span>{{title}}</span>
+  </p>
     <div class="Bond_Popup">
       <div style="line-height:32px;">
         <span class="Bond_Popup_title">订单商品：</span>
@@ -50,6 +51,10 @@
     </div>
 </template>
     <template v-else>
+      <p slot="header" style="color:#666; text-align:left; font-size:14px;" >
+        <Icon type="md-chatboxes" style="font-size:18px;"/>
+        <span>{{title}}</span>
+      </p>
       <div style="width: 120px; height: 120px; margin: 0 auto">
         <img src="/img/process_icon.gif" style="width: 100%">
       </div>
@@ -71,6 +76,7 @@
 				btnBoolen: false,
 				TipCode: '',
                 isCanPay: true,
+                closable:true,
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -140,6 +146,7 @@
 					this.TipCode = '验证码不能为空'
 					return
 				}else{
+				  this.closable=false
                   this.$emit('payedChange', this.Bonddeposit.BondCode)
                 }
             }

@@ -29,8 +29,8 @@
             </div>
             <div class="NumStore">
               <span>数量 : {{items.totalNum}}{{items.uomName}}</span>
-              <span>库区 : {{items.warehouseName}}</span>
-              <span>开始时间 : {{$utils.dateStrFormat(items.beginTime,'yyyy-MM-dd')}}</span>
+              <span class="mt3">库区 : {{items.warehouseName}}</span>
+              <span class="mt3">开始时间 : {{$utils.dateStrFormat(items.beginTime,'yyyy-MM-dd')}}</span>
             </div>
             <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">正在竞拍</div>
             <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">即将开始</div>
