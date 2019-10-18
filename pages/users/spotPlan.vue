@@ -135,7 +135,6 @@
 				store.dispatch('spot/getSpotPlanList', {
 					current_page: query.page || 1,
           page_size: 6,
-          status:1,
 					plan_no: query.plan_no ? query.plan_no : ''
 				})
 			])
