@@ -250,8 +250,7 @@
 				type: Object
 			},
 			type: {
-				type: Boolean,
-				default: false
+				default: '1'
 			}
 		},
 		methods: {
@@ -283,7 +282,6 @@
 				this.tax_id = e
 			},
 			async dataList() {
-				
 				if(this.type==2){
 					let params = {
 					orderId: this.datalist.orderId,
@@ -295,8 +293,7 @@
 					}
 					const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 				}
-			
-
+				console.log('11',res)
 				this.OrderList = res.data
 				this.formAddress.phone = res.data.phone
 				this.formAddress.contact = res.data.contact
