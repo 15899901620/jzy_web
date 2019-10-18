@@ -181,7 +181,7 @@
 
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-			 <div class="submitOrder" @click='beginCreateOrder' v-if=" this.currMin>= PlanNum">提交订单</div>
+			 <div class="submitOrder" @click='beginCreateOrder' v-if="isCanSale">提交订单</div>
 			 <div class="submitOrder" style='background:gray'  v-else>提交订单</div>	  
 			   
 		
@@ -280,6 +280,7 @@
 				currMin: 0,
 				currMax: 0,
 				PlanNum:0,
+        isCanSale: true,
 				currsetp: 1,
 				ServiceTimeList: [],
 				payList: [
@@ -511,12 +512,15 @@
 				}
 
 			},
-			async PlanTotalNum(){
+			async PlanTotalNum(limit_num){
 				let params = {
 					quoteId: this.spotId,
 				}
 				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
 				this.PlanNum=res.data
+        if(this.PlanNum >= limit_num){
+        	this.isCanSale = false
+        }
 			}
 		},
 		mounted() {	
@@ -532,7 +536,7 @@
 
 			this.orderinfo.spot_id = this.spotInfo.id
 			if(this.spotInfo.limit_num > 0){		
-				this.PlanTotalNum()	
+				this.PlanTotalNum(this.spotInfo.limit_num)
 				this.currMax = Math.min(this.spotInfo.limit_num-this.PlanNum, this.spotInfo.available_num)
 			}else{
 				this.currMax = this.spotInfo.available_num

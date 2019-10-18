@@ -61,7 +61,6 @@ export const actions = {
 	async getAuctionInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
-			console.log(res.data)
 			commit('updateAuctionInfo', res.data)
 		}
 	},
@@ -73,9 +72,7 @@ export const actions = {
 			authorization = utils.getMemberTokenInClient()
 		}
 		if(authorization !== false && authorization != ''){
-			console.log('getPartakeList has ')
 			let res = await sendCurl(this, server.api.Auction.getPartakeList)
-			console.log('getPartakeList', res)
 			if (res.status === 200 && (res.data.errorcode||0) == 0) {
 				commit('updatePartakeList', res.data)
 			}
