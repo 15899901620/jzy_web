@@ -4,7 +4,7 @@
       <supplynav></supplynav>
       <div class="memberInfor ml20  mt20" style="background: white;">
         <div style='font-size: 16px;margin: 20px 10px 10px 10px;'>
-          优质货运需求
+          询价中心
         </div>
         <div style="width: 100%; height: 2px; background-color: #f7f7f7;"></div>
         <div class="" style="width: 95%; margin: 0 auto;">
