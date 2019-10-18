@@ -40,7 +40,7 @@
 				<td style="width: 10%;">{{item.receiptFullAddress}}</td>
 				<td style="width: 10%;">{{item.freightGoods}}</td>
 				<td style="width: 10%;">{{item.weight}}吨</td>
-				<td style="width: 10%;">  
+				<td style="width: 10%;">
 					<span v-if='item.isTax==0'>否</span>
               		<span v-else>是</span>
 			   </td >
@@ -72,28 +72,30 @@
         @on-ok="delay"
         @on-cancel="cancelDelay" :width='340'>
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">起 点</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">起 点</span>：
         <Input v-model="dispatchFull" :disabled='true' placeholder="Enter something..."
                style="width: 150px; margin-top: 10px;"/>
       </Row>
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">终 点</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">终 点</span>：
         <Input v-model="receiptFull" :disabled='true' placeholder="Enter something..."
                style="width: 150px; margin-top: 10px;"/>
       </Row>
 	   <Row>
-        	<span style="margin-top: 10px   margin-left: 40px; font-size:14px">是否含税</span>：
+        	<span style="margin-top: 10px;   margin-left: 40px; font-size:14px">是否含税</span>：
 			<span v-if='isTaxs==0'>否</span>
 			<span v-else>是</span>
-		</Row>
+       </Row>
+
       <Row>
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
         <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
       </Row>
       <Row style=" margin-top: 10px;">
-        <span style="margin-top: 10px   margin-left: 40px; font-size:14px" >单 价</span>：
+        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px" >单 价</span>：
         <Input v-model="price" placeholder="立即出价"  style="width: 150px" /> / 每吨
       </Row>
+
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
 	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
