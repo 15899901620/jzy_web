@@ -51,7 +51,7 @@
           <div class="birdtabletitle">{{auctionInfo.skuName}}&nbsp;&nbsp;&nbsp;&nbsp;{{auctionInfo.manufacturer}}&nbsp;&nbsp;<span class="orangeFont">{{auctionInfo.totalNum}}</span>{{auctionInfo.uomName}}
           </div>
           <div class="kailong">
-            <div class="tranfont">{{auctionInfo.warehouseProvince}}</div>
+            <div class="tranfont" :title="auctionInfo.warehouseProvince">{{auctionInfo.warehouseProvince}}</div>
           </div>
           <table class="table">
             <tbody>
@@ -500,15 +500,15 @@
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
       </div>
     </Modal>
- 
+
     <!-- 添加其他竞拍关注-->
     <!-- <Modal
             v-model="addfollow"
             title="Title"
             width="80"
     >
-      
-    
+
+
       <div slot="header">添加其他竞拍关注</div>
       <Table border ref="selection" :columns="columns4" :data="unfollowList"></Table>
       <div slot="footer">
@@ -884,9 +884,10 @@
           width: 35px;
           color: #fff;
           position: absolute;
-          top: 10px;
-          left: 18px;
+          top: 8px;
+          left: 10px;
           font-weight: bold;
+          cursor: default;
         }
       }
 

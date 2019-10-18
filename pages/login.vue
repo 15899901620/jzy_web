@@ -2,10 +2,10 @@
   <div class="body">
     <Header-small title="交易平台登录">
       <div slot="headerother">
-<!--        <div v-if="$store.state.common.sysConfig.SERVICEHOTLINE" data-v-7b07b57b="" class="dflexAlem fs20 gray" style="color: rgb(102, 102, 102);margin-top: 44px;">服务热线 :-->
-<!--          {{$store.state.common.sysConfig.SERVICEHOTLINE}}-->
-<!--        </div>-->
-        <qqservice></qqservice>
+          <div class="TopTel" >
+              {{$store.state.common.sysConfig.SERVICEHOTLINE}}
+          </div>
+<!-- <qqservice></qqservice> -->
       </div>
     </Header-small>
     <div class="container" title="">
@@ -126,5 +126,16 @@
   }
   .ivu-tabs .ivu-tabs-content{
       width: 99%;
+  }
+  .TopTel{
+      margin-top: 45px;
+      height: 30px;
+      align-items: center;
+      background: url(../static/img/Tel_icon.png) no-repeat 0px 0px;
+      padding-left: 37px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff7300;
+      overflow: hidden;
   }
 </style>
