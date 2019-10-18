@@ -11,7 +11,7 @@
 							<td height="80">
 								<div style="padding-bottom:5px;clear:both;position:relative;">
 									<p class="ffw fl fs16p" style="width:20%;"> <a href="/">
-											<img src="~/static/img/logo.png" alt="巨正源">
+											<img src="~/static/img/jzylogo.png" alt="巨正源" >
 									</a></p>
 									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
                     <div style="position: absolute;right: 0px;top: 1px;">

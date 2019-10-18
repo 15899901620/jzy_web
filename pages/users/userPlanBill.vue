@@ -331,27 +331,30 @@
                 },
             };
         },
-        methods: {
-            async getSourceData() {
-				let params = {
-					current_page: this.current_page,
-                    page_size: this.page_size,
-                    status:2,
-				}
-				this.$store.dispatch('member/getOrderList', params)
-				this.$store.dispatch('member/getOrderCount')
-            },
-            toCreateOrder(id) {
+      methods: {
+        async getSourceData() {
+            let params = {
+              current_page: this.current_page,
+                        page_size: this.page_size,
+                        status:2,
+            }
+            this.$store.dispatch('member/getOrderList', params)
+            this.$store.dispatch('member/getOrderCount')
+          },
+      toCreateOrder(id) {
 				location.href = '/spot/change/' + id
 			},
-            reloadPage() {
+      reloadPage() {
 				location.reload(true)
-            },
+      },
             	//订单类型
 			getOrderType(typeId) {
 				if (!typeId) return
 				return config.orderType[typeId].substring(0, 1)
-			},
+      },
+      Spot(id){
+				location.href = '/users/spotContract?id=' + id
+      },
 			//订单类型
 			detailOrderType(typeId) {
 				if (!typeId) return
