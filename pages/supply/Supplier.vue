@@ -220,7 +220,9 @@
 					'dispatchFullAddress' : this.dispatchFull,
 					'receiptFullAddress' :  this.receiptFull,
 					'current_page' : this.current_page,
-					'page_size' : this.page_size
+					'page_size' : this.page_size,
+					'sortBy' : 'create_time',
+					'desc': 'true'
 					}
 
 				const res = await sendHttp(this, true, server.api.freight.getPageList, params, 2)
