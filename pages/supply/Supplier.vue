@@ -98,6 +98,7 @@
 
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
+	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
   </div>
 </template>
 
@@ -145,6 +146,7 @@
 				dispatchFull: '',
 				receiptFull: '',
 				hotorderinfo: [],
+				addList:{},
 				total: 0,
 				isTaxs:0,
 				total_fund: '',
