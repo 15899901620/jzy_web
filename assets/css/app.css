@@ -1565,8 +1565,11 @@ gAccount {
 .memberList ul {
 	margin-left:30px;
 }
+.memberList ul li:first-child{
+	margin-top: 10px;
+}
 .memberList ul li {
-	margin-top:10px;
+	margin-top:5px;
 	font-size:14px;
 }
 .memberList ul li a {
@@ -1579,7 +1582,8 @@ gAccount {
 	color:#007de4;
 }
 .memberList h1 {
-	font-size: 16px;
+	font-size: 15px;
+	font-weight: bold;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 	position: relative;

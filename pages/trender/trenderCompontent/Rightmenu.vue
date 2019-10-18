@@ -49,7 +49,7 @@
   .memberList ul li a{color: #999}
   .memberList ul li:hover{color: #007de4;}
   .memberList ul li.curr{color: #007de4;}
-  .memberList h1{font-size: 16px;margin-bottom: 0px; padding-bottom: 0px; position: relative;}
+  .memberList h1{font-size: 15px; font-weight: bold; margin-bottom: 0px; padding-bottom: 0px; position: relative;}
 
   .memberList ul li .nuxt-link-active{color: #007de4}
 </style>
