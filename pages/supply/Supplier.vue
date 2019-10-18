@@ -41,11 +41,13 @@
 				<td style="width: 10%;">{{item.freightGoods}}</td>
 				<td style="width: 10%;">{{item.weight}}吨</td>
 				<td style="width: 10%;">
-					<span v-if='item.isTax==0'>否</span>
-              		<span v-else>是</span>
+					{{item.demandBeginDate}}					
 			   </td >
 				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
-				<td style="width: 10%;">{{item.demandBeginDate}}</td>
+				<td style="width: 10%;">
+					<span v-if='item.isTax==0'>否</span>
+              		<span v-else>是</span>
+				</td>
 			  <td class="operate" style="width: 10%;">
                 <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==0' >已取消</div>
 				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
@@ -98,7 +100,7 @@
 
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
-	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList'></FreightDetail>
+	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type=2></FreightDetail>
   </div>
 </template>
 

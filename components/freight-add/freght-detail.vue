@@ -248,6 +248,10 @@
 			},
 			datalist: {
 				type: Object
+			},
+			type: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
@@ -279,10 +283,19 @@
 				this.tax_id = e
 			},
 			async dataList() {
-				let params = {
+				
+				if(this.type==2){
+					let params = {
+					orderId: this.datalist.orderId,
+					}
+					const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 2)
+				}else{
+					let params = {
 					orderId: this.datalist.id,
+					}
+					const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
 				}
-				const res = await sendHttp(this, true, server.api.freight.InfoByOrderId, params, 1)
+			
 
 				this.OrderList = res.data
 				this.formAddress.phone = res.data.phone
