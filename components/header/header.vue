@@ -8,14 +8,10 @@
       <!--搜索-->
       <Search></Search>
       <!--电话-->
-<!--      <div class="TopTel" >-->
-<!--        <a rel="nofollow" target="_blank" @v-on::click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">-->
-<!--          <div>-->
-<!--            <img src="../../static/img/qq_service.png" style="width: 100%; height: 100%;" />-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-     <qqserivce></qqserivce>
+      <div class="TopTel" >
+        {{$store.state.common.sysConfig.SERVICEHOTLINE}}
+      </div>
+<!--     <qqserivce></qqserivce>-->
 
     </div>
     <div class="navigation">
@@ -54,6 +50,12 @@
 			coolapse,
             qqserivce
 		},
+      fetch({store}) {
+        return Promise.all([
+          //获取系统配置
+          store.dispatch('common/getSysConfig'),
+        ])
+      },
 		computed: {
 			classes() {
 				return [
