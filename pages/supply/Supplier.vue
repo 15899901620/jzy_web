@@ -41,7 +41,7 @@
 				<td style="width: 10%;">{{item.freightGoods}}</td>
 				<td style="width: 10%;">{{item.weight}}吨</td>
 				<td style="width: 10%;">
-					{{item.demandBeginDate}}					
+					{{item.demandBeginDate}}
 			   </td >
 				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
 				<td style="width: 10%;">
@@ -56,15 +56,15 @@
 				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 &&  item.isWin == 0'>已中标 </div>
               </td>
               <td class="operate" style="width: 10%;">
-                <div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
-				<div class="check mt5 blackFont" style="margin-left:15px;cursor: pointer;"  @click="detailLog(item)">查看详情</div>
+                <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
+				<div class="check mt5 blackFont"   @click="detailLog(item)">查看详情</div>
               </td>
             </tr>
             </tbody>
           </table>
           <!--页码-->
           <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page"
-                 style="margin-top:20px;"></pages>
+                 style="margin-top:20px; margin-bottom: 20px;"></pages>
         </div>
       </div>
     </div>
@@ -72,30 +72,23 @@
         v-model="modal1"
         title="我的报价"
         @on-ok="delay"
-        @on-cancel="cancelDelay" :width='340'>
+        @on-cancel="cancelDelay" :width='420'>
       <Row>
-        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">起 点</span>：
-        <Input v-model="dispatchFull" :disabled='true' placeholder="Enter something..."
-               style="width: 150px; margin-top: 10px;"/>
+        <span class="titleoffer">起 点</span><span class="ml5 mr10">:</span>
+        <Input v-model="dispatchFull" :disabled='true' placeholder="Enter something..." style="width: 230px;"/>
       </Row>
       <Row>
-        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">终 点</span>：
-        <Input v-model="receiptFull" :disabled='true' placeholder="Enter something..."
-               style="width: 150px; margin-top: 10px;"/>
+        <span class="titleoffer">终 点</span><span class="ml5 mr10">:</span><Input v-model="receiptFull" :disabled='true' placeholder="Enter something..."style="width: 230px;"/>
       </Row>
 	   <Row>
-        	<span style="margin-top: 10px;   margin-left: 40px; font-size:14px">是否含税</span>：
-			<span v-if='isTaxs==0'>否</span>
-			<span v-else>是</span>
+        	<span class="titleoffer">是否含税</span><span class="ml5 mr10">:</span><span v-if='isTaxs==0' style="font-size: 15px">否</span><span v-else style="font-size: 15px">是</span>
        </Row>
 
       <Row>
-        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
-        <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
+        <span class="titleoffer">吨 数</span><span class="ml5 mr10">:</span><Input v-model="weight" :disabled='true' style="width: 230px;"/><span class="ml5">（吨）</span>
       </Row>
-      <Row style=" margin-top: 10px;">
-        <span style="margin-top: 10px;   margin-left: 40px; font-size:14px" >单 价</span>：
-        <Input v-model="price" placeholder="立即出价"  style="width: 150px" /> / 每吨
+      <Row >
+        <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 每吨</span>
       </Row>
 
     </Modal>
@@ -233,3 +226,14 @@
 		}
 	}
 </script>
+<style lang="less">
+    .ivu-modal-wrap .ivu-modal-body{margin-bottom: 20px;}
+    .ivu-modal-wrap .ivu-row{
+        display: flex; align-items: center;margin-top: 20px;margin-left: 20px;
+       .titleoffer{
+           width: 60px;text-align-last: justify;    font-size: 15px;
+           color: #333;
+       }
+
+    }
+</style>
