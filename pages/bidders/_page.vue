@@ -101,9 +101,12 @@
                   </template>
 
                   <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
-                  <div class="cancel_follow " v-if="items.statusType != '3' && items.isFollow ? 1 : 0 " >已关注</div>
-                  <div class="follow" v-else-if="items.statusType != '3' && items.isFollow ? 0 : 1 " @click="BidersAdd(items,index)">关注</div>
-                 </div>
+                  <template>
+                    <div class="cancel_follow " v-if="items.isFollow === 1 " >已关注</div>
+                    <div class="follow" v-else="items.isFollow === 0 " @click="BidersAdd(items,index)">关注</div>
+                  </template>
+
+                  </div>
 
                 <div class="acuProduct ">
                   <h1 class=" fs20 mt20">{{items.skuName}}</h1>
@@ -269,6 +272,7 @@
       },
       mounted(){
 		  console.log("sideadvImg:",this.sideadvImg)
+        console.log("auctionList:",this.auctionList)
       },
       computed: {
 			...mapState({
@@ -309,6 +313,7 @@
 
 
             const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
+            console.log("res",res)
              if(!res.data.errorCode && res.data){
 
                  this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
