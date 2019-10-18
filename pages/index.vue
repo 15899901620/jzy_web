@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header title=""></Header>
+    <Header name="name"></Header>
     <div class="container" title="">
       <!--内容-->
       <Banner title="" :bannerData="$store.state.common.adList.ad1" :heightNum="this.heightNum" style="height: 320px; overflow: hidden;"/>
