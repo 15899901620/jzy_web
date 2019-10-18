@@ -94,7 +94,7 @@
         <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 每吨</span>
       </Row>
         <Row >
-            <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input   placeholder=""  style="width: 230px" />
+            <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"   placeholder=""  style="width: 230px" />
         </Row>
 
     </Modal>
@@ -150,6 +150,7 @@
 				hotorderinfo: [],
 				addList:{},
 				total: 0,
+				remark:'',
 				isTaxs:0,
 				total_fund: '',
 				showtimeVal: '',
@@ -177,7 +178,8 @@
 			delay() {
 				let params = {
 					demandId: this.id,
-					price: this.price
+					price: this.price,
+					remark:this.remark
 				}
 				sendHttp(this, true, server.api.freightOffer.save, params, 2).then(response => {
 					this.loading = false
