@@ -165,7 +165,7 @@
 				location.href = '/users/spotPlan?plan_no=' + this.formSearch.planNo
       },
       Spot(id){
-				location.href = '/users/spotContract?id=' + id
+				window.open('/users/spotContract?id=' + id)
       },
 			cancelPlan(row) {
 				this.$Modal.confirm({

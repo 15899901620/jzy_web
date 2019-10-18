@@ -152,7 +152,7 @@ export default {
 			location.href = '/auction/change/'+id
     },
     Spot(id){
-			location.href = '/users/spotContract?type=2&id=' + id
+    	window.open('/users/spotContract?type=2&id=' + id)
     },
   },
   mounted(){

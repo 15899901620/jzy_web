@@ -152,7 +152,7 @@
                   </td>
                   <td style="width: 15%;">
                      <div>待签合同</div>
-                    <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
+                    <div><a @click='Spot(item.id, 2)' class="greenFont">查看合同模板</a></div>
                   </td>
                   
                   <td style="width: 15%;" class="operate">
@@ -352,8 +352,9 @@
 				if (!typeId) return
 				return config.orderType[typeId].substring(0, 1)
       },
-      Spot(id){
-				location.href = '/users/spotContract?id=' + id
+      Spot(id, type){
+        type = type || 1
+				window.open('/users/spotContract?&id=' + id+"&type="+ type)
       },
 			//订单类型
 			detailOrderType(typeId) {

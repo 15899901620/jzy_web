@@ -328,7 +328,7 @@
 
       </div>
       <!--  我的关注-->
-      <div class="biddersRecord">
+      <div class="biddersRecord" v-show="followList.length > 0">
         <h1 class="paipinacu fs20">我关注的其他竞拍</h1>
         <table class="parttable" :key='index' v-for="(item,index) in followList ">
           <tbody>
@@ -336,32 +336,29 @@
             <td>竞拍编号</td>
             <td>开始时间</td>
             <td>竞拍时长</td>
-            <td>竞拍状态</td>
-            <td>品种</td>
             <td>牌号</td>
             <td>厂商</td>
-            <td>城市</td>
             <td>起拍价</td>
             <td>竞拍总量</td>
             <td>提货仓库</td>
+            <td>竞拍状态</td>
             <td>操作</td>
           </tr>
           <tr>
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.beginTime}}</td>
             <td>{{$utils.timeBetween(item.beginTime,item.realEndTime)}}</td>
-            <td>
-                <span v-if="item.statusType=='1'">正在竞拍</span>
-                <span v-if="item.statusType=='2'">即将开始</span>
-                <span v-if="item.statusType=='3'">竞拍结束</span>
-            </td>
-            <td>{{item.catName}}</td>
+
             <td>{{item.skuName}}</td>
             <td class="orangeFont">{{item.manufacturer}}</td>
-            <td>{{item.cityName}}</td>
             <td>{{item.finalPrice}}</td>
             <td>{{item.totalNum}}</td>
             <td>{{item.warehouseName}}</td>
+            <td>
+              <span v-if="item.statusType=='1'">正在竞拍</span>
+              <span v-if="item.statusType=='2'">即将开始</span>
+              <span v-if="item.statusType=='3'">竞拍结束</span>
+            </td>
             <td>
               <div class="seeTable" @click='BidersDetail(item.id)'>查看</div>
             </td>
@@ -659,7 +656,6 @@
 
         }
         let res = await getAuctionfollow(this, params)
-          console.log('1',res)
         if (res) {
           this.followList = res.data
         }

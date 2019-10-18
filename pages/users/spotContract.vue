@@ -13,7 +13,7 @@
 									<p class="ffw fl fs16p" style="width:20%;"> <a href="/">
 											<img :src="$store.state.common.sysConfig.CONTRATLOGO" alt="巨正源" >
 									</a></p>
-									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
+									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 19px;">{{title}}</span> <span class="red fs00p"></span></p>
                     <div style="position: absolute;right: 0px;top: 1px;">
                         <Button type="error" id='printBtn' class="printBtn"  @click="print_page()">打印</Button>
                     </div>

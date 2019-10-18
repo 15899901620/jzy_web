@@ -377,11 +377,11 @@
     }
 
     .table_title {
-      background-color: #fcfcfc;
+      background-color: #ff6c00;
 
       th {
         padding: 15px 0;
-        color: #999;
+        color: #fff;
       }
     }
 

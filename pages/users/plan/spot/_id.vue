@@ -20,17 +20,17 @@
               <Col span="12">转单状态：
                 <Tag v-if="dataInfo.status === 0" color="default">已取消</Tag>
                 <Tag v-else-if="dataInfo.status === 1" color="default">待转单</Tag>
-                <Tag v-else-if="dataInfo.status === 2" color="default">已转单</Tag>
+                <Tag v-else-if="dataInfo.status === 2" color="error">已转单</Tag>
               </Col>
               <Col span="12">付款状态：
                 <Tag v-if="dataInfo.taken_num == 0" color="default">待支付</Tag>
                 <Tag v-else-if="dataInfo.total_num > dataInfo.taken_num" color="orange">部分支付</Tag>
-                <Tag v-else color="default">已支付</Tag>
+                <Tag v-else color="error">已支付</Tag>
               </Col>
             </Row>
             <Row index="">
               <Col span="12">最迟转单时间：
-                <span>{{dataInfo.last_ordered_date}}</span>
+                <span style="color: red;">{{dataInfo.last_ordered_date}}</span>
               </Col>
             </Row>
           </div>
@@ -45,16 +45,20 @@
             </Row>
             <Row index="">
               <Col span="12">产品等级：
-                <template v-if="dataInfo.product_grade == 1">优等品</template>
-                <template v-else-if="dataInfo.product_grade == 2">一等品</template>
-                <template v-else-if="dataInfo.product_grade == 3">合格品</template>
+                <span style="color: red;">
+                  <template v-if="dataInfo.product_grade == 1">优等品</template>
+                  <template v-else-if="dataInfo.product_grade == 2">一等品</template>
+                  <template v-else-if="dataInfo.product_grade == 3">合格品</template>
+                </span>
               </Col>
               <Col span="12">生产厂商：{{dataInfo.manufacturer}}</Col>
             </Row>
             <Row index="">
               <Col span="12">包装方式：
-                <template v-if="dataInfo.packing_modes == 1">标准包装</template>
-                <template v-else-if="dataInfo.packing_modes == 2">非标准包装</template>
+                <span style="color: red;">
+                  <template v-if="dataInfo.packing_modes == 1">标准包装</template>
+                  <template v-else-if="dataInfo.packing_modes == 2">非标准包装</template>
+                </span>
               </Col>
               <Col span="12">单位：{{dataInfo.uom_name}}</Col>
             </Row>
@@ -65,13 +69,13 @@
           <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">转单提货信息</h3>
           <div style="line-height:32px; ">
             <Row index="">
-              <Col span="12">合约数量：{{dataInfo.total_num}}{{dataInfo.uom_name}}</Col>
-              <Col span="12">待提数量：{{dataInfo.available_num}}{{dataInfo.uom_name}}</Col>
+              <Col span="12">合约数量：<span style="color: red;">{{dataInfo.total_num}}</span>{{dataInfo.uom_name}}</Col>
+              <Col span="12">待转单数量：{{dataInfo.available_num}}{{dataInfo.uom_name}}</Col>
             </Row>
             <Row index="">
               <Col span="12">提货方式：待订单中确定</Col>
               <Col span="12">有效提货时间：
-                <span>{{dataInfo.delivery_start}} 至 {{dataInfo.delivery_deadline}}</span>
+                <span style="color: red;">{{dataInfo.delivery_start}}</span> 至 <span style="color: red;">{{dataInfo.delivery_deadline}}</span>
               </Col>
             </Row>
             <!--<Row index="">
