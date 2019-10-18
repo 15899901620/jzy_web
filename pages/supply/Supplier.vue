@@ -85,6 +85,7 @@
         	<span style="margin-top: 10px   margin-left: 40px; font-size:14px">是否含税</span>：
 			<span v-if='isTaxs==0'>否</span>
 			<span v-else>是</span>
+		</Row>
       <Row>
         <span style="margin-top: 10px   margin-left: 40px; font-size:14px">吨 数（吨）</span>：
         <Input v-model="weight" :disabled='true' style="width: 150px;margin-top: 10px;"/>
