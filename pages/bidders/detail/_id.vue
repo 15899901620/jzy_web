@@ -91,7 +91,7 @@
       </div>
       <!--竞拍记录-我的出价-->
       <div class="whitebg " style="width: 1200px; margin: 0 auto; display: flex">
-        <div class="recodelist">
+        <div class="recodelist" style="border-right: 0px;">
           <div class="recordTitle" style="background: #007de4;color: #fff;">竞拍记录</div>
           <table class="Bidders_record_title">
             <tbody>
@@ -127,7 +127,7 @@
           </div>
         </div>
 
-        <div class="recodelist">
+        <div class="recodelist" style="border: 2px solid #ff7300;" >
           <div class="recordTitle whiteFont" style="background: #ff7300;">我的出价</div>
           <table class="Bidders_record_title">
             <tbody>

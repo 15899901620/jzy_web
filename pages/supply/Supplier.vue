@@ -49,7 +49,7 @@
               		<span v-else>是</span>
 				</td>
 			  <td class="operate" style="width: 10%;">
-                <div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==0' >已取消</div>
+                <div class="check mt5 blackFont" style="margin-left:15px; background-color: gainsboro;" v-if='item.status==0' >已失效</div>
 				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
 				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
 				<div class="check mt5 blackFont" style="margin-left:15px;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
@@ -100,7 +100,7 @@
 
     </Modal>
     <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
-	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type=2></FreightDetail>
+	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type='type'></FreightDetail>
   </div>
 </template>
 
@@ -139,6 +139,7 @@
 				Timeloading: false,
 				dataList: {},
 				price: '',
+				type:'2',
 				modal1: false,
 				payloading: false,
 				detailloading: false,
@@ -200,6 +201,9 @@
 					...row
 				}
 				this.detailloading = true
+			},
+			undetailChange(res) {
+				this.detailloading = res
 			},
 			showTotal(total) {
 				return `全部 ${total} 条`;
