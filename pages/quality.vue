@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header></Header>  // 头部
+		<Header name="头部"></Header>
 		<div class="container" title="">
             <div class="w1200 fs14" style="margin-top:18px">
                 <outpacking title="质检单" cpadding="0px">

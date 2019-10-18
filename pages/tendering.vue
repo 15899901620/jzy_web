@@ -18,7 +18,7 @@
       </div>
       <div class="trenderCenter">
         <div class="trendLogin fs14">
-          <div class="trendLoginCenter" v-if="!SupplierInfor" style="margin:20px 32px;">16
+          <div class="trendLoginCenter" v-if="!SupplierInfor" style="margin:20px 32px;">
             <p class="trendTitle">招标登录</p>
             <login-supply></login-supply>
           </div>
