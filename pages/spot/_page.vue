@@ -80,14 +80,14 @@
                 <span style="width: 7%;" v-else>非标准包装</span>
                 <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
                   <span style="position: relative">{{item.available_num}}
-                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">限</i>
+                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                   </span>
                 </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
                       style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                      <span style="position: relative">
                        {{item.finalPriceFormat}}
-                        <i v-if="item.is_jry"  style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">易</i>
+                        <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
                 <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
