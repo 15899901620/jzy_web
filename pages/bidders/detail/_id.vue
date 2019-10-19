@@ -330,7 +330,7 @@
       <!--  我的关注-->
       <div class="biddersRecord" v-show="followList.length > 0">
         <h1 class="paipinacu fs20">我关注的其他竞拍</h1>
-        <table class="parttable" :key='index' v-for="(item,index) in followList ">
+        <table class="parttable" >
           <tbody>
           <tr class="tableTitle">
             <td>竞拍编号</td>
@@ -344,7 +344,7 @@
             <td>竞拍状态</td>
             <td>操作</td>
           </tr>
-          <tr>
+          <tr :key='index' v-for="(item,index) in followList ">
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.beginTime}}</td>
             <td>{{$utils.timeBetween(item.beginTime,item.realEndTime)}}</td>

@@ -285,16 +285,6 @@
 			}
 		},
 		methods: {
-			inLogin() {
-				var userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')
-				if (!userinfo) {
-					this.$router.push('/login')
-				}
-				this.formAddress.contact = userinfo.logistics_contacter
-				this.formAddress.phone = userinfo.logistics_mobile
-
-
-			},
 			demandDate(e) {
 				this.formAddress.demandBeginDate = e[0]
 				this.formAddress.demandEndDate = e[1]
@@ -325,6 +315,10 @@
 				let t = new Date(this.datalist.deliveryDeadline)
 				this.date = t.getTime();
 				this.formAddress.demandEndDate = this.$utils.dateFormat(t, 'yyyy-MM-dd')
+				this.formAddress.contact = ''
+				this.formAddress.phone = ''
+        //todo 在此初始化，展示用户的联系人，默认到物流联系人，没有物流联系人填充账号联系人
+        //todo 在些初始化，展示提货地址，提货地址为仓库的详细地址
 			},
 			async AddressOk() {
 				//设置别名
@@ -403,7 +397,6 @@
 			isshow: function (e) {
 				if (e === true) {
 					this.dataList();
-					this.inLogin();
 					this.loading = true
 					this.isAddressFormShow = true
 				} else {

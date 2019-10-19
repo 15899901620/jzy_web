@@ -233,11 +233,11 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取会员合约列表
-				store.dispatch('spot/getSpotPlanList', {
+				/*store.dispatch('spot/getSpotPlanList', {
 					current_page: query.page || 1,
 					page_size: 6,
 					plan_no: query.plan_no ? query.plan_no : ''
-				})
+				})*/
 			])
 		},
 		data() {

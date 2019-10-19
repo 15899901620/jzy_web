@@ -98,7 +98,6 @@
         </Row>
 
     </Modal>
-    <!-- <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder> -->
 	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type='type'></FreightDetail>
   </div>
 </template>
@@ -106,7 +105,7 @@
 <script>
 	import Navigation from '../../components/navigation'
 	import paydeposit from '../../components/paydeposit'
-	import FreightDetail from '../../components/freight-add/freght-detail'
+	import FreightDetail from '../../components/freight-add/freght-supplier-detail'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
 	import pagination from '../../components/pagination'
