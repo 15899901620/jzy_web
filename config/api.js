@@ -123,7 +123,10 @@ let api = {
 		getAuctionPlan:{'url':'/bill/auctionPlanned/getMyList/page','method':'get'},    //获取竞拍记录
 		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
 		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
-		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},        //
+		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
+		getContractInfo: {'url':'/bill/auctionPlanned/getContractInfo', 'method':'get'},
+
+
         cancelfollow: {'url':'/bill/auctionFollow/cancel', 'method':'post'},        //取消关注
         getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
     auctionDelete:'/bill/auction',  //删除竞拍

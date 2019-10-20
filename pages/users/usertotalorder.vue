@@ -8,32 +8,71 @@
         <div class="TableList">
           <div class="titleOrder mt15">
             <ul class="dflex">
-              <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">全部订单({{$store.state.member.orderCount.total_cn}})</li>
-              <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">待付款({{$store.state.member.orderCount.unpay_cn}})</li>
-              <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">已付款({{$store.state.member.orderCount.payed_cn}})</li>
-              <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">已取消({{$store.state.member.orderCount.cancel_cn}})</li>
+              <li :class=" 0 === currTabs ? 'curr' : ''" :key="0" @click="setTabs(1)">
+                全部订单({{$store.state.member.orderCount.total_cn}})
+              </li>
+              <li :class=" 1 === currTabs ? 'curr' : ''" :key="1" @click="setTabs(2)">
+                待付款({{$store.state.member.orderCount.unpay_cn}})
+              </li>
+              <li :class=" 2 === currTabs ? 'curr' : ''" :key="2" @click="setTabs(3)">
+                已付款({{$store.state.member.orderCount.payed_cn}})
+              </li>
+              <li :class=" 3 === currTabs ? 'curr' : ''" :key="3" @click="setTabs(0)">
+                已取消({{$store.state.member.orderCount.cancel_cn}})
+              </li>
             </ul>
           </div>
           <div class="order_operate">
-            <div class="dflex">
-			<Select v-model="formSearch.orderType" style="width:150px" placeholder="单据类型">
-				<Option v-for="item in registType" :value="item.value" :key="item.value" >{{ item.label }}</Option>
-			</Select>
-			  <DatePicker  type="date"     format="yyyy-MM-dd"  placeholder="输入开始日期"  @on-change="formSearch.start_time = $event"></DatePicker>
-			   <DatePicker  type="date"     format="yyyy-MM-dd" placeholder="输入结束日期"   @on-change="formSearch.end_time = $event"></DatePicker>
-			    <Select v-model="formSearch.status" style="width:150px" placeholder="付款状态">
-                  <Option v-for="item in paystatus" :value="item.value" :key="item.value" >{{ item.label }}</Option>
-                </Select>
-				<Select  style="width:150px" placeholder="提货状态">
-                  <Option v-for="item in pickstatus" :value="item.value" :key="item.value" >{{ item.label }}</Option>
-                </Select>
-              <input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value="" class="orderInput"
-                     style="width:140px; margin-left:5px;"/>
-              <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
-            </div>
-            <!-- <div class="dflexAlem">
-            <span style="width: 90px;">起始日期</span><input type="text" class="layui-input" id="test6" placeholder="选择订单时间">
-            </div> -->
+            <Form :label-width="80">
+              <Row>
+                <Col span="6">
+                  <FormItem label="单据类型">
+                    <Select v-model="formSearch.orderType" placeholder="单据类型">
+                      <Option v-for="item in registType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                  </FormItem>
+                </Col>
+                <Col span="6">
+                  <FormItem label="开始日期">
+                    <DatePicker type="date" format="yyyy-MM-dd" placeholder="输入开始日期"
+                                @on-change="formSearch.start_time = $event"></DatePicker>
+                  </FormItem>
+                </Col>
+                <Col span="6">
+                  <FormItem label="结束日期">
+                    <DatePicker type="date" format="yyyy-MM-dd" placeholder="输入结束日期"
+                                @on-change="formSearch.end_time = $event"></DatePicker>
+                  </FormItem>
+                </Col>
+                <Col span="6">
+                  <FormItem label="付款状态">
+                    <Select v-model="formSearch.status" placeholder="付款状态">
+                      <Option v-for="item in paystatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row>
+                <Col span="6">
+                  <FormItem label="提货状态">
+                    <Select placeholder="提货状态">
+                      <Option v-for="item in pickstatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                  </FormItem>
+                </Col>
+                <Col span="6">
+                  <FormItem label="商品名称">
+                    <Input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value=""/>
+                  </FormItem>
+                </Col>
+                <Col span="6"><FormItem label=""></FormItem></Col>
+                <Col span="6">
+                  <FormItem label="">
+                    <div class="check" @click="onSearch" style="cursor: pointer;">查询</div>
+                  </FormItem>
+                </Col>
+              </Row>
+            </Form>
           </div>
           <div class="TableTitle graybg">
             <!-- <span style="width: 10%;">单据类型</span> -->
@@ -48,15 +87,17 @@
             <span style="width: 12%;">提货状态</span>
           </div>
           <template v-if="$store.state.member.orderList.length > 0">
-            <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border="" cellspacing=""
+            <table v-for="(item, index) in $store.state.member.orderList" :key="index" class="listT mt10" border=""
+                   cellspacing=""
                    cellpadding="">
               <tbody>
               <tr class="Ttitle graybg">
                 <td colspan="10">
 				  <span class="ml10">合约编号:
-						<span  v-if="item.orderType==1"><a :href="`/users/plan/spot/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
-              			<span  v-if="item.orderType==3"><a :href="`/users/plan/aution/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
-                    <!-- <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a> -->
+						<span v-if="item.orderType==1"><a :href="`/users/plan/spot/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
+              			<span v-if="item.orderType==3"><a :href="`/users/plan/aution/${item.sourceId}`"
+                                                      class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
+            <!-- <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a> -->
                   </span>
                   <span class="ml10">订单编号：<Tag color="success">{{getOrderType(item.orderType)}}</Tag>
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.orderNo}}</span></a>
@@ -66,19 +107,19 @@
                 </td>
               </tr>
               <tr class="detailTable">
-				<!-- <td>{{detailOrderType(item.orderType)}}</td> -->
+                <!-- <td>{{detailOrderType(item.orderType)}}</td> -->
                 <td>{{item.skuName}}</td>
                 <td><span class="orangeFont">{{item.finalPriceFormat}}</span></td>
                 <td>{{item.orderNum}}</td>
                 <td>{{item.warehouseName}}</td>
-				<td>
+                <td>
 					<span v-if="item.isDelivery == 0">
 						自提
 					</span>
-					<span v-if="item.isDelivery == 1">
+                  <span v-if="item.isDelivery == 1">
 						配送
 					</span>
-				</td>
+                </td>
                 <td style="width: 14%;">
                   {{item.totalAmountFormat}}
                   <template v-if="item.status == 3 || item.status == 4 "><br><span
@@ -86,10 +127,11 @@
                   </template>
                 </td>
                 <td style="width: 14%;">
-                  <span v-if="item.status == 3 || item.status == 4 " class="greenFont">{{getOrderState(item.status)}}</span>
+                  <span v-if="item.status == 3 || item.status == 4 "
+                        class="greenFont">{{getOrderState(item.status)}}</span>
                   <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
-				  <template v-if="item.status == 2"><br><span
+                  <template v-if="item.status == 2"><br><span
                       style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{amountFormat(item.totalAmount)}}</span>
                   </template>
                 </td>
@@ -98,7 +140,7 @@
                     <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
                     <a class="blackFont mt15" @click="closeBut(item)">重开订单</a>
                   </div>
-					<div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
+                  <div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
                     <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
                   </div>
                   <div class="" v-if="item.isAddDemand == 1 && item.isDelivery == 0">
@@ -106,14 +148,15 @@
                   </div>
                   <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">订单详情</a>
                 </td>
-				<td>
-					
-				</td>
+                <td>
+
+                </td>
               </tr>
               </tbody>
             </table>
             <!--页码-->
-            <Page style="margin:20px auto; float:right;" :total="$store.state.member.orderListTotal" :current="current_page" @on-change="changePage"
+            <Page style="margin:20px auto; float:right;" :total="$store.state.member.orderListTotal"
+                  :current="current_page" @on-change="changePage"
                   :page-size="page_size" @on-page-size-change="changePageSize"></Page>
           </template>
           <template v-else>
@@ -134,7 +177,7 @@
 	import OrderPay from '../../components/paydeposit/orderPay'
 	import FreightAdd from '../../components/freight-add/freight-add'
 	import FreightDetail from '../../components/freight-add/freght-detail'
-	import { sendCurl } from '../../api/common'
+	import {sendCurl} from '../../api/common'
 	import utils from '../../plugins/common'
 	import server from '../../config/api'
 
@@ -159,22 +202,22 @@
 		data() {
 			return {
 				payOrderID: 0,
-				paystatus:[
-				{'label': '已取消','value':0},
-				  {'label': '待付货款','value':2},
-				  {'label': '已付款','value':3},
-                ],
-				registType:[
-                  {'label': '现货订单','value':1},
-				  {'label': '预售订单','value':2},
-				  {'label': '竞拍订单','value':3},
-				  {'label': '专用料订单','value':4},
-				  {'label': '出口订单','value':5},
+				paystatus: [
+					{'label': '已取消', 'value': 0},
+					{'label': '待付货款', 'value': 2},
+					{'label': '已付款', 'value': 3},
 				],
-				pickstatus:[
-                  {'label': '未提货','value':1},
-				  {'label': '部分提货','value':2},
-				  {'label': '已提货','value':3},
+				registType: [
+					{'label': '现货订单', 'value': 1},
+					{'label': '预售订单', 'value': 2},
+					{'label': '竞拍订单', 'value': 3},
+					{'label': '专用料订单', 'value': 4},
+					{'label': '出口订单', 'value': 5},
+				],
+				pickstatus: [
+					{'label': '未提货', 'value': 1},
+					{'label': '部分提货', 'value': 2},
+					{'label': '已提货', 'value': 3},
 				],
 				detailloading: false,
 				addloading: false,
@@ -185,8 +228,8 @@
 				page_size: 5,
 				currTabs: 0,
 				formSearch: {
-					start_time:'',
-					end_time:'',
+					start_time: '',
+					end_time: '',
 					orderType: '',
 					status: '',
 					orderNo: '',
@@ -209,7 +252,7 @@
 			},
 			amountFormat: function (amount, sign) {
 				return utils.amountFormat(amount, sign)
-      		},
+			},
 			paymentBut(row) {
 				//检查是否可以使用合约的保证金
 
@@ -225,16 +268,16 @@
 					'payAmount' : row.payAmount,
 					'deductAmount' : row.deductAmount,
 				}*/
-			},		
+			},
 			unPayOrder(row) {
 				this.payLoading = row
 				this.getSourceData()
 			},
-			closeBut(row){
+			closeBut(row) {
 				this.$Modal.confirm({
 					title: '取消订单',
 					content: '<p style="font-size:14px;">您确认想取消当前订单？</p>',
-					onOk:async () => {
+					onOk: async () => {
 						let rs = await sendCurl(this, server.api.order.cancel, {id: row.id})
 						if (rs.status === 200) {
 							if ((rs.data.errorcode || 0) == 0) {
@@ -252,8 +295,8 @@
 
 					}
 				})
-      },
-      addAddress() {
+			},
+			addAddress() {
 				this.addloading = true
 			},
 			unaddChange(res) {

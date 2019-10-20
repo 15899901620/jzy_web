@@ -47,9 +47,9 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">供方名称：</th><th >{{OrderList.companyName}}</th><th >需方名称：</th><th>{{OrderList.memberName}}</th></tr>
-									<tr><th style="padding:5px 0;">供方地址：</th><th >{{OrderList.companyAddress}}</th><th >需方地址：</th><th>{{OrderList.memberAddress}}</th></tr>
-									<tr><th style="padding:5px 0;">供方税号：</th><th >{{OrderList.companyTax}}</th><th >需方税号：</th><th>{{OrderList.memberTax}}</th></tr>
+									<tr><th style="padding:5px 0;width:100px;">供方名称：</th><th >{{OrderList.companyName}}</th><th style="padding:5px 0;width:100px;">需方名称：</th><th>{{OrderList.memberName}}</th></tr>
+									<tr><th style="">供方地址：</th><th >{{OrderList.companyAddress}}</th><th >需方地址：</th><th>{{OrderList.memberAddress}}</th></tr>
+									<tr><th style="">供方税号：</th><th >{{OrderList.companyTax}}</th><th >需方税号：</th><th>{{OrderList.memberTax}}</th></tr>
 									<tr><th style="padding:5px 0;">供方法人：</th><th >{{OrderList.companyCorporation}}</th><th >需方法人：</th><th>{{OrderList.memberCorporation}}</th></tr>
 									<tr><th style="padding:5px 0;">供方电话：</th><th >{{OrderList.companyTel}}</th><th >需方电话：</th><th>{{OrderList.memberTel}}</th></tr>
 									<tr><th style="padding:5px 0;">供方开户行：</th><th >{{OrderList.companyBank}}</th><th >需方开户行：</th><th>{{OrderList.memberBank}}</th></tr>
@@ -118,7 +118,7 @@
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
 									<tr>
-										<th style="padding:5px 0;">包装方式：</th>
+										<th style="padding:5px 0;width: 140px;">包装方式：</th>
 										<th>
 											<span>{{OrderList.packingModes}}</span>
 										</th>
@@ -164,9 +164,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;padding: 5px;margin-top: 30px">
-				<div style="padding-bottom:5px;clear:both;position:relative;">
-					<div style="text-align: right;margin-right: 20px;margin-top: 10px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
+			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;margin-top: 30px">
+				<div style="clear:both;position:relative;">
+					<div style="text-align: right;margin-right: 20px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 				<p class="ffw fs20p tac" ><span style="padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 
 				</div>
@@ -253,8 +253,13 @@
 				let params = {
 					id: this.id,
 				}
-				const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
-				this.OrderList = res.data
+				if(this.type == 1){
+					const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
+					this.OrderList = res.data
+        }else if(this.type == 2){
+					const res = await sendHttp(this, true, server.api.Auction.getContractInfo, params, 1)
+					this.OrderList = res.data
+        }
 			},
 			print_page() {
 				document.getElementById('printBtn').style.display="none";

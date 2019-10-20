@@ -6,68 +6,69 @@
       width="500"
       :closable="closeShow"
       class-name="vertical-center-modal">
-    <template v-if="proShow ===false ">
-    <p slot="header" style="color:#666; text-align:left; font-size:14px;">
-      <Icon type="md-chatboxes" style="font-size:18px;"/>
-      <span>订单支付</span>
-    </p>
+    <template v-if="!proShow">
+      <p slot="header" style="color:#666; text-align:left; font-size:14px;">
+        <Icon type="md-chatboxes" style="font-size:18px;"/>
+        <span>订单支付</span>
+      </p>
 
-    <div class="Bond_Popup">
-      <div style="line-height:32px;" v-if="dataList.orderNo">
-        <span class="Bond_Popup_title">订单编号：</span>
-        <span class="ml10">{{dataList.orderNo}}</span>
-      </div>
-      <div style="line-height:32px;">
-        <span class="Bond_Popup_title">订单商品：</span>
-        <span class="ml10">{{dataList.skuName}}</span>
-      </div>
-      <div style="line-height:32px;">
-        <span class="Bond_Popup_title">订单数量：</span>
-        <span class="ml10">{{dataList.orderNum}}吨</span>
-      </div>
-      <div style="line-height:32px;">
-        <span class="Bond_Popup_title">订单总金额：</span>
-        <span class="ml10">￥{{amountFormat(dataList.totalAmount)}}</span>
-      </div>
-      <!--需冻结保证金-->
-      <div class="PricePopup">
-        <div style="line-height: 28px; padding:20px">
-          <p v-if="dataList.deductAmount > 0">
-            <span class="PricePopup_title">使用已冻结保证金额：</span>
-            <span class="orangeFont fwb fs16"> ￥{{amountFormat(dataList.deductAmount)}}</span>
-          </p>
-          <p>
-            <span class="PricePopup_title">需支付金额：</span>
-            <span class="orangeFont fwb fs16"> ￥{{amountFormat(dataList.payAmount)}}</span>
-          </p>
-          <p>
-            <Checkbox :disabled="true" :value="true"></Checkbox>
-            <span class="PricePopup_title">资金余额：</span>
-            <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.available_amount_format }}</span>
-          </p>
-          <p>
-            <Checkbox :disabled="true"></Checkbox>
-            <span class="PricePopup_title">保证金钱包余额：</span>
-            <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-            <a class="PricePopup_btn" @click="wallet()" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
-          </p>
+      <div class="Bond_Popup">
+        <div style="line-height:32px;" v-if="dataList.orderNo">
+          <span class="Bond_Popup_title">订单编号：</span>
+          <span class="ml10">{{dataList.orderNo}}</span>
+        </div>
+        <div style="line-height:32px;">
+          <span class="Bond_Popup_title">订单商品：</span>
+          <span class="ml10">{{dataList.skuName}}</span>
+        </div>
+        <div style="line-height:32px;">
+          <span class="Bond_Popup_title">订单数量：</span>
+          <span class="ml10">{{dataList.orderNum}}吨</span>
+        </div>
+        <div style="line-height:32px;">
+          <span class="Bond_Popup_title">订单总金额：</span>
+          <span class="ml10">{{$utils.amountFormat(dataList.totalAmount)}}</span>
+        </div>
+        <!--需冻结保证金-->
+        <div class="PricePopup">
+          <div style="line-height: 28px; padding:20px">
+            <p v-if="dataList.deductAmount > 0">
+              <span class="PricePopup_title">使用已冻结保证金额：</span>
+              <span class="orangeFont fwb fs16"> {{$utils.amountFormat(dataList.deductAmount)}}</span>
+            </p>
+            <p>
+              <span class="PricePopup_title">需支付金额：</span>
+              <span class="orangeFont fwb fs16"> {{$utils.amountFormat(dataList.payAmount)}}</span>
+            </p>
+            <p>
+              <Checkbox :disabled="true" :value="true"></Checkbox>
+              <span class="PricePopup_title">资金余额：</span>
+              <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.available_amount_format }}</span>
+            </p>
+            <p>
+              <Checkbox :disabled="true"></Checkbox>
+              <span class="PricePopup_title">保证金钱包余额：</span>
+              <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
+              <a class="PricePopup_btn" @click="wallet()" target="_blank"
+                 style="float: right;line-height: 16px;">钱包转资金</a>
+            </p>
+          </div>
+        </div>
+        <!--输入验证码-->
+        <div class="PopupCode pr">
+          <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码"/>
+          <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
+          <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
         </div>
       </div>
-      <!--输入验证码-->
-      <div class="PopupCode pr">
-        <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码"/>
-        <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
-        <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
-      </div>
-    </div>
 
-    <div slot="footer" style="text-align:center">
-      <Button type="warning" size="large" @click="showInvestCapital">查看充值方式</Button>
-      <Button type="primary" size="large" @click="sumitOK">确认支付</Button>
-    </div>
+      <div slot="footer" style="text-align:center">
+        <Button type="warning" size="large" @click="showInvestCapital">查看充值方式</Button>
+        <Button type="primary" size="large" @click="sumitOK">确认支付</Button>
+      </div>
     </template>
     <template v-else>
-      <p slot="header" style="color:#666; text-align:left; font-size:14px;" >
+      <p slot="header" style="color:#666; text-align:left; font-size:14px;">
         <Icon type="md-chatboxes" style="font-size:18px;"/>
         <span>{{title}}</span>
       </p>
@@ -82,11 +83,11 @@
 
 <script>
 	import {orderPayCode, orderPayment} from '../../api/users'
-	import { mapState } from 'vuex'
+	import {mapState} from 'vuex'
 
 	export default {
 		name: 'orderPay',
-		computed:{
+		computed: {
 			...mapState({
 				dataList: state => state.member.orderPayInfo,
 			})
@@ -97,8 +98,8 @@
 				btnValue: "获取短信验证码",
 				btnBoolen: false,
 				TipCode: '',
-                proShow:false,
-                closeShow:true,
+				proShow: false,
+				closeShow: true,
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -119,11 +120,8 @@
 			biderscancel() {
 				this.$emit('unChange', false)
 			},
-			showInvestCapital(){
+			showInvestCapital() {
 				location.href = '/users/investCapital'
-			},
-			amountFormat(amount) {
-				return parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 			},
 			async getNoteValue() {
 				let params = {}
@@ -150,13 +148,11 @@
 					});
 				}
 			},
-			wallet(){
-				alert('该功能正在维护')
+			wallet() {
+				alert('该功能暂未开放，敬请期待！')
 			},
 			//确认支付
 			async sumitOK() {
-
-
 				if (!this.Bonddeposit.BondCode) {
 					this.TipCode = '验证码不能为空'
 					return
@@ -168,25 +164,20 @@
 					code: this.Bonddeposit.BondCode
 				}
 
+				this.proShow = true
+				this.closeShow = false
 				let res = await orderPayment(this, params)
-                this.proShow=true
-                this.closeShow=false
+				this.proShow = false
+				this.closeShow = true
 				if (res.status === 200) {
-
-					if(res.data && !res.data.errorcode){
-
+					if (res.data && !res.data.errorcode) {
 						this.Bonddeposit.BondCode = ''
 						this.$Message.info("支付成功")
 						this.$emit('unChange', false)
-                         this.proShow=false
-                         this.closeShow=true
-                  }else{
-                      this.proShow=false
-                      this.closeShow=true
-                      this.$Message.info(res.data.message)
-                  }
+					} else {
+						this.$Message.info(res.data.message)
+					}
 				} else {
-
 					this.$Modal.confirm({
 						title: '失败提示',
 						content: '<p style="font-size: 16px; margin-top: 10px">支付失败，请联系客服</p>',
@@ -200,7 +191,6 @@
 						}
 					})
 				}
-
 			}
 		},
 		watch: {
