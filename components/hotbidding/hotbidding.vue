@@ -40,7 +40,7 @@
       </template>
       <template v-else>
         <ul>
-          <li>暂无任何信息！</li>
+          <li style="text-align: center;padding-top: 100px;font-size: 14px;color: #ccc;">暂无任何信息！</li>
         </ul>
       </template>
       <div class="Time-limited_next position prve" id='next' :style="{'display':display}">
