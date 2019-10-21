@@ -1083,7 +1083,7 @@
           },
           async supSubmit(formCustom){
               const res = await supplierReg(this, formCustom)
-              if (!res.errorcode && res.status === 200) {
+              if (res.status === 200 && !res.data.errorcode) {
                 this.current = 2
                 this.$emit('currData', false)
                  //this.$router.push({name:'RegisterSuccess'})

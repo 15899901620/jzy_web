@@ -102,14 +102,10 @@
                     </div>
                   </template>
 
-                  <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime,
-                    items.realEndTime)}}
-                  </div>
-                  <div class="cancel_follow " v-if="items.statusType != '3' && (items.isFollow ? 1 : 0) ">已关注</div>
-                  <div class="follow" v-else-if="items.statusType != '3' && (items.isFollow ? 0 : 1) "
-                       @click="BidersAdd(items,index)">关注
-                  </div>
-                </div>
+                  <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
+                  <div class="cancel_follow " v-if="items.statusType != '3' && (items.isFollow ? 1 : 0) " @click="Bidersdelete(items,index)">已关注</div>
+                  <div class="follow" v-else-if="items.statusType != '3' && (items.isFollow ? 0 : 1) " @click="BidersAdd(items,index)">关注</div>
+                 </div>
 
                 <div class="acuProduct ">
                   <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
@@ -292,49 +288,59 @@
 
 		},
 		methods: {
-			Tospot(link) {
-				if (link) {
-					this.$router.push({name: link})
-				}
-			},
-			showTotal(total) {
-				return `全部 ${total} 条`;
-			},
-			reloadPage() {
-				location.reload()
-			},
+      Tospot(link){
+        if(link){
+          this.$router.push({name:link})
+        }
+      },
+      showTotal(total) {
+          return `全部 ${total} 条`;
+      },
+      reloadPage() {
+          location.reload()
+      },
 
-			async BidersAdd(items, index) {
-				let params = {
-					auctionIds: items.id
-				}
-				const res = await sendCurl(this, server.api.Auction.getfollow, params, false)
-				if (!res.data.errorCode && res.data) {
-					this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-				}
+      async BidersAdd(items,index){
+         let params={
+          auctionIds:items.id
+        }
+        const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
+         if(!res.data.errorCode && res.data){
+             this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+         }
 
-			},
-			async BidersCancel(items, index) {
-				let params = {
-					auctionId: items.id
-				}
-				const res = await sendCurl(this, server.api.Auction.cancelfollow, params, false)
-				if (!res.data.errorCode && res.data) {
-					this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-				} else {
-					this.$Notice.warning({
-						title: res.message,
-					});
-				}
+      },
+      async Bidersdelete(items,index){
+         let params={
+          auctionId:items.id
+        }
+        const res = await sendCurl(this,server.api.Auction.cancelfollow,params,false)
+         if(!res.data.errorCode && res.data){
+             this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+         }
 
-			},
-			async SourceData() {
-				let params = {
-					catId: 8
-				}
-				const res = await sendCurl(this, server.api.information.getArticleList, params, false)
-				this.aclist = res.data.items
-			},
+      },
+      async BidersCancel(items,index){
+        let params={
+          auctionId:items.id
+        }
+        const res = await sendCurl(this,server.api.Auction.cancelfollow,params,false)
+        if(!res.data.errorCode && res.data){
+          this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+        }else{
+          this.$Notice.warning({
+            title: res.message,
+           });
+        }
+
+      },
+      async SourceData() {
+        let params={
+          catId:8
+        }
+         const res = await sendCurl(this,server.api.information.getArticleList,params,false)
+        this.aclist = res.data.items
+      },
 			//跳转详情页
 			BidersDetail(id) {
 
