@@ -29,7 +29,8 @@
     	  			prefixCls + '-item-1',
     	  			current == 1 ? prefixCls + '-item-active' : ''
     	  		]">
-                  <a href="?page=1">1</a>
+                  <a v-if="otherParams == ''" href="?page=1">1</a>
+                  <a v-else :href="`?page=1&${otherParams}`">1</a>
             </li>
             <li v-if="showJumpPrev" @click="_jumpPrev" :class="prefixCls + '-jump-prev'">
                 <a class="ant-pages-item-link"></a>
@@ -39,7 +40,9 @@
     	  			prefixCls + '-item-' + index,
     	  			current == index ? prefixCls + '-item-active' : ''
     	  		]" v-bind:key="index">
-                <nuxt-link :to="{query:{page:index}}">{{index}}</nuxt-link>
+              <a v-if="otherParams == ''" :href="`?page=${index}`">{{index}}</a>
+              <a v-else :href="`?page=${index}&${otherParams}`">{{index}}</a>
+                <!--<nuxt-link :to="{query:{page:index}}">{{index}}</nuxt-link>-->
             </li>
             <li v-if="showJumpNext" @click="_jumpNext" :class="prefixCls + '-jump-next'">
                 <a class="ant-pagination-item-link"></a>
@@ -101,6 +104,10 @@ export default {
             default: false,
         },
         showTotal: Function,
+        otherParams:{
+        	type: String,
+          default: ''
+        }
     },
     data() {
         return {

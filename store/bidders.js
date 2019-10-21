@@ -54,6 +54,7 @@ export const actions = {
 	async getAuctionList({commit}, params) {
 		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
 		if (res.status === 200 && (res.data.errorcode||0) == 0) {
+			console.log(res.data)
 			commit('updateAuctionList', res.data.items)
 			commit('updateAuctionTotal', res.data.total)
 		}

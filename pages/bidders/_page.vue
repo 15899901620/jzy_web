@@ -77,26 +77,27 @@
               <div class="auction_screen">
 
                 <template>
-                  <Dropdown placement="bottom-start">
+                  <Dropdown @on-click="handleStatusTypeOption" placement="bottom-start">
                     <a href="javascript:void(0)">
-                      全部
+                      {{statusTypeName}}
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem>即将开始</DropdownItem>
-                      <DropdownItem>正在竞拍</DropdownItem>
-                      <DropdownItem>竞拍结束</DropdownItem>
+                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="2">即将开始</DropdownItem>
+                      <DropdownItem name="1">正在竞拍</DropdownItem>
+                      <DropdownItem name="3">竞拍结束</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
-                  <Dropdown style="margin-left: 20px">
+                  <Dropdown @on-click="handlePlanTypeOption" style="margin-left: 20px">
                     <a href="javascript:void(0)">
-                      全部
+                      {{planTypeName}}
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem>正在参与</DropdownItem>
-                      <DropdownItem>未参与</DropdownItem>
-
+                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="1">已中标</DropdownItem>
+                      <DropdownItem name="2">未中标</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
 
@@ -105,7 +106,7 @@
             </div>
 
             <ul class="acuList" v-if="this.auctionTotal > 0">
-              <li class="auction_over_01" v-for="(items,index) in this.auctionList" :key="index">
+              <li v-for="(items,index) in this.auctionList" :class="getIcon(items)" :key="index">
                 <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
@@ -188,9 +189,9 @@
             <p v-else style="background: none; font-size: 20px;text-align: center; margin:80px auto;">
               目前暂无竞拍活动！
             </p>
-            <div class="  ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-              <pages :total="this.auctionTotal" :show-total="showTotal" :value="current_page"
-                     :pageSize="page_size"></pages>
+            <div class="text-xs-center" style="padding: 18px 0; text-align: center;">
+              <pages :total="auctionTotal" :show-total="showTotal" :value="current_page"
+                     :pageSize="page_size" :otherParams="`statusType=${this.statusType}&planType=${this.planType}`"></pages>
             </div>
           </div>
 
@@ -249,8 +250,8 @@
 			return {
 				CurrSelect: 0,
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 6,
-				page: '',
+				page_size: 1,
+				page: 1,
 				NowTime: '',
 				Auctionlist: '',
 				AuctionTip: '暂无竞拍活动',
@@ -259,15 +260,12 @@
 				index: 0,
 				isFollow: 0,
 				aclist: '',
-				AuctionTab: [
-					{AuctionName: '竞拍列表', status: 1},
-					{AuctionName: '我的竞拍', status: 2}
-				]
+
+        statusType: this.$route.query.statusType || 0,
+        planType: this.$route.query.planType || 0
 			}
 		},
 		fetch({store, params, query}) {
-
-			console.log("page:", this.page)
 			return Promise.all([
 				// 获取顶部、中部、底部导航信息
 				store.dispatch('common/getNavList'),
@@ -282,7 +280,7 @@
 				store.dispatch('article/getindexArticleList', {catId: 8}),
 
 				// 获取竞拍列表
-				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
+				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 1, status_type: query.statusType,plan_type: query.planType,}),
 
 				// 网站公告
 				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15, sortBy:'add_time', desc:'1'}),
@@ -313,8 +311,29 @@
 
 				partakeList: state => state.bidders.partakeList,  // 我的竞拍
 				sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
-			})
-
+			}),
+			statusTypeName: function(){
+				let type = this.statusType
+				if(type == '0'){
+          return '全部'
+				}else if(type == '1'){
+					return '正在竞拍'
+				}else if(type == '2'){
+					return '即将开始'
+				}else if(type == '3'){
+					return '竞拍结束'
+				}
+      },
+			planTypeName: function(){
+				let type = this.planType
+				if(type == '0'){
+					return '全部'
+				}else if(type == '1'){
+					return '已中标'
+				}else if(type == '2') {
+					return '未中标'
+				}
+			}
 		},
 		methods: {
       Tospot(link){
@@ -328,6 +347,31 @@
       reloadPage() {
           location.reload()
       },
+			getIcon(items){
+      	if(this.$store.state.memberToken) {
+      		if(items.statusType == '1' || items.statusType == '2'){
+						if(items.depositNum > 0){
+							return 'auction_over_01'
+            }
+          }else{
+						if(items.totalPlanNum > 0){
+							return 'auction_over_02'
+						}else{
+							if(items.depositNum > 0){
+								return 'auction_over_03'
+							}
+            }
+          }
+				}
+      },
+			handleStatusTypeOption(type){
+				this.statusType = type
+        location.href = '/bidders?page='+this.current_page+'&statusType='+this.statusType+"&planType="+this.planType
+      },
+			handlePlanTypeOption(type){
+				this.planType = type
+				location.href = '/bidders?page='+this.current_page+'&statusType='+this.statusType+"&planType="+this.planType
+			},
 
       async BidersAdd(items,index){
          let params={
