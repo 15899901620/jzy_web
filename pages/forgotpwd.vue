@@ -91,7 +91,7 @@
                                 <img src="../static/img/exam_icon.png" />
                             </div>
                             <div class="fs30 fwb greenFont tac mt10" >新密码设置成功!</div>
-                            <div class="tac mt25 fs16" style=" color: #666;">请牢记您设置的新密码! 现<nuxt-link class=" blueFont cp" to="/login">[登 录]</nuxt-link> 或 <nuxt-link class=" blueFont cp" to="/">返回首页</nuxt-link></div>
+                            <div class="tac mt25 fs16" style=" color: #666;">请牢记您设置的新密码! 现<nuxt-link class=" blueFont cp" to="/login">[登 录]</nuxt-link> 或 <nuxt-link  to="/"><span class=" orangeFont cp">返回首页</span></nuxt-link></div>
                         </div>
                     </Form>
                 </div>

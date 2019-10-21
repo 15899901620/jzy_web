@@ -15,14 +15,14 @@
           </FormItem>
         </Col>
       </Row>
-      <Row  index="">
+      <!--<Row  index="">
         <Col span="24">
           <FormItem prop="mobilecode">
             <Input v-model="loginsupplierform.mobilecode"  autocomplete="off" placeholder="短信验证码"/>
           </FormItem>
           <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
         </Col>
-      </Row>
+      </Row>-->
       <Row  index="">
         <Col span="24">
           <FormItem prop="password">
@@ -151,13 +151,13 @@ export default {
         });
         return false
       }
-      if (!this.loginsupplierform.mobilecode) {
+      /*if (!this.loginsupplierform.mobilecode) {
         this.$Modal.info({
           title: '提示',
           content: '验证码不能为空!'
         });
         return false
-      }
+      }*/
       if (!this.loginsupplierform.password) {
         this.$Modal.info({
           title: '提示',
@@ -174,14 +174,12 @@ export default {
         })
         return
       }else{
-        console.log("params***")
-        let params = {
+         let params = {
           username:this.loginsupplierform.username,
           password:this.loginsupplierform.password,
           code: this.loginsupplierform.mobilecode
         }
-      console.log("params:",params)
-        const res = await supplierLogin(this, params)
+         const res = await supplierLogin(this, params)
 
         let authres=res.data
         if(res.data.data===null && res.status === 200){

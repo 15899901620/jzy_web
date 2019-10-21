@@ -115,7 +115,7 @@ let api = {
    */
   Auction:{
     auctionList:'/bill/auction/list',   //竞拍列表--无分页
-    auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页 
+    auctionPage:'/bill/auction/web/page',    //竞拍列表--有分页
     getAuctionList:{'url':'/bill/auction/web/page','method':'get'},    //竞拍列表--有分页
     getAuctionfollow:'/bill/auction/followList',    //竞拍列表，获取当前登录用户已关注列表
     getAuctionunfollow:'/bill/auction/unFollowList',    //竞拍列表，获取当前登录用户未关注列表
@@ -124,7 +124,11 @@ let api = {
 		getPlanDetail:{'url':'/bill/auctionPlanned/user/detail', 'method':'get'},
 		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
 		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
-        getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},
+		getContractInfo: {'url':'/bill/auctionPlanned/getContractInfo', 'method':'get'},
+
+
+        cancelfollow: {'url':'/bill/auctionFollow/cancel', 'method':'post'},        //取消关注
+        getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍

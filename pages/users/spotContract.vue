@@ -11,9 +11,9 @@
 							<td height="80">
 								<div style="padding-bottom:5px;clear:both;position:relative;">
 									<p class="ffw fl fs16p" style="width:20%;"> <a href="/">
-											<img src="~/static/img/logo.png" alt="巨正源">
+											<img :src="$store.state.common.sysConfig.CONTRATLOGO" alt="巨正源" >
 									</a></p>
-									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;">{{title}}</span> <span class="red fs00p"></span></p>
+									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 19px;">{{title}}</span> <span class="red fs00p"></span></p>
                     <div style="position: absolute;right: 0px;top: 1px;">
                         <Button type="error" id='printBtn' class="printBtn"  @click="print_page()">打印</Button>
                     </div>
@@ -47,9 +47,9 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;">供方名称：</th><th >{{OrderList.companyName}}</th><th >需方名称：</th><th>{{OrderList.memberName}}</th></tr>
-									<tr><th style="padding:5px 0;">供方地址：</th><th >{{OrderList.companyAddress}}</th><th >需方地址：</th><th>{{OrderList.memberAddress}}</th></tr>
-									<tr><th style="padding:5px 0;">供方税号：</th><th >{{OrderList.companyTax}}</th><th >需方税号：</th><th>{{OrderList.memberTax}}</th></tr>
+									<tr><th style="padding:5px 0;width:100px;">供方名称：</th><th >{{OrderList.companyName}}</th><th style="padding:5px 0;width:100px;">需方名称：</th><th>{{OrderList.memberName}}</th></tr>
+									<tr><th style="">供方地址：</th><th >{{OrderList.companyAddress}}</th><th >需方地址：</th><th>{{OrderList.memberAddress}}</th></tr>
+									<tr><th style="">供方税号：</th><th >{{OrderList.companyTax}}</th><th >需方税号：</th><th>{{OrderList.memberTax}}</th></tr>
 									<tr><th style="padding:5px 0;">供方法人：</th><th >{{OrderList.companyCorporation}}</th><th >需方法人：</th><th>{{OrderList.memberCorporation}}</th></tr>
 									<tr><th style="padding:5px 0;">供方电话：</th><th >{{OrderList.companyTel}}</th><th >需方电话：</th><th>{{OrderList.memberTel}}</th></tr>
 									<tr><th style="padding:5px 0;">供方开户行：</th><th >{{OrderList.companyBank}}</th><th >需方开户行：</th><th>{{OrderList.memberBank}}</th></tr>
@@ -118,7 +118,7 @@
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
 									<tr>
-										<th style="padding:5px 0;">包装方式：</th>
+										<th style="padding:5px 0;width: 140px;">包装方式：</th>
 										<th>
 											<span>{{OrderList.packingModes}}</span>
 										</th>
@@ -164,9 +164,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;padding: 5px;margin-top: 30px">
-				<div style="padding-bottom:5px;clear:both;position:relative;">
-					<div style="text-align: right;margin-right: 20px;margin-top: 10px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
+			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;margin-top: 30px">
+				<div style="clear:both;position:relative;">
+					<div style="text-align: right;margin-right: 20px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 				<p class="ffw fs20p tac" ><span style="padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 
 				</div>
@@ -210,6 +210,7 @@
 <span style="font-weight: bold;">第十一条  效力及其它:</span>
 1.本合同自双方签字并盖章之日起生效。
 2.本合同未尽事宜，由双方当事人协商签订补充协议，补充协议是本合同组成部分，具有同等法律效力，补充协议与本合同内容不一致，以补充协议为准。
+3.本合一式贰份，供方执壹份，需方执壹份。
 </pre>
 				</div>
 			</div>
@@ -232,11 +233,11 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取会员合约列表
-				store.dispatch('spot/getSpotPlanList', {
+				/*store.dispatch('spot/getSpotPlanList', {
 					current_page: query.page || 1,
 					page_size: 6,
 					plan_no: query.plan_no ? query.plan_no : ''
-				})
+				})*/
 			])
 		},
 		data() {
@@ -252,8 +253,13 @@
 				let params = {
 					id: this.id,
 				}
-				const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
-				this.OrderList = res.data
+				if(this.type == 1){
+					const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
+					this.OrderList = res.data
+        }else if(this.type == 2){
+					const res = await sendHttp(this, true, server.api.Auction.getContractInfo, params, 1)
+					this.OrderList = res.data
+        }
 			},
 			print_page() {
 				document.getElementById('printBtn').style.display="none";

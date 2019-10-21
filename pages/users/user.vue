@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="dflexPrice">
-                  <div class="Frozen_icon"></div>
+                  <div class="auction_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>竞拍冻结金额</span>
                     <span class="fs18 fwb">{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>

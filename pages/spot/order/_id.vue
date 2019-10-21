@@ -181,16 +181,14 @@
 
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-			 <div class="submitOrder" @click='beginCreateOrder' v-if=" this.currMin>= PlanNum">提交订单</div>
-			 <div class="submitOrder" style='background:gray'  v-else>提交订单</div>	  
-			   
-		
+			 <div class="submitOrder" @click='beginCreateOrder' v-if="isCanSale">提交订单</div>
+			 <div class="submitOrder" style='background:gray'  v-else>提交订单</div>
         </div>
       </div>
     </div>
     <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
     <address-dialog :isshow="addAddressLoading" @unChange="unaddAddressChange"></address-dialog>
-    <spotPay :isshow='payModalShow' :datalist='payData' :isPay="isCanPay" :title="payModalTitle" @unChange="unPayOrder"
+    <spotPay :isshow='payModalShow' :datalist='payData' :isPay="isCanPay" :title="payModalTitle" :ProgressShow="progressShow" @unChange="unPayOrder"
              @payedChange="PayedOrder"></spotPay>
   </div>
 </template>
@@ -280,6 +278,7 @@
 				currMin: 0,
 				currMax: 0,
 				PlanNum:0,
+        isCanSale: true,
 				currsetp: 1,
 				ServiceTimeList: [],
 				payList: [
@@ -299,7 +298,8 @@
 				RegisterName: 'member',
 				nowIndex: 0,
 				index: 0,
-				spotId: this.$route.params.id || 0
+				spotId: this.$route.params.id || 0,
+                progressShow:false     //进度条显示
 			}
 		},
 		methods: {
@@ -463,7 +463,8 @@
 			},
 			PayedOrder(smsCode) {
 				this.isCanPay = false
-				this.createOrder(smsCode)
+                this.progressShow=true
+ 				this.createOrder(smsCode)
 				this.isCanPay = true
 			},
 			//提交订单
@@ -481,16 +482,22 @@
 				}
 				if(params.is_delivery == 0){
 					params.transportation_mode = this.orderinfo.transportationModeTake
-        }
+                }
+ 				 let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
 
-				let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
 				if (res.status === 200) {
-					if ((res.data.errorcode || 0) == 0) {
+
+ 					if ((res.data.errorcode || 0) == 0) {
+                      //this.progressShow=false
 						location.href = '/spot/order/success?plan_no=' + res.data.plan_no + '&last_ordered_date='+ (res.data.last_ordered_date||'') + '&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
-					} else {
+
+ 					} else {
 						this.$Modal.warning({
 							title: '提示',
-							content: res.data.message
+							content: res.data.message,
+                            onOk: () => {
+                              this.$router.push({name: "spot-page"})
+                            }
 						})
 				return
 					}
@@ -511,16 +518,19 @@
 				}
 
 			},
-			async PlanTotalNum(){
+			async PlanTotalNum(limit_num){
 				let params = {
 					quoteId: this.spotId,
 				}
 				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
 				this.PlanNum=res.data
+        if(this.PlanNum >= limit_num){
+        	this.isCanSale = false
+        }
 			}
 		},
-		mounted() {	
-			
+		mounted() {
+
 			if(!this.spotInfo){
 				this.showWarning('报价信息不存在，请重新操作！', function(){
 					location.href = '/spot'
@@ -531,8 +541,8 @@
 			this.$store.dispatch('member/getCapitalInfo'),
 
 			this.orderinfo.spot_id = this.spotInfo.id
-			if(this.spotInfo.limit_num > 0){		
-				this.PlanTotalNum()	
+			if(this.spotInfo.limit_num > 0){
+				this.PlanTotalNum(this.spotInfo.limit_num)
 				this.currMax = Math.min(this.spotInfo.limit_num-this.PlanNum, this.spotInfo.available_num)
 			}else{
 				this.currMax = this.spotInfo.available_num

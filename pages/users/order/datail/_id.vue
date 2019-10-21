@@ -50,7 +50,7 @@
           </template>
           <template v-else-if="this.datalist.isDelivery == 1">配送</template>
             <span style="margin-left: 100px; color:#62c097;">
-              <span style="cursor: pointer;"  @click="addLog(datalist)" v-if="datalist.isDelivery==0 && datalist.isAddDemand==0 && datalist.status!=2">我要询价/</span><span v-else style="color:#e8e8e8">我要询价/</span>
+              <span style="cursor: pointer;"  @click="addLog(datalist)" v-if="datalist.isDelivery==0 && datalist.isAddDemand==0 && datalist.status!=2">物流询价/</span><span v-else style="color:#e8e8e8">我要询价/</span>
               <span style="cursor: pointer;"  @click="detailLog(datalist)" v-if="datalist.isDelivery==0 && datalist.isAddDemand==1 && datalist.status!=2">查看物流询价</span><span v-else style="color:#e8e8e8">查看物流询价</span>
             </span>
           </h3>

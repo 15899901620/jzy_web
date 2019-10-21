@@ -51,7 +51,7 @@
           <div class="birdtabletitle">{{auctionInfo.skuName}}&nbsp;&nbsp;&nbsp;&nbsp;{{auctionInfo.manufacturer}}&nbsp;&nbsp;<span class="orangeFont">{{auctionInfo.totalNum}}</span>{{auctionInfo.uomName}}
           </div>
           <div class="kailong">
-            <div class="tranfont">{{auctionInfo.warehouseProvince}}</div>
+            <div class="tranfont" :title="auctionInfo.warehouseProvince">{{auctionInfo.warehouseProvince}}</div>
           </div>
           <table class="table">
             <tbody>
@@ -214,7 +214,7 @@
               <span class="inputTitle">竞拍数量</span>
               <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.totalNum)" :step="1" v-model="auctionNum"></input-special>
               <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
-              <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
+              <span class="ml10 gray fs14">当前您最大可拍：<span class="orangeFont font">{{auctionInfo.depositNum}}</span>{{auctionInfo.uomName}}</span>
             </div>
             <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
           </div>
@@ -328,42 +328,37 @@
 
       </div>
       <!--  我的关注-->
-      <div class="biddersRecord">
+      <div class="biddersRecord" v-show="followList.length > 0">
         <h1 class="paipinacu fs20">我关注的其他竞拍</h1>
-        <table class="parttable" :key='index' v-for="(item,index) in followList ">
+        <table class="parttable" >
           <tbody>
           <tr class="tableTitle">
             <td>竞拍编号</td>
             <td>开始时间</td>
             <td>竞拍时长</td>
-            <td>竞拍状态</td>
-            <td>品种</td>
             <td>牌号</td>
             <td>厂商</td>
-            <td>城市</td>
             <td>起拍价</td>
             <td>竞拍总量</td>
             <td>提货仓库</td>
+            <td>竞拍状态</td>
             <td>操作</td>
           </tr>
-          <tr>
+          <tr :key='index' v-for="(item,index) in followList ">
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.beginTime}}</td>
-            <td>{{$utils.timeBetween(item.beginTime,item.lastDeliveryTime)}}</td>
-            <td>
-                <span v-if="item.status=='VO'">已取消</span>
-                <span v-if="item.status=='DR'">起草</span>
-                <span v-if="item.status=='AP'">审批中</span>
-                <span v-if="item.status=='CO'">已审核</span>
-                <span v-if="item.status=='CL'">已结束</span>
-            </td>
+            <td>{{$utils.timeBetween(item.beginTime,item.realEndTime)}}</td>
+
             <td>{{item.skuName}}</td>
-            <td>{{item.catName}}</td>
             <td class="orangeFont">{{item.manufacturer}}</td>
-            <td>{{item.cityName}}</td>
             <td>{{item.finalPrice}}</td>
             <td>{{item.totalNum}}</td>
             <td>{{item.warehouseName}}</td>
+            <td>
+              <span v-if="item.statusType=='1'">正在竞拍</span>
+              <span v-if="item.statusType=='2'">即将开始</span>
+              <span v-if="item.statusType=='3'">竞拍结束</span>
+            </td>
             <td>
               <div class="seeTable" @click='BidersDetail(item.id)'>查看</div>
             </td>
@@ -500,15 +495,15 @@
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
       </div>
     </Modal>
- 
+
     <!-- 添加其他竞拍关注-->
     <!-- <Modal
             v-model="addfollow"
             title="Title"
             width="80"
     >
-      
-    
+
+
       <div slot="header">添加其他竞拍关注</div>
       <Table border ref="selection" :columns="columns4" :data="unfollowList"></Table>
       <div slot="footer">
@@ -661,7 +656,6 @@
 
         }
         let res = await getAuctionfollow(this, params)
-          console.log('1',res)
         if (res) {
           this.followList = res.data
         }
@@ -884,9 +878,10 @@
           width: 35px;
           color: #fff;
           position: absolute;
-          top: 10px;
-          left: 18px;
+          top: 8px;
+          left: 10px;
           font-weight: bold;
+          cursor: default;
         }
       }
 

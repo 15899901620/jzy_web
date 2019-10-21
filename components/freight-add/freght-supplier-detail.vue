@@ -116,7 +116,6 @@
           <Col span="5">承运商</Col>
           <Col span="3">承运商电话</Col>
           <Col span="2">状态</Col>
-          <Col span="3">操作</Col>
         </Row>
         <Row :gutter="24"  v-for="(item, index) in OrderList.freightOffers" :key='index' index=""
              style="line-height: 32px;text-align: center;border-bottom: 1px solid #eee;">
@@ -165,11 +164,6 @@
             <span v-if="item.status==1">竞价中</span>
             <span v-if="item.status==2">已中标</span>
             <span v-if="item.status==3">未中标</span>
-          </Col>
-          <Col span="3">
-            <span v-if='item.status==1 '><a
-                style="background-color: #23aa36;padding: 4px 18px; color: #fff; border-radius: 3px;"
-                @click='setSelected(item)'>入 选</a></span>
           </Col>
         </Row>
         <Row>

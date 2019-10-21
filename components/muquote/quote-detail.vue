@@ -4,7 +4,7 @@
       title="需求详情"
       v-model="loading"
       @on-cancel="AddressCancel"
-      :width='800'
+      :width='1050'
       class-name="vertical-center-modal">
     <p slot="header" style="color:#666; text-align:left; font-size:14px;">
       <Icon type="ios-create" style="font-size:18px;"/>

@@ -21,7 +21,9 @@
 .Time_Banner {
 	width:234px;
 	height:242px;
+
 }
+
 .Time-limited_list {
 	display:flex;
 	position:relative;
@@ -163,12 +165,13 @@
 }
 .check {
 	color:#fff;
-	width:60px;
-	line-height:32px;
+	padding: 4px 5px;
 	background-color:#007de4;
 	text-align:center;
 	margin-left:10px;
+	margin-right: 10px;
 	border-radius:3px;
+	cursor: pointer;
 }
 .qualityTitle {
 	background-color:#f8f8f8;
@@ -1104,7 +1107,7 @@ gAccount {
 .acuList li {
 	background-color:#fff;
 	width:100%;
-	margin-top: 15px;
+	margin-bottom: 15px;
 	display:flex;
 	border: 1px solid #dfdfdf;
 	position: relative;
@@ -1115,9 +1118,11 @@ gAccount {
 .acuList li .acuProduct {
 	width:62%;
 	border-right:1px solid #ccc;
-	margin:35px 0;
+	margin: 60px 0 35px;
 	margin-left:45px;
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 .acuList li .acuOpear {
 	font-size:18px;
@@ -1565,8 +1570,11 @@ gAccount {
 .memberList ul {
 	margin-left:30px;
 }
+.memberList ul li:first-child{
+	margin-top: 10px;
+}
 .memberList ul li {
-	margin-top:10px;
+	margin-top:5px;
 	font-size:14px;
 }
 .memberList ul li a {
@@ -1579,7 +1587,8 @@ gAccount {
 	color:#007de4;
 }
 .memberList h1 {
-	font-size: 16px;
+	font-size: 15px;
+	font-weight: bold;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 	position: relative;
@@ -1664,13 +1673,19 @@ gAccount {
 .account_icon {
 	width:32px;
 	height:32px;
-	background:url(/img/icon.png)no-repeat -764px -83px;
+	background:url(/img/capita_01.png)no-repeat 3px 3px;
 }
 .Frozen_icon {
 	margin-left:15px;
 	width:44px;
 	height:44px;
-	background:url(/img/icon.png)no-repeat -754px -38px;
+	background:url(/img/capita_02.png)no-repeat 7px 7px;
+}
+.auction_icon {
+	margin-left:15px;
+	width:44px;
+	height:44px;
+	background:url(/img/capita_03.png)no-repeat 8px 5px;
 }
 /*订单操作列表*/
   .orderlist {
@@ -1919,3 +1934,12 @@ gAccount {
 .newsTimeLink a:hover {
   color: #2b85e4;
 }
+
+
+.auction_over_01{background: url(/img/participating_01.png)no-repeat 430px 42px;}
+.auction_over_02{background: url(/img/participating_02.png)no-repeat 430px 42px;}
+.auction_over_03{background: url(/img/participating_03.png)no-repeat 430px 42px;}
+.titlelist{background: #fff;height:40px !important;line-height:40px !important;padding-right:10px;border:1px solid #dfdfdf;border-bottom:0;}
+.titlelist_txt{ border-left: 2px solid #ff6c00;padding-left:10px;}
+.acuList{width:100%;float:left;}
+.auction_screen{float:right;font-size:14px;}

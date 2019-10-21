@@ -2,13 +2,13 @@
   <div style="display: flex">
       <a   href="/bidders">
     <div class="Time_Banner pr">
-      <img src="/img/Time_banner.jpg"/>
+      <img src="/img/index_acution.png" style="width: 100%; height: 100%"/>
     </div>
       </a>
     <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
-      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">
-        <img src="../../static/img/back.png"/>
-      </div>
+<!--      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">-->
+<!--        <img src="../../static/img/back.png"/>-->
+<!--      </div>-->
       <template v-if="$store.state.bidders.auctionList.length > 0">
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}" id='TimeL-ul'>
           <li ref="elememt" v-for="(items, index) in $store.state.bidders.auctionList" :key="index">
@@ -29,8 +29,8 @@
             </div>
             <div class="NumStore">
               <span>数量 : {{items.totalNum}}{{items.uomName}}</span>
-              <span>库区 : {{items.warehouseName}}</span>
-              <span>开始时间 : {{$utils.dateStrFormat(items.beginTime,'yyyy-MM-dd')}}</span>
+              <span class="mt3">库区 : {{items.warehouseName}}</span>
+              <span class="mt3">开始时间 : {{$utils.dateStrFormat(items.beginTime,'yyyy-MM-dd')}}</span>
             </div>
             <div class="Timebtn beginbg" v-if="items.statusType == '1'" @click="acutionDetail(items.id)">正在竞拍</div>
             <div class="Timebtn orangebg" v-if="items.statusType == '2'" @click="acutionDetail(items.id)">即将开始</div>
@@ -43,9 +43,9 @@
           <li style="text-align: center;padding-top: 100px;font-size: 14px;color: #ccc;">暂无任何信息！</li>
         </ul>
       </template>
-      <div class="Time-limited_next position prve" id='next' :style="{'display':display}">
-        <img src="../../static/img/next.png"/>
-      </div>
+<!--      <div class="Time-limited_next position prve" id='next' :style="{'display':display}">-->
+<!--        <img src="../../static/img/next.png"/>-->
+<!--      </div>-->
     </div>
   </div>
 </template>

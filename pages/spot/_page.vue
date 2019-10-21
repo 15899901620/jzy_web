@@ -80,14 +80,14 @@
                 <span style="width: 7%;" v-else>非标准包装</span>
                 <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
                   <span style="position: relative">{{item.available_num}}
-                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">限</i>
+                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                   </span>
                 </span>
                 <span v-if="$store.state.memberToken" class="orangeFont"
                       style="width: 11%;position:relative;text-align:right;padding-right:18px;">
                      <span style="position: relative">
                        {{item.finalPriceFormat}}
-                        <i v-if="item.is_jry"  style="padding: 0 4px; font-size: 12px;position: absolute; top: -10px; right: -22px;border-radius: 3px; background-color: #ed4014; color: #fff;">易</i>
+                        <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
                 <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
@@ -105,7 +105,7 @@
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
                 <span style="width: 12%;">
                   <div
-                      v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1"
+                      v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1 || item.on_sale == 2"
                       style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>

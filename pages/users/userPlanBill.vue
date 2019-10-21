@@ -152,7 +152,7 @@
                   </td>
                   <td style="width: 15%;">
                      <div>待签合同</div>
-                    <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
+                    <div><a @click='Spot(item.id, 2)' class="greenFont">查看合同模板</a></div>
                   </td>
                   
                   <td style="width: 15%;" class="operate">
@@ -331,27 +331,31 @@
                 },
             };
         },
-        methods: {
-            async getSourceData() {
-				let params = {
-					current_page: this.current_page,
-                    page_size: this.page_size,
-                    status:2,
-				}
-				this.$store.dispatch('member/getOrderList', params)
-				this.$store.dispatch('member/getOrderCount')
-            },
-            toCreateOrder(id) {
+      methods: {
+        async getSourceData() {
+            let params = {
+              current_page: this.current_page,
+                        page_size: this.page_size,
+                        status:2,
+            }
+            this.$store.dispatch('member/getOrderList', params)
+            this.$store.dispatch('member/getOrderCount')
+          },
+      toCreateOrder(id) {
 				location.href = '/spot/change/' + id
 			},
-            reloadPage() {
+      reloadPage() {
 				location.reload(true)
-            },
+      },
             	//订单类型
 			getOrderType(typeId) {
 				if (!typeId) return
 				return config.orderType[typeId].substring(0, 1)
-			},
+      },
+      Spot(id, type){
+        type = type || 1
+				window.open('/users/spotContract?&id=' + id+"&type="+ type)
+      },
 			//订单类型
 			detailOrderType(typeId) {
 				if (!typeId) return

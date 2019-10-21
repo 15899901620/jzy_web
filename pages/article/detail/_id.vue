@@ -17,7 +17,7 @@
             <div class="Pages">
                 <div class="Pages_left" style="background: #fff;">
                     <div class="NewsDetail">
-                        <h3 class="mt10 fs20">{{this.articledetail.title}}</h3>
+                        <h3 class="mt15 fs20 tac">{{this.articledetail.title}}</h3>
                         <div class="NewsDetail_tip mt20">
                         <div class="dflexAlem">
                             <a href="/" class="blueFont">{{this.articledetail.author}}</a>
@@ -39,7 +39,7 @@
                           <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
                         </div>
                         </div>
-                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content" style="min-height: 80vh"></div>
+                        <div class="mt20 mb40 fs14" v-html="this.articledetail.content" style="min-height: 80vh; text-indent: 28px;"></div>
                         <div class="new_other" style="margin-bottom:20px;">
                             <span v-if="!this.articledetail.lastPage.id">【上一篇】{{this.articledetail.lastPage.title}}</span>
                             <span v-else>【上一篇】

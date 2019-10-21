@@ -15,7 +15,7 @@
           </FormItem>
         </Col>
       </Row>
-      <Row :gutter="24" index="">
+      <!--<Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="mobilecode">
             <Input v-model="loginform.mobilecode" autocomplete="off" placeholder="短信验证码"/>
@@ -24,7 +24,7 @@
             {{this.btnValue}}
           </Button>
         </Col>
-      </Row>
+      </Row>-->
       <Row :gutter="24" index="">
         <Col span="24">
           <FormItem prop="password">
@@ -76,7 +76,6 @@
 				}
 			};
 			const validateSlide = (rule, value, callback) => {
-			  console.log("value",value)
 				if (value === 0) {
 					callback(new Error('请滑动完成验证'));
 				} else {
@@ -122,7 +121,6 @@
 				'updateUserInfof'
 			]),
 			onTime(res) {
-			  console.log("res",res)
 				if (res) {
 					this.loginform.slidecode = res
 				} else {
@@ -135,7 +133,6 @@
 				}
 			},
 			async LoginForm() {
-			  console.log("***LoginForm***")
 				if (!this.loginform.username) {
 					this.$Modal.info({
 						title: '提示',
@@ -150,13 +147,13 @@
 					});
 					return false
 				}
-				if (!this.loginform.mobilecode) {
+				/*if (!this.loginform.mobilecode) {
 					this.$Modal.info({
 						title: '提示',
 						content: '验证码不能为空!'
 					});
 					return false
-				}
+				}*/
 				if (!this.loginform.password) {
 					this.$Modal.info({
 						title: '提示',
