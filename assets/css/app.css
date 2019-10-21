@@ -1107,7 +1107,7 @@ gAccount {
 .acuList li {
 	background-color:#fff;
 	width:100%;
-	margin-top: 15px;
+	margin-bottom: 15px;
 	display:flex;
 	border: 1px solid #dfdfdf;
 	position: relative;
@@ -1934,3 +1934,12 @@ gAccount {
 .newsTimeLink a:hover {
   color: #2b85e4;
 }
+
+
+.auction_over_01{background: url(/img/participating_01.png)no-repeat 430px 42px;}
+.auction_over_02{background: url(/img/participating_02.png)no-repeat 430px 42px;}
+.auction_over_03{background: url(/img/participating_03.png)no-repeat 430px 42px;}
+.titlelist{background: #fff;height:40px !important;line-height:40px !important;padding-right:10px;border:1px solid #dfdfdf;border-bottom:0;}
+.titlelist_txt{ border-left: 2px solid #ff6c00;padding-left:10px;}
+.acuList{width:100%;float:left;}
+.auction_screen{float:right;font-size:14px;}

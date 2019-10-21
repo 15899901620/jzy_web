@@ -68,13 +68,44 @@
           </tr>
           </tbody>
         </table>
-        <div class="titlelist mt15">
-          竞拍列表
-        </div>
+
         <div style="display: flex;">
           <div style="width: 77%">
+
+            <div class="titlelist mt15">
+              <span class="titlelist_txt">竞拍列表</span>
+              <div class="auction_screen">
+
+                <template>
+                  <Dropdown placement="bottom-start">
+                    <a href="javascript:void(0)">
+                      全部
+                      <Icon type="ios-arrow-down"></Icon>
+                    </a>
+                    <DropdownMenu slot="list">
+                      <DropdownItem>即将开始</DropdownItem>
+                      <DropdownItem>正在竞拍</DropdownItem>
+                      <DropdownItem>竞拍结束</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                  <Dropdown style="margin-left: 20px">
+                    <a href="javascript:void(0)">
+                      全部
+                      <Icon type="ios-arrow-down"></Icon>
+                    </a>
+                    <DropdownMenu slot="list">
+                      <DropdownItem>正在参与</DropdownItem>
+                      <DropdownItem>未参与</DropdownItem>
+
+                    </DropdownMenu>
+                  </Dropdown>
+
+                </template>
+              </div>
+            </div>
+
             <ul class="acuList" v-if="this.auctionTotal > 0">
-              <li v-for="(items,index) in this.auctionList" :key="index">
+              <li class="auction_over_01" v-for="(items,index) in this.auctionList" :key="index">
                 <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
@@ -373,8 +404,7 @@
   .titlelist {
     font-size: 16px;
     padding-left: 15px;
-    line-height: 33px;
-    border-left: 5px solid #ff6c00;
+
   }
 
   .bidersTable {
