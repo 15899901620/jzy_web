@@ -131,23 +131,20 @@
                 </tr>
                 <tr class="detailTable">
                   <td>{{item.skuNo}} {{item.skuName}}</td>
-                  <td><span class="orangeFont">￥{{item.finalPrice}}</span> <span style="color:#999">/吨</span></td>
+                  <td><span class="orangeFont">{{$utils.amountFormat(item.finalPrice)}}</span> <span style="color:#999">/吨</span></td>
                   <td>{{item.orderNum}}</td>
                   <td>{{item.warehouseName}}</td>
-                  <td>￥{{item.totalAmount}}</td>
+                  <td>{{$utils.amountFormat(item.totalAmount)}}</td>
                   <td>
                     <span v-if="item.status == 3" class="greenFont">{{getOrderState(item.status)}}</span>
                     <span v-else-if="item.status == 0" class="gray">{{getOrderState(item.status)}}</span>
                     <span v-else class="orangeFont">{{getOrderState(item.status)}}</span>
                   </td>
                   <td class="operate">
-                    <div class="" v-if="item.status == 1">
-                      <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
-                    </div>
                     <div class="" v-if="item.status == 2">
-                      <a class="Paybtn mt15" @click="paymentBut(item)">去付款</a>
+                      <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
                     </div>
-                    <a :href="`/users/order/detail/${item.id}`" class="mt5 blackFont">查看详情</a>
+                    <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">查看详情</a>
                   </td>
                 </tr>
                 </tbody>
@@ -157,7 +154,7 @@
         </div>
       </div>
     </div>
-    <payorder :isshow='payloading' :datalist='dataRow' @unChange="unPayOrder"></payorder>
+    <OrderPay :isShow='payLoading' :order_id='payOrderID' @unChange="unPayOrder"></OrderPay>
   </div>
 </template>
 
@@ -167,10 +164,10 @@
   import Cookies from 'js-cookie'
   import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
   import {orderpage} from '../../api/order'
+	import OrderPay from '../../components/paydeposit/orderPay'
   import {parse, stringify} from 'qs'
     import { getCookies } from '../../config/storage'
     import config from '../../config/config'
-	import paydeposit from '../../components/paydeposit'
 
 	export default {
 		name: 'index',
@@ -178,7 +175,7 @@
 		middleware: 'memberAuth',
 		components: {
 			usernav: Navigation.user,
-			payorder: paydeposit.order
+			OrderPay
 		},
 		fetch({store}) {
 			return Promise.all([
@@ -193,7 +190,8 @@
 		data() {
 			return {
 				dataRow: {},
-				payloading: false,
+				payOrderID: 0,
+				payLoading: false,
 				total_amount_format: '',
 				freeze_amount_format: '',
 				available_amount_format: '',
@@ -241,14 +239,11 @@
 				return config.orderState[typeId]
 			},
 			paymentBut(row) {
-				this.payloading = true
-				this.dataRow = {
-					...row,
-					freezeAmount: this.userinfo.freezeAmount
-				}
+				this.payLoading = true
+				this.payOrderID = row.id
 			},
 			unPayOrder(row) {
-				this.payloading = row
+				this.payLoading = row
 			},
 			showtime() {
 				var now = new Date();
