@@ -51,6 +51,7 @@ export default {
     },
     data() {
         return {
+            display: "none",
             brandList: [],
             cobrandData:[],
             currlist:[],
@@ -73,6 +74,25 @@ export default {
         },
     },
     methods: {
+
+        mouseEnter() {
+            var ul = document.getElementById('TimeL-ul')
+            console.log("ul_li",ul)
+            var li = ul.getElementsByTagName('li')
+            console.log("li",li)
+            if (li.length >= 5) {
+                this.display = "flex";
+            } else {
+                this.display = "none";
+            }
+        },
+        mouseLeave() {
+            this.display = "none";
+        },
+
+
+
+
 
         //点击tab标题触发
         handleChange: function(index) {
@@ -135,6 +155,77 @@ export default {
             // 如果需要滚动条
             scrollbar: '.swiper-scrollbar',
         })
+
+
+
+//             setTimeout(function () {
+//                 var chefElement = {
+//                     minSpeed: 10,//每次移动的距离
+//                     //获取页面元素
+//                     prev: document.getElementById('prev'),
+//                     next: document.getElementById('next'),
+//                     parent: document.getElementById('parent'),
+//                     ul: document.getElementById('TimeL-ul'),
+//                     li: document.getElementById('TimeL-ul').getElementsByTagName('li'),
+//                     liWidth: document.getElementById('TimeL-ul').getElementsByTagName('li')[0].offsetWidth,
+//                     type: true,
+//                     nextTimer: null,
+//                     prevTimer: null,
+//                     parent_n: null
+//                 }
+// console.log("chefElement:",chefElement.li)
+//                 chefElement.prev.onclick = function () {
+//                     if (chefElement.type) {
+//                         clearInterval(chefElement.prevTimer);
+//                         chefElement.ul.insertBefore(chefElement.li[chefElement.li.length - 1], chefElement.li[0]);
+//                         chefElement.liWidth = chefElement.li[0].offsetWidth;
+//                         chefElement.ul.style.left = '-' + chefElement.liWidth + 'px';
+//                         chefElement.prevTimer = setInterval(pre, chefElement.animationSpeed);
+//                         chefElement.type = false;
+//                     }
+//                 };
+//                 next.onclick = function () {
+//
+//                     if (chefElement.type) {
+//                         chefElement.liWidth = 0;
+//                         clearInterval(chefElement.nextTimer);
+//                         chefElement.nextTimer = setInterval(nex, chefElement.animationSpeed);
+//                         chefElement.type = false;
+//                     }
+//                 };
+//
+//                 //next动画函数
+//                 function nex() {
+//
+//                     chefElement.ul.style.left = '-' + chefElement.liWidth + 'px';
+//                     chefElement.liWidth += chefElement.minSpeed;
+//                     if (chefElement.liWidth >= chefElement.li[0].offsetWidth) {
+//                         clearInterval(chefElement.nextTimer);
+//                         chefElement.ul.appendChild(chefElement.li[0]);
+//                         chefElement.ul.style.left = 0;
+//                         chefElement.type = true;
+//                     }
+//                 }
+//
+//                 //prev动画函数
+//                 function pre() {
+//
+//                     chefElement.ul.style.left = '-' + chefElement.liWidth + 'px';
+//                     chefElement.liWidth -= chefElement.minSpeed;
+//                     if (chefElement.liWidth <= -1) {
+//                         chefElement.ul.style.left = 0;
+//                         clearInterval(chefElement.prevTimer);
+//                         chefElement.type = true;
+//                     }
+//                 }
+// // *****限时竞拍******
+//             }, 2000)
+//             var that = this
+//             let TL = document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
+//             let TLWidth = TL[0].offsetWidth
+//             that.TLlength = TL.length * TLWidth
+
+
     },
     created(){
         this.cooperatbrand()
