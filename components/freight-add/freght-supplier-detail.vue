@@ -332,8 +332,8 @@
 							id: row.id,
 						}
 						sendHttp(this, true, server.api.freight.setSelected, params, 1).then(response => {
-							if(response.errorcode==501106){
-								alert(response.message)
+							if(response.data.errorcode==501106){
+								alert(response.data.message)
 							}else{
 								this.AddressCancel();
 							}
