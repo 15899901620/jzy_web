@@ -168,15 +168,13 @@
             <div class="Notice whitebg mt15">
               <div class="NoticeTitle">
                 <span class="fs16">竞拍公告</span>
-                <!--  <span class="gray freshicon">换一组</span>-->
+                <span class="gray"><a href="/notice/list">更多...</a></span>
               </div>
               <ul class="NoticeList">
                 <li v-for="(item,index) in noticeList" :key="index">
-                  <span style="width: 18%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                        :title="item.seoKeywords">{{item.seoKeywords}}</span>
                   <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                      :title="item.title">{{item.title}}</span>
+                      style="width: 82%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                      :title="item.title"><a :href="`/notice/detail/${item.id}`">{{item.title}}</a></span>
                   <span style="width:16%;" class="gray">{{item.time}}</span>
                 </li>
               </ul>
@@ -256,7 +254,7 @@
 				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
 
 				// 网站公告
-				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15}),
+				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15, sortBy:'add_time', desc:'1'}),
 
 				// 获取用户参与列表
 				store.dispatch('bidders/getPartakeList'),
