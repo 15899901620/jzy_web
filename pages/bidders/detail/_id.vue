@@ -214,7 +214,7 @@
               <span class="inputTitle">竞拍数量</span>
               <input-special :min="minNum" :max="Math.min(auctionInfo.depositNum,auctionInfo.totalNum)" :step="1" v-model="auctionNum"></input-special>
               <span class="ml10 gray fs14">最小起拍量：{{auctionInfo.minOrder}}{{auctionInfo.uomName}}</span>
-              <span class="ml10 gray fs14">当前您最大可拍：{{auctionInfo.depositNum}}{{auctionInfo.uomName}}</span>
+              <span class="ml10 gray fs14">当前您最大可拍：<span class="orangeFont font">{{auctionInfo.depositNum}}</span>{{auctionInfo.uomName}}</span>
             </div>
             <div class="MustSee"><a href="/help/17" target="_blank">竞拍必看</a></div>
           </div>

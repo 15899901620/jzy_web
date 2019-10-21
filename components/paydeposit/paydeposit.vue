@@ -19,9 +19,9 @@
       <div class="mt15 dflex" style="align-items: center;">
         <span class="Bond_Popup_title">交纳数量：</span>
         <div class="pr ml10">
-          <input class="InputNum" v-model="Bonddeposit.bidNum"/><span class="unit">吨</span>
+          <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span>
         </div>
-        <span class="ml10">已交纳{{datalist.depositNum}}吨</span>
+        <span class="ml10">已交纳<span class="orangeFont">{{datalist.depositNum}}</span>吨</span>
       </div>
       <!--需冻结保证金-->
       <div class="PricePopup">

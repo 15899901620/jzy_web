@@ -3,9 +3,9 @@
     <Header name="头部"></Header>
     <div class="container" title="">
       <template v-for="(item,index) in $store.state.common.adList.ad4">
-      <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
+        <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
           <!-- <img :src="item.adImg"/>-->
-      </div>
+        </div>
       </template>
       <div class="w1200" style="margin-top: 20px">
         <div class="titlelist" v-if="partakeList.length > 0">
@@ -32,8 +32,10 @@
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.skuName}}</td>
             <td>{{item.manufacturer}}</td>
-            <td><TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
-                          :onTimeOver="reloadPage"></TimeDown></td>
+            <td>
+              <TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
+                        :onTimeOver="reloadPage"></TimeDown>
+            </td>
             <td>{{$utils.amountFormat(item.finalPrice)}}</td>
             <td>
               <span v-if="item.bidList.length > 0">{{$utils.amountFormat(item.bidList[0].bidPrice)}}</span>
@@ -43,7 +45,7 @@
               <span v-if="item.bidList.length > 0">{{item.bidList[0].bidNum}}</span>
               <span v-else> - </span>
             </td>
-             <td>
+            <td>
               <span v-if="item.bidList.length > 0">{{item.bidList[0].selectedNum}}</span>
               <span v-else> - </span>
             </td>
@@ -100,15 +102,22 @@
                     </div>
                   </template>
 
-                  <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime, items.realEndTime)}}</div>
-                  <div class="cancel_follow " v-if="items.statusType != '3' && (items.isFollow ? 1 : 0) " >已关注</div>
-                  <div class="follow" v-else-if="items.statusType != '3' && (items.isFollow ? 0 : 1) " @click="BidersAdd(items,index)">关注</div>
-                 </div>
+                  <div class="ml50"><span class="gray">竞拍时长：</span>{{$utils.timeBetween(items.beginTime,
+                    items.realEndTime)}}
+                  </div>
+                  <div class="cancel_follow " v-if="items.statusType != '3' && (items.isFollow ? 1 : 0) ">已关注</div>
+                  <div class="follow" v-else-if="items.statusType != '3' && (items.isFollow ? 0 : 1) "
+                       @click="BidersAdd(items,index)">关注
+                  </div>
+                </div>
 
                 <div class="acuProduct ">
-                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i v-if="items.is_jry" style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
+                      v-if="items.is_jry"
+                      style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
                   <div class="mt10 fs14 dflex">
-                    <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span></div>
+                    <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span>
+                    </div>
                     <div class="fs14 dflex">
                       <span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}
                       <template v-if="items.isAll == 1">
@@ -117,8 +126,10 @@
                     </div>
                   </div>
                   <div class="mt10 fs14 dflex">
-                    <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span></div>
-                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span class=" fs16">{{items.manufacturer}}</span></div>
+                    <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span>
+                    </div>
+                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span
+                        class=" fs16">{{items.manufacturer}}</span></div>
                   </div>
 
                 </div>
@@ -164,17 +175,20 @@
                 <!--  <span class="gray freshicon">换一组</span>-->
               </div>
               <ul class="NoticeList">
-                <li v-for="(item,index) in noticeList" :key="index" >
-                  <span style="width: 18%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="item.seoKeywords">{{item.seoKeywords}}</span>
+                <li v-for="(item,index) in noticeList" :key="index">
+                  <span style="width: 18%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                        :title="item.seoKeywords">{{item.seoKeywords}}</span>
                   <span
-                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" :title="item.title">{{item.title}}</span>
+                      style="width: 56%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                      :title="item.title">{{item.title}}</span>
                   <span style="width:16%;" class="gray">{{item.time}}</span>
                 </li>
               </ul>
             </div>
 
             <template v-if="this.sideadvImg.length>0">
-              <div class="NoticeTitleAdv" v-for="(item, index) in this.sideadvImg" :key="index" @click="Tospot(item.adLink)">
+              <div class="NoticeTitleAdv" v-for="(item, index) in this.sideadvImg" :key="index"
+                   @click="Tospot(item.adLink)">
                 <img :src="item.adImg">
               </div>
             </template>
@@ -188,16 +202,16 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex'
+	import {mapState} from 'vuex'
 	import Header from '../../components/header'
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
-    import server from "../../config/api";
-    import { sendCurl } from '../../api/common'
+	import server from "../../config/api";
+	import {sendCurl} from '../../api/common'
 
 
-    export default {
+	export default {
 		name: 'bidders',
 		components: {
 			Header,
@@ -211,64 +225,57 @@
 				CurrSelect: 0,
 				current_page: parseInt(this.$route.query.page) || 1,
 				page_size: 6,
-                page:'',
+				page: '',
 				NowTime: '',
 				Auctionlist: '',
 				AuctionTip: '暂无竞拍活动',
 				tabMain: ['1', '2', '3'],
 				status: 2,
 				index: 0,
-                isFollow:0,
-                aclist:'',
-                MinAuctioin:[
-                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
-                  current_stute:'结束',min_stute:0},
-                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
-                    current_stute:'结束',min_stute:0},
-                  {id:1,bill_no:"1651616",product:'LLDPE',manufacturer:'巨正源',real_end_time:'2019-10-18 12:00:00',min_price:10400.00,min_offerprice:10400.00,min_num:50,ru_num:50,
-                    current_stute:'结束',min_stute:0},
-                ],
+				isFollow: 0,
+				aclist: '',
 				AuctionTab: [
 					{AuctionName: '竞拍列表', status: 1},
 					{AuctionName: '我的竞拍', status: 2}
 				]
 			}
 		},
-        fetch({store, params, query}) {
+		fetch({store, params, query}) {
 
-            console.log("page:",this.page)
-            return Promise.all([
-                // 获取顶部、中部、底部导航信息
-                store.dispatch('common/getNavList'),
-                // 获取系统配置
-                store.dispatch('common/getSysConfig'),
-                // 获取友情链接
-                store.dispatch('common/getFriendlyList'),
-                // 获取轮播图
-                store.dispatch('common/getBannerList', 4),
-                // 获取底部帮助分类
-                store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-                store.dispatch('article/getindexArticleList',{catId: 8}),
+			console.log("page:", this.page)
+			return Promise.all([
+				// 获取顶部、中部、底部导航信息
+				store.dispatch('common/getNavList'),
+				// 获取系统配置
+				store.dispatch('common/getSysConfig'),
+				// 获取友情链接
+				store.dispatch('common/getFriendlyList'),
+				// 获取轮播图
+				store.dispatch('common/getBannerList', 4),
+				// 获取底部帮助分类
+				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
+				store.dispatch('article/getindexArticleList', {catId: 8}),
 
-                // 获取竞拍列表
-                store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
+				// 获取竞拍列表
+				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6}),
 
-                // 网站公告
-                store.dispatch('article/getNoticeList',  {typeId: 4, current_page: 1, page_size: 15}),
+				// 网站公告
+				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15}),
 
-                // 获取用户参与列表
-                store.dispatch('bidders/getPartakeList'),
-                // 侧边广告栏
-                store.dispatch('system/getBannerInfo', {
-                  positionId: 6
-                }),
-            ])
-        },
-      created(){
-        this.SourceData()
-      },
-      mounted(){ },
-      computed: {
+				// 获取用户参与列表
+				store.dispatch('bidders/getPartakeList'),
+				// 侧边广告栏
+				store.dispatch('system/getBannerInfo', {
+					positionId: 6
+				}),
+			])
+		},
+		created() {
+			this.SourceData()
+		},
+		mounted() {
+		},
+		computed: {
 			...mapState({
 				auctionTotal: state => state.bidders.auctionTotal,
 				auctionList: state => state.bidders.auctionList,
@@ -276,62 +283,62 @@
 				biddersbeingData: state => state.bidders.biddersbeingData,
 				bidderssoonData: state => state.bidders.bidderssoonData,
 				biddersendData: state => state.bidders.biddersendData,
-                bannerinfo: state => state.system.bannerinfo,      // 页面banner
-                noticeList: state => state.article.noticeList,     // 侧边竞拍广告
+				bannerinfo: state => state.system.bannerinfo,      // 页面banner
+				noticeList: state => state.article.noticeList,     // 侧边竞拍广告
 
 				partakeList: state => state.bidders.partakeList,  // 我的竞拍
-                sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
- 			})
+				sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
+			})
 
-      },
+		},
 		methods: {
-          Tospot(link){
-            if(link){
-              this.$router.push({name:link})
-            }
-          },
-          showTotal(total) {
-              return `全部 ${total} 条`;
-          },
-          reloadPage() {
-              location.reload()
-          },
+			Tospot(link) {
+				if (link) {
+					this.$router.push({name: link})
+				}
+			},
+			showTotal(total) {
+				return `全部 ${total} 条`;
+			},
+			reloadPage() {
+				location.reload()
+			},
 
-          async BidersAdd(items,index){
-             let params={
-              auctionIds:items.id
-            }
-            const res = await sendCurl(this,server.api.Auction.getfollow,params,false)
-             if(!res.data.errorCode && res.data){
-                 this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-             }
+			async BidersAdd(items, index) {
+				let params = {
+					auctionIds: items.id
+				}
+				const res = await sendCurl(this, server.api.Auction.getfollow, params, false)
+				if (!res.data.errorCode && res.data) {
+					this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+				}
 
-          },
-          async BidersCancel(items,index){
-            let params={
-              auctionId:items.id
-            }
-            const res = await sendCurl(this,server.api.Auction.cancelfollow,params,false)
-            if(!res.data.errorCode && res.data){
-              this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
-            }else{
-              this.$Notice.warning({
-                title: res.message,
-               });
-            }
+			},
+			async BidersCancel(items, index) {
+				let params = {
+					auctionId: items.id
+				}
+				const res = await sendCurl(this, server.api.Auction.cancelfollow, params, false)
+				if (!res.data.errorCode && res.data) {
+					this.$store.dispatch('bidders/getAuctionList', {current_page: this.current_page || 1, page_size: 6})
+				} else {
+					this.$Notice.warning({
+						title: res.message,
+					});
+				}
 
-          },
-          async SourceData() {
-            let params={
-              catId:8
-            }
-             const res = await sendCurl(this,server.api.information.getArticleList,params,false)
-            this.aclist = res.data.items
-          },
+			},
+			async SourceData() {
+				let params = {
+					catId: 8
+				}
+				const res = await sendCurl(this, server.api.information.getArticleList, params, false)
+				this.aclist = res.data.items
+			},
 			//跳转详情页
 			BidersDetail(id) {
 
- 				if (this.$store.state.memberToken) {
+				if (this.$store.state.memberToken) {
 					location.href = '/bidders/detail/' + id
 				} else {
 					this.$Modal.confirm({
@@ -395,31 +402,47 @@
     }
   }
 
-.startauction{background-color: #ff6c00}
-.vcauction{background-color: #25a96d}
-.endauction{background-color: #cccccc}
-  .statusicon{
+  .startauction {
+    background-color: #ff6c00
+  }
+
+  .vcauction {
+    background-color: #25a96d
+  }
+
+  .endauction {
+    background-color: #cccccc
+  }
+
+  .statusicon {
     width: 80px;
-    cursor:pointer;
+    cursor: pointer;
     text-align: center;
     line-height: 40px;
     border-top-right-radius: 22px;
     border-bottom-right-radius: 22px;
     color: #ffff;
   }
-  .btmunv{display: flex;width: 250px; }
-  .iv_title{
+
+  .btmunv {
+    display: flex;
+    width: 250px;
+  }
+
+  .iv_title {
     width: 60px;
     text-align-last: justify;
   }
-  .ixebm{
+
+  .ixebm {
     width: 235px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
   }
-  .Notice{
+
+  .Notice {
     border: 1px solid #dfdfdf;
 
     .NoticeTitle {
@@ -458,22 +481,24 @@
     height: 135px;
     margin-top: 15px;
   }
-  .follow{
+
+  .follow {
     cursor: pointer;
     border: 1px solid #d9d9d9;
     margin-left: 15px;
     padding: 1px 12px;
     font-size: 12px;
-    background: url("/img/add_follow.png")no-repeat 9px 5px;
+    background: url("/img/add_follow.png") no-repeat 9px 5px;
     padding-left: 25px;
   }
-  .cancel_follow{
+
+  .cancel_follow {
     cursor: pointer;
     border: 1px solid #d9d9d9;
     margin-left: 15px;
     padding: 1px 10px;
     font-size: 12px;
-    background: url("/img/cancel_follow.png")no-repeat 6px 5px;
+    background: url("/img/cancel_follow.png") no-repeat 6px 5px;
     padding-left: 22px;
   }
 </style>
