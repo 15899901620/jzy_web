@@ -39,7 +39,7 @@
                         <p class="service_title">在线客服</p>
 <!--                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />-->
 <!--                        <p>-->
-<!--                            <i>巨正源交易平台</i>-->
+<!--                            <i>巨正源电商平台</i>-->
 <!--                            <i>微信扫码下单</i></p>-->
                         <div class="tel">
 <!--                            <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</a></p>-->
@@ -79,7 +79,7 @@
                     <div class="sev-t"  style="padding-left:10px;padding-top:10px;">
                         <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />
                         <p>
-                            <i>巨正源交易平台</i>
+                            <i>巨正源电商平台</i>
                             <i>微信扫码下单</i></p>
                     </div>
                     <span class="arrow-right" style="top:162px;"></span>

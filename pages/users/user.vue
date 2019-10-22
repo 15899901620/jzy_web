@@ -28,7 +28,7 @@
                 </div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfor.phone}}</span>
-              <span>欢迎来到巨正源科技官方交易平台！</span>
+              <span>欢迎来到巨正源科技官电商平台！</span>
               <div class="gray mt10 mb10 fs12">上次登录时间：{{$store.state.memberInfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">
