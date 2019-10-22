@@ -1089,7 +1089,7 @@
                  //this.$router.push({name:'RegisterSuccess'})
               } else {
                 this.$Message.info({
-                  content: '注册未成功,请重新填写提交!',
+                  content: res.data.message,
                   duration: 5,
                   closable: true
                 })
