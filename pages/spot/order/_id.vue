@@ -37,7 +37,7 @@
         </div>
         <div class="gray" style="margin-left: 35px;">
           <template v-if="orderinfo.isDelivery == 0">
-            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotInfo.take_their_min}}吨</span>，数量加量幅度为<span
+            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{Math.max(spotInfo.take_their_min, spotInfo.min_order)}}吨</span>，数量加量幅度为<span
               class="orangeFont">{{spotInfo.take_bid_increment}}吨</span>）
           </template>
           <template v-else-if="orderinfo.isDelivery == 1">
