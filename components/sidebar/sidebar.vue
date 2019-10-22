@@ -7,7 +7,7 @@
             </div>
             <div class="cndns-right-box">
                 <div class="box-border">
-                    <div class="sev-t" >
+                    <div class="sev-t" style="height:49px;line-height:49px;padding-left:20px;">
                         <p>{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</p>
                     </div>
                     <span class="arrow-right"></span>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <!--收藏-->
-        <div class="cndns-right-meau meau-acution"  title="收藏本站">
+        <div class="cndns-right-meau meau-acution"  title="我的收藏">
 <!--            <a  @click="addFavorite();"  title='巨正源' rel="sidebar" href="http://192.168.10.63:3000/">-->
 <!--                <div class="cndns-right-btn">-->
 <!--                    <img src="../../static/img/siderbar_03.png" />-->
@@ -74,15 +74,15 @@
             <div class="cndns-right-btn ">
                 <img src="../../static/img/siderbar_01.png" />
             </div>
-            <div class="cndns-right-box">
-                <div class="box-border">
-                    <div class="sev-t">
+            <div class="cndns-right-box" style="top:-147px;">
+                <div class="box-border" style="height:195px;">
+                    <div class="sev-t"  style="padding-left:10px;padding-top:10px;">
                         <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />
                         <p>
                             <i>巨正源交易平台</i>
                             <i>微信扫码下单</i></p>
                     </div>
-                    <span class="arrow-right"></span>
+                    <span class="arrow-right" style="top:162px;"></span>
                 </div>
             </div>
         </div>
