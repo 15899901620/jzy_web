@@ -49,7 +49,7 @@
               <input type="text" v-model="minPrice" class="priceInput" placeholder="￥最低价"/>-
               <input type="text" v-model="maxPrice" class="priceInput" placeholder="￥最高价"/>
             </div>
-            <div class="xhBtn" @click="spotData">确定</div>
+            <div class="xhBtn" @click="spotData">搜索</div>
           </div>
         </div>
         <!--现货列表-->
