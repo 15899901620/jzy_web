@@ -33,26 +33,39 @@
             <div class="cndns-right-btn ">
                 <img src="../../static/img/siderbar_05.png" />
             </div>
-            <div class="cndns-right-box">
-                <div class="box-border">
+            <div class="cndns-right-box" style="top:-98px;">
+                <div class="box-border" style="height:195px;">
                     <div class="sev-t">
-                        在线客服
+                        <p class="service_title">在线客服</p>
 <!--                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />-->
 <!--                        <p>-->
 <!--                            <i>巨正源交易平台</i>-->
 <!--                            <i>微信扫码下单</i></p>-->
                         <div class="tel">
-                            <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</a></p>
-                            <p>全国服务热线</p>
-                            <p>交易时间(工作日)</p>
-                            <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
-                            <p class="mt10">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
+<!--                            <p class="fs24"><a target="_blank" rel="nofollow"  style="color: #007de4;">{{this.$store.state.common.sysConfig.SERVICEHOTLINE}}</a></p>-->
+<!--                            <p>全国服务热线</p>-->
+<!--                            <p>交易时间(工作日)</p>-->
+<!--                            <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>-->
+                            <p class="service_text">
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
                             </p>
+                            <p class="service_text">
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
+                            </p>
+                            <p class="service_text">
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">商务洽谈</a>
+                            </p>
+                            <p class="service_text">
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售后咨询</a>
+                            </p>
+                            <p class="service_text">
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">问题反馈</a>
+                            </p>
+
                         </div>
 
                     </div>
-                    <span class="arrow-right"></span>
+                    <span class="arrow-right" style="top:116px;"></span>
                 </div>
             </div>
         </div>
