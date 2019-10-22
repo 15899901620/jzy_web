@@ -946,7 +946,7 @@
              // this.$router.push({name:'RegisterSuccess'})
             } else {
               this.$Message.info({
-                content: "抱歉、您的信息提交失败，请填写重新提交！",
+                content: res.data.message,
                 duration: 5,
                 closable: true
               })

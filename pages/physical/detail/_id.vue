@@ -12,7 +12,7 @@
         <div class="Pages">
           <div class="Pages_left" style="background: #fff;">
             <div class="NewsDetail" >
-              <h3 class="mt10 fs20">{{this.physicaldetailinfo.skuNo}}</h3>
+              <h3 class="mt10 fs20">{{this.physicaldetailinfo.title}} {{this.physicaldetailinfo.skuNo}}</h3>
               <div class="NewsDetail_tip mt20"  >
                 <div class="dflexAlem">
                   <a href="/" class="blueFont">巨正源</a>
