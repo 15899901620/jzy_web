@@ -35,7 +35,7 @@
         </div>
       </div>
       <!--输入验证码-->
-      <div class="PopupCode pr" v-if="$store.state.member.capitalInfo.available_amount > datalist.totalAmount">
+      <div class="PopupCode pr" v-if="$store.state.member.capitalInfo.available_amount >= datalist.totalAmount">
         <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码"/>
         <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
         <i class="redFont fs12" style="position: absolute;bottom: -20px;">{{TipCode}}</i>
