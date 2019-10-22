@@ -46,8 +46,8 @@
     </div>
 
     <div slot="footer" style="text-align:center">
-      <Button type="primary" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && isCanPay" @click="bidersOK">确认支付</Button>
-      <Button type="default" size="large" v-show="$store.state.member.capitalInfo.available_amount > datalist.totalAmount && !isCanPay">正在提交</Button>
+      <Button type="primary" size="large" v-show="$store.state.member.capitalInfo.available_amount >= datalist.totalAmount && isCanPay" @click="bidersOK">确认支付</Button>
+      <Button type="default" size="large" v-show="$store.state.member.capitalInfo.available_amount >= datalist.totalAmount && !isCanPay">正在提交</Button>
     </div>
 </template>
     <template v-else>
