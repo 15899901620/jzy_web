@@ -5,7 +5,7 @@
       <div class="ml10">
         <p class="mt5">HI,上午好！</p>
 
-        <p class="gray">欢迎来到巨正源科技官方交易平台!</p>
+        <p class="gray">欢迎来到巨正源科技官方电商平台!</p>
 
       </div>
     </div>
@@ -16,7 +16,7 @@
     <ul class="news">
       <li v-show="cur==0">
         <ul class="newscont">
-          <li v-for="(item, index) in aclist" :key="index" v-if="index<4">
+          <li v-for="(item, index) in aclist" :key="index" v-if="index < 4" >
             <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}} " >
               <span class="newtitle" ><a :>{{item.title}}</a></span>
               <span class="ml10 Newsdate">{{item.time}}</span>

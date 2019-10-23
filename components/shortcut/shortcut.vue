@@ -1,7 +1,7 @@
 <template>
   <div :class="classes">
     <div class="TopPos" style="display: flex;">
-      <div class="slogens">您好，欢迎来到巨正源科技官方交易平台！ <span>|</span>
+      <div class="slogens">您好，欢迎来到巨正源科技官方电商平台！ <span>|</span>
         <a href="/">首页</a>
       </div>
       <ul class="topnavlist" v-if="showNav">

@@ -4,7 +4,7 @@
     <!--头部-文字-->
     <div class="IndexTop">
       <div class="w1200 TopPos">
-        <div class="">您好，欢迎来到巨正源化科技交易平台！</div>
+        <div class="">您好，欢迎来到巨正源化科技电商平台！</div>
         <ul class="UserList">
           <li>首页</li>
         </ul>
@@ -23,7 +23,7 @@
         <div class="mt20 mb20" style="border-right: 1px solid #D2D2D2; padding-right: 30px;">
           <img src="../../../static/img/logo.png"/>
         </div>
-        <div class="fs20 pl25 gray">交易平台登录</div>
+        <div class="fs20 pl25 gray">电商平台登录</div>
       </div>
       <!--电话-->
       <div class="dflexAlem fs20 gray" style="color: #666;" >服务热线 : 4009-000-000</div>
