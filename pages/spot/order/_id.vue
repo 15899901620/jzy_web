@@ -118,7 +118,7 @@
             <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
             <div style="width: 14%;">
-              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
+              <input-special :min="0" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
             </div>
             <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>

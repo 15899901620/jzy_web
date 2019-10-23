@@ -19,7 +19,9 @@
       <div class="mt15 dflex" style="align-items: center;">
         <span class="Bond_Popup_title">交纳数量：</span>
         <div class="pr ml10">
-          <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span>
+			<input-special :min="0" :max="datalist.totalNum-datalist.depositNum"  v-model="Bonddeposit.bidNum"
+						@change="changeNum"></input-special>
+          <!-- <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span> -->
         </div>
         <span class="ml10">已交纳<span class="orangeFont">{{datalist.depositNum}}</span>吨</span>
       </div>
@@ -60,10 +62,14 @@
 
 <script>
 	import { BondMessSend, AddBondRecord } from '../../api/auction'
-
+  	import InputSpecial from '../../components/input-special'
 	export default {
 		name: 'paydeposit',
+		 components: {
+			InputSpecial
+		},
 		data() {
+			
 			return {
 				loading: false,
 				btnValue: "获取短信验证码",
@@ -74,6 +80,7 @@
 					bidNum: 0,
 					BondCode: '',
 				},
+				currsetp:0,
 			}
 		},
 		props: {
@@ -131,6 +138,9 @@
 			},
 			wallet(){
 				alert('该功能正在维护')
+			},
+			changeNum(value) {
+				this.Bonddeposit.bidNum = value
 			},
 			//提交缴纳保证金
 			async bidersOK() {

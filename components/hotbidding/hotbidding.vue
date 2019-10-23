@@ -5,7 +5,7 @@
         <img src="/img/index_acution.png" style="width: 100%; height: 100%"/>
       </div>
     </a>
-    <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
+    <div class="ovh pr" style="width: 966px" id="parent" >
       <!--      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">-->
       <!--        <img src="../../static/img/back.png"/>-->
       <!--      </div>-->
