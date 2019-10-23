@@ -1907,6 +1907,9 @@ gAccount {
 
 .inforList{margin-left: 25px; margin-top: 30px;}
 .inforList li{margin-left: 35px;margin-top: 20px; display: flex;align-items: center;}
+.inforList li.ivu-select-item{margin:0 !important;}
+.ivu-select-not-found li{margin:0 !important;}
+
 .inforTitle{border-left: 2px solid #007de4;padding-left: 5px; font-weight: bold;color: #007de4;font-size: 14px;}
 .titleInfor{width: 85px;color:#999; margin-right: 20px; text-align: right; font-size: 14px; }
 .inforInput{width: 340px;height: 40px;border-radius: 3px;   box-sizing: border-box;}
