@@ -169,7 +169,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '失败提示',
-						content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+						content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，'+res.data.message+'</p>',
 						okText: '确定',
 						styles: 'top:30px;',
 						onOk: () => {
