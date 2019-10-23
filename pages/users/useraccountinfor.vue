@@ -61,6 +61,36 @@
                             <span class="titleInfor">邮箱</span><Input type="text" class="inforInput" v-model="userinfor.contacter_email"     @on-blur="contacter_email" />
                         </li>
                     </ul>
+                     <!--收票信息-->
+                    <ul class="inforList mb30">
+                        <div class="inforTitle">收票信息</div>
+                        <li>
+                            <span class="titleInfor">收票人</span><Input type="text" class="inforInput" v-model="userinfor.inv_contact"  />
+                        </li>
+
+                        <li>
+                            <span class="titleInfor" >收票人联系方式</span><Input type="text" class="inforInput" v-model="userinfor.inv_contact_mobile"    />
+                        </li>
+                    
+                        <li style="display: block;margin-left: 0px;">
+                                <FormItem label="收票地址"   :label-width="150" >
+                                        <div style="width:500px;">
+                                                <address-from
+                                                    :country="1"
+                                                    :province="userinfor.inv_state"
+                                                    :city="userinfor.inv_city"
+                                                    :area="userinfor.inv_district"
+                                                    :isshow="this.isAddressFormShow"
+                                                    @selectAddress="getSelectCountry">
+                                            </address-from>
+                                        </div>
+                                </FormItem>
+
+                        </li>
+                         <li>
+                            <span class="titleInfor" >收票人详细地址</span><Input type="text" class="inforInput" v-model="userinfor.inv_address"    />
+                        </li>
+                    </ul>
                     <Button class="saveInfor" @click="handleSubmit">保存</Button>
                 </Form>
             </div>
@@ -72,13 +102,15 @@
 import { getGainuserInfor, manageEdit } from  '../../api/users'
 import Navigation from '../../components/navigation'
 import { getCookies } from '../../config/storage'
+import AddressFrom from "../../components/address-from";
 
 export default {
     name: "useraccountinfor",
 	middleware: 'memberAuth',
     layout:'membercenter',
     components:{
-        usernav: Navigation.user
+        usernav: Navigation.user,
+        AddressFrom
     },
     fetch({ store }) {
         return Promise.all([
@@ -91,6 +123,7 @@ export default {
     data() {
         return {
             userinfor:{},
+            isAddressFormShow: false,
         };
    
     },
@@ -100,6 +133,12 @@ export default {
             if (!userinfo) {
                 this.$router.push('/login')
             }
+        },
+        getSelectCountry(res){
+            this.userinfor.inv_country_id = res.countryId
+            this.userinfor.inv_state = res.provinceId
+            this.userinfor.inv_city = res.cityId
+            this.userinfor.inv_district = res.areaId
         },
         contacter(){
             if(!this.userinfor.contacter){
@@ -159,6 +198,7 @@ export default {
         //获取用户信息
         async UserInfor(){
             const res=await getGainuserInfor(this,{})
+            this.isAddressFormShow = true
             this.userinfor=res.data
         },
         async handleSubmit(){
@@ -175,6 +215,14 @@ export default {
                 contacter: this.userinfor.contacter,
                 contacter_mobile: this.userinfor.contacter_mobile,
                 contacter_email: this.userinfor.contacter_email,
+                inv_contact: this.userinfor.inv_contact,
+                inv_contact_mobile: this.userinfor.inv_contact_mobile,
+                inv_country_id: this.userinfor.inv_country_id,
+                inv_district: this.userinfor.inv_district,
+                inv_city: this.userinfor.inv_city,
+                inv_state: this.userinfor.inv_state,
+                inv_address: this.userinfor.inv_address
+                    
             }
             const res=await manageEdit(this, data)
             if(res.data===true && res.status ===200){
@@ -197,3 +245,7 @@ export default {
     }
 }
 </script>
+<style scoped>
+  .titleInfor{width: 100px;color:#999; margin-right: 15px; text-align: right;  font-size: 14px;}
+ 
+</style>
