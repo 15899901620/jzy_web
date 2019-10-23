@@ -51,7 +51,7 @@
                   </div>
                 </div>
 
-                <div class="dflexPrice">
+                <div class="dflexPrice" @click='memberCurr'>
                   <div class="Frozen_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>合约冻结金额</span>
@@ -59,8 +59,8 @@
                   </div>
                 </div>
 
-                <div class="dflexPrice">
-                  <div class="auction_icon"></div>
+                <div class="dflexPrice" @click='auctionCurr'>
+                  <div class="auction_icon" ></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>竞拍冻结金额</span>
                     <span class="fs18 fwb">{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
@@ -252,7 +252,13 @@
 				var seconds = now.getSeconds()
 				var timeValue = "" + ((hours >= 12) ? "下午" : "上午")
 				this.showtimeVal = timeValue
-			},
+      },
+      memberCurr(){
+          this.$router.push({name: 'users-ContractDeposit', query: {status: 2}})
+      },
+      auctionCurr(){
+          this.$router.push({name: 'users-AutionDeposit', query: {status: 1}})
+      },
 			async getOrderList() {
 				let params = {
 					current_page: 1,

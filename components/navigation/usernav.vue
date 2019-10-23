@@ -81,6 +81,18 @@
 								path: '/users/investCapital',
 								name: '立即充值'
 							},
+							{
+								path: '/users/ContractDeposit',
+								name: '合约保证金'
+							},
+							{
+								path: '/users/AutionDeposit',
+								name: '竞拍保证金'
+							},
+							{
+								path: '/users/memberDefaults',
+								name: '违约单'
+							},
 						]
 					},
 					{
