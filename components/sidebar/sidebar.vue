@@ -15,19 +15,19 @@
             </div>
         </div>
         <!--收藏-->
-        <div class="cndns-right-meau meau-acution"  title="我的收藏">
+        <!-- <div class="cndns-right-meau meau-acution"  title="我的收藏"> -->
 <!--            <a  @click="addFavorite();"  title='巨正源' rel="sidebar" href="http://192.168.10.63:3000/">-->
 <!--                <div class="cndns-right-btn">-->
 <!--                    <img src="../../static/img/siderbar_03.png" />-->
 <!--                </div>-->
 <!--            </a>-->
-            <a  href="javascript:addBookmark('脚本之家','http://192.168.10.63:3000/')"  >
+            <!-- <a  href="javascript:addBookmark('脚本之家','http://192.168.10.63:3000/')"  >
                 <div class="cndns-right-btn">
                     <img src="../../static/img/siderbar_03.png" />
                 </div>
             </a>
 
-        </div>
+        </div> -->
         <!--关注官方微信-->
         <div class="cndns-right-meau ">
             <div class="cndns-right-btn ">
@@ -47,19 +47,19 @@
 <!--                            <p>交易时间(工作日)</p>-->
 <!--                            <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>-->
                             <p class="service_text">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService(0)" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
                             </p>
                             <p class="service_text">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService(1)" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售前咨询</a>
                             </p>
                             <p class="service_text">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">商务洽谈</a>
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService(2)" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">商务洽谈</a>
                             </p>
                             <p class="service_text">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售后咨询</a>
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService(3)" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">售后咨询</a>
                             </p>
                             <p class="service_text">
-                                <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">问题反馈</a>
+                                <a rel="nofollow" target="_blank" v-on:click="OnlineService(4)" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息">问题反馈</a>
                             </p>
 
                         </div>
@@ -123,45 +123,15 @@ export default {
                 return true;
             }
         },
-        // addFavorite() {
-        //     var url = window.location;
-        //     var title = document.title;
-        //     var ua = navigator.userAgent.toLowerCase();
-        //     console.log("url:",url)
-        //     console.log("title:",title)
-        //     console.log("ua:",ua)
-        //     if (ua.indexOf("msie 8") > -1) {
-        //         external.AddToFavoritesBar(url, title, '');//IE8
-        //     } else {
-        //         try {
-        //             window.external.addFavorite(url, title);
-        //         } catch (e) {
-        //             try {
-        //                 window.sidebar.addPanel(title, url, "");//firefox
-        //             } catch (e) {
-        //                 alert("加入收藏失败，请使用Ctrl+D进行添加");
-        //             }
-        //         }
-        //     }
-        // },
-        // addFavorite () {
-        //     var url = window.location
-        //     console.log("url", url)
-        //     console.log("sidebar",window.sidebar)
-        //     if (window.sidebar) {        // Firefox
-        //         window.sidebar.addPanel ('Dottoro help page', url, '');
-        //     }
-        //     else {
-        //         if (window.external && ('AddFavorite' in window.external)) {
-        //             // Internet Explorer
-        //             window.external.AddFavorite ('http://help.dottoro.com', 'Dottoro help page');
-        //         }
-        //         else {  // Opera, Google Chrome and Safari
-        //             alert ("加入收藏失败，请使用Ctrl+D进行添加");
-        //         }
-        //     }
-        // },
 
+        OnlineService (res) {
+          if(this.$store.state.common.sysConfig.SERVERONLINE) {
+            let data = this.$store.state.common.sysConfig.SERVERONLINE.split(',')
+            let url = 'http://wpa.qq.com/msgrd?v=3&uin='+ data[res] +'&site=qq&menu=yes'
+            window.open(url)
+          }
+         
+        },
         addFavorite () {
             var url = window.location.href;
             var title = document.title;
@@ -185,7 +155,7 @@ export default {
         }
     },
     mounted(){
-        window.addEventListener('scroll', this.handleScroll)
+      window.addEventListener('scroll', this.handleScroll)
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.handleScroll);
