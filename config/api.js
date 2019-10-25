@@ -28,7 +28,7 @@ let api = {
     supplierReg: '/user/supplier/register',
     supplierValid:'/auth/supplier/verify',
     userPhoneCheck: '/user/m/check/phone',
-    userlabel:'/user/label/tree',
+    userlabel:'/item/category/tree',
     userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
