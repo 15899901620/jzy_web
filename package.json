@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
+    "testbuild": "cross-env NODE_ENV=testprod nuxt build",
+    "test": "cross-env NODE_ENV=testdev nuxt",
     "start": "nuxt start --exec babel-node",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/style-resources": "^1.0.0",
+    "across-env": "^2.0.1",
     "babel-plugin-component": "^1.1.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
