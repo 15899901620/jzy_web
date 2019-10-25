@@ -1,12 +1,15 @@
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 const appConfig = require('./config/app.config')
 
 //是否生产环境appConfig.system.BASE_URL.pro
-const proxy_url = process.env.NODE_ENV === 'production'? appConfig.system.BASE_URL.pro : appConfig.system.BASE_URL.dev
+const proxy_url = process.env.NODE_ENV === 'development'? appConfig.system.BASE_URL.dev : appConfig.system.BASE_URL.pro
 
 let Version = new Date().getTime()
 export default {
-	mode: 'universal',
+  mode: 'universal',
+  env: {
+    NODE_ENV: process.env.NODE_ENV
+  },
 	/*
 	 ** Headers of the page
 	 */
@@ -131,7 +134,7 @@ export default {
         // terser-webpack-plugin
         new TerserPlugin({
           terserOptions: {
-            warnings: false,
+            warnings: true,
             compress: {
               drop_console: true,
               pure_funcs: ['console.log']

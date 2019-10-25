@@ -612,7 +612,13 @@
 
 
 			getUploadURL() {
-				this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
+        if (process.env.NODE_ENV === 'development') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+        } else if (process.env.NODE_ENV === 'testprod') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.test
+        } else {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+        }
 			},
 
 			//验证手机是否存在
