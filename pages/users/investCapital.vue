@@ -32,9 +32,6 @@ export default {
                 store.dispatch('helper/gethelpDetail',{id:9}),
         ])
     },
-    mounted(){
-        console.log('helpDetail',this.helpDetail)
-     },
     computed:{
         ...mapState({
              helpDetail: state => state.helper.helpDetail,

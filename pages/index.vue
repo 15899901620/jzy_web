@@ -149,6 +149,9 @@ export default {
       articleCates:{},
     }
   },
+  created(){
+    console.log(process.env.NODE_ENV)
+  },
   computed: {
     ...mapState({
       bannerinfo: state => state.system.bannerinfo

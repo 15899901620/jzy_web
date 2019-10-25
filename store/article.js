@@ -99,31 +99,6 @@ export const actions = {
 			.catch(error => {
 				console.log('err', error)
 			})
-
-		// for(var i=0;i<=6; i++){
-		// 	let params={
-		// 		current_page:  1, page_size: 4, catId: i,sortBy: 'add_time', desc: true, isShow: 1
-		// 	}
-		// 	console.log('params:',params)
-		//
-		// 	sendCurl(this, server.api.information.getArticleList, params).then(res=>{
-		// 	console.log('res',res)
-		// 		dataarray[i]=res.data.items
-		//
-		// 		commit('updateindexarticelist', dataarray)
-		// 	})
-		// }
-
-		// cate.forEach((item,index)=>{
-		// 	let params={
-		// 		current_page:  1, page_size: 4, catId: item.id,sortBy: 'add_time', desc: true, isShow: 1
-		// 	}
-		// 	sendCurl(this, server.api.information.getArticleList, params).then(res=>{
-		// 		dataarray[item.id]=res.data.items
-		// 		commit('updateindexarticelist', dataarray)
-		// 	})
-		// })
-
 	},
 	async getNoticeList({commit}, params) {
 		commit('updateCurrPage', parseInt(params.current_page))
@@ -173,22 +148,13 @@ export const actions = {
 	async getArticleCatList({commit}, params) {
  		return await this.$axios.$get(api.prefix + api.api.information.infocate, {params})
 			.then(response => {
-
-
-
  				commit('updateArticleCatList', response)
-
-
-
-
-
 			})
 			.catch(error => {
 				console.log('err', error)
 			})
 	},
 	async getArticleDetail({commit}, params) {
-    console.log(params)
 		return await this.$axios.$get(api.prefix + api.api.information.infodetail, {params})
 			.then(response => {
         if (response.errorcode) {

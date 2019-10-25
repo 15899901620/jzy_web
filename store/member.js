@@ -70,14 +70,12 @@ export const actions = {
 	async getOrderCount({commit}) {
 		let res = await sendCurl(this, server.api.order.getMemberOrderCount, {})
 		if (res.status === 200) {
-			console.log(res.data)
 			commit('updateOrderCount', res.data)
 		}
 	},
 	async getMemberCurr({commit},params) {
 		let res = await sendCurl(this, server.api.Auction.membercurr, params)
 		if (res.status === 200) {
-			console.log(res.data)
 			commit('updateMemberTotal', res.data.total)
 			commit('updateMemberCurr', res.data.items)
 		}
@@ -85,7 +83,6 @@ export const actions = {
 	async getAuctionCurr({commit},params) {
 		let res = await sendCurl(this, server.api.Auction.auctioncurr,params)
 		if (res.status === 200) {
-			console.log(res.data.total)
 			commit('updateAuctionTotal', res.data.total)
 			commit('updateAuctionCurr', res.data.items)
 		}
@@ -93,7 +90,6 @@ export const actions = {
 	async getmemberDefaults({commit},params) {
 		let res = await sendCurl(this, server.api.Auction.memberDefaults,params)
 		if (res.status === 200) {
-			console.log(res.data)
 			commit('updateDefaultsTotal', res.data.total)
 			commit('updateDefaultsCurr', res.data.items)
 		}
@@ -102,7 +98,6 @@ export const actions = {
 	async getOrderPayInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.order.getOrderPayInfo, params)
 		if (res.status === 200) {
-			console.log(res)
 			commit('updateOrderPayInfo', res.data)
 		}
 	},

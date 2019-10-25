@@ -220,7 +220,6 @@ export default {
             }
 
             const res = await userRephone(this, params)
-              console.log("res",res)
             if(!res.data.errorcode && res.status ===200){
                 this.$Message.info({content: '换绑手机号成功'})
                 this.formCustom.newcode=''

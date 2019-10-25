@@ -666,9 +666,7 @@
         let params = {
         }
         let res = await getAuctionunfollow(this, params)
-      console.log('2',res)
-
-          this.unfollowList = res.data
+        this.unfollowList = res.data
       },
       //所有竞拍记录
       async getAuctionRecord() {
