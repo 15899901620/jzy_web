@@ -642,7 +642,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
-						content: '<p>请登录后参数竞拍！</p>',
+						content: '<p>请登录后参与竞拍！</p>',
 						okText: '去登录',
 						onOk: () => {
 							location.href = '/login'
@@ -666,9 +666,7 @@
         let params = {
         }
         let res = await getAuctionunfollow(this, params)
-      console.log('2',res)
-
-          this.unfollowList = res.data
+        this.unfollowList = res.data
       },
       //所有竞拍记录
       async getAuctionRecord() {

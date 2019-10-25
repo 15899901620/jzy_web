@@ -19,10 +19,8 @@ export const mutations = {
 
 export const actions = {
     async getAdvanceList({commit}, params) {
-        console.log('params',params)
         let res = await sendCurl(this, server.api.advance.initAdvanceList, params)
         if (res.status === 200) {
-            console.log('res',res)
             commit('updateAdvanceList', res.data.items)
             commit('updateTotal', res.data.total)
         }

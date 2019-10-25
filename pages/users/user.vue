@@ -314,10 +314,9 @@
           },
 		},
 		mounted() {
-		  console.log("capitalInfo",this.$store.state.member.capitalInfo)
-			 this.showtime()
-			 this.getOrderList()
-      }
+      this.showtime()
+      this.getOrderList()
+    }
 	}
 </script>
 <style lang="less" scoped>
