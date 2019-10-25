@@ -7,7 +7,7 @@
               <li v-for="(item, index) in $store.state.article.noticeList" :key="index" v-if="index<4">
                 <span>{{item.time}}</span>
                 <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
-                  <span :class="item.time==newDate?'redtitle':'newtitle'">{{item.title}}{{item.time==newDate}}</span>
+                  <span  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
                 </nuxt-link>
               </li>
             </template>
