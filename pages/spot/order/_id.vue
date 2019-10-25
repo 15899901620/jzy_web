@@ -29,7 +29,7 @@
             <li @click="chooseDelieryType(1)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':1 === currentIndex}" :key="1">
               <div style="background-color: #fff;">配送</div>
             </li>
-            <li @click="chooseDelieryType(2)" :class="{'curr':2 === currentIndex}" :key="2">
+            <li @click="chooseDelieryType(2)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':2 === currentIndex}" :key="2">
               <div style="background-color: #fff;">待定</div>
             </li>
           </ul>

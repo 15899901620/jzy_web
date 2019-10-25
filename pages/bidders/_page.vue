@@ -83,7 +83,7 @@
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="0">全部竞拍</DropdownItem>
                       <DropdownItem name="2">即将开始</DropdownItem>
                       <DropdownItem name="1">正在竞拍</DropdownItem>
                       <DropdownItem name="3">竞拍结束</DropdownItem>
@@ -95,7 +95,7 @@
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="0">我的竞拍</DropdownItem>
                       <DropdownItem name="1">已中标</DropdownItem>
                       <DropdownItem name="2">未中标</DropdownItem>
                     </DropdownMenu>
@@ -312,7 +312,7 @@
 			statusTypeName: function(){
 				let type = this.statusType
 				if(type == '0'){
-          return '全部'
+          return '全部竞拍'
 				}else if(type == '1'){
 					return '正在竞拍'
 				}else if(type == '2'){
@@ -324,7 +324,7 @@
 			planTypeName: function(){
 				let type = this.planType
 				if(type == '0'){
-					return '全部'
+					return '我的竞拍'
 				}else if(type == '1'){
 					return '已中标'
 				}else if(type == '2') {
@@ -419,7 +419,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
-						content: '<p>请登录后参数竞拍！</p>',
+						content: '<p>请登录后参与竞拍！</p>',
 						okText: '去登录',
 						onOk: () => {
 							location.href = '/login'
