@@ -77,10 +77,10 @@
             <div class="cndns-right-box" style="top:-147px;">
                 <div class="box-border" style="height:195px;">
                     <div class="sev-t"  style="padding-left:10px;padding-top:10px;">
-                        <img :src="this.$store.state.common.sysConfig.ERWEIMA" style="width: 130px;height: 130px;" />
+                        <img :src="this.$store.state.common.sysConfig.GZH_ERWEIMA" style="width: 130px;height: 130px;" />
                         <p>
-                            <i>巨正源电商平台</i>
-                            <i>微信扫码下单</i></p>
+                          <i>关注微信公众号</i>
+                        </p>
                     </div>
                     <span class="arrow-right" style="top:162px;"></span>
                 </div>

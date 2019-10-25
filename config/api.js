@@ -28,6 +28,7 @@ let api = {
     supplierReg: '/user/supplier/register',
     supplierValid:'/auth/supplier/verify',
     userPhoneCheck: '/user/m/check/phone',
+    userlabel:'/item/category/tree',
     userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
@@ -131,7 +132,7 @@ let api = {
     getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
     membercurr: {'url':'/bill/member_deposits/curr/page', 'method':'get'},        //合约保证金
     auctioncurr:{'url': '/bill/auctionDeposits/curr/page', 'method':'get'},      //竞拍保证金
-    memberDefaults:{'url': '/bill/member_defaults/curr/page', 'method':'get'},      //违约单
+    auctioncurr:{'url': '/bill/member_defaults/curr/page', 'method':'get'},      //违约单
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍

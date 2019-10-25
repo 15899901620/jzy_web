@@ -393,7 +393,7 @@
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
 	import {supplierCodeCheck, supplierCodeSend, supplierRegCode, carrierRegcode, supplierdataCheck, supplierNature, supplierReg} from '../../api/users'
-    import SlideVerifysupply from '../slide-verify/slide-verify-supply'
+  import SlideVerifysupply from '../slide-verify/slide-verify-supply'
 
 	const appConfig = require('../../config/app.config')
 
@@ -690,9 +690,9 @@
 					registCapi: [
 						{required: true, validator: validateRegistCapi, trigger: 'blur'}
 					],
-                  slidecode: [
-                    {  validator: validateSlide, trigger: 'blur'}
-                  ]
+          slidecode: [
+            {  validator: validateSlide, trigger: 'blur'}
+          ]
 				}
 			}
 		},
@@ -700,7 +700,7 @@
 			steps,
 			step,
 			captcha,
-          SlideVerifysupply
+      SlideVerifysupply
 		},
 		computed: {
 			classes() {
@@ -709,12 +709,11 @@
 					{[`${prefixCls}-shortcut`]: this.vertical},
 				];
 			},
-          ...mapState([
-            'slidecode'
-          ])
+      ...mapState([
+        'slidecode'
+      ])
 		},
 		methods: {
-
           // 滑动验证
           onTimesupply(res) {
             console.log("res",res)
@@ -731,8 +730,14 @@
             }
           },
 			getUploadURL() {
-				this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
-			},
+        if (process.env.NODE_ENV === 'development') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+        } else if (process.env.NODE_ENV === 'testprod') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.test
+        } else {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+        }
+      },
 			getItemValue(items) {
 				this.formCustom.natureName = items.value,           //供应商性质
                this.formCustom.natureValue = items.value_name      //供应商性质值

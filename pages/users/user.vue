@@ -15,12 +15,11 @@
                   <img :src="!$store.state.memberInfo.avatar?this.headImage:$store.state.memberInfo.avatar"   />
                 </template>
 
-
                 <div class="headClick"   >
 <!--                  上传-->
                   <Upload
                         ref="upload"
-                        action="/api/upload/image"
+                        :action="uploadUrl"
                         :show-upload-list="false"
                         :on-success="handleSuccess">
                   <Button  style="width: 86px;height: 25px; padding: 0 10px;line-height: 0;" >上传</Button>
@@ -190,7 +189,8 @@
 		data() {
 			return {
 				dataRow: {},
-				payOrderID: 0,
+        payOrderID: 0,
+        uploadUrl: '',
 				payLoading: false,
 				total_amount_format: '',
 				freeze_amount_format: '',
@@ -204,14 +204,22 @@
 			}
 		},
 		methods: {
-          ...mapMutations('login', [
-            'updateUserInfof'
-          ]),
-          //竞拍列表页
-          biddersList(){
-
-            this.$router.push({name:"bidders"})
-          },
+      ...mapMutations('login', [
+        'updateUserInfof'
+      ]),
+      //竞拍列表页
+      biddersList(){
+        this.$router.push({name:"bidders"})
+      },
+      getUploadURL(){
+        if (process.env.NODE_ENV === 'development') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+        } else if (process.env.NODE_ENV === 'testprod') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.test
+        } else {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+        } 
+      },
 			//订单类型
 			getOrderType(typeId) {
 
@@ -270,54 +278,49 @@
 				this.hotorderinfo = res.data.items
 			},
 
-          handleSuccess (res) {
-            this.Headavatar= res.url
-            this.EditUserinfo(this.Headavatar)
-          },
-          async EditUserinfo(avatarImg){
-            this.userinfor= getCookies('userinfor')
-            let data = {
-              phone: this.userinfor.phone,
-              avatar:avatarImg,
-              companyName: this.userinfor.username,
-              business_license:  this.userinfor.business_license,
-              authorization_elc:  this.userinfor.authorization_elc,
-              taxId: this.userinfor.taxId,
-              invBankName: this.userinfor.invBankName,
-              invBankAccount: this.userinfor.invBankAccount,
-              invAddress: this.userinfor.invAddress,
-              invTelephone: this.userinfor.invTelephone,
+      handleSuccess (res) {
+        this.Headavatar= res.url
+        this.EditUserinfo(this.Headavatar)
+      },
+      async EditUserinfo(avatarImg){
+        this.userinfor= getCookies('userinfor')
+        let data = {
+          phone: this.userinfor.phone,
+          avatar:avatarImg,
+          companyName: this.userinfor.username,
+          business_license:  this.userinfor.business_license,
+          authorization_elc:  this.userinfor.authorization_elc,
+          taxId: this.userinfor.taxId,
+          invBankName: this.userinfor.invBankName,
+          invBankAccount: this.userinfor.invBankAccount,
+          invAddress: this.userinfor.invAddress,
+          invTelephone: this.userinfor.invTelephone,
 
-            }
-            const res=await manageEdit(this, data)
-            if(res.data===true && res.status ===200){
-              this.$Message.info({
-                content: '修改成功',
-                duration: 5,
-                closable: true
-              })
-              let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
+        }
+        const res=await manageEdit(this, data)
+        if(res.data===true && res.status ===200){
+          this.$Message.info({
+            content: '修改成功',
+            duration: 5,
+            closable: true
+          })
+          let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
 
-              const res = await getGainuserInfor(this, {})
-              if (res.status === 200 && res.data) {
-                let auth = stringify(res.data)
-                Cookies.set('userinfor', auth, {expires: expires})
-                Cookies.set('memberInfo', res.data, {expires: expires})
-                this.updateUserInfof(res.data)
-
-              } else {
-
-              }
-
-
-            }
-          },
+          const res = await getGainuserInfor(this, {})
+          if (res.status === 200 && res.data) {
+            let auth = stringify(res.data)
+            Cookies.set('userinfor', auth, {expires: expires})
+            Cookies.set('memberInfo', res.data, {expires: expires})
+            this.updateUserInfof(res.data)
+          }
+        }
+      },
 		},
 		mounted() {
-		  console.log("capitalInfo",this.$store.state.member.capitalInfo)
-			 this.showtime()
-			 this.getOrderList()
-      }
+      this.getUploadURL()
+      this.showtime()
+      this.getOrderList()
+    }
 	}
 </script>
 <style lang="less" scoped>
