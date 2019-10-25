@@ -419,7 +419,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
-						content: '<p>请登录后参数竞拍！</p>',
+						content: '<p>请登录后参与竞拍！</p>',
 						okText: '去登录',
 						onOk: () => {
 							location.href = '/login'
