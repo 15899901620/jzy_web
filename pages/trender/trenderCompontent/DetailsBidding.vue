@@ -42,6 +42,7 @@
       },
        methods:{
           getUploadURL(){
+           
             if (process.env.NODE_ENV === 'development') {
               this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
             } else if (process.env.NODE_ENV === 'testprod') {
