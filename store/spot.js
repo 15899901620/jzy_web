@@ -42,10 +42,14 @@ export const mutations = {
 
 export const actions = {
 	async getSpotList({commit}, params) {
-		let res = await sendCurl(this, server.api.spot.initSpotList, params)
-		if (res.status === 200) {
-			commit('updateSpotList', res.data.items)
-			commit('updateTotal', res.data.total)
+		try{
+			let res = await sendCurl(this, server.api.spot.initSpotList, params)
+			if (res.status === 200) {
+				commit('updateSpotList', res.data.items)
+				commit('updateTotal', res.data.total)
+			}
+		}catch (e) {
+			console.log('获取现货列表异常：', e)
 		}
 	},
 	async getFilterConditonData({commit}) {

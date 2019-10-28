@@ -71,7 +71,6 @@
 
         <div style="display: flex;">
           <div style="width: 77%">
-
             <div class="titlelist mt15">
               <span class="titlelist_txt">竞拍列表</span>
               <div class="auction_screen">

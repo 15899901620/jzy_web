@@ -110,7 +110,7 @@ let api = {
    * @description 预售商口
    */
   advance: {
-    initAdvanceList: {'url':'/bill/book/list/show', 'method':'get'},
+    getSaleList: {'url':'/bill/booking/list/page/onSale', 'method':'get'},
   },
   /**
    * @description 竞拍管理
