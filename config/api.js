@@ -34,6 +34,7 @@ let api = {
     userCodeSend: '/user/m/code',
     userLoginCodeSend: '/user/m/login/code',
     gainuserInfor:'/user/m/info',
+    editAvatar:'/user/m/editAvatar',
     supplierCheck: '/user/supplier/check',
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',

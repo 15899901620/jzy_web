@@ -91,8 +91,7 @@
             <span class="quality_title">日期</span>
             <row>
               <i-col span="12">
-                <Date-picker type="date" placeholder="选择日期" style="width: 217px"
-                             format="yyyy-MM-dd" @on-change="QDate"></Date-picker>
+                      <DatePicker type="month" placement="bottom-end" placeholder="生产日期至"  @on-change="QDate" style="width: 217px"></DatePicker>
               </i-col>
             </row>
           </li>

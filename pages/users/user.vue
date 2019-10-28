@@ -158,15 +158,17 @@
 </template>
 
 <script>
-  import { manageEdit,getGainuserInfor } from  '../../api/users'
+  import { manageEdit,getGainuserInfor,editAvatar } from  '../../api/users'
 	import Navigation from '../../components/navigation'
   import Cookies from 'js-cookie'
   import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
   import {orderpage} from '../../api/order'
 	import OrderPay from '../../components/paydeposit/orderPay'
   import {parse, stringify} from 'qs'
-    import { getCookies } from '../../config/storage'
-    import config from '../../config/config'
+  import { getCookies } from '../../config/storage'
+  import config from '../../config/config'
+  import appConfig from '../../config/app.Config'
+
 
 	export default {
 		name: 'index',
@@ -198,9 +200,9 @@
 				hotorderinfo: [],
 				total_fund: '',
 				showtimeVal: '',
-                headImage:'/img/headImage.png',
-                Headavatar:'',
-                 userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
+        headImage:'/img/headImage.png',
+        Headavatar:'',
+        userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
 			}
 		},
 		methods: {
@@ -280,7 +282,25 @@
 
       handleSuccess (res) {
         this.Headavatar= res.url
-        this.EditUserinfo(this.Headavatar)
+        console.log('222',res)
+        this.editAvatar();
+      },
+      async editAvatar(){
+
+         let data = {
+          avatar:this.Headavatar
+        }
+        console.log(data)
+         const res=await editAvatar(this, data)
+          let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
+
+          const res1 = await getGainuserInfor(this, {}) 
+          if (res1.status === 200 && res1.data) {
+            let auth = stringify(res1.data)
+            Cookies.set('userinfor', auth, {expires: expires})
+            Cookies.set('memberInfo', res1.data, {expires: expires})
+            this.updateUserInfof(res1.data)
+          }
       },
       async EditUserinfo(avatarImg){
         this.userinfor= getCookies('userinfor')
