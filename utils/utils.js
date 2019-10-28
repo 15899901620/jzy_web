@@ -36,6 +36,7 @@ export default {
 		return info ? info : ''
 	},
 	memberLogout: function () {
+		Cookie.set('memberInfo', '')
 		Cookie.set('userinfor', '')
 		Cookie.set('webtoken', '')
 		Cookie.set('websuppliertoken', '')
