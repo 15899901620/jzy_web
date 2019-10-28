@@ -1,4 +1,5 @@
 import Cookie from 'js-cookie'
+import server from "../config/api";
 
 export default {
 //获取服务端cookie
@@ -142,5 +143,37 @@ export default {
 	},
 	reload(){
 		location.reload(true)
+	},
+	sendCurl(vm, apiName, params, isMember){
+		isMember = isMember || true
+		let authorization = ''
+
+		if(isMember){
+			if(process.server){
+				authorization = this.getMemberTokenInVm(vm)
+			}else{
+				authorization = this.getMemberTokenInClient()
+			}
+		}else{
+			authorization = vm.store.state.supplierToken
+		}
+		if(authorization === false){
+			vm.$axios.defaults.headers = {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}else{
+			vm.$axios.defaults.headers = {
+				'Authorization': authorization,
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}
+
+		return vm.$axios.request({
+			url: server.prefix + apiName.url,
+			method: apiName.method,
+			params: {
+				...params
+			}
+		})
 	}
 }
