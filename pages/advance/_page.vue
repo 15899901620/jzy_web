@@ -86,7 +86,7 @@
                   <span class="mt5">城市：{{items.warehouse_province}}</span>
                 </div>
                 <template v-if="items.statusType == '1'">
-                  <div class="btnStart startauction" @click="toPlan(items.id)">
+                  <div class="btnStart startauction" @click="toPlan(items)">
                     <template>
                       参与预定
                     </template>
@@ -101,7 +101,7 @@
           </p>
           <div class="text-xs-center" style="padding: 18px 0; text-align: center;">
             <pages :total="total" :show-total="showTotal" :value="current_page"
-                   :pageSize="page_size"></pages>
+                   :pageSize="pageSize"></pages>
           </div>
         </div>
 
@@ -116,6 +116,7 @@
         </div>
       </div>
     </div>
+    <advancePay :isShow="DepositShow" :dataList='DepositData' @unChange="unDepositShow"></advancePay>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
 </template>
@@ -128,6 +129,7 @@
 	import purchasing from '../../components/purchasing'
 	import breadcrumb from '../../components/breadcrumb'
 	import TimeDown from '../../components/timeDown'
+	import advancePay from '../../components/paydeposit/advancePay'
 
 	export default {
 		name: "advance",
@@ -153,7 +155,8 @@
 			TimeDown,
 			purchasing,
 			breadcrumbItem: breadcrumb.item,
-			breadcrumb
+			breadcrumb,
+			advancePay
 		},
 		computed: {
 			...mapState({
@@ -164,19 +167,33 @@
 		data() {
 			return {
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 6,
-
-				skuName: '',
-				categoryName: '',
-				minPrice: '',
-				maxPrice: '',
 				pageSize: 10,
+
+				DepositData: {
+					advance_id: '',
+					bill_no: '',
+					sku_name: '',
+          min_num: 0,
+					max_num: 0,
+					base_price: 0,
+					Bond: 0,   //保证金比例
+				},
+				DepositShow: false,
 			}
 		},
 		methods: {
-			toPlan(id) {
+			toPlan(row) {
 				if (this.$store.state.memberToken) {
+					this.DepositShow = true
+					this.DepositData.advance_id = row.id
+					this.DepositData.bill_no = row.bill_no
+					this.DepositData.sku_name = row.sku_name
+					this.DepositData.min_num = row.min_order
+					this.DepositData.max_num = row.available_num
+					this.DepositData.basePrice = row.final_price
+					this.DepositData.Bond = row.margin_ratio
 
+          console.log('DepositData', this.DepositData)
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
@@ -188,7 +205,10 @@
 					});
 				}
 			},
-
+			unDepositShow(row) {
+				this.DepositShow = row
+				location.reload()
+			},
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
@@ -203,6 +223,7 @@
 
 				this.$store.dispatch('advance/getAdvanceList', params)
 			},
+
 		},
 		watch: {
 			'$route'(to, from) {

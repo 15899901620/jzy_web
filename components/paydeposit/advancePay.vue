@@ -1,4 +1,4 @@
-<!--<template>
+<template>
   <Modal
       v-model="loading"
       @on-cancel="biderscancel"
@@ -13,35 +13,35 @@
       </p>
 
       <div class="Bond_Popup">
-        <div style="line-height:32px;" v-if="dataList.orderNo">
+        <div style="line-height:32px;">
           <span class="Bond_Popup_title">预售编号：</span>
-          <span class="ml10">{{dataList.orderNo}}</span>
+          <span class="ml10">{{dataList.bill_no}}</span>
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">预售商品：</span>
-          <span class="ml10">{{dataList.skuName}}</span>
+          <span class="ml10">{{dataList.sku_name}}</span>
         </div>
-        <div style="line-height:32px;">
+        <div class="mt15 dflex" style="align-items: center;">
           <span class="Bond_Popup_title">需求数量：</span>
           <div class="pr ml10">
-            <input-special :min="0" :max="datalist.totalNum-datalist.depositNum"  v-model="Bonddeposit.bidNum"
-                           @change="changeNum"></input-special>吨
+            <input-special :min="0" :max="dataList.max_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
+            <span class="ml15">吨</span>
           </div>
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">总金额：</span>
-          <span class="ml10">{{$utils.amountFormat(dataList.totalAmount)}}</span>
+          <span class="ml10">{{$utils.amountFormat(this.totalAmount)}}</span>
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">保证金比例：</span>
-          <span class="ml10">{{$utils.amountFormat(dataList.totalAmount)}}</span>
+          <span class="ml10">{{$utils.amountFormat(dataList.Bond)}}%</span>
         </div>
-        &lt;!&ndash;需冻结保证金&ndash;&gt;
+        <!--需冻结保证金-->
         <div class="PricePopup">
           <div style="line-height: 28px; padding:20px">
             <p>
               <span class="PricePopup_title">需支付金额：</span>
-              <span class="orangeFont fwb fs16"> {{$utils.amountFormat(dataList.payAmount)}}</span>
+              <span class="orangeFont fwb fs16"> {{$utils.amountFormat(this.payAmount)}}</span>
             </p>
             <p>
               <Checkbox :disabled="true" :value="true"></Checkbox>
@@ -57,7 +57,7 @@
             </p>
           </div>
         </div>
-        &lt;!&ndash;输入验证码&ndash;&gt;
+        <!--输入验证码-->
         <div class="PopupCode pr">
           <input type="text" class="TextCode" v-model="Bonddeposit.BondCode" placeholder="请输入手机验证码"/>
           <button class="AcqCode" @click="getNoteValue" :disabled='btnBoolen'>{{this.btnValue}}</button>
@@ -86,14 +86,12 @@
 
 <script>
 	import {orderPayCode, orderPayment} from '../../api/users'
-	import {mapState} from 'vuex'
+	import InputSpecial from '../../components/input-special'
 
 	export default {
-		name: 'orderPay',
-		computed: {
-			...mapState({
-				dataList: state => state.member.orderPayInfo,
-			})
+		name: 'advancePay',
+		components: {
+			InputSpecial
 		},
 		data() {
 			return {
@@ -104,8 +102,8 @@
 				proShow: false,
 				closeShow: true,
 				Bonddeposit: {
-					depositAmount: '',
-					bidNum: '',
+					advance_id: 0,
+					bidNum: 0,
 					BondCode: '',
 				},
 			}
@@ -115,11 +113,22 @@
 				type: Boolean,
 				default: false
 			},
-			order_id: {
-				type: Number
+			dataList: {
+				type: Object
 			}
 		},
+		computed: {
+			payAmount: function () {
+				return this.Bonddeposit.bidNum * this.dataList.basePrice * this.dataList.Bond / 100
+			},
+			totalAmount: function () {
+				return this.Bonddeposit.bidNum * this.dataList.basePrice
+			},
+		},
 		methods: {
+			changeNum(value) {
+				this.Bonddeposit.bidNum = value
+			},
 			biderscancel() {
 				this.$emit('unChange', false)
 			},
@@ -132,7 +141,7 @@
 				if (res.data && res.status === 200) {
 					this.auth_time = 60;
 					let timer = setInterval(() => {
-						this.auth_time&#45;&#45;;
+						this.auth_time--;
 						if (this.auth_time <= 0) {
 							clearInterval(timer)
 							this.btnBoolen = false;
@@ -197,9 +206,15 @@
 			}
 		},
 		watch: {
+			dataList: {
+				handler(newValue, oldValue) {
+					this.Bonddeposit.bidNum = newValue.min_order
+				},
+				deep: true
+			},
 			isShow: function (e) {
 				if (e === true) {
-					this.$store.dispatch('member/getOrderPayInfo', {order_id: this.order_id})
+					console.log('dataList:',this.dataList)
 					this.$store.dispatch('member/getCapitalInfo')
 					this.loading = true
 				} else {
@@ -209,7 +224,3 @@
 		}
 	}
 </script>
-
-<style>
-
-</style>-->
