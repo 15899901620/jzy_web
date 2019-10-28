@@ -107,9 +107,13 @@ export const actions = {
 		}
 	},
 	async getFriendlyList({commit}) {
-		let res = await sendCurl(this, server.api.sysconf.getFriendLink, {})
-		if (res.status === 200) {
-			commit('updateFriendlyList', res.data)
+		try{
+			let res = await sendCurl(this, server.api.sysconf.getFriendLink, {})
+			if (res.status === 200) {
+				commit('updateFriendlyList', res.data)
+			}
+		}catch (e) {
+			console.log("获取友情链接异常", e)
 		}
 	},
 }

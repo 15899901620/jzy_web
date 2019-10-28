@@ -1,399 +1,367 @@
 <template>
-    <div class="body">
-        <Header name="头部"></Header>
-        <div class="container" title="">
-            <div class="w1200">
-
-                <div class="mt10">
-<!--                    <a>巨正源首页</a>><span class="gray">预售专栏</span>-->
-                    <breadcrumb>
-                        <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
-                        <breadcrumb-item>预售专栏</breadcrumb-item>
-                    </breadcrumb>
-                </div>
-            </div>
-            <div class="w1200 dflex" style="margin-top: 10px;">
-                <div style="width: 76%;">
-                    <div class="whitebg">
-                        <h1 class="AdvSaleTitle">预售专栏</h1>
-                    </div>
-                    <div class="dflex whitebg" style="justify-content: space-between; align-items: center;">
-                        <div class="XHsearch" style="display: flex;">
-                            <span>品种</span><input type="text" v-model="categoryName" class="XHsearchInput" placeholder="请输入品种"/>
-                            <span class="ml15">牌号</span><input type="text" v-model="skuName" class="XHsearchInput" placeholder="请输入牌号"/>
-                            <div class="ml20">
-                                <input type="text" v-model="minPrice" class="priceInput" placeholder="￥最低价"/>-<input type="text"
-                                                                                                  class="priceInput" v-model="maxPrice"
-                                                                                                  placeholder="￥最高价"/>
-                            </div>
-                            <div class="xhBtn" @click="spotData">确定</div>
-                        </div>
-                        <div class="mr15 fs14">共搜到<span class="orangeFont">{{this.$store.state.advance.advanceList.length}}</span>条数据</div>
-                    </div>
-
-                    <div class="XhlistTitle graybg">
-                        <span style="width: 11%;">品种</span>
-                        <span style="width: 11%;">牌号</span>
-                        <span style="width: 10%;">厂商</span>
-                        <span style="width: 14%;">库区</span>
-                        <span style="width: 13%;">总吨数 </span>
-                        <span style="width: 14%;">交货时间</span>
-                        <span style="width: 14%;">单价（元/吨）</span>
-                        <span style="width: 13%;">操作</span>
-                    </div>
-
-                    <ul class="Xhlist">
-                        <template v-if="spotList">
-                            <li v-for="(item, index) in spotList" :key="index">
-                                <span style="width: 11%;">{{item.category_name}}</span>
-                                <span style="width: 11%;">{{item.sku_name}}</span>
-                                <span style="width: 10%;">{{item.manufacturer}}</span>
-                                <span style="width: 14%;">{{item.warehouse_name}}</span>
-                                <span style="width: 13%;">{{item.total_num}}</span>
-                                <span style="width: 14%;">{{item.last_delivery_time}}</span>
-                                <span class="orangeFont" style="width: 14%;">¥{{item.base_price}}</span>
-                                <span style="width: 13%;"><div class="ListBtn" @click="addBook(item.id)">预定</div></span>
-                            </li>
-                        </template>
-                    </ul>
-                    <div class="whitebg ovh" style="padding:18px; text-align:center;">
-                        <pages :total="total" :show-total="showTotal" :value="currentPage"></pages>
-                    </div>
-                </div>
-
-                <div class="ml10" style="width: 23%;">
-                    <div class="whitebg">
-                        <h1 style="padding: 16px 15px;background-color: #fcfcfc; font-size: 16px;border-bottom:1px solid #DEDEDE">
-                            求购信息</h1>
-
-                        <!--求购-->
-
-                        <purchasing></purchasing>
-                    </div>
-                    <!--最近交易-->
-
-<!--                    <div class="mt20 whitebg">-->
-<!--                        <h1 style="padding: 16px 15px;background-color: #fcfcfc;  font-size: 16px;border-bottom:1px solid #DEDEDE">-->
-<!--                            最近交易-->
-<!--                            <span class="fr gray dflexAlem"><i class="fresh"></i>换一批</span></h1>-->
-<!--                        <ul class="currdate">-->
-<!--                            <li>-->
-<!--                                <span class="fwb">FB2310 北欧化工</span>-->
-<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
-<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
-<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <span class="fwb">FB2310 北欧化工</span>-->
-<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
-<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
-<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <span class="fwb">FB2310 北欧化工</span>-->
-<!--                                <span class="mt5">价格：￥9400.00/吨</span>-->
-<!--                                <div class="mt5 mb10" style="display: flex;justify-content: space-between;"><span-->
-<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <span class="fwb">FB2310 北欧化工</span>-->
-<!--                                <span class="mt10">价格：￥9400.00/吨</span>-->
-<!--                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span-->
-<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <span class="fwb">FB2310 北欧化工</span>-->
-<!--                                <span class="mt10">价格：￥9400.00/吨</span>-->
-<!--                                <div class="mt10 mb15" style="display: flex;justify-content: space-between;"><span-->
-<!--                                        class="redFont">待付款</span><span>2019-04-28</span></div>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-                </div>
-
-
-            </div>
+  <div class="body">
+    <Header name="头部"></Header>
+    <div class="container" title="">
+      <div class="w1200">
+        <div class="mt10">
+          <breadcrumb>
+            <breadcrumb-item><i type="home"></i>
+              <nuxt-link to="/">巨正源</nuxt-link>
+            </breadcrumb-item>
+            <breadcrumb-item>预售专栏</breadcrumb-item>
+          </breadcrumb>
         </div>
-        <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+      </div>
+
+      <div class="w1200 dflex" style="margin-top: 10px;">
+        <div style="width: 77%">
+          <div class="titlelist mt15">
+            <span class="titlelist_txt">预售列表</span>
+          </div>
+
+          <ul class="acuList" v-if="this.total > 0">
+            <li v-for="(items, index) in advanceList" :key="index">
+              <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
+                <template v-if="items.statusType == '1'">
+                  <div class="statusicon startauction">正在预售</div>
+                  <div class="ml20"><span class="gray">距离结束 ：</span>
+                    <span class="fs18">
+                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" hoursShow endMsg="已结束"
+                                  :onTimeOver="reloadPage"></TimeDown>
+                      </span>
+                  </div>
+                </template>
+                <template v-if="items.statusType == '2' || items.statusType == '3'">
+                  <div class="statusicon vcauction">已售罄</div>
+                  <div class="ml20"><span class="gray">距离结束 ：</span>
+                    <span class="fs18">
+                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" hoursShow endMsg="已结束"
+                                  :onTimeOver="reloadPage"></TimeDown>
+                      </span>
+                  </div>
+                </template>
+                <template v-if="items.statusType == '4'">
+                  <div class="statusicon endauction">已结束</div>
+                  <div class="ml20">
+                    <span>结束时间 ：</span>
+                    <span class="fs16">{{items.price_valid_time}}</span>
+                  </div>
+                </template>
+
+                <div class="ml20">
+                  <span>提货日期 ：</span>
+                  <span class="fs16">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span>
+                </div>
+              </div>
+
+              <div class="acuProduct ">
+                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
+                      v-if="items.is_jry"
+                      style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+                <div class="mt10 fs14 dflex">
+                  <div class="btmunv"><span class="iv_title">预售价</span> ：<span class="orangeFont fwb fs16">{{$utils.amountFormat(items.final_price)}}</span>
+                  </div>
+                  <div class="fs14 dflex">
+                    <span class="iv_title">预售总数</span> ：<span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
+                  </div>
+                </div>
+                <div class="mt10 fs14 dflex">
+                  <div class="btmunv"><span class="iv_title">可售数量</span> ：<span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
+                  </div>
+                  <div class="fs14 dflex">
+                    <span class="iv_title">起订量</span> ：<span class="orangeFont fs16">{{items.min_order}}</span>{{items.uom_name}}
+                    <span class=" ml20">保证金</span> ：<span class="orangeFont fs16">{{items.margin_ratio}}%</span>
+                  </div>
+                </div>
+                <div class="mt10 fs14 dflex">
+                  <div class="btmunv"><span class="iv_title">预售编号</span> ：<span class=" fs16">{{items.bill_no}}</span>
+                  </div>
+                  <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span
+                      class=" fs16">{{items.manufacturer}}</span></div>
+                </div>
+              </div>
+              <div class="acuOpear">
+                <div style="display: flex; flex-direction: column; justify-content: center">
+                  <span class="mt10 ">库区：{{items.warehouse_name}}</span>
+                  <span class="mt5">城市：{{items.warehouse_province}}</span>
+                </div>
+                <template v-if="items.statusType == '1'">
+                  <div class="btnStart startauction" @click="toPlan(items.id)">
+                    <template>
+                      参与预定
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </li>
+
+          </ul>
+          <p v-else style="background: none; font-size: 20px;text-align: center; margin:80px auto;">
+            目前暂无预售活动！
+          </p>
+          <div class="text-xs-center" style="padding: 18px 0; text-align: center;">
+            <pages :total="total" :show-total="showTotal" :value="current_page"
+                   :pageSize="page_size"></pages>
+          </div>
+        </div>
+
+        <div class="" style="width: 24%; margin-left: 1.5%; display: flex; flex-direction: column">
+          <!--  竞拍公告-->
+          <div class="Notice whitebg mt15">
+            <div class="NoticeTitle">
+              <span class="fs16">求购信息</span>
+            </div>
+            <purchasing></purchasing>
+          </div>
+        </div>
+      </div>
     </div>
+    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+  </div>
 </template>
 
 <script>
+	import {mapState} from 'vuex'
+	import Header from '../../components/header'
+	import Footer from '../../components/footer'
+	import pagination from '../../components/pagination'
+	import purchasing from '../../components/purchasing'
+	import breadcrumb from '../../components/breadcrumb'
+	import TimeDown from '../../components/timeDown'
 
-    import {mapState} from 'vuex'
-    import Header from '../../components/header'
-    import Footer from '../../components/footer'
-    import pagination from '../../components/pagination'
-    import purchasing from '../../components/purchasing'
-    import breadcrumb from '../../components/breadcrumb'
+	export default {
+		name: "advance",
+		fetch({store, params, query}) {
+			return Promise.all([
+				//获取顶部、中部、底部导航信息
+				store.dispatch('common/getNavList'),
+				//获取系统配置
+				store.dispatch('common/getSysConfig'),
+				//获取友情链接
+				store.dispatch('common/getFriendlyList'),
+				// 获取预售
+				store.dispatch('advance/getAdvanceList', {
+					current_page: query.page || 1,
+					page_size: 10
+				})
+			])
+		},
+		components: {
+			Header,
+			Footer,
+			pages: pagination.pages,
+			TimeDown,
+			purchasing,
+			breadcrumbItem: breadcrumb.item,
+			breadcrumb
+		},
+		computed: {
+			...mapState({
+				total: state => state.advance.total,
+				advanceList: state => state.advance.advanceList,
+			})
+		},
+		data() {
+			return {
+				current_page: parseInt(this.$route.query.page) || 1,
+				page_size: 6,
 
-    export default {
-        name: "advance",
-        fetch({store, params, query}) {
-            return Promise.all([
-                //获取顶部、中部、底部导航信息
-                store.dispatch('common/getNavList'),
-                //获取系统配置
-                store.dispatch('common/getSysConfig'),
-                //获取友情链接
-                store.dispatch('common/getFriendlyList'),
-                // 获取预售
-                store.dispatch('advance/getAdvanceList', {
-                    current_page: query.page || 1,
-                    page_size: 10
-                })
-            ])
-        },
-        components: {
-            Header,
-            Footer,
-            pages: pagination.pages,
-            purchasing,
-            breadcrumbItem:breadcrumb.item,
-            breadcrumb
-        },
-        data() {
-            return {
-                skuName: '',
-                categoryName: '',
-                minPrice: '',
-                maxPrice: '',
-                currentPage: parseInt(this.$route.query.page) || 1,
-                pageSize: 10,
-            }
-        },
-        methods: {
-            addBook(id) {
-                this.$router.push({
-                    name: 'advance-book-id',
-                    params: {
-                        id: id
-                    }
-                })
-            },
-            showTotal(total) {
-                return `全部 ${total} 条`;
-            },
-            reloadPage() {
-                this.$router.go(0)
-            },
-            async spotData() {
-                let params = {
-                    sku_name: this.skuName,
-                    category_name: this.categoryName,
-                    min_price: this.minPrice,
-                    max_price: this.maxPrice,
-                    current_page: this.currentPage,
-                    page_size: this.pageSize
-                };
+				skuName: '',
+				categoryName: '',
+				minPrice: '',
+				maxPrice: '',
+				pageSize: 10,
+			}
+		},
+		methods: {
+			toPlan(id) {
+				if (this.$store.state.memberToken) {
 
-                this.$store.dispatch('advance/getAdvanceList', params)
-            },
-        },
-        watch: {
-            '$route'(to, from) {
-                this.$router.go(0);
-            }
-        },
-        created(){},
-        computed: {
-          spotList: function () {
-            return this.$store.state.advance.advanceList
-          },
-          total: function () {
-              return this.$store.state.advance.total
-          }
-        },
-        head() {
-            return {
-                title: '巨正源-化工交易平台',
-                page: 10,
-                meta: [
-                    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-                    {name: 'keywords', content: '化工, 交易, 丙烷脱氢'},
-                    {hid: 'description', name: 'description', content: '巨正源-化工交易平台，提供丙烷脱氢,石化产品贸易、仓储服务、成品油运输服务'}
-                ]
-            }
-        }
-    }
+				} else {
+					this.$Modal.confirm({
+						title: '提示',
+						content: '<p>请登录后参与预售！</p>',
+						okText: '去登录',
+						onOk: () => {
+							location.href = '/login'
+						}
+					});
+				}
+			},
+
+			showTotal(total) {
+				return `全部 ${total} 条`;
+			},
+			reloadPage() {
+				this.$router.go(0)
+			},
+			async spotData() {
+				let params = {
+					current_page: this.currentPage,
+					page_size: this.pageSize
+				};
+
+				this.$store.dispatch('advance/getAdvanceList', params)
+			},
+		},
+		watch: {
+			'$route'(to, from) {
+				this.$router.go(0);
+			}
+		},
+		created() {
+		},
+		head() {
+			return {
+				title: '巨正源-化工交易平台',
+				page: 10,
+				meta: [
+					{name: 'viewport', content: 'width=device-width, initial-scale=1'},
+					{name: 'keywords', content: '化工, 交易, 丙烷脱氢'},
+					{hid: 'description', name: 'description', content: '巨正源-化工交易平台，提供丙烷脱氢,石化产品贸易、仓储服务、成品油运输服务'}
+				]
+			}
+		}
+	}
 </script>
 
-<style scoped>
-    .AdvSaleTitle {
-        border-bottom: 1px solid #DEDEDE;
-        padding: 16px 0;
-        font-size: 16px;
-        margin-left: 20px;
+<style lang="less">
+  .ivu-modal-footer {
+    border: 0px;
+  }
+
+  .titlelist {
+    font-size: 16px;
+    padding-left: 15px;
+
+  }
+
+  .bidersTable {
+    background-color: #ffffff;
+    margin-top: 10px;
+
+    tr td {
+      border: 1px solid #dfdfdf;
+      text-align: center;
+      padding: 10px 0;
     }
 
-    .XHsearch {
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        font-size: 14px
-    }
+    .table_title {
+      background-color: #ff6c00;
 
-    .XHsearchInput {
-        width: 120px;
-        height: 30px;
-        border: 1px solid #D2D2D2;
-        margin-left: 10px;
-        padding-left: 5px;
-        box-sizing: border-box;
-    }
-
-    .priceInput {
-        width: 90px;
-        height: 30px;
-        margin: 0 10px;
-        border: 1px solid #D2D2D2;
-        padding-left: 5px;
-        box-sizing: border-box;
-    }
-
-    .xhBtn {
-        padding: 6px 20px;
-        background-color: #007de4;
-        box-sizing: border-box;
+      th {
+        padding: 15px 0;
         color: #fff;
-        border-radius: 3px;
-        margin-left: 10px;
+      }
     }
 
-    .orangeFont {
-        color: #ff9800;
+    .see {
+      background-color: #007de4;
+      color: #fff;
+      border: none;
+      padding: 3px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  }
+
+  .startauction {
+    background-color: #ff6c00
+  }
+
+  .vcauction {
+    background-color: #25a96d
+  }
+
+  .endauction {
+    background-color: #cccccc
+  }
+
+  .statusicon {
+    width: 80px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    color: #ffff;
+  }
+
+  .btmunv {
+    display: flex;
+    width: 250px;
+  }
+
+  .iv_title {
+    width: 60px;
+    text-align-last: justify;
+  }
+
+  .ixebm {
+    width: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+  }
+
+  .Notice {
+    border: 1px solid #dfdfdf;
+
+    .NoticeTitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #fcfcfc;
+      border-bottom: 1px solid #dfdfdf;
+
+      .freshicon {
+        background: url("/img/fresh.png") no-repeat 48px 5px;
+        padding-right: 20px;
+      }
     }
 
-    .XhlistTitle {
+    .NoticeList {
+      width: 90%;
+      margin: 0 auto;
+
+      li:last-child {
+        border-bottom: none
+      }
+
+      li {
         display: flex;
-        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px dashed #ccc;
+        padding: 13px 0;
+      }
     }
 
-    .XhlistTitle span {
-        text-align: center;
-        margin: 10px 0;
-        font-size: 14px
-    }
+  }
 
-    .Xhlist li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1px;
-        background-color: #fff;
-        font-size: 14px
-    }
+  .NoticeTitleAdv {
+    height: 135px;
+    margin-top: 15px;
+  }
 
-    .Xhlist li:hover {
-        background-color: #f2f8fe;
-    }
+  .follow {
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    margin-left: 15px;
+    padding: 1px 12px;
+    font-size: 12px;
+    background: url("/img/add_follow.png") no-repeat 9px 5px;
+    padding-left: 25px;
+  }
 
-
-
-    .Xhlist li span {
-        text-align: center;
-        margin: 20px 0;
-    }
-
-    /*下单按钮*/
-    .ListBtn {
-        cursor: pointer;
-        width: 76px;
-        line-height: 30px;
-        margin: 0 auto;
-        color: #007de4;
-        border-radius: 3px;
-        border: 1px solid #007de4;
-        background-color: #f2f8fe;
-    }
-
-    .ListBtn:hover {
-        background-color: #007de4;
-        color: #fff;
-    }
-
-    /*求购信息*/
-    .purInfor {
-        margin-top: 20px;
-        margin-left: 15px;
-    }
-
-    .purInfor li {
-        margin: 15px auto;
-        display: flex;
-        align-items: center;
-    }
-
-    .purInfor li .Infortitle {
-        color: #999;
-        width: 60px;
-        font-size: 14px
-    }
-
-    .purInfor li .input {
-        padding-left: 10px;
-        box-sizing: border-box;
-        width: 168px;
-        line-height: 30px;
-        border: 1px solid #DDDDDD;
-        border-radius: 3px;
-        margin-left: 10px;
-    }
-
-    .date_icon {
-        position: absolute;
-        right: 8px;
-        top: 7px;
-        width: 25px;
-        height: 25px;
-        background: url(/img/icon.png) no-repeat 0px -282px;
-    }
-
-    .DateTIME {
-        width: 168px;
-        margin-left: 12px;
-        position: relative;
-        cursor: pointer;
-    }
-
-    .purinfobtn {
-        cursor: pointer;
-        background-color: #007de4;
-        display: inline-block;
-        color: #fff;
-        padding: 9px 20px;
-        border-radius: 3px;
-        margin-left: 73px;
-        margin-bottom: 20px;
-        margin-top: 10px;
-    }
-
-    .redFont {
-        color: #f70503;
-    }
-
-    /*最近交易*/
-    .fresh {
-        display: inline-block;
-        width: 17px;
-        height: 17px;
-        background: url(/img/icon.png) no-repeat -2px -317px;
-        margin-right: 6px;
-    }
-
-    .currdate {
-        margin: 18px 20px;
-        overflow: hidden;
-    }
-
-    .currdate li {
-        border-bottom: 1px dotted #DDDDDD;
-        display: flex;
-        flex-direction: column;
-        margin-top: 10px;
-        font-size: 14px;
-    }
-
-    .currdate li:last-child {
-        margin-bottom: 30px;
-    }
+  .cancel_follow {
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    margin-left: 15px;
+    padding: 1px 10px;
+    font-size: 12px;
+    background: url("/img/cancel_follow.png") no-repeat 6px 5px;
+    padding-left: 22px;
+  }
 </style>
