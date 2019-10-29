@@ -167,7 +167,7 @@
   import {parse, stringify} from 'qs'
   import { getCookies } from '../../config/storage'
   import config from '../../config/config'
-  import appConfig from '../../config/app.Config'
+  import appConfig from '../../config/app.config'
 
 
 	export default {
