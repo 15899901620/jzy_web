@@ -9,6 +9,7 @@
           <hotinfo title=""></hotinfo>
         </hotrecommend>
       </div>
+        <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>2375吨</i>昨日成交量：<i>205350吨</i>月成交量：<i>205350吨</i>累计成交量：<i>205350吨</i></span><b><img src="/img/new_time.gif">更新时间：10-24 09:39</b></div>
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
