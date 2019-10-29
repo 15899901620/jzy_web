@@ -30,6 +30,7 @@
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/style-resources": "^1.0.0",
+    "@riophae/vue-treeselect": "^0.4.0",
     "across-env": "^2.0.1",
     "babel-plugin-component": "^1.1.1",
     "less": "^3.9.0",
