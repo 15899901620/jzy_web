@@ -39,7 +39,7 @@
             <tbody v-for="(item, index) in dataList" :key="index">
             <tr class=" graybg" style="height:40px;text-align: left;">
               <th colspan="3" style="padding-left: 10px;">发布时间 : {{item.createTime}}</th>
-              <th colspan="3" style="padding-left: 10px;">运单编号 : <a @click="detailLog(item)">{{item.billNo}}</a></th>
+              <th colspan="3" style="padding-left: 10px;" v-if='item.billNo'>需求编号 : <a @click="detailLog(item)">{{item.billNo}}</a></th>
             </tr>
             <tr class="detailTable">
               <td style="width: 40%;">{{item.dispatchFullAddress}}
@@ -204,7 +204,8 @@
 				params.current_page = this.current_page
 				params.page_size = this.page_size
 				params.desc = true
-				const res = await sendHttp(this, true, server.api.freightOffer.offerMyList, params, 2)
+        const res = await sendHttp(this, true, server.api.freightOffer.offerMyList, params, 2)
+        console.log(res)
 				this.dataList = res.data.items;
 				this.total = res.data.total
 			},
