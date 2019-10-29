@@ -175,7 +175,7 @@
 					sku_name: '',
           min_num: 0,
 					max_num: 0,
-					base_price: 0,
+					basePrice: 0,
 					Bond: 0,   //保证金比例
 				},
 				DepositShow: false,
@@ -192,8 +192,6 @@
 					this.DepositData.max_num = row.available_num
 					this.DepositData.basePrice = row.final_price
 					this.DepositData.Bond = row.margin_ratio
-
-          console.log('DepositData', this.DepositData)
 				} else {
 					this.$Modal.confirm({
 						title: '提示',

@@ -111,6 +111,7 @@ let api = {
    */
   advance: {
     getSaleList: {'url':'/bill/booking/list/page/onSale', 'method':'get'},
+    planAdd: {'url':'/bill/booking/plan/add', 'method':'post'},
   },
   /**
    * @description 竞拍管理

@@ -24,7 +24,7 @@
         <div class="mt15 dflex" style="align-items: center;">
           <span class="Bond_Popup_title">需求数量：</span>
           <div class="pr ml10">
-            <input-special :min="0" :max="dataList.max_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
+            <input-special :min="dataList.min_num" :max="dataList.max_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
             <span class="ml15">吨</span>
           </div>
         </div>
@@ -87,6 +87,7 @@
 <script>
 	import {orderPayCode, orderPayment} from '../../api/users'
 	import InputSpecial from '../../components/input-special'
+	import server from '../../config/api'
 
 	export default {
 		name: 'advancePay',
@@ -103,7 +104,7 @@
 				closeShow: true,
 				Bonddeposit: {
 					advance_id: 0,
-					bidNum: 0,
+					bidNum: 12,
 					BondCode: '',
 				},
 			}
@@ -172,13 +173,15 @@
 				this.TipCode = ''
 
 				let params = {
-					id: this.order_id,
-					code: this.Bonddeposit.BondCode
+					id: this.Bonddeposit.advance_id,
+					num: this.Bonddeposit.bidNum,
+					sms_code: this.Bonddeposit.BondCode
 				}
 
 				this.proShow = true
 				this.closeShow = false
-				let res = await orderPayment(this, params)
+
+				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params)
 				this.proShow = false
 				this.closeShow = true
 				if (res.status === 200) {
@@ -208,7 +211,6 @@
 		watch: {
 			dataList: {
 				handler(newValue, oldValue) {
-					this.Bonddeposit.bidNum = newValue.min_order
 				},
 				deep: true
 			},
@@ -216,6 +218,8 @@
 				if (e === true) {
 					console.log('dataList:',this.dataList)
 					this.$store.dispatch('member/getCapitalInfo')
+					this.Bonddeposit.bidNum = this.dataList.min_num
+					this.Bonddeposit.advance_id = this.dataList.advance_id
 					this.loading = true
 				} else {
 					this.loading = false
