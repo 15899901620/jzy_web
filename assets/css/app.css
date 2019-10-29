@@ -1886,6 +1886,11 @@ gAccount {
 }
 .ivu-checkbox-checked:hover .ivu-checkbox-inner{border-color: #ff7300;}
 
+.transaction_data{height:50px;line-height:50px;background:#fff; overflow:hidden;width:1200px;margin:0 auto;margin-top:20px;}
+.transaction_data h2{float:left;font-size:14px;font-weight:bold;margin-right:30px;border-left:3px solid #108ee9;height:20px;line-height:20px;margin-top:14px;padding-left:10px;}
+.transaction_data i{padding-right:30px; font-weight:bold;color:#007de4;}
+.transaction_data b{float:right;color:#999999; font-weight:normal;padding-right:10px;}
+.transaction_data b img{margin-right:5px; float:left;margin-top:17px;}
 /*商品信息*/
 .orderPorList{width: 98%;margin: 0 auto;margin-top: 10px;}
 .orderPorList li{display: flex; background-color: #fbfcff; border-bottom: 1px solid #fff; font-size: 14px;}
