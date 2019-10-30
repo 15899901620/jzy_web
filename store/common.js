@@ -16,6 +16,7 @@ export const state = () => {
 		sysConfig: {},
 		adList:{},
 		friendlyList: [],
+		TurnoverList:[],
 	}
 }
 
@@ -44,6 +45,9 @@ export const mutations = {
 	},
 	updateFriendlyList(state, data){
 		state.friendlyList = data
+	},
+	updateTurnoverInfo(state, data){
+		state.TurnoverList = data
 	}
 }
 
@@ -80,6 +84,13 @@ export const actions = {
 		let res = await sendCurl(this, server.api.product.cateHot, {})
 		if (res.status === 200) {
 			commit('updateHotCategory', res.data)
+		}
+	},
+	async getTurnoverInfo({commit}){
+		let res = await sendCurl(this, server.api.order.getTurnoverInfo, {})
+		if (res.status === 200) {
+			console.log(res.data)
+			commit('updateTurnoverInfo', res.data)
 		}
 	},
 	async getHotProduct({commit}) {

@@ -9,7 +9,7 @@
           <hotinfo title=""></hotinfo>
         </hotrecommend>
       </div>
-        <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>2375吨</i>昨日成交量：<i>205350吨</i>月成交量：<i>205350吨</i>累计成交量：<i>205350吨</i></span><b><img src="/img/new_time.gif">更新时间：10-24 09:39</b></div>
+        <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.todayNum)}}</i>昨日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.yesterdayNum)}}</i>月成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.monthNum)}}</i>累计成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.allNum)}}</i></span><b><img src="/img/new_time.gif">更新时间：{{$store.state.common.TurnoverList.ctime}}</b></div>
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
@@ -85,6 +85,7 @@ export default {
       }),
       //获取轮播图
       store.dispatch('common/getBannerList', 1),
+      store.dispatch('common/getTurnoverInfo'),  
       store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
       store.dispatch('article/getArticleCatList',{parentId: 0}),
       store.dispatch('article/getindexArticleList',{catId:this.articleCates}),

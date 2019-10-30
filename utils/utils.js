@@ -100,6 +100,10 @@ export default {
 		sign = sign || '￥'
 		return sign + parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,')
 	},
+	numFormat: function(num, sign){
+		sign = sign || '吨'
+		return parseInt(num).toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,')+sign
+	},
 	dateFormat(date, fmt) {
 		if (/(y+)/.test(fmt)) {
 			fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
