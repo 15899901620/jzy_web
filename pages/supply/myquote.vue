@@ -54,7 +54,9 @@
                 {{item.memberPhone}}
               </td>
               <td class="operate">
-                <div class="mt5 blackFont" style="width:100px;" v-if='item.status==2'>已中标</div>
+           
+                <div class="mt5 blackFont" style="width:100px;" v-if='$utils.dateCompare(today,item.endTime)==true'>已结束</div>
+                <div class="mt5 blackFont" style="width:100px;" v-else-if='item.status==2'>已中标</div>
                 <div class="mt5 blackFont" style="width:100px;" v-else-if='item.status==1'>竞价中</div>
                 <div class="mt5 blackFont" style="width:100px;" v-else>未中标</div>
               </td>
@@ -125,7 +127,8 @@
 				status: 0,
 				total: 0,
 				total_fund: '',
-				showtimeVal: '',
+        showtimeVal: '',
+        today:this.$utils.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'),  
 				orderTabs: [
 					{value: 0, name: '全部状态', status: 0},
 					{value: 0, name: '已报价', status: 1},
@@ -203,7 +206,6 @@
 
 				params.current_page = this.current_page
 				params.page_size = this.page_size
-				params.desc = true
         const res = await sendHttp(this, true, server.api.freightOffer.offerMyList, params, 2)
         console.log(res)
 				this.dataList = res.data.items;
