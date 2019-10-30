@@ -43,23 +43,22 @@
 				<td style="width: 10%;">
 					{{item.demandBeginDate}}
 			   </td >
-				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
+				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" :onTimeOver="reloadPage" hoursShow></TimeDown></td>
 				<td style="width: 10%;">
 					<span v-if='item.isTax==0'>否</span>
               		<span v-else>是</span>
 				</td>
 			  <td class="operate" style="width: 10%;">
-                <div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==0' >已失效</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #25a96d;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #ff6c00;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #f13a39" v-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
+                <div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==0 || $utils.dateCompare(item.inquiryEndTime,today)==false' >已失效</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #25a96d;" v-else-if='item.status==1 && item.isQuote==0' >未报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #ff6c00;" v-else-if='item.status==1 && item.isQuote== 1'>竞价中</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-else-if='item.status==2 && item.isWin == 0'>未中标</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #f13a39" v-else-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
               </td>
               <td class="operate" style="width: 10%;">
-
-                <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
+				  <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0 && $utils.dateCompare(item.inquiryEndTime,today)==true' @click="oldtime(item)">我要报价</div>
                   <div class="check mt5 blackFont" v-else-if='item.status==0'   >查看详情</div>
-				<div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
+				  <div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
 
               </td>
             </tr>
@@ -153,6 +152,7 @@
 				isTaxs:0,
 				total_fund: '',
 				showtimeVal: '',
+				today:this.$utils.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'),
 				userinfo: {},
 				current_page: 1,
 				weight: '',
@@ -214,6 +214,9 @@
 			},
 			check() {
 				this.getOrderList()
+			},
+			reloadPage(data) {
+				console.log(data)
 			},
 			async getOrderList() {
 				let params = {

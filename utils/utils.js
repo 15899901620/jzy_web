@@ -96,6 +96,9 @@ export default {
 		}
 		return result
 	},
+	dateCompare(d1,d2){
+		return ((new Date(d1.replace(/-/g,"\/"))) > (new Date(d2.replace(/-/g,"\/"))));
+	},
 	amountFormat: function(amount, sign){
 		sign = sign || '￥'
 		return sign + parseFloat(amount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,')
