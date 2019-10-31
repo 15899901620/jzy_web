@@ -55,7 +55,8 @@ let api = {
    * @description 订单管理
    */
   order: {
-		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
+    getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
+    getOrderInfoById:{'url':'/bill/orderInfo/getOrderInfoById', 'method':'get'} ,
 		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
 		getOrderPayInfo:{'url':'/bill/orderInfo/getOrderPayInfo', 'method':'get'} ,
 		orderPayment:{'url':'/bill/orderInfo/payment', 'method':'get'} ,
@@ -63,6 +64,7 @@ let api = {
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
+    getTurnoverInfo:  {'url':'/bill/orderInfo/getTurnoverInfo', 'method':'get'},
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
     paycode: '/bill/orderInfo/payment/code',
