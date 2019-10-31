@@ -28,7 +28,7 @@
             
                 <ul class="j_mq"  >
                  <div class="j_n_pic">
-                      <img :src="$store.state.article.articleList2[0].image" width="160" height="106"/>
+                      <img :src="$store.state.article.articleList2[0].image" width="299" height="186"/>
                 </div>
                   <li v-for="(items, index) in $store.state.article.articleList2" :key="index+1">
                       <span>{{items.title}}</span>
