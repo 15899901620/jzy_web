@@ -111,7 +111,7 @@
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span class="gray">距离结束 ：</span>
                       <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.realEndTime" hoursShow endMsg="已结束"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.realEndTime" hoursShow endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -120,7 +120,7 @@
                     <div class="statusicon vcauction">即将开始</div>
                     <div class="ml20"><span class="gray">距离开始 ：</span>
                       <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
