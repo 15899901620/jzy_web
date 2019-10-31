@@ -85,6 +85,7 @@
 				location.href='/spot/order/' + id
 			},
 			reloadPage() {
+				console.log('reloadPage')
 				this.$router.go(0)
 			},
 			goLogin(){
