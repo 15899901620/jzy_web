@@ -1,166 +1,170 @@
 <template>
     <div class="body">
         <Header name="头部"></Header>
-
-      <div class="j_news_wrap">
-        <div class="j_news_l">
-          <h2 class="j_t mt20"><i>公司动态</i><span><a href="#" target="_blank">更多></a></span></h2>
-          <div class="j_n_pt">
-            <div class="j_n_pic">
-              <a href="#" target="_blank">
-                <img src="img/j_n_01.jpg" width="299" height="186"/>
-                <span>东莞市肖亚非市长来司调研来司调研来司调研</span>
-              </a>
-            </div>
-            <ul class="j_n_text">
-              <li><a href="#">东莞市肖亚非市长来司调研</a><span>07-05</span></li>
-              <li><a href="#">中国石化新闻网：十建广东巨正源项目丙烷脱氢装置顺利产</a><span>07-05</span></li>
-              <li><a href="#">祝贺巨正源科技公司取得《危险化学品许可证》</a><span>07-05</span></li>
-              <li><a href="#">大连瓦房店市副市长石宏博一行莅临危险化学品许可证危险化学品许可证巨正源参观指导</a><span>07-05</span></li>
-              <li><a href="#">十建广东巨正源项目丙烷脱氢装置顺利产置顺利产置顺利产置顺利产置顺利产</a><span>07-05</span></li>
-              <li><a href="#">东莞市肖亚非市长来司调研</a><span>07-05</span></li>
-              <li><a href="#">祝贺巨正源科技公司取得《危险化学品许可证》</a><span>07-05</span></li>
-            </ul>
+        <div class="container" title="">
+          <div class="breadcrumb">
+            <breadcrumb>
+              <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
+              <breadcrumb-item>{{this.currCategoryInfo.title}}</breadcrumb-item>
+            </breadcrumb>
           </div>
+          <div class="Pages">
+            <div class="j_news_wrap">
+              <div class="j_news_l">
+                <h2 class="j_t mt20"><i>公司动态</i><span><a href="#" target="_blank">更多></a></span></h2>
+                <div class="j_n_pt">
+                  <div class="j_n_pic">
+                    <a href="#" target="_blank">
+                      <img src="img/j_n_01.jpg" width="299" height="186"/>
+                      <span>东莞市肖亚非市长来司调研来司调研来司调研</span>
+                    </a>
+                  </div>
+                  <ul class="j_n_text">
+                    <li><a href="#">东莞市肖亚非市长来司调研</a><span>07-05</span></li>
+                    <li><a href="#">中国石化新闻网：十建广东巨正源项目丙烷脱氢装置顺利产</a><span>07-05</span></li>
+                    <li><a href="#">祝贺巨正源科技公司取得《危险化学品许可证》</a><span>07-05</span></li>
+                    <li><a href="#">大连瓦房店市副市长石宏博一行莅临危险化学品许可证危险化学品许可证巨正源参观指导</a><span>07-05</span></li>
+                    <li><a href="#">十建广东巨正源项目丙烷脱氢装置顺利产置顺利产置顺利产置顺利产置顺利产</a><span>07-05</span></li>
+                    <li><a href="#">东莞市肖亚非市长来司调研</a><span>07-05</span></li>
+                    <li><a href="#">祝贺巨正源科技公司取得《危险化学品许可证》</a><span>07-05</span></li>
+                  </ul>
+                </div>
 
-          <h2 class="j_t mt20"><i>市场行情</i><span><a href="#" target="_blank">更多></a></span></h2>
+                <h2 class="j_t mt20"><i>市场行情</i><span><a href="#" target="_blank">更多></a></span></h2>
 
-          <ul class="j_mq">
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"/></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                <i>昨日PVC期货窄幅反弹，现货市场报盘基现货市场报盘基本维稳现货市场报盘基本维稳现货市场报盘基本维稳本维稳，部分料价格窄幅松动，部分商家出货有</i>
-              </a>
-            </li>
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                <i>昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有</i>
-              </a>
-            </li>
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
-              </a>
-            </li>
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
-              </a>
-            </li>
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
-              </a>
-            </li>
-            <li>
-              <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
-              <a href="#">
-                <span>巨正源市场行情走好</span>
-                昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
-              </a>
-            </li>
-          </ul>
+                <ul class="j_mq">
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"/></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      <i>昨日PVC期货窄幅反弹，现货市场报盘基现货市场报盘基本维稳现货市场报盘基本维稳现货市场报盘基本维稳本维稳，部分料价格窄幅松动，部分商家出货有</i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      <i>昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有</i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="img/j_n_02.jpg" width="160" height="106"></a>
+                    <a href="#">
+                      <span>巨正源市场行情走好</span>
+                      昨日PVC期货窄幅反弹，现货市场报盘基本维稳，部分料价格窄幅松动，部分商家出货有......
+                    </a>
+                  </li>
+                </ul>
 
 
-          <h2 class="j_t mt20"><i>信息公告</i><span><a href="#" target="_blank">更多></a></span></h2>
-          <div class="j_n_pt">
-            <div class="j_n_pic">
-              <a href="#" target="_blank">
-                <img src="img/j_n_01.jpg" width="299" height="186"/>
-                <span>PVC塑料价格早间提示</span>
-              </a>
+                <h2 class="j_t mt20"><i>信息公告</i><span><a href="#" target="_blank">更多></a></span></h2>
+                <div class="j_n_pt">
+                  <div class="j_n_pic">
+                    <a href="#" target="_blank">
+                      <img src="img/j_n_01.jpg" width="299" height="186"/>
+                      <span>PVC塑料价格早间提示</span>
+                    </a>
+                  </div>
+                  <div class="j_n_info">
+                    <h3 class="fwb">销售公告</h3>
+                    <ul class="j_n_info_l">
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    </ul>
+                  </div>
+
+                  <div class="j_n_info">
+                    <h3 class="fwb">采购竞标公告</h3>
+                    <ul class="j_n_info_l">
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                      <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    </ul>
+                  </div>
+
+
+
+                </div>
+
+              </div>
+
+
+              <div  class="j_news_r">
+                <div>
+                  <h2 class="j_t mt20"><i>今日行情</i><span><a href="#" target="_blank">更多></a></span></h2>
+                  <ul class="j_t_in" style="height:214px;">
+                    <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早塑料价格早间提示间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h2 class="j_t mt20"><i>网站公告</i><span><a href="#" target="_blank">更多></a></span></h2>
+                  <ul class="j_t_in" style="height:388px;">
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h2 class="j_t mt20"><i>行业资讯</i><span><a href="#" target="_blank">更多></a></span></h2>
+                  <ul class="j_t_in" style="height:211px;">
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                    <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="j_n_info">
-              <h3 class="fwb">销售公告</h3>
-              <ul class="j_n_info_l">
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              </ul>
-            </div>
-
-            <div class="j_n_info">
-              <h3 class="fwb">采购竞标公告</h3>
-              <ul class="j_n_info_l">
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-                <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              </ul>
-            </div>
-
-
-
           </div>
-
         </div>
-
-
-        <div  class="j_news_r">
-          <div>
-            <h2 class="j_t mt20"><i>今日行情</i><span><a href="#" target="_blank">更多></a></span></h2>
-            <ul class="j_t_in" style="height:214px;">
-              <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早塑料价格早间提示间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 class="j_t mt20"><i>网站公告</i><span><a href="#" target="_blank">更多></a></span></h2>
-            <ul class="j_t_in" style="height:388px;">
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格塑料价格早间提示早间提示</a><span>07-05</span></li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 class="j_t mt20"><i>行业资讯</i><span><a href="#" target="_blank">更多></a></span></h2>
-            <ul class="j_t_in" style="height:211px;">
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-              <li><a href="#">PVC塑料价格早间提示</a><span>07-05</span></li>
-            </ul>
-          </div>
-
-
-
-        </div>
-      </div>
-
-
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
 </template>
@@ -311,4 +315,3 @@ export default {
   .j_t_in li span{ float:right;padding-right:20px;}
   .j_t_in .fwb{line-height:28px;height:28px;padding-top:10px;}
 </style>
-
