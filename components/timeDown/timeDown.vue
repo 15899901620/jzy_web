@@ -76,6 +76,7 @@
 		},
 		methods:{
 			restart(){
+				let self = this
 				if(this.t){
 					clearTimeout(this.t)
         }
@@ -107,14 +108,12 @@
 						this.myHours = `${add(this.timeObj.hours)}`
 						this.myMinutes = `${add(this.timeObj.minutes)}`
 						this.mySeconds = `${add(this.timeObj.seconds)}`
-						console.log('onTimeOver', time)
 						// 当时间差小于等于0时,停止倒计时
 						if (time <= 0) {
-
 							this.isStop = true
 							this.clocker = this.endMsg || '已结束2'
               console.log('onTimeOver')
-							this.$emit('onTimeOver', '')
+							self.$emit('onTimeOver', '')
 						} else {
 							this.t = setTimeout(function () {
 								timeFunction();

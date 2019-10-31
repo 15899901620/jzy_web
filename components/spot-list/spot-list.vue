@@ -41,7 +41,7 @@
             已失效
             </template>
             <template v-else>
-              <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+              <TimeDown :currTime="item.currTime" :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
             </template>
           </span>
           <span style="width: 7%;">{{item.delivery_deadline}}</span>

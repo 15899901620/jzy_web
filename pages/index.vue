@@ -44,16 +44,17 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
-    <iframe 
+    <script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8" async defer></script>
+    <!--<iframe
       src="qqonline.html"
-      width="1200" 
-      height="800" 
+      height="800"
       scrolling="no" 
       frameborder="0" 
       allowtransparency="true" 
       id="iframe" 
-      style="left: 20px; bottom: 0px; position: fixed; z-index: 2000000000; border-radius: 4px;">
-    </iframe> 
+      style="width:98%; left: 20px; bottom: 0px; position: fixed; z-index: 2000000000; border-radius: 4px;">
+    </iframe> -->
+
   </div>
 </template>
 
@@ -75,9 +76,6 @@ import SpotList from '../components/spot-list'
 import LogisticsList from '../components/logistics-list'
 import indexnewstabs from '../components/indexnewstabs'
 import newsinfo from '../components/indexnews'
-import {setCookies} from "../config/storage";
-import { getCookies } from '../config/storage'
-
 
 export default {
   fetch({store}) {
@@ -95,7 +93,7 @@ export default {
       }),
       //获取轮播图
       store.dispatch('common/getBannerList', 1),
-      store.dispatch('common/getTurnoverInfo'),  
+      store.dispatch('common/getTurnoverInfo'),
       store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
       store.dispatch('article/getArticleCatList',{parentId: 0}),
       store.dispatch('article/getindexArticleList',{catId:this.articleCates}),

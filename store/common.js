@@ -87,10 +87,13 @@ export const actions = {
 		}
 	},
 	async getTurnoverInfo({commit}){
-		let res = await sendCurl(this, server.api.order.getTurnoverInfo, {})
-		if (res.status === 200) {
-			console.log(res.data)
-			commit('updateTurnoverInfo', res.data)
+		try{
+			let res = await sendCurl(this, server.api.order.getTurnoverInfo, {})
+			if (res.status === 200) {
+				commit('updateTurnoverInfo', res.data)
+			}
+		}catch (e) {
+			console.log('获取成交统计异常')
 		}
 	},
 	async getHotProduct({commit}) {
@@ -112,9 +115,13 @@ export const actions = {
 		}
 	},
 	async getBannerList({commit}, position) {
-		let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
-		if (res.status === 200) {
-			commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
+		try{
+			let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
+			if (res.status === 200) {
+				commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
+			}
+		}catch (e) {
+			console.log('获取广告图片异常，位置为：', position)
 		}
 	},
 	async getFriendlyList({commit}) {
