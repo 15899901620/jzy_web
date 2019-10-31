@@ -44,6 +44,16 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
+    <iframe 
+      src="qqonline.html"
+      width="1200" 
+      height="800" 
+      scrolling="no" 
+      frameborder="0" 
+      allowtransparency="true" 
+      id="iframe" 
+      style="left: 20px; bottom: 0px; position: fixed; z-index: 2000000000; border-radius: 4px;">
+    </iframe> 
   </div>
 </template>
 
