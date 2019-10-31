@@ -44,7 +44,7 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
-    <script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8" async defer />
+    <!--<script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8"></script>-->
     <!--<iframe
       src="qqonline.html"
       height="800"
@@ -163,6 +163,11 @@ export default {
     ...mapState({
       bannerinfo: state => state.system.bannerinfo
      })
-  }
+  },
+	head: {
+		script: [
+			{ body: true, src: 'https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f', id: 'qd288570929125de54b1b05179506f548d8f6e40700f' }
+		]
+	}
 }
 </script>
