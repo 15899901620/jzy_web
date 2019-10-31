@@ -148,7 +148,6 @@ export default {
                 title:'全部',
                 seoKeywords:'全部',
                 seoDescription:'全部',
-                seoDescription:'全部',
             }
         }
 
