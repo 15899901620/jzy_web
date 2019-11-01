@@ -111,8 +111,7 @@
 						// 当时间差小于等于0时,停止倒计时
 						if (time <= 0) {
 							this.isStop = true
-							this.clocker = this.endMsg || '已结束2'
-              console.log('onTimeOver')
+							this.clocker = this.endMsg || '已结束'
 							self.$emit('onTimeOver', '')
 						} else {
 							this.t = setTimeout(function () {
