@@ -23,37 +23,44 @@
 
           </div>
           <!--表格标题-->
-          <div class="TableTitle graybg">
-            <span style="width: 17%;">出发地</span>
-            <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
-               style="font-size:24px;     color: #007de4;"></i>
-            <span style="width: 17%;">到达地</span>
-            <span style="width: 15%;">货物名称</span>
-            <span style="width: 13%;">单价</span>
-            <span style="width: 12%;">会员名称</span>
-            <span style="width: 12%;">电话</span>
-            <span style="width: 12%;">订单状态</span>
-          </div>
+          
 
           <table class="listT mt10" border="" cellspacing="" cellpadding="">
+
+            <tbody>
+              <tr class="detailTable" style="background:#f7f7f7;padding:5px 0;margin:0;border:0 none;height:40px;font-size:14px;">
+                <td style="width:35%;padding:0;border:0 none;">
+                  <span style="padding-right:30px;">出发地</span>
+                <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
+                  style="font-size:24px;     color: #007de4;"></i>
+                <span style="padding-left:30px;">到达地</span>
+                </td>
+                <td style="width: 15%;padding:0;border:0 none;">货物名称</td>
+                <td style="width: 13%;padding:0;border:0 none;">单价</td>
+                <td style="width: 12%;padding:0;border:0 none;">会员名称</td>
+                <td style="width: 12%;padding:0;border:0 none;">电话</td>
+                <td style="width: 12%;padding:0;border:0 none;  ">订单状态</td>
+              </tr>
+            </tbody>
+
             <tbody v-for="(item, index) in dataList" :key="index">
             <tr class=" graybg" style="height:40px;text-align: left;">
-              <th colspan="3" style="padding-left: 10px;">发布时间 : {{item.createTime}}</th>
-              <th colspan="3" style="padding-left: 10px;" v-if='item.billNo'>需求编号 : <a @click="detailLog(item)">{{item.billNo}}</a></th>
+              <th colspan="6" style="padding-left: 10px;">发布时间 : {{item.createTime}}<span style="padding-right: 10px;float:right;" v-if='item.billNo'>需求编号 : <a @click="detailLog(item)">{{item.billNo}}</a></span></th>
+              
             </tr>
             <tr class="detailTable">
-              <td style="width: 40%;">{{item.dispatchFullAddress}}
+              <td style="width:35%">{{item.dispatchFullAddress}}
                 <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
-                   style="font-size: 32px;     color: #007de4;"></i>
+                   style="font-size: 20px;     color: #007de4;"></i>
                 {{item.receiptFullAddress}}
               </td>
-              <td>{{item.freightGoods}}</td>
-              <td><span>{{$utils.amountFormat(item.price)}}</span>/吨</td>
-              <td>{{item.memberName}}</td>
-              <td class="operate">
+              <td style="width:15%;">{{item.freightGoods}}</td>
+              <td style="width:13%;"><span>{{$utils.amountFormat(item.price)}}</span>/吨</td>
+              <td style="width:12%;">{{item.memberName}}</td>
+              <td class="operate" style="width:12%;">
                 {{item.memberPhone}}
               </td>
-              <td class="operate">
+              <td class="operate" style="width:12%;">
            
                 <div class="mt5 blackFont" style="width:100px;" v-if='$utils.dateCompare(today,item.endTime)==true'>已结束</div>
                 <div class="mt5 blackFont" style="width:100px;" v-else-if='item.status==2'>已中标</div>
