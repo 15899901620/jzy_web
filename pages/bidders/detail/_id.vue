@@ -26,14 +26,14 @@
               <template v-if="auctionInfo.statusType == '1'">
                 <span class="fs16">距离结束：</span>
                 <span class="fs16">
-                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>
               <template v-else-if="auctionInfo.statusType == '2'">
                 <span class="fs16">距离开始：</span>
                 <span class="fs16">
-                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>

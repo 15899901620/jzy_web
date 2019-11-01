@@ -45,6 +45,9 @@
 			endTime: {
 				type: String,
 			},
+      currTime: {
+				type: String,
+      },
 			endMsg: {
 				type: String
 			},
@@ -73,14 +76,19 @@
 		},
 		methods:{
 			restart(){
+				let self = this
 				if(this.t){
 					clearTimeout(this.t)
         }
 
         if(this.endTime){
-					let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
-					// 计算时间差
-					let timeLag = (end - new Date().getTime()) / 1000
+					let nowTime = new Date().getTime()
+        	if(this.currTime) {
+						nowTime = new Date(Date.parse(this.currTime.replace(/-/g, "/"))).getTime()
+					}
+          let end = new Date(Date.parse(this.endTime.replace(/-/g, "/"))).getTime()
+          // 计算时间差
+          let timeLag = (end - nowTime) / 1000
 					// 判断当前是否时分秒的值是否大于10
 					let add = num => {
 						return num < 10 ? '0' + num : num
@@ -102,10 +110,10 @@
 						this.mySeconds = `${add(this.timeObj.seconds)}`
 						// 当时间差小于等于0时,停止倒计时
 						if (time <= 0) {
-
 							this.isStop = true
-							this.clocker = this.endMsg || '已结束'
-							this.$emit('onTimeOver')
+							this.clocker = this.endMsg || '已结束2'
+              console.log('onTimeOver')
+							self.$emit('onTimeOver', '')
 						} else {
 							this.t = setTimeout(function () {
 								timeFunction();
@@ -122,6 +130,9 @@
 		},
 		watch: {
 			endTime: function (e) {
+				this.restart()
+			},
+			downTime: function (e) {
 				this.restart()
 			}
 		}
