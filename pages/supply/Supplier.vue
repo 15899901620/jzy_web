@@ -90,7 +90,7 @@
         <span class="titleoffer">吨 数</span><span class="ml5 mr10">:</span><Input v-model="weight" :disabled='true' style="width: 230px;"/><span class="ml5">（吨）</span>
       </Row>
       <Row >
-        <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 每吨</span>
+        <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 吨</span>
       </Row>
         <Row >
             <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"   placeholder=""  style="width: 230px" />
