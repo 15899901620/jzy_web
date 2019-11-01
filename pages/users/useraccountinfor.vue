@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { getGainuserInfor, manageEdit } from  '../../api/users'
+import { getGainuserInfor, manageEdit ,getuserInforId} from  '../../api/users'
 import Navigation from '../../components/navigation'
 import { getCookies } from '../../config/storage'
 import AddressFrom from "../../components/address-from";
@@ -198,8 +198,15 @@ export default {
         //获取用户信息
         async UserInfor(){
             const res=await getGainuserInfor(this,{})
+     
+            var   params= {
+                member_id:res.data.id
+            }
+            const res1=await getuserInforId(this,params)
+            this.userinfor=res1.data
             this.isAddressFormShow = true
-            this.userinfor=res.data
+
+           
         },
         async handleSubmit(){
             let data = {
