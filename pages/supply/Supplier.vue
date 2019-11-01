@@ -10,7 +10,7 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="居正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"
+              <input type="text" placeholder="巨正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"
                      style="width: 200px;"/>
               <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
                  style="font-size: 32px;     color: #007de4;"></i>
@@ -43,7 +43,7 @@
 				<td style="width: 10%;">
 					{{item.demandBeginDate}}
 			   </td >
-				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" :onTimeOver="reloadPage" hoursShow></TimeDown></td>
+				<td style="width: 10%;"> <TimeDown :isshow="Timeloading" :timeStyleType='1' :endTime="item.inquiryEndTime" :onTimeOver="reloadPage" hoursShow></TimeDown></td>
 				<td style="width: 10%;">
 					<span v-if='item.isTax==0'>否</span>
               		<span v-else>是</span>
@@ -247,5 +247,8 @@
            color: #333;
        }
 
-    }
+	}
+	.time{
+		 color: rgb(235, 62, 61);
+	}
 </style>
