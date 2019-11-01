@@ -92,9 +92,9 @@
       <Row >
         <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 吨</span>
       </Row>
-        <Row >
-            <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"   placeholder=""  style="width: 230px" />
-        </Row>
+	  <Row >
+		  <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"  :disabled='true'  placeholder=""  style="width: 230px" />
+	  </Row>
 
     </Modal>
 	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type='type'></FreightDetail>
@@ -167,6 +167,7 @@
 				this.dispatchFull = row.dispatchFullAddress
 				this.receiptFull = row.receiptFullAddress
 				this.isTaxs = row.isTax
+				this.remark=row.remark
 			},
 			cancelDelay() {
 

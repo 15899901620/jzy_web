@@ -111,6 +111,13 @@
             </FormItem>
           </Col>
         </Row>
+		<Row index="5">
+		   <Col style="margin-top: 5px;">
+            <FormItem label="备注" prop="pickupMode">
+            	 <textarea v-model="formAddress.remark"   placeholder=""  style="width: 400px;height: 65px;border: 1px solid #dcdee2;border-radius: 5px;" />
+            </FormItem>
+          </Col>
+	 	 </Row>
       </Form>
     </div>
     <p slot="footer" style="text-align:center">
@@ -236,6 +243,7 @@
 				userinfo: {},
 				date: '',
 				formAddress: {
+					remark:'',
 					memberId: '',
 					contact: '',    //收货人姓名
 					phone: '',   //收货人电话
@@ -387,6 +395,7 @@
 						receiptDistrict: this.formAddress.district,      //区县
 						demandBeginDate: this.formAddress.demandBeginDate,
 						demandEndDate: this.formAddress.demandEndDate,
+						remark:this.formAddress.remark
 					}
 					const res = await sendHttp(this, true, server.api.biddding.freightDemand, params, 1)
 					if (res.data == true) {
