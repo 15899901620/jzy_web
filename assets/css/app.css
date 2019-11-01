@@ -2000,3 +2000,5 @@ gAccount {
 .j_t_in .fwb{line-height:28px;height:28px;padding-top:10px;}
 
 .tab_text th{border:0 none;border-collapse:collapse;border-spacing:0;}
+
+.mc_tm{position:absolute;width:250px;height:310px;background:rgba(255, 255, 255, 0.5);right:0;top:-315px;}

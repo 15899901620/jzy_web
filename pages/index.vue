@@ -5,9 +5,11 @@
       <!--内容-->
       <Banner title="" :bannerData="$store.state.common.adList.ad1" :heightNum="this.heightNum" style="height: 320px; overflow: hidden;"/>
       <div class="memberCenter">
+        <div class="mc_tm">
         <hotrecommend>
           <hotinfo title=""></hotinfo>
         </hotrecommend>
+        </div>
       </div>
         <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.todayNum)}}</i>昨日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.yesterdayNum)}}</i>月成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.monthNum)}}</i>累计成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.allNum)}}</i></span><b><img src="/img/new_time.gif">更新时间：{{$store.state.common.TurnoverList.ctime}}</b></div>
       <div class="hotbidding">
