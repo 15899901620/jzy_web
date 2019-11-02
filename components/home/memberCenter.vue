@@ -1,7 +1,9 @@
 <template>
       <div class="memberCenter">
+   
         <headnews></headnews>
-      </div>
+        </div>
+
 </template>
 
 <script>
@@ -17,5 +19,5 @@
 
 <style scoped>
   .memberCenter{width: 1200px;margin: 0 auto;   position: relative; z-index: 4;  height: 1px;}
-
+  
 </style>

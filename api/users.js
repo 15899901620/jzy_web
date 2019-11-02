@@ -177,6 +177,24 @@ export const getGainuserInfor = (vm, data) => {
     console.log('supplierRegErr', errorInfo)
   })
 }
+/**
+ * @description 根据id获取会员信息
+ * @param {*} vm
+ * @param {*} data
+ */
+export const getuserInforId = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.getuserInforId,
+    {
+        params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('supplierRegErr', errorInfo)
+  })
+}
+
 
 /**
  * @description 上传头像

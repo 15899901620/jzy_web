@@ -11,9 +11,9 @@
 							<td height="80">
 								<div style="padding-bottom:5px;clear:both;position:relative;">
 									<p class="ffw fl fs16p" style="width:20%;"> <a href="/">
-											<img :src="$store.state.common.sysConfig.CONTRATLOGO" alt="巨正源" >
+											<img :src="$store.state.common.sysConfig.CONTRATLOGO" style="position: absolute;top: -30px;" alt="巨正源" >
 									</a></p>
-									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 19px;">{{title}}</span> <span class="red fs00p"></span></p>
+									<p class="ffw fs20p tac" style="width: 80%"><span style="border-bottom:2px solid #000; padding-bottom: 2px;font-size: 19px;margin-left: 100px;">{{title}}</span> <span class="red fs00p"></span></p>
                     <div style="position: absolute;right: 0px;top: 1px;">
                         <Button type="error" id='printBtn' class="printBtn"  @click="print_page()">打印</Button>
                     </div>
@@ -27,7 +27,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr><td height="20"></td></tr>
+						<tr><td height="80"></td></tr>
 						<tr width="100%">
 							<td>
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
