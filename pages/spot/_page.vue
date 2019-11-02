@@ -96,10 +96,10 @@
                   已售罄
                   </template>
                   <template v-else-if="item.on_sale == 2 && item.available_num > 0">
-                  已失效
+                  已结束
                   </template>
                   <template v-else>
-                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                   </template>
                 </span>
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
@@ -158,7 +158,7 @@
 				store.dispatch('spot/getSpotList', {
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
-						page_size: 10
+						page_size: 6
 					}
 				),
 			])
@@ -175,7 +175,7 @@
 				checkTypeShow: false,
 
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 10,
+				page_size: 6,
 				categoryId: this.$route.query.category_id || '',
 				processId: this.$route.query.level_id || '',
 				skuName: this.$route.query.keyword || '',

@@ -116,7 +116,7 @@ export default {
       //获取现货列表
       store.dispatch('spot/getSpotList', {
         current_page: 1,
-        page_size: 20
+        page_size: 6
       }),
     ])
   },

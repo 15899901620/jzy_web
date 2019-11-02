@@ -38,10 +38,10 @@
             已售罄
             </template>
             <template v-else-if="item.on_sale == 2 && item.available_num > 0">
-            已失效
+            已结束
             </template>
             <template v-else>
-              <TimeDown :currTime="item.currTime" :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+              <TimeDown :currTime="item.currTime" :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
             </template>
           </span>
           <span style="width: 7%;">{{item.delivery_deadline}}</span>
