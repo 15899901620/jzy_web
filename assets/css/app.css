@@ -2001,4 +2001,4 @@ gAccount {
 
 .tab_text th{border:0 none;border-collapse:collapse;border-spacing:0;}
 
-.mc_tm{position:absolute;width:250px;height:310px;background:rgba(255, 255, 255, 0.5);right:0;top:-315px;}
+.mc_tm{position:absolute;width:240px;height:300px;background:rgba(255, 255, 255, 0.2);right:0;top:-315px;}
