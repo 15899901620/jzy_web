@@ -19,13 +19,13 @@
     <template v-if="timeStyleType == 2">
       <div class="time" v-show="!isStop">
         <template v-if="dayShow">
-          <span class="hour">{{myDay}}</span> 天
+          <span class="hour " :class="[statusType == 1 ?'orangeFont':'vcauction']" >{{myDay}}</span> 天
         </template>
         <template v-if="hoursShow">
-          <span class="hour">{{myHours}}</span> 时
+          <span class="hour" :class="[statusType == 1 ?'orangeFont':'vcauction']">{{myHours}}</span> 时
         </template>
-        <span class="minute">{{myMinutes}}</span> 分
-        <span class="second">{{mySeconds}}</span> 秒
+        <span class="minute" :class="[statusType == 1 ?'orangeFont':'vcauction']">{{myMinutes}}</span> 分
+        <span class="second" :class="[statusType == 1 ?'orangeFont':'vcauction']">{{mySeconds}}</span> 秒
       </div>
       <!-- 这里是显示结束后的内容 -->
       <span class="second" v-show="isStop">{{clocker}}</span>
@@ -38,6 +38,10 @@
 		name: 'downTime',
 
 		props: { // 接收父组件传递过来的参数,这里传了  结束时间 - 开始时间 - 结束后显示的内容
+            //竞拍状态
+		    statusType:{
+		      type: Number,
+            },
 			timeStyleType: {
 				type: Number,
 				default: 1
@@ -45,9 +49,9 @@
 			endTime: {
 				type: String,
 			},
-      currTime: {
+            currTime: {
 				type: String,
-      },
+            },
 			endMsg: {
 				type: String
 			},
@@ -76,6 +80,7 @@
 		},
 		methods:{
 			restart(){
+			  console.log("statusType:",this.statusType)
 				let self = this
 				if(this.t){
 					clearTimeout(this.t)
@@ -147,5 +152,8 @@
     .second {
       color: rgb(235, 62, 61);
     }
+  }
+  .vcauction {
+    background-color: #25a96d
   }
 </style>
