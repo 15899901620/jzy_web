@@ -63,7 +63,7 @@
             <span style="width: 9%;">剩余数量（吨）</span>
             <span style="width: 11%;">单价（元/吨）</span>
             <span style="width: 8%;">距下架时间</span>
-            <span style="width: 7%;">提货期限</span>
+            <span style="width: 7%;">提货起始日期</span>
             <span style="width: 12%;">操作</span>
           </div>
           <ul class="Xhlist">
@@ -102,7 +102,7 @@
                     <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                   </template>
                 </span>
-                <span style="width: 7%;">{{item.delivery_deadline}}</span>
+                <span style="width: 7%;">{{item.delivery_start}}</span>
                 <span style="width: 12%;">
                   <div
                       v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
