@@ -1,15 +1,15 @@
 <template>
     <div :class="classes">
-        <carousel
+        <Carousel
             :autoplay="true"
             :height= heightNum
             :autoplay-speed="10000">
-            <carousel-item v-for="(item, index) in bannerData" :key="index">
-                <div class="demo-carousel" style="display: flex; justify-content: center;"   >
+            <Carousel-item v-for="(item, index) in bannerData" :key="index">
+                <div class="demo-carousel"  >
                     <img :src="item.adImg"/>
                 </div>
-            </carousel-item>
-        </carousel>
+            </Carousel-item>
+        </Carousel>
     </div>
 </template>
 <script>
@@ -44,3 +44,8 @@ export default {
 
 }
 </script>
+<style lang="less">
+    .demo-carousel{
+        img{width: 100%; height: 100%}
+    }
+</style>
