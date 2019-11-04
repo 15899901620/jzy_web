@@ -50,7 +50,8 @@
                                     <span style="width: 20%">{{items.productionDate}}</span>
                                     <span style="width: 20%">{{items.batchNo}}</span>
                                     <span style="width: 20%">
-                                        <p class="qualitySeeDetail" @click="seedetail(items)">查看质检单</p>
+                                        
+                                        <p class="qualitySeeDetail"><a :href="items.inspectionElc" target="_blank">查看质检单</a></p>
                                     </span>
                                 </li>
                             </template>
