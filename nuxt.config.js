@@ -1,12 +1,15 @@
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 const appConfig = require('./config/app.config')
 
 //是否生产环境appConfig.system.BASE_URL.pro
-const proxy_url = process.env.NODE_ENV === 'production'? appConfig.system.BASE_URL.pro : appConfig.system.BASE_URL.dev
+const proxy_url = process.env.NODE_ENV === 'development'? appConfig.system.BASE_URL.dev : appConfig.system.BASE_URL.pro
 
 let Version = new Date().getTime()
 export default {
-	mode: 'universal',
+  mode: 'universal',
+  env: {
+    NODE_ENV: process.env.NODE_ENV
+  },
 	/*
 	 ** Headers of the page
 	 */
@@ -115,13 +118,13 @@ export default {
     // SourceMap: false,
     // cssSourceMap: false,
 		// publicPath: './', //sample/essays 打包的默认路径为 '_nuxt’ 或者可以指定cdn 域名
-		filenames: { // css 和 js img 打包时指定文件夹
+		/*filenames: { // css 和 js img 打包时指定文件夹
 			app: ({isDev}) => isDev ? '[name].js' :'[name].[contenthash].'+Version+'.js',
 			chunk:({isDev}) => isDev ? '[name].js' : '[name].[contenthash].'+Version+'.js',
 			js: ({isDev}) => isDev ? '[name].js' : '[name].[contenthash].'+Version+'.js',
 			css: ({isDev}) => isDev ? '[name].css' : '[name].[contenthash].'+Version+'.css',
 			img: ({isDev}) => isDev ? '[path][name].[ext]' :  '[hash:7].[ext]'
-		},
+		},*/
     /**
      * 配置代码压缩规则，提升速度
      */

@@ -25,7 +25,7 @@
                                     </Col>
                                     <Col span="4">
                                         <FormItem prop='productionDate'>
-                                            <DatePicker type="date" :value="formSearch.productionDate" format="yyyy-MM-dd" @on-change="selectTime" placeholder="生产日期"></DatePicker>
+                                                  <DatePicker type="month" placement="bottom-end" placeholder="生产日期至"  @on-change="selectTime"></DatePicker>
                                         </FormItem>
                                     </Col>
                                     <Col span="4" style="padding:0px;">

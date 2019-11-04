@@ -275,6 +275,14 @@
               </div>
             </Col>
           </Row>
+          <Row :gutter="24" index="0" style="margin-bottom:50px">
+            <Col span="21">
+              <FormItem  label="主营产品">
+                   <memberLabelSelect :value="formCustom.label_ids" :isMultiple="true"  
+                                   @onChange="formCustom.label_ids = $event"/>
+              </FormItem>
+            </Col>
+          </Row>
           <Row :gutter="24" index="0" style="margin-bottom:120px">
             <Col span="21" style="text-align:center;">
               <Button class="UserRegister mt20" style="margin-left: 42px;" @click="handleUp">上一步</Button>
@@ -300,7 +308,7 @@
         title="用户注册协议"
         v-model="protocolModalShow"
         @on-cancel="protocolModalCancel"
-        :width='700'
+        :width='700'  
         class-name="vertical-center-modal">
       <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
       </div>
@@ -330,11 +338,12 @@
 
 <script>
 	const prefixCls = 'ant-user-register'
-	import {mapState} from 'vuex'
+  import {mapState} from 'vuex'
+  import MemberLabelSelect from './memberLabelSelect'
 	import {steps, step} from '../steps'
 	import captcha from '../captcha'
 	import {userCodeSend, userCodeCheck, userPhoneCheck, userValid, manageReg} from '../../api/users'
-    import SlideVerify from '../slide-verify'
+  import SlideVerify from '../slide-verify'
 	const appConfig = require('../../config/app.config')
 
 	export default {
@@ -484,8 +493,8 @@
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
                 usersubmitModal:false,         //确认提交框
-				current: 0,
-				uploadUrl: '',
+				current: 0    ,
+        uploadUrl: '',
 				companyValid: false,
                 license_filextension:'',   // 营业执照图片格式
                 filextension_elc:'',       // 授权书格式
@@ -493,23 +502,24 @@
                 other_filextension:'',        // 其它文件
                 invoice_filextension:'',      // 开票资料
 
-              formCustom: {
-					phone: '',
-					password: '',
-					mobilecode: '',
-					single: '',
-					repassword: '',
-					Imgcode: '',
-					companyName: '',
-					taxId: '',
-					invBankName: '',
-					invBankAccount: '',
-					invAddress: '',
-					invTelephone: '',
-					contacter: '',
-					business_license: '',
-					authorization_elc: '',
-					code: '',
+        formCustom: {
+                    label_ids: '',
+                    phone: '',
+                    password: '',
+                    mobilecode: '',
+                    single: '',
+                    repassword: '',
+                    Imgcode: '',
+                    companyName: '',
+                    taxId: '',
+                    invBankName: '',
+                    invBankAccount: '',
+                    invAddress: '',
+                    invTelephone: '',
+                    contacter: '',
+                    business_license: '',
+                    authorization_elc: '',
+                    code: '',
                     invoice_pic:'',              // 开票资料
                     dangerous_license:'',       // 危化品上传许可证
                     other_pic:'',               // 其它资料
@@ -567,8 +577,9 @@
 		components: {
 			steps,
 			step,
-			captcha,
-            SlideVerify
+      captcha,
+      MemberLabelSelect,
+        SlideVerify
 		},
 		computed: {
 			classes() {
@@ -601,7 +612,13 @@
 
 
 			getUploadURL() {
-				this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
+        if (process.env.NODE_ENV === 'development') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+        } else if (process.env.NODE_ENV === 'testprod') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.test
+        } else {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+        }
 			},
 
 			//验证手机是否存在
@@ -946,7 +963,7 @@
              // this.$router.push({name:'RegisterSuccess'})
             } else {
               this.$Message.info({
-                content: "抱歉、您的信息提交失败，请填写重新提交！",
+                content: res.data.message,
                 duration: 5,
                 closable: true
               })

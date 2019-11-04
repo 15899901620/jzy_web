@@ -11,7 +11,7 @@
       </div>
       <div class="ml10" style="width: 64%;">
         <p class=" ">您好！ {{$store.state.memberInfo.phone}}</p>
-        <p class="gray">欢迎来到巨正源科技官方交易平台!</p>
+        <p class="gray">欢迎来到巨正源科技官方电商平台!</p>
       </div>
     </div>
     <div class="dflex mt25" style="justify-content: center;" v-else>
@@ -19,7 +19,7 @@
       <div class="ml10" style="width: 64%;" >
         <p class=" ">HI,上午好！</p>
         <p class="gray" style="width: 88%">
-          欢迎来到巨正源科技官方交易平台!</p>
+          欢迎来到巨正源科技官方电商平台!</p>
       </div>
     </div>
     <div class="loginReg mt10" v-if="!$store.state.memberToken">

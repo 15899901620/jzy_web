@@ -52,17 +52,25 @@ export const mutations = {
 export const actions = {
 	//我的出价
 	async getAuctionList({commit}, params) {
-		let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
-		if (res.status === 200 && (res.data.errorcode||0) == 0) {
-			console.log(res.data)
-			commit('updateAuctionList', res.data.items)
-			commit('updateAuctionTotal', res.data.total)
+		try{
+			let res = await sendCurl(this, server.api.Auction.getAuctionList, params)
+			if (res.status === 200 && (res.data.errorcode||0) == 0) {
+				commit('updateAuctionList', res.data.items)
+				commit('updateAuctionTotal', res.data.total)
+			}
+		}catch(err){
+			console.log('获取竞拍列表异常：', err)
 		}
+
 	},
 	async getAuctionInfo({commit}, params) {
-		let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
-		if (res.status === 200 && (res.data.errorcode||0) == 0) {
-			commit('updateAuctionInfo', res.data)
+		try{
+			let res = await sendCurl(this, server.api.Auction.getAuctionInfo, params)
+			if (res.status === 200 && (res.data.errorcode||0) == 0) {
+				commit('updateAuctionInfo', res.data)
+			}
+		}catch(err){
+			console.log('获取竞拍信息异常：', err)
 		}
 	},
 	async getPartakeList({commit}) {

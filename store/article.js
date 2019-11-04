@@ -15,9 +15,15 @@ export const state = () => {
 		articecatDetail: {},
 		articleCat: [],
 		noticeInfo: [],
+		noticeInfo1:[],
+		noticeInfo2:[],
+		noticeInfo3:[],
 		articleInfo: [],
 		hotarticleInfo: [],
 		articleList: [],
+		articleList2: [],
+		articleList3: [],
+		articleList4: [],
 		articleTotal: 0,
 		noticeList: [],
 		articledetail: {},
@@ -29,10 +35,20 @@ export const state = () => {
 export const mutations = {
 	updateArticleList(state, data) {
 		state.articleList = data
-  },
-  updateArticleTotal(state, data) {
+	},
+	updateArticleList2(state, data) {
+		state.articleList2 = data
+	},
+	updateArticleList3(state, data) {
+		state.articleList3 = data
+	},
+	updateArticleList4(state, data) {
+		state.articleList4 = data
+  	},
+  	updateArticleTotal(state, data) {
 		state.articleTotal = data
 	},
+	
 	updateNoticeList(state, data) {
 		state.noticeList = data
 	},
@@ -42,6 +58,15 @@ export const mutations = {
 	},
 	updateNoticeInfo(state, data) {
 		state.noticeInfo = data
+	},
+	updateNoticeInfo1(state, data) {
+		state.noticeInfo1 = data
+	},
+	updateNoticeInfo2(state, data) {
+		state.noticeInfo2 = data
+	},
+	updateNoticeInfo3(state, data) {
+		state.noticeInfo3 = data
 	},
 	updateArticleInfo(state, data) {
 		state.articleInfo = data
@@ -73,8 +98,38 @@ export const actions = {
 		let res = await sendCurl(this, server.api.information.getArticleList, params)
 
 		if (res.status === 200) {
-		  commit('updateArticleList', res.data.items)
+			console.log(res.data.items)
+			
 		  commit('updateArticleTotal', res.data.total)
+		  commit('updateArticleList', res.data.items)
+
+		}
+	},
+	async getArticleList2({commit}, params) {
+		commit('updateCurrPage', parseInt(params.current_page))
+
+		let res = await sendCurl(this, server.api.information.getArticleList, params)
+
+		if (res.status === 200) {
+		  commit('updateArticleList2', res.data.items)
+		}
+	},
+	async getArticleList3({commit}, params) {
+		commit('updateCurrPage', parseInt(params.current_page))
+
+		let res = await sendCurl(this, server.api.information.getArticleList, params)
+
+		if (res.status === 200) {
+		  commit('updateArticleList3', res.data.items)
+		}
+	},
+	async getArticleList4({commit}, params) {
+		commit('updateCurrPage', parseInt(params.current_page))
+
+		let res = await sendCurl(this, server.api.information.getArticleList, params)
+
+		if (res.status === 200) {
+		  commit('updateArticleList4', res.data.items)
 		}
 	},
 	//首页行情资讯
@@ -99,31 +154,6 @@ export const actions = {
 			.catch(error => {
 				console.log('err', error)
 			})
-
-		// for(var i=0;i<=6; i++){
-		// 	let params={
-		// 		current_page:  1, page_size: 4, catId: i,sortBy: 'add_time', desc: true, isShow: 1
-		// 	}
-		// 	console.log('params:',params)
-		//
-		// 	sendCurl(this, server.api.information.getArticleList, params).then(res=>{
-		// 	console.log('res',res)
-		// 		dataarray[i]=res.data.items
-		//
-		// 		commit('updateindexarticelist', dataarray)
-		// 	})
-		// }
-
-		// cate.forEach((item,index)=>{
-		// 	let params={
-		// 		current_page:  1, page_size: 4, catId: item.id,sortBy: 'add_time', desc: true, isShow: 1
-		// 	}
-		// 	sendCurl(this, server.api.information.getArticleList, params).then(res=>{
-		// 		dataarray[item.id]=res.data.items
-		// 		commit('updateindexarticelist', dataarray)
-		// 	})
-		// })
-
 	},
 	async getNoticeList({commit}, params) {
 		commit('updateCurrPage', parseInt(params.current_page))
@@ -143,10 +173,40 @@ export const actions = {
 				console.log('err', error)
 			})
 	},
-	async getHomeNotice({commit}, {params}) {
+	async getHomeNotice({commit}, params) {
 		return await this.$axios.$get(api.prefix + api.api.information.announcement, {params})
 			.then(response => {
 				commit('updateNoticeInfo', response.items)
+			})
+			.catch(error => {
+				console.log('err', error)
+			})
+	},
+	async getHomeNotice1({commit}, params) {
+		return await this.$axios.$get(api.prefix + api.api.information.announcement, {params})
+			.then(response => {
+				console.log('111',params)
+				commit('updateNoticeInfo1', response.items)
+			})
+			.catch(error => {
+				console.log('err', error)
+			})
+	},
+	async getHomeNotice2({commit}, params) {
+		return await this.$axios.$get(api.prefix + api.api.information.announcement, {params})
+			.then(response => {
+				console.log('222',params)
+				commit('updateNoticeInfo2', response.items)
+			})
+			.catch(error => {
+				console.log('err', error)
+			})
+	},
+	async getHomeNotice3({commit},params) {
+		return await this.$axios.$get(api.prefix + api.api.information.announcement, {params})
+			.then(response => {
+				console.log('333',params)
+				commit('updateNoticeInfo3', response.items)
 			})
 			.catch(error => {
 				console.log('err', error)
@@ -173,22 +233,13 @@ export const actions = {
 	async getArticleCatList({commit}, params) {
  		return await this.$axios.$get(api.prefix + api.api.information.infocate, {params})
 			.then(response => {
-
-
-
  				commit('updateArticleCatList', response)
-
-
-
-
-
 			})
 			.catch(error => {
 				console.log('err', error)
 			})
 	},
 	async getArticleDetail({commit}, params) {
-    console.log(params)
 		return await this.$axios.$get(api.prefix + api.api.information.infodetail, {params})
 			.then(response => {
         if (response.errorcode) {

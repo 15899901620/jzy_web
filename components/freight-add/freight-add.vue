@@ -32,26 +32,26 @@
           </Col>
           <Col span="12" style="margin-top: 5px;">
             <FormItem label="提货仓库">
-              <Input v-model="datalist.warehouseName" disabled placeholder="请输入提货仓库"></Input>
+              <Input v-model="formAddress.warehouseName" disabled placeholder="请输入提货仓库"></Input>
             </FormItem>
           </Col>
         </Row>
         <Row index="0">
           <Col span="12" style="margin-top: 5px;">
             <FormItem label="联系人" prop="name">
-              <Input v-model="formAddress.contact" placeholder="请输入收货人的姓名"></Input>
+              <Input v-model="formAddress.contact" disabled placeholder="请输入收货人的姓名"></Input>
             </FormItem>
           </Col>
           <Col span="12" style="margin-top: 5px;">
             <FormItem label="联系电话" prop="phone">
-              <Input v-model="formAddress.phone" placeholder="请输入收货人的联系电话"></Input>
+              <Input v-model="formAddress.phone" disabled placeholder="请输入收货人的联系电话"></Input>
             </FormItem>
           </Col>
         </Row>
         <Row index="1">
           <Col span="22" style="margin-top: 5px;">
             <FormItem label="提货地址">
-              <Input v-model="formAddress.dispatchFullAddress" disabled></Input>
+              <Input v-model="formAddress.warehouseAddress" disabled></Input>
             </FormItem>
           </Col>
         </Row>
@@ -111,6 +111,13 @@
             </FormItem>
           </Col>
         </Row>
+		<Row index="5">
+		   <Col style="margin-top: 5px;">
+            <FormItem label="备注" prop="pickupMode">
+            	 <textarea v-model="formAddress.remark"   placeholder=""  style="width: 400px;height: 65px;border: 1px solid #dcdee2;border-radius: 5px;" />
+            </FormItem>
+          </Col>
+	 	 </Row>
       </Form>
     </div>
     <p slot="footer" style="text-align:center">
@@ -236,6 +243,7 @@
 				userinfo: {},
 				date: '',
 				formAddress: {
+					remark:'',
 					memberId: '',
 					contact: '',    //收货人姓名
 					phone: '',   //收货人电话
@@ -246,7 +254,9 @@
 					district: '',      //区县
 					receiver_district: '',
 					provinceId: '',
+					warehouseAddress:'',
 					dispatchFullAddress: '',
+					warehouseName:'',
 					address: '',//详细地址
 					defaultAddress: false,    //设置默认地址
 					demandBeginDate: this.$utils.dateFormat(new Date(), 'yyyy-MM-dd'),
@@ -302,6 +312,11 @@
 			cancelDelay() {
 
 			},
+			async dataList() {	
+			
+
+
+			},
 			selectLang(e) {
 				this.title = this.localList[e]
 			},
@@ -312,11 +327,21 @@
 
 			async dataList() {
 				// var date= new Date(Date.parse(res.data.demandEndDate.replace(/-/g, "/")))
+				let res={}
+				let params = {
+					orderId: this.datalist.id,
+				}
+				res = await sendHttp(this, true, server.api.order.getOrderInfoById, params, 1)
+				console.log(res)
+				
+				this.formAddress.contact = res.data.contacter	
+				this.formAddress.phone =  res.data.phone	
+				this.formAddress.warehouseAddress =  res.data.warehouseAddress
+				this.formAddress.warehouseName =  res.data.warehouseName			
 				let t = new Date(this.datalist.deliveryDeadline)
 				this.date = t.getTime();
 				this.formAddress.demandEndDate = this.$utils.dateFormat(t, 'yyyy-MM-dd')
-				this.formAddress.contact = ''
-				this.formAddress.phone = ''
+				
         //todo 在此初始化，展示用户的联系人，默认到物流联系人，没有物流联系人填充账号联系人
         //todo 在些初始化，展示提货地址，提货地址为仓库的详细地址
 			},
@@ -370,6 +395,7 @@
 						receiptDistrict: this.formAddress.district,      //区县
 						demandBeginDate: this.formAddress.demandBeginDate,
 						demandEndDate: this.formAddress.demandEndDate,
+						remark:this.formAddress.remark
 					}
 					const res = await sendHttp(this, true, server.api.biddding.freightDemand, params, 1)
 					if (res.data == true) {

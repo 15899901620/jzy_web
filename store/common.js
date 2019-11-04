@@ -16,6 +16,7 @@ export const state = () => {
 		sysConfig: {},
 		adList:{},
 		friendlyList: [],
+		TurnoverList:[],
 	}
 }
 
@@ -44,6 +45,9 @@ export const mutations = {
 	},
 	updateFriendlyList(state, data){
 		state.friendlyList = data
+	},
+	updateTurnoverInfo(state, data){
+		state.TurnoverList = data
 	}
 }
 
@@ -82,6 +86,16 @@ export const actions = {
 			commit('updateHotCategory', res.data)
 		}
 	},
+	async getTurnoverInfo({commit}){
+		try{
+			let res = await sendCurl(this, server.api.order.getTurnoverInfo, {})
+			if (res.status === 200) {
+				commit('updateTurnoverInfo', res.data)
+			}
+		}catch (e) {
+			console.log('获取成交统计异常')
+		}
+	},
 	async getHotProduct({commit}) {
 		let res = await sendCurl(this, server.api.product.goodsHot, {})
 		if (res.status === 200) {
@@ -101,15 +115,23 @@ export const actions = {
 		}
 	},
 	async getBannerList({commit}, position) {
-		let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
-		if (res.status === 200) {
-			commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
+		try{
+			let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
+			if (res.status === 200) {
+				commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
+			}
+		}catch (e) {
+			console.log('获取广告图片异常，位置为：', position)
 		}
 	},
 	async getFriendlyList({commit}) {
-		let res = await sendCurl(this, server.api.sysconf.getFriendLink, {})
-		if (res.status === 200) {
-			commit('updateFriendlyList', res.data)
+		try{
+			let res = await sendCurl(this, server.api.sysconf.getFriendLink, {})
+			if (res.status === 200) {
+				commit('updateFriendlyList', res.data)
+			}
+		}catch (e) {
+			console.log("获取友情链接异常", e)
 		}
 	},
 }

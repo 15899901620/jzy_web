@@ -5,7 +5,7 @@
         <img src="/img/index_acution.png" style="width: 100%; height: 100%"/>
       </div>
     </a>
-    <div class="ovh pr" style="width: 966px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
+    <div class="ovh pr" style="width: 966px" id="parent" >
       <!--      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">-->
       <!--        <img src="../../static/img/back.png"/>-->
       <!--      </div>-->
@@ -14,12 +14,12 @@
           <li ref="elememt" v-for="(items, index) in $store.state.bidders.auctionList" :key="index">
             <div class="endTime endTimebg" v-if="items.statusType == '1'">
               <!--距开始时间 :-->
-              <TimeDown :timeStyleType="2" :endTime="items.realEndTime" dayShow hoursShow endMsg=""
+              <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.realEndTime" dayShow hoursShow endMsg="已开始"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
             <div class="endTime endTimebg" v-if="items.statusType == '2'">
               <!--距结束时间 :-->
-              <TimeDown :timeStyleType="2" :endTime="items.beginTime" dayShow hoursShow endMsg=""
+              <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.beginTime" dayShow hoursShow endMsg="已结束"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
             <div class="endTime graybg" v-if="items.statusType == '3'">

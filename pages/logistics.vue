@@ -3,37 +3,8 @@
 		<Header name="头部"></Header>
 		<div class="container" title="">
 			<div class="tac">
-				<img src="/img/logisticsBanner.png" style="width: 100%" />
+				<img src="/img/logisticsBanner.jpg" style="width: 100%" />
 			</div>
-			<!--询价找车-->
-<!--			<div class="inquirybg">-->
-<!--				<div class="inquiryCar">-->
-<!--					<h2>询价找车</h2>-->
-<!--					<ul class="inquiryList">-->
-<!--						<li>-->
-<!--							<div class="inquiryTitle iconbg01">发货仓</div>-->
-<!--                            <Select v-model="searchForm.warehouse_id" style="width:170px">-->
-<!--                                <i-option v-for="(item, index) in warehouseList" :value="item.id" :key="index">{{ item.wName }}</i-option>-->
-<!--                            </Select>-->
-<!--						</li>-->
-<!--						<li>-->
-<!--							<div class="inquiryTitle iconbg02">卸货点</div>-->
-<!--                            <Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:170px"></Cascader>-->
-<!--						</li>-->
-<!--						<li>-->
-<!--							<div class="inquiryTitle iconbg03">类&nbsp;&nbsp;&nbsp;目</div>-->
-<!--                            <Select v-model="searchForm.category_code" style="width:170px">-->
-<!--                                <i-option v-for="(item, index) in categoryList" :value="item.code" :key="index">{{ item.name }}</i-option>-->
-<!--                            </Select>-->
-<!--						</li>-->
-<!--						<li>-->
-<!--							<div class="inquiryTitle iconbg04">吨&nbsp;&nbsp;&nbsp;位</div><input type="text" class="inquiryText" name=""-->
-<!--								id="" value="" />-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--					<div class="inquiryFree" @click='searchFreight'>查询运价</div>-->
-<!--				</div>-->
-<!--			</div>-->
 			<div class="w1200">
 				<!--询价找车-->
 				<div class="inquirybg">
@@ -64,11 +35,7 @@
 							<FormItem :label-width="30">
 								<Button  class="inquiryFree" type="primary" @click="searchFreight()">查询运费</Button>
 							</FormItem>
-
-
-
 						</Form>
-
 					</ul>
 				</div>
 				<!--物流找车/实时数据-->
@@ -153,19 +120,18 @@
                 <Table size="small" border stripe highlight-row :columns="searchColumns"   :data="searchData" :content="self" >
                 </Table>
             </div>
-			<div slot="footer">
-				<Button type="primary" @click="searchModalCancel">确定</Button>
-			</div>
+            <div slot="footer">
+              <Button type="primary" @click="searchModalCancel">确定</Button>
+            </div>
         </Modal>
-
 	</div>
 </template>
 
 <script>
 	// Logisticslist
 	import Logisticslist from '../components/logistics-list/logistics-list'
-    import { getWarehouseList, getERPCategoryList, searchFreightFee } from '../api/logistics'
-    import { provinceData, cityregionData } from '../api/users'
+  import { getWarehouseList, getERPCategoryList, searchFreightFee } from '../api/logistics'
+  import { provinceData, cityregionData } from '../api/users'
 	import {
 		mapState
 	} from 'vuex'
@@ -180,28 +146,28 @@
 			Footer,
 			Logisticslist
 		},
-        data() {
-            return {
-                self: this,
-                warehouseList: [],
-                categoryList: [],
-                registList: [],
-                searchForm: {
-                    warehouse_id: 0,
-                    category_code: '',
-                    country_id: 1,
-                    to_region_id: []
-				},
-				reaList:{},
-                searchModalShow: false,
-                searchData: [],
-                searchColumns: [
-                    { title: '运输方式', key: 'transportation' },
-                    { title: '费用', key: 'freight_fee'}
-                ],
-            }
-        },
-        methods: {
+    data() {
+        return {
+            self: this,
+            warehouseList: [],
+            categoryList: [],
+            registList: [],
+            searchForm: {
+                warehouse_id: 0,
+                category_code: '',
+                country_id: 1,
+                to_region_id: []
+    },
+    reaList:{},
+            searchModalShow: false,
+            searchData: [],
+            searchColumns: [
+                { title: '运输方式', key: 'transportation' },
+                { title: '费用', key: 'freight_fee'}
+            ],
+        }
+    },
+    methods: {
  			async offerList(){
 				  let params={
 					  current_page:1,
@@ -316,11 +282,7 @@
 			])
 		},
 	}
-
 </script>
-
-
-
 <style scoped>
 	.ivu-form{display: flex;}
 	.ivu-form >>> .ivu-select-selection{

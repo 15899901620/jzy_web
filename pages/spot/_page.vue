@@ -49,7 +49,7 @@
               <input type="text" v-model="minPrice" class="priceInput" placeholder="￥最低价"/>-
               <input type="text" v-model="maxPrice" class="priceInput" placeholder="￥最高价"/>
             </div>
-            <div class="xhBtn" @click="spotData">确定</div>
+            <div class="xhBtn" @click="spotData">搜索</div>
           </div>
         </div>
         <!--现货列表-->
@@ -96,16 +96,16 @@
                   已售罄
                   </template>
                   <template v-else-if="item.on_sale == 2 && item.available_num > 0">
-                  已失效
+                  已结束
                   </template>
                   <template v-else>
-                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已失效" :onTimeOver="reloadPage"></TimeDown>
+                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                   </template>
                 </span>
                 <span style="width: 7%;">{{item.delivery_deadline}}</span>
                 <span style="width: 12%;">
                   <div
-                      v-if="($store.state.memberToken && item.available_num < item.delivery_min && item.available_num < item.take_their_min) || item.on_sale != 1 || item.on_sale == 2"
+                      v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
                       style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
@@ -158,7 +158,7 @@
 				store.dispatch('spot/getSpotList', {
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
-						page_size: 10
+						page_size: 6
 					}
 				),
 			])
@@ -175,7 +175,7 @@
 				checkTypeShow: false,
 
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 10,
+				page_size: 6,
 				categoryId: this.$route.query.category_id || '',
 				processId: this.$route.query.level_id || '',
 				skuName: this.$route.query.keyword || '',

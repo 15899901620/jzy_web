@@ -26,14 +26,14 @@
               <template v-if="auctionInfo.statusType == '1'">
                 <span class="fs16">距离结束：</span>
                 <span class="fs16">
-                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>
               <template v-else-if="auctionInfo.statusType == '2'">
                 <span class="fs16">距离开始：</span>
                 <span class="fs16">
-                  <TimeDown :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>
@@ -626,6 +626,7 @@
         this.DepositData.addNum = this.auctionInfo.minOrder
         this.DepositData.depositNum = this.auctionInfo.depositNum
         this.DepositData.Bond = this.auctionInfo.marginRatio
+        this.DepositData.totalNum = this.auctionInfo.totalNum
       },
       unDepositShow(row) {
         this.DepositShow = row
@@ -641,7 +642,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
-						content: '<p>请登录后参数竞拍！</p>',
+						content: '<p>请登录后参与竞拍！</p>',
 						okText: '去登录',
 						onOk: () => {
 							location.href = '/login'
@@ -665,9 +666,7 @@
         let params = {
         }
         let res = await getAuctionunfollow(this, params)
-      console.log('2',res)
-
-          this.unfollowList = res.data
+        this.unfollowList = res.data
       },
       //所有竞拍记录
       async getAuctionRecord() {

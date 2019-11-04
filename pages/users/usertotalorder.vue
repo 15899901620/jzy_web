@@ -32,6 +32,11 @@
                     </Select>
                   </FormItem>
                 </Col>
+				<Col span="6">
+                  <FormItem label="商品名称">
+                    <Input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value=""/>
+                  </FormItem>
+                </Col>
                 <Col span="6">
                   <FormItem label="开始日期">
                     <DatePicker type="date" format="yyyy-MM-dd" placeholder="输入开始日期"
@@ -44,13 +49,7 @@
                                 @on-change="formSearch.end_time = $event"></DatePicker>
                   </FormItem>
                 </Col>
-                <Col span="6">
-                  <FormItem label="付款状态">
-                    <Select v-model="formSearch.status" placeholder="付款状态">
-                      <Option v-for="item in paystatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                    </Select>
-                  </FormItem>
-                </Col>
+              
               </Row>
               <Row>
                 <Col span="6">
@@ -60,9 +59,11 @@
                     </Select>
                   </FormItem>
                 </Col>
-                <Col span="6">
-                  <FormItem label="商品名称">
-                    <Input type="text" v-model="formSearch.skuName" placeholder="输入商品名称" name="" value=""/>
+				<Col span="6">
+                  <FormItem label="付款状态">
+                    <Select v-model="formSearch.status" placeholder="付款状态">
+                      <Option v-for="item in paystatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
                   </FormItem>
                 </Col>
                 <Col span="6"><FormItem label=""></FormItem></Col>
@@ -95,7 +96,7 @@
                 <td colspan="10">
 				  <span class="ml10">合约编号:
 						<span v-if="item.orderType==1"><a :href="`/users/plan/spot/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
-              			<span v-if="item.orderType==3"><a :href="`/users/plan/aution/${item.sourceId}`"
+              			<span v-if="item.orderType==3"><a :href="`/users/plan/auction/${item.sourceId}`"
                                                       class="mt5 blackFont blue">{{item.sourceSn}}</a></span>
             <!-- <a  class="mt5"><span class="blue">{{item.sourceSn}}</span></a> -->
                   </span>

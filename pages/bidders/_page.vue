@@ -71,7 +71,6 @@
 
         <div style="display: flex;">
           <div style="width: 77%">
-
             <div class="titlelist mt15">
               <span class="titlelist_txt">竞拍列表</span>
               <div class="auction_screen">
@@ -83,7 +82,7 @@
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="0">全部竞拍</DropdownItem>
                       <DropdownItem name="2">即将开始</DropdownItem>
                       <DropdownItem name="1">正在竞拍</DropdownItem>
                       <DropdownItem name="3">竞拍结束</DropdownItem>
@@ -95,7 +94,7 @@
                       <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                      <DropdownItem name="0">全部</DropdownItem>
+                      <DropdownItem name="0">我的竞拍</DropdownItem>
                       <DropdownItem name="1">已中标</DropdownItem>
                       <DropdownItem name="2">未中标</DropdownItem>
                     </DropdownMenu>
@@ -112,7 +111,7 @@
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span class="gray">距离结束 ：</span>
                       <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.realEndTime" hoursShow endMsg="已结束"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.realEndTime" hoursShow endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -121,7 +120,7 @@
                     <div class="statusicon vcauction">即将开始</div>
                     <div class="ml20"><span class="gray">距离开始 ：</span>
                       <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -278,13 +277,10 @@
 				// 获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
 				store.dispatch('article/getindexArticleList', {catId: 8}),
-
 				// 获取竞拍列表
 				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6, status_type: query.statusType,plan_type: query.planType,}),
-
 				// 网站公告
 				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15, sortBy:'add_time', desc:'1'}),
-
 				// 获取用户参与列表
 				store.dispatch('bidders/getPartakeList'),
 				// 侧边广告栏
@@ -315,7 +311,7 @@
 			statusTypeName: function(){
 				let type = this.statusType
 				if(type == '0'){
-          return '全部'
+          return '全部竞拍'
 				}else if(type == '1'){
 					return '正在竞拍'
 				}else if(type == '2'){
@@ -327,7 +323,7 @@
 			planTypeName: function(){
 				let type = this.planType
 				if(type == '0'){
-					return '全部'
+					return '我的竞拍'
 				}else if(type == '1'){
 					return '已中标'
 				}else if(type == '2') {
@@ -422,7 +418,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '提示',
-						content: '<p>请登录后参数竞拍！</p>',
+						content: '<p>请登录后参与竞拍！</p>',
 						okText: '去登录',
 						onOk: () => {
 							location.href = '/login'

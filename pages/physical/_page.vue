@@ -141,9 +141,6 @@ export default {
             specList: []
         }
     },
-    mounted(){
-        console.log("bannerinfo",this.bannerinfo)
-    },
     computed:{
         ...mapState({
             currPage:  state => state.physical.currPage,

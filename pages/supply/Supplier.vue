@@ -10,7 +10,7 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="居正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"
+              <input type="text" placeholder="巨正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"
                      style="width: 200px;"/>
               <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
                  style="font-size: 32px;     color: #007de4;"></i>
@@ -43,23 +43,22 @@
 				<td style="width: 10%;">
 					{{item.demandBeginDate}}
 			   </td >
-				<td style="width: 10%;">  <TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="item.inquiryEndTime" hoursShow></TimeDown></td>
+				<td style="width: 10%;"> <TimeDown :isshow="Timeloading" :timeStyleType='1' :endTime="item.inquiryEndTime" :onTimeOver="reloadPage" hoursShow></TimeDown></td>
 				<td style="width: 10%;">
 					<span v-if='item.isTax==0'>否</span>
               		<span v-else>是</span>
 				</td>
 			  <td class="operate" style="width: 10%;">
-                <div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==0' >已失效</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #25a96d;" v-if='item.status==1 && item.isQuote==0' >未报价</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #ff6c00;" v-if='item.status==1 && item.isQuote== 1'>竞价中</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==2 && item.isWin == 0'>未中标</div>
-				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #f13a39" v-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
+                <div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-if='item.status==0 || $utils.dateCompare(item.inquiryEndTime,today)==false' >已失效</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #25a96d;" v-else-if='item.status==1 && item.isQuote==0' >未报价</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #ff6c00;" v-else-if='item.status==1 && item.isQuote== 1'>竞价中</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #e9e7e7;" v-else-if='item.status==2 && item.isWin == 0'>未中标</div>
+				<div class="check mt5 blackFont" style="margin-left:15px; background-color: #f13a39" v-else-if='item.status==2 &&  item.isWin == 0'>恭喜中标 </div>
               </td>
               <td class="operate" style="width: 10%;">
-
-                <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0' @click="oldtime(item)">我要报价</div>
+				  <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0 && $utils.dateCompare(item.inquiryEndTime,today)==true' @click="oldtime(item)">我要报价</div>
                   <div class="check mt5 blackFont" v-else-if='item.status==0'   >查看详情</div>
-				<div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
+				  <div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
 
               </td>
             </tr>
@@ -91,11 +90,11 @@
         <span class="titleoffer">吨 数</span><span class="ml5 mr10">:</span><Input v-model="weight" :disabled='true' style="width: 230px;"/><span class="ml5">（吨）</span>
       </Row>
       <Row >
-        <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 每吨</span>
+        <span class="titleoffer">单 价</span><span class="ml5 mr10">:</span><Input v-model="price" placeholder="立即出价"  style="width: 230px" /><span class="ml5">/ 吨</span>
       </Row>
-        <Row >
-            <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"   placeholder=""  style="width: 230px" />
-        </Row>
+	  <Row >
+		  <span class="titleoffer">备注</span><span class="ml5 mr10">:</span><Input v-model="remark"  :disabled='true'  placeholder=""  style="width: 230px" />
+	  </Row>
 
     </Modal>
 	   <FreightDetail :isshow="detailloading" @unChange="undetailChange" :datalist='addList' :type='type'></FreightDetail>
@@ -153,6 +152,7 @@
 				isTaxs:0,
 				total_fund: '',
 				showtimeVal: '',
+				today:this.$utils.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'),
 				userinfo: {},
 				current_page: 1,
 				weight: '',
@@ -167,6 +167,7 @@
 				this.dispatchFull = row.dispatchFullAddress
 				this.receiptFull = row.receiptFullAddress
 				this.isTaxs = row.isTax
+				this.remark=row.remark
 			},
 			cancelDelay() {
 
@@ -215,6 +216,9 @@
 			check() {
 				this.getOrderList()
 			},
+			reloadPage(data) {
+				console.log(data)
+			},
 			async getOrderList() {
 				let params = {
 					'dispatchFullAddress' : this.dispatchFull,
@@ -244,5 +248,8 @@
            color: #333;
        }
 
-    }
+	}
+	.time{
+		 color: rgb(235, 62, 61);
+	}
 </style>

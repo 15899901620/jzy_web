@@ -25,7 +25,7 @@
                                 </li>
                             </ul>
                             <div class="whitebg ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-                                <pagination :total="noticelist.total" urlPage="notice-list-page" @change="changePage" :value="currPage"></pagination>
+                                <pagination :total="noticelist.total" :urlPage="'notice-list-page'" @change="changePage" :value="currPage"></pagination>
                             </div>
                         </div>
                     </outpacking>
@@ -34,7 +34,7 @@
                     <outpacking title="热点推荐">
                         <div slot="content">
                             <ul class="newsWeek">
-                               <li v-for="(item, index) in noticeHotlist" :key="index">
+                                <li v-for="(item, index) in noticeHotlist" :key="index">
                                     <div v-if="index+1 ===1" class="Recommend_orangebg Recommend_icon">{{index+1}}</div>
                                     <div v-else-if="index+1 === 2" class="Recommend_iconYellow Recommend_icon">{{index+1}}</div>
                                     <div v-else-if="index+1 === 3" class="Recommend_iconYellow Recommend_icon">{{index+1}}</div>
@@ -105,7 +105,7 @@ export default {
     methods: {
         changePage (row) {
             let id = this.$route.params.id
-            this.$router.push({name:'notice-list-page',params:{id:id},query:{page:row}})
+            this.$router.push({name:'notice-list-page',params:{page:row}})
         }
     }
 }

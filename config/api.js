@@ -28,11 +28,14 @@ let api = {
     supplierReg: '/user/supplier/register',
     supplierValid:'/auth/supplier/verify',
     userPhoneCheck: '/user/m/check/phone',
+    userlabel:'/item/category/tree',
     userValid: '/user/m/check/userName',
     userCodeCheck: '/user/m/checkCode',
     userCodeSend: '/user/m/code',
     userLoginCodeSend: '/user/m/login/code',
     gainuserInfor:'/user/m/info',
+    getuserInforId:'/user/m/info/id',
+    editAvatar:'/user/m/editAvatar',
     supplierCheck: '/user/supplier/check',
     supplierdataCheck: '/user/supplier/check/data',
     supplierNature: '/user/dictionary/code/value/supplierNature',
@@ -53,7 +56,8 @@ let api = {
    * @description 订单管理
    */
   order: {
-		getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
+    getMemberOrderList:{'url':'/bill/orderInfo/getOrderInfoByCurrMemberId', 'method':'get'} ,
+    getOrderInfoById:{'url':'/bill/orderInfo/getOrderInfoById', 'method':'get'} ,
 		getMemberOrderCount:{'url':'/bill/orderInfo/getMemberOrderCount', 'method':'get'} ,
 		getOrderPayInfo:{'url':'/bill/orderInfo/getOrderPayInfo', 'method':'get'} ,
 		orderPayment:{'url':'/bill/orderInfo/payment', 'method':'get'} ,
@@ -61,6 +65,7 @@ let api = {
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
+    getTurnoverInfo:  {'url':'/bill/orderInfo/getTurnoverInfo', 'method':'get'},
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
     paycode: '/bill/orderInfo/payment/code',
@@ -108,7 +113,8 @@ let api = {
    * @description 预售商口
    */
   advance: {
-    initAdvanceList: {'url':'/bill/book/list/show', 'method':'get'},
+    getSaleList: {'url':'/bill/booking/list/page/onSale', 'method':'get'},
+    planAdd: {'url':'/bill/booking/plan/add', 'method':'post'},
   },
   /**
    * @description 竞拍管理
@@ -125,10 +131,13 @@ let api = {
 		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
 		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
 		getContractInfo: {'url':'/bill/auctionPlanned/getContractInfo', 'method':'get'},
-
-
-        cancelfollow: {'url':'/bill/auctionFollow/cancel', 'method':'post'},        //取消关注
-        getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
+     
+    
+    cancelfollow: {'url':'/bill/auctionFollow/cancel', 'method':'post'},        //取消关注
+    getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
+    membercurr: {'url':'/bill/member_deposits/curr/page', 'method':'get'},        //合约保证金
+    auctioncurr:{'url': '/bill/auctionDeposits/curr/page', 'method':'get'},      //竞拍保证金
+    memberDefaults:{'url': '/bill/member_defaults/curr/page', 'method':'get'},      //违约单
     auctionDelete:'/bill/auction',  //删除竞拍
     auctionAdd:'/bill/auction',  //添加竞拍
     auctionEdit:'/bill/auction',  //编辑竞拍

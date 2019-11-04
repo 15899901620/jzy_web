@@ -7,7 +7,7 @@
               <li v-for="(item, index) in $store.state.article.noticeList" :key="index" v-if="index<4">
                 <span>{{item.time}}</span>
                 <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
-                  {{item.title}}
+                  <span  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
                 </nuxt-link>
               </li>
             </template>
@@ -38,19 +38,25 @@
 <script>
 const prefixCls = 'ant-hotinfo'
 import tabs from '../tabs'
-
 export default {
   name: "hotinfo",
   components: {
     tabs,
-    tabsPane: tabs.pane
+    tabsPane: tabs.pane,
+   
+  },
+  data(){
+    return{
+      m_class:'',
+      newDate: this.$utils.dateFormat(new Date(), 'MM-dd')
+    }
   },
 
   mounted(){
-
+      console.log(this.$utils.dateFormat(new Date(), 'MM-dd'))
   },
   computed: {
-    classes() {
+    classes(item) {
       return [
         `${prefixCls}`,
         { [`${prefixCls}-hotinfo`]: this.vertical },
@@ -62,3 +68,6 @@ export default {
   },
 }
 </script>
+<style scoped>
+  .redtitle{width: 80%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; color: #e50618;}
+</style>

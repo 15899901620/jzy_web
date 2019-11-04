@@ -35,8 +35,8 @@
                             <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
                             <span class="BSHARE_COUNT bshare-share-count">0</span>
                           </div>
-                          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
-                          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                          <!-- <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+                          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script> -->
                         </div>
                         </div>
                         <div class="mt20 mb40 fs14" v-html="this.articledetail.content" style="min-height: 80vh; text-indent: 28px;"></div>

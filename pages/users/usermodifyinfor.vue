@@ -67,7 +67,7 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import { getGainuserInfor } from  '../../api/users'
+import { getGainuserInfor,getuserInforId } from  '../../api/users'
 import { getCookies } from '../../config/storage'
 
 
@@ -89,38 +89,6 @@ export default {
     data(){
         return{
             userinfor:{
-            authorization_elc: "",
-            avatar: null,
-            business_license: "",
-            channel_type_name: "",
-            channel_type_value: "",
-            company_name: "",
-            contacter: "人",
-            contacter_email: null,
-            contacter_mobile: null,
-            corporation: "",
-            created: "",
-            id:'',
-            industry_name: "",
-            industry_value: "",
-            inv_address: "",
-            inv_bank_account: "",
-            inv_bank_name: "",
-            inv_telephone: "",
-            is_active: 1,
-            main_materials_name: "",
-            main_materials_value: "",
-            member_no: "",
-            member_type_name: "",
-            member_type_value: "",
-            password: "",
-            phone: "18750123840",
-            property_name: "",
-            property_value: "",
-            salesman_code: null,
-            salesman_name: null,
-            tax_id: "",
-            username: "",
             }
         }
     },
@@ -128,8 +96,14 @@ export default {
         //获取用户信息
         async UserInfor(){
             const res=await getGainuserInfor(this,{})
-     
-            this.userinfor=res.data
+            this.isAddressFormShow = true
+            var   params= {
+                member_id:res.data.id
+            }
+            const res1=await getuserInforId(this,params)
+            this.userinfor=res1.data
+            
+           
         },
         isLogin () {
           let userinfo = !getCookies('userinfor') ? '' : getCookies('userinfor')

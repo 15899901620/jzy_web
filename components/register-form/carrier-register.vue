@@ -511,7 +511,13 @@ export default {
     },
     methods:{
         getUploadURL(){
-          this.uploadUrl = process.env.NODE_ENV === 'development' ? appConfig.system.UPLOAD_URL.dev : appConfig.system.UPLOAD_URL.pro
+          if (process.env.NODE_ENV === 'development') {
+            this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+          } else if (process.env.NODE_ENV === 'testprod') {
+            this.uploadUrl = appConfig.system.UPLOAD_URL.test
+          } else {
+            this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+          }
         },
         getItemValue(items){
           this.formCustom.natureName=items.value,           //供应商性质

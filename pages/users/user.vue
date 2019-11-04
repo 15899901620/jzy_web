@@ -15,12 +15,11 @@
                   <img :src="!$store.state.memberInfo.avatar?this.headImage:$store.state.memberInfo.avatar"   />
                 </template>
 
-
                 <div class="headClick"   >
 <!--                  上传-->
                   <Upload
                         ref="upload"
-                        action="/api/upload/image"
+                        :action="uploadUrl"
                         :show-upload-list="false"
                         :on-success="handleSuccess">
                   <Button  style="width: 86px;height: 25px; padding: 0 10px;line-height: 0;" >上传</Button>
@@ -28,7 +27,7 @@
                 </div>
               </div>
               <span class="mt10">{{showtimeVal}}好，{{userinfor.phone}}</span>
-              <span>欢迎来到巨正源科技官方交易平台！</span>
+              <span>欢迎来到巨正源科技官电商平台！</span>
               <div class="gray mt10 mb10 fs12">上次登录时间：{{$store.state.memberInfo.lastLoginTime}}</div>
             </div>
             <div class="pricebg">
@@ -51,7 +50,7 @@
                   </div>
                 </div>
 
-                <div class="dflexPrice">
+                <div class="dflexPrice" @click='memberCurr'>
                   <div class="Frozen_icon"></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>合约冻结金额</span>
@@ -59,8 +58,8 @@
                   </div>
                 </div>
 
-                <div class="dflexPrice">
-                  <div class="auction_icon"></div>
+                <div class="dflexPrice" @click='auctionCurr'>
+                  <div class="auction_icon" ></div>
                   <div class="" style="display: flex; flex-direction: column; margin-left: 15px;">
                     <span>竞拍冻结金额</span>
                     <span class="fs18 fwb">{{$store.state.member.capitalInfo.shop_freeze_amount_format}}</span>
@@ -159,15 +158,17 @@
 </template>
 
 <script>
-  import { manageEdit,getGainuserInfor } from  '../../api/users'
+  import { manageEdit,getGainuserInfor,editAvatar } from  '../../api/users'
 	import Navigation from '../../components/navigation'
   import Cookies from 'js-cookie'
   import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
   import {orderpage} from '../../api/order'
 	import OrderPay from '../../components/paydeposit/orderPay'
   import {parse, stringify} from 'qs'
-    import { getCookies } from '../../config/storage'
-    import config from '../../config/config'
+  import { getCookies } from '../../config/storage'
+  import config from '../../config/config'
+  import appConfig from '../../config/app.config'
+
 
 	export default {
 		name: 'index',
@@ -190,7 +191,8 @@
 		data() {
 			return {
 				dataRow: {},
-				payOrderID: 0,
+        payOrderID: 0,
+        uploadUrl: '',
 				payLoading: false,
 				total_amount_format: '',
 				freeze_amount_format: '',
@@ -198,20 +200,28 @@
 				hotorderinfo: [],
 				total_fund: '',
 				showtimeVal: '',
-                headImage:'/img/headImage.png',
-                Headavatar:'',
-                 userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
+        headImage:'/img/headImage.png',
+        Headavatar:'',
+        userinfor: !getCookies('userinfor') ? '' : getCookies('userinfor'),
 			}
 		},
 		methods: {
-          ...mapMutations('login', [
-            'updateUserInfof'
-          ]),
-          //竞拍列表页
-          biddersList(){
-
-            this.$router.push({name:"bidders"})
-          },
+      ...mapMutations('login', [
+        'updateUserInfof'
+      ]),
+      //竞拍列表页
+      biddersList(){
+        this.$router.push({name:"bidders"})
+      },
+      getUploadURL(){
+        if (process.env.NODE_ENV === 'development') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+        } else if (process.env.NODE_ENV === 'testprod') {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.test
+        } else {
+          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+        } 
+      },
 			//订单类型
 			getOrderType(typeId) {
 
@@ -252,7 +262,13 @@
 				var seconds = now.getSeconds()
 				var timeValue = "" + ((hours >= 12) ? "下午" : "上午")
 				this.showtimeVal = timeValue
-			},
+      },
+      memberCurr(){
+          this.$router.push({name: 'users-ContractDeposit', query: {status: 2}})
+      },
+      auctionCurr(){
+          this.$router.push({name: 'users-AutionDeposit', query: {status: 1}})
+      },
 			async getOrderList() {
 				let params = {
 					current_page: 1,
@@ -264,54 +280,67 @@
 				this.hotorderinfo = res.data.items
 			},
 
-          handleSuccess (res) {
-            this.Headavatar= res.url
-            this.EditUserinfo(this.Headavatar)
-          },
-          async EditUserinfo(avatarImg){
-            this.userinfor= getCookies('userinfor')
-            let data = {
-              phone: this.userinfor.phone,
-              avatar:avatarImg,
-              companyName: this.userinfor.username,
-              business_license:  this.userinfor.business_license,
-              authorization_elc:  this.userinfor.authorization_elc,
-              taxId: this.userinfor.taxId,
-              invBankName: this.userinfor.invBankName,
-              invBankAccount: this.userinfor.invBankAccount,
-              invAddress: this.userinfor.invAddress,
-              invTelephone: this.userinfor.invTelephone,
+      handleSuccess (res) {
+        this.Headavatar= res.url
+        console.log('222',res)
+        this.editAvatar();
+      },
+      async editAvatar(){
 
-            }
-            const res=await manageEdit(this, data)
-            if(res.data===true && res.status ===200){
-              this.$Message.info({
-                content: '修改成功',
-                duration: 5,
-                closable: true
-              })
-              let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
+         let data = {
+          avatar:this.Headavatar
+        }
+        console.log(data)
+         const res=await editAvatar(this, data)
+          let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
 
-              const res = await getGainuserInfor(this, {})
-              if (res.status === 200 && res.data) {
-                let auth = stringify(res.data)
-                Cookies.set('userinfor', auth, {expires: expires})
-                Cookies.set('memberInfo', res.data, {expires: expires})
-                this.updateUserInfof(res.data)
+          const res1 = await getGainuserInfor(this, {}) 
+          if (res1.status === 200 && res1.data) {
+            let auth = stringify(res1.data)
+            Cookies.set('userinfor', auth, {expires: expires})
+            Cookies.set('memberInfo', res1.data, {expires: expires})
+            this.updateUserInfof(res1.data)
+          }
+      },
+      async EditUserinfo(avatarImg){
+        this.userinfor= getCookies('userinfor')
+        let data = {
+          phone: this.userinfor.phone,
+          avatar:avatarImg,
+          companyName: this.userinfor.username,
+          business_license:  this.userinfor.business_license,
+          authorization_elc:  this.userinfor.authorization_elc,
+          taxId: this.userinfor.taxId,
+          invBankName: this.userinfor.invBankName,
+          invBankAccount: this.userinfor.invBankAccount,
+          invAddress: this.userinfor.invAddress,
+          invTelephone: this.userinfor.invTelephone,
 
-              } else {
+        }
+        const res=await manageEdit(this, data)
+        if(res.data===true && res.status ===200){
+          this.$Message.info({
+            content: '修改成功',
+            duration: 5,
+            closable: true
+          })
+          let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
 
-              }
-
-
-            }
-          },
+          const res = await getGainuserInfor(this, {})
+          if (res.status === 200 && res.data) {
+            let auth = stringify(res.data)
+            Cookies.set('userinfor', auth, {expires: expires})
+            Cookies.set('memberInfo', res.data, {expires: expires})
+            this.updateUserInfof(res.data)
+          }
+        }
+      },
 		},
 		mounted() {
-		  console.log("capitalInfo",this.$store.state.member.capitalInfo)
-			 this.showtime()
-			 this.getOrderList()
-      }
+      this.getUploadURL()
+      this.showtime()
+      this.getOrderList()
+    }
 	}
 </script>
 <style lang="less" scoped>

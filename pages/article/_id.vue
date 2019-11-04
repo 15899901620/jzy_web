@@ -19,7 +19,7 @@
               </outpacking>
               <outpacking v-else :title="this.currCategoryInfo.title" :total="$store.state.article.articleTotal">
                 <div slot="content">
-                  <ul class="NewContentlist">
+                  <ul class="NewContentlist"> 
                     <li v-for="(items, index) in $store.state.article.articleList" :key="index">
                       <div class="newsImg">
                         <nuxt-link class="blueFont fr" :to="{name:'article-detail-id', params:{id:items.id}}"><img :src="items.image" :alt="items.title" :id="index"></nuxt-link>
@@ -147,7 +147,6 @@ export default {
             this.currCategoryInfo = {
                 title:'全部',
                 seoKeywords:'全部',
-                seoDescription:'全部',
                 seoDescription:'全部',
             }
         }

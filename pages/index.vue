@@ -5,10 +5,13 @@
       <!--内容-->
       <Banner title="" :bannerData="$store.state.common.adList.ad1" :heightNum="this.heightNum" style="height: 320px; overflow: hidden;"/>
       <div class="memberCenter">
+        <div class="mc_tm">
         <hotrecommend>
           <hotinfo title=""></hotinfo>
         </hotrecommend>
+        </div>
       </div>
+        <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.todayNum)}}</i>昨日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.yesterdayNum)}}</i>月成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.monthNum)}}</i>累计成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.allNum)}}</i></span><b><img src="/img/new_time.gif">更新时间：{{$store.state.common.TurnoverList.ctime}}</b></div>
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
@@ -43,6 +46,17 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
+    <!--<script id="qd288570929125de54b1b05179506f548d8f6e40700f" src="https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f" charset="utf-8"></script>-->
+    <!--<iframe
+      src="qqonline.html"
+      height="800"
+      scrolling="no" 
+      frameborder="0" 
+      allowtransparency="true" 
+      id="iframe" 
+      style="width:98%; left: 20px; bottom: 0px; position: fixed; z-index: 2000000000; border-radius: 4px;">
+    </iframe> -->
+
   </div>
 </template>
 
@@ -64,9 +78,6 @@ import SpotList from '../components/spot-list'
 import LogisticsList from '../components/logistics-list'
 import indexnewstabs from '../components/indexnewstabs'
 import newsinfo from '../components/indexnews'
-import {setCookies} from "../config/storage";
-import { getCookies } from '../config/storage'
-
 
 export default {
   fetch({store}) {
@@ -84,6 +95,7 @@ export default {
       }),
       //获取轮播图
       store.dispatch('common/getBannerList', 1),
+      store.dispatch('common/getTurnoverInfo'),
       store.dispatch('article/getArticleList', {current_page:  1, page_size: 4, catId: 6,sortBy: 'add_time', desc: true, isShow: 1}),
       store.dispatch('article/getArticleCatList',{parentId: 0}),
       store.dispatch('article/getindexArticleList',{catId:this.articleCates}),
@@ -106,7 +118,7 @@ export default {
       //获取现货列表
       store.dispatch('spot/getSpotList', {
         current_page: 1,
-        page_size: 20
+        page_size: 6
       }),
     ])
   },
@@ -153,6 +165,11 @@ export default {
     ...mapState({
       bannerinfo: state => state.system.bannerinfo
      })
-  }
+  },
+	head: {
+		script: [
+			{ body: true, src: 'https://wp.qiye.qq.com/qidian/2885709291/25de54b1b05179506f548d8f6e40700f', id: 'qd288570929125de54b1b05179506f548d8f6e40700f' }
+		]
+	}
 }
 </script>

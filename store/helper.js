@@ -31,20 +31,24 @@ export const mutations = {
 
 export const actions = {
 	async getHelpCate({commit}, params) {
-		let res = await sendCurl(this, server.api.helper.getHelpCatTree, params)
-		if (res.status === 200) {
-			let cateData = res.data
-			for (let k in cateData) {
-				let params2 = {
-					catId: cateData[k].id,
-					indexShow: 1
-				}
-				const rest = await sendCurl(this, server.api.helper.getHelpPage, params2)
+		try{
+			let res = await sendCurl(this, server.api.helper.getHelpCatTree, params)
+			if (res.status === 200) {
+				let cateData = res.data
+				for (let k in cateData) {
+					let params2 = {
+						catId: cateData[k].id,
+						indexShow: 1
+					}
+					const rest = await sendCurl(this, server.api.helper.getHelpPage, params2)
 
-				let restdata = rest.data
-				cateData[k]['clist'] = restdata
+					let restdata = rest.data
+					cateData[k]['clist'] = restdata
+				}
+				commit('updateHelperCat', cateData)
 			}
-			commit('updateHelperCat', cateData)
+		}catch (e) {
+			console.log('获取帮助分类异常：', e)
 		}
 	},
 

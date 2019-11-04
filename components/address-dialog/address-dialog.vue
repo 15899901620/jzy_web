@@ -70,7 +70,6 @@
 
 <script>
 import AddressFrom from "../address-from";
-import { getCookies } from '../../config/storage'
 import { addressAdd } from '../../api/users'
 export default {
     name: 'AddressDialog',

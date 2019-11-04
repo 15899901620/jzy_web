@@ -19,7 +19,9 @@
       <div class="mt15 dflex" style="align-items: center;">
         <span class="Bond_Popup_title">交纳数量：</span>
         <div class="pr ml10">
-          <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span>
+          <input-special :min="0" :max="datalist.totalNum-datalist.depositNum" v-model="Bonddeposit.bidNum"
+                         @change="changeNum"></input-special>
+          <!-- <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span> -->
         </div>
         <span class="ml10">已交纳<span class="orangeFont">{{datalist.depositNum}}</span>吨</span>
       </div>
@@ -39,7 +41,8 @@
             <Checkbox :disabled="true"></Checkbox>
             <span class="PricePopup_title">保证金钱包余额：</span>
             <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-            <a class="PricePopup_btn" @click="wallet()" target="_blank" style="float: right;line-height: 16px;">钱包转资金</a>
+            <a class="PricePopup_btn" @click="wallet()" target="_blank"
+               style="float: right;line-height: 16px;">钱包转资金</a>
           </p>
         </div>
       </div>
@@ -59,11 +62,16 @@
 </template>
 
 <script>
-	import { BondMessSend, AddBondRecord } from '../../api/auction'
+	import {BondMessSend, AddBondRecord} from '../../api/auction'
+	import InputSpecial from '../../components/input-special'
 
 	export default {
 		name: 'paydeposit',
+		components: {
+			InputSpecial
+		},
 		data() {
+
 			return {
 				loading: false,
 				btnValue: "获取短信验证码",
@@ -74,6 +82,7 @@
 					bidNum: 0,
 					BondCode: '',
 				},
+				currsetp: 0,
 			}
 		},
 		props: {
@@ -101,7 +110,7 @@
 			biderscancel() {
 				this.$emit('unChange', false)
 			},
-			showInvestCapital(){
+			showInvestCapital() {
 				location.href = '/users/investCapital'
 			},
 			async getNoteValue() {
@@ -129,8 +138,11 @@
 					});
 				}
 			},
-			wallet(){
+			wallet() {
 				alert('该功能正在维护')
+			},
+			changeNum(value) {
+				this.Bonddeposit.bidNum = value
 			},
 			//提交缴纳保证金
 			async bidersOK() {
@@ -159,7 +171,7 @@
 				} else {
 					this.$Modal.confirm({
 						title: '失败提示',
-						content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，请联系客服</p>',
+						content: '<p style="font-size: 16px; margin-top: 10px">缴纳保证金失败，' + res.data.message + '</p>',
 						okText: '确定',
 						styles: 'top:30px;',
 						onOk: () => {

@@ -29,7 +29,7 @@
             <li @click="chooseDelieryType(1)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':1 === currentIndex}" :key="1">
               <div style="background-color: #fff;">配送</div>
             </li>
-            <li @click="chooseDelieryType(2)" :class="{'curr':2 === currentIndex}" :key="2">
+            <li @click="chooseDelieryType(2)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':2 === currentIndex}" :key="2">
               <div style="background-color: #fff;">待定</div>
             </li>
           </ul>
@@ -37,7 +37,7 @@
         </div>
         <div class="gray" style="margin-left: 35px;">
           <template v-if="orderinfo.isDelivery == 0">
-            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{spotInfo.take_their_min}}吨</span>，数量加量幅度为<span
+            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{Math.max(spotInfo.take_their_min, spotInfo.min_order)}}吨</span>，数量加量幅度为<span
               class="orangeFont">{{spotInfo.take_bid_increment}}吨</span>）
           </template>
           <template v-else-if="orderinfo.isDelivery == 1">
@@ -118,7 +118,7 @@
             <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> ￥{{this.totalPriceFormat}}</div>
             <div style="width: 14%;">
-              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
+              <input-special :min="0" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
             </div>
             <div class="fwb orangeFont" style="width: 9%;">￥{{ this.totalAmountFormat }}</div>
@@ -486,7 +486,6 @@
  				 let res = await sendCurl(this, server.api.spot.createOrderByQuote, params)
 
 				if (res.status === 200) {
-
  					if ((res.data.errorcode || 0) == 0) {
                       //this.progressShow=false
 						location.href = '/spot/order/success?plan_no=' + res.data.plan_no + '&last_ordered_date='+ (res.data.last_ordered_date||'') + '&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
@@ -495,9 +494,9 @@
 						this.$Modal.warning({
 							title: '提示',
 							content: res.data.message,
-                            onOk: () => {
-                              this.$router.push({name: "spot-page"})
-                            }
+                onOk: () => {
+								  location.reload()
+                }
 						})
 				return
 					}
