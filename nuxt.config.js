@@ -133,8 +133,8 @@ export default {
           terserOptions: {
             warnings: false,
             compress: {
-              drop_console: true,
-              pure_funcs: ['console.log']
+              drop_console: false,
+             // pure_funcs: ['console.log']
             },
             output: {
               //是否保留注释，编译后无需保留
@@ -147,22 +147,22 @@ export default {
         })
       ],
       //代码打包分割规则
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          libs: {
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            chunks: 'initial' // only package third parties that are initially dependent
-          },
-          iview: {
-            name: 'chunk-ui',
-            priority: 20,
-            test: /[\\/]node_modules[\\/]_?iview(.*)/
-          }
-        }
-      }
+      // splitChunks: {
+      //   chunks: 'all',
+      //   cacheGroups: {
+      //     libs: {
+      //       name: 'chunk-libs',
+      //       test: /[\\/]node_modules[\\/]/,
+      //       priority: 10,
+      //       chunks: 'initial' // only package third parties that are initially dependent
+      //     },
+      //     iview: {
+      //       name: 'chunk-ui',
+      //       priority: 20,
+      //       test: /[\\/]node_modules[\\/]_?iview(.*)/
+      //     }
+      //   }
+      // }
     },
 		/*
 		 ** You can extend webpack config here
