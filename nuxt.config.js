@@ -136,8 +136,8 @@ export default {
           terserOptions: {
             warnings: false,
             compress: {
-              drop_console: true,
-              pure_funcs: ['console.log']
+              drop_console: false,
+             // pure_funcs: ['console.log']
             },
             output: {
               //是否保留注释，编译后无需保留

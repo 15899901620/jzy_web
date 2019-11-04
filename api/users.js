@@ -69,9 +69,6 @@ export const supplierLogin = (vm, data) => {
 }
 
 
-
-
-
 export const carrierCodes = (vm, data) => {
     return vm.$axios.post(server.prefix + server.api.user.carriercode,
         {

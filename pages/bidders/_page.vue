@@ -7,6 +7,7 @@
           <!-- <img :src="item.adImg"/>-->
         </div>
       </template>
+<!--      我的竞拍列表-->
       <div class="w1200" style="margin-top: 20px">
         <div class="titlelist" v-if="partakeList.length > 0">
           我的竞拍
@@ -109,18 +110,18 @@
                 <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
-                    <div class="ml20"><span class="gray">距离结束 ：</span>
+                    <div class="ml20"><span>距离结束 ：</span>
                       <span class="fs18">
-                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.realEndTime" hoursShow endMsg="已结束"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="1" :endTime="items.realEndTime" hoursShow endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
                   </template>
                   <template v-if="items.statusType == '2'">
                     <div class="statusicon vcauction">即将开始</div>
-                    <div class="ml20"><span class="gray">距离开始 ：</span>
+                    <div class="ml20"><span>距离开始 ：</span>
                       <span class="fs18">
-                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
+                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -128,8 +129,8 @@
                   <template v-if="items.statusType == '3'">
                     <div class="statusicon endauction">竞拍结束</div>
                     <div class="ml20">
-                      <span>竞拍时间 ：</span>
-                      <span class="fs16">{{items.beginTime}}</span>
+                      <span class="gray">竞拍时间 ：</span>
+                      <span class="fs16 gray">{{items.beginTime}}</span>
                     </div>
                   </template>
 
@@ -145,7 +146,7 @@
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span>
                     </div>
-                    <div class="fs14 dflex">
+                    <div class="fs14 dflex" style="align-items: center">
                       <span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}
                       <template v-if="items.isAll == 1">
                         <span class="orangeFont fs16 ml30">整单</span>
@@ -155,7 +156,7 @@
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">竞拍编号</span> ：<span class=" fs16">{{items.billNo}}</span>
                     </div>
-                    <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span
+                    <div class="fs14 dflex" style="align-items: center"><span class="iv_title">厂商</span> ：<span
                         class=" fs16">{{items.manufacturer}}</span></div>
                   </div>
 
@@ -311,7 +312,7 @@
 			statusTypeName: function(){
 				let type = this.statusType
 				if(type == '0'){
-          return '全部竞拍'
+                    return '全部竞拍'
 				}else if(type == '1'){
 					return '正在竞拍'
 				}else if(type == '2'){
@@ -360,14 +361,14 @@
           }
 				}
       },
-			handleStatusTypeOption(type){
-				this.statusType = type
-        location.href = '/bidders?page='+this.current_page+'&statusType='+this.statusType+"&planType="+this.planType
+          handleStatusTypeOption(type){
+              this.statusType = type
+              location.href = '/bidders?page='+this.current_page+'&statusType='+this.statusType+"&planType="+this.planType
       },
-			handlePlanTypeOption(type){
+          handlePlanTypeOption(type){
 				this.planType = type
 				location.href = '/bidders?page='+this.current_page+'&statusType='+this.statusType+"&planType="+this.planType
-			},
+          },
 
       async BidersAdd(items,index){
          let params={
@@ -501,6 +502,7 @@
   .btmunv {
     display: flex;
     width: 250px;
+    align-items: center;
   }
 
   .iv_title {

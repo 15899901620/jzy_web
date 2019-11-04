@@ -309,6 +309,7 @@
   .btmunv {
     display: flex;
     width: 250px;
+    align-items: center;
   }
 
   .iv_title {

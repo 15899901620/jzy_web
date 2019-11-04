@@ -27,7 +27,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr><td height="80"></td></tr>
+						<tr><td height="40"></td></tr>
 						<tr width="100%">
 							<td>
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
@@ -164,9 +164,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;margin-top: 30px">
+				<div style="page-break-after: always;"></div>
+			<div class="PrintArea"   style="font-family:'宋体';margin:0 auto;width: 800px;border: 0px dashed #d3d3d3;">
 				<div style="clear:both;position:relative;">
-					<div style="text-align: right;margin-right: 20px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
+					<div style="text-align: right;margin-right: 50px;" class="bcTarget">合约编号:JZYKJHT-YX-XS-{{OrderList.planNo}}</div>
 				<p class="ffw fs20p tac" ><span style="padding-bottom: 2px;font-size: 18px;font-weight: bold;">《合同条款及规则》</span> <span class="red fs00p"></span></p>
 
 				</div>
