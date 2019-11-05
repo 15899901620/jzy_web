@@ -6,7 +6,6 @@
             :autoplay-speed="10000">
             <Carousel-item v-for="(item, index) in bannerData" :key="index">
                 <div class="demo-carousel"   :style="{background: 'url(' + item.adImg + ')no-repeat center' }" >
-<!--                    <img :src="item.adImg"/>-->
                 </div>
             </Carousel-item>
         </Carousel>
@@ -45,10 +44,5 @@ export default {
 }
 </script>
 <style lang="less">
-    .demo-carousel{
-        width: 1920px;
-        height: 320px;
-
-        /*img{width: 100%; height: 100%}*/
-    }
+    .demo-carousel{ width: 100%; height: 320px; }
 </style>
