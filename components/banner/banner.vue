@@ -44,8 +44,5 @@ export default {
 }
 </script>
 <style lang="less">
-    .demo-carousel{
-        width: 100%;
-        height: 320px;
-    }
+    .demo-carousel{ width: 100%; height: 320px; }
 </style>
