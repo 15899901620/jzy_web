@@ -37,7 +37,7 @@
         </outpacking>
       </div> -->
 
-      <div class="hot-industry" style=" overflow: hidden">
+      <div v-if="$store.state.common.sysConfig.INDEX_SHOW_INFOMATION == 1" class="hot-industry" style=" overflow: hidden">
         <newsinfo></newsinfo>
       </div>
       <div class="co-brands">
