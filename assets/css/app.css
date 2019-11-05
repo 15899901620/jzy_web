@@ -691,6 +691,7 @@ a {
 	align-items:center;
 	margin-bottom:1px;
 	background-color:#fff;
+	font-size: 14px;
 }
 .Xhlist li:hover {
 	background-color:#f2f8fe;
