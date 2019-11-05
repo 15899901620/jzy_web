@@ -39,7 +39,7 @@
                 <span class="fr mr15"
                       v-if="item.available_num > 0 && item.status == 1">
                   <span class="red">转单倒计时：</span>
-                  <span class="red"><TimeDown :endTime="item.last_ordered_date" hoursShow endMsg="已失效"
+                  <span class="red"><TimeDown :endTime="item.last_ordered_date" endMsg="已失效"
                                               :onTimeOver="reloadPage"></TimeDown></span>
                 </span>
               </td>
@@ -125,7 +125,7 @@
                 <span class="fr mr15"
                       v-if="item.status != 3 && item.availableNum > 0 && (item.closeApplyStatus == 1 || item.closeApplyStatus == 4)">
                       <span class="red">转单倒计时：</span>
-                      <span class="red"><TimeDown :endTime="item.lastOrderedDate" hoursShow endMsg="已失效"
+                      <span class="red"><TimeDown :endTime="item.lastOrderedDate" endMsg="已失效"
                                                   :onTimeOver="$utils.reload"></TimeDown></span>
                   </span>
               </td>

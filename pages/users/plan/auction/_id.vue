@@ -6,7 +6,7 @@
         <!--个人信息-->
         <div class="whitebg" style="padding:0px 18px 18px;">
           <h3 class="fs16 " style="line-height: 46px; border-bottom: 1px solid #ddd;">竞拍合约详情 <span
-              v-if="dataInfo.availableNum > 0 && dataInfo.status == 1" style="float:right;color:red; font-size:16px;">转单倒计时： <TimeDown :endTime="dataInfo.lastOrderedDate" hoursShow endMsg="已失效"></TimeDown></span>
+              v-if="dataInfo.availableNum > 0 && dataInfo.status == 1" style="float:right;color:red; font-size:16px;">转单倒计时： <TimeDown :endTime="dataInfo.lastOrderedDate" endMsg="已失效"></TimeDown></span>
           </h3>
           <div style="line-height:32px;">
             <Row index="">
