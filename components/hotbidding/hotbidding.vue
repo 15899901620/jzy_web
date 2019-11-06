@@ -12,18 +12,21 @@
       <template v-if="$store.state.bidders.auctionList.length > 0">
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}" id='TimeL-ul'>
           <li ref="elememt" v-for="(items, index) in $store.state.bidders.auctionList" :key="index">
-            <div class="endTime endTimebg" v-if="items.statusType == '1'">
+            <div class="endTime endTimebg dflexAlemJust" v-if="items.statusType == '1'">
+              <div class="imgLogo"><img src="/img/cutDown_icon_orange.png"/></div>
               <!--距开始时间 :-->
               <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="1" :endTime="items.realEndTime" dayShow hoursShow endMsg="已开始"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
-            <div class="endTime endTimebg" v-if="items.statusType == '2'">
+            <div class="endTime endTimebg dflexAlemJust" v-if="items.statusType == '2'">
+              <div class="imgLogo"><img src="/img/cutDown_icon_orange.png"/></div>
               <!--距结束时间 :-->
               <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="2" :endTime="items.beginTime" dayShow hoursShow endMsg="已结束"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
-            <div class="endTime graybg" v-if="items.statusType == '3'">
-              竞拍结束
+            <div class="endTime graybg dflexAlemJust" v-if="items.statusType == '3'">
+              <div class="imgLogo"><img src="/img/newsTime.png"/></div>
+              <div>竞拍结束</div>
             </div>
             <h3 class="fs16 fwb mt10">{{items.skuName}}</h3>
             <div class="limitedPrice">
@@ -99,6 +102,14 @@
 	}
 </script>
 
-<style>
-
+<style lang="less">
+  .imgLogo{
+    display: flex;align-items: center;
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+    img{
+      width: 100%;
+    }
+  }
 </style>
