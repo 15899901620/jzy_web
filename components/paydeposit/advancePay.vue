@@ -181,6 +181,9 @@
 				this.proShow = true
 				this.closeShow = false
 
+				this.$Message.info("功能待完成，敬请期待！")
+        return
+
 				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params)
 				this.proShow = false
 				this.closeShow = true
@@ -216,7 +219,6 @@
 			},
 			isShow: function (e) {
 				if (e === true) {
-					console.log('dataList:',this.dataList)
 					this.$store.dispatch('member/getCapitalInfo')
 					this.Bonddeposit.bidNum = this.dataList.min_num
 					this.Bonddeposit.advance_id = this.dataList.advance_id

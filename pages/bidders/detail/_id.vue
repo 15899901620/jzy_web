@@ -748,22 +748,22 @@
         this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
         if(this.auctionInfo.status != 'CL'){
           setTimeout(function () {
-            reloadActionInfo();
+            reloadActionInfo()
           }, 15000)
         }
       }
       setTimeout(function () {
-        reloadActionInfo();
+        reloadActionInfo()
       }, 15000)
 
       this.auctionNum = this.minNum
       this.auctionOffer = this.minPrice
       this.getfollow()
-      this.getunfollow();
+      this.getunfollow()
     },
     watch: {
       '$route'(to, from) {
-        this.$router.go(0);
+        this.$router.go(0)
       },
     }
   }
