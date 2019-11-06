@@ -57,13 +57,13 @@
           <div class="XhlistTitle">
             <span style="width: 10%;">品种</span>
             <span style="width: 16%;">牌号</span>
-            <span style="width: 16%;">厂商</span>
+            <span style="width: 14%;">厂商</span>
             <span style="width: 10%;">交货仓</span>
             <span style="width: 7%;">包装方式</span>
             <span style="width: 9%;">剩余数量（吨）</span>
             <span style="width: 11%;">单价（元/吨）</span>
-            <span style="width: 8%;">距下架时间</span>
-            <span style="width: 7%;">提货起始日期</span>
+            <span style="width: 9%;">距下架时间</span>
+            <span style="width: 8%;">提货日期</span>
             <span style="width: 12%;">操作</span>
           </div>
           <ul class="Xhlist">
@@ -73,7 +73,7 @@
                 <span style="width: 10%;">{{item.category_name}}</span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
-                    style="width: 16%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
+                    style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
 
                 <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
@@ -83,15 +83,14 @@
                   <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                   </span>
                 </span>
-                <span v-if="$store.state.memberToken" class="orangeFont"
-                      style="width: 11%;position:relative;text-align:right;padding-right:18px;">
+                <span class="orangeFont"
+                      style="width: 11%;position:relative;padding-right:18px;">
                      <span style="position: relative">
                        {{item.finalPriceFormat}}
                         <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
-                <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
-                <span style="width: 8%;">
+                <span style="width: 9%;">
                   <template v-if="item.available_num == 0">
                   已售罄
                   </template>
@@ -99,10 +98,10 @@
                   已结束
                   </template>
                   <template v-else>
-                    <TimeDown :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                    <TimeDown :endTime="item.price_valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                   </template>
                 </span>
-                <span style="width: 7%;">{{item.delivery_start}}</span>
+                <span style="width: 8%;">{{item.delivery_start}}</span>
                 <span style="width: 12%;">
                   <div
                       v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"

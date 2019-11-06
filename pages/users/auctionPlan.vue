@@ -42,7 +42,7 @@
                     <span class="ml15">下单时间：<span class="gray">{{item.createTime}}</span></span>
                     <span class="fr mr15" v-if="item.status != 3 && item.availableNum > 0 && (item.closeApplyStatus == 1 || item.closeApplyStatus == 4)">
                       <span class="red">转单倒计时：</span>
-                      <span class="red"><TimeDown :endTime="item.lastOrderedDate" hoursShow endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
+                      <span class="red"><TimeDown :endTime="item.lastOrderedDate" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
                   </span>
                   </td>
                 </tr>

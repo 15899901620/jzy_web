@@ -97,11 +97,11 @@
         <span class="fr mr15 red" v-if="!isOverEnd">
           <template v-if="isOverInquiry">
             确认倒计时：
-            <TimeDown :timeStyleType='2' :endTime="OrderList.endTime" hoursShow></TimeDown>
+            <TimeDown formatStr='{H}小时{M}分{S}秒' :endTime="OrderList.endTime"></TimeDown>
           </template>
           <template v-else>
             报价倒计时：
-            <TimeDown :timeStyleType='2' :endTime="OrderList.inquiryEndTime" hoursShow></TimeDown>
+            <TimeDown formatStr='{H}小时{M}分{S}秒' :endTime="OrderList.inquiryEndTime"></TimeDown>
           </template>
 
         </span>

@@ -1,32 +1,10 @@
 <template>
   <!-- 倒计时组件 -->
   <div style="display: inline-block;">
-    <template v-if="timeStyleType == 1" class="downTime-wrapper">
-      <!-- 这里是显示还未结束时的内容，这里只是我这得布局，你可以随意。 -->
-      <div class="time" v-show="!isStop">
-        <template v-if="dayShow">
-          <span class="hour">{{myDay}}</span> :
-        </template>
-        <template v-if="hoursShow">
-          <span class="hour">{{myHours}}</span> :
-        </template>
-        <span class="minute">{{myMinutes}}</span> :
-        <span class="second">{{mySeconds}}</span>
-      </div>
-      <!-- 这里是显示结束后的内容 -->
-      <span class="second" v-show="isStop">{{clocker}}</span>
-    </template>
-    <template v-if="timeStyleType == 2">
-      <div class="time" v-show="!isStop">
-        <template v-if="dayShow">
-          <!--<span class="hour " :class="[statusType == 1 ?'orangeFont':'vcauction']">{{myDay}}</span> 天-->
-          <span class="hour ">{{myDay}}</span> 天
-        </template>
-        <template v-if="hoursShow">
-          <span class="hour">{{myHours}}</span> 时
-        </template>
-        <span class="minute">{{myMinutes}}</span> 分
-        <span class="second">{{mySeconds}}</span> 秒
+    <template class="downTime-wrapper">
+      <!-- 这里是显示还未结束时的内容 -->
+      <div :class='[timeStyleType==2?"wrapper2":"",timeStyleType==3?"wrapper3":""]' v-show="!isStop" v-html="displayStr">
+
       </div>
       <!-- 这里是显示结束后的内容 -->
       <span class="second" v-show="isStop">{{clocker}}</span>
@@ -39,10 +17,9 @@ export default {
 	name: 'downTime',
 
 	props: { // 接收父组件传递过来的参数,这里传了  结束时间 - 开始时间 - 结束后显示的内容
-		//竞拍状态
-		statusType: {
-			type: Number,
-			default: 1
+		formatStr: {
+			type: String,
+			default: '{H} : {M} : {S}'
 		},
 		timeStyleType: {
 			type: Number,
@@ -57,14 +34,6 @@ export default {
 		endMsg: {
 			type: String
 		},
-		dayShow: {
-			type: Boolean,
-			default: false
-		},
-		hoursShow: {
-			type: Boolean,
-			default: false
-		}
 	},
 
 	data() {
@@ -80,9 +49,28 @@ export default {
 			t: ''
 		}
 	},
+	computed: {
+		displayStr: function () {
+			if (this.formatStr) {
+				if (this.timeStyleType != '0') {
+					let rs = this.formatStr.replace(new RegExp("\\{D\\}", "g"), '<span class="day">' + this.myDay + '</span>')
+					rs = rs.replace(new RegExp("\\{H\\}", "g"), '<span class="hour">' + this.myHours + '</span>')
+					rs = rs.replace(new RegExp("\\{M\\}", "g"), '<span class="minute">' + this.myMinutes + '</span>')
+					rs = rs.replace(new RegExp("\\{S\\}", "g"), '<span class="second">' + this.mySeconds + '</span>')
+					return rs
+				} else {
+					//自定义样式
+					let rs = this.formatStr.replace(new RegExp("\\{D\\}", "g"), this.myDay)
+					rs = rs.replace(new RegExp("\\{H\\}", "g"), this.myHours)
+					rs = rs.replace(new RegExp("\\{M\\}", "g"), this.myMinutes)
+					rs = rs.replace(new RegExp("\\{S\\}", "g"), this.mySeconds)
+					return rs
+				}
+			}
+		}
+	},
 	methods: {
 		restart() {
-			console.log("statusType:", this.statusType)
 			let self = this
 			if (this.t) {
 				clearTimeout(this.t)
@@ -100,7 +88,6 @@ export default {
 				let add = num => {
 					return num < 10 ? '0' + num : num
 				}
-				//let self = this
 				// 时间倒计时运算的方法
 				let timeFunction = () => {
 					let time = timeLag--
@@ -145,18 +132,41 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .downTime-wrapper {
-    font-size: 0.8rem;
-    //font-weight: bold;
-    // .hour{}
-    // .minute{}
+    .day {
+    }
+
+    .hour {
+    }
+
+    .minute {
+    }
+
     .second {
-      color: rgb(235, 62, 61);
     }
   }
 
-  .vcauction {
-    background-color: #25a96d
+  .wrapper2 {
+    color: red;
+
+    .day, .hour, .minute, .second {
+      color: white;
+      padding: 0px 5px;
+      border-radius:5px;
+      background-color: rgb(235, 62, 61);
+    }
+  }
+
+  .wrapper3 {
+    color: #635959;
+    font-weight:bold;
+
+    .day, .hour, .minute, .second {
+      color: white;
+      padding: 3px 8px;
+      border-radius:5px;
+      background-color: #635959;
+    }
   }
 </style>

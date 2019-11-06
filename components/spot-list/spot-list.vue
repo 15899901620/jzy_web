@@ -9,7 +9,7 @@
       <span style="width: 10%;">剩余数量（吨）</span>
       <span style="width: 11%;">单价（元/吨）</span>
       <span style="width: 10%;">距下架时间</span>
-      <span style="width: 7%;">提货起始日期</span>
+      <span style="width: 7%;">提货日期</span>
       <span style="width: 12%;">操作</span>
     </div>
     <ul class="Xhlist">
@@ -27,12 +27,11 @@
                   <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="padding: 0 4px;position: absolute; top: -10px; right: -22px;"><img src="../../static/img/A01.png"/></i>
                   </span>
           </span>
-          <span v-if="$store.state.memberToken" class="orangeFont" style="width: 11%;position:relative;text-align:right;padding-right:18px;">
-                    <i style="padding-left:30px; position: relative">{{item.finalPriceFormat}}
-                        <i v-if="item.is_jry" style="padding: 0 4px;position: absolute; top: -10px; right: -22px;"><img src="../../static/img/B02.png"/></i>
-                    </i>
-                </span>
-          <span v-else class="orangeFont" style="width: 11%;" title="登录后查看">{{item.finalPriceFormat}}</span>
+          <span class="orangeFont" style="width: 11%;position:relative;padding-right:18px;">
+            <i style="position: relative">{{item.finalPriceFormat}}
+                <i v-if="item.is_jry" style="padding: 0 4px;position: absolute; top: -10px; right: -22px;"><img src="../../static/img/B02.png"/></i>
+            </i>
+          </span>
           <span style="width: 10%;">
             <template v-if="item.available_num == 0">
             已售罄
@@ -41,7 +40,7 @@
             已结束
             </template>
             <template v-else>
-              <TimeDown :currTime="item.currTime" :endTime="item.price_valid_time" hoursShow endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+              <TimeDown :currTime="item.currTime" :endTime="item.price_valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
             </template>
           </span>
           <span style="width: 7%;">{{item.delivery_start}}</span>

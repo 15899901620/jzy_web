@@ -34,7 +34,7 @@
             <td class="blue">{{item.skuName}}</td>
             <td>{{item.manufacturer}}</td>
             <td>
-              <TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
+              <TimeDown :timeStyleType="2" :endTime="item.realEndTime" endMsg="已结束"
                         :onTimeOver="reloadPage"></TimeDown>
             </td>
             <td>{{$utils.amountFormat(item.finalPrice)}}</td>
@@ -112,7 +112,7 @@
                     <div class="statusicon startauction">正在竞拍</div>
                     <div class="ml20"><span>距离结束 ：</span>
                       <span class="fs18">
-                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="1" :endTime="items.realEndTime" hoursShow endMsg="已结束"
+                        <TimeDown :currTime="items.currTime" :timeStyleType='2' :endTime="items.realEndTime" endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -121,7 +121,7 @@
                     <div class="statusicon vcauction">即将开始</div>
                     <div class="ml20"><span>距离开始 ：</span>
                       <span class="fs18">
-                        <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="2" :endTime="items.beginTime" hoursShow endMsg="已开始"
+                        <TimeDown :currTime="items.currTime" :timeStyleType='2' :endTime="items.beginTime" endMsg="已开始"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                     </div>
@@ -312,12 +312,12 @@
 			statusTypeName: function(){
 				let type = this.statusType
 				if(type == '0'){
-                    return '全部竞拍'
-				}else if(type == '1'){
+          return '全部竞拍'
+				}else if (type == '1'){
 					return '正在竞拍'
-				}else if(type == '2'){
+				}else if (type == '2'){
 					return '即将开始'
-				}else if(type == '3'){
+				}else if (type == '3'){
 					return '竞拍结束'
 				}
       },
