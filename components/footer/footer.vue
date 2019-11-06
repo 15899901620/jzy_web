@@ -16,9 +16,9 @@
                         <p>全国服务热线</p>
                         <p>交易时间(工作日)</p>
                         <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
-                        <p class="mt10">
-                            <a rel="nofollow" target="_blank"  v-on:click="OnlineService()"  class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
-                        </p>
+<!--                        <p class="mt10">-->
+<!--                            <a rel="nofollow" target="_blank"  v-on:click="OnlineService()"  class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>-->
+<!--                        </p>-->
                     </div>
                 </div>
             </div>
@@ -42,9 +42,9 @@
                         <p>全国服务热线</p>
                         <p>交易时间(工作日)</p>
                         <p>{{this.$store.state.common.sysConfig.OPENING_TIME}}-{{this.$store.state.common.sysConfig.CLOSED_TIME}}</p>
-                        <p class="mt10">
-                            <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>
-                        </p>
+<!--                        <p class="mt10">-->
+<!--                            <a rel="nofollow" target="_blank" v-on:click="OnlineService()" class="telurl" alt="点击这里给我发消息" title="点击这里给我发消息"> 在线客服</a>-->
+<!--                        </p>-->
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
 const prefixCls = 'ant-footer'
 import slogen from './slogen'
 import helpnav from '../helper'
- 
+
 export default {
     name: 'Footer',
     components:{
