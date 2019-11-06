@@ -24,9 +24,9 @@
               <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                 <template v-if="items.statusType == '1'">
                   <div class="statusicon startauction">正在预售</div>
-                  <div class="ml20"><span class="gray">距离结束 ：</span>
+                  <div class="ml20"><span>距离结束 ：</span>
                     <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" hoursShow endMsg="已结束"
+                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                   </div>
@@ -35,7 +35,7 @@
                   <div class="statusicon vcauction">已售罄</div>
                   <div class="ml20"><span class="gray">距离结束 ：</span>
                     <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" hoursShow endMsg="已结束"
+                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
                       </span>
                   </div>
@@ -91,6 +91,7 @@
                       参与预定
                     </template>
                   </div>
+                  <span v-if="items.planned_total_num > 0">已预购{{items.planned_total_num}}吨</span>
                 </template>
               </div>
             </li>

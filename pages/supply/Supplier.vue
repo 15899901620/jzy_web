@@ -43,7 +43,7 @@
 				<td style="width: 10%;">
 					{{item.demandBeginDate}}
 			   </td >
-				<td style="width: 10%;"> <TimeDown :isshow="Timeloading" :timeStyleType='1' :endTime="item.inquiryEndTime" :onTimeOver="reloadPage" hoursShow></TimeDown></td>
+				<td style="width: 10%;"> <TimeDown :isshow="Timeloading" :endTime="item.inquiryEndTime" :onTimeOver="reloadPage"></TimeDown></td>
 				<td style="width: 10%;">
 					<span v-if='item.isTax==0'>否</span>
               		<span v-else>是</span>

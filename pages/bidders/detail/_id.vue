@@ -26,14 +26,14 @@
               <template v-if="auctionInfo.statusType == '1'">
                 <span class="fs16">距离结束：</span>
                 <span class="fs16">
-                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.realEndTime" hoursShow endMsg="已结束"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="3" :endTime="auctionInfo.realEndTime" endMsg="已结束"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>
               <template v-else-if="auctionInfo.statusType == '2'">
                 <span class="fs16">距离开始：</span>
                 <span class="fs16">
-                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="2" :endTime="auctionInfo.beginTime" hoursShow endMsg="已开始"
+                  <TimeDown :currTime="auctionInfo.currTime" :timeStyleType="3" :endTime="auctionInfo.beginTime" endMsg="已开始"
                             :onTimeOver="reloadPage"></TimeDown>
                 </span>
               </template>
@@ -291,7 +291,7 @@
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.skuName}}</td>
             <td>{{item.manufacturer}}</td>
-            <td><TimeDown :timeStyleType="2" :endTime="item.realEndTime" hoursShow endMsg="已结束"
+            <td><TimeDown formatStr='{H}小时{M}分{S}秒' :endTime="item.realEndTime" endMsg="已结束"
                           :onTimeOver="reloadPage"></TimeDown></td>
             <td>{{$utils.amountFormat(item.finalPrice)}}</td>
             <td>

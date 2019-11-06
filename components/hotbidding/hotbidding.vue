@@ -15,13 +15,13 @@
             <div class="endTime endTimebg dflexAlemJust" v-if="items.statusType == '1'">
               <div class="imgLogo"><img src="/img/cutDown_icon_orange.png"/></div>
               <!--距开始时间 :-->
-              <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="1" :endTime="items.realEndTime" dayShow hoursShow endMsg="已开始"
+              <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.realEndTime" endMsg="已开始"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
             <div class="endTime endTimebg dflexAlemJust" v-if="items.statusType == '2'">
               <div class="imgLogo"><img src="/img/cutDown_icon_orange.png"/></div>
               <!--距结束时间 :-->
-              <TimeDown :currTime="items.currTime" :timeStyleType="2" :statusType="2" :endTime="items.beginTime" dayShow hoursShow endMsg="已结束"
+              <TimeDown :currTime="items.currTime" :timeStyleType="2" :endTime="items.beginTime" endMsg="已结束"
                         :onTimeOver="reloadPage"></TimeDown>
             </div>
             <div class="endTime graybg dflexAlemJust" v-if="items.statusType == '3'">

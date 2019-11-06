@@ -26,7 +26,7 @@
               </Col>
               <Col span="12">报价倒计时:   
                   <span class='red'>
-					<TimeDown :isshow="Timeloading" :timeStyleType='2' :endTime="OrderList.inquiryEndTime" hoursShow></TimeDown>
+					<TimeDown :isshow="Timeloading" formatStr='{H}小时{M}分{S}秒' :endTime="OrderList.inquiryEndTime"></TimeDown>
 				</span>	
               </Col>
 			  
