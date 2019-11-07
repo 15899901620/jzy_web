@@ -8,18 +8,18 @@
 			<div class="w1200">
 				<!--询价找车-->
 				<div class="inquirybg">
-					<h2>询价找车</h2>
+					<h2>查运费</h2>
 					<ul class="inquiryList">
 						<Form :model="searchForm" :label-width="65">
 							<li>
-								<FormItem label="发货地">
+								<FormItem label="发货仓">
 									<Select  v-model="searchForm.warehouse_id" >
 										<Option   v-for="(item, index) in warehouseList" :value="item.id" :key="index">{{ item.wName }}</Option>
 									</Select>
 								</FormItem>
 							</li>
 							<li>
-								<FormItem label="收货仓">
+								<FormItem label="收货地">
 									<Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:229px"></Cascader>
 								</FormItem>
 							</li>
