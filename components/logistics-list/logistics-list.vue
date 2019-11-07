@@ -2,9 +2,9 @@
 <!--    <div>-->
 <!--      物流找车-->
       <div class="ovh pr" style="width: 900px" id="parent" @mouseenter="mouseEnter" @mouseleave="mouseLeave"  >
-        <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">
-          <img src="../../static/img/back.png" />
-        </div>
+<!--        <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">-->
+<!--          <img src="../../static/img/back.png" />-->
+<!--        </div>-->
         <ul class="logisticList mt1" :style="{width:TLlength+'px'}"  id='log-ul'>
           <li v-for="(item, index) in dataList"  :key="index" @click='detail()'>
             <div class="dflexAlem mt25" style="justify-content: center; flex-direction: column;">
@@ -23,11 +23,11 @@
           </li>
       </ul>
           <div style="text-align: center;">
-						<sapn v-if='dataList==""'>暂无数据</sapn>
-					</div>
-        <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">
-          <img src="../../static/img/next.png" />
-        </div>
+            <sapn v-if='dataList==""'>暂无数据</sapn>
+          </div>
+<!--        <div class="Time-limited_next position prve" id='next'  :style="{'display':display}">-->
+<!--          <img src="../../static/img/next.png" />-->
+<!--        </div>-->
       </div>
 <!--    </div>-->
 </template>

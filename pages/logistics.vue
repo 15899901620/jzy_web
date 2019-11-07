@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header name="头部"></Header>
+		<Header name="头部" ></Header>
 		<div class="container" title="">
 			<div class="tac">
 				<img src="/img/logisticsBanner.jpg" style="width: 100%" />
@@ -25,10 +25,10 @@
 							</li>
 							<li>
 								<FormItem label="商品">
-								<Select  placeholder="请输入关键字"    prefix="ios-search"   
+								<Select  placeholder="请输入关键字"    prefix="ios-search"
 									  		filterable
 											clearable
-											remote 
+											remote
 											@on-change="onChange"
 											:remote-method="searchData1"
 											:loading="loading">
@@ -61,10 +61,10 @@
 						<template v-if="reaList.length>0">
 							<ul class="RealTime whitebg">
 								<li v-for="(items, index) in reaList" :key="index">
-									<div class="dflexAlem" style="justify-content: space-between;">
-										<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
-									<div class="dflexAlem mt5" style="justify-content: space-between;">
-										<span class="gray">{{items.dispatchStateName}}-{{items.dispatchDistrictName}} <span class="orangeFont">{{items.weight}}吨</span></span>
+									<div class="dflex" style="justify-content: space-between;">
+										<span class="fwb" style="width: 60%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" :title="items.memberName">{{items.memberName}}</span><span class="gray tar" style="width: 40%">{{items.createTime}}</span></div>
+									<div class="dflex mt5" style="justify-content: space-between;">
+										<span class="gray">{{items.dispatchState}}-{{items.dispatchDistrict}} <span class="orangeFont">{{items.weight}}吨</span></span>
 										<span  class="greenFont" v-if='items.status==2'>已选择</span>
 									</div>
 								</li>
@@ -193,6 +193,7 @@
 				const res = await sendHttp(this, false, server.api.freight.freightList,params)
 
 				this.reaList=res.data.items;
+console.log("reaList:",this.reaList)
 				this.total=res.data.total
 
 			},
