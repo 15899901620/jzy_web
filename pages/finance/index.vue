@@ -11,8 +11,8 @@
             <div class="whitebg ovh" >
                 <div class="w1200">
                     <h1 class="financeTitle">[ 什么是巨易融 ]</h1>
-                    <div class="financeText">巨易融是巨正源，针对中小微企业倾力打造的企业贷款产品，助力中小微企业提升资金使用效率，为您提升营业收入。</div>
-                    <div class="fs24 mt25">结合您在巨正源平台的历史交易情况，即可轻松完成订单贷款。</div>
+                    <div class="financeText">巨易融是巨正源科技公司，针对中小微企业倾力打造的企业贷款产品，助力中小微企业提升资金使用效率，为您提升营业收入。</div>
+                    <div class="fs24 mt25">结合您在巨正源电商平台的历史交易情况，即可轻松完成订单贷款。</div>
                     <ul class="listImg">
                         <li>
                             <div class="tac">
