@@ -72,7 +72,7 @@
             isActive:''
           }
           let res = await auctionPage(this,params)
-          
+
           this.indexAuction=res.data.items
           var arrayData=[]
           for (var i=0;i<this.indexAuction.length;i++){
@@ -163,13 +163,6 @@
           this.$router.push({name:'Biders-BidersBegin', query:{id:id}})
         },
 
-
-
-
-
-
-
-
       },
       computed:{
 
@@ -245,9 +238,9 @@
           // *****限时竞拍******
         var that=this
         let TL=document.getElementsByClassName('Time-limited_list')[0].getElementsByTagName('li')
-        
+
         let TLWidth=TL[0].offsetWidth
-        
+
         that.TLlength=TL.length*TLWidth
       },2000)
 

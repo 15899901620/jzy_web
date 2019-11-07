@@ -273,7 +273,9 @@
     margin-bottom: 1px;
     background-color: #fff;
   }
-
+  .Xhlist li:hover{
+    background-color: rgba(217,232,249,0.5);
+  }
   .h50 {
     height: 50px;
   }
