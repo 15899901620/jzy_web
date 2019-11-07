@@ -333,9 +333,6 @@
 		margin-bottom: 30px;
 		display: flex;
 	}
-	.inquiryList li:first-child{
-		margin-left: 0;
-	}
 	.inquiryList li {
 		width: 295px;
 		display: flex;

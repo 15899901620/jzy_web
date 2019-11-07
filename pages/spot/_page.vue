@@ -121,7 +121,7 @@
             </template>
           </ul>
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
-            <pages :total="$store.state.spot.total" :show-total="showTotal" :value="current_page"></pages>
+            <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
           </div>
         </div>
       </div>
