@@ -308,7 +308,7 @@
         title="用户注册协议"
         v-model="protocolModalShow"
         @on-cancel="protocolModalCancel"
-        :width='700'  
+        :width='700'
         class-name="vertical-center-modal">
       <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
       </div>
@@ -494,7 +494,7 @@
 				repasswordValid: '',//号码有效
                 usersubmitModal:false,         //确认提交框
 				current: 0    ,
-        uploadUrl: '',
+                uploadUrl: '',
 				companyValid: false,
                 license_filextension:'',   // 营业执照图片格式
                 filextension_elc:'',       // 授权书格式
@@ -575,11 +575,11 @@
 			}
 		},
 		components: {
-			steps,
-			step,
-      captcha,
-      MemberLabelSelect,
-        SlideVerify
+            steps,
+            step,
+            captcha,
+            MemberLabelSelect,
+            SlideVerify
 		},
 		computed: {
 			classes() {
@@ -610,15 +610,16 @@
             }
           },
 
-
 			getUploadURL() {
-        if (process.env.NODE_ENV === 'development') {
-          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
-        } else if (process.env.NODE_ENV === 'testprod') {
-          this.uploadUrl = appConfig.system.UPLOAD_URL.test
-        } else {
-          this.uploadUrl = appConfig.system.UPLOAD_URL.pro
-        }
+              if (process.env.NODE_ENV === 'development') {
+
+                this.uploadUrl = appConfig.system.UPLOAD_URL.dev
+                console.log("uploadUrl:",this.uploadUrl)
+              } else if (process.env.NODE_ENV === 'testprod') {
+                this.uploadUrl = appConfig.system.UPLOAD_URL.test
+              } else {
+                this.uploadUrl = appConfig.system.UPLOAD_URL.pro
+              }
 			},
 
 			//验证手机是否存在
