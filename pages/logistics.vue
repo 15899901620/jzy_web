@@ -19,20 +19,20 @@
 								</FormItem>
 							</li>
 							<li>
-								<FormItem label="收货地">
+								<FormItem label="收货仓">
 									<Cascader v-model="searchForm.to_region_id" :data="registList" :load-data="loadRegionData" style="width:229px"></Cascader>
 								</FormItem>
 							</li>
 							<li>
-								<FormItem label="商品编号">
-								<Select     prefix="ios-search"   
+								<FormItem label="商品">
+								<Select  placeholder="请输入关键字"    prefix="ios-search"   
 									  		filterable
 											clearable
 											remote 
 											@on-change="onChange"
 											:remote-method="searchData1"
 											:loading="loading">
-										<Option v-for="(item, index) in productData" :value="item.id" :key="index">{{ item.skuNo }}</Option>
+										<Option v-for="(item, index) in productData" :value="item.id" :key="index">{{ item.title }}</Option>
 
 									</Select>
 								</FormItem>
