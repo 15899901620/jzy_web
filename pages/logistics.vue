@@ -193,11 +193,6 @@
 				const res = await sendHttp(this, false, server.api.freight.freightList,params)
 
 				this.reaList=res.data.items;
-<<<<<<< HEAD
-				console.log(reaList)
-=======
-console.log("reaList:",this.reaList)
->>>>>>> fb1ea4c5d380ebd3a69c05ccdc303468c447d31f
 				this.total=res.data.total
 
 			},
