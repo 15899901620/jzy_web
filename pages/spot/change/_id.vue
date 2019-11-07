@@ -289,7 +289,7 @@
 					this.choosePayType(1)
 				}
 				if (this.currMin <= this.currMax) {
-					this.orderinfo.orderNum = this.currMin
+					//this.orderinfo.orderNum = this.currMin
 				} else {
 					this.showWarning("剩余转单量(" + this.currMax + ")不满足当前交货方式的起订量(" + this.currMin + ")要求，请重新选择！", function () {
 						history.back()
