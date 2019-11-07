@@ -152,6 +152,7 @@
 	import Footer from '../components/footer'
 	import { sendHttp } from "../api/common";
 	import server from "../config/api";
+	let Base64 = require('js-base64').Base64
 	export default {
 		name: "logistics",
 		components: {
@@ -267,7 +268,8 @@
                     warehouse_id: this.searchForm.warehouse_id,
                     sku_no: this.searchForm.sku_no,
                     to_region_id: this.searchForm.to_region_id.join(",")
-                }
+				}
+				encodeURIComponent(Base64.encode(params))
 				const res = await searchFreightFee(this, params)
 				if(res.data==''){
 					this.showWarning('后台暂无此运输线路，无法给出参考运费！')
