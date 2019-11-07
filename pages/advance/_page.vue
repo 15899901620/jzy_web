@@ -142,6 +142,10 @@
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
 				store.dispatch('common/getFriendlyList'),
+				store.dispatch('helper/getHelpCate', {
+					catId: 0,
+					indexShow: 1
+				}),
 				// 获取预售
 				store.dispatch('advance/getAdvanceList', {
 					current_page: query.page || 1,
