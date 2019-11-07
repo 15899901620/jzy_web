@@ -16,8 +16,9 @@
             <dl class="fl filter_item">
               <dt class="scTitle">原料分类：</dt>
               <dd class="pro_brand_list" :class="categoryMore ? 'h50' : ''">
-                <a v-for="(item, index) in $store.state.spot.condition.category" :key="index"
-                   @click="categoryClick(item.id)">
+                <a  @click="categoryClick()" :class="CateCurr === 'select'?'lightfont':''">显示全部</a>
+                <a v-for="(item, index) in $store.state.spot.condition.category" :key="index" :class="IndexCurr === index+1?'lightfont':''"
+                   @click="categoryClick(item.id,index)" >
                   {{item.name}}
                 </a>
               </dd>
@@ -31,9 +32,9 @@
             <dl class="fl filter_item">
               <dt class="scTitle">加工级别：</dt>
               <dd class="pro_brand_list" :class="processMore ? 'h50' : ''">
-                <a  @click="processClick()">显示全部</a>
-                <a v-for="(item, index) in $store.state.spot.condition.process" :key="index"
-                   @click="processClick(item.id)">
+                <a  @click="processClick()" :class="TotalCurr === 'select'?'lightfont':''">显示全部</a>
+                <a v-for="(item, index) in $store.state.spot.condition.process" :key="index" :class="processCurr === index+1 ?'lightfont':''"
+                   @click="processClick(item.id,index)">
                   {{item.name}}
                 </a>
               </dd>
@@ -69,8 +70,8 @@
           <ul class="Xhlist">
             <template v-if="$store.state.spot.spotList.length>0">
 
-              <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
-                <span style="width: 10%;">{{item.category_name}}</span>
+              <li v-for="(item, index) in $store.state.spot.spotList" :key="index" :style="{backgroundColor:($store.state.memberToken && item.available_num > 0?'rgba(36,153,249,0.1)':'')}">
+                <span style="width: 10%;"><div class="pr"><i v-if="$store.state.memberToken && item.available_num > 0" style="position: absolute; top: -7px;  left: 84px;font-size: 12px; color: #ed1e2d;font-style: italic;">new</i>{{item.category_name}}</div></span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
                     style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
@@ -103,8 +104,7 @@
                 </span>
                 <span style="width: 8%;">{{item.delivery_start}}</span>
                 <span style="width: 12%;">
-                  <div
-                      v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
+                  <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
                       style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
@@ -185,20 +185,37 @@
 				processMore: true,
 				categoryMoreVal: '更多',
 				processMoreVal: '更多',
+                IndexCurr:'',  //列表当前高亮
+                CateCurr:'select',
+                processCurr:'',
+                TotalCurr:'select'
 			}
 		},
 		methods: {
 			addOrder(id) {
 				location.href = '/spot/order/' + id
 			},
-			categoryClick(id) {
+			categoryClick(id,index) {
 				this.categoryId = id
+                this.IndexCurr=index+1
+                if(index === undefined){
+                  this.CateCurr = 'select'
+                }else{
+                  this.CateCurr = index
+                }
 				this.spotData()
 			},
-			processClick(id) {
-				this.processId = id
-				this.spotData()
-			},
+			processClick(id,index) {
+              this.processId = id
+              this.processCurr = index+1
+              if(index === undefined){
+                this.TotalCurr = 'select'
+              }else{
+                this.TotalCurr = index
+              }
+
+              this.spotData()
+ 			},
 			categoryOpen() {
 				this.categoryMore = !this.categoryMore;
 				if (this.categoryMore) {
@@ -232,7 +249,7 @@
 					current_page: this.current_page,
 					page_size: this.page_size
 				};
-				this.$store.dispatch('spot/getSpotList', params)
+ 				this.$store.dispatch('spot/getSpotList', params)
 			},
 			checkTypeCancel(){
 				this.checkTypeShow = false
@@ -279,7 +296,8 @@
   .h50 {
     height: 50px;
   }
-
+  .lightfont{color: #2d8cf0;}
+  .colorB{color:#666;}
   .arrow-up {
     background: url(/img/icon.png) no-repeat 42px -147px;
   }
