@@ -242,6 +242,7 @@ let api = {
     productlist: '/item/goods/list/page',
     productdetail: '/item/goods/sku/info',
     skuInfoBIddetail: '/item/goods/querySkuInfoById',
+    productgoods: {'url': '/item/goods/list/page', 'method': 'get'},
     skuInfoBId: {'url': '/item/goods/querySkuInfoById', 'method': 'get'},
     inspectionCheck: '/item/inspection_sheet/list/page',
     demandadd: '/bill/goodsDemand/add',
