@@ -38,7 +38,7 @@
 								</FormItem>
 							</li>
 
-							<FormItem :label-width="30">
+							<FormItem :label-width="18" >
 								<Button  class="inquiryFree" type="primary" @click="searchFreight()">查询运费</Button>
 							</FormItem>
 						</Form>
