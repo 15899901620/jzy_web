@@ -66,7 +66,7 @@ import server from "../../config/api";
         async offerList(){
 				  let params={
 					  current_page:1,
-					  page_size:3
+					  page_size:4
 					}
 				  const res = await sendHttp(this, false, server.api.freight.freightList,params)
 
