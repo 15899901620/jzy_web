@@ -62,10 +62,9 @@
 							<ul class="RealTime whitebg">
 								<li v-for="(items, index) in reaList" :key="index">
 									<div class="dflexAlem" style="justify-content: space-between;">
-										<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
+										<span class="fwb">{{items.memberName}}</span></div>
 									<div class="dflexAlem mt5" style="justify-content: space-between;">
-										<span class="gray">{{items.dispatchStateName}}-{{items.dispatchDistrictName}} <span class="orangeFont">{{items.weight}}吨</span></span>
-										<span  class="greenFont" v-if='items.status==2'>已选择</span>
+										<span class="orangeFont">{{items.weight}}吨</span><span class="greenFont">￥{{items.offerPrice}}/吨</span><span class="gray">{{items.demandBeginDate}}</span>
 									</div>
 								</li>
 							</ul>
@@ -187,12 +186,13 @@
  			async offerList(){
 				  let params={
 					  current_page:1,
-					  page_size:3,
+					  page_size:4,
 					  status:2
 					}
 				const res = await sendHttp(this, false, server.api.freight.freightList,params)
 
 				this.reaList=res.data.items;
+				console.log(reaList)
 				this.total=res.data.total
 
 			},
@@ -263,14 +263,19 @@
                 if(this.searchForm.category_code == ''){
                     this.showWarning('请选择配送物品类目')
                     return
-                }
-                let params = {
+				}
+				let to_region_id= this.searchForm.to_region_id.join(",")
+				// to_region_id=encodeURIComponent(to_region_id)
+					console.log(to_region_id)
+				let params = {
                     warehouse_id: this.searchForm.warehouse_id,
                     sku_no: this.searchForm.sku_no,
-                    to_region_id: this.searchForm.to_region_id.join(",")
+                    to_region_id: to_region_id
 				}
-				encodeURIComponent(Base64.encode(params))
 				const res = await searchFreightFee(this, params)
+		
+                
+			
 				if(res.data==''){
 					this.showWarning('后台暂无此运输线路，无法给出参考运费！')
 				}else{
