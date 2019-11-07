@@ -24,9 +24,15 @@
 								</FormItem>
 							</li>
 							<li>
-								<FormItem label="货物">
-									<Select v-model="searchForm.category_code" >
-										<Option v-for="(item, index) in categoryList" :value="item.code" :key="index">{{ item.name }}</Option>
+								<FormItem label="商品编号">
+								<Select     prefix="ios-search"   
+									  		filterable
+											clearable
+											remote 
+											@on-change="onChange"
+											:remote-method="searchData1"
+											:loading="loading">
+										<Option v-for="(item, index) in productData" :value="item.id" :key="index">{{ item.skuNo }}</Option>
 
 									</Select>
 								</FormItem>
@@ -52,7 +58,7 @@
 							<div class="TitleName">实时数据</div>
 						</div>
 						<ul class="RealTime whitebg">
-							<li v-for="(items, index) in reaList" :key="index">
+							<li v-for="(items, index) in reaList" :key="index" >
 								<div class="dflexAlem" style="justify-content: space-between;">
 									<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
 								<div class="dflexAlem mt5" style="justify-content: space-between;">
@@ -60,11 +66,12 @@
 									<span  class="greenFont" v-if='items.status==2'>已选择</span>
 								</div>
 							</li>
+							<div style="text-align: center;" v-if='reaList==""'>
+								<sapn>暂无数据</sapn>
+							</div>
 						</ul>
 					</div>
-					<div style="text-align: center;">
-						<sapn v-if='reaList==""'>暂无数据</sapn>
-					</div>
+			
 				</div>
 
 				<div class="">
@@ -151,10 +158,12 @@
             self: this,
             warehouseList: [],
             categoryList: [],
-            registList: [],
+			registList: [],
+			productData:[],
+			loading:false,
             searchForm: {
                 warehouse_id: 0,
-                category_code: '',
+                sku_no: '',
                 country_id: 1,
                 to_region_id: []
     },
@@ -179,7 +188,21 @@
 				this.reaList=res.data.items;
 				this.total=res.data.total
 
-			  },
+			},
+			async  searchData1 (query) {
+					let params= {
+						current_page: 1,
+						page_size: 10,
+						enable: 1,
+						title: query
+					}
+					this.loading = true
+					const res = await sendHttp(this, false, server.api.product.productgoods,params)
+						this.loading = false
+						if (res.status === 200) {
+						this.productData = res.data.items
+					}
+			},
             async initData(){
                 const res = await getWarehouseList(this, {})
                 this.warehouseList = res.data
@@ -236,18 +259,25 @@
                 }
                 let params = {
                     warehouse_id: this.searchForm.warehouse_id,
-                    category_code: this.searchForm.category_code,
-                    country_id: this.searchForm.country_id,
+                    sku_no: this.searchForm.sku_no,
                     to_region_id: this.searchForm.to_region_id.join(",")
                 }
-                const res = await searchFreightFee(this, params)
-                if(res.data.lenght == 0){
-                    this.showWarning('后台暂无此运输线路，无法给出参考运费！')
-                }else{
-                    this.searchData = res.data
+				const res = await searchFreightFee(this, params)
+				if(res.data==''){
+					this.showWarning('后台暂无此运输线路，无法给出参考运费！')
+				}else{
+					this.searchData = res.data
                     this.searchModalShow = true
-                }
-            },
+				}
+
+			},
+			onChange (id) {
+				 this.productData.forEach((item) => {
+					if(item.id === id){
+						this.searchForm.sku_no=item.skuNo
+					}
+				})
+			},
             searchModalCancel(){
                 this.searchModalShow = false
             },
