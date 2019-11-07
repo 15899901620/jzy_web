@@ -51,20 +51,26 @@
 						<div class="ListTitle  whitebg mt20">
 							<div class="TitleName">实时数据</div>
 						</div>
-						<ul class="RealTime whitebg">
-							<li v-for="(items, index) in reaList" :key="index">
-								<div class="dflexAlem" style="justify-content: space-between;">
-									<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
-								<div class="dflexAlem mt5" style="justify-content: space-between;">
-									<span class="gray">{{items.dispatchStateName}}-{{items.dispatchDistrictName}} <span class="orangeFont">{{items.weight}}吨</span></span>
-									<span  class="greenFont" v-if='items.status==2'>已选择</span>
-								</div>
-							</li>
-						</ul>
+						<template v-if="reaList.length>0">
+							<ul class="RealTime whitebg">
+								<li v-for="(items, index) in reaList" :key="index">
+									<div class="dflexAlem" style="justify-content: space-between;">
+										<span class="fwb">上海春万实业有限公司</span><span class="gray">{{items.createTime}}</span></div>
+									<div class="dflexAlem mt5" style="justify-content: space-between;">
+										<span class="gray">{{items.dispatchStateName}}-{{items.dispatchDistrictName}} <span class="orangeFont">{{items.weight}}吨</span></span>
+										<span  class="greenFont" v-if='items.status==2'>已选择</span>
+									</div>
+								</li>
+							</ul>
+						</template>
+						<template v-else>
+							<div class="RealTime whitebg" style="text-align: center; height: 300px">
+								<sapn>暂无数据</sapn>
+							</div>
+						</template>
+
 					</div>
-					<div style="text-align: center;">
-						<sapn v-if='reaList==""'>暂无数据</sapn>
-					</div>
+
 				</div>
 
 				<div class="">
