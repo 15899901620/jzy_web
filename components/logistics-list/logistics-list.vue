@@ -16,8 +16,8 @@
               <p><span class="logNumTime_title">类别</span>: <span class="orangeFont ml5">{{item.freightGoodsCname}}</span></p>
               <p><span class="logNumTime_title">数量</span>: <span class="orangeFont ml5">{{item.weight}}吨</span></p>
               <p class="mt1" style="display: flex; flex-direction: column;align-items:inherit">
-                <span style="display: flex;  align-items:inherit"><span class="logNumTime_title">装货时间</span>:</span>
-                <span style="text-align: left">{{item.demandBeginDate}}~{{item.demandEndDate}}</span>
+                <span style="display: flex;  align-items:inherit"><span class="logNumTime_title">装货时间</span>: {{item.demandBeginDate}}</span>
+                <!-- <span style="text-align: left">{{item.demandBeginDate}}~{{item.demandEndDate}}</span> -->
               </p>
             </div>
           </li>
