@@ -71,7 +71,9 @@
             <template v-if="$store.state.spot.spotList.length>0">
 
               <li v-for="(item, index) in $store.state.spot.spotList" :key="index" :style="{backgroundColor:($store.state.memberToken && item.available_num > 0?'rgba(36,153,249,0.1)':'')}">
-                <span style="width: 10%;"><div class="pr"><i v-if="$store.state.memberToken && item.available_num > 0" style="position: absolute; top: -7px;  left: 84px;font-size: 12px; color: #ed1e2d;font-style: italic;">new</i>{{item.category_name}}</div></span>
+                <span style="width: 10%;">
+                  <div class="pr">
+                  <i v-if="$store.state.memberToken && item.available_num > 0" class="newClass"  ></i>{{item.category_name}}</div></span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
                     style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
@@ -121,7 +123,8 @@
             </template>
           </ul>
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
-            <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
+            <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
+                   :otherParams="`category_id=${this.categoryId}&level_id=${this.processId}`" ></pages>
           </div>
         </div>
       </div>
@@ -249,6 +252,7 @@
 					current_page: this.current_page,
 					page_size: this.page_size
 				};
+				console.log("params:",params)
  				this.$store.dispatch('spot/getSpotList', params)
 			},
 			checkTypeCancel(){
@@ -300,5 +304,9 @@
   .colorB{color:#666;}
   .arrow-up {
     background: url(/img/icon.png) no-repeat 42px -147px;
+  }
+  .newClass{
+    width:19px; height:15px;
+    position: absolute; top: -7px;  left: 84px;background: url(/img/new_icon.gif)no-repeat;background-size: cover;
   }
 </style>
