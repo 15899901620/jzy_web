@@ -93,43 +93,59 @@ export const getters={
 }
 export const actions = {
 	async getArticleList({commit}, params) {
-		commit('updateCurrPage', parseInt(params.current_page))
+		try{
+			commit('updateCurrPage', parseInt(params.current_page))
 
-		let res = await sendCurl(this, server.api.information.getArticleList, params)
+			let res = await sendCurl(this, server.api.information.getArticleList, params)
 
-		if (res.status === 200) {
-			console.log(res.data.items)
-			
-		  commit('updateArticleTotal', res.data.total)
-		  commit('updateArticleList', res.data.items)
+			if (res.status === 200) {
+				console.log(res.data.items)
+				
+			commit('updateArticleTotal', res.data.total)
+			commit('updateArticleList', res.data.items)
 
+			}
+		}catch (e) {
+			console.log('获取资讯1异常')
 		}
 	},
 	async getArticleList2({commit}, params) {
-		commit('updateCurrPage', parseInt(params.current_page))
+		try{
+			commit('updateCurrPage', parseInt(params.current_page))
 
-		let res = await sendCurl(this, server.api.information.getArticleList, params)
+			let res = await sendCurl(this, server.api.information.getArticleList, params)
 
-		if (res.status === 200) {
-		  commit('updateArticleList2', res.data.items)
+			if (res.status === 200) {
+			commit('updateArticleList2', res.data.items)
+			}
+		}catch (e) {
+			console.log('获取资讯2异常')
 		}
 	},
 	async getArticleList3({commit}, params) {
-		commit('updateCurrPage', parseInt(params.current_page))
+		try{
+			commit('updateCurrPage', parseInt(params.current_page))
 
-		let res = await sendCurl(this, server.api.information.getArticleList, params)
+			let res = await sendCurl(this, server.api.information.getArticleList, params)
 
-		if (res.status === 200) {
-		  commit('updateArticleList3', res.data.items)
+			if (res.status === 200) {
+			commit('updateArticleList3', res.data.items)
+			}
+		}catch (e) {
+			console.log('获取资讯3异常')
 		}
 	},
 	async getArticleList4({commit}, params) {
-		commit('updateCurrPage', parseInt(params.current_page))
+		try{
+			commit('updateCurrPage', parseInt(params.current_page))
 
-		let res = await sendCurl(this, server.api.information.getArticleList, params)
+			let res = await sendCurl(this, server.api.information.getArticleList, params)
 
-		if (res.status === 200) {
-		  commit('updateArticleList4', res.data.items)
+			if (res.status === 200) {
+			commit('updateArticleList4', res.data.items)
+			}
+		}catch (e) {
+			console.log('获取资讯4异常')
 		}
 	},
 	//首页行情资讯
