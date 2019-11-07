@@ -138,7 +138,6 @@
         today:this.$utils.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'),  
 				orderTabs: [
 					{value: 0, name: '全部状态', status: 0},
-					{value: 0, name: '已报价', status: 1},
 					{value: 0, name: '已入选', status: 2},
 					{value: 0, name: '未入选', status: 3},
 				],
@@ -182,15 +181,12 @@
 				if (res == '0') {
 					this.status = ''
 					this.currTabs = 0
-				} else if (res == '1') {
-					this.status = 1
-					this.currTabs = 1
-				} else if (res == '2') {
+				}  else if (res == '2') {
 					this.status = 2
-					this.currTabs = 2
+					this.currTabs = 1
 				} else if (res == '3') {
 					this.status = 3
-					this.currTabs = 3
+					this.currTabs = 2
 				}
 				this.getOrderList()
 			},
