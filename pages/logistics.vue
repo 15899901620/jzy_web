@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header name="头部"></Header>
+		<Header name="头部" ></Header>
 		<div class="container" title="">
 			<div class="tac">
 				<img src="/img/logisticsBanner.jpg" style="width: 100%" />
@@ -25,10 +25,10 @@
 							</li>
 							<li>
 								<FormItem label="商品">
-								<Select  placeholder="请输入关键字"    prefix="ios-search"   
+								<Select  placeholder="请输入关键字"    prefix="ios-search"
 									  		filterable
 											clearable
-											remote 
+											remote
 											@on-change="onChange"
 											:remote-method="searchData1"
 											:loading="loading">
@@ -65,6 +65,7 @@
 										<span class="fwb">{{items.memberName}}</span></div>
 									<div class="dflexAlem mt5" style="justify-content: space-between;">
 										<span class="orangeFont">{{items.weight}}吨</span><span class="greenFont">￥{{items.offerPrice}}/吨</span><span class="gray">{{items.demandBeginDate}}</span>
+
 									</div>
 								</li>
 							</ul>
@@ -192,7 +193,11 @@
 				const res = await sendHttp(this, false, server.api.freight.freightList,params)
 
 				this.reaList=res.data.items;
+<<<<<<< HEAD
 				console.log(reaList)
+=======
+console.log("reaList:",this.reaList)
+>>>>>>> fb1ea4c5d380ebd3a69c05ccdc303468c447d31f
 				this.total=res.data.total
 
 			},
