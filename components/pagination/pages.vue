@@ -61,13 +61,13 @@
                 <nuxt-link v-if="current < allPages" class="ant-pages-item-link" :to="{query:{page:current + 1}}"></nuxt-link>
                 <a v-else class="ant-pages-item-link"></a>
             </li>
-          
+
         </ul>
     </div>
 </template>
 
 <script>
-    
+
 export default {
     name: 'pages',
     props: {
@@ -106,7 +106,7 @@ export default {
         showTotal: Function,
         otherParams:{
         	type: String,
-          default: ''
+            default: ''
         }
     },
     data() {
@@ -224,6 +224,9 @@ export default {
                 this._handleChange(val + 1);
             }
         },
+    },
+    mounted(){
+        console.log("otherParams",this.otherParams)
     },
     watch: {
         currentPageSize() {
