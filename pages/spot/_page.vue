@@ -70,10 +70,11 @@
           <ul class="Xhlist">
             <template v-if="$store.state.spot.spotList.length>0">
 
-              <li v-for="(item, index) in $store.state.spot.spotList" :key="index" :style="{backgroundColor:($store.state.memberToken && item.available_num > 0?'rgba(36,153,249,0.1)':'')}">
+              <li v-for="(item, index) in $store.state.spot.spotList" :key="index"
+                  :style="{backgroundColor:($store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1?'rgba(36,153,249,0.3)':' ')}">
                 <span style="width: 10%;">
                   <div class="pr">
-                  <i v-if="$store.state.memberToken && item.available_num > 0" class="newClass"  ></i>{{item.category_name}}</div></span>
+                  <i v-if="$store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1" class="newClass"  ></i>{{item.category_name}}</div></span>
                 <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
                     style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
@@ -107,7 +108,7 @@
                 <span style="width: 8%;">{{item.delivery_start}}</span>
                 <span style="width: 12%;">
                   <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
-                      style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
+                      style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
@@ -273,6 +274,7 @@
           console.log("categoryId:",this.categoryId)
           console.log("category:",this.$store.state.spot.condition.category)
           console.log("process:",this.$store.state.spot.condition.process)
+          console.log("spotList:",this.$store.state.spot.spotList)
 		},
 		watch: {
 			'$route'(to, from) {
