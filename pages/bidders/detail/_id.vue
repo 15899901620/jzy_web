@@ -627,6 +627,7 @@
         this.DepositData.depositNum = this.auctionInfo.depositNum
         this.DepositData.Bond = this.auctionInfo.marginRatio
         this.DepositData.totalNum = this.auctionInfo.totalNum
+        this.DepositData.limitNum = this.auctionInfo.limitNum
       },
       unDepositShow(row) {
         this.DepositShow = row

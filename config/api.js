@@ -252,6 +252,7 @@ let api = {
     cateHot: {'url': '/item/category/hotCate', 'method': 'get'},
     // attrlist: '/item/spec/value'
     attrlist: {'url': '/item/spec/value', 'method': 'get'},
+    goodslist: {'url': '/item/goods/list/page', 'method': 'get'},
   },
   /**
    * @description 质检单(表)
