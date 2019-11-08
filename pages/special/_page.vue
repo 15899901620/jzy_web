@@ -9,7 +9,7 @@
 							<img :src="items.img" height="312">
 						</div>
 						<div class="operatebtn">
-							<div class="btn">{{items.planName}}</div>
+							<div class="btn" @click="planOrder(items.planName)">{{items.planName}}</div>
 						</div>
 					</li>
 				</ul>
@@ -203,7 +203,16 @@ export default {
             const res = await specialList(this, params)
             this.speciallist = res.data.items
             this.total = res.data.total
-        }
+        },
+
+		//计划下单
+		planOrder(name){
+        	console.log("name",name)
+			this.$router.push({
+				name: 'special-list-page',
+				params:{name:name}
+			})
+		},
     },
     created() {
 
