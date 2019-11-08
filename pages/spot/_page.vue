@@ -17,7 +17,7 @@
               <dt class="scTitle">原料分类：</dt>
               <dd class="pro_brand_list" :class="categoryMore ? 'h50' : ''">
                 <a  @click="categoryClick()" :class="CateCurr === 'select'?'lightfont':''">显示全部</a>
-                <a v-for="(item, index) in $store.state.spot.condition.category" :key="index" :class="IndexCurr === index+1?'lightfont':''"
+                <a v-for="(item, index) in $store.state.spot.condition.category" :key="index" :class="IndexCurr === item.id?'lightfont':''"
                    @click="categoryClick(item.id,index)" >
                   {{item.name}}
                 </a>
@@ -33,7 +33,7 @@
               <dt class="scTitle">加工级别：</dt>
               <dd class="pro_brand_list" :class="processMore ? 'h50' : ''">
                 <a  @click="processClick()" :class="TotalCurr === 'select'?'lightfont':''">显示全部</a>
-                <a v-for="(item, index) in $store.state.spot.condition.process" :key="index" :class="processCurr === index+1 ?'lightfont':''"
+                <a v-for="(item, index) in $store.state.spot.condition.process" :key="index" :class="processCurr === item.id ?'lightfont':''"
                    @click="processClick(item.id,index)">
                   {{item.name}}
                 </a>
@@ -160,7 +160,9 @@
 				store.dispatch('spot/getSpotList', {
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
-						page_size: 6
+						page_size: 6,
+                        categoryId: query.category_id || '',
+                        processId: query.level_id || '',
 					}
 				),
 			])
@@ -188,10 +190,11 @@
 				processMore: true,
 				categoryMoreVal: '更多',
 				processMoreVal: '更多',
-                IndexCurr:'',  //列表当前高亮
-                CateCurr:'select',
-                processCurr:'',
-                TotalCurr:'select'
+                IndexCurr: Number(this.$route.query.category_id) || '',  //列表当前高亮
+                CateCurr: Number(this.$route.query.category_id) || 'select',
+                categoryindex:'',
+                processCurr: Number(this.$route.query.level_id) || '',
+                TotalCurr:Number(this.$route.query.level_id) || 'select',
 			}
 		},
 		methods: {
@@ -199,24 +202,23 @@
 				location.href = '/spot/order/' + id
 			},
 			categoryClick(id,index) {
-				this.categoryId = id
-                this.IndexCurr=index+1
-                if(index === undefined){
+                this.categoryId=id
+                this.IndexCurr=id
+                if(id === undefined){
                   this.CateCurr = 'select'
                 }else{
-                  this.CateCurr = index
+                  this.CateCurr = id
                 }
 				this.spotData()
 			},
 			processClick(id,index) {
               this.processId = id
-              this.processCurr = index+1
-              if(index === undefined){
+              this.processCurr = id
+              if(id === undefined){
                 this.TotalCurr = 'select'
               }else{
-                this.TotalCurr = index
+                this.TotalCurr = id
               }
-
               this.spotData()
  			},
 			categoryOpen() {
@@ -252,7 +254,6 @@
 					current_page: this.current_page,
 					page_size: this.page_size
 				};
-				console.log("params:",params)
  				this.$store.dispatch('spot/getSpotList', params)
 			},
 			checkTypeCancel(){
@@ -266,7 +267,12 @@
 
 		},
 		mounted() {
-
+         // this.CateCurr = this.IndexCurr
+          console.log("IndexCurr_category_id",typeof this.$route.query.category_id)
+         // this.IndexCurr= Number(this.$route.query.category_id)
+          console.log("categoryId:",this.categoryId)
+          console.log("category:",this.$store.state.spot.condition.category)
+          console.log("process:",this.$store.state.spot.condition.process)
 		},
 		watch: {
 			'$route'(to, from) {
