@@ -13,7 +13,7 @@
       </div>
     </Header-small>
     <div class="container" title="">
-      <div class="tac fs0 Tenderbanner" style="background: url('/img/Tenderingbanner.png')no-repeat center" >
+      <div class="tac fs0 Tenderbanner" style="background: url('/img/Tenderingbanner.jpg')no-repeat center" >
       <!--&lt;!&ndash;        <img src="/img/Tenderingbanner.png"  style="width: 100%" />&ndash;&gt;-->
       </div>
       <div class="trenderCenter">

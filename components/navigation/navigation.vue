@@ -24,7 +24,9 @@ export default {
 
      computed: {
         selected() {
-            return !this.$route.path ? '/' : this.$route.path
+
+            let pathArray=this.$route.path.split('/')
+            return !pathArray[1] ? '/' : '/'+pathArray[1]
         },
         classes() {
             return [
