@@ -210,7 +210,7 @@ export default {
         	console.log("name",name)
 			this.$router.push({
 				name: 'special-list-page',
-				params:{name:name}
+				query:{name:name}
 			})
 		},
     },
