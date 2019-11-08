@@ -4,35 +4,35 @@
             <Row  index="">
                 <Col span="24">
                     <FormItem prop="username">
-                        <Input v-model="loginsupplierform.username"  max="11" placeholder="公司名称" id="input1"/>
+                        <Input   max="11" placeholder="公司名称" id="input1"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row  index="">
                 <Col span="24">
                     <FormItem prop="username">
-                        <Input v-model="loginsupplierform.username"  max="11" placeholder="联系人" id="input1"/>
+                        <Input   max="11" placeholder="联系人" id="input1"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row  index="">
                 <Col span="24">
                     <FormItem prop="username">
-                        <Input v-model="loginsupplierform.username"  max="11" placeholder="手机号码" id="input1"/>
+                        <Input   max="11" placeholder="手机号码" id="input1"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row  index="">
                 <Col span="24">
                     <FormItem prop="username">
-                        <Input v-model="loginsupplierform.username"  max="11" placeholder="职务" id="input1"/>
+                        <Input   max="11" placeholder="职务" id="input1"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row  index="">
               <Col span="24">
                 <FormItem prop="mobilecode">
-                  <Input v-model="loginsupplierform.mobilecode"  autocomplete="off" placeholder="短信验证码"/>
+                  <Input  autocomplete="off" placeholder="短信验证码"/>
                 </FormItem>
                 <Button type="text" class="butGetCode" :disabled='this.btnBoolen' v-on:click="getNoteValue">{{this.btnValue}}</Button>
               </Col>
