@@ -6,7 +6,7 @@
                 <div class="breadcrumb">
                     <breadcrumb>
                         <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
-                        <breadcrumb-item><nuxt-link :to="{name:'special-page'}">计划专场</nuxt-link></breadcrumb-item><breadcrumb-item>{{$route.query.name}}</breadcrumb-item>
+                        <breadcrumb-item><nuxt-link :to="{name:'special-page'}">专场专料</nuxt-link></breadcrumb-item><breadcrumb-item>{{$route.query.name}}</breadcrumb-item>
                     </breadcrumb>
                 </div>
 
@@ -90,7 +90,6 @@
                 <span class="orangeFont"  style="width: 11%;position:relative;padding-right:18px;">
                      <span style="position: relative">
                        {{item.finalPriceFormat}}
-                        <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
                                 <span style="width: 9%;">
