@@ -148,8 +148,8 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
-        store.dispatch('common/getFriendlyList'),
-        //获取底部帮助分类
+                store.dispatch('common/getFriendlyList'),
+                //获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {
 					catId: 0,
 					indexShow: 1
