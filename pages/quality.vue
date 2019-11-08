@@ -122,7 +122,7 @@ export default {
         return {
             showmodal: false,
             datalist:[],
-            page_size:2,
+            page_size:5,
             current_page:1,
             total: 0,
             rowData: {},
