@@ -162,8 +162,8 @@
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
 						page_size: 6,
-                        categoryId: query.category_id || '',
-                        processId: query.level_id || '',
+                        category_id: query.category_id || '',
+                        level_id: query.level_id || '',
 					}
 				),
 			])
