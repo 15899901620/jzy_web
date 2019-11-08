@@ -17,11 +17,15 @@
                                 <Select v-model="condition.cate_id" clearable style="width:170px;padding-left: 10px;">
                                     <i-option v-for="(item, index) in categoryList" :value="item.id" :key="index">{{ item.name }}</i-option>
                                 </Select>
-                                <span class="ml30">牌号</span><input type="text" v-model="condition.name" name="title"  class="PhysearchInput" placeholder="请输入牌号"/>
+                                <span class="ml30">牌号</span><input type="text"  style='width:150px' v-model="condition.name" name="title"  class="PhysearchInput" placeholder="请输入牌号"/>
                                 <span class="ml30">加工级别</span>
-                                <Select v-model="condition.attr" clearable style="width:170px;padding-left: 10px;">
+                                <Select v-model="condition.attr" clearable style="width:150px;padding-left: 10px;">
                                     <i-option v-for="(item, index) in specList" :value="item.id" :key="index">{{ item.value }}</i-option>
                                 </Select>
+                                  <!-- <span class="ml30">是否显示</span>
+                                <Select v-model="condition.attr" clearable style="width:100px;padding-left: 10px;">
+                                    <i-option v-for="(item, index) in isshow" :value="item.id" :key="index">{{ item.value }}</i-option>
+                                </Select> -->
                                 <div class="xhBtn" style="margin-left: 20px;" @click="submitSearch">搜索</div>
 
                             </div>
@@ -138,13 +142,13 @@ export default {
             purpose: '',
             feature: '',
             categoryList: [],
-            specList: []
+            specList: [],
+            physicallist:[],
         }
     },
     computed:{
         ...mapState({
             currPage:  state => state.physical.currPage,
-            physicallist: state => state.physical.physicallist,
             physicalHotlist: state => state.physical.physicalHotlist,
             bannerinfo: state => state.system.bannerinfo,
         })
@@ -152,6 +156,7 @@ export default {
     created(){
         this.initCategoryListData()
         this.initAttrListData()
+        this.goodslist()
     },
     methods: {
         Tospot(link){
@@ -167,6 +172,19 @@ export default {
             const res = await sendHttp(this, false, server.api.product.attrlist, {'spec_id': 1})
             this.specList = res.data
         },
+        async goodslist(){
+            let params={
+                enable:1,
+                isShow:1,
+                cid1:  this.condition.cate_id,
+                title: this.condition.name,
+                level_id:  this.condition.attr,
+            }
+            const res = await sendHttp(this, false, server.api.product.goodslist, params)
+       
+            this.physicallist=res.data
+            //this.specList = res.data
+        },
 
         showTotal(total) {
             return `全部 ${total} 条`;
@@ -176,7 +194,8 @@ export default {
             this.$router.push({name:'physical-page',params:{id:id},query:{page:row}})
         },
         submitSearch() {
-            this.$router.push({ name:'physical-page',query: this.condition })
+            
+            this.goodslist()
         }
     },
     watch: {
