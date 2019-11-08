@@ -19,7 +19,7 @@
       <div class="mt15 dflex" style="align-items: center;">
         <span class="Bond_Popup_title">交纳数量：</span>
         <div class="pr ml10">
-          <input-special :min="0" :max="datalist.limitNum==0?datalist.totalNum:datalist.limitNum" v-model="Bonddeposit.bidNum"
+          <input-special :min="0" :max="datalist.limitNum==0?(datalist.totalNum-datalist.depositNum):(datalist.limitNum-datalist.depositNum)" v-model="Bonddeposit.bidNum"
                          @change="changeNum"></input-special>
           <!-- <input class="InputNum" v-model="Bonddeposit.bidNum" style="background: white;"/><span class="unit">吨</span> -->
         </div>
