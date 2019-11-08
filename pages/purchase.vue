@@ -64,6 +64,7 @@
         </div>
         </div>
         <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
+
     </div>
 </template>
 
@@ -81,6 +82,8 @@
             purchase: register.purchase,
             Footer
         },
+        computed: {
+        },
         fetch({ store, params }) {
             return Promise.all([
                 //获取顶部、中部、底部导航信息
@@ -93,6 +96,7 @@
 </script>
 
 <style lang="less" scoped>
+
     .Tenderbanner{
         height: 500px;
     }
