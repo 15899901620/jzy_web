@@ -1,17 +1,18 @@
 <template>
   <div class="body">
-    <Header-small title="招标中心">
-      <div slot="headerother">
-        <div v-if="!SupplierInfor"
-          data-v-228ad150
-          class="dflexAlem gray fs14"
-          style="color: rgb(102, 102, 102);    margin-top: 50px;"
-        >
-          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>
-          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>
-        </div>
-      </div>
-    </Header-small>
+    <Header></Header>
+    <!--    <Header-small title="招标中心">-->
+<!--      <div slot="headerother">-->
+<!--        <div v-if="!SupplierInfor"-->
+<!--          data-v-228ad150-->
+<!--          class="dflexAlem gray fs14"-->
+<!--          style="color: rgb(102, 102, 102);    margin-top: 50px;"-->
+<!--        >-->
+<!--          <span data-v-228ad150 class="bbright pr10 blackFont">已有账号？</span>-->
+<!--          <a data-v-228ad150 href="/login" class="blueFont pl10">直接登录</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </Header-small>-->
     <div class="container" title="">
       <div class="tac fs0 Tenderbanner" style="background: url('/img/Tenderingbanner.jpg')no-repeat center" >
       <!--&lt;!&ndash;        <img src="/img/Tenderingbanner.png"  style="width: 100%" />&ndash;&gt;-->
@@ -35,7 +36,7 @@
         <img src="/img/trendFlow.png" />
       </div>
       <!--  公告信息-->
-      <div class="graybg ovh">
+      <div class="graybg ovh" >
         <div class="w1200" style="margin-bottom: 50px">
           <div class="ListTitle whitebg mt20">
             <div class="TitleName">公告信息</div>
@@ -63,7 +64,7 @@
         </div>
       </div>
     </div>
-    <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
+    <Footer size="default" title="底部"    ></Footer>
   </div>
 </template>
 
@@ -106,6 +107,13 @@ export default {
         store.dispatch('common/getNavList'),
         //获取系统配置
         store.dispatch('common/getSysConfig'),
+      //获取友情链接
+      store.dispatch('common/getFriendlyList'),
+      //获取底部帮助分类
+      store.dispatch('helper/getHelpCate', {
+        catId: 0,
+        indexShow: 1
+      }),
     ]);
   },
   methods: {
