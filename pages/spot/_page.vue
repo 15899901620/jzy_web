@@ -203,21 +203,27 @@
 				location.href = '/spot/order/' + id
 			},
 			categoryClick(id,index) {
-                this.categoryId=id
-                this.IndexCurr=id
-                if(id === undefined){
+              console.log('111111',id)
+                if(id == undefined){
+                  this.categoryId=''
+                  this.IndexCurr=''
                   this.CateCurr = 'select'
                 }else{
+                  this.categoryId=id
+                  this.IndexCurr=id
                   this.CateCurr = id
                 }
 				this.spotData()
 			},
 			processClick(id,index) {
-              this.processId = id
-              this.processCurr = id
+              
               if(id === undefined){
+                this.processId = ""
+                this.processCurr =""
                 this.TotalCurr = 'select'
               }else{
+                this.processId = id
+                this.processCurr = id
                 this.TotalCurr = id
               }
               this.spotData()
@@ -269,12 +275,12 @@
 		},
 		mounted() {
          // this.CateCurr = this.IndexCurr
-          console.log("IndexCurr_category_id",typeof this.$route.query.category_id)
+          // console.log("IndexCurr_category_id",typeof this.$route.query.category_id)
          // this.IndexCurr= Number(this.$route.query.category_id)
-          console.log("categoryId:",this.categoryId)
-          console.log("category:",this.$store.state.spot.condition.category)
-          console.log("process:",this.$store.state.spot.condition.process)
-          console.log("spotList:",this.$store.state.spot.spotList)
+          // console.log("categoryId:",this.categoryId)
+          // console.log("category:",this.$store.state.spot.condition.category)
+          // console.log("process:",this.$store.state.spot.condition.process)
+          // console.log("spotList:",this.$store.state.spot.spotList)
 		},
 		watch: {
 			'$route'(to, from) {
