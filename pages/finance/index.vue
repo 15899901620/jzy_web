@@ -90,12 +90,17 @@
                 }),
             ])
         },
+        head(){
+            return{
+                title:"供应链金融"
+            }
+        },
         components:{
             Header,
             Footer
         },
         mounted(){
-            console.log("adList:",this.$store.state.common.adList.ad9[0].adImg)
+            
         },
     }
 </script>
