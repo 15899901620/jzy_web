@@ -9,7 +9,7 @@
 							<img :src="items.img" height="312">
 						</div>
 						<div class="operatebtn">
-							<div class="btn" @click="planOrder(items.planName)">{{items.planName}}</div>
+							<div class="btn" style="font-size: 23px;font-weight: 600;" @click="planOrder(items.planName)">{{items.planName}}</div>
 						</div>
 					</li>
 				</ul>
