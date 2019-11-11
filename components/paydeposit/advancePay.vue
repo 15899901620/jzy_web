@@ -34,7 +34,7 @@
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">保证金比例：</span>
-          <span class="ml10">{{$utils.amountFormat(dataList.Bond)}}%</span>
+          <span class="ml10">{{dataList.Bond}}%</span>
         </div>
         <!--需冻结保证金-->
         <div class="PricePopup">
@@ -180,9 +180,6 @@
 
 				this.proShow = true
 				this.closeShow = false
-
-				this.$Message.info("功能待完成，敬请期待！")
-        return
 
 				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params)
 				this.proShow = false
