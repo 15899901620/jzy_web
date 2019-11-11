@@ -146,8 +146,9 @@
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span>
                     </div>
-                    <div class="fs14 dflex" style="align-items: center">
+                    <div class="fs14 dflex" style="align-items: center;position: relative">
                       <span class="iv_title">竞拍数量</span> ：<span class="orangeFont fs16">{{items.totalNum}}</span>{{items.uomName}}
+                                 <i :title="`限购${items.limitNum}`" v-if="items.limitNum > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                       <template v-if="items.isAll == 1">
                         <span class="orangeFont fs16 ml30">整单</span>
                       </template>

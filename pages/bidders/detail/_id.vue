@@ -77,8 +77,9 @@
                 <template v-if="auctionInfo.packingModes===1">标准包装</template>
                 <template v-else-if="auctionInfo.packingModes===2">非标准包装</template>
               </td>
-              <td>
+              <td  style="position: relative">
                 {{auctionInfo.totalNum}}
+                   <i :title="`限购${auctionInfo.limitNum}`" v-if="auctionInfo.limitNum > 0" style="width: 15px; height: 18px; position: absolute; top: -3px; right: 20px; background:url('/img/Xian_icon.png')no-repeat;"></i>
               </td>
               <td>{{auctionInfo.warehouseName}}</td>
               <td>{{auctionInfo.deliveryStart}}</td>

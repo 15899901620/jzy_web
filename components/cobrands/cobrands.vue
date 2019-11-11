@@ -24,7 +24,7 @@
                             <a :href="items.url" target="_blank"><img :src="items.image"/></a>
                         </template>
                         <template else>
-                              <a  href="javascript:" target="_blank"><img :src="items.image"/></a>
+                              <a  href="javascript:void(0)"><img :src="items.image"/></a>
                         </template>
                        
                     </li>
