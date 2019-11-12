@@ -25,7 +25,7 @@
                 <h2 class="j_t mt20"><i>市场行情</i><span><nuxt-link :to="{name:'article-id', params:{id:3}}" >更多></nuxt-link></span></h2>
 
                 <ul class="j_mq"  v-if="$store.state.article.articleList2.length>0">
-                   <div class="j_n_pic">
+                  <div class="j_n_pic">
                       <img :src="$store.state.article.articleList2[0].image" width="299" height="186"/>
                   </div>
                   <li v-for="(items, index) in $store.state.article.articleList2" :key="index+1">
