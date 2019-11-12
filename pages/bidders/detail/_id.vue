@@ -60,13 +60,14 @@
               <td>厂商</td>
               <td>产品等级</td>
               <td>包装方式</td>
+              <td>物性表</td>
               <td>数量({{auctionInfo.uomName}})</td>
               <td>提货仓库</td>
               <td>开始提货日期</td>
               <td>截至提货日期</td>
             </tr>
             <tr>
-              <td>{{auctionInfo.skuName}}</td>
+              <td><a >{{auctionInfo.skuName}}</a></td>
               <td>{{auctionInfo.manufacturer}}</td>
               <td>
                 <template v-if="auctionInfo.productGrade===1">优等品</template>
@@ -76,6 +77,9 @@
               <td>
                 <template v-if="auctionInfo.packingModes===1">标准包装</template>
                 <template v-else-if="auctionInfo.packingModes===2">非标准包装</template>
+              </td>
+               <td>
+                <a :href="`/physical/detail/${auctionInfo.skuId}`" style="color:#ff7300">点击查看</a>
               </td>
               <td  style="position: relative">
                 {{auctionInfo.totalNum}}
@@ -748,6 +752,7 @@
       let reloadActionInfo = () =>{
         //获取竞拍信息
         this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
+        console.log(this.auctionInfo)
         if(this.auctionInfo.status != 'CL'){
           setTimeout(function () {
             reloadActionInfo()
