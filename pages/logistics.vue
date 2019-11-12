@@ -179,7 +179,7 @@
             searchData: [],
             searchColumns: [
                 { title: '运输方式', key: 'transportation' },
-                { title: '费用(吨)', key: 'freight_fee'}
+                { title: '费用(元/吨)', key: 'freight_fee'}
             ],
         }
     },
