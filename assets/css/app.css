@@ -371,6 +371,8 @@
 	box-sizing:border-box;
 }
 .PopupCode .AcqCode {
+	height: 34px;
+	cursor: pointer;
 	width:40%;
 	text-align:center;
 }
@@ -1971,7 +1973,7 @@ gAccount {
 .j_n_text{width:540px; float:right;margin-top:10px;}
 .j_n_text li{ overflow:hidden;height:29px;line-height:29px;}
 .j_n_text li:hover{color:#007de4;}
-.j_n_text li a{padding-left:10px;float:left;width:430px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;background:url(../../static/img/p_h1.jpg) no-repeat 0 13px;}
+.j_n_text li a{padding-left:10px;float:left;width:460px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;background:url(../../static/img/p_h1.jpg) no-repeat 0 13px;}
 .j_n_text li a:hover{color:#007de4;background:url(../../static/img/p_h2.jpg) no-repeat 0 13px;}
 .j_n_text li span{ float:right;padding-right:20px;}
 
@@ -1987,7 +1989,7 @@ gAccount {
 .j_n_info_l{float:left;width:260px;}
 .j_n_info_l li{ overflow:hidden;height:29px;line-height:29px;}
 .j_n_info_l li:hover{color:#007de4;}
-.j_n_info_l li a{float:left;width:150px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;}
+.j_n_info_l li a{float:left;width:200px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;}
 .j_n_info_l li a:hover{color:#007de4;}
 .j_n_info_l li span{ float:right;padding-right:20px;}
 .j_n_info .fwb{line-height:28px;height:28px;padding-top:10px;}
@@ -1995,7 +1997,7 @@ gAccount {
 .j_t_in{ background:#fff;padding-top:10px;}
 .j_t_in li{ overflow:hidden;height:31px;line-height:31px;}
 .j_t_in li:hover{color:#007de4;}
-.j_t_in li a{float:left;width:210px;padding-left:20px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;background:url(../../static/img/p_h1.jpg) no-repeat 10px 13px;}
+.j_t_in li a{float:left;width:220px;padding-left:20px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;background:url(../../static/img/p_h1.jpg) no-repeat 10px 13px;}
 .j_t_in li a:hover{color:#007de4;background:url(../../static/img/p_h2.jpg) no-repeat 10px 13px;}
 .j_t_in li span{ float:right;padding-right:20px;}
 .j_t_in .fwb{line-height:28px;height:28px;padding-top:10px;}

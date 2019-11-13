@@ -270,7 +270,7 @@
       </div>
 
     </div>
-
+    <OrderPay :isShow='payLoading' :order_id='payOrderID' @unChange="unPayOrder"></OrderPay>
   </div>
 
 </template>
@@ -280,10 +280,13 @@
 	import {orderpage, orderCount} from '../../api/order'
 	import pagination from '../../components/pagination'
 	import config from '../../config/config'
-	import paydeposit from '../../components/paydeposit'
+  import paydeposit from '../../components/paydeposit'
+  import OrderPay from '../../components/paydeposit/orderPay'
 	import TimeDown from '../../components/timeDown'
 	import server from '../../config/api'
-	import {sendHttp} from "../../api/common";
+  import {sendHttp} from "../../api/common";
+  import {sendCurl} from '../../api/common'
+	import utils from '../../plugins/common'
 
 	export default {
 		name: "userPlanBill",
@@ -293,7 +296,8 @@
 			TimeDown,
 			pages: pagination.pages,
 			usernav: Navigation.user,
-			payorder: paydeposit.order
+      payorder: paydeposit.order,
+      OrderPay
 		},
 		fetch({store, query}) {
 			return Promise.all([
@@ -319,7 +323,8 @@
 			return {
 				current_page: 1,
 				page_size: 5,
-				total: 0,
+        total: 0,
+        payLoading:false,
 				formSearch: {
 					orderType: '',
 					status: '',
@@ -364,6 +369,76 @@
 			},
 			showTotal(total) {
 				return `全部 ${total} 条`;
+      },
+      paymentBut(row) {
+				//检查是否可以使用合约的保证金
+
+				this.payLoading = true
+				this.payOrderID = row.id
+      },
+      unPayOrder(row) {
+				this.payLoading = row
+				this.getSourceData()
+			},
+      closeBut(row) {
+				this.$Modal.confirm({
+					title: '取消订单',
+					content: '<p style="font-size:14px;">您确认想取消当前订单？</p>',
+					onOk: async () => {
+						let rs = await sendCurl(this, server.api.order.cancel, {id: row.id})
+						if (rs.status === 200) {
+							if ((rs.data.errorcode || 0) == 0) {
+								location.reload()
+							} else {
+								this.$Modal.warning({
+									title: '提示',
+									content: rs.data.message
+								})
+								return
+							}
+						}
+					},
+					onCancel: () => {
+
+					}
+				})
+      },
+      cancelPlan(row) {
+				this.$Modal.confirm({
+					title: '合约申请结束',
+					content: '<p style="font-size:14px;">您确认申请结束当前合约单？申请取消执行剩余' + row.available_num + '吨货物转订单</p>',
+					onOk: () => {
+						let params = {
+							id: row.id
+						}
+						sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
+            
+							if (response.status === 200) {
+                       
+								if ((response.data.errorcode || 0) == 0) {
+									window.location.reload()
+								} else {
+                   alert(response.data.message)						
+								}
+							}
+						})
+					},
+					onCancel: () => {
+
+					}
+				})
+			},
+      addLog(row) {
+				this.addList = {
+					...row
+				}
+				this.addloading = true
+      },
+      detailLog(row) {
+				this.addList = {
+					...row
+				}
+				this.detailloading = true
 			},
 		},
 		mounted() {

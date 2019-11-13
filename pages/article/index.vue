@@ -12,7 +12,7 @@
             <div class="j_news_wrap">
               <div class="j_news_l">
                 <h2 class="j_t mt20"><i>公司动态</i><span><nuxt-link :to="{name:'article-id', params:{id:6}}" >更多></nuxt-link></span></h2>
-                <div class="j_n_pt">
+                <div class="j_n_pt" v-if="$store.state.article.articleList.length>0">
 
                   <div class="j_n_pic">
                     <img :src="$store.state.article.articleList[0].image" width="299" height="186"/>
@@ -24,10 +24,10 @@
                 </div>
                 <h2 class="j_t mt20"><i>市场行情</i><span><nuxt-link :to="{name:'article-id', params:{id:3}}" >更多></nuxt-link></span></h2>
 
-                <ul class="j_mq"  >
-                 <div class="j_n_pic">
+                <ul class="j_mq"  v-if="$store.state.article.articleList2.length>0">
+                  <div class="j_n_pic">
                       <img :src="$store.state.article.articleList2[0].image" width="299" height="186"/>
-                </div>
+                  </div>
                   <li v-for="(items, index) in $store.state.article.articleList2" :key="index+1">
                       <span>{{items.title}}</span>
                       <nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">
@@ -39,19 +39,19 @@
 
                 <h2 class="j_t mt20"><i>信息公告</i></h2>
                 <div class="j_n_pt">
-                  <div class="j_n_info" style="margin-left: 40px;">
+                  <div class="j_n_info" style="margin-left: 40px;" v-if="$store.state.article.noticeInfo1.length>0">
                      <h3 class="fwb">招标公告</h3>
                     <ul class="j_n_info_l" style="margin-top: 15px;">
                       <li v-for="(items, index) in $store.state.article.noticeInfo1" :key="index"><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
                     </ul>
                   </div>
-                  <div class="j_n_info" >
+                  <div class="j_n_info"  v-if="$store.state.article.noticeInfo2.length>0">
                     <h3 class="fwb">销售公告</h3>
                     <ul class="j_n_info_l" style="margin-top: 15px;">
                       <li v-for="(items, index) in $store.state.article.noticeInfo2" :key="index"><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
                     </ul>
                   </div>
-                  <div class="j_n_info">
+                  <div class="j_n_info" v-if="$store.state.article.noticeInfo3.length>0">
                     <h3 class="fwb">竞拍公告</h3>
                     <ul class="j_n_info_l" style="margin-top: 15px;">
                       <li  v-for="(items, index) in $store.state.article.noticeInfo3" :key="index"><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
@@ -63,21 +63,21 @@
 
 
               <div  class="j_news_r">
-                <div>
+                <div v-if="$store.state.article.articleList3.length>0">
                   <h2 class="j_t mt20"><i>今日行情</i><span> <nuxt-link :to="{name:'article-id', params:{id:2}}" >更多></nuxt-link></span></h2>
                   <ul class="j_t_in" style="height:214px;" >
                     <li v-for="(items, index) in $store.state.article.articleList3" :key="index"> <nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
                   </ul>
                 </div>
 
-                <div>
+                <div v-if="$store.state.article.noticeInfo.length>0">
                   <h2 class="j_t mt20"><i>网站公告</i><span><nuxt-link :to="{name:'notice-list-page'}">更多></nuxt-link></span></h2>
                   <ul class="j_t_in" style="height:388px;" >
                     <li v-for="(items, index) in $store.state.article.noticeInfo" :key="index"><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
                   </ul>
                 </div>
 
-                <div>
+                <div v-if="$store.state.article.articleList4.length>0">
                   <h2 class="j_t mt20"><i>行业资讯</i><span><nuxt-link :to="{name:'article-id', params:{id:1}}" >更多></nuxt-link></span></h2>
                   <ul class="j_t_in" style="height:211px;" >
                     <li v-for="(items, index) in $store.state.article.articleList4" :key="index"><nuxt-link :to="{name:'article-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>
@@ -125,8 +125,6 @@ export default {
           store.dispatch('article/getHotArticle',  {current_page: 1, page_size: 10,sortBy: 'click', desc: true, isShow: 1}),
           store.dispatch('article/getArticleCatList',  {parentId: 0}),
           store.dispatch('article/getArticleCatDetail',  {id: !params.id ? 2 : params.id}),
-
-
         ])
     },
     components: {
@@ -160,6 +158,9 @@ export default {
             let id = this.$route.params.id
             this.$router.push({name:'article-id',params:{id:id},query:{page:row}})
         },
+
+    },
+    mounted(){
 
     },
     created(){
