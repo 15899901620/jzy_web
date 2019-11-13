@@ -773,6 +773,10 @@
       }, 15000)
 
       this.auctionNum = 0
+      if(this.auctionInfo.myBidList.length > 0){
+        this.auctionNum = this.auctionInfo.myBidList[0].bidNum
+      }
+
       this.auctionOffer = this.minPrice
       this.getfollow()
       this.getunfollow()
