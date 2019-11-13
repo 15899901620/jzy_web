@@ -711,6 +711,15 @@
           })
         }
 
+        if (this.auctionNum == 0) {
+          this.$Modal.warning({
+            title: '提示',
+            content: '竞拍数量不能为零！',
+            duration: 5,
+            styles: 'top:300px'
+          })
+        }
+
         let params = {
           auctionId: this.auctionId,
           bidNum: this.auctionNum,
@@ -763,7 +772,7 @@
         reloadActionInfo()
       }, 15000)
 
-      this.auctionNum = this.minNum
+      this.auctionNum = 0
       this.auctionOffer = this.minPrice
       this.getfollow()
       this.getunfollow()
