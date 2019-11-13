@@ -100,7 +100,7 @@
             Footer
         },
         mounted(){
-            
+
         },
     }
 </script>

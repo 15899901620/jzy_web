@@ -46,7 +46,7 @@
       <sidebar></sidebar>
     </div>
     <Footer size="default"   style="margin-top:18px;"></Footer>
-    
+
   </div>
 </template>
 
