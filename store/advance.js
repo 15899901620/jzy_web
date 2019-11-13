@@ -4,7 +4,9 @@ import server from '../config/api'
 export const state = () => {
 	return {
 		advanceList: [],
-		total: 0
+		total: 0,
+		planList: [],
+		planDetail: {}
 	}
 };
 
@@ -14,6 +16,12 @@ export const mutations = {
 	},
 	updateTotal(state, data) {
 		state.total = data
+	},
+	updatePlanList(state, data) {
+		state.planList = data
+	},
+	updatePlanDetail(state, data) {
+		state.planDetail = data
 	}
 }
 
@@ -27,6 +35,27 @@ export const actions = {
 			}
 		}catch(err){
 			console.log('获取预售列表异常：', err)
+		}
+	},
+	async getPlanList({commit}, params) {
+		try {
+			let res = await sendCurl(this, server.api.advance.getMemberPlanList, params)
+			if (res.status === 200) {
+				commit('updatePlanList', res.data.items)
+				commit('updateTotal', res.data.total)
+			}
+		}catch(err){
+			console.log('获取预售合约列表异常：', err)
+		}
+	},
+	async getPlanDetail({commit}, params) {
+		try {
+			let res = await sendCurl(this, server.api.advance.getSalePlanDetail, params)
+			if (res.status === 200) {
+				commit('updatePlanDetail', res.data)
+			}
+		}catch(err){
+			console.log('获取预售合约放料详情异常：', err)
 		}
 	}
 }

@@ -182,5 +182,19 @@ export default {
 				...params
 			}
 		})
-	}
+	},
+	showWarning(vm, msg, okCallback) {
+		if (okCallback) {
+			vm.$Modal.warning({
+				title: '提示',
+				content: msg,
+				onOk: okCallback
+			})
+		} else {
+			vm.$Modal.warning({
+				title: '提示',
+				content: msg,
+			})
+		}
+	},
 }

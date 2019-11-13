@@ -327,7 +327,7 @@
 			//获取物流费用
 			async getFreight() {
 				let data = {
-					sku_id: this.spotInfo.sku_id,
+					sku_no: this.spotInfo.sku_no,
 					warehouse_id: this.spotInfo.warehouse_id,
 					country_id: this.defaultAdd.countryId,
 					state_id: this.defaultAdd.state,
