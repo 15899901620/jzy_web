@@ -11,7 +11,7 @@
 											<img :src="items.img" height="312">
 										</div>
 										<div class="operatebtn">
-											<div class="btn" style="font-size: 23px;font-weight: 600;" @click="planOrder(items.planName)">{{items.planName}}</div>
+											<div class="btn" style="font-size: 23px;font-weight: 600;" @click="planOrder(items.id)">{{items.planName}}</div>
 										</div>
 									</li>
 								</ul>
@@ -135,34 +135,42 @@ export default {
             total: 0,
 			planArray:[
 				{
+					id:3,
 					img:'img/plan_01.png',
 					planName:'BOPP膜料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_02.png',
 					planName:'无纺布专场'
 				},
 				{
+					id:'',
 					img:'img/plan_03.png',
 					planName:'透明料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_04.png',
 					planName:'注塑料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_05.png',
 					planName:'改性塑料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_06.png',
 					planName:'拉丝料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_07.png',
 					planName:'纤维料专场'
 				},
 				{
+					id:'',
 					img:'img/plan_08.png',
 					planName:'塑料助剂专场'
 				},
@@ -208,11 +216,11 @@ export default {
         },
 
 		//计划下单
-		planOrder(name){
+		planOrder(id){
         	console.log("name",name)
 			this.$router.push({
 				name: 'special-list-page',
-				query:{name:name}
+				query:{id:id}
 			})
 		},
     },
