@@ -123,7 +123,7 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
+	import { mapState } from 'vuex'
 	import Header from '../../components/header'
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'

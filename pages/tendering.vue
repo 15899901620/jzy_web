@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <Footer size="default" title="底部"    ></Footer>
+    <Footer size="default" title="底部" ></Footer>
   </div>
 </template>
 

@@ -258,7 +258,7 @@
 				addAddressLoading: false,
 				payModalShow: false,
 				payModalTitle: '支付',
-        isCanPay: true,
+                isCanPay: true,
 				payData: {},
 				orderinfo: {
 					spot_id: 0,
@@ -278,7 +278,7 @@
 				currMin: 0,
 				currMax: 0,
 				PlanNum:0,
-        isCanSale: true,
+                isCanSale: true,
 				currsetp: 1,
 				ServiceTimeList: [],
 				payList: [
@@ -396,18 +396,21 @@
 			},
 			choosePayType(index) {
 				this.orderinfo.payIndex = index
-        if(index == 0){
-					this.orderinfo.jryDays = 0
-					this.setJry()
-        }
+              if(index == 0){
+                this.orderinfo.jryDays = 0
+                this.setJry()
+              }
 			},
 			//选择巨融易
 			setJry() {
+			  console.log("JRY_COST:", this.$store.state.common.sysConfig.JRY_COST)
+              console.log("jryDays:", this.orderinfo.jryDays)
 				if (this.orderinfo.jryDays > 0) {
 					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
 				} else {
 					this.orderinfo.jryCost = 0
 				}
+              console.log("jryCost:", this.orderinfo.jryCost)
 			},
 			//选择订单数量
 			changeNum(value) {
@@ -523,11 +526,11 @@
 				}
 				let res = await sendHttp(this, true,server.api.spot.getPlanTotalNumByQuoteId, params,1)
 				this.PlanNum=res.data
-        if(this.PlanNum >= limit_num){
-        	this.isCanSale = false
-        }
-			}
-		},
+                if(this.PlanNum >= limit_num){
+                    this.isCanSale = false
+                }
+            }
+        },
 		mounted() {
 
 			if(!this.spotInfo){
