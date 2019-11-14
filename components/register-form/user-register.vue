@@ -453,8 +453,8 @@
 			const validateInvTelephone = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入联系电话'));
-				}  else 	if (value.length > 12) {
-					callback(new Error('联系电话不能超过12位'));
+				}  else 	if (value.length > 15) {
+					callback(new Error('联系电话不能超过15位'));
 				}else {
 					callback();
 				}
