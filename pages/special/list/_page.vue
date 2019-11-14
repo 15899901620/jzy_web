@@ -122,8 +122,8 @@
                         </template>
                     </ul>
                     <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
-                        <pages :total="1" :pageSize="page_size" :show-total="showTotal" :value="current_page"
-                               :otherParams="`category_id=${this.categoryId}&level_id=${this.processId}`" ></pages>
+                        <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
+                               :otherParams="`id=${this.$route.query.id}`" ></pages>
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                         sku_name: query.keyword || '',
                         current_page: query.page || 1,
                         page_size: 6,
-                        category3_id: query.id || '',
+                        category3_id: query.id || 0,
 
                     }
                 ),
