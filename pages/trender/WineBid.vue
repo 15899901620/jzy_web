@@ -82,14 +82,14 @@
 			};
 		},
 		methods: {
-			WineDetail(row) {
-				this.$router.push({
-					name: 'trender-WineBidDetail',
-					params: {
-						id: row.id
-					}
-				})
-			},
+      WineDetail(row){
+        this.$router.push({
+              name: 'trender-WineBidDetail',
+              query: {
+                  id: row.id
+              }
+          })
+      },
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},
