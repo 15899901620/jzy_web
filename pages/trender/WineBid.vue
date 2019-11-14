@@ -13,7 +13,7 @@
         </div>
       </div>
     </Header-small>
-      <div class="w1200 dflex">
+      <div class="w1200 dflex" style="margin-top: 20px;">
         <!-- 公告信息-->
         <div class="Notice">
           <div class="title">
@@ -64,7 +64,6 @@
 
 	export default {
 		name: "WineBid",
-		layout: 'membercenter',
 		components: {
       HeaderSmall: Header.small,
 			pageRoute,
