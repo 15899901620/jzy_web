@@ -444,6 +444,8 @@
 			const validateInvAddress = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入开票地址'));
+				} else 	if (value.length > 38) {
+					callback(new Error('开票地址内容不能超过38个字'));
 				} else {
 					callback();
 				}
@@ -451,7 +453,9 @@
 			const validateInvTelephone = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入联系电话'));
-				} else {
+				}  else 	if (value.length > 12) {
+					callback(new Error('联系电话不能超过12位'));
+				}else {
 					callback();
 				}
 			};
