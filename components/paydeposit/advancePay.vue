@@ -52,8 +52,8 @@
               <Checkbox :disabled="true"></Checkbox>
               <span class="PricePopup_title">保证金钱包余额：</span>
               <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-              <a class="PricePopup_btn" @click="wallet()" target="_blank"
-                 style="float: right;line-height: 16px;">钱包转资金</a>
+              <a class="PricePopup_btn" target="_blank"
+                 style="float: right;line-height: 16px;background-color:#cfcfcf;">钱包转资金</a>
             </p>
           </div>
         </div>

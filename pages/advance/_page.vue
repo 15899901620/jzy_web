@@ -24,34 +24,36 @@
               <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                 <template v-if="items.statusType == '1'">
                   <div class="statusicon startauction">正在预售</div>
+                  <div class="ml20">
+                    <span class="fs18 orangeFont">{{items.sku_name}}</span>
+                  </div>
                   <div class="ml20"><span>距离结束 ：</span>
                     <span class="fs18">
                         <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" endMsg="已结束"
                                   :onTimeOver="reloadPage"></TimeDown>
-                      </span>
+                    </span>
                   </div>
                 </template>
                 <template v-if="items.statusType == '2' || items.statusType == '3'">
                   <div class="statusicon vcauction">已售罄</div>
-                  <div class="ml20"><span class="gray">距离结束 ：</span>
-                    <span class="fs18">
-                        <TimeDown :timeStyleType="2" :endTime="items.price_valid_time" endMsg="已结束"
-                                  :onTimeOver="reloadPage"></TimeDown>
-                      </span>
+                  <div class="ml20">
+                    <span class="fs18 orangeFont">{{items.sku_name}}</span>
+                  </div>
+                  <div class="ml20">
+                    <span class="gray">距离结束 ：</span>
+                    <span class="fs16">已结束</span>
                   </div>
                 </template>
                 <template v-if="items.statusType == '4'">
                   <div class="statusicon endauction">已结束</div>
                   <div class="ml20">
+                    <span class="fs18 orangeFont">{{items.sku_name}}</span>
+                  </div>
+                  <div class="ml20">
                     <span>结束时间 ：</span>
                     <span class="fs16">{{items.price_valid_time}}</span>
                   </div>
                 </template>
-
-                <div class="ml20">
-                  <span>提货日期 ：</span>
-                  <span class="fs16">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span>
-                </div>
               </div>
 
               <div class="acuProduct ">
@@ -61,8 +63,9 @@
                 <div class="mt10 fs14 dflex">
                   <div class="btmunv"><span class="iv_title">预售价</span> ：<span class="orangeFont fwb fs16">{{$utils.amountFormat(items.final_price)}}</span>
                   </div>
-                  <div class="fs14 dflex">
+                  <div class="fs14 dflex" style="position: relative;">
                     <span class="iv_title">预售总数</span> ：<span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
+                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                   </div>
                 </div>
                 <div class="mt10 fs14 dflex">
@@ -81,20 +84,31 @@
                   <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span
                       class=" fs16">{{items.manufacturer}}</span></div>
                 </div>
+                <div class="mt10 fs14 dflex">
+                  <div class="btmunv"><span class="iv_title">包装方式</span> ：<span class="fs16">{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
+                  </div>
+                  <div class="fs14 dflex"><span class="iv_title">提货日期</span> ：<span class="fs16 orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
+                </div>
               </div>
               <div class="acuOpear">
                 <div style="display: flex; flex-direction: column; justify-content: center">
                   <span class="mt10 ">库区：{{items.warehouse_name}}</span>
-                  <span class="mt5">城市：{{items.warehouse_province}}</span>
+                  <span class="mt5">城市：{{items.warehouse_city}}</span>
                 </div>
                 <template v-if="items.statusType == '1'">
                   <div class="btnStart startauction" @click="toPlan(items)">
-                    <template>
-                      参与预定
+                    <template v-if="items.planned_total_num > 0">
+                      追加预定
+                    </template>
+                    <template v-else>
+                      参加预定
                     </template>
                   </div>
-                  <span v-if="items.planned_total_num > 0">已预购{{items.planned_total_num}}吨</span>
                 </template>
+                <template v-else>
+                  <div class="btnStart endauction">预售结束</div>
+                </template>
+                <span v-if="items.planned_total_num > 0">已预购{{items.planned_total_num}}吨</span>
               </div>
             </li>
 

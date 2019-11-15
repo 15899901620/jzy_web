@@ -11,7 +11,7 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入合约编号查询" ref="searchval" class="orderInput" v-model="formSearch.planNo"  />
+              <input type="text" placeholder="合约编号、商品名称搜索" ref="searchval" class="orderInput" v-model="formSearch.keyword"  />
               <div class="check" @click='checked()' style="cursor: pointer">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
@@ -69,8 +69,9 @@
                     <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">已违约</a>
                   </div>
                   <div v-else-if="item.available_num > 0">
-                    <template v-if="item.close_apply_status == 1 && item.feeding_num > 0">
-                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
+                    <template v-if="item.close_apply_status == 1">
+                      <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" v-else style="padding: 3px 6px;background-color: #dbdcde;cursor: default;">转单</a>
                     </template>
                     <template v-else-if="item.close_apply_status == 2">
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
@@ -91,7 +92,7 @@
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-          <pages :total="planTotal" :show-total="showTotal" :value="current_page" style="margin-top:20px;"></pages>
+          <pages :total="planTotal" :show-total="showTotal" :value="current_page" style="margin:20px 0;"></pages>
         </div>
         <Modal
             title="选择放料"
@@ -145,7 +146,7 @@ export default {
 			//获取系统配置
 			store.dispatch('common/getSysConfig'),
 			//获取会员合约列表
-			store.dispatch('advance/getPlanList', {current_page:query.page||1, page_size: 6, planNo:query.plan_no ? query.plan_no: ''})
+			store.dispatch('advance/getPlanList', {current_page:query.page||1, page_size: 6, keyword:query.keyword ? query.keyword: ''})
 		])
 	},
 	computed: {
@@ -164,10 +165,7 @@ export default {
 			auctionNo:'',
       curr_plan_id: 0,
 			formSearch: {
-				planNo: '',
-				skuNo: '',
-				auctionId: '',
-				status: ''
+				keyword: '',
 			},
 
 			selectFeedingModalShow: false,
@@ -188,7 +186,7 @@ export default {
 			return `全部 ${total} 条`;
 		},
 		checked(){
-			location.href = '/users/auctionPlan?plan_no='+this.formSearch.planNo
+			location.href = '/users/advancePlan?keyword='+this.formSearch.keyword
 		},
 		async getSaleFeedingList(planned_id) {
 			this.curr_plan_id = planned_id
@@ -219,7 +217,6 @@ export default {
 	mounted(){
 	},
 	created(){
-    console.log(this.planList)
 	},
 	watch: {
 		'$route' (to, from) {
