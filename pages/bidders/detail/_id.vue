@@ -79,7 +79,7 @@
                 <template v-else-if="auctionInfo.packingModes===2">非标准包装</template>
               </td>
                <td>
-                <a :href="`/physical/detail/${auctionInfo.skuId}`" style="color:#ff7300">点击查看</a>
+                <a :href="`/physical/detail/${auctionInfo.skuId}`" target="_blank" style="color:#ff7300">点击查看</a>
               </td>
               <td  style="position: relative">
                 {{auctionInfo.totalNum}}
