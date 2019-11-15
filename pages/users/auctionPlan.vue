@@ -95,7 +95,7 @@
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-          <pages :total="$store.state.bidders.planTotal" :show-total="showTotal" :value="current_page" style="margin-top:20px;"></pages>
+          <pages :total="$store.state.bidders.planTotal" :show-total="showTotal" :value="current_page" style="margin:20px 0;"></pages>
         </div>
       </div>
     </div>
