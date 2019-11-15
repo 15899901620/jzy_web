@@ -34,7 +34,7 @@
               <tr class="Ttitle graybg" >
                 <td colspan="8">
                     <span class="ml10">合约编号：
-                      <a :href="`/users/plan/auction/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
+                      <a :href="`/users/plan/spot/${item.booking_id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
                       <template v-if="item.status == 1">(待转单)</template>
                       <template v-else-if="item.status == 2">(已转单)</template>
                       <template v-else-if="item.status == 3">(已违约)</template>
@@ -219,6 +219,7 @@ export default {
 	mounted(){
 	},
 	created(){
+    console.log(this.planList)
 	},
 	watch: {
 		'$route' (to, from) {
