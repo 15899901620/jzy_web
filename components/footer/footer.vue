@@ -22,9 +22,11 @@
                     </div>
                 </div>
             </div>
-             <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
-                <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
-
+             <div class="ensure-wrap" style="padding-bottom: 0px;padding: 30px 0px;  background-color: #f1f1f1; border:0;">
+                <div class="copyright" style="padding:5px 0">    
+                    <a :href="item.url" v-for="(item, index) in $store.state.common.nav.bottomNav" :key="index" style="padding-right: 10px;">{{ item.name }}</a>
+                 </div>
+                <div class="copyright" style="padding: 0px;" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
             </div>
         </template>
         <template v-else-if="size === 'large'">
@@ -49,6 +51,7 @@
                 </div>
             </div>
              <div class="ensure-wrap" style="padding-bottom: 0px;  background-color: #f1f1f1; border:0;">
+               
                 <div class="copyright" v-html="this.$store.state.common.sysConfig.COPYRIGHT"></div>
             </div>
         </template>

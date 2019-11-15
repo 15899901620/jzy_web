@@ -9,9 +9,9 @@
       <p class="mt5 "><span class="gray">邮箱：</span>{{this.$store.state.common.sysConfig.SERVICEEMAIL}}</p>
       <p class="mt5 "><span class="gray">在线客服：</span>{{this.$store.state.common.sysConfig.ONLINESERVICE}}</p>
     </div>
-    <div class="dflexAlemJust mt20 mb20">
+    <!-- <div class="dflexAlemJust mt20 mb20">
       <button class="serviceBtn"  @click="OnlineService()"  alt="点击这里给我发消息" title="点击这里给我发消息">在线客服</button>
-    </div>
+    </div> -->
 
 
 
