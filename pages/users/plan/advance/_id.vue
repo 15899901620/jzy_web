@@ -111,7 +111,6 @@
             </Row>
           </div>
           <div style="display: flex;justify-content: flex-end;margin: 30px 0;">
-            <Button v-if="dataInfo.available_num > 0 && dataInfo.status == 1" class="submitspotOrder" @click='toCreateOrder'>转订单</Button>
             <Button class="submitspotback ml10" @click='goBack'>返回</Button>
           </div>
           <div class="TableTitle graybg">
