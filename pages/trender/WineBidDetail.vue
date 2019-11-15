@@ -1,6 +1,6 @@
 <template>
 <div class="body">
-    <Header-small title="招标中心">
+    <Header-small shortType = 'suppler' title="招标中心">
       <div slot="headerother">
         <div
           data-v-228ad150

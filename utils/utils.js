@@ -39,6 +39,7 @@ export default {
 	memberLogout: function () {
 		Cookie.set('memberInfo', '')
 		Cookie.set('userinfor', '')
+		Cookie.set('supplierInfor', '')
 		Cookie.set('webtoken', '')
 		Cookie.set('websuppliertoken', '')
 		location.href='/'

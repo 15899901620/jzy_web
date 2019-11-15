@@ -66,7 +66,9 @@
                   </div>
                 </div>
                 <div class="mt10 fs14 dflex">
-                  <div class="btmunv"><span class="iv_title">可售数量</span> ：<span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
+                  <div class="btmunv" style="position: relative;margin-top: 15px">
+                    <span class="iv_title">可售数量</span> ：<span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
+                                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right:110px; background:url('/img/Xian_icon.png')no-repeat;"></i>
                   </div>
                   <div class="fs14 dflex">
                     <span class="iv_title">起订量</span> ：<span class="orangeFont fs16">{{items.min_order}}</span>{{items.uom_name}}
@@ -234,6 +236,7 @@
 			}
 		},
 		created() {
+      console.log(this.advanceList)
 		},
 		head() {
 			return {
