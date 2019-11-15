@@ -1,6 +1,6 @@
 <template>
 	<div class="body">
-		<Header name="头部" ></Header>
+		<Header  name="头部"  shortType = 'suppler' type='1'></Header>
 		<div class="container" title="">
 			<div class="tac">
 				<img src="/img/logisticsBanner.jpg" style="width: 100%" />
@@ -156,7 +156,7 @@
 	export default {
 		name: "logistics",
 		components: {
-			Header,
+			Header:Header.small,
 			Footer,
 			Logisticslist
 		},

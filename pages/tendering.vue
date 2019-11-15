@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header></Header>
+    <HeaderSmall shortType = 'suppler' type='1'></HeaderSmall>
     <!--    <Header-small title="招标中心">-->
 <!--      <div slot="headerother">-->
 <!--        <div v-if="!SupplierInfor"-->
@@ -164,7 +164,7 @@ export default {
         })
     },
     async SourceData() {
-         if(this.SupplierInfor != undefined){
+         if(this.SupplierInfor){
             const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
 
             this.dataList = res.data.items
