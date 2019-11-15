@@ -119,7 +119,9 @@ let api = {
 		getContractInfo: {'url':'/bill/bookingPlan/getContractInfo', 'method':'get'},
 		getFeedingByPlan: {'url':'/bill/bookingFeeding/saleListByPlan', 'method':'post'},
 		getSalePlanDetail: {'url':'/bill/bookingPlan/salePlanDetail', 'method':'get'},
-		createOrder: {'url':'/bill/bookingPlan/order/create', 'method':'post'},
+    createOrder: {'url':'/bill/bookingPlan/order/create', 'method':'post'},
+    detail: {'url':'/bill/bookingPlan/detail', 'method':'GET'}, 
+    
   },
   /**
    * @description 竞拍管理

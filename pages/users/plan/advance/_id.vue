@@ -214,18 +214,18 @@
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
-				store.dispatch('spot/getSpotPlanDetail', {id: params.id}),
 			])
 		},
 		computed:{
-			...mapState({
-				dataInfo: state => state.spot.spotPlanDetail,
-			})
+			// ...mapState({
+			// 	dataInfo: state => state.spot.spotPlanDetail,
+			// })
 		},
 		data() {
 			return {
         id:!this.$route.params.id ? 0 : this.$route.params.id,
         OrderList:{},
+        dataInfo:{},
 			}
 		},
 		methods: {
@@ -250,10 +250,10 @@
       },
       async getSpotPlanDetail() {
         	let params = {
-					id: this.id,
-				  }
-				const res = await sendHttp(this, false, server.api.spot.spotPlanDetail, params, 1)
-        this.OrderList = res.data
+               id: this.id,
+				  } 
+          const res = await sendHttp(this, false, server.api.advance.detail, params, 1)
+          this.dataInfo = res.data
       },
 		},
 		mounted(){
