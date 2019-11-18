@@ -61,7 +61,7 @@
 	import Notice from './trenderCompontent/Notice'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
-
+  import Cookies from "js-cookie";
 	export default {
 		name: "WineBid",
 		components: {
@@ -77,7 +77,8 @@
 				webName: '',
 				dataList: {},
 				current_page: 1,
-				page_size: 10,
+        page_size: 10,
+        SupplierInfor: Cookies.get("supplierInfor"),
 				total: 0
 			};
 		},
@@ -102,13 +103,24 @@
 				})
 			},
 			async SourceData() {
-				let params = {
-					page_size: this.page_size,
-					current_page: this.current_page
-				};
-				const res = await sendHttp(this, false, server.api.biddding.bidddingList, params)
-				this.dataList = res.data.items
-				this.total = res.data.total
+       if(this.SupplierInfor){
+            let params = {
+              page_size: this.page_size,
+              current_page: this.current_page
+            };
+            const res = await sendHttp(this, false, server.api.biddding.bidddingList, params,2)
+            this.dataList = res.data.items
+            this.total = res.data.total
+       }else{
+            let params = {
+              page_size: this.page_size,
+              current_page: this.current_page
+            };
+            const res = await sendHttp(this, false, server.api.biddding.bidddingList, params)
+            this.dataList = res.data.items
+            this.total = res.data.total
+       }
+		
 			},
 		},
 		mounted() {
