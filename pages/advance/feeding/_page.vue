@@ -49,7 +49,7 @@
                   <TimeDown :endTime="item.valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                 </span>
                 <span style="width: 8%;">
-                  <div class="ListBtn" @click="getSalePlanList(item.id)">下单</div>
+                  <div class="ListBtn" @click="getSalePlanList(item.id)">转单</div>
                 </span>
               </li>
             </template>
@@ -73,7 +73,7 @@
             <div class="">
               <Table size="small" border stripe highlight-row :columns="selectPlanColumns" :data="selectPlanData" :content="self" >
                 <template slot-scope="{ row, index }" slot="action">
-                  <Button type="primary" size="small" @click="toCreateOrder(curr_feeding_id, row.id)">下单</Button>
+                  <Button type="primary" size="small" @click="toCreateOrder(curr_feeding_id, row.id)">转单</Button>
                 </template>
               </Table>
             </div>
@@ -139,7 +139,7 @@
 
 				current_page: parseInt(this.$route.query.page) || 1,
 				page_size: 6,
-        
+
 				curr_feeding_id: 0,
 
 				selectPlanModalShow: false,
