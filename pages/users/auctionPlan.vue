@@ -11,7 +11,7 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="输入竞拍计划编号查询" ref="searchval" class="orderInput" v-model="formSearch.planNo"  />
+              <input type="text" placeholder="输入合约编号查询" ref="searchval" class="orderInput" v-model="formSearch.planNo"  />
               <div class="check" @click='checked()' style="cursor: pointer">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
@@ -95,7 +95,7 @@
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-          <pages :total="$store.state.bidders.planTotal" :show-total="showTotal" :value="current_page" style="margin-top:20px;"></pages>
+          <pages :total="$store.state.bidders.planTotal" :show-total="showTotal" :value="current_page" style="margin:20px 0;"></pages>
         </div>
       </div>
     </div>

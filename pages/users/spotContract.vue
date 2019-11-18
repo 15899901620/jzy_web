@@ -260,7 +260,10 @@
         }else if(this.type == 2){
 					const res = await sendHttp(this, true, server.api.Auction.getContractInfo, params, 1)
 					this.OrderList = res.data
-        }
+        }else if(this.type == 3){
+					const res = await sendHttp(this, true, server.api.advance.getContractInfo, params, 1)
+					this.OrderList = res.data
+				}
 			},
 			print_page() {
 				document.getElementById('printBtn').style.display="none";

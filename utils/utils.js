@@ -39,6 +39,7 @@ export default {
 	memberLogout: function () {
 		Cookie.set('memberInfo', '')
 		Cookie.set('userinfor', '')
+		Cookie.set('supplierInfor', '')
 		Cookie.set('webtoken', '')
 		Cookie.set('websuppliertoken', '')
 		location.href='/'
@@ -182,5 +183,19 @@ export default {
 				...params
 			}
 		})
-	}
+	},
+	showWarning(vm, msg, okCallback) {
+		if (okCallback) {
+			vm.$Modal.warning({
+				title: '提示',
+				content: msg,
+				onOk: okCallback
+			})
+		} else {
+			vm.$Modal.warning({
+				title: '提示',
+				content: msg,
+			})
+		}
+	},
 }

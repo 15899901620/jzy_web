@@ -133,7 +133,7 @@
                     ref="upload"
                     :action="uploadUrl"
                     :on-success="imageSuccess"
-                    :max-size="10240"
+                    :max-size="2048"
                     :show-upload-list="false"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
@@ -163,7 +163,7 @@
                     :action="uploadUrl"
                     :on-success="handleFileSuccess"
                     :show-upload-list="false"
-                    :max-size="10240"
+                    :max-size="2048"
                     :format="['jpg','jpeg','png', 'pdf']"
                     :on-exceeded-size="handleMaxSize">
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
@@ -192,7 +192,7 @@
                         ref="upload"
                         :action="uploadUrl"
                         :on-success="handleInvoiceFile"
-                        :max-size="10240"
+                        :max-size="2048"
                         :show-upload-list="false"
                         :format="['jpg','jpeg','png', 'pdf']"
                         :on-format-error="handleFormatError"
@@ -222,7 +222,7 @@
                         ref="upload"
                         :action="uploadUrl"
                         :on-success="HazchemiFile"
-                        :max-size="10240"
+                        :max-size="2048"
                         :show-upload-list="false"
                         :format="['jpg','jpeg','png', 'pdf']"
                         :on-format-error="handleFormatError"
@@ -252,7 +252,7 @@
                         ref="upload"
                         :action="uploadUrl"
                         :on-success="handleOtherFile"
-                        :max-size="10240"
+                        :max-size="2048"
                         :show-upload-list="false"
                         :format="['jpg','jpeg','png', 'pdf']"
                         :on-format-error="handleFormatError"
@@ -444,6 +444,8 @@
 			const validateInvAddress = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入开票地址'));
+				} else 	if (value.length > 38) {
+					callback(new Error('开票地址内容不能超过38个字'));
 				} else {
 					callback();
 				}
@@ -451,7 +453,9 @@
 			const validateInvTelephone = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入联系电话'));
-				} else {
+				}  else 	if (value.length > 15) {
+					callback(new Error('联系电话不能超过15位'));
+				}else {
 					callback();
 				}
 			};
@@ -493,7 +497,7 @@
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
                 usersubmitModal:false,         //确认提交框
-				current: 0    ,
+				current: 1    ,
                 uploadUrl: '',
 				companyValid: false,
                 license_filextension:'',   // 营业执照图片格式
@@ -805,7 +809,7 @@
 			handleMaxSize(file) {
 				this.$Notice.warning({
 					title: '超出文件大小限制',
-					desc: '文件 ' + file.name + ' 太大，不能超过 10M。'
+					desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
 				});
 			},
 			// 校验公司名称

@@ -34,7 +34,7 @@
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">保证金比例：</span>
-          <span class="ml10">{{$utils.amountFormat(dataList.Bond)}}%</span>
+          <span class="ml10">{{dataList.Bond}}%</span>
         </div>
         <!--需冻结保证金-->
         <div class="PricePopup">
@@ -52,8 +52,8 @@
               <Checkbox :disabled="true"></Checkbox>
               <span class="PricePopup_title">保证金钱包余额：</span>
               <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
-              <a class="PricePopup_btn" @click="wallet()" target="_blank"
-                 style="float: right;line-height: 16px;">钱包转资金</a>
+              <a class="PricePopup_btn" target="_blank"
+                 style="float: right;line-height: 16px;background-color:#cfcfcf;">钱包转资金</a>
             </p>
           </div>
         </div>
@@ -180,9 +180,6 @@
 
 				this.proShow = true
 				this.closeShow = false
-
-				this.$Message.info("功能待完成，敬请期待！")
-        return
 
 				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params)
 				this.proShow = false

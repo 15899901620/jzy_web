@@ -115,6 +115,13 @@ let api = {
   advance: {
     getSaleList: {'url':'/bill/booking/list/page/onSale', 'method':'get'},
     planAdd: {'url':'/bill/booking/plan/add', 'method':'post'},
+		getMemberPlanList: {'url':'/bill/bookingPlan/member/list', 'method':'get'},
+		getContractInfo: {'url':'/bill/bookingPlan/getContractInfo', 'method':'get'},
+		getFeedingByPlan: {'url':'/bill/bookingFeeding/saleListByPlan', 'method':'post'},
+		getSalePlanDetail: {'url':'/bill/bookingPlan/salePlanDetail', 'method':'get'},
+    createOrder: {'url':'/bill/bookingPlan/order/create', 'method':'post'},
+    detail: {'url':'/bill/bookingPlan/detail', 'method':'GET'}, 
+    
   },
   /**
    * @description 竞拍管理

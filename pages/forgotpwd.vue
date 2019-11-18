@@ -468,7 +468,7 @@ export default {
                       this.current = 2
                   }else{
                       this.$Message.info({
-                          content: res.message,
+                          content: res.data.message,
                           duration: 5,
                           closable: true
                       })
@@ -479,7 +479,7 @@ export default {
                       this.current = 2
                   }else{
                       this.$Message.info({
-                          content: res.message,
+                          content: res.data.message,
                           duration: 5,
                           closable: true
                       })

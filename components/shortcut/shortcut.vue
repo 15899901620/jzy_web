@@ -17,7 +17,11 @@
             <a href="/register">注册</a>
           </li>
         </template>
+		<li>
+		  <a href="/users/user">会员中心</a>
+		</li>
         <li v-for="(item, index) in $store.state.common.nav.topNav" :key="index">
+		
           <a :href="item.url">{{ item.name }}</a>
         </li>
       </ul>
@@ -51,6 +55,7 @@
 		methods: {
 			logout() {
 				utils.setCoolies('userinfor', '')
+				utils.setCoolies('supplierInfor', '')
 				utils.setCoolies('memberInfo', '')
 				utils.setCoolies('webtoken', '')
 				utils.setCoolies('websuppliertoken', '')

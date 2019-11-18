@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header></Header>
+    <HeaderSmall shortType = 'suppler' type='1'></HeaderSmall>
     <!--    <Header-small title="招标中心">-->
 <!--      <div slot="headerother">-->
 <!--        <div v-if="!SupplierInfor"-->
@@ -43,17 +43,26 @@
             <a class="mr20 mt15 mb15 gray fs14" @click="WineBid">更多</a>
           </div>
           <div class="graybg trendlistTitle">
-            <span style="width: 25%; padding-left: 10px">招标编号</span>
-            <span class="tac" style="width:45%;">招标名称</span>
-            <span class="tac" style="width: 13%">招标状态</span>
-            <span class="tar mr10" style="width: 17%">招标时间</span>
+            <span style="width:15%; padding-left: 65px">招标编号</span>
+            <span class="tac" style="width:25%;">招标名称</span>
+             <span class="tac" style="width:20%;">距招标结束</span>
+            <span class="tac" style="width: 10%">招标状态</span>
+            <span class="tar" style="width: 17%">招标时间</span>
           </div>
           <ul class="trendlist" v-for="(item, index) in dataList" :key="index">
             <li  @click="WineDetail(item)">
-              <span class="pl10" style="width: 25%;">{{item.biddingNo}}</span>
-              <span class="tac" style="width:45%;">{{item.title}}</span>
-              <span class="tac" style="width: 13%">{{item.statusName}}</span>
-              <span class="tar gray pr10" style="width: 17%">{{item.beginTime}}</span>
+              <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
+              <span class="tac" style="width:25%;">{{item.title}}</span>
+              <span class="tac" style="width: 20%">
+                  <template >
+                    <TimeDown :endTime="item.beginTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                  </template>
+              </span>
+              <span class="tac" style="width: 10%">
+                    {{item.statusName}}
+              </span>
+              <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
+              
             </li>
 
           </ul>
@@ -77,6 +86,7 @@ import { mapState } from "vuex";
 import login from "../components/login-form";
 import { supplierLogin, supplierValid } from "../api/users";
 import Cookies from "js-cookie";
+import TimeDown from '../components/timeDown'
 
 export default {
   name: "tendering",
@@ -99,7 +109,8 @@ export default {
     Header,
     HeaderSmall: Header.small,
     loginSupply: login.supply,
-    Footer
+    Footer,
+    TimeDown
   },
   fetch({ store, params }) {
     return Promise.all([
@@ -164,7 +175,7 @@ export default {
         })
     },
     async SourceData() {
-         if(this.SupplierInfor != undefined){
+         if(this.SupplierInfor){
             const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
 
             this.dataList = res.data.items

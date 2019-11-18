@@ -68,9 +68,9 @@
                         <span style="width: 12%;">操作</span>
                     </div>
                     <ul class="Xhlist">
-                        <template v-if="sopdata">
+                        <template v-if="$store.state.spot.spotList.length>0 &&  this.$route.query.id !=''">
 
-                            <li v-for="(item, index) in sopdata"  :key="index"  >
+                            <li v-for="(item, index) in $store.state.spot.spotList"  :key="index"  >
 
                 <span style="width: 10%;">
                   <div class="pr">
@@ -105,9 +105,9 @@
                 </span>
                 <span style="width: 8%;">{{item.delivery_start}}</span>
                 <span style="width: 12%;">
-                  <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
-                       style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
-                  <div v-else-if="$store.state.memberToken && item.available_num > 0" style="background:#e7e7e7;color:#c9c3c9; border: 1px solid #cfcfcf;" class="ListBtn"
+                   <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
+                      style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
+                  <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
                        @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
@@ -122,8 +122,8 @@
                         </template>
                     </ul>
                     <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
-                        <pages :total="1" :pageSize="page_size" :show-total="showTotal" :value="current_page"
-                               :otherParams="`category_id=${this.categoryId}&level_id=${this.processId}`" ></pages>
+                        <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
+                               :otherParams="`id=${this.$route.query.id}`" ></pages>
                     </div>
                 </div>
             </div>
@@ -160,8 +160,7 @@
                         sku_name: query.keyword || '',
                         current_page: query.page || 1,
                         page_size: 6,
-                        categoryId: query.category_id || '',
-                        processId: query.level_id || '',
+                        category3_id: query.id || 0,
 
                     }
                 ),
@@ -177,7 +176,6 @@
             return {
                 selectRecordID: 0,
                 checkTypeShow: false,
-
                 current_page: parseInt(this.$route.query.page) || 1,
                 page_size: 6,
                 categoryId: this.$route.query.category_id || '',
@@ -196,277 +194,6 @@
                 processCurr: Number(this.$route.query.level_id) || '',
                 TotalCurr:Number(this.$route.query.level_id) || 'select',
                 specialList:[
-                    {
-                        planName:'BOPP膜料专场',
-                        category_name: "PP",
-                        sku_name: "F03",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库区",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 90,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,800.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'BOPP膜料专场',
-                        category_name: "PP",
-                        sku_name: "F04S",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库区",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 300,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,750.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'BOPP膜料专场',
-                        category_name: "PP",
-                        sku_name: "F300M",
-                        manufacturer: "茂石化",
-                        warehouse_name: "3号库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,900.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'无纺布专场',
-                        category_name: "PP",
-                        sku_name: "Y25L",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库区",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,580.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'无纺布专场',
-                        category_name: "PP",
-                        sku_name: "Z30S",
-                        manufacturer: "湛江东兴",
-                        warehouse_name: "东兴pp库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,900.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'透明料专场',
-                        category_name: "PP",
-                        sku_name: "9025NX",
-                        manufacturer: "茂石化",
-                        warehouse_name: "2号库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 120,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,700.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'透明料专场',
-                        category_name: "PP",
-                        sku_name: "UT8012M",
-                        manufacturer: "茂石化",
-                        warehouse_name: "3号库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 130,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,750.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'注塑料专场',
-                        category_name: "PP",
-                        sku_name: "M17",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,530.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'注塑料专场',
-                        category_name: "PP",
-                        sku_name: "M12",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,520.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'拉丝料专场',
-                        category_name: "PP",
-                        sku_name: "T03",
-                        manufacturer: "茂石化",
-                        warehouse_name: "3号库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 130,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,480.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'拉丝料专场',
-                        category_name: "PP",
-                        sku_name: "T02",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,520.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'拉丝料专场',
-                        category_name: "PP",
-                        sku_name: "1080K",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 80,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,600.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'改性塑料专场',
-                        category_name: "PP",
-                        sku_name: "改性PA6",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 200,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,620.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'改性塑料专场',
-                        category_name: "PP",
-                        sku_name: "改性PP(普通级)",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 150,
-                        limit_num: 0,
-                        finalPriceFormat: "￥25,000.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'塑料助剂专场',
-                        category_name: "PP",
-                        sku_name: "PP短波纤",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 350,
-                        limit_num: 0,
-                        finalPriceFormat: "￥4,000.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'塑料助剂专场',
-                        category_name: "PP",
-                        sku_name: "扁平波纤",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 150,
-                        limit_num: 0,
-                        finalPriceFormat: "￥4,500.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'纤维料专场',
-                        category_name: "PP",
-                        sku_name: "Y40L",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 150,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,600.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-                    {
-                        planName:'纤维料专场',
-                        category_name: "PP",
-                        sku_name: "Y38L",
-                        manufacturer: "东莞巨正源",
-                        warehouse_name: "聚丙烯一期库",
-                        price_valid_time: "2019-11-06 20:00:00",
-                        packing_modes: 1,
-                        available_num: 150,
-                        limit_num: 0,
-                        finalPriceFormat: "￥8,600.00",
-                        is_jry: 1,
-                        on_sale: 1,
-                        delivery_start: "2019-11-06",
-                    },
-
                 ],
                 sopdata:[],
             }
@@ -474,12 +201,8 @@
         computed: {
         },
         methods: {
-            filterData:function(){
-                let name=this.$route.query.name
-                this.sopdata= this.specialList.filter(item => item.planName === name)
-            },
             addOrder(id) {
-              //  location.href = '/spot/order/' + id
+               location.href = '/spot/order/' + id
             },
             categoryClick(id,index) {
                 this.categoryId=id
@@ -544,7 +267,6 @@
             }
         },
         created() {
-            this.filterData()
         },
         mounted() {
 

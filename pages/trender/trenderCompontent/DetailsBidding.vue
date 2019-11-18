@@ -35,14 +35,12 @@
             formCustom:{
                  appendix:'',
             },
-            SupplierInfor:{},
 
 
         };
       },
        methods:{
           getUploadURL(){
-           
             if (process.env.NODE_ENV === 'development') {
               this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
             } else if (process.env.NODE_ENV === 'testprod') {
@@ -57,17 +55,32 @@
               this.SourceData();
           },
           async fileUpdate() {
-
              let params = {
-                supplierId:this.SupplierInfor.id,
+                supplierId:this.$store.state.supplierInfo.id,
                 biddingId: this.id,
                 appendix:this.formCustom.appendix,
-                supplierName:this.SupplierInfor.username
+                supplierName:this.$store.state.supplierInfo.username
               };
+           
               const res = await sendHttp(this, true, server.api.biddding.save,params,2)
+                 console.log(res)
+              if(res.data.errorcode=='501002'){
+                this.$Notice.warning({
+                    title: res.data.message,
+                    duration: 5
+                });
+                return
+              }else{
+                this.$Message.info({
+                    content: '投标成功',
+                    duration: 5,
+                    closable: true
+                })
+              }
 
           },
           async SourceData() {
+            
               let params = {
                 id: this.id,
               };
@@ -84,8 +97,7 @@
 
       },
       mounted() {
-          this.SupplierInfor = Cookies.get("supplierInfor");
-         this.getUploadURL()
+          this.getUploadURL()
           this.SourceData()
           // this.BySupplier()
       }

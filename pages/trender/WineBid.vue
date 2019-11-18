@@ -1,7 +1,7 @@
 <template>
 
   <div class="body">
-     <Header-small title="招标中心">
+     <Header-small shortType = 'suppler' title="招标中心">
       <div slot="headerother">
         <div
           data-v-228ad150
@@ -13,7 +13,7 @@
         </div>
       </div>
     </Header-small>
-      <div class="w1200 dflex">
+      <div class="w1200 dflex" style="margin-top: 20px;">
         <!-- 公告信息-->
         <div class="Notice">
           <div class="title">
@@ -64,7 +64,6 @@
 
 	export default {
 		name: "WineBid",
-		layout: 'membercenter',
 		components: {
       HeaderSmall: Header.small,
 			pageRoute,
@@ -83,14 +82,14 @@
 			};
 		},
 		methods: {
-			WineDetail(row) {
-				this.$router.push({
-					name: 'trender-WineBidDetail',
-					params: {
-						id: row.id
-					}
-				})
-			},
+      WineDetail(row){
+        this.$router.push({
+              name: 'trender-WineBidDetail',
+              query: {
+                  id: row.id
+              }
+          })
+      },
 			showTotal(total) {
 				return `全部 ${total} 条`;
 			},

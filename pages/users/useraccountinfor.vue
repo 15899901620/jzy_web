@@ -27,7 +27,7 @@
                     </li>
                 </ul>
                 <!--开票信息-->
-                <Form ref="formValidate" :model="userinfor" :label-width="80" >
+                <Form ref="formValidate" :model="userinfor" :rules="ruleCustom" :label-width="80" >
                     <ul class="inforList">
                         <div class="inforTitle">开票信息</div>
                         <li>
@@ -37,7 +37,7 @@
                         <li>
                             <span class="titleInfor">纳税人识别号</span><Input type="text" v-model="userinfor.taxId" class="inforInput"   />
                         </li>
-                        <li>
+                        <li >
                             <span class="titleInfor">开户行</span><Input type="text" class="inforInput" v-model="userinfor.invBankName" />
                         </li>
                         <li>
@@ -112,6 +112,7 @@ export default {
         usernav: Navigation.user,
         AddressFrom
     },
+    
     fetch({ store }) {
         return Promise.all([
 					//获取顶部、中部、底部导航信息
@@ -121,10 +122,38 @@ export default {
         ])
     },
     data() {
+        const validateInvAddress = (rule, value, callback) => {
+				if (value === '') {
+					callback(new Error('请输入开票地址'));
+				} else 	if (value.length > 38) {
+					callback(new Error('开票地址内容不能超过38个字'));
+				} else {
+					callback();
+				}
+        };
+        const validateInvTelephone = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入联系电话'));
+            }  else 	if (value.length > 12) {
+                callback(new Error('联系电话不能超过12位'));
+            }else {
+                callback();
+            }
+        };
         return {
             userinfor:{},
             isAddressFormShow: false,
+            	ruleCustom: {
+					invAddress: [
+						{  required:true,  validator: validateInvAddress, trigger: 'blur'}
+					],
+					invTelephone: [
+						{ required:true,    validator: validateInvTelephone, trigger: 'blur'}
+					],
+				}
+			
         };
+        
    
     },
     methods:{
