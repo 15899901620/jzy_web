@@ -71,7 +71,7 @@
 </template>
 
 <script>
-	import {orderPayCode} from '../../api/users'
+	import { orderPayCode } from '../../api/users'
 
 	export default {
 		name: 'spotPay',
