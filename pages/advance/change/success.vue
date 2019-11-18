@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header-small title="现货下单">
+    <Header-small title="预售下单">
       <div slot="headerother">
         <ul class="sp_cat_title_list">
           <li class="curr"><i>1</i><p>编辑详细信息</p></li>

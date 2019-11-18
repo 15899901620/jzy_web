@@ -196,8 +196,8 @@ export default {
 			let res = await this.$utils.sendCurl(this, server.api.advance.getFeedingByPlan, params)
       if(res.status === 200 && res.data){
       	if(res.data.length == 0){
-					this.$utils.showWarning('放料信息已改变，请刷新再操作！', function(){
-						location.href = '/users/advancePlan'
+					this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+						location.reload(true)
 					})
           return
         }

@@ -6,7 +6,8 @@ export const state = () => {
 		advanceList: [],
 		total: 0,
 		planList: [],
-		planDetail: {}
+		planDetail: {},
+		feedingList: [],
 	}
 };
 
@@ -22,6 +23,9 @@ export const mutations = {
 	},
 	updatePlanDetail(state, data) {
 		state.planDetail = data
+	},
+	updateFeedingList(state, data) {
+		state.feedingList = data
 	}
 }
 
@@ -56,6 +60,17 @@ export const actions = {
 			}
 		}catch(err){
 			console.log('获取预售合约放料详情异常：', err)
+		}
+	},
+	async getFeedingList({commit}, params) {
+		try {
+			let res = await sendCurl(this, server.api.advance.getMemberFeedingList, params)
+			if (res.status === 200) {
+				commit('updateFeedingList', res.data.items)
+				commit('updateTotal', res.data.total)
+			}
+		}catch(err){
+			console.log('获取预售放料列表异常：', err)
 		}
 	}
 }

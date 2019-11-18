@@ -120,8 +120,9 @@ let api = {
 		getFeedingByPlan: {'url':'/bill/bookingFeeding/saleListByPlan', 'method':'post'},
 		getSalePlanDetail: {'url':'/bill/bookingPlan/salePlanDetail', 'method':'get'},
     createOrder: {'url':'/bill/bookingPlan/order/create', 'method':'post'},
-    detail: {'url':'/bill/bookingPlan/detail', 'method':'GET'}, 
-    
+    detail: {'url':'/bill/bookingPlan/detail', 'method':'GET'},
+		getMemberFeedingList: {'url':'/bill/bookingFeeding/saleList', 'method':'get'},
+		getPlanByFeeding: {'url':'/bill/bookingPlan/saleListByFeeding', 'method':'post'},
   },
   /**
    * @description 竞拍管理
