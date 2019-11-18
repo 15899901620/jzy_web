@@ -497,7 +497,7 @@
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
                 usersubmitModal:false,         //确认提交框
-				current: 1    ,
+				current: 0    ,
                 uploadUrl: '',
 				companyValid: false,
                 license_filextension:'',   // 营业执照图片格式

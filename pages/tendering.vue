@@ -55,7 +55,7 @@
               <span class="tac" style="width:25%;">{{item.title}}</span>
               <span class="tac" style="width: 20%">
                   <template >
-                    <TimeDown :endTime="item.beginTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                    <TimeDown  :endTime="item.endTime" formatStr='{D}天{H}小时{M}分{S}秒' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                   </template>
               </span>
               <span class="tac" style="width: 10%">

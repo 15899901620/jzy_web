@@ -104,10 +104,10 @@ let api = {
     createOrderByQuote: {'url':'/bill/spot/order/create', 'method':'post'},
     getContractInfo:{'url':'/bill/spotPlan/getContractInfo', 'method':'get'} ,
     getPlanTotalNumByQuoteId: {'url':'/bill/spotPlan/getPlanTotalNumByQuoteId', 'method':'get'},
-		spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
-		spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
-		spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},
-		createOrderByPlan: {'url':'/bill/spotPlan/order/create', 'method':'post'},
+    spotPlanList: {'url':'/bill/spotPlan/user/list/page', 'method':'get'},
+    spotPlanDetail: {'url':'/bill/spotPlan/user/detail', 'method':'get'},
+    spotPlanCloseApply: {'url':'/bill/plan/close/apply/member/save', 'method':'get'},
+    createOrderByPlan: {'url':'/bill/spotPlan/order/create', 'method':'post'},
   },
   /**
    * @description 预售商口
@@ -139,8 +139,8 @@ let api = {
 		createOrderByPlan: {'url':'/bill/orderInfo/auction/create', 'method':'post'},
 		getPartakeList: {'url':'/bill/auction/partake', 'method':'get'},
 		getContractInfo: {'url':'/bill/auctionPlanned/getContractInfo', 'method':'get'},
-     
-    
+
+
     cancelfollow: {'url':'/bill/auctionFollow/cancel', 'method':'post'},        //取消关注
     getfollow: {'url':'/bill/auctionFollow/save', 'method':'post'},        //添加关注
     membercurr: {'url':'/bill/member_deposits/curr/page', 'method':'get'},        //合约保证金

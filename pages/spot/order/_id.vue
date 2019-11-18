@@ -497,9 +497,9 @@
 						this.$Modal.warning({
 							title: '提示',
 							content: res.data.message,
-                onOk: () => {
-								  location.reload()
-                }
+                            onOk: () => {
+                              location.reload()
+                            }
 						})
 				return
 					}
