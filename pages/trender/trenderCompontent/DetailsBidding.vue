@@ -6,6 +6,7 @@
               <Upload
                       ref="upload"
                       :action="uploadUrl"
+                      :show-upload-list="false"
                       :on-success="handleOtherFile"
                       :max-size="2048">
                <Button type="primary" size="large">上传标书</Button>
@@ -63,7 +64,6 @@
               };
            
               const res = await sendHttp(this, true, server.api.biddding.save,params,2)
-                 console.log(res)
               if(res.data.errorcode=='501002'){
                 this.$Notice.warning({
                     title: res.data.message,
