@@ -154,7 +154,7 @@
 				showtimeVal: '',
 				today:this.$utils.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'),
 				userinfo: {},
-				current_page: 1,
+				current_page: parseInt(this.$route.query.page) || 1,
 				weight: '',
 				page_size: 10
 			}

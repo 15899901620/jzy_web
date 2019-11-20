@@ -189,6 +189,9 @@ export default {
     WineBid() {
       this.$router.push({ name: "trender-WineBid" });
     },
+    reloadPage() {
+      location.reload()
+    },
     // 忘记密码
     forCode() {},
     // 注册新账号
