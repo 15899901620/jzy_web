@@ -133,7 +133,7 @@
           <div class="Discharge">
             <div class="title">放料专场</div>
             <div class="text">好商品 好价格 好服务</div>
-            <button class="dischargeBtn">进入放料专场</button>
+            <button class="dischargeBtn" @click="FeedIng">进入放料专场</button>
           </div>
           <!--  竞拍公告-->
           <div class="Notice whitebg mt15">
@@ -254,6 +254,9 @@
 
 				this.$store.dispatch('advance/getAdvanceList', params)
 			},
+          FeedIng(){
+            location.href = '/advance/feeding'
+          },
 
 		},
 		watch: {
