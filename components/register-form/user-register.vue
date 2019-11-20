@@ -31,7 +31,7 @@
               </FormItem>
             </Col>
             <Col span="6">
-              <div class="codeCarrier graybg" @click="getNoteValue" disabled="btnBoolen">{{this.btnValue}}</div>
+              <Button class="codeCarrier graybg" @click="getNoteValue" :disabled="btnBoolen" >{{this.btnValue}}</Button>
             </Col>
           </Row>
           <Row :gutter="24" index="3">
@@ -278,7 +278,7 @@
           <Row :gutter="24" index="0" style="margin-bottom:50px">
             <Col span="21">
               <FormItem  label="主营产品">
-                   <memberLabelSelect :value="formCustom.label_ids" :isMultiple="true"  
+                   <memberLabelSelect :value="formCustom.label_ids" :isMultiple="true"
                                    @onChange="formCustom.label_ids = $event"/>
               </FormItem>
             </Col>
@@ -489,7 +489,7 @@
 				//用来发判断发送验证码
 				isrefreshpic: false,
 				//disabled的初始值
-				btnBoolen: false,
+				btnBoolen: true,
 				btnClassName: "btn",
 				btnValue: "获取短信验证码",
 				smsTotalTime: 60,
@@ -604,6 +604,8 @@
             if (res) {
               this.formCustom.slidecode = res
               this.isopenSms = true
+              this.btnBoolen= false
+
             } else {
               this.$Modal.warning({
                 title: '提示',
@@ -659,6 +661,7 @@
 			},
 			//获取短信验证码
 			async getNoteValue() {
+            console.log("getNoteValue")
 				if (this.btnBoolen) {
 					return
 				}
@@ -695,7 +698,7 @@
 						phone: phone
 					}
 
-					const res = await userCodeSend(this, params)
+ 					const res = await userCodeSend(this, params)
  					if (res.data && res.status === 200) {
 						// this.ImgCodeValid = false
 

@@ -528,6 +528,7 @@
 				this.PlanNum=res.data
                 if(this.PlanNum >= limit_num){
                     this.isCanSale = false
+
                 }
             }
         },

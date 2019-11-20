@@ -194,7 +194,7 @@
 					advance_id: '',
 					bill_no: '',
 					sku_name: '',
-          min_num: 0,
+                    min_num: 0,
 					max_num: 0,
 					basePrice: 0,
 					Bond: 0,   //保证金比例
