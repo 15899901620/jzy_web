@@ -25,8 +25,13 @@ export default {
      computed: {
         selected() {
 
-            let pathArray=this.$route.path.split('/')
-            return !pathArray[1] ? '/' : '/'+pathArray[1]
+            if(this.$route.path === '/advance/feeding'){
+                 return this.$route.path
+            }else{
+                let pathArray=this.$route.path.split('/')
+                return !pathArray[1] ? '/' : '/'+pathArray[1]
+            }
+
         },
         classes() {
             return [
