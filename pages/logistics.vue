@@ -121,6 +121,9 @@
 				</div>
 
 			</div>
+		    <div class="co-brands">
+				<cobrands :isDelivery='1'></cobrands>
+			</div>
 		</div>
 		<Footer size="default" title="底部" style="margin-top:18px;"></Footer>
         <Modal
@@ -150,6 +153,7 @@
 	} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
+	import cobrands from '../components/cobrands'
 	import { sendHttp } from "../api/common";
 	import server from "../config/api";
 	let Base64 = require('js-base64').Base64
@@ -158,6 +162,7 @@
 		components: {
 			Header:Header.small,
 			Footer,
+			cobrands,
 			Logisticslist
 		},
     data() {
