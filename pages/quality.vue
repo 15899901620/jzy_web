@@ -62,7 +62,7 @@
                             </template>
                         </ul>
                         <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="datalist">
-                            <pages :total="total" :pageSize="page_size" :show-total="showTotal" @change="changePage" :value="current_page"></pages>
+                            <pages :total="total" :pageSize="page_size" :otherParams="`batchNo=${this.formSearch.batchNo}&productionDate=${this.formSearch.productionDate}`" :show-total="showTotal" @change="changePage" :value="current_page" ></pages>
                         </div>
 					</div>
 				</outpacking>
