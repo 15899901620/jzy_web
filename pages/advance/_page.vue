@@ -64,14 +64,20 @@
                   <div class="btmunv"><span class="iv_title">预售价</span> ：<span class="orangeFont fwb fs16">{{$utils.amountFormat(items.final_price)}}</span>
                   </div>
                   <div class="fs14 dflex" style="position: relative;">
-                    <span class="iv_title">预售总数</span> ：<span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
-                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
+                    <span class="iv_title">预售总数</span> ：
+                    <span class="pr">
+                    <span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
+                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;   background:url('/img/Xian_icon.png')no-repeat;"></i>
+                   </span>
                   </div>
                 </div>
                 <div class="mt10 fs14 dflex">
-                  <div class="btmunv" style="position: relative;margin-top: 15px">
-                    <span class="iv_title">可售数量</span> ：<span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
-                                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right:110px; background:url('/img/Xian_icon.png')no-repeat;"></i>
+                  <div class="btmunv" style="position: relative; ">
+                    <span class="iv_title">可售数量</span> ：
+                    <span class="pr">
+                      <span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
+                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
+                    </span>
                   </div>
                   <div class="fs14 dflex">
                     <span class="iv_title">起订量</span> ：<span class="orangeFont fs16">{{items.min_order}}</span>{{items.uom_name}}
@@ -123,6 +129,12 @@
         </div>
 
         <div class="" style="width: 24%; margin-left: 1.5%; display: flex; flex-direction: column">
+          <!-- 放料专场 -->
+          <div class="Discharge">
+            <div class="title">放料专场</div>
+            <div class="text">好商品 好价格 好服务</div>
+            <button class="dischargeBtn" @click="FeedIng">进入放料专场</button>
+          </div>
           <!--  竞拍公告-->
           <div class="Notice whitebg mt15">
             <div class="NoticeTitle">
@@ -242,6 +254,9 @@
 
 				this.$store.dispatch('advance/getAdvanceList', params)
 			},
+          FeedIng(){
+            location.href = '/advance/feeding'
+          },
 
 		},
 		watch: {
@@ -405,5 +420,41 @@
     font-size: 12px;
     background: url("/img/cancel_follow.png") no-repeat 6px 5px;
     padding-left: 22px;
+  }
+
+  .Discharge{
+    width: 280px;
+    height: 148px;
+    margin-top: 15px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    background: url("/img/Discharge.png")no-repeat;
+    color: #FFFFFF;
+    .title{
+      font-size: 18px;
+      margin-top: 30px;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
+    .text{
+      font-size: 14px;
+    }
+    .dischargeBtn{
+      font-size: 14px;
+      color: #258ef9;
+      background-color: #fff;
+      border:none;
+      width: 47%;
+      font-weight: bold;
+      margin: 10px auto 0px;
+      padding: 7px 0;
+      border-radius: 3px;
+      box-shadow: 0px 1px 1px #333;
+    }
+    .dischargeBtn:hover{
+      cursor: pointer;
+    }
+
   }
 </style>
