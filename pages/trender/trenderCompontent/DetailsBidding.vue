@@ -3,14 +3,17 @@
     <div class="whitebg">
        <div class="mt20 mb40 fs14" v-html="dataList.content"></div>
        <div style="text-align: center;" v-if="dataList.statusName=='未投标'">
+            <div style="display: inline-flex;"> 
               <Upload
                       ref="upload"
                       :action="uploadUrl"
-                      :show-upload-list="false"
                       :on-success="handleOtherFile"
                       :max-size="2048">
-               <Button type="primary" size="large">上传标书</Button>
+               <Button type="primary" size="large">上传标书</Button>             
              </Upload>
+             </div>
+             <Button type="primary" size="large" @click='fileUpdate'>提交</Button>
+            
         </div>
     </div>
 
@@ -52,8 +55,6 @@
           },
           handleOtherFile(res){
               this.formCustom.appendix = res.url
-              this.fileUpdate();
-              this.SourceData();
           },
           async fileUpdate() {
              let params = {
@@ -77,6 +78,7 @@
                     closable: true
                 })
               }
+              this.SourceData();
 
           },
           async SourceData() {
