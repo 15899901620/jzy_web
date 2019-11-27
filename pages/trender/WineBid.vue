@@ -20,15 +20,19 @@
             <span>公告信息</span><span class="fs14">共<span class="orangeFont">{{total}}</span>条数据</span>
           </div>
           <div class="graybg trendlistTitle">
-            <span style="width: 25%; padding-left: 10px">招标编号</span><span class="tac" style="width:45%;">名称</span><span
-              class="tac" style="width: 13%">结果</span><span class="tar mr10" style="width: 17%">招标时间</span>
+            <span style="width: 25%; padding-left: 10px">招标编号</span>
+            <span class="tac" style="width:30%;">名称</span><span
+              class="tac" style="width: 15%">结果</span>
+              <span class="tar mr10" style="width: 17%;padding-right: 10px">招标时间</span>
+              <span class="tar mr10" style="width: 13%;padding-right: 10px">操作</span>
           </div>
           <ul class="trendlist" v-for="(item, index) in dataList" :key="index">
             <li @click="WineDetail(item)">
               <span class="pl10" style="width: 25%;">{{item.biddingNo}}</span>
-              <span class="tac" style="width:45%;">{{item.title}}</span>
-              <span class="tac" style="width: 13%">{{item.statusName}}</span>
+              <span class="tac" style="width:30%;">{{item.title}}</span>
+              <span class="tac" style="width: 15%">{{item.statusName}}</span>
               <span class="tar gray  pr10" style="width: 17%">{{item.beginTime}}</span>
+              <span class="tar gray  pr10" style="width: 13%"  ><Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button></span>
             </li>
           </ul>
           <div class="whitebg ovh">
