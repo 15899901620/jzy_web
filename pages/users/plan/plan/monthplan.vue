@@ -72,7 +72,7 @@ export default {
                 },
                 {
                     title: '状态',
-                    width: '100',
+                    width: '120',
                     slot: 'status',
                     key: 'status'
                 },
