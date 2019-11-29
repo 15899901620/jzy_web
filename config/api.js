@@ -199,8 +199,9 @@ let api = {
     /**
      * @description 专料
      */
-    special: {
+    special: { 
         specialList: '/bill/yearlyFeeding/web/page',
+        myYearList: '/bill/myYearPlanned/page',
         specialDetail: '/bill/yearlyFeeding/detail',
         submitOrder: '/bill/orderInfo/feeding/create'
     },
@@ -241,6 +242,16 @@ let api = {
      */
     week: {
         getWeek: '/bill/getWeekPlannedByMember'
+    },
+     /**
+     * @description 周计划
+     */
+    month: {
+      freightListpage:{'url': '/bill/myMonthPlanned/page', 'method': 'get'},
+      MonthPlannedByYearPlanId:{'url': '/bill/getMonthPlannedByYearPlanId', 'method': 'get'},
+      yeardetail: { 'url': '/bill/yearPlanned/detail', 'method': 'get'},
+      monthadd: { 'url': '/bill/monthPlanned', 'method': 'post'},
+      monthedit: { 'url': '/bill/monthPlanned', 'method': 'PUT'},
     },
 
   /**

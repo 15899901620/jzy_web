@@ -36,6 +36,25 @@ export const specialList = (vm, data) => {
         console.log('specialListErr', errorInfo)
     })
 };
+/**
+ * @description 我的年计划
+ * @param data
+ * @returns {*|never}
+ */
+export const myYearList = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.special.myYearList,
+    {
+        params: {...data}
+    }).catch((e) => {
+        let errorInfo = e.response
+        console.log('specialListErr', errorInfo)
+    })
+};
+
 export const specialDetail = (vm, data) => {
     vm.$axios.defaults.headers = {
         'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
