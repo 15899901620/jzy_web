@@ -205,7 +205,7 @@ export default {
 					//显示放料选择窗口
 					this.selectFeedingData = res.data
 					this.selectFeedingModalShow = true
-          return
+                    return
 				}
 			}
 			this.toCreateOrder(res.data[0].id, planned_id)

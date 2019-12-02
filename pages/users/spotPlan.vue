@@ -134,7 +134,7 @@
 				//获取会员合约列表
 				store.dispatch('spot/getSpotPlanList', {
 					current_page: query.page || 1,
-          page_size: 6,
+                    page_size: 6,
 					plan_no: query.plan_no ? query.plan_no : ''
 				})
 			])
@@ -176,13 +176,13 @@
 							id: row.id
 						}
 						sendHttp(this, false, server.api.spot.spotPlanCloseApply, params).then(response => {
-            
+
 							if (response.status === 200) {
-                       
+
 								if ((response.data.errorcode || 0) == 0) {
 									window.location.reload()
 								} else {
-                   alert(response.data.message)						
+                   alert(response.data.message)
 								}
 							}
 						})

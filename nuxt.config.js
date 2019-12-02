@@ -17,10 +17,10 @@ export default {
 		title: appConfig.meta.title,
 		meta: [{
 			charset: 'utf-8'
-		},
+		    },
 			{
 				name: 'viewport',
-				content: 'width=device-width, initial-scale=1'
+				content: 'width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
 			},
 			{
 				'http-equiv': 'pragram',
@@ -170,7 +170,7 @@ export default {
 		/*
 		 ** You can extend webpack config here
 		 */
-		extend(config, ctx) {
+	extend(config, ctx) {
       // Run ESLint on save
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({

@@ -13,7 +13,7 @@ export const state = () => {
 
 export const mutations = {
 	updateAdvanceList(state, data) {
-		state.advanceList = data
+ 		state.advanceList = data
 	},
 	updateTotal(state, data) {
 		state.total = data
