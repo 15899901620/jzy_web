@@ -15,7 +15,7 @@
         <CarouselItem>
           <ul class="coorperList">
             <li>
-              <a v-for="(item, index) in brandList" :key="index"><img :src="item.image"/></a>
+              <a v-for="(item, index) in brandList" :key="index" :title="item.brief" brief><img :src="item.image"/></a>
             </li>
           </ul>
         </CarouselItem>

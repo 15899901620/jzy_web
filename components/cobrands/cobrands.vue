@@ -21,10 +21,10 @@
                 <template v-for="(item, index) in brandList"  >
                     <li v-for="(items, k) in item" :key="k" v-if="k<7">
                         <template v-if="items.url">
-                            <a :href="items.url" target="_blank"><img :src="items.image"/></a>
+                            <a :href="items.url" target="_blank" :title="items.brief"><img :src="items.image"/></a>
                         </template>
                         <template else>
-                              <a  href="javascript:void(0)"><img :src="items.image"/></a>
+                              <a  href="javascript:void(0)" :title="items.brief"><img :src="items.image"/></a>
                         </template>
                        
                     </li>
