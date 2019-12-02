@@ -181,7 +181,7 @@
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
-        //获取资金情况
+                //获取资金情况
 				store.dispatch('member/getCapitalInfo'),
 				//获取放料信息
 				store.dispatch('advance/getPlanDetail', {feeding_id: query.id, planned_id: query.planned_id}),
@@ -238,7 +238,7 @@
 					this.orderinfo.isDelivery = 0
 					this.currMin = this.planInfo.feedingInfo.take_bid_increment
 					this.currsetp = this.planInfo.feedingInfo.take_bid_increment
-          this.setFreight(-1)
+                    this.setFreight(-1)
 				} else if (index == 1) {
 					this.orderinfo.isDelivery = 1
 					this.currMin = this.planInfo.feedingInfo.delivery_min
@@ -303,11 +303,11 @@
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
 					this.currfreight = -1
-        }else{
+                }else{
 					this.orderinfo.transportationMode = row.transportation
 					this.orderinfo.freightFee = row.freight_fee
 					this.currfreight = i
-        }
+                }
 			},
 			//选择巨融易
 			setJry() {
@@ -369,13 +369,13 @@
 			if(!this.planInfo){
 				this.$utils.showWarning(this, '合约信息不存在，请重新操作！', function(){
 					history.back()
-        })
+				})
 				return
-      }
+            }
 
 			this.orderinfo.plan_id = this.planInfo.id
 			this.orderinfo.feeding_id = this.planInfo.feedingInfo.id
-      this.currMax = Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num)
+            this.currMax = Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num)
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},

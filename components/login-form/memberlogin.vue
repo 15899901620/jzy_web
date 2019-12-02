@@ -172,7 +172,8 @@
 					this.NameCheck = false
 					let params = {
 						username: this.loginform.username.replace(/^\s+|\s+$/g, ""),
-						code: this.loginform.mobilecode,
+						// code: this.loginform.mobilecode,
+                        code:1,
 						password: this.loginform.password.replace(/^\s+|\s+$/g, "")
 					}
 					const res = await manageLogin(this, params)

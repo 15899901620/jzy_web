@@ -18,7 +18,6 @@
                     <Option v-for="(item, index) in checkprod" :value="item.id" :key="index">{{item.skuNo}}-{{item.title}}-{{item.uomName}}-{{item.manufacturer}}</Option>
                   </Select>
                 </FormItem>
-              </Col>
         </Col>
       </Row>
       <Row :gutter="24" index="1">
@@ -32,7 +31,7 @@
         <Col span="24">
           <FormItem label="库区" prop="warehouseId" >
             <Select v-model="formItem.warehouseId" style="width:90%" @on-change="getWarehouseName" label-in-value	>
-              <Option  v-for="item in warehouseData" :value="item.id" :key="item.id">{{ item.wName }}</Option>
+              <Option  v-for="item in warehouseData" :value="item.id" :key="item.id" >{{ item.wName }}</Option>
             </Select>
           </FormItem>
         </Col>
@@ -111,7 +110,7 @@ export default {
   },
   methods:{
     getDatetime(res){
-      this.formItem.intentionDate = res
+       this.formItem.intentionDate = res
     },
     getWarehouseName(res) {
       this.formItem.warehouseName=res.label

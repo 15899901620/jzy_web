@@ -140,9 +140,8 @@
                  </div>
 
                 <div class="acuProduct ">
-                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
-                      v-if="items.is_jry"
-                      style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}}
+                    <i v-if="items.is_jry" style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
                   <div class="mt10 fs14 dflex">
                     <div class="btmunv"><span class="iv_title">起拍价</span> ：<span class="orangeFont fwb fs16">{{items.finalPriceFormat}}</span>
                     </div>
