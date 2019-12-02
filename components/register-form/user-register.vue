@@ -187,7 +187,7 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
-              <FormItem label="开票资料：">
+              <FormItem label="开票资料：" prop="invoiceLicense">
                 <Upload
                         ref="upload"
                         :action="uploadUrl"
@@ -539,6 +539,9 @@
 					repassword: [
 						{validator: validaterePass, trigger: 'blur'}
 					],
+          invoiceLicense:[
+            {required:true, trigger: 'blur'}
+          ],
 					Imgcode: [
 						{validator: validateImgcode, trigger: 'blur'}
 					],

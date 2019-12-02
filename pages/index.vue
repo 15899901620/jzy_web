@@ -41,7 +41,7 @@
         <newsinfo></newsinfo>
       </div>
       <div class="co-brands">
-        <cobrands></cobrands>
+        <cobrands :isDelivery='0'></cobrands>
       </div>
       <sidebar></sidebar>
     </div>

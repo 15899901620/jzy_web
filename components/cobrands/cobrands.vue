@@ -55,6 +55,12 @@ export default {
         carousel,
         carouselItem:carousel.item
     },
+    props: {
+        isDelivery: {
+				default: '0'
+        },
+    },
+  
     data() {
         return {
             display: "none",
@@ -83,9 +89,7 @@ export default {
 
         mouseEnter() {
             var ul = document.getElementById('TimeL-ul')
-            console.log("ul_li",ul)
             var li = ul.getElementsByTagName('li')
-            console.log("li",li)
             if (li.length >= 5) {
                 this.display = "flex";
             } else {
@@ -112,6 +116,7 @@ export default {
             let params = {
                 current_page: 1,
                 page_size: 52,
+                isDelivery:this.isDelivery
             }
             const res = await cooperativeBrand(this, params)
             let cobrand = res.data.items

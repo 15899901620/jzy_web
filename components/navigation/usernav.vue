@@ -37,11 +37,11 @@
 							{
 							  path: '/users/advancePlan',
 							  name: '预售合约'
-              },
-							// {
-							// 	path: '/users/userSpecmat',
-							// 	name: '年度合约'
-							// },
+              				},
+							{
+								path: '/users/userSpecmat',
+								name: '年计划'
+							},
 							// {
 							// 	path: '/users/userSpecmat',
 							// 	name: '月度合约'

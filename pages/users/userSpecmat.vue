@@ -11,7 +11,7 @@
                     <div class="dflex">
                         <Form :model="formSearch" style="float:left;" >
                             <FormItem prop='skuName' style="width:160px; display: inline-block;float:left;margin-right: 5px;margin-bottom:0px;">
-                                <Input placeholder="输入订单号/商品名称查询" clearable v-model="formSearch.skuName" style="width: 160px" />
+                                <Input placeholder="商品名称查询" clearable v-model="formSearch.skuName" style="width: 160px" />
                             </FormItem>
                             <span @click="onSearch" style="margin: 0 10px;"><Button type="primary" icon="search">搜索</Button></span>
                             <Button @click="closeSearch" >重置</Button>
@@ -21,10 +21,13 @@
                     <!--表格-->
                     <template>
                         <div>
-                            <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" :data="datalist" :content="self" >
+                            <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" @on-expand="getAttrVal" :data="datalist" :content="self" >
                                  <template slot-scope="{ row, index }" slot="status">
                                     <Tag color="primary" v-if="row.feedingType === '放'">{{row.feedingType}}</Tag>
                                     <Tag v-else color="warning">{{row.feedingType}}</Tag>
+                                </template>
+                                  <template slot-scope="{ row, index }" slot="action" v-if='row.isCan==1 && row.isExist==0'>
+                                        <Tooltip content="添加月计划" placement="left" ><Button   title="添加月计划" icon="md-add" @click='addmonth(row)' size="small"></Button></Tooltip>
                                 </template>
                             </Table>
                             <div style="margin: 10px auto;  float: right;">
@@ -35,20 +38,23 @@
                 </div>
             </div>
         </div>
+        <monthplanadd :isshow="addmodalmonth" @unChange="unAdddmonth" :rowData='rowPlanData' @onChange="addOnmonthSuccess"></monthplanadd>
     </div>
 </template>
 
 <script>
 import Navigation from '../../components/navigation'
-import { specialList } from '../../api/special'
+import { specialList ,myYearList} from '../../api/special'
 import { getCookies } from '../../config/storage'
-
+import monthplan from './plan/plan/monthplan.vue'
+import monthplanadd from './plan/plan/monthadd.vue'
 export default {
     name: "userSpecmat",
 	middleware: 'memberAuth',
     layout:'membercenter',
     components:{
-        usernav: Navigation.user
+        usernav: Navigation.user,
+        monthplanadd
     },
     fetch({ store }) {
         return Promise.all([
@@ -62,7 +68,9 @@ export default {
         return {
             self: this,
             loading: false,
+            addmodalmonth:false,
             datalist: [],
+            rowPlanData:{},
             userinfo: {},
             formSearch: {
                 skuName: '',
@@ -72,42 +80,39 @@ export default {
             current_page: 1,
             sourcecolumns: [
                 {
-                    title: '类型',
-                    width: '65',
-                    slot: 'status',
+                    type: 'expand',
+                    width: 50,
+                    render: (h, params) => {
+                        return h(monthplan, {
+                        props: {
+                            monthData: this.monthData
+                        }
+                        })
+                    }
                 },
                 {
-                    title: '编号',
-                    key: 'skuNo'
+                    title: '年计划',
+                    width: '100',
+                    key: 'year',
+                },
+                {
+                    title: '年计划编号',
+                    key: 'yearPlanNo'
+                },
+                {
+                    title: '年计划量',
+                    key: 'yearNum'
                 },
                 {
                     title: '商品名称',
                     key: 'skuName'
                 },
                 {
-                    title: '厂商',
-                    key: 'manufacturer'
+                    title: '操作',
+                    slot: 'action',
+                    key: 'action'
                 },
-                {
-                    title: '交货地',
-                    key: 'warehouseName'
-                },
-                {
-                    title: '单价',
-                    key: 'finalPriceFormat'
-                },
-                {
-                    title: '合同数量',
-                    key: 'availableNum'
-                },
-                {
-                    title: '已提吨数',
-                    key: 'tokenNum'
-                },
-                {
-                    title: '可提吨数',
-                    key: 'maxCanDeliveryNum'
-                }
+
             ]
         }
     },
@@ -120,14 +125,13 @@ export default {
             this.userinfo = userinfo
         },
         async sourceData () {
-            this.loading = true
+            // this.loading = true
             let params = {
                 current_page: this.current_page,
                 page_size: this.page_size,
-                status: 'CO',
                 ...this.formSearch
             }
-            const res = await specialList(this, params)
+            const res = await myYearList(this, params)
             if (res.status === 200) {
                 this.datalist = res.data.items
                 this.total = res.data.total
@@ -139,12 +143,24 @@ export default {
             this.page_size = 20
             this.sourceData()
         },
-        
+        unAdddmonth (res) {
+            this.addmodalmonth = res
+        },
+        addOnmonthSuccess (res) {
+            if (res === 'success') {
+                this.sourceData()
+            }
+        },
+        addmonth (res) {
+            this.rowPlanData = res
+            this.addmodalmonth = true
+        },
         closeSearch () {
             this.current_page = 1
             this.page_size = 20
             this.sourceData()
         },
+        
         changePage (row) {
             this.current_page = row
             this.sourceData()
@@ -152,6 +168,19 @@ export default {
         changePageSize (row) {
             this.page_size = row
             this.sourceData()
+        },
+         getAttrVal (row, status) {
+            if (status) {
+                this.datalist.map((item, index) => {
+                if (item.id === row.id) {
+                    item._expanded = true
+                    this.monthData = item
+                } else {
+                    item._expanded = false
+                    return item
+                }
+                })
+            }
         }
     },
     created() {

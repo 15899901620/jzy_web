@@ -3,14 +3,29 @@
     <div class="whitebg">
        <div class="mt20 mb40 fs14" v-html="dataList.content"></div>
        <div style="text-align: center;" v-if="dataList.statusName=='未投标'">
+            <div style="display: inline-flex;margin-right: 20x;"> 
               <Upload
                       ref="upload"
                       :action="uploadUrl"
-                      :show-upload-list="false"
+                      :on-success="handleFile"
+                      :max-size="2048">
+               <Button type="primary" size="large">上传技术文件</Button>             
+             </Upload>
+             </div>
+              <div style="display: inline-flex;margin-left: 120px;"> 
+              <Upload
+                      ref="upload"
+                      :action="uploadUrl"
                       :on-success="handleOtherFile"
                       :max-size="2048">
-               <Button type="primary" size="large">上传标书</Button>
+               <Button type="primary" size="large">上传商务文件</Button>             
              </Upload>
+             </div>
+             <div style="display: inline-flex;margin-left: 20px;">
+               <Button type="primary" size="large" @click='fileUpdate' >提交</Button>
+             </div>
+             
+            
         </div>
     </div>
 
@@ -35,6 +50,7 @@
             uploadUrl: '',
             formCustom:{
                  appendix:'',
+                 technicalDoc:'',
             },
 
 
@@ -52,13 +68,30 @@
           },
           handleOtherFile(res){
               this.formCustom.appendix = res.url
-              this.fileUpdate();
-              this.SourceData();
+          },
+          handleFile(res){
+              this.formCustom.technicalDoc = res.url
           },
           async fileUpdate() {
+              if(!this.formCustom.appendix){
+                  this.$Notice.warning({
+                    title: '请上传技术文件',
+                    duration: 5
+                });
+                return
+              }
+              if(!this.formCustom.technicalDoc){
+                  this.$Notice.warning({
+                    title: '请上传商务文件',
+                    duration: 5
+                });
+                return
+              }
+            
              let params = {
                 supplierId:this.$store.state.supplierInfo.id,
                 biddingId: this.id,
+                technicalDoc:this.formCustom.technicalDoc,
                 appendix:this.formCustom.appendix,
                 supplierName:this.$store.state.supplierInfo.username
               };
@@ -77,6 +110,7 @@
                     closable: true
                 })
               }
+              this.SourceData();
 
           },
           async SourceData() {
