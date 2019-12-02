@@ -133,6 +133,7 @@
           <div class="Discharge">
             <div class="title">放料专场</div>
             <div class="text">好商品 好价格 好服务</div>
+            
             <button class="dischargeBtn" @click="FeedIng">进入放料专场</button>
           </div>
           <!--  竞拍公告-->
@@ -265,7 +266,7 @@
 			}
 		},
 		created() {
-      console.log(this.advanceList)
+      console.log('advanceList:', this.advanceList)
 		},
 		head() {
 			return {
