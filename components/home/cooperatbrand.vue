@@ -13,11 +13,20 @@
         :trigger="setting.trigger"
         :arrow="setting.arrow">
         <CarouselItem>
-          <ul class="coorperList">
-            <li>
-              <a v-for="(item, index) in brandList" :key="index" :title="item.brief" brief><img :src="item.image"/></a>
-            </li>
-          </ul>
+          
+            <ul class="coorperList" v-show="currentValue === 0">
+                <template v-for="(item, index) in brandList"  >
+                    <li v-for="(items, k) in item" :key="k" v-if="k<14">
+                        <template v-if="items.url">
+                            <a :href="items.url" target="_blank" :title="items.brief"><img :src="items.image"/></a>
+                        </template>
+                        <template else>
+                              <a  href="javascript:void(0)" :title="items.brief"><img :src="items.image"/></a>
+                        </template>
+                       
+                    </li>
+                </template>
+            </ul>
         </CarouselItem>
       </Carousel>
     </div>

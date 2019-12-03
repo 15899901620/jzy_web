@@ -19,7 +19,7 @@
 
             <ul class="coorperList" v-show="currentValue === 0">
                 <template v-for="(item, index) in brandList"  >
-                    <li v-for="(items, k) in item" :key="k" v-if="k<7">
+                    <li v-for="(items, k) in item" :key="k" v-if="k<14">
                         <template v-if="items.url">
                             <a :href="items.url" target="_blank" :title="items.brief"><img :src="items.image"/></a>
                         </template>
