@@ -89,7 +89,7 @@
 				location.href.reload()
 			},
 			acutionDetail(id) {
-				this.$router.push({name: 'bidders-detail-id', params: {id: id}})
+				location.href = '/bidders/detail/' + id
 			}
 		},
 		created() {
