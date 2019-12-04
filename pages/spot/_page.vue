@@ -35,7 +35,7 @@
                 <a  @click="processClick()" :class="TotalCurr === 'select'?'lightfont':''">显示全部</a>
                 <a v-for="(item, index) in $store.state.spot.condition.process" :key="index" :class="processCurr === item.id ?'lightfont':''"
                    @click="processClick(item.id,index)">
-                  {{item.name}}
+                   {{item.name}}
                 </a>
               </dd>
             </dl>
@@ -125,7 +125,7 @@
           </ul>
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
             <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
-                   :otherParams="`category_id=${this.categoryId}&level_id=${this.processId}`" ></pages>
+                   :otherParams="`category_id=${this.categoryId}&level_id=${this.processId}&sku_name=${this.skuName}`" ></pages>
           </div>
         </div>
       </div>
@@ -162,8 +162,8 @@
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
 						page_size: 6,
-                        category_id: query.category_id || '',
-                        level_id: query.level_id || '',
+            category_id: query.category_id || '',
+            level_id: query.level_id || '',
 					}
 				),
 			])
@@ -191,11 +191,11 @@
 				processMore: true,
 				categoryMoreVal: '更多',
 				processMoreVal: '更多',
-                IndexCurr: Number(this.$route.query.category_id) || '',  //列表当前高亮
-                CateCurr: Number(this.$route.query.category_id) || 'select',
-                categoryindex:'',
-                processCurr: Number(this.$route.query.level_id) || '',
-                TotalCurr:Number(this.$route.query.level_id) || 'select',
+        IndexCurr: Number(this.$route.query.category_id) || '',  //列表当前高亮
+        CateCurr: Number(this.$route.query.category_id) || 'select',
+        categoryindex:'',
+        processCurr: Number(this.$route.query.level_id) || '',
+        TotalCurr:Number(this.$route.query.level_id) || 'select',
 			}
 		},
 		methods: {

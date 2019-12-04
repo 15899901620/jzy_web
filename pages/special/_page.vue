@@ -208,7 +208,6 @@ export default {
             let params = {
                 current_page: this.current_page,
                 page_size: this.page_size,
-                status: 'CO'
             }
             const res = await specialList(this, params)
             this.speciallist = res.data.items

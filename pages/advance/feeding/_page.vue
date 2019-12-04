@@ -42,8 +42,14 @@
                         <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
+				
                 <span style="width: 18%;" :title="`合约量：${item.plan_total_num}，待转单：${item.plan_available_num}`">
-                  <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
+					<template v-if="item.plan_total_num==0 && item.plan_available_num==0 " >
+							<Progress :percent="0" :stroke-width="20"/>
+                    </template>
+					<template v-else >
+                  		<Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
+				   </template>
                 </span>
                 <span style="width: 9%;">
                   <TimeDown :endTime="item.valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>

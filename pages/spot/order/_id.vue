@@ -384,6 +384,7 @@
 			},
 			//选择运费
 			setFreight(i, row) {
+			
 				if(i == -1){
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0

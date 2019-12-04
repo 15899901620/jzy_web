@@ -28,7 +28,7 @@
 		methods: {
 			gotoSearch() {
 				let kd = this.keyword
-				if (!kd) return false;
+				// if (!kd) return false;
 				this.$router.push({name: 'spot-page', query: {keyword: kd}})
 			}
 		},

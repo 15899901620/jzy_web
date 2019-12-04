@@ -56,59 +56,53 @@
                 <!--现货列表-->
                 <div class="mt20">
                     <div class="XhlistTitle">
-                        <span style="width: 10%;">品种</span>
-                        <span style="width: 16%;">牌号</span>
-                        <span style="width: 14%;">厂商</span>
-                        <span style="width: 10%;">交货仓</span>
-                        <span style="width: 7%;">包装方式</span>
-                        <span style="width: 9%;">剩余数量（吨）</span>
-                        <span style="width: 11%;">单价（元/吨）</span>
-                        <span style="width: 9%;">距下架时间</span>
-                        <span style="width: 8%;">提货日期</span>
-                        <span style="width: 12%;">操作</span>
+                        <span style="width:  16%;">牌号</span>
+                        <span style="width:  12%;">厂商</span>
+                        <span style="width:  10%;">交货仓</span>
+                        <span style="width:  7%;">包装方式</span>
+                        <span style="width:  9%;">剩余数量（吨）</span>
+                        <span style="width:  11%;">单价（元/吨）</span>
+                        <span style="width:  18%;">合约完成量</span>
+                        <span style="width:  9%;">距下架时间</span>
+                        <span style="width:  8%;">操作</span>
                     </div>
                     <ul class="Xhlist">
                         <template v-if="$store.state.spot.spotList.length>0 &&  this.$route.query.id !=''">
 
                             <li v-for="(item, index) in $store.state.spot.spotList"  :key="index"  >
 
-                <span style="width: 10%;">
-                  <div class="pr">
-                  <i v-if="$store.state.memberToken && item.available_num > 0" class="newClass"  ></i>{{item.category_name}}</div></span>
-                    <span style="width: 16%;">{{item.sku_name}}</span>
-                    <span
-                            style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
-                    <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
+                    <span style="width: 16%;">{{item.skuName}}</span>
+                    <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
+                    <span :title="item.warehouseName" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouseName}}</span>
 
                     <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
                     <span style="width: 7%;" v-else>非标准包装</span>
                     <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
-                  <span style="position: relative">{{item.available_num}}
-                  <i :title="`限购${item.limit_num}`" v-if="item.available_num > 0 && item.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -10px; right: -22px; background:url('/img/Xian_icon.png')no-repeat;"></i>
-                  </span>
+                  <span style="position: relative">{{item.availableNum}}</span>
                 </span>
                 <span class="orangeFont"  style="width: 11%;position:relative;padding-right:18px;">
                      <span style="position: relative">
-                       {{item.finalPriceFormat}}
+                         {{$utils.amountFormat(item.finalPrice)}}
+                         <i v-if="item.isJry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
-                                <span style="width: 9%;">
-                  <template v-if="item.available_num == 0">
-                  已售罄
-                  </template>
-                  <template v-else-if="item.on_sale == 2 && item.available_num > 0">
-                  已结束
-                  </template>
-                  <template v-else>
-                    <TimeDown :endTime="item.price_valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
-                  </template>
+                 <span style="width: 18%;" :title="`合约量：${item.plan_total_num}，待转单：${item.plan_available_num}`">
+                    <template v-if="item.plan_total_num==0 && item.plan_available_num==0 " >
+                             <Progress :percent="0" :stroke-width="20"/>
+                    </template>
+                     <template v-else>
+                            <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
+                    </template>
+                
+                </span>                
+                <span style="width: 9%;">
+                  <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                 </span>
-                <span style="width: 8%;">{{item.delivery_start}}</span>
-                <span style="width: 12%;">
-                   <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
+                <span style="width: 8%;">
+                   <div v-if="$store.state.memberToken &&  item.onSale != 1"
                       style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
-                  <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
-                       @click="addOrder(item.id)">下单</div>
+                  <div v-else-if="$store.state.memberToken && item.availableNum > 0" class="ListBtn"
+                       @click="addOrder(item.id,item.planned_id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
                             </li>
@@ -157,10 +151,9 @@
                 store.dispatch('spot/getFilterConditonData'),
                 //获取报价
                 store.dispatch('spot/getSpotList', {
-                        sku_name: query.keyword || '',
                         current_page: query.page || 1,
                         page_size: 6,
-                        category3_id: query.id || 0,
+                        catId: query.id || 0,
 
                     }
                 ),
@@ -178,7 +171,7 @@
                 checkTypeShow: false,
                 current_page: parseInt(this.$route.query.page) || 1,
                 page_size: 6,
-                categoryId: this.$route.query.category_id || '',
+                id: this.$route.query.id || '',
                 processId: this.$route.query.level_id || '',
                 skuName: this.$route.query.keyword || '',
                 manufacturer: '',
@@ -201,8 +194,10 @@
         computed: {
         },
         methods: {
-            addOrder(id) {
-               location.href = '/spot/order/' + id
+            addOrder(id,planned_id) {
+            //    location.href = '/special/order/' + id+'?planned_id='+planned_id
+                // let id = this.$route.params.id
+                this.$router.push({name:'special-order-id',params:{id:id,planned_id:planned_id}})
             },
             categoryClick(id,index) {
                 this.categoryId=id
@@ -248,12 +243,7 @@
             },
             async spotData() {
                 let params = {
-                    category_id: this.categoryId,
-                    level_id: this.processId,
-                    sku_name: this.skuName,
-                    manufacturer: this.manufacturer,
-                    min_price: this.minPrice,
-                    max_price: this.maxPrice,
+                    catId: this.id,
                     current_page: this.current_page,
                     page_size: this.page_size
                 };
@@ -262,6 +252,9 @@
             checkTypeCancel(){
                 this.checkTypeShow = false
             },
+			toCreateOrder(feeding_id, planned_id){
+				location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+			},
             toLogin(){
                 location.href = '/login'
             }

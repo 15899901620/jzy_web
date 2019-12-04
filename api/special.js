@@ -68,6 +68,19 @@ export const specialDetail = (vm, data) => {
         console.log('specialDetailErr', errorInfo)
     })
 };
+export const monthspecialDetail = (vm, data) => {
+    vm.$axios.defaults.headers = {
+        'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+    return vm.$axios.get(server.prefix + server.api.special.monthspecialDetail,
+    {
+        params: {...data}
+    }).catch((e) => {
+        let errorInfo = e.response
+        console.log('specialDetailErr', errorInfo)
+    })
+};
 export const getWeek = (vm, data) => {
     vm.$axios.defaults.headers = {
         'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken'),

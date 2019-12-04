@@ -95,7 +95,7 @@ let api = {
     filterConditon: '/bill/spot/filter/condition',
     getFilterConditon: {'url':'/bill/spot/filter/condition', 'method':'get'},
     spotList: '/bill/spot/list/page/onSale',
-    initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
+    initSpotList: {'url':'/bill/yearlyFeeding/saleList', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     getSpotInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
@@ -199,11 +199,12 @@ let api = {
     /**
      * @description 专料
      */
-    special: { 
-        specialList: '/bill/yearlyFeeding/web/page',
+    special: {  
+        specialList: '/bill/yearlyFeeding/saleList',
         myYearList: '/bill/myYearPlanned/page',
         specialDetail: '/bill/yearlyFeeding/detail',
-        submitOrder: '/bill/orderInfo/feeding/create'
+        monthspecialDetail: '/bill/monthPlanned/salePlanDetail',
+        submitOrder: '/bill/monthPlanned/order/create'
     },
      /**
      * @description 招标
