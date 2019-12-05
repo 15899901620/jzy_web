@@ -103,7 +103,8 @@ export default {
       //获取竞拍列表
       store.dispatch('bidders/getAuctionList', {
         current_page: 1,
-        page_size: 8
+        page_size: 8,
+        product_type:1
       }),
       //获取现货列表
       store.dispatch('spot/getSpotList', {

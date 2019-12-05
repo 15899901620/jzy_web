@@ -35,6 +35,13 @@
       <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
         <img src="/img/trendFlow.png" />
       </div>
+      <div class="hotbidding">
+        <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
+          <div slot="content">
+            <hotbidding></hotbidding>
+          </div>
+        </outpacking>
+      </div>
       <!--  公告信息-->
       <div class="graybg ovh" >
         <div class="w1200" style="margin-bottom: 50px">
@@ -80,8 +87,10 @@
 <script>
 import Header from "../components/header";
 import Footer from "../components/footer";
+import hotbidding from '../components/hotbidding'
 import { sendHttp } from "../api/common";
 import server from "../config/api";
+import outpacking from '../components/outpacking'
 import { mapState } from "vuex";
 import login from "../components/login-form";
 import { supplierLogin, supplierValid } from "../api/users";
@@ -91,7 +100,12 @@ import TimeDown from '../components/timeDown'
 export default {
   name: "tendering",
   data() {
+  
     return {
+      bidderData: {
+        title: '更多',
+        url: '/bidders'
+      },
       toIndex: 1,
       NameCheck: false,
       passwordTip: false,
@@ -107,6 +121,8 @@ export default {
   },
   components: {
     Header,
+    hotbidding,
+    outpacking,
     HeaderSmall: Header.small,
     loginSupply: login.supply,
     Footer,
@@ -125,6 +141,11 @@ export default {
         catId: 0,
         indexShow: 1
       }),
+        store.dispatch('bidders/getAuctionList', {
+          current_page: 1,
+          page_size: 8,
+          product_type:2
+        }),
     ]);
   },
   methods: {
@@ -205,6 +226,11 @@ export default {
     WinmemberCenter() {
       this.$router.push({ name: "trender-WinBidmember" });
     }
+  },
+  computed: {
+    ...mapState({
+      bannerinfo: state => state.system.bannerinfo
+     })
   },
   mounted() {
 
