@@ -121,7 +121,7 @@ let api = {
     getSalePlanDetail: {'url':'/bill/bookingPlan/salePlanDetail', 'method':'get'},
     createOrder: {'url':'/bill/bookingPlan/order/create', 'method':'post'},
     detail: {'url':'/bill/bookingPlan/detail', 'method':'GET'},
-		getMemberFeedingList: {'url':'/bill/bookingFeeding/saleList', 'method':'get'},
+		getMemberFeedingList: {'url':'/bill/bookingPlan/getMyPlanList/page', 'method':'get'},
 		getPlanByFeeding: {'url':'/bill/bookingPlan/saleListByFeeding', 'method':'post'},
   },
   /**
