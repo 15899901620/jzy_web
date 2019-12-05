@@ -14,46 +14,45 @@
         <!--放料列表-->
         <div class="" style="margin: 10px auto;">
           <div class="XhlistTitle">
-            <span style="width: 16%;">牌号</span>
-            <span style="width: 12%;">厂商</span>
-            <span style="width: 10%;">交货仓</span>
-            <span style="width: 7%;">包装方式</span>
-            <span style="width: 9%;">剩余数量（吨）</span>
+            <span style="width: 16%;">合约编号</span>
+            <span style="width: 12%;">商品信息</span>
+            <span style="width: 15%;">下单时间</span>
+            <span style="width: 15%;">提货仓库</span>
             <span style="width: 11%;">单价（元/吨）</span>
             <span style="width: 18%;">合约完成量</span>
-            <span style="width: 9%;">距下架时间</span>
+            <span style="width: 9%;">合同状态</span>
+			<span style="width: 9%;">转单倒计时</span>
             <span style="width: 8%;">操作</span>
           </div>
           <ul class="Xhlist">
             <template v-if="total > 0">
               <li v-for="(item, index) in feedingList" :key="index">
-                <span style="width: 16%;">{{item.sku_name}}</span>
-                <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
-                <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
-                <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
-                <span style="width: 7%;" v-else>非标准包装</span>
-                <span style="width: 9%; display: flex; justify-content: center; align-items: center; position: relative">
-                  <span style="position: relative">{{item.available_num}}</span>
-                </span>
+                <span style="width: 16%;">{{item.plan_no}}</span>
+                <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.sku_name}}</span>
+                <span style="width: 15%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.create_time}}</span>
+                <span style="width: 15%;" >{{item.warehouse_name}}</span>
                 <span class="orangeFont"
-                      style="width: 11%;position:relative;padding-right:18px;">
+                      style="width: 11%;position:relative;">
                      <span style="position: relative">
                        {{$utils.amountFormat(item.final_price)}}
                         <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
 				
-                <span style="width: 18%;" :title="`合约量：${item.plan_total_num}，待转单：${item.plan_available_num}`">
-					<template v-if="item.plan_total_num==0 && item.plan_available_num==0 " >
-							<Progress :percent="0" :stroke-width="20"/>
+                <span style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
+                    <template v-if="item.total_num==0 && item.available_num==0 " >
+                            <Progress :percent="0" :stroke-width="20"/>
                     </template>
-					<template v-else >
-                  		<Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
-				   </template>
+                    <template v-else >
+                          <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="20"/>
+                   </template>
+
                 </span>
                 <span style="width: 9%;">
-                  <TimeDown :endTime="item.valid_time" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                  <div>待签合同</div>
+                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
                 </span>
+				<span style="width: 9%;"> <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span></span>
                 <span style="width: 8%;">
                   <div class="ListBtn" @click="getSalePlanList(item.id)">转单</div>
                 </span>
@@ -111,16 +110,17 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
-        store.dispatch('common/getFriendlyList'),
-        //获取底部帮助分类
+        		store.dispatch('common/getFriendlyList'),
+        		//获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {
 					catId: 0,
 					indexShow: 1
 				}),
-				//获取放料列表
+				//获取放料列表GET /bookingPlan/getMyPlanList/page
 				store.dispatch('advance/getFeedingList', {
 						current_page: query.page || 1,
-						page_size: 6
+						page_size: 6,
+						statusType:1
 					}
 				),
 			])
