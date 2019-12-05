@@ -56,20 +56,8 @@
                     <template v-else><p>暂无任何收货地址，请您添加！</p></template>
                 </div>
                 <div class="lineborder"></div>
-                <div class="mt30 fs16 ml15 fwb">余额支付</div>
-                <ul class="DeliveryMethod ml35">
-                    <li v-for="(item, index) in payList" :class="{'curr':index === payIndex}" :key="index">{{item.name}}</li>
-                    <div class="ml10 fs14">可用余额：<span class="orangeFont">{{capitalinfo.available_amount_format}}</span>元</div>
-                    <a  class="licz" href="/users/investCapital" style="cursor: pointer" target="_blank">查看充值方式</a>
-                </ul>
-                <div class="orderCzTip">
-                    * 提交订单后当天17：00前完成付款，逾期扣除保证金
-                </div>
-                <div class="lineborder"></div>
                 <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
                 <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
-        
-                    <div class="ml20 orangeFont" >* 此线路暂无货运承运商，请变更配送地址 或 货物选择自提</div>
                       <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
                         选择运输方式
                         <ul class="DeliveryMethod ml35 mb20">
@@ -90,7 +78,7 @@
                 <!--优选服务-->
                 <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
                 <div class="ml35 fs14 mt10 dflexAlem">
-                    <Checkbox v-model="orderinfo.isJryService">巨融易</Checkbox>
+                    巨融易
                     <div class="ml5">
                         <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" size="small" style="width:100px">
                             <i-option v-for="(item, index) in ServiceTimeList" :value="item.value" :key="index">{{ item.timeSelect }}</i-option>
@@ -109,27 +97,29 @@
                 </div>
                 <ul class="orderPorList">
                     <li>
-                        <span class="title" style="width: 12%;">编号</span>
                         <span class="title" style="width: 13%;">货物信息</span>
-                        <span class="title" style="width: 12%;">合计单价（元/吨）</span>
+                           <span class="title" style="width: 12%;">交货地</span>
+                        
                          <span class="title" style="width: 12%;">运费</span>
+                         
                          <span class="title" style="width: 12%;">巨融易</span>
+                         <span class="title" style="width: 12%;">合计单价（元/吨）</span>
                         <span class="title" style="width: 12%;">放料单可提吨数</span>
                         <span class="title" style="width: 14%;">本次提货吨数</span>
-                        <span class="title" style="width: 12%;">交货地</span>
+                     
                         <span class="title" style="width: 9%;">小计</span>
                     </li>
                     <li>
-                        <div  style="width: 12%;">{{specialDetail.skuNo}}</div>
                         <div  style="width: 13%;">{{specialDetail.skuName}}</div>
-                        <div  style="width: 12%;">{{$utils.amountFormat(feedingInfo.basePrice)}}</div>
+                         <div  style="width: 12%;">{{feedingInfo.warehouseName}}</div>
                             <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
                          <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
+                        <div  style="width: 12%;">{{$utils.amountFormat(feedingInfo.basePrice)}}</div>
                         <div  style="width: 12%;">{{specialDetail.availableNum}}</div>
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="feedingInfo.availableNum" @change="changeNum"></input-special>
                         </div>
-                        <div  style="width: 12%;">{{feedingInfo.warehouseName}}</div>
+                       
                         <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmountFormat }}</div>
                     </li>
                 </ul>
@@ -428,6 +418,14 @@ export default {
         // },
         //创建订单
         async createOrder() {
+            
+            if(this.orderinfo.transportationMode == ''){
+                    this.$Modal.warning({
+                    title: '提示',
+                    content: '请选择运输方式'
+                });
+                return false
+            }
             let params = {
                 plan_id:this.planned_id,
                 feeding_id	:this.specialId,

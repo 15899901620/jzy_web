@@ -208,7 +208,7 @@ export default {
                     return
 				}
 			}
-			this.toCreateOrder(res.data[0].id, planned_id)
+			// this.toCreateOrder(res.data[0].id, planned_id)
 		},
 		toCreateOrder(feeding_id, planned_id){
 			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id

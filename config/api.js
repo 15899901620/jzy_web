@@ -200,6 +200,7 @@ let api = {
      * @description 专料
      */
     special: {  
+        saleListByPlan: {'url':'/bill/yearlyFeeding/saleListByPlan', 'method':'post'},
         specialList: '/bill/yearlyFeeding/saleList',
         myYearList: '/bill/myYearPlanned/page',
         specialDetail: '/bill/yearlyFeeding/detail',
