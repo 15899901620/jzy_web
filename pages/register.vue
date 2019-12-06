@@ -17,6 +17,19 @@
       </div>
     </div>
     <Footer size="small" title="" style="margin-top:18px;"></Footer>
+	<Modal
+	
+      v-model="isusershow"
+      @on-cancel="cancelModal"
+      title="选择注册页面">
+	   <div style="font-size:18px">选择会员注册或者承运商注册</div>
+	   
+
+      <div slot="footer" style="display:flex;justify-content: center; padding:10px 0; ">
+		   <Button  title="提交"  style="font-size:18px"  type="primary" size="default"  @click="tabClicks('users')" >会员注册</Button>
+			<Button  type="primary" style="font-size:18px;margin-left: 30px"  size="default"   @click="tabClicks('supply')" >供应/承运商注册</Button>
+	  </div>
+    </Modal>
   </div>
 </template>
 
@@ -49,6 +62,7 @@
 				RegisterName: 'member',
 				nowIndex: 0,
 				index: 0,
+				isusershow:true,
 				current: false,
 
 			}
@@ -56,6 +70,9 @@
 		methods: {
 			currData(res) {
 				this.current = res
+			},
+			applyData(row){
+
 			},
             userTab(res){
               this.supplydisable=res
@@ -69,6 +86,10 @@
 				this.nowIndex = index
 				this.mySwiper.slideTo(index, 500, false)
 			},
+			tabClicks(type){
+				this.nowIndex = type
+				this.isusershow = false
+			}
 		},
 		mounted() {
 			var that = this
@@ -136,5 +157,5 @@
    .ivu-tabs-nav-container{
      font-size: 16px;
    }
-
+.ivu-btn>span{}
 </style>
