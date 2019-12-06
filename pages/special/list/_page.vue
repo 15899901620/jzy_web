@@ -67,9 +67,9 @@
                         <span style="width:  8%;">操作</span>
                     </div>
                     <ul class="Xhlist">
-                        <template v-if="$store.state.spot.spotList.length>0 &&  this.$route.query.id !=''">
+                        <template v-if="$store.state.special.spotList.length>0 &&  this.$route.query.id !=''">
 
-                            <li v-for="(item, index) in $store.state.spot.spotList"  :key="index"  >
+                            <li v-for="(item, index) in $store.state.special.spotList"  :key="index"  >
 
                     <span style="width: 16%;">{{item.skuName}}</span>
                     <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
