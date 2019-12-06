@@ -81,7 +81,7 @@
                     巨融易
                     <div class="ml5">
                         <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" size="small" style="width:100px">
-                            <i-option v-for="(item, index) in ServiceTimeList" :value="item.value" :key="index">{{ item.timeSelect }}</i-option>
+                            <i-option v-for="(item, index) in jryDays" :value="index" :key="index">{{ item }}</i-option>
                         </Select>
                     </div>
                     <div class="ml20 orangeFont">* 费率=天数*吨数*5元</div>
@@ -260,6 +260,7 @@ export default {
             userinfo: !getCookies('userinfor') ? '' : getCookies('userinfor'),
             capitalinfo: {},
             addressList:[],
+            jryDays:{},
             currentIndex: 0,
             RegisterName: 'member',
             nowIndex: 0,
@@ -396,10 +397,10 @@ export default {
                      this.feedingInfo= this.specialDetail.feedingInfo
                     this.currMax = Math.min(this.specialDetail.availableNum,this.feedingInfo.availableNum)
                     this.takeTheirTrans=this.feedingInfo.takeTheirTransportations.split(","); //字符分割 
-           
+                    this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割 
             }
        
-            console.log('takeTheirTrans',this.takeTheirTrans)
+            console.log('jryDays',this.jryDays)
             this.setCosting()
             // this.getWeekDetail()
         },
