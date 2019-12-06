@@ -14,7 +14,7 @@ export const state = () => {
         currPage: 0,
         specialDetail: {},
         feedingInfo:{},
-        spotList:{},
+        spotList:[],
         total:0
     }
 }
