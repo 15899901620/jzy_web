@@ -247,13 +247,14 @@ export default {
                 this.dataList.productGrade ='合格品'
            }   
            
-      }
+      },
+       cancel (formItem) {
+        this.$emit('unChange', false)
+        this.formItem.monthNum=''
+        // this.$refs.month.handleClear()
+      },
     },
-    cancel (formItem) {
-      this.$emit('unChange', false)
-      this.formItem.monthNum=''
-      this.$refs.month.handleClear()
-    },
+   
    
   mounted () {
           

@@ -154,7 +154,6 @@ export default {
 				planned_id: planned_id
 			}
             let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
-            console.log(res)
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
@@ -170,11 +169,9 @@ export default {
                     return
 				}
 			}
-			// this.toCreateOrder(res.data[0].id, planned_id)
         },
         toCreateOrder(feeding_id, planned_id){
              this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
-			// location.href = '/special/order/feeding_id?id='+feeding_id+'&planned_id='+planned_id
 		},
         async sourceData () {
             let params = {

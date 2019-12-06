@@ -122,6 +122,23 @@
                 </div>
             </div>
         </div>
+        <Modal
+            title="选择放料"
+            v-model="selectFeedingModalShow"
+            @on-cancel="selectFeedingModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+          <div class="">
+            <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" :content="self" >
+              <template slot-scope="{ row, index }" slot="action">
+                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id, curr_plan_id)">下单</Button>
+                <Button type="primary" size="small" v-else  disabled>下单</Button>
+              </template>
+            </Table>
+          </div>
+          <div slot="footer">
+          </div>
+        </Modal>
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
 </template>
@@ -131,7 +148,8 @@
     import Footer from '../../../components/footer'
     import pagination from '../../../components/pagination'
     import TimeDown from '../../../components/timeDown'
-
+    import server from "../../../config/api"
+    import {sendHttp} from "../../../api/common"
     export default {
         name: "spot",
         fetch({store, params, query}) {
@@ -178,6 +196,7 @@
                 minPrice: '',
                 maxPrice: '',
                 categoryMore: true,
+                selectFeedingModalShow:false,
                 processMore: true,
                 categoryMoreVal: '更多',
                 processMoreVal: '更多',
@@ -188,17 +207,48 @@
                 TotalCurr:Number(this.$route.query.level_id) || 'select',
                 specialList:[
                 ],
+                 selectFeedingColumns: [
+                    { title: '商品名称', key: 'skuName' },
+                    { title: '放料编号', key: 'feedingNo'},
+                    {title: '仓库', key: 'warehouseName'},
+                    { title: '放料单剩余数量', key: 'availableNum'},
+                    { title: '会员可下单数量', key: 'member_available_num'},
+                    {title: '操作',slot: 'action',
+                        key: 'action'
+                    }
+			    ],
                 sopdata:[],
             }
         },
         computed: {
         },
         methods: {
-            addOrder(id,planned_id) {
-            //    location.href = '/special/order/' + id+'?planned_id='+planned_id
-                // let id = this.$route.params.id
-                this.$router.push({name:'special-order-id',params:{id:id,planned_id:planned_id}})
-            },
+        async addOrder(id,planned_id){
+            this.curr_plan_id = planned_id
+			let params = {
+				planned_id: planned_id
+			}
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
+            console.log(res)
+                if(res.status === 200 && res.data){
+                    if(res.data.length == 0){
+                                this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+                                    location.reload(true)
+                    })
+                    return
+                }
+				if(res.data.length >= 1){
+					//显示放料选择窗口
+					this.selectFeedingData = res.data
+                    this.selectFeedingModalShow = true
+                    console.log(this.selectFeedingModalShow)
+                    return
+				}
+			}
+        },
+        toCreateOrder(feeding_id, planned_id){
+             this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
+		},
             categoryClick(id,index) {
                 this.categoryId=id
                 this.IndexCurr=id
@@ -253,7 +303,7 @@
                 this.checkTypeShow = false
             },
 			toCreateOrder(feeding_id, planned_id){
-				location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+		    	this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
 			},
             toLogin(){
                 location.href = '/login'
