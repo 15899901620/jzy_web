@@ -31,17 +31,18 @@
           </div>
         </div>
       </div>
-      <!--  招标流程-->
-      <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
-        <img src="/img/trendFlow.png" />
-      </div>
-      <div class="hotbidding">
+      <div class="hotbidding" style="    margin-bottom: 20px;">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
             <hotbidding></hotbidding>
           </div>
         </outpacking>
       </div>
+      <!--  招标流程-->
+      <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
+        <img src="/img/trendFlow.png" />
+      </div>
+  
       <!--  公告信息-->
       <div class="graybg ovh" >
         <div class="w1200" style="margin-bottom: 50px">
