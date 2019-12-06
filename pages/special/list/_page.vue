@@ -150,7 +150,7 @@
                 //获取筛选条件
                 store.dispatch('spot/getFilterConditonData'),
                 //获取报价
-                store.dispatch('spot/getSpotList', {
+                store.dispatch('special/getSpotList', {
                         current_page: query.page || 1,
                         page_size: 6,
                         catId: query.id || 0,
