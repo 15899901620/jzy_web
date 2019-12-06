@@ -95,7 +95,7 @@ let api = {
     filterConditon: '/bill/spot/filter/condition',
     getFilterConditon: {'url':'/bill/spot/filter/condition', 'method':'get'},
     spotList: '/bill/spot/list/page/onSale',
-    initSpotList: {'url':'/bill/yearlyFeeding/saleList', 'method':'get'},
+    initSpotList: {'url':'/bill/spot/list/page/onSale', 'method':'get'},
     categoryList: '/item/spot/goods/category',
     spotDetail: '/bill/spot/order',
     getSpotInfoToOrder: {'url':'/bill/spot/order', 'method':'get'},
