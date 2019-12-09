@@ -414,7 +414,7 @@
       }
 
 			this.orderinfo.plan_id = this.planInfo.id
-      this.currMax = this.planInfo.availableNum
+            this.currMax = this.planInfo.availableNum
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},

@@ -49,7 +49,7 @@
                                 @on-change="formSearch.end_time = $event"></DatePicker>
                   </FormItem>
                 </Col>
-              
+
               </Row>
               <Row>
                 <Col span="6">
@@ -251,6 +251,7 @@
 					page_size: this.page_size,
 					...this.formSearch
 				}
+				console.log("params:", params)
 				this.$store.dispatch('member/getOrderList', params)
 				this.$store.dispatch('member/getOrderCount')
 			},
@@ -322,16 +323,16 @@
 			},
 			setTabs(res) {
 				if (res == '1') {
-					this.formSearch.status = ''
+					this.formSearch.status = '' //全部订单
 					this.currTabs = 0
 				} else if (res == '2') {
-					this.formSearch.status = 2
+					this.formSearch.status = 2  //待付款
 					this.currTabs = 1
 				} else if (res == '3') {
-					this.formSearch.status = 3
+					this.formSearch.status = 3  //已付款
 					this.currTabs = 2
 				} else if (res == '0') {
-					this.formSearch.status = '0'
+					this.formSearch.status = '0'   //已取消
 					this.currTabs = 3
 				}
 				this.getSourceData()

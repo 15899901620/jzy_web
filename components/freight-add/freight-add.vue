@@ -62,6 +62,7 @@
                           format="yyyy-MM-dd" @on-change="formAddress.demandBeginDate = $event"></DatePicker>
             </FormItem>
           </Col>
+          <Col span="12" style="margin-top: 5px;">
           <FormItem label="截止日期" prop="demandEndDate">
             <DatePicker type="date" transfer :value='formAddress.demandEndDate' :options="options4" format="yyyy-MM-dd"
                         @on-change="formAddress.demandEndDate = $event"></DatePicker>
@@ -333,15 +334,15 @@
 				}
 				res = await sendHttp(this, true, server.api.order.getOrderInfoById, params, 1)
 				console.log(res)
-				
-				this.formAddress.contact = res.data.contacter	
-				this.formAddress.phone =  res.data.phone	
+
+				this.formAddress.contact = res.data.contacter
+				this.formAddress.phone =  res.data.phone
 				this.formAddress.warehouseAddress =  res.data.warehouseAddress
-				this.formAddress.warehouseName =  res.data.warehouseName			
+				this.formAddress.warehouseName =  res.data.warehouseName
 				let t = new Date(this.datalist.deliveryDeadline)
 				this.date = t.getTime();
 				this.formAddress.demandEndDate = this.$utils.dateFormat(t, 'yyyy-MM-dd')
-				
+
         //todo 在此初始化，展示用户的联系人，默认到物流联系人，没有物流联系人填充账号联系人
         //todo 在些初始化，展示提货地址，提货地址为仓库的详细地址
 			},
