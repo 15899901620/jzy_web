@@ -7,12 +7,99 @@
           <breadcrumb>
               <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源</nuxt-link></breadcrumb-item>
               <breadcrumb-item><nuxt-link to="/advance">预售列表</nuxt-link></breadcrumb-item>
-              <breadcrumb-item>放料列表</breadcrumb-item>
+              <breadcrumb-item>合约列表</breadcrumb-item>
           </breadcrumb>
         </div>
+ 	<div class="" style="width: 95%; margin: 0 auto;">
+          <div class="TableTitle graybg">
+            <span style="width: 15%;">商品信息</span>
+            <span style="width: 15%;">提货仓库</span>
+            <span style="width: 10%;">数量</span>
+            <span style="width: 10%;">单价</span>
+            <span style="width: 10%;">待转单数</span>
+            <span style="width: 10%;">尾款支付状态</span>
+            <span style="width: 15%;">合同状态</span>
+            <span style="width: 15%;">操作</span>
+          </div>
+          <template v-if="feedingList.length > 0">
+            <table v-for="(item, index) in feedingList" :key="index" class="listT mt10" border="" cellspacing="" cellpadding="">
+              <tbody>
+              <tr class="Ttitle graybg" >
+                <td colspan="8">
+                    <span class="ml10">合约编号：
+                      <a :href="`/users/plan/advance/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
+                      <template v-if="item.status == 1">(待转单)</template>
+                      <template v-else-if="item.status == 2">(已转单)</template>
+                      <template v-else-if="item.status == 3">(已违约)</template>
+                    </span>
+                  <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
+				<span  class="ml15" style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
+                    <template v-if="item.total_num==0 && item.available_num==0 " >
+                            <Progress :percent="0" :stroke-width="20"/>
+                    </template>
+                    <template v-else >
+                          <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="20"/>
+                   </template>
 
+                </span>
+                  <span class="fr mr15" v-if="item.status != 3 && item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)">
+                      <span class="red">转单倒计时：</span>
+                      <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
+                  </span>
+                </td>
+              </tr>
+              <tr class="detailTable">
+                <td style="width: 15%;">{{item.sku_name}}</td>
+                <td style="width: 15%;">{{item.warehouse_name}}</td>
+                <td style="width: 10%;">
+                  {{item.total_num}}吨
+                </td>
+                <td style="width: 10%;">{{$utils.amountFormat(item.final_price)}}</td>
+                <td style="width: 10%;">{{item.available_num}}</td>
+                <td style="width: 10%;">
+                  <span class="gray" v-if="item.taken_num === 0">待支付</span>
+                  <span class="gray" v-else-if="item.taken_num > 0 && item.taken_num < item.total_num">部分支付</span>
+                  <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
+                </td>
+                <td style="width: 15%;">
+                  <div>待签合同</div>
+                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
+                </td>
+
+                <td style="width: 15%;" class="operate">
+                  <div v-if="item.status == 3">
+                    <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">已违约</a>
+                  </div>
+                  <div v-else-if="item.available_num > 0">
+                    <template v-if="item.close_apply_status == 1">
+                      <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSalePlanList(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" v-else style="padding: 3px 6px;background-color: #dbdcde;cursor: default;">转单</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 2">
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 3">
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消同意</a>
+                    </template>
+                    <template v-else-if="item.close_apply_status == 4">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="getSalePlanList(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
+                    </template>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </template>
+          <template v-else>
+            <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
+          </template>
+		<div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="feedingList.length > 0">
+            <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
+          </div>
+        </div>
         <!--放料列表-->
-        <div class="" style="margin: 10px auto;">
+        <!-- <div class="" style="margin: 10px auto;">
           <div class="XhlistTitle">
             <span style="width: 16%;">合约编号</span>
             <span style="width: 12%;">商品信息</span>
@@ -69,7 +156,9 @@
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="feedingList.length > 0">
             <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
           </div>
-          <Modal
+        
+        </div> -->
+		  <Modal
               title="选择合约"
               v-model="selectPlanModalShow"
               @on-cancel="selectPlanModalCancel"
@@ -85,7 +174,6 @@
             <div slot="footer">
             </div>
           </Modal>
-        </div>
       </div>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>

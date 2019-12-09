@@ -131,10 +131,10 @@
         <div class="" style="width: 24%; margin-left: 1.5%; display: flex; flex-direction: column">
           <!-- 放料专场 -->
           <div class="Discharge">
-            <div class="title">放料专场</div>
+            <div class="title">预售专场</div>
             <div class="text">好商品 好价格 好服务</div>
             
-            <button class="dischargeBtn" @click="FeedIng">进入放料专场</button>
+            <button class="dischargeBtn" @click="FeedIng">预售合约转单</button>
           </div>
           <!--  竞拍公告-->
           <div class="Notice whitebg mt15">
