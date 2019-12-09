@@ -82,7 +82,7 @@ export default {
                 },
                 {
                     title: '月计划编号',
-                    width: '130',
+                    width: '150',
                     key: 'planNo'
                 },
                 {
