@@ -26,6 +26,7 @@
               <tbody>
               <tr class="Ttitle graybg" >
                 <td colspan="8">
+                  <div class="dflex" style="display: flex; justify-content: space-between">
                     <span class="ml10">合约编号：
                       <a :href="`/users/plan/advance/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
                       <template v-if="item.status == 1">(待转单)</template>
@@ -46,6 +47,8 @@
                       <span class="red">转单倒计时：</span>
                       <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
                   </span>
+                  </div>
+
                 </td>
               </tr>
               <tr class="detailTable">
@@ -125,7 +128,7 @@
                         <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
-				
+
                 <span style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
                     <template v-if="item.total_num==0 && item.available_num==0 " >
                             <Progress :percent="0" :stroke-width="20"/>
@@ -156,7 +159,7 @@
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="feedingList.length > 0">
             <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
           </div>
-        
+
         </div> -->
 		  <Modal
               title="选择合约"
@@ -320,6 +323,7 @@
   .h50 {
     height: 50px;
   }
+  .detailTable{background-color: #f7f7f7}
   .lightfont{color: #2d8cf0;}
   .colorB{color:#666;}
   .arrow-up {
