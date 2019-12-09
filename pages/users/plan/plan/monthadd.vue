@@ -2,7 +2,7 @@
   <Modal
     v-model="addmodal"
     title="添加月计划"
-
+    @on-cancel="cancel"
     width="50%"
     :loading="loading"
     :mask-closable="false"
