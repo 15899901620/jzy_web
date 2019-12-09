@@ -72,6 +72,7 @@ export default {
             datalist: [],
             rowPlanData:{},
             userinfo: {},
+            monthData:{},
             formSearch: {
                 skuName: '',
             },
@@ -133,7 +134,10 @@ export default {
             }
             const res = await myYearList(this, params)
             if (res.status === 200) {
-                this.datalist = res.data.items
+                 this.datalist = res.data.items.map(ite => {
+                        ite._expanded = false
+                        return ite
+                    })
                 this.total = res.data.total
             } 
             this.loading = false
