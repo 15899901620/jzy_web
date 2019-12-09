@@ -93,8 +93,8 @@
                      <template v-else>
                             <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
                     </template>
-                
-                </span>                
+
+                </span>
                 <span style="width: 9%;">
                   <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
                 </span>
@@ -247,8 +247,9 @@
 			}
         },
         toCreateOrder(feeding_id, planned_id){
-             this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
-		},
+            let url='/special/order/'+feeding_id+'?planned_id='+planned_id
+            location.href =url
+        },
             categoryClick(id,index) {
                 this.categoryId=id
                 this.IndexCurr=id
@@ -302,9 +303,7 @@
             checkTypeCancel(){
                 this.checkTypeShow = false
             },
-			toCreateOrder(feeding_id, planned_id){
-		    	this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
-			},
+
             toLogin(){
                 location.href = '/login'
             }

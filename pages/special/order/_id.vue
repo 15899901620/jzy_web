@@ -73,7 +73,7 @@
                         </ul>
                     </div>
                 </div>
-              
+
                 <div class="lineborder"></div>
                 <!--优选服务-->
                 <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
@@ -99,14 +99,14 @@
                     <li>
                         <span class="title" style="width: 13%;">货物信息</span>
                            <span class="title" style="width: 12%;">交货地</span>
-                        
+
                          <span class="title" style="width: 12%;">运费</span>
-                         
+
                          <span class="title" style="width: 12%;">巨融易</span>
                          <span class="title" style="width: 12%;">合计单价（元/吨）</span>
                         <span class="title" style="width: 12%;">放料单可提吨数</span>
                         <span class="title" style="width: 14%;">本次提货吨数</span>
-                     
+
                         <span class="title" style="width: 9%;">小计</span>
                     </li>
                     <li>
@@ -119,7 +119,7 @@
                         <div  style="width: 14%;">
                             <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="feedingInfo.availableNum" @change="changeNum"></input-special>
                         </div>
-                       
+
                         <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmountFormat }}</div>
                     </li>
                 </ul>
@@ -142,7 +142,9 @@
             </div>
 		</div>
 		<Footer size="small" title="底部" style="margin-top:18px;"></Footer>
-	</div>
+
+
+    </div>
 </template>
 
 <script>
@@ -182,7 +184,7 @@ export default {
     //     }
     //   }
     },
-  
+
     fetch({
         store,
         params
@@ -220,7 +222,7 @@ export default {
                 freightFee:0,
                 addressId: 0
             },
-            
+
             createInfo:false,
             currMin: 0,
             currMax: 0,
@@ -268,7 +270,7 @@ export default {
             payIndex: 0,
             totalAmount: '0.00',
             specialId: !this.$route.params.id ? 0 : this.$route.params.id,
-            planned_id: !this.$route.params.planned_id ? 0 : this.$route.params.planned_id
+            planned_id: !this.$route.query.planned_id ? 0 : this.$route.query.planned_id
         }
     },
     computed: {
@@ -309,7 +311,7 @@ export default {
         },
         //选择运费
         setFreight(i, row){
- 
+
             if(i == -1){
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
@@ -319,7 +321,7 @@ export default {
 					this.orderinfo.freightFee = row.freight_fee
 					this.currfreight = i
 				}
-               
+
 
         },
         //选择运费
@@ -369,7 +371,7 @@ export default {
             this.currsetp = this.currMin
           }
           if (this.currMin <= this.currMax) {
-              
+
           } else {
             this.showWarning("剩余库存(" + this.currMax + ")不满足当前交货方式的起订量(" + this.currMin + ")要求，请重新下单！", function () {
               window.location.href = '/special'
@@ -389,17 +391,17 @@ export default {
                 feeding_id: this.specialId,
                 planned_id:this.planned_id,
             }
-            
-          
+
+
             let res = await monthspecialDetail(this, params)
             if(res.status==200){
                     this.specialDetail = res.data
                      this.feedingInfo= this.specialDetail.feedingInfo
                     this.currMax = Math.min(this.specialDetail.availableNum,this.feedingInfo.availableNum)
-                    this.takeTheirTrans=this.feedingInfo.takeTheirTransportations.split(","); //字符分割 
-                    this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割 
+                    this.takeTheirTrans=this.feedingInfo.takeTheirTransportations.split(","); //字符分割
+                    this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割
             }
-       
+
             console.log('jryDays',this.jryDays)
             this.setCosting()
             // this.getWeekDetail()
@@ -415,11 +417,11 @@ export default {
         //     if(res){
         //         this.WeekList = res.data
         //     }
-         
+
         // },
         //创建订单
         async createOrder() {
-            
+
             if(this.orderinfo.transportationMode == ''){
                     this.$Modal.warning({
                     title: '提示',
@@ -436,8 +438,8 @@ export default {
                 jry_days	:this.orderinfo.jryDays,
                 order_num   :this.feedingInfo.availableNum
             }
-          
-            
+
+
             const res = await submitOrder(this, params)
 
             if (typeof res.data.errorcode == "undefined"){
@@ -477,18 +479,18 @@ export default {
         async getFreight () {
             let data={
                 sku_no: this.feedingInfo.skuNo,
-              
+
                 warehouse_id: this.feedingInfo.warehouseId,
                 country_id: this.defaultAdd.countryId,
                 state_id: this.defaultAdd.state,
                   city_id: this.defaultAdd.city,
-     
+
                 district_id: this.defaultAdd.district,
-                
+
             }
             const res= await devDetail(this, data)
             if(res.data){
-                
+
                 this.carrierList = res.data.carriers
 
                  this.logisticsfreight = res.data.freightList
@@ -576,12 +578,12 @@ export default {
         this.getSourceData()
         this.getMyCapital()
         this.getMyAddress()
-          
-     
-        
+
+
+
     },
     created() {
-   
+
     },
     head() {
         return {
@@ -606,6 +608,7 @@ export default {
 }
 </script>
 <style lang="css" scoped>
+    body{overflow: auto;}
 .ivu-checkbox-checked .ivu-checkbox-inner:after {font-size: 6px;}
 .ivu-checkbox-wrapper {line-height: 17px;}
 .ivu-radio-group-vertical .ivu-radio-wrapper {height: 32px;}

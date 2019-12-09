@@ -12,7 +12,7 @@
                 <Tag color="warning" v-else-if="row.status === 'AP'">正在审核</Tag>
                 <Tag color="success" v-else-if="row.status === 'CO'">审核通过</Tag>
               </template>
-            
+
         </Table>
         <Modal
             title="选择放料"
@@ -46,7 +46,7 @@ export default {
     },
     components: {
          monthplanedit
-        
+
     },
     data() {
         return {
@@ -144,7 +144,7 @@ export default {
             this.rowweekdata = res
             this.addmodal = true
         },
-     
+
         unEditdWeek (res) {
             this.addmodal = res
         },
@@ -173,7 +173,8 @@ export default {
 			}
         },
         toCreateOrder(feeding_id, planned_id){
-             this.$router.push({name:'special-order-id',params:{id:feeding_id,planned_id:planned_id}})
+            let url='/special/order/'+feeding_id+'?planned_id='+planned_id
+            location.href =url
 		},
         async sourceData () {
             let params = {
