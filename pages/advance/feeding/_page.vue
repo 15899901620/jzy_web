@@ -36,10 +36,10 @@
                   <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
 				<span  class="ml15" style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
                     <template v-if="item.total_num==0 && item.available_num==0 " >
-                            <Progress :percent="0" :stroke-width="20"/>
+                            <Progress :percent="0" :stroke-width="12"/>
                     </template>
                     <template v-else >
-                          <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="20"/>
+                          <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="12"/>
                    </template>
 
                 </span>
@@ -333,4 +333,6 @@
     width:19px; height:15px;
     position: absolute; top: -7px;  left: 84px;background: url(/img/new_icon.gif)no-repeat;background-size: cover;
   }
+
+  .ivu-progress >>> .ivu-progress-inner{background-color: #e2dfdf;}
 </style>
