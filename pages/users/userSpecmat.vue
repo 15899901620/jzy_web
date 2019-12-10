@@ -35,7 +35,7 @@
                                         <Progress :percent="0" :stroke-width="20" style="background-color: beige;"/>
                                     </template>
                                     <template v-else >
-                                         <Progress :percent="((row.yearNum - (row.yearNum-row.monthAllNum))*100/row.yearNum).toFixed(2)" :stroke-width="20"/>
+                                         <Progress :percent="(row.monthAllNum*100/row.yearNum).toFixed(2)" :stroke-width="20"/>
                                     </template>
                                     </span>
                                 </template>
