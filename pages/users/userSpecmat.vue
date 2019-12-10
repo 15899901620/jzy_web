@@ -29,6 +29,20 @@
                                   <template slot-scope="{ row, index }" slot="action" v-if='row.isCan==1 && row.isExist==0'>
                                         <Tooltip content="添加月计划" placement="left" ><Button   title="添加月计划" icon="md-add" @click='addmonth(row)' size="small"></Button></Tooltip>
                                 </template>
+                                <template slot-scope="{ row, index }" slot="yearNum"  >
+                                  <span  class="ml15"  :title="`年计划量：${row.yearNum}，月计划总量：${row.monthAllNum}`">
+                                    <template  v-if="row.yearNum==0 && row.monthAllNum==0 " >
+                                        <Progress :percent="0" :stroke-width="20" style="background-color: beige;"/>
+                                    </template>
+                                    <template v-else >
+                                         <Progress :percent="((row.yearNum - (row.yearNum-row.monthAllNum))*100/row.yearNum).toFixed(2)" :stroke-width="20"/>
+                                    </template>
+                                    </span>
+                                </template>
+                             
+                                  
+                                       
+                            
                             </Table>
                             <div style="margin: 10px auto;  float: right;">
                                 <Page  :total="total" :current="current_page" @on-change="changePage" :page-size="page_size" @on-page-size-change="changePageSize" ></Page>
@@ -103,6 +117,11 @@ export default {
                 {
                     title: '年计划量',
                     key: 'yearNum'
+                },
+                {
+                    title: '年计划进度条',
+                    slot: 'yearNum',
+                    key:'yearNum'
                 },
                 {
                     title: '商品名称',
