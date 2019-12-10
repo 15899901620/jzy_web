@@ -2,8 +2,8 @@
     <div>
         <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" :data="datalist" :content="self" >
             <template slot-scope="{ row, index }" slot="action" >
-                <Button title="编辑" type="primary" size="small" v-if="row.status === 'DR' && row.status === 'CO'"  @click="editdischargeData(row)" icon="md-brush"  style="margin-right: 5px;">编辑</Button>
-                <Button title="转单" type="info" size="small" v-if="row.availableNum > 0"  @click="getSaleFeedingList(row.id)"   style="margin-right: 5px;">转单</Button>
+                <Button title="编辑" type="primary" size="small" v-if="row.status === 'DR'"  @click="editdischargeData(row)" icon="md-brush"  style="margin-right: 5px;">编辑</Button>
+                <Button title="转单" type="info" size="small" v-if="row.availableNum > 0 && row.feedingNum>0"  @click="getSaleFeedingList(row.id)"   style="margin-right: 5px;">转单</Button>
                 <Button title="转单" type="primary" disabled size="small" v-else   style="margin-right: 5px;">转单</Button>
             </template>
                <template slot-scope="{ row, index }" slot="status">

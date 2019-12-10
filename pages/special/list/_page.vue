@@ -102,7 +102,7 @@
                    <div v-if="$store.state.memberToken &&  item.onSale != 1"
                       style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else-if="$store.state.memberToken && item.availableNum > 0" class="ListBtn"
-                       @click="addOrder(item.id,item.planned_id)">下单</div>
+                       @click="toCreateOrder(item.id,item.planned_id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
                             </li>
@@ -131,7 +131,7 @@
           <div class="">
             <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" :content="self" >
               <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id, curr_plan_id)">下单</Button>
+                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,row.planned_id)">下单</Button>
                 <Button type="primary" size="small" v-else  disabled>下单</Button>
               </template>
             </Table>
@@ -223,29 +223,29 @@
         computed: {
         },
         methods: {
-        async addOrder(id,planned_id){
-            this.curr_plan_id = planned_id
-			let params = {
-				planned_id: planned_id
-			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
-            console.log(res)
-                if(res.status === 200 && res.data){
-                    if(res.data.length == 0){
-                                this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
-                                    location.reload(true)
-                    })
-                    return
-                }
-				if(res.data.length >= 1){
-					//显示放料选择窗口
-					this.selectFeedingData = res.data
-                    this.selectFeedingModalShow = true
-                    console.log(this.selectFeedingModalShow)
-                    return
-				}
-			}
-        },
+        // async addOrder(id,planned_id){
+        //     this.curr_plan_id = planned_id
+		// 	let params = {
+		// 		planned_id: planned_id
+		// 	}
+        //     let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
+        //     console.log(res)
+        //         if(res.status === 200 && res.data){
+        //             if(res.data.length == 0){
+        //                         this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+        //                             location.reload(true)
+        //             })
+        //             return
+        //         }
+		// 		if(res.data.length >= 1){
+		// 			//显示放料选择窗口
+		// 			this.selectFeedingData = res.data
+        //             this.selectFeedingModalShow = true
+        //             console.log(this.selectFeedingModalShow)
+        //             return
+		// 		}
+		// 	}
+        // },
         toCreateOrder(feeding_id, planned_id){
             let url='/special/order/'+feeding_id+'?planned_id='+planned_id
             location.href =url
