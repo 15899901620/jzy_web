@@ -167,6 +167,9 @@ export default {
             this.sourceData()
         },
         unAdddmonth (res) {
+            this.datalist.map((item, index) => {         
+                    item._expanded = false
+            })
             this.addmodalmonth = res
         },
         addOnmonthSuccess (res) {
