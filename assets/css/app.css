@@ -1764,6 +1764,7 @@ gAccount {
 }
 .titleOrder li {
 	padding:8px 20px;
+	cursor: pointer;
 }
 .titleOrder li.curr {
 	background-color:#007de4;

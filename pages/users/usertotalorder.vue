@@ -329,7 +329,7 @@
 					this.formSearch.status = 2  //待付款
 					this.currTabs = 1
 				} else if (res == '3') {
-					this.formSearch.status = 3  //已付款
+					this.formSearch.status = 5  //已付款
 					this.currTabs = 2
 				} else if (res == '0') {
 					this.formSearch.status = '0'   //已取消

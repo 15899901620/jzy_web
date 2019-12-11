@@ -136,8 +136,7 @@
           </div>
           <div style="display: flex; flex-direction: column; width: 300px; ">
             <div class="mt20 tar mr20 dflex " style="align-items: center;">
-              <span class="totalprice">应付总额：</span><span class="tar"
-                                                         style="width: 150px;">{{$utils.amountFormat(this.totalAmount)}}</span>
+              <span class="totalprice">应付总额：</span><span class="tar" style="width: 150px;">{{$utils.amountFormat(this.totalAmount)}}</span>
             </div>
             <div class="mt20 mb20 tar mr20 dflexAlem">
               <span class="totalprice">待付金额：</span><span class="fs18 orangeFont tar fwb" style="width: 150px;">{{$utils.amountFormat(this.payAmount)}}</span>
