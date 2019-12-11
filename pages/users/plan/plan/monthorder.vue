@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" :height='110'  :data="datalist" :content="self" >
+        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns"    :data="datalist" :content="self" >
             <template slot-scope="{ row, index }" slot="isDelivery" >
                	<span v-if="row.isDelivery == 0">
 						自提
@@ -10,13 +10,15 @@
                 </span>
             </template>
                <template slot-scope="{ row, index }" slot="status">
+                   <div style="padding: 10px; display: flex; flex-direction: column; align-items: center">
                   <span v-if="row.status == 3 || row.status == 4 "
                         class="greenFont">{{getOrderState(row.status)}}</span>
                   <span v-else-if="row.status == 0" class="gray">{{getOrderState(row.status)}}</span>
                   <span v-else class="orangeFont">{{getOrderState(row.status)}}</span>
-                  <template v-if="row.status == 2"><br><span
-                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{$utils.amountFormat(row.totalAmount)}}</span>
+                  <template v-if="row.status == 2">
+                      <span style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{$utils.amountFormat(row.totalAmount)}}</span>
                   </template>
+                   </div>
               </template>
               <template slot-scope="{ row, index }" slot="availableNum"  >
                     <span  class="ml15"  :title="`月计划量：${row.monthNum}，待转单数量	：${row.availableNum}`">
@@ -172,7 +174,7 @@ export default {
 				planned_id: planned_id
 			}
             let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
-      
+
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
