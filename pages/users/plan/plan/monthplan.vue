@@ -92,7 +92,7 @@ export default {
                     key: 'monthNum',
                 },
                 {
-                    title: '本计划执行量',
+                    title: '待转单数量',
                     width: '120',
                     align: 'center',
                     key: 'availableNum'

@@ -19,7 +19,9 @@
                </Col>
                <Col span="12">
                  <FormItem label="月计划量" prop="monthNum" >
-                   <Input v-model="formItem.monthNum"  placeholder="请输入月计划量" style="width:80%" />
+                      <input-special :min="min" :max="max" :step="1" v-model="formItem.monthNum" style="width:270px"
+                             @change="changeNum"></input-special>
+                    <!-- <InputNumber :max="50" :min="160" :step="1" v-model="formItem.monthNum" prop="monthNum"></InputNumber> -->
                  </FormItem>
                </Col>
             </Row>
@@ -27,9 +29,6 @@
                 <Col span="12">
                <FormItem label="月份" >
                      <Input v-model="canMonth" disabled   style="width:80%" />
-                       <!-- <Select v-model="formItem.month" transfer  style="width:80%" >
-                        <Option v-for="(item, index) in monthData" :value="item.value"  :key="index">{{item.labal}}</Option>
-                      </Select> -->
                   </FormItem>
                 </Col>
               </Row>
@@ -144,6 +143,7 @@
 <script>
 import server from "../../../../config/api";
 import {sendHttp} from "../../../../api/common";
+import InputSpecial from '../../../../components/input-special'
 export default {
   name: 'monthplanadd',
   props: {
@@ -156,11 +156,13 @@ export default {
     }
   },
   components: {
-    
+      InputSpecial
   },
-  data () {
+  data () {   
     return {
       self: this,
+      max:'',
+      min:'',
       addmodal: false,
       loading: true,
       loading1:false,
@@ -176,20 +178,6 @@ export default {
         { value:2, labal: '一等品' },
         { value:3, labal: '合格品' }
       ],
-      monthData:[
-        {value:1, labal:'1'},
-        {value:2, labal:'2'},
-        {value:3, labal:'3'},
-        {value:4, labal:'4'},
-        {value:5, labal:'5'},
-        {value:6, labal:'6'},
-        {value:7, labal:'7'},
-        {value:8, labal:'8'},
-        {value:9, labal:'9'},
-        {value:10,labal:'10'},
-        {value:11,labal:'11'},
-        {value:12,labal:'12'},
-      ],
       
       checkprod: [],
       warehouseData: [],
@@ -197,19 +185,19 @@ export default {
      
       formItem: {
         yearId: 0,
-        monthNum:'',
+        monthNum:0,
       },
       ruleValidate: {
         month: [
           { required: true, message: '月份不能为空', trigger: 'blur' }
         ],
-        monthNum: [
-          { required: true, message: '月计划量不能为空', trigger: 'blur' }
-        ],
       }
     }
   },
   methods: {
+      changeNum(value) {
+				this.formItem.monthNum = value
+			},
         async  define () {
         
                let params = {
@@ -234,7 +222,12 @@ export default {
           var res= await sendHttp(this, true, server.api.month.yeardetail, {id: this.formItem.yearId})
          
            this.dataList=res.data
-            if(this.dataList.packingModes == 1){
+           
+           this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
+           this.min=Math.round(this.formItem.monthNum/2)
+           this.max=this.formItem.monthNum*2
+           console.log(this.max)
+           if(this.dataList.packingModes == 1){
                 this.dataList.packingModes ='标准包装'
            } else{
                 this.dataList.packingModes ='非标准包装'
