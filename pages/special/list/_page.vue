@@ -60,7 +60,7 @@
                         <span style="width:  12%;">厂商</span>
                         <span style="width:  10%;">交货仓</span>
                         <span style="width:  7%;">包装方式</span>
-                        <span style="width:  9%;">剩余数量（吨）</span>
+                        <span style="width:  9%;">资源量（吨）</span>
                         <span style="width:  11%;">单价（元/吨）</span>
                         <span style="width:  18%;">合约完成量</span>
                         <span style="width:  9%;">距下架时间</span>

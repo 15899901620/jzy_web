@@ -1,16 +1,22 @@
 <template>
     <div>
-        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" @on-expand="getAttrVal" :data="datalist" :content="self" >
-            <template slot-scope="{ row, index }" slot="action" >
-                <Button title="编辑" type="primary" size="small" v-if="row.status === 'DR'"  @click="editdischargeData(row)" icon="md-brush"  style="margin-right: 5px;">编辑</Button>
-                <Button title="转单" type="info" size="small" v-if="row.availableNum > 0 && row.feedingNum>0"  @click="getSaleFeedingList(row.id)"   style="margin-right: 5px;">转单</Button>
-                <Button title="转单" type="primary" disabled size="small" v-else   style="margin-right: 5px;">转单</Button>
+        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" :height='110'  :data="datalist" :content="self" >
+            <template slot-scope="{ row, index }" slot="isDelivery" >
+               	<span v-if="row.isDelivery == 0">
+						自提
+                </span>
+                  <span v-if="row.isDelivery == 1">
+						配送
+                </span>
             </template>
                <template slot-scope="{ row, index }" slot="status">
-                <Tag color="default" v-if="row.status === 'VO'">已取消</Tag>
-                <Tag color="primary" v-else-if="row.status === 'DR'">等待审核</Tag>
-                <Tag color="warning" v-else-if="row.status === 'AP'">正在审核</Tag>
-                <Tag color="success" v-else-if="row.status === 'CO'">审核通过</Tag>
+                  <span v-if="row.status == 3 || row.status == 4 "
+                        class="greenFont">{{getOrderState(row.status)}}</span>
+                  <span v-else-if="row.status == 0" class="gray">{{getOrderState(row.status)}}</span>
+                  <span v-else class="orangeFont">{{getOrderState(row.status)}}</span>
+                  <template v-if="row.status == 2"><br><span
+                      style="color:#ff9800;border:1px solid #ff9800;border-radius:3px;padding:2px 3px;font-size: 8px;">待付{{$utils.amountFormat(row.totalAmount)}}</span>
+                  </template>
               </template>
               <template slot-scope="{ row, index }" slot="availableNum"  >
                     <span  class="ml15"  :title="`月计划量：${row.monthNum}，待转单数量	：${row.availableNum}`">
@@ -46,13 +52,12 @@
 </template>
 <script>
 import server from "../../../../config/api";
+import config from '../../../../config/config'
 import {sendHttp} from "../../../../api/common";
 import monthplanedit from "./monthedit";
-import monthorder from './monthorder.vue'
-
 export default {
     props: {
-        monthData: {
+        orderData: {
             type: Object
         },
     },
@@ -71,7 +76,6 @@ export default {
             addmodal: false,
             editmodal: false,
             rowweekdata: {},
-            orderData:{},
             editdata: {},
             curr_plan_id:0,
             selectFeedingColumns: [
@@ -88,71 +92,54 @@ export default {
 			selectFeedingData: [],
             sourcecolumns: [
                 {
-                    type: 'expand',
-                    width: 50,
-                    render: (h, params) => {
-                        return h(monthorder, {
-                        props: {
-                            orderData: this.orderData
-                        }
-                        })
-                    }
-                },
-                {
-                    title: '月份',
-                    width: '65',
-                    align: 'center',
-                    key: 'month'
-                },
-                {
-                    title: '月计划编号',
+                    title: '商品信息',
                     width: '150',
-                    key: 'planNo'
-                },
-                {
-                    title: '月计划量',
-                    width: '100',
                     align: 'center',
-                    key: 'monthNum',
-                },
-                {
-                    title: '待转单数量',
-                    width: '120',
-                    align: 'center',
-                    key: 'availableNum'
-                },
-                {
-                    title: '计划完成率',
-                    width: '120',
-                    align: 'center',
-                    slot: 'availableNum',
-                    key: 'availableNum'
-                },
-                {
-                    title: '商品名称',
-                    width: '165',
                     key: 'skuName'
                 },
                 {
-                    title: '状态',
+                    title: '单价（元/吨）',
                     width: '120',
-                    slot: 'status',
+                    key: 'finalPriceFormat'
+                },
+                {
+                    title: '数量（吨）',
+                    width: '100',
+                    align: 'center',
+                    key: 'orderNum',
+                },
+                {
+                    title: '库区',
+                    width: '150',
+                    align: 'center',
+                    key: 'warehouseName'
+                },
+                {
+                    title: '提货方式',
+                    width: '100',
+                    align: 'center',
+                    slot: 'isDelivery',
+                    key: 'isDelivery'
+                },
+                {
+                    title: '订单总金额',
+                    width: '120',
                     key: 'status'
                 },
                 {
-                    title: '操作',
-                    width: 200,
-                    slot: 'action',
-                    key: 'action'
-                }
+                    title: '付款状态',
+                    width: '150',
+                    slot: 'status',
+                    key: 'status'
+                },
             ]
         }
     },
     methods: {
-        addmonthplan () {
-
+       	getOrderState(typeId) {
+            return config.orderState[typeId]
         },
-          closeApply(){
+        closeApply(){
             this.applyShow = false
             this.sourceData()
         },
@@ -185,6 +172,7 @@ export default {
 				planned_id: planned_id
 			}
             let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
+      
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
@@ -196,6 +184,7 @@ export default {
 					//显示放料选择窗口
 					this.selectFeedingData = res.data
                     this.selectFeedingModalShow = true
+
                     return
                 }
                 this.toCreateOrder(res.data[0].id, planned_id)
@@ -207,12 +196,13 @@ export default {
 		},
         async sourceData () {
             let params = {
-                yearId: this.monthData.id
+                orderType:4,
+                sourceId: this.orderData.id
             }
-            var res = await sendHttp(this, true, server.api.month.MonthPlannedByYearPlanId, params)
-            console.log(res)
+             let res = await this.$utils.sendCurl(this, server.api.order.monthorder, params)
+                   console.log(res)
                 if (res.status === 200) {
-                    this.datalist = res.data.map(ite =>{
+                    this.datalist = res.data.items.map(ite =>{
                         ite._expanded = false
                         return ite
                     })
@@ -223,23 +213,6 @@ export default {
                     })
                 }
 
-        },
-        getOrderState(typeId) {
-            return config.orderState[typeId]
-        },
-        getAttrVal (row, status) {
-        
-            if (status) {
-                this.datalist.map((item, index) => {
-                if (item.id === row.id) {
-                    item._expanded = true
-                    this.orderData = item
-                } else {
-                    item._expanded = false
-                    return item
-                }
-                })
-            }
         }
     },
     created () {
@@ -248,7 +221,7 @@ export default {
         this.sourceData()
     },
     watch: {
-        monthData: {
+        orderData: {
             handler (newValue, oldValue) {
                 this.sourceData()
             },

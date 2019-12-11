@@ -28,7 +28,7 @@
                   <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
                     选择运输方式
                     <div class="ml5">
-                        <Select v-model="orderinfo.transportationMode" style="width:200px">
+                        <Select v-model="orderinfo.transportationModeTake" style="width:200px">
                         <i-option v-for="(item, index) in takeTheirTrans" :value="item" :key="index">{{ item }}</i-option>
                         </Select>
                     </div>
@@ -217,7 +217,8 @@ export default {
                 orderType: 4,
                 sourceId: 0,
                 feedingId: 0,
-                transportationMode: '',
+                transportationModeTake: '公路运输',
+                transportationMode:'',
                 orderNum: 0,
                 freightFee:0,
                 addressId: 0
@@ -422,7 +423,7 @@ export default {
         //创建订单
         async createOrder() {
 
-            if(this.orderinfo.transportationMode == ''){
+            if(this.orderinfo.transportationModeTake == ''){
                     this.$Modal.warning({
                     title: '提示',
                     content: '请选择运输方式'
@@ -437,6 +438,9 @@ export default {
                 transportation_mode:this.orderinfo.transportationMode,
                 jry_days	:this.orderinfo.jryDays,
                 order_num   :this.feedingInfo.availableNum
+            }
+            if(params.is_delivery == 0){
+                params.transportation_mode = this.orderinfo.transportationModeTake
             }
 
 
