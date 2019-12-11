@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" :data="datalist" :content="self" >
+        <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" @on-expand="getAttrVal" :data="datalist" :content="self" >
             <template slot-scope="{ row, index }" slot="action" >
                 <Button title="编辑" type="primary" size="small" v-if="row.status === 'DR'"  @click="editdischargeData(row)" icon="md-brush"  style="margin-right: 5px;">编辑</Button>
                 <Button title="转单" type="info" size="small" v-if="row.availableNum > 0 && row.feedingNum>0"  @click="getSaleFeedingList(row.id)"   style="margin-right: 5px;">转单</Button>
@@ -12,6 +12,16 @@
                 <Tag color="warning" v-else-if="row.status === 'AP'">正在审核</Tag>
                 <Tag color="success" v-else-if="row.status === 'CO'">审核通过</Tag>
               </template>
+              <template slot-scope="{ row, index }" slot="availableNum"  >
+                    <span  class="ml15"  :title="`月计划量：${row.monthNum}，待转单数量	：${row.availableNum}`">
+                        <template  v-if="row.monthNum==0 && (row.monthNum-row.availableNum)==0 " >
+                            <Progress :percent="0" :stroke-width="20" style="background-color: beige;"/>
+                        </template>
+                        <template v-else >
+                            <Progress :percent="((row.monthNum-row.availableNum)*100/row.monthNum).toFixed(2)" :stroke-width="20"/>
+                        </template>
+                    </span>
+            </template>
 
         </Table>
         <Modal
@@ -38,6 +48,8 @@
 import server from "../../../../config/api";
 import {sendHttp} from "../../../../api/common";
 import monthplanedit from "./monthedit";
+import monthorder from './monthorder.vue'
+
 export default {
     props: {
         monthData: {
@@ -59,6 +71,7 @@ export default {
             addmodal: false,
             editmodal: false,
             rowweekdata: {},
+            orderData:{},
             editdata: {},
             curr_plan_id:0,
             selectFeedingColumns: [
@@ -74,6 +87,17 @@ export default {
             selectFeedingModalShow: false,
 			selectFeedingData: [],
             sourcecolumns: [
+                {
+                    type: 'expand',
+                    width: 50,
+                    render: (h, params) => {
+                        return h(monthorder, {
+                        props: {
+                            orderData: this.orderData
+                        }
+                        })
+                    }
+                },
                 {
                     title: '月份',
                     width: '65',
@@ -95,6 +119,13 @@ export default {
                     title: '待转单数量',
                     width: '120',
                     align: 'center',
+                    key: 'availableNum'
+                },
+                {
+                    title: '计划完成率',
+                    width: '120',
+                    align: 'center',
+                    slot: 'availableNum',
                     key: 'availableNum'
                 },
                 {
@@ -165,10 +196,8 @@ export default {
 					//显示放料选择窗口
 					this.selectFeedingData = res.data
                     this.selectFeedingModalShow = true
-                    console.log(this.selectFeedingModalShow)
                     return
                 }
-                console.log(res)
                 this.toCreateOrder(res.data[0].id, planned_id)
 			}
         },
@@ -181,6 +210,7 @@ export default {
                 yearId: this.monthData.id
             }
             var res = await sendHttp(this, true, server.api.month.MonthPlannedByYearPlanId, params)
+            console.log(res)
                 if (res.status === 200) {
                     this.datalist = res.data.map(ite =>{
                         ite._expanded = false
@@ -193,6 +223,23 @@ export default {
                     })
                 }
 
+        },
+        getOrderState(typeId) {
+            return config.orderState[typeId]
+        },
+        getAttrVal (row, status) {
+        
+            if (status) {
+                this.datalist.map((item, index) => {
+                if (item.id === row.id) {
+                    item._expanded = true
+                    this.orderData = item
+                } else {
+                    item._expanded = false
+                    return item
+                }
+                })
+            }
         }
     },
     created () {

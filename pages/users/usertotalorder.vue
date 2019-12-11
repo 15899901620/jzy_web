@@ -93,7 +93,7 @@
                    cellpadding="">
               <tbody>
               <tr class="Ttitle graybg">
-                <td colspan="10">
+				<td colspan="10">
 				  <span class="ml10">合约编号:
 						<span v-if="item.orderType==1">
               <a :href="`/users/plan/spot/${item.sourceId}`" class="mt5 blackFont blue">{{item.sourceSn}}</a>

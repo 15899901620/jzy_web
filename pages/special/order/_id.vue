@@ -423,7 +423,7 @@ export default {
         //创建订单
         async createOrder() {
 
-            if(this.orderinfo.transportationMode == ''){
+            if(this.orderinfo.transportationModeTake == ''){
                     this.$Modal.warning({
                     title: '提示',
                     content: '请选择运输方式'
