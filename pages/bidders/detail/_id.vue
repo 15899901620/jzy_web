@@ -41,6 +41,10 @@
                 <span class="fs16">已结束</span>
 
               </template>
+              <template >
+                <a class="fs16" :href="auctionInfo.descUrl" style="font-size: 17px;font-weight: 600;color: #fc3838;margin-left: 20px;text-decoration: none;">运费说明</a>
+
+              </template>
             </div>
             <div class="mr30">
               <span class="fs16">竞拍编号：{{auctionInfo.billNo}}</span>
