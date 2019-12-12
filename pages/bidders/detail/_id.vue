@@ -42,7 +42,7 @@
 
               </template>
               <template >
-                <a class="fs16" :href="auctionInfo.descUrl" style="font-size: 17px;font-weight: 600;color: #fc3838;margin-left: 20px;text-decoration: none;">运费说明</a>
+                <a class="fs16" v-if="auctionInfo.descUrl" :href="auctionInfo.descUrl" style="font-size: 17px;font-weight: 600;color: #fc3838;margin-left: 20px;text-decoration: none;">运费说明</a>
 
               </template>
             </div>
