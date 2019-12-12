@@ -180,7 +180,7 @@
 					if (res.data.data === null && res.status === 200) {
 						this.$Modal.info({
 							title: '提示',
-							content: '账号密码或验证码错误！'
+							content:  res.data.message
 						});
 						return false
 					} else {
