@@ -31,12 +31,19 @@
 						<tr width="100%">
 							<td>
 								<table class="table-head" width="100%" border="0" cellspacing="0" cellpadding="0" >
-									<tr>
+									<tr v-if="this.type==4 || this.type==5">
+										<td class="pb5p ">合同生效日期：{{OrderList.deliveryStart}}</td>
+										<td class="pb5p tar">合同生效截止日期：{{OrderList.deliveryDeadline}}</td>
+									</tr>
+									<tr v-else>
 										<td class="pb5p ">合同生效日期：{{OrderList.orderDate}}</td>
 										<td class="pb5p tar">合同生效截止日期：{{OrderList.deliveryDeadline}}</td>
 									</tr>
-									<tr class="mt20">
-
+									<tr class="mt20" v-if="this.type==4 || this.type==5">
+										<td class="pb5p ">提货起始日期：{{OrderList.deliveryStart}}</td>
+										<td class="pb5p tar">提货截止日期：{{OrderList.deliveryDeadline}}</td>
+									</tr>
+									<tr class="mt20" v-else>
 										<td class="pb5p ">提货起始日期：{{OrderList.deliveryStart}}</td>
 										<td class="pb5p tar">提货截止日期：{{OrderList.deliveryDeadline}}</td>
 									</tr>
@@ -127,9 +134,11 @@
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">装运点：</th>
-										<th>{{OrderList.pointName}}</th>
+										<th v-if='OrderList.pointName'>{{OrderList.pointName}}</th>
+										<th v-else>待定</th>
 										<th>提货仓库：</th>
-										<th>{{OrderList.warehouseName}}</th>
+										<th v-if='OrderList.warehouseName'>{{OrderList.warehouseName}}</th>
+										<th v-else>待定</th>
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">交/提货方式：</th>
@@ -257,12 +266,20 @@
 				if(this.type == 1){
 					const res = await sendHttp(this, true, server.api.spot.getContractInfo, params, 1)
 					this.OrderList = res.data
-        }else if(this.type == 2){
-					const res = await sendHttp(this, true, server.api.Auction.getContractInfo, params, 1)
-					this.OrderList = res.data
-        }else if(this.type == 3){
+				}else if(this.type == 2){
+							const res = await sendHttp(this, true, server.api.Auction.getContractInfo, params, 1)
+							this.OrderList = res.data
+				}else if(this.type == 3){
 					const res = await sendHttp(this, true, server.api.advance.getContractInfo, params, 1)
 					this.OrderList = res.data
+				}else if(this.type == 4){
+					const res = await sendHttp(this, true, server.api.special.getContractInfo, params, 1)
+					this.OrderList = res.data
+					
+				}else if(this.type == 5){
+					const res = await sendHttp(this, true, server.api.special.monthContractInfo, params, 1)
+					this.OrderList = res.data
+					
 				}
 			},
 			print_page() {
@@ -287,6 +304,10 @@
 	mounted() {
 		if(this.type==2){
 			this.title='化工产品购销（竞拍）合同'
+		}else if(this.type==4){
+			this.title='化工产品购销（年计划）合同'
+		}else if(this.type==5){
+			this.title='化工产品购销（月计划）合同'
 		}
 		this.dataList();
 	},

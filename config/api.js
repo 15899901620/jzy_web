@@ -202,6 +202,8 @@ let api = {
      */
     special: {  
         saleListByPlan: {'url':'/bill/yearlyFeeding/saleListByPlan', 'method':'post'},
+        getContractInfo: {'url':'/bill/yearPlanned/getContractInfo', 'method':'GET'},
+        monthContractInfo: {'url':'/bill/monthPlanned/getContractInfo', 'method':'GET'},
         initSpotList: {'url':'/bill/yearlyFeeding/saleList', 'method':'get'},
         specialList: '/bill/yearlyFeeding/saleList',
         myYearList: '/bill/myYearPlanned/page',

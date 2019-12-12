@@ -22,12 +22,13 @@
                     <template>
                         <div>
                             <Table size="small" border stripe :loading="loading" highlight-row :columns="sourcecolumns" @on-expand="getAttrVal" :data="datalist" :content="self" >
-                                 <template slot-scope="{ row, index }" slot="status">
+                                <template slot-scope="{ row, index }" slot="status">
                                     <Tag color="primary" v-if="row.feedingType === '放'">{{row.feedingType}}</Tag>
                                     <Tag v-else color="warning">{{row.feedingType}}</Tag>
                                 </template>
-                                  <template slot-scope="{ row, index }" slot="action" v-if='row.isCan==1 && row.isExist==0'>
-                                        <Tooltip content="添加月计划" placement="left" ><Button   title="添加月计划" icon="md-add" @click='addmonth(row)' size="small"></Button></Tooltip>
+                                  <template slot-scope="{ row, index }" slot="action" >
+                                        <Tooltip content="添加月计划" placement="left" v-if='row.isCan==1 && row.isExist==0' ><Button   title="添加月计划" icon="md-add" @click='addmonth(row)' size="small"></Button></Tooltip>
+                                        <Button type="success" size="small"  target="_blank" @click="spotContract(row)" >查看合同模板</Button>
                                 </template>
                                 <template slot-scope="{ row, index }" slot="yearNum"  >
                                   <span  class="ml15"  :title="`年计划量：${row.yearNum}，月计划总量：${row.monthAllNum}`">
@@ -160,6 +161,9 @@ export default {
                 this.total = res.data.total
             } 
             this.loading = false
+        },
+         spotContract(row){
+            window.location.href="/users/spotContract?type=4&id="+row.id 
         },
         onSearch () {
             this.current_page = 1
