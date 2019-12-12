@@ -81,7 +81,7 @@
                     巨融易
                     <div class="ml5">
                         <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" size="small" style="width:100px">
-                            <i-option v-for="(item, index) in jryDays" :value="index" :key="index">{{ item }}</i-option>
+                            <i-option v-for="(item, index) in jryDays" :value="item" :key="index">{{ item }}</i-option>
                         </Select>
                     </div>
                     <div class="ml20 orangeFont">* 费率=天数*吨数*5元</div>
@@ -210,7 +210,7 @@ export default {
                 isDelivery: 0,
                 isPerDeposit: 0,
                 isJryService: false,
-                jryDays: 0,
+                jryDays: '',
                 jryCost: '0.00',
                 totalAmount: '0.00',
                 depositAmount: 0,
@@ -472,7 +472,7 @@ export default {
             }
         },
         setJry() {
-
+                console.log(this.orderinfo.jryDays)
 				if (this.orderinfo.jryDays > 0) {
 					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
 				} else {
