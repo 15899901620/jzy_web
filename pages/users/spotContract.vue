@@ -112,7 +112,12 @@
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
 									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th style="    width: 205px;">电汇或银行承兑自贴息</th><th style="    width: 140px;">付款方式：</th><th>款到发货</th></tr>
-									<tr><th style="padding:5px 0;">计价方式：</th><th>现货价</th><th>其他约定：</th><th>/</th></tr>
+									<tr>
+										<th style="padding:5px 0;">计价方式：</th>
+										<th v-if='this.type==3'>含税合约价</th>
+										<th v-else>现货价</th>
+										<th>其他约定：</th>
+										<th>/</th></tr>
 									<tr>
 										<th style="padding:5px 0;">支付条款约定：</th>
 										<th colspan="3">银行承兑自贴息指需方按照供方要求支付承兑贴息，银行范围及贴息利率按供方要求可接收银行清单范围收取，贴息率按供方当期公开贴息率执行。</th>
@@ -304,6 +309,8 @@
 	mounted() {
 		if(this.type==2){
 			this.title='化工产品购销（竞拍）合同'
+		}else if(this.type==3){
+			this.title='化工产品购销（预售）合同'
 		}else if(this.type==4){
 			this.title='化工产品购销（年计划）合同'
 		}else if(this.type==5){

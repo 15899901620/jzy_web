@@ -118,7 +118,7 @@ export default {
           store.dispatch('article/getArticleList2', {current_page: !query.page ? 1 : query.page, page_size: 6, catId:3 ,sortBy: 'add_time', desc: true, isShow: 1}),
           store.dispatch('article/getArticleList3', {current_page: !query.page ? 1 : query.page, page_size: 6, catId:2 ,sortBy: 'add_time', desc: true, isShow: 1}),
           store.dispatch('article/getArticleList4', {current_page: !query.page ? 1 : query.page, page_size: 6, catId:1 ,sortBy: 'add_time', desc: true, isShow: 1}),
-          store.dispatch('article/getHomeNotice', {desc: true,isShow: 1,page_size:15}),
+          store.dispatch('article/getHomeNotice', {desc: true,isShow: 1,page_size:12}),
           store.dispatch('article/getHomeNotice1', {typeId:1,desc: true,isShow: 1}),
           store.dispatch('article/getHomeNotice2', {typeId:2,desc: true,isShow: 1}),
           store.dispatch('article/getHomeNotice3', {typeId:4,desc: true,isShow: 1}),
