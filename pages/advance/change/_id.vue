@@ -103,7 +103,11 @@
             <div style="width: 10%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> {{$utils.amountFormat(this.totalPrice)}}</div>
             <div style="width: 12%;"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
-            <div style="width: 12%;">
+            <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==0">
+              <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
+                             @change="changeNum"></input-special>
+            </div>
+			<div style="width: 12%;" v-else>
               <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
             </div>
@@ -375,7 +379,12 @@
 
 			this.orderinfo.plan_id = this.planInfo.id
 			this.orderinfo.feeding_id = this.planInfo.feedingInfo.id
-            this.currMax = Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num)
+			if(this.planInfo.feedingInfo.is_limit==0){
+				 this.currMax = Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num)
+			}else{
+				 this.currMax =Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num,this.planInfo.limitNum-this.planInfo.createOrderNum) 
+			}
+           
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
