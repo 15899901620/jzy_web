@@ -14,7 +14,8 @@
     </div>
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
-        <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
+        <li v-for="(item, index) in $store.state.spot.spotList" :key="index" 
+        :style="{backgroundColor:($store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1?'rgba(36,153,249,0.3)':' ')}">
           <span style="width: 7%;">{{item.category_name}}</span>
           <span style="width: 13%;">{{item.sku_name}}</span>
           <span

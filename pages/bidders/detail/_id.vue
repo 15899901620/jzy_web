@@ -41,10 +41,6 @@
                 <span class="fs16">已结束</span>
 
               </template>
-              <template >
-                <a class="fs16" v-if="auctionInfo.descUrl" :href="auctionInfo.descUrl" style="font-size: 17px;font-weight: 600;color: #fc3838;margin-left: 20px;text-decoration: none;">运费说明</a>
-
-              </template>
             </div>
             <div class="mr30">
               <span class="fs16">竞拍编号：{{auctionInfo.billNo}}</span>
@@ -89,7 +85,9 @@
                 {{auctionInfo.totalNum}}
                    <i :title="`限购${auctionInfo.limitNum}`" v-if="auctionInfo.limitNum > 0" style="width: 15px; height: 18px; position: absolute; top: -3px; right: 20px; background:url('/img/Xian_icon.png')no-repeat;"></i>
               </td>
-              <td>{{auctionInfo.warehouseName}}</td>
+              <td>{{auctionInfo.warehouseName}}
+                 <a class="fs16" v-if="auctionInfo.descUrl" :href="auctionInfo.descUrl" style="display: block;font-weight: 600;color: #ff7300;text-decoration: none;">运费说明</a>
+              </td>
               <td>{{auctionInfo.deliveryStart}}</td>
               <td>{{auctionInfo.lastDeliveryTime}}</td>
             </tr>

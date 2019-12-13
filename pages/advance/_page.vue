@@ -114,7 +114,7 @@
                 <template v-else>
                   <div class="btnStart endauction">预售结束</div>
                 </template>
-                <span v-if="items.planned_total_num > 0">已预购{{items.planned_total_num}}吨</span>
+                <span v-if="items.planned_total_num > 0" style="color:#eb3e3d">已预购{{items.planned_total_num}}吨</span>
               </div>
             </li>
 
