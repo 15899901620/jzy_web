@@ -135,9 +135,9 @@ export default {
             total: 0,
 			planArray:[
 				{
-					id:3,
-					img:'img/plan_01.png',
-					planName:'BOPP膜料专场'
+					id:'',
+					img:'img/plan_04.png',
+					planName:'注塑料专场'
 				},
 				{
 					id:'',
@@ -146,33 +146,53 @@ export default {
 				},
 				{
 					id:'',
-					img:'img/plan_03.png',
-					planName:'透明料专场'
-				},
-				{
-					id:'',
-					img:'img/plan_04.png',
-					planName:'注塑料专场'
-				},
-				{
-					id:'',
-					img:'img/plan_05.png',
-					planName:'改性塑料专场'
-				},
-				{
-					id:'',
 					img:'img/plan_06.png',
 					planName:'拉丝料专场'
 				},
 				{
+					id:3,
+					img:'img/plan_01.png',
+					planName:'BOPP膜料专场'
+				},		
+				{
+					id:'',
+					img:'img/plan_05.png',
+					planName:'薄塑料专场'
+				},
+				{
+					id:'',
+					img:'img/plan_03.png',
+					planName:'透明料专场'
+				},				
+				{
 					id:'',
 					img:'img/plan_07.png',
-					planName:'纤维料专场'
+					planName:'卫材专场'
 				},
 				{
 					id:'',
 					img:'img/plan_08.png',
-					planName:'塑料助剂专场'
+					planName:'塑料制品'
+				},
+				{
+					id:'',
+					img:'img/plan_09.jpg',
+					planName:'化工原料'
+				},
+				{
+					id:'',
+					img:'img/plan_10.jpg',
+					planName:'副产品'
+				},
+				{
+					id:'',
+					img:'img/plan_11.jpg',
+					planName:'助剂专场'
+				},
+				{
+					id:'',
+					img:'img/plan_12.jpg',
+					planName:'改性塑料专场'
 				},
 			]
         }
@@ -216,7 +236,6 @@ export default {
 
 		//计划下单
 		planOrder(id){
-        	console.log("name",name)
 			this.$router.push({
 				name: 'special-list-page',
 				query:{id:id}
