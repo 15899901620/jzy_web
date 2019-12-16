@@ -250,7 +250,7 @@
 			return {
 				CurrSelect: 0,
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 6,
+				page_size: 10,
 				page: 1,
 				NowTime: '',
 				Auctionlist: '',
@@ -279,7 +279,7 @@
 				store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
 				store.dispatch('article/getindexArticleList', {catId: 8}),
 				// 获取竞拍列表
-				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 6, status_type: query.statusType,plan_type: query.planType,product_type:1}),
+				store.dispatch('bidders/getAuctionList', {current_page: query.page || 1, page_size: 10, status_type: query.statusType,plan_type: query.planType,product_type:1}),
 				// 网站公告
 				store.dispatch('article/getNoticeList', {typeId: 4, current_page: 1, page_size: 15, sortBy:'add_time', desc:'1'}),
 				// 获取用户参与列表
