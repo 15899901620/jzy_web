@@ -159,7 +159,7 @@
 				store.dispatch('spot/getSpotList', {
 						sku_name: query.keyword || '',
 						current_page: query.page || 1,
-						page_size: 6,
+						page_size: 10,
             category_id: query.category_id || '',
             level_id: query.level_id || '',
 					}
@@ -178,7 +178,7 @@
 				checkTypeShow: false,
 
 				current_page: parseInt(this.$route.query.page) || 1,
-				page_size: 6,
+				page_size: 10,
 				categoryId: this.$route.query.category_id || '',
 				processId: this.$route.query.level_id || '',
 				skuName: this.$route.query.keyword || '',

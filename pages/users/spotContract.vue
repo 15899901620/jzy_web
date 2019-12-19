@@ -74,7 +74,7 @@
 										<th>生产工厂</th>
 <!--										<th>规格型号</th>-->
 										<th>数量（吨）</th>
-										<th>售价（元/吨）</th>
+										<th>估价（元/吨）</th>
 										<th>税率%</th>
 									</tr>
 									<tr>
@@ -90,6 +90,9 @@
 										<th>{{OrderList.totalAmount}}元</th>
 										<th>总金额大写</th>
 										<th colspan="3">{{$utils.moneyFormat(OrderList.totalAmount)}}</th>
+									</tr>
+									<tr v-if='this.type==4'>
+										<th colspan="5">备注：具体采购量由需方在每月20日前向供方提交下月需求计划，双方共同协商确定下月的供货数量和供货进度。数量确认以供方发货单记录的数量为准</th>
 									</tr>
 								</table>
 							</td>
@@ -143,7 +146,7 @@
 										<th v-else>待定</th>
 										<th>提货仓库：</th>
 										<th v-if='OrderList.warehouseName'>{{OrderList.warehouseName}}</th>
-										<th v-else>待定</th>
+										<th v-else>在实际执行订单中确定</th>
 									</tr>
 									<tr>
 										<th style="padding:5px 0;">交/提货方式：</th>

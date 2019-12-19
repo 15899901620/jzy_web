@@ -35,7 +35,7 @@
                         <ul class="phyList">
                             <li v-for="(items,index) in physicallist.items" :key="index">
                                 <div class="phylistlist mt10 ml20 mb30">
-                                    <nuxt-link :to="{name:'physical-detail-id', params:{id:items.id}}">{{items.title}} ({{items.skuNo}})</nuxt-link>
+                                    <nuxt-link :to="{name:'physical-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link>
                                     <div class="mt10">
                                         加工级别 : {{items.rocessingLevelValue}}
                                     </div>
@@ -102,7 +102,7 @@ export default {
             store.dispatch('common/getFriendlyList'),
             store.dispatch('physical/getphysicalList', {
                 current_page: !query.page ? 1 : query.page,
-                page_size: 10,
+                page_size: 8,
                 title: !query.name ? '' : query.name,
                 enable:1,
                 cid1: !query.cate_id ? 0 : query.cate_id,
