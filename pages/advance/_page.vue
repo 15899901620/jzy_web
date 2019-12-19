@@ -93,7 +93,20 @@
                 <div class="mt10 fs14 dflex">
                   <div class="btmunv"><span class="iv_title">包装方式</span> ：<span class="fs16">{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
                   </div>
+                   <div class="btmunv"> 
+                     <span class="iv_title">包装方式</span>:
+                      <span class="fs16" v-if="items.product_grade == 1">优等品</span>
+                    <span class="fs16" v-if="items.product_grade == 2">一等品</span>
+                    <span class="fs16" v-if="items.product_grade == 3">合格品</span>
+                  </div>
+                </div>
+                  <div class="mt10 fs14 dflex">
+
                   <div class="fs14 dflex"><span class="iv_title">提货日期</span> ：<span class="fs16 orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
+                  
+                   <div class="btmunv" > 
+                        <a v-if="items.desc_url" class="fs16"  :href="items.desc_url" style="color:#ff7300;margin-left: 30px;">预售说明</a>
+                    </div>
                 </div>
               </div>
               <div class="acuOpear">
@@ -114,7 +127,7 @@
                 <template v-else>
                   <div class="btnStart endauction">预售结束</div>
                 </template>
-                <a v-if="items.desc_url" :href="items.desc_url" style="color:#ff7300">预售说明</a>
+
                 <span v-if="items.planned_total_num > 0" style="color:#eb3e3d">已预购{{items.planned_total_num}}吨</span>
               </div>
             </li>
