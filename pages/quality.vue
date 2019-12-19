@@ -25,7 +25,7 @@
                                     </Col>
                                     <Col span="4">
                                         <FormItem prop='productionDate'>
-                                                  <DatePicker type="month" placement="bottom-end" placeholder="生产日期至"  @on-change="selectTime"></DatePicker>
+                                            <DatePicker type="month" placement="bottom-end" placeholder="生产日期至"  @on-change="selectTime"></DatePicker>
                                         </FormItem>
                                     </Col>
                                     <Col span="4" style="padding:0px;">
@@ -50,7 +50,7 @@
                                     <span style="width: 20%">{{items.productionDate}}</span>
                                     <span style="width: 20%">{{items.batchNo}}</span>
                                     <span style="width: 20%">
-                                        
+
                                         <p class="qualitySeeDetail"><a :href="items.inspectionElc" target="_blank">查看质检单</a></p>
                                     </span>
                                 </li>

@@ -66,7 +66,7 @@ export const actions = {
 		try {
 			let res = await sendCurl(this, server.api.advance.getMemberFeedingList, params)
 			if (res.status === 200) {
-				commit('updateFeedingList', res.data.items)
+ 				commit('updateFeedingList', res.data.items)
 				commit('updateTotal', res.data.total)
 			}
 		}catch(err){

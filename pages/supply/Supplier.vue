@@ -10,16 +10,14 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="巨正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"
-                     style="width: 200px;"/>
+              <input type="text" placeholder="巨正源一号仓" name="receiptFull" v-model='dispatchFull' class="orderInput"   style="width: 200px;"/>
               <i data-v-394040b0="" class="ivu-icon ivu-icon-md-arrow-round-forward"
                  style="font-size: 32px;     color: #007de4;"></i>
-              <input type="text" placeholder="请选择到达地" name="" v-model='receiptFull' class="orderInput"
-                     style="width: 200px;"/>
+              <input type="text" placeholder="请选择到达地" name="" v-model='receiptFull' class="orderInput"   style="width: 200px;"/>
               <div class="check" @click='check()'>确定</div>
             </div>
-
           </div>
+
           <div class="TableTitle graybg">
 			<span style="width: 10%;">询价日期</span>
 			<span style="width: 10%;">出发地</span>
@@ -59,7 +57,6 @@
 				  <div class="check mt5 blackFont"  v-if='item.status==1 && item.isQuote==0 && $utils.dateCompare(item.inquiryEndTime,today)==true' @click="oldtime(item)">我要报价</div>
                   <div class="check mt5 blackFont" v-else-if='item.status==0'   >查看详情</div>
 				  <div class="check mt5 blackFont"   v-else @click="detailLog(item)">查看详情</div>
-
               </td>
             </tr>
             </tbody>
