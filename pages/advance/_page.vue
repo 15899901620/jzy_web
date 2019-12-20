@@ -94,7 +94,7 @@
                   <div class="btmunv"><span class="iv_title">包装方式</span> ：<span class="fs16">{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
                   </div>
                    <div class="btmunv"> 
-                     <span class="iv_title">包装方式</span>:
+                     <span class="iv_title">产品等级</span>:
                       <span class="fs16" v-if="items.product_grade == 1">优等品</span>
                     <span class="fs16" v-if="items.product_grade == 2">一等品</span>
                     <span class="fs16" v-if="items.product_grade == 3">合格品</span>
