@@ -218,9 +218,9 @@
 				}),
 				//获取放料列表GET /bookingPlan/getMyPlanList/page
 				store.dispatch('advance/getFeedingList', {
-						current_page: query.page || 1,
+            current_page: query.page || 1,
 						page_size: 6,
-						statusType:1
+						statusType:9
 					}
 				),
 			])
