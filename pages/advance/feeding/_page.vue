@@ -18,7 +18,7 @@
             <span style="width: 10%;">单价</span>
             <span style="width: 10%;">待转单数</span>
             <span style="width: 10%;">尾款支付状态</span>
-            <span style="width: 15%;">合同状态</span>
+            <span style="width: 15%;">放料数量</span>
             <span style="width: 15%;">操作</span>
           </div>
           <template v-if="feedingList.length > 0">
@@ -65,8 +65,9 @@
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
                 <td style="width: 15%;">
-                  <div>待签合同</div>
-                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
+                  {{item.feeding_num}}
+                  <!-- <div>待签合同</div>
+                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div> -->
                 </td>
 
                 <td style="width: 15%;" class="operate">
@@ -75,7 +76,7 @@
                   </div>
                   <div v-else-if="item.available_num > 0">
                     <template v-if="item.close_apply_status == 1">
-                      <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSalePlanList(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
                       <a class="Paybtn CarCurr" v-else style="padding: 3px 6px;background-color: #dbdcde;cursor: default;">转单</a>
                     </template>
                     <template v-else-if="item.close_apply_status == 2">
@@ -85,7 +86,7 @@
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消同意</a>
                     </template>
                     <template v-else-if="item.close_apply_status == 4">
-                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="getSalePlanList(item.id)">转单</a>
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
                     </template>
                   </div>
@@ -161,22 +162,30 @@
           </div>
 
         </div> -->
-		  <Modal
-              title="选择合约"
-              v-model="selectPlanModalShow"
-              @on-cancel="selectPlanModalCancel"
-              :width='700'
-              class-name="vertical-center-modal">
-            <div class="">
-              <Table size="small" border stripe highlight-row :columns="selectPlanColumns" :data="selectPlanData" :content="self" >
-                <template slot-scope="{ row, index }" slot="action">
-                  <Button type="primary" size="small" @click="toCreateOrder(curr_feeding_id, row.id)">转单</Button>
+           <Modal
+            title="选择放料"
+            v-model="selectPlanModalShow"
+            @on-cancel="selectPlanModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+          <div class="">
+            <Table size="small" border stripe highlight-row :columns="selectPlanColumns" :data="selectPlanData" :content="self" >
+              <template slot-scope="{ row, index }" slot="available_num">
+                <template v-if="row.member_available_num > 0">
+                  <tag color="error">定</tag>{{row.member_available_num}}
                 </template>
-              </Table>
-            </div>
-            <div slot="footer">
-            </div>
-          </Modal>
+                <template v-else>
+                  {{row.available_num}}
+                </template>
+              </template>
+              <template slot-scope="{ row, index }" slot="action">
+                <Button type="primary" size="small" @click="toCreateOrder(curr_feeding_id, row.id)">下单</Button>
+              </template>
+            </Table>
+          </div>
+          <div slot="footer">
+          </div>
+        </Modal>
       </div>
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
@@ -242,11 +251,10 @@
 				selectPlanModalShow: false,
 				selectPlanData: [],
 				selectPlanColumns: [
-					{ title: '转单有效期', key: 'last_ordered_date',width: 160 },
-					{ title: '合约编号', key: 'plan_no'},
-					{ title: '合约总数', key: 'total_num'},
-					{ title: '待转单数', key: 'available_num'},
-					{ title: '操作', slot: 'action'}
+					{ title: '放料有效期', key: 'valid_time' },
+          { title: '放料编号', key: 'feeding_no'},
+          { title: '可用数量', key: 'available_num',slot: 'available_num'},
+          { title: '操作', slot: 'action'}
 				],
 			}
 		},
@@ -263,31 +271,31 @@
 			selectPlanModalCancel(){
 				this.selectPlanModalShow = false
 			},
-			async getSalePlanList(feeding_id) {
-				this.curr_feeding_id = feeding_id
-				let params = {
-					feeding_id: feeding_id
+      async getSaleFeedingList(planned_id) {
+        this.curr_plan_id = planned_id
+        let params = {
+          planned_id: planned_id
+        }
+        let res = await this.$utils.sendCurl(this, server.api.advance.getFeedingByPlan, params)
+        if(res.status === 200 && res.data){
+          if(res.data.length == 0){
+            this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+              location.reload(true)
+            })
+            return
+          }
+				if(res.data.length > 1){
+					//显示放料选择窗口
+					this.selectPlanData = res.data
+					this.selectPlanModalShow = true
+                    return
 				}
-				let res = await this.$utils.sendCurl(this, server.api.advance.getPlanByFeeding, params)
-				if(res.status === 200 && res.data){
-					if(res.data.length == 0){
-						this.$utils.showWarning(this, '合约信息已改变，请刷新再操作！', function(){
-							location.reload(true)
-						})
-						return
-					}
-					if(res.data.length > 1){
-						//显示放料选择窗口
-						this.selectPlanData = res.data
-						this.selectPlanModalShow = true
-						return
-					}
-				}
-				this.toCreateOrder(feeding_id, res.data[0].id)
-			},
-			toCreateOrder(feeding_id, planned_id){
-				location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
-			},
+			}
+			this.toCreateOrder(res.data[0].id, planned_id)
+		},
+		toCreateOrder(feeding_id, planned_id){
+			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+		},
 		},
 		mounted() {
 		},
