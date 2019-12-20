@@ -117,7 +117,7 @@ export const actions = {
 	async getBannerList({commit}, position) {
 		try{
 			let res = await sendCurl(this, server.api.ad.getAdList, {'positionId': position})
-			if (res.status === 200) {
+ 			if (res.status === 200) {
 				commit('updateAdList', {'key': 'ad'+position, 'value':res.data})
 			}
 		}catch (e) {
