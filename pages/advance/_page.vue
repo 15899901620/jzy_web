@@ -60,10 +60,10 @@
                   <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
                       v-if="items.is_jry"
                       style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
-                <div class="mt10 fs14 dflex">
+                <div class="mt10 fs14 dflexAlem">
                   <div class="btmunv"><span class="iv_title">预售价</span> ：<span class="orangeFont fwb fs16">{{$utils.amountFormat(items.final_price)}}</span>
                   </div>
-                  <div class="fs14 dflex" style="position: relative;">
+                  <div class="fs14 dflexAlem" style="position: relative;">
                     <span class="iv_title">预售总数</span> ：
                     <span class="pr">
                     <span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
@@ -71,7 +71,7 @@
                    </span>
                   </div>
                 </div>
-                <div class="mt10 fs14 dflex">
+                <div class="mt10 fs14 dflexAlem">
                   <div class="btmunv" style="position: relative; ">
                     <span class="iv_title">可售数量</span> ：
                     <span class="pr">
@@ -79,32 +79,32 @@
                       <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
                     </span>
                   </div>
-                  <div class="fs14 dflex">
+                  <div class="fs14 dflexAlem">
                     <span class="iv_title">起订量</span> ：<span class="orangeFont fs16">{{items.min_order}}</span>{{items.uom_name}}
                     <span class=" ml20">保证金</span> ：<span class="orangeFont fs16">{{items.margin_ratio}}%</span>
                   </div>
                 </div>
-                <div class="mt10 fs14 dflex">
-                  <div class="btmunv"><span class="iv_title">预售编号</span> ：<span class=" fs16">{{items.bill_no}}</span>
+                <div class="mt10 fs14 dflexAlem">
+                  <div class="btmunv"><span class="iv_title">预售编号</span> ：<span class="">{{items.bill_no}}</span>
                   </div>
                   <div class="fs14 dflex"><span class="iv_title">厂商</span> ：<span
                       class=" fs16">{{items.manufacturer}}</span></div>
                 </div>
-                <div class="mt10 fs14 dflex">
-                  <div class="btmunv"><span class="iv_title">包装方式</span> ：<span class="fs16">{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
+                <div class="mt10 fs14 dflexAlem">
+                  <div class="btmunv"><span class="iv_title">包装方式</span> ：<span>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
                   </div>
-                   <div class="btmunv"> 
-                     <span class="iv_title">产品等级</span>:
-                      <span class="fs16" v-if="items.product_grade == 1">优等品</span>
-                    <span class="fs16" v-if="items.product_grade == 2">一等品</span>
-                    <span class="fs16" v-if="items.product_grade == 3">合格品</span>
+                   <div class="btmunv dflexAlem">
+                     <span class="iv_title">产品等级</span> :
+                      <span class="" v-if="items.product_grade == 1">优等品</span>
+                    <span class="" v-if="items.product_grade == 2">一等品</span>
+                    <span class="" v-if="items.product_grade == 3">合格品</span>
                   </div>
                 </div>
-                  <div class="mt10 fs14 dflex">
+                  <div class="mt10 fs14 dflexAlem">
 
-                  <div class="fs14 dflex"><span class="iv_title">提货日期</span> ：<span class="fs16 orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
-                  
-                   <div class="btmunv" > 
+                  <div class="fs14 dflexAlem"><span class="iv_title">提货日期</span> ：<span class="orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
+
+                   <div class="btmunv" >
                         <a v-if="items.desc_url" class="fs16"  :href="items.desc_url" style="color:#ff7300;margin-left: 30px;">预售说明</a>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
           <div class="Discharge">
             <div class="title">预售专场</div>
             <div class="text">好商品 好价格 好服务</div>
-            
+
             <button class="dischargeBtn" @click="FeedIng">预售合约转单</button>
           </div>
           <!--  竞拍公告-->
