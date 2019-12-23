@@ -179,7 +179,7 @@
                 </template>
               </template>
               <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" @click="toCreateOrder(curr_feeding_id, row.id)">下单</Button>
+                <Button type="primary" size="small" @click="toCreateOrder( row.id,curr_plan_id)">下单</Button>
               </template>
             </Table>
           </div>
@@ -247,7 +247,7 @@
 				page_size: 6,
 
 				curr_feeding_id: 0,
-
+        curr_plan_id:0,
 				selectPlanModalShow: false,
 				selectPlanData: [],
 				selectPlanColumns: [
