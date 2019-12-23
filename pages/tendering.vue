@@ -38,10 +38,7 @@
           </div>
         </outpacking>
       </div>
-      <!--  招标流程-->
-      <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
-        <img src="/img/trendFlow.png" />
-      </div>
+  
   
       <!--  公告信息-->
       <div class="graybg ovh" >
@@ -79,6 +76,10 @@
           </div>
 
         </div>
+      </div>
+      <!--  招标流程-->
+      <div class="whitebg dflexAlemJust" style="padding: 40px 0 50px;">
+        <img src="/img/trendFlow.png" />
       </div>
     </div>
     <Footer size="default" title="底部" ></Footer>
