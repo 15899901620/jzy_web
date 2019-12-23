@@ -299,7 +299,7 @@
  				this.createOrder(smsCode)
 				this.isCanPay = true
 			},
-			createOrder(smsCode){
+			async createOrder(smsCode){
 				let params = {
 					plan_id: this.orderinfo.plan_id,
 					feeding_id: this.orderinfo.feeding_id,
@@ -311,8 +311,8 @@
 					is_pay_deposit:1,
 					sms_code: smsCode
 				}
- 				 let res = this.$utils.sendCurl(this, server.api.advance.createOrder, params)
-
+ 				 let res = await this.$utils.sendCurl(this, server.api.advance.createOrder, params)
+				console.log(res)
 				if (res.status === 200) {
 					if ((res.data.errorcode || 0) == 0) {
 						location.href = '/advance/change/success?&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
