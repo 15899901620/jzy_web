@@ -434,9 +434,9 @@
 					return
 				}
 				/*if(params.isDelivery == 1 && params.carrierId == 0){
-            this.showWarning('配送承运商不能为空！');
-            return ;
-        }*/
+					this.showWarning('配送承运商不能为空！');
+					return ;
+				}*/
 				if (params.isDelivery == 1 && params.transportationMode == 0) {
 					this.showWarning('配送运输方式不能为空！');
 					return;

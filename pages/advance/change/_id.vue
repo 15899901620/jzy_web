@@ -117,7 +117,7 @@
         </ul>
 
         <!--优选服务-->
-        <div class="mt30 fs16 ml15 fwb" v-if="planInfo.feedingInfo.is_jry">优选服务</div>
+        <!-- <div class="mt30 fs16 ml15 fwb" v-if="planInfo.feedingInfo.is_jry">优选服务</div>
         <div class="ml35 fs14 mt10 dflexAlem" v-if="planInfo.feedingInfo.is_jry">
           巨融易
           <div class="ml5">
@@ -130,8 +130,16 @@
         <div class="orderCzTip" v-if="orderinfo.isDelivery != -1 && planInfo.isJry">
           * 选择巨融易服务，提交订单后必须在有效期内支付尾款完成，逾期将自动取消订单，可能会导致因合约转单超期而扣除保证金。<br/>
           （例：选择使用巨融易 5 天，在2019-05-08 11:00:00提交订单，必须在2019-05-13 {{$store.state.common.sysConfig.CLOSED_TIME}}:00前完成货款支付）
-        </div>
-        <div class="lineborder"></div>
+        </div> -->
+		<div class="lineborder"></div>
+		<div class="mt30 fs16 ml15 fwb">支付选择</div>
+			<ul class="DeliveryMethod ml35">
+				<li @click="choosePayType(0)" :class="'curr'" :key="0">
+					支付全款
+				</li>
+				<div class="ml10 fs14">可用余额：<span class="orangeFont">{{$store.state.member.capitalInfo.available_amount_format}}</span></div>
+				<a class="licz" href="/users/investCapital" style="cursor: pointer" target="_blank">查看充值方式</a>
+			</ul>
 
         <div class="proInfor">
           <div style="display: flex; flex-direction: column; width: 200px; ">
@@ -152,10 +160,11 @@
 
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
-          <div class="submitOrder" @click='beginCreateOrder'>提交订单</div>
+          <div class="submitOrder" @click='beginCreateOrder(planInfo)'>提交订单</div>
         </div>
       </div>
     </div>
+	<advancePay :isshow='payModalShow'  @payedChange="PayedOrder" :isPay="isCanPay" :title="payModalTitle" :ProgressShow="progressShow" :datalist='payData'   @unChange="unPayOrder" ></advancePay>
     <Footer size="small" title="" style="margin-top:18px;"></Footer>
     <address-dialog :isshow="addAddressLoading" @unChange="unaddAddressChange"></address-dialog>
   </div>
@@ -167,6 +176,7 @@
 	import { getFreightList} from '../../../api/spot'
 	import InputSpecial from '../../../components/input-special'
 	import {addressList} from '../../../api/users'
+	import advancePay from '../../../components/paydeposit/Payadvance'
 	import AddressDialog from '../../../components/address-dialog'
 	import { mapState } from 'vuex'
 	import server from '../../../config/api'
@@ -175,6 +185,7 @@
 		name: "advance-change",
 		middleware: 'memberAuth',
 		components: {
+			advancePay,
 			HeaderSmall: Header.small,
 			Footer,
 			InputSpecial,
@@ -210,6 +221,8 @@
 		data() {
 			return {
 				addAddressLoading: false,
+				isCanPay:true,
+				payModalTitle: '支付',
 				orderinfo: {
 					plan_id: 0,
 					feeding_id: 0,
@@ -222,6 +235,8 @@
 					freightFee: 0,
 					jryCost: '0.00',
 				},
+				payData:{},
+				payModalShow:false,
 				createInfo: false,
 				currMin: 0,
 				currMax: 0,
@@ -232,6 +247,7 @@
 				defaultAdd: {},
 				logisticsfreight: {},
 				curraddress: 0,
+				progressShow:false ,
 				addressList: [],
 			}
 		},
@@ -269,6 +285,40 @@
 							this.setAddress(0, element)
 						}
 					});
+				}
+			},
+			unPayOrder(row){
+				this.payModalShow = row
+			},
+			choosePayType(){
+
+			},
+			PayedOrder(smsCode) {
+				this.isCanPay = false
+                this.progressShow=true
+ 				this.createOrder(smsCode)
+				this.isCanPay = true
+			},
+			createOrder(smsCode){
+				let params = {
+					plan_id: this.orderinfo.plan_id,
+					feeding_id: this.orderinfo.feeding_id,
+					is_delivery: this.orderinfo.isDelivery,
+					address_id: this.orderinfo.addressId,
+					transportation_mode: this.orderinfo.transportationMode,
+					jry_days: this.orderinfo.jryDays || 0,
+					order_num: this.orderinfo.orderNum,
+					is_pay_deposit:1,
+					sms_code: smsCode
+				}
+ 				 let res = this.$utils.sendCurl(this, server.api.advance.createOrder, params)
+
+				if (res.status === 200) {
+					if ((res.data.errorcode || 0) == 0) {
+						location.href = '/advance/change/success?&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
+					} else {
+              		  alert(res.data.message)
+					}
 				}
 			},
 			//添加新的地址
@@ -327,7 +377,8 @@
 				this.orderinfo.orderNum = value
 			},
 			//开始订单
-      beginCreateOrder() {
+			beginCreateOrder(data) {
+		
 				let self = this
 				let params = {
 					plan_id: this.orderinfo.plan_id,
@@ -350,24 +401,33 @@
 					this.$utils.showWarning(this, '下单数量不能为0！');
 					return
 				}
+			
+				this.payData = {
+					skuNo: this.planInfo.sku_no,
+					skuName: this.planInfo.sku_name,
+					orderNum: this.orderinfo.orderNum,
+					totalAmount: this.payAmount,
+					totalAmountFormat: parseFloat(this.payAmount).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
 
-				this.$Modal.confirm({
-					title: '提交订单',
-					content: '<p style="font-size:14px;">您确认提交当前转单信息？</p>',
-					onOk:async () => {
-						let rs = await this.$utils.sendCurl(this, server.api.advance.createOrder, params)
-						if (rs.status === 200) {
-							if ((rs.data.errorcode || 0) == 0) {
-								location.href = '/advance/change/success?&order_no=' + (rs.data.order_no||'') + '&order_status=' + (rs.data.order_status||'') + '&order_pay_last_time=' + (rs.data.order_pay_last_time||'')
-							} else {
-                alert(rs.data.message)
-							}
-						}
-					},
-					onCancel: () => {
+				}
+				this.payModalShow=true
+				// this.$Modal.confirm({
+				// 	title: '提交订单',
+				// 	content: '<p style="font-size:14px;">您确认提交当前转单信息？</p>',
+				// 	onOk:async () => {
+				// 		let rs = await this.$utils.sendCurl(this, server.api.advance.createOrder, params)
+				// 		if (rs.status === 200) {
+				// 			if ((rs.data.errorcode || 0) == 0) {
+				// 				location.href = '/advance/change/success?&order_no=' + (rs.data.order_no||'') + '&order_status=' + (rs.data.order_status||'') + '&order_pay_last_time=' + (rs.data.order_pay_last_time||'')
+				// 			} else {
+                // alert(rs.data.message)
+				// 			}
+				// 		}
+				// 	},
+				// 	onCancel: () => {
 
-					}
-				})
+				// 	}
+				// })
 			},
 		},
 		mounted() {
