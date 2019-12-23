@@ -153,7 +153,7 @@
 	} from 'vuex'
 	import Header from '../components/header'
 	import Footer from '../components/footer'
-	import cobrands from '../components/cobrands'
+	import cobrands from '../components/logisticsBrands'
 	import { sendHttp } from "../api/common";
 	import server from "../config/api";
 	let Base64 = require('js-base64').Base64
@@ -278,9 +278,9 @@
                     to_region_id: to_region_id
 				}
 				const res = await searchFreightFee(this, params)
-		
-                
-			
+
+
+
 				if(res.data==''){
 					this.showWarning('后台暂无此运输线路，无法给出参考运费！')
 				}else{
