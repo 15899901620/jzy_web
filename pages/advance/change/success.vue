@@ -21,9 +21,9 @@
         </h1>
         <div class="tac fs17">
           <span>订单号：<span>{{order_no}}</span></span>
-          <template v-if="order_pay_last_time">
+          <!-- <template v-if="order_pay_last_time">
             <div>请在限定的时间<span class="orangeFont">{{order_pay_last_time}}</span>内尽快支付货款，否则系统会自动取消订单<br>（注：超过合约转单时间，则会扣除保证金）</div>
-          </template>
+          </template> -->
         </div>
         <div class="tac gray">
           <p>如有疑问您可以通过以下联系方式与我们取得联系</p>
