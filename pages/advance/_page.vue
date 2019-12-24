@@ -17,6 +17,7 @@
         <div style="width: 77%">
           <div class="titlelist mt15">
             <span class="titlelist_txt">预售列表</span>
+            <a style="color:#eb3e3d; margin-left: 20px;" href="/help/20">预售规则</a>
           </div>
 
           <ul class="acuList" v-if="this.total > 0">
