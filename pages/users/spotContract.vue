@@ -74,7 +74,8 @@
 										<th>生产工厂</th>
 <!--										<th>规格型号</th>-->
 										<th>数量（吨）</th>
-										<th>估价（元/吨）</th>
+										<th v-if='this.type==4 || this.type==5'>估价（元/吨）</th>
+										<th v-else>售价（元/吨）</th>
 										<th>税率%</th>
 									</tr>
 									<tr>
