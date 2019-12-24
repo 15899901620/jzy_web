@@ -23,15 +23,25 @@
         <!--需冻结保证金-->
         <div class="PricePopup">
           <div style="line-height: 28px; padding:20px">
-            <p>
-              <span class="PricePopup_title">需支付金额：</span>
-              <span class="orangeFont fwb fs16"> ￥{{datalist.totalAmountFormat}}</span>
+            <p v-if="IsReleaseData.deductAmount > 0">
+              <span class="PricePopup_title">使用已冻结保证金额：</span>
+              <span class="orangeFont fwb fs16"> {{$utils.amountFormat(IsReleaseData.deductAmount)}}</span>
             </p>
             <p>
-              <span class="PricePopup_title">可用余额：</span>
+              <span class="PricePopup_title">需支付金额：</span>
+              <span class="orangeFont fwb fs16"> {{this.$utils.amountFormat(IsReleaseData.payAmount)}}</span>
+            </p>
+            <p>
+              <Checkbox :disabled="true" :value="true"></Checkbox>
+              <span class="PricePopup_title">资金余额：</span>
               <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.available_amount_format }}</span>
-              <a class="PricePopup_btn" @click="showInvestCapital" target="_blank"
-                 style="float: right;line-height: 16px;">查看充值方式</a>
+            </p>
+            <p>
+              <Checkbox :disabled="true"></Checkbox>
+              <span class="PricePopup_title">保证金钱包余额：</span>
+              <span class="orangeFont fwb fs16">{{$store.state.member.capitalInfo.package_amount_format }}</span>
+              <a class="PricePopup_btn"
+                 style="float: right;line-height: 16px;background-color:#cfcfcf">钱包转资金</a>
             </p>
           </div>
         </div>
@@ -71,7 +81,7 @@
 </template>
 
 <script>
-	import { orderPayCode } from '../../api/users'
+	import { orderPayCode ,checkIsRelease} from '../../api/users'
 
 	export default {
 		name: 'spotPay',
@@ -83,6 +93,7 @@
 				TipCode: '',
 				isCanPay: true,
 				closable: true,
+				IsReleaseData:{},
 				Bonddeposit: {
 					depositAmount: '',
 					bidNum: '',
@@ -120,6 +131,18 @@
 			},
 			showInvestCapital() {
 				location.href = '/users/investCapital'
+			},
+			async checkIsRelease() {
+				let params = {
+					plan_id:this.datalist.plan_id,
+					num:this.datalist.orderNum
+				}
+				const res = await checkIsRelease(this, params)
+				console.log(res)
+				if (res.data && res.status === 200) {
+					this.IsReleaseData=res.data
+					
+				} 
 			},
 			async getNoteValue() {
 				let params = {}
@@ -166,6 +189,7 @@
 			isshow: function (e) {
 				if (e === true) {
 					this.loading = true
+					this.checkIsRelease()
 					this.getCapital()
 				} else {
 					this.loading = false

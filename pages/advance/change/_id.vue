@@ -404,6 +404,7 @@
 			
 				this.payData = {
 					skuNo: this.planInfo.sku_no,
+					plan_id: this.orderinfo.plan_id,
 					skuName: this.planInfo.sku_name,
 					orderNum: this.orderinfo.orderNum,
 					totalAmount: this.payAmount,

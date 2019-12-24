@@ -802,3 +802,22 @@ export const orderPayCode = (vm, data) => {
       console.log('manageEditErr', errorInfo)
     })
   }
+   /**
+ * @description 获取保证金信息
+ * @param vm
+ * @param data
+ * @returns {*}GET /bookingPlan/checkIsRelease
+ */
+export const checkIsRelease = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.order.checkIsRelease,
+    {
+      params:{...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('manageEditErr', errorInfo)
+  })
+}

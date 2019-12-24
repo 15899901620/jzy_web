@@ -66,6 +66,7 @@ let api = {
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
+    checkIsRelease: '/bill/bookingPlan/checkIsRelease',
     getTurnoverInfo:  {'url':'/bill/orderInfo/getTurnoverInfo', 'method':'get'},
     payment: '/bill/orderInfo/payment',
     paycheckCode: '/bill/orderInfo/payment/checkCode',
