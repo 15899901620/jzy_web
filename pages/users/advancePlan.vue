@@ -72,6 +72,7 @@
                     <template v-if="item.close_apply_status == 1">
                       <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
                       <a class="Paybtn CarCurr" v-else style="padding: 3px 6px;background-color: #dbdcde;cursor: default;">转单</a>
+                      <a class="Paybtn CarCurr"  style="margin-top: 6px;" @click='applycance(item.id)'>申请取消</a>
                     </template>
                     <template v-else-if="item.close_apply_status == 2">
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
@@ -209,7 +210,33 @@ export default {
 				}
 			}
 			this.toCreateOrder(res.data[0].id, planned_id)
-		},
+    },
+    applycance(id){
+          let params = {
+            id: id
+          }
+          this.$Modal.confirm({
+            title: '取消提示',
+            content: '<p>您是否要取消当前订单?</p>',
+            onOk:async () => {
+              let rs = await this.$utils.sendCurl(this, server.api.advance.bookingPlanclose, params)
+              if(!rs.data.message){
+                  this.$Notice.success({
+                    title: '提醒',
+                    desc: '申请成功'
+                  })
+              }else{
+                    this.$Notice.warning({
+                    title: '提醒',
+                    desc: rs.data.message
+                  })
+              }
+            },
+            onCancel: () => {
+              
+            }
+				})
+    },
 		toCreateOrder(feeding_id, planned_id){
 			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
 		},

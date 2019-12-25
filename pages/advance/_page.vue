@@ -54,7 +54,7 @@
                 </div>
             </td>
             <td>
-                <Button v-if="items.feeding_num > 0" type="dashed"  @click="getSaleFeedingList(items.id)">下单</Button>
+                <Button v-if="items.feeding_num > 0" type="primary"  @click="getSaleFeedingList(items.id)">下单</Button>
                 <Button type="primary"  v-else disabled>下单</Button>
             </td>
           </tr>
@@ -210,8 +210,33 @@
         </div>
       </div>
     </div>
+     <Modal
+            title="选择放料"
+            v-model="selectPlanModalShow"
+            @on-cancel="selectPlanModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+          <div class="">
+            <Table size="small" border stripe highlight-row :columns="selectPlanColumns" :data="selectPlanData" :content="self" >
+              <template slot-scope="{ row, index }" slot="available_num">
+                <template v-if="row.member_available_num > 0">
+                  <tag color="error">定</tag>{{row.member_available_num}}
+                </template>
+                <template v-else>
+                  {{row.available_num}}
+                </template>
+              </template>
+              <template slot-scope="{ row, index }" slot="action">
+                <Button type="primary" size="small" @click="toCreateOrder( row.id,curr_plan_id)">下单</Button>
+              </template>
+            </Table>
+          </div>
+          <div slot="footer">
+          </div>
+    </Modal>
     <advancePay :isShow="DepositShow" :dataList='DepositData' @unChange="unDepositShow"></advancePay>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    
   </div>
 </template>
 
@@ -224,7 +249,7 @@
 	import breadcrumb from '../../components/breadcrumb'
 	import TimeDown from '../../components/timeDown'
 	import advancePay from '../../components/paydeposit/advancePay'
-
+	import server from '../../config/api'
 	export default {
 		name: "advance",
 		fetch({store, params, query}) {
@@ -274,10 +299,17 @@
 			return {
 				current_page: parseInt(this.$route.query.page) || 1,
 				pageSize: 10,
-
+        selectPlanModalShow:false,
+        selectPlanData:[],
+        selectPlanColumns: [
+					{ title: '放料有效期', key: 'valid_time' },
+          { title: '放料编号', key: 'feeding_no'},
+          { title: '可用数量', key: 'available_num',slot: 'available_num'},
+          { title: '操作', slot: 'action'}
+				],
 				DepositData: {
 					advance_id: '',
-					bill_no: '',
+          bill_no: '',
 					sku_name: '',
           min_num: 0,
 					max_num: 0,
@@ -308,6 +340,35 @@
 						}
 					});
 				}
+      },
+      async getSaleFeedingList(planned_id) {
+        this.curr_plan_id = planned_id
+        let params = {
+          planned_id: planned_id
+        }
+        let res = await this.$utils.sendCurl(this, server.api.advance.getFeedingByPlan, params)
+        console.log(res);
+        if(res.status === 200 && res.data){
+          if(res.data.length == 0){
+            this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+              location.reload(true)
+            })
+            return
+          }
+				if(res.data.length > 1){
+					//显示放料选择窗口
+					this.selectPlanData = res.data
+					this.selectPlanModalShow = true
+              return
+				}
+			}
+			this.toCreateOrder(res.data[0].id, planned_id)
+      },
+      toCreateOrder(feeding_id, planned_id){
+		  	location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+		  },
+      selectPlanModalCancel(row){
+				this.selectPlanModalShow = row
 			},
 			unDepositShow(row) {
 				this.DepositShow = row
