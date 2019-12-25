@@ -117,7 +117,7 @@
                     <span class="iv_title">预售总数</span> ：
                     <span class="pr">
                     <span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
-                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;   background:url('/img/Xian_icon.png')no-repeat;"></i>
+                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;    left: 50px;   background:url('/img/Xian_icon.png')no-repeat;"></i>
                    </span>
                   </div>
                 </div>
@@ -126,7 +126,7 @@
                     <span class="iv_title">可售数量</span> ：
                     <span class="pr">
                       <span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
-                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
+                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px;    left: 50px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
                     </span>
                   </div>
                   <div class="fs14 dflexAlem">
