@@ -174,7 +174,7 @@
                       </div>
                   </div>
                   <div class="mt10 fs14 ">
-                      <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.available_num}}{{items.uom_name}}</span>
+                      <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.maxOrderNum}}{{items.uom_name}}</span>
                       </div>
                   </div>
                   <div class="acuOpear" style=" width: 150%;margin-top: 0; */">
