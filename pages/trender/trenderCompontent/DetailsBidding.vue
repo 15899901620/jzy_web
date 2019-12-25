@@ -2,7 +2,11 @@
 
     <div class="whitebg">
        <div class="mt20 mb40 fs14" v-html="dataList.content"></div>
+        <div style="display: inline-flex;    margin-left: 10px;position: absolute;" v-if="this.dataList.appendix"> 
+               <Button type="primary" size="large" @click='download()'>下载模板</Button>             
+        </div>
        <div style="text-align: center;" v-if="dataList.statusName=='未投标'">
+           
             <div style="display: inline-flex;margin-right: 20x;"> 
               <Upload
                       ref="upload"
@@ -11,7 +15,7 @@
                       :max-size="2048">
                <Button type="primary" size="large">上传技术文件</Button>             
              </Upload>
-             </div>
+            </div>
               <div style="display: inline-flex;margin-left: 120px;"> 
               <Upload
                       ref="upload"
@@ -71,6 +75,13 @@
           },
           handleFile(res){
               this.formCustom.technicalDoc = res.url
+          },
+          download(){
+              if (!this.dataList.appendix) {
+                  return
+              } 
+
+              window.open(this.dataList.appendix);
           },
           async fileUpdate() {
               if(!this.formCustom.appendix){
