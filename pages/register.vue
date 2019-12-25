@@ -67,6 +67,7 @@
 
 			}
 		},
+		
 		methods: {
 			currData(res) {
 				this.current = res
@@ -89,7 +90,10 @@
 			tabClicks(type){
 				this.nowIndex = type
 				this.isusershow = false
-			}
+			},
+			cancelModal(){
+				this.isusershow=false
+			},
 		},
 		mounted() {
 			var that = this
