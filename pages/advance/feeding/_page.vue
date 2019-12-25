@@ -11,7 +11,7 @@
           </breadcrumb>
         </div>
  	<div class="" style="width: 95%; margin: 0 auto;">
-          <div class="TableTitle graybg">
+          <!-- <div class="TableTitle graybg">
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">提货仓库</span>
             <span style="width: 10%;">数量</span>
@@ -34,7 +34,7 @@
                       <template v-else-if="item.status == 3">(已违约)</template>
                     </span>
                   <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
-				<span  class="ml15" style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
+			          	<span  class="ml15" style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
                     <template v-if="item.total_num==0 && item.available_num==0 " >
                             <Progress :percent="0" :stroke-width="10"/>
                     </template>
@@ -42,7 +42,7 @@
                           <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="10"/>
                    </template>
 
-                </span>
+                  </span>
                   <span class="fr mr15" v-if="item.status != 3 && item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)">
                       <span class="red">转单倒计时：</span>
                       <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
@@ -66,8 +66,6 @@
                 </td>
                 <td style="width: 15%;">
                   {{item.feeding_num}}
-                  <!-- <div>待签合同</div>
-                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div> -->
                 </td>
 
                 <td style="width: 15%;" class="operate">
@@ -98,70 +96,86 @@
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-		<div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="feedingList.length > 0">
-            <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
-          </div>
-        </div>
-        <!--放料列表-->
-        <!-- <div class="" style="margin: 10px auto;">
-          <div class="XhlistTitle">
-            <span style="width: 16%;">合约编号</span>
-            <span style="width: 12%;">商品信息</span>
-            <span style="width: 15%;">下单时间</span>
-            <span style="width: 15%;">提货仓库</span>
-            <span style="width: 11%;">单价（元/吨）</span>
-            <span style="width: 18%;">合约完成量</span>
-            <span style="width: 9%;">合同状态</span>
-			<span style="width: 9%;">转单倒计时</span>
-            <span style="width: 8%;">操作</span>
-          </div>
-          <ul class="Xhlist">
-            <template v-if="total > 0">
-              <li v-for="(item, index) in feedingList" :key="index">
-                <span style="width: 16%;">{{item.plan_no}}</span>
-                <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.sku_name}}</span>
-                <span style="width: 15%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.create_time}}</span>
-                <span style="width: 15%;" >{{item.warehouse_name}}</span>
-                <span class="orangeFont"
-                      style="width: 11%;position:relative;">
-                     <span style="position: relative">
-                       {{$utils.amountFormat(item.final_price)}}
-                        <i v-if="item.is_jry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
-                     </span>
-                </span>
-
-                <span style="width: 18%;" :title="`合约量：${item.total_num}，待转单：${item.available_num}`">
-                    <template v-if="item.total_num==0 && item.available_num==0 " >
-                            <Progress :percent="0" :stroke-width="20"/>
-                    </template>
-                    <template v-else >
-                          <Progress :percent="((item.total_num - item.available_num)*100/item.total_num).toFixed(2)" :stroke-width="20"/>
-                   </template>
-
-                </span>
-                <span style="width: 9%;">
-                  <div>待签合同</div>
-                  <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
-                </span>
-				<span style="width: 9%;"> <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span></span>
-                <span style="width: 8%;">
-                  <div class="ListBtn" @click="getSalePlanList(item.id)">转单</div>
-                </span>
-              </li>
-            </template>
-            <template v-else>
-              <li style="overflow:hidden; height: 235px;">
-                <p style="width:100%; text-align:center">
-                  <img src="../../../static/img/Nothing.png"/>
-                </p>
-              </li>
-            </template>
-          </ul>
           <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="feedingList.length > 0">
             <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
+          </div> -->
+            <div style="width: 77%">
+          <div class="titlelist mt15">
+            <span class="titlelist_txt">预售列表</span>
+            <a style="color:#eb3e3d; margin-left: 20px;" href="/help/20">预售规则</a>
           </div>
 
-        </div> -->
+          <ul class="acuList" v-if="this.total > 0">
+            <li v-for="(items, index) in feedingList" :key="index">
+
+              <div class="acuProduct " style="width: 50%;    margin: 0px 0 37px;    margin-left: 45px;">
+                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
+                      v-if="items.is_jry"
+                      style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+                <div class="mt10 fs14">
+                  <div class="btmunv"><span class="iv_title">合约编号</span> ：
+                      <span class="orangeFont fwb">
+                        <a :href="`/users/plan/advance/${items.id}`" ><span >{{items.plan_no}}</span>
+                        </a>
+                        <template v-if="items.status == 1">(待转单)</template>
+                        <template v-else-if="items.status == 2">(已转单)</template>
+                        <template v-else-if="items.status == 3">(已违约)</template>
+                     </span>
+                  </div>
+                </div>
+                <div class="mt10 fs14 ">
+                  <div class="btmunv" style="position: relative; ">
+                    <span class="iv_title">下单日期</span> ：
+                    <span class="pr">
+                      <span class="orangeFont fwb">{{items.create_time}}</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="mt10 fs14 ">
+                  <div class="btmunv"><span class="iv_title">单价</span> ：<span class="">{{$utils.amountFormat(items.final_price)}}</span>
+                  </div>
+                </div>
+                <div class="mt10 fs14 ">
+                  <div class="btmunv"><span class="iv_title">包装方式</span> ：<span>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
+                  </div>
+                </div>
+                  <div class="mt10 fs14">
+
+                  <div class="btmunv "><span class="iv_title">提货仓库</span> ：<span class="orangeFont">{{items.warehouse_name}}</span></div>
+
+                   <div class="btmunv" >
+                        <a v-if="items.desc_url" class="fs16"  :href="items.desc_url" style="color:#ff7300;margin-left: 30px;">预售说明</a>
+                    </div>
+                </div>
+              </div>
+              <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px;    margin-left: 45px;">
+                  <div class="mt10 fs14">
+                    <div ><span class="iv_title btmunv">执行进度</span> ：
+                           <div  class="ml15" style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
+                                  <template v-if="items.total_num==0 && items.available_num==0 " >
+                                          <Progress :percent="0" :stroke-width="10"/>
+                                  </template>
+                                  <template v-else >
+                                        <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
+                                </template>
+
+                          </div>
+                    </div>
+                  
+                   </div>
+
+              </div>
+            </li>
+
+          </ul>
+          <p v-else style="background: none; font-size: 20px;text-align: center; margin:80px auto;">
+             暂无任何信息！
+          </p>
+          <div class="text-xs-center" style="padding: 18px 0; text-align: center;">
+           <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages>
+          </div>
+        </div>
+        </div>
            <Modal
             title="选择放料"
             v-model="selectPlanModalShow"
@@ -190,6 +204,7 @@
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
+  
 </template>
 
 <script>
@@ -318,6 +333,9 @@
 	}
 </script>
 <style scoped>
+  .iv_title{
+      width: 70px;
+  }
   .Xhlist li {
     height: 55px;
     display: flex;
