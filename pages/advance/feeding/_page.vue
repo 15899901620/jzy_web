@@ -149,19 +149,18 @@
                 </div>
               </div>
               <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px;    margin-left: 45px;">
-                  <div class="mt10 fs14">
-                    <div ><span class="iv_title btmunv">执行进度</span> ：
-                           <div  class="ml15" style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
-                                  <template v-if="items.total_num==0 && items.available_num==0 " >
-                                          <Progress :percent="0" :stroke-width="10"/>
-                                  </template>
-                                  <template v-else >
-                                        <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
-                                </template>
-
-                          </div>
+                  <div class="mt10 fs14 dflexAlem">
+                     <span class="iv_title btmunv">执行进度</span> ：
+                     <div  class="ml15" style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
+                        <template v-if="items.total_num==0 && items.available_num==0 " >
+                                <Progress :percent="0" :stroke-width="10"/>
+                        </template>
+                        <template v-else >
+                              <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
+                      </template> 
                     </div>
-                  
+
+
                    </div>
 
               </div>
@@ -204,7 +203,7 @@
     </div>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
   </div>
-  
+
 </template>
 
 <script>
