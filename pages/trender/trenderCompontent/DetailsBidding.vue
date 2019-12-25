@@ -3,7 +3,7 @@
     <div class="whitebg">
        <div class="mt20 mb40 fs14" v-html="dataList.content"></div>
         <div style="display: inline-flex;    margin-left: 10px;position: absolute;" v-if="this.dataList.appendix"> 
-               <Button type="primary" size="large" @click='download()'>下载模板</Button>             
+               <Button  type="warning" size="large" @click='download()'>下载模板</Button>             
         </div>
        <div style="text-align: center;" v-if="dataList.statusName=='未投标'">
            
@@ -86,14 +86,14 @@
           async fileUpdate() {
               if(!this.formCustom.appendix){
                   this.$Notice.warning({
-                    title: '请上传技术文件',
+                    title: '请上传商务文件',
                     duration: 5
                 });
                 return
               }
               if(!this.formCustom.technicalDoc){
                   this.$Notice.warning({
-                    title: '请上传商务文件',
+                    title: '请上传技术文件',
                     duration: 5
                 });
                 return

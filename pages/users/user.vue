@@ -129,7 +129,7 @@
                   </td>
                 </tr>
                 <tr class="detailTable">
-                  <td>{{item.skuNo}} {{item.skuName}}</td>
+                  <td>{{item.skuName}}</td>
                   <td><span class="orangeFont">{{$utils.amountFormat(item.finalPrice)}}</span> <span style="color:#999">/吨</span></td>
                   <td>{{item.orderNum}}</td>
                   <td>{{item.warehouseName}}</td>
@@ -143,6 +143,9 @@
                     <div class="" v-if="item.status == 2">
                       <a class="Paybtn mt15" @click="paymentBut(item)">支付尾款</a>
                     </div>
+                    <div class="" v-if="item.status == 4   && item.isAddDemand == 0 && item.isDelivery == 0">
+                      <a class="greenFont mt15" @click="addLog(item)">我要找车</a>
+                    </div>
                     <a :href="`/users/order/datail/${item.id}`" class="mt5 blackFont">查看详情</a>
                   </td>
                 </tr>
@@ -154,6 +157,7 @@
       </div>
     </div>
     <OrderPay :isShow='payLoading' :order_id='payOrderID' @unChange="unPayOrder"></OrderPay>
+    <FreightAdd :isshow="addloading" @unChange="unaddChange" :datalist='addList'></FreightAdd>
   </div>
 </template>
 
@@ -166,6 +170,7 @@
 	import OrderPay from '../../components/paydeposit/orderPay'
   import {parse, stringify} from 'qs'
   import { getCookies } from '../../config/storage'
+  import FreightAdd from '../../components/freight-add/freight-add'
   import config from '../../config/config'
   import appConfig from '../../config/app.config'
 
@@ -175,7 +180,8 @@
 		layout: 'membercenter',
 		middleware: 'memberAuth',
 		components: {
-			usernav: Navigation.user,
+      usernav: Navigation.user,
+      FreightAdd,
 			OrderPay
 		},
 		fetch({store}) {
@@ -193,7 +199,9 @@
 				dataRow: {},
         payOrderID: 0,
         uploadUrl: '',
-				payLoading: false,
+        addloading:false,
+        payLoading: false,
+        addList:{},
 				total_amount_format: '',
 				freeze_amount_format: '',
 				available_amount_format: '',
@@ -227,7 +235,10 @@
 
 				if (!typeId) return
 				return config.orderType[typeId]
-			},
+      },
+      unaddChange(row){
+          this.addloading = row
+      },
 			payment() {
 				this.$router.push({name: 'users-usertotalorder', query: {status: 2}})
 			},
@@ -243,6 +254,12 @@
       bidders(){
 	        this.$router.push({name: 'bidders-page'})
       },
+      addLog(row) {
+				this.addList = {
+					...row
+				}
+				this.addloading = true
+			},
 			//订单状态
 			getOrderState(typeId) {
 				if (!typeId) return
