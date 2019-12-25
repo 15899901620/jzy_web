@@ -12,8 +12,57 @@
           </breadcrumb>
         </div>
       </div>
+    <table class="bidersTable" style="width: 100%; border: 1px solid #dfdfdf;" v-if="feedingList.length > 0">
+          <tbody>
+          <tr class="table_title" style="">
+            <th style="width: 10%">合约编号</th>
+            <th style="width: 10%">提货仓库</th>
+            <th style="width: 11%">包装方式</th>
+            <th style="width: 11%">单价</th>
+            <th style="width: 6%">全部数量</th>
+            <th style="width: 8%">待转数量</th>
+            <th style="width: 6%">资源池</th>
+            <th style="width: 6%">执行进度</th>
+            <th style="width: 7%">操作</th>
+          </tr>
 
+
+          <tr v-for="(items,index) in feedingList" :key="index">
+            <td>
+                <a :href="`/users/plan/advance/${items.id}`" ><span >{{items.plan_no}}</span></a>
+            </td>
+            <td class="blue">{{items.warehouse_name}}</td>
+            <td>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</td>
+            <td>
+                {{$utils.amountFormat(items.final_price)}}
+            </td>
+            <td>
+                {{items.total_num}}{{items.uom_name}}
+            </td>
+            <td>{{items.available_num}}{{items.uom_name}}</td>
+            <td>
+                {{items.feeding_num}}{{items.uom_name}}
+            </td>
+        
+            <td>
+                <div   style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
+                    <template v-if="items.total_num==0 && items.available_num==0 " >
+                            <Progress :percent="0" :stroke-width="10"/>
+                    </template>
+                    <template v-else >
+                          <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
+                   </template> 
+                </div>
+            </td>
+            <td>
+                <Button v-if="items.feeding_num > 0" type="dashed"  @click="getSaleFeedingList(items.id)">下单</Button>    
+                <Button type="primary"  v-else disabled>下单</Button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       <div class="w1200 dflex" style="margin-top: 10px;">
+    
         <div style="width: 77%">
           <div class="titlelist mt15">
             <span class="titlelist_txt">预售列表</span>
@@ -194,7 +243,14 @@
 				store.dispatch('advance/getAdvanceList', {
 					current_page: query.page || 1,
 					page_size: 10
-				})
+        }),
+        //获取放料列表
+         store.dispatch('advance/getFeedingList', {
+            current_page: query.page || 1,
+						page_size: 6,
+						statusType:9
+					}
+				),
 			])
 		},
 		components: {
@@ -210,7 +266,8 @@
 		computed: {
 			...mapState({
 				total: state => state.advance.total,
-				advanceList: state => state.advance.advanceList,
+        advanceList: state => state.advance.advanceList,
+        feedingList: state => state.advance.feedingList,
 			})
 		},
 		data() {
@@ -222,7 +279,7 @@
 					advance_id: '',
 					bill_no: '',
 					sku_name: '',
-                    min_num: 0,
+          min_num: 0,
 					max_num: 0,
 					basePrice: 0,
 					Bond: 0,   //保证金比例
