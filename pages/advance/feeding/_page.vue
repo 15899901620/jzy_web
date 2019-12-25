@@ -11,6 +11,7 @@
           </breadcrumb>
         </div>
  	<div class="" style="width: 95%; margin: 0 auto;">
+     
           <!-- <div class="TableTitle graybg">
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">提货仓库</span>
@@ -101,8 +102,7 @@
           </div> -->
             <div style="width: 77%">
           <div class="titlelist mt15">
-            <span class="titlelist_txt">预售列表</span>
-            <a style="color:#eb3e3d; margin-left: 20px;" href="/help/20">预售规则</a>
+            <span class="titlelist_txt">合约列表</span>
           </div>
 
           <ul class="acuList" v-if="this.total > 0">
@@ -148,20 +148,47 @@
                     </div>
                 </div>
               </div>
-              <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px;    margin-left: 45px;">
+              <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px; border:none;   margin-left: 45px;">
+                 <span class="fs20" style="position: relative;margin-top: 12px" data-v-572906ad=""> <!----></span>
                   <div class="mt10 fs14 dflexAlem">
-                     <span class="iv_title btmunv">执行进度</span> ：
-                     <div  class="ml15" style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
-                        <template v-if="items.total_num==0 && items.available_num==0 " >
-                                <Progress :percent="0" :stroke-width="10"/>
-                        </template>
-                        <template v-else >
-                              <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
-                      </template> 
-                    </div>
-
-
+                         <div class="btmunv" style="width: 90px; */"><span class="iv_title ">执行进度</span> ：</div> 
+                        <div   style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
+                            <template v-if="items.total_num==0 && items.available_num==0 " >
+                                    <Progress :percent="0" :stroke-width="10"/>
+                            </template>
+                            <template v-else >
+                                  <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
+                          </template> 
+                        </div>
                    </div>
+                  <div class="mt10 fs14 ">
+                      <div class="btmunv"><span class="iv_title">全部数量</span> ：<span class=""> {{items.total_num}}{{items.uom_name}}</span>
+                      </div>
+                  </div>
+                  <div class="mt10 fs14 ">
+                      <div class="btmunv"><span class="iv_title">待转数量</span> ：<span class="">{{items.available_num}}{{items.uom_name}}</span>
+                      </div>
+                  </div>
+                  <div class="mt10 fs14 ">
+                      <div class="btmunv"><span class="iv_title">资源池</span> ：<span class="">{{items.feeding_num}}{{items.uom_name}}</span>
+                      </div>
+                  </div>
+                  <div class="mt10 fs14 ">
+                      <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.available_num}}{{items.uom_name}}</span>
+                      </div>
+                  </div>
+                  <div class="acuOpear" style=" width: 150%;margin-top: 0; */">
+                      <div class="btnStart startauction" v-if="items.feeding_num > 0">
+                        <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>    
+                      </div>
+                      <div  class="btnStart endauction" v-else>
+                            <a  style="color:white">下单</a>
+                          
+                      </div>
+                  
+                  </div>
+                  
+
 
               </div>
             </li>
@@ -230,7 +257,7 @@
 					catId: 0,
 					indexShow: 1
 				}),
-				//获取放料列表GET /bookingPlan/getMyPlanList/page
+				//获取放料列表
 				store.dispatch('advance/getFeedingList', {
             current_page: query.page || 1,
 						page_size: 6,
