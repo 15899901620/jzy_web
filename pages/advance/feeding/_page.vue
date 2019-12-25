@@ -202,7 +202,7 @@
           </div>
         </div>
         </div>
-           <Modal
+        <Modal
             title="选择放料"
             v-model="selectPlanModalShow"
             @on-cancel="selectPlanModalCancel"
@@ -333,7 +333,7 @@
 				}
 			}
 			this.toCreateOrder(res.data[0].id, planned_id)
-		},
+    },
 		toCreateOrder(feeding_id, planned_id){
 			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
 		},
