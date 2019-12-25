@@ -11,7 +11,7 @@
           </breadcrumb>
         </div>
  	<div class="" style="width: 95%; margin: 0 auto;">
-     
+
           <!-- <div class="TableTitle graybg">
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">提货仓库</span>
@@ -151,14 +151,14 @@
               <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px; border:none;   margin-left: 45px;">
                  <span class="fs20" style="position: relative;margin-top: 12px" data-v-572906ad=""> <!----></span>
                   <div class="mt10 fs14 dflexAlem">
-                         <div class="btmunv" style="width: 90px; */"><span class="iv_title ">执行进度</span> ：</div> 
+                         <div class="btmunv" style="width: 90px; */"><span class="iv_title ">执行进度</span> ：</div>
                         <div   style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
                             <template v-if="items.total_num==0 && items.available_num==0 " >
                                     <Progress :percent="0" :stroke-width="10"/>
                             </template>
                             <template v-else >
                                   <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
-                          </template> 
+                            </template>
                         </div>
                    </div>
                   <div class="mt10 fs14 ">
@@ -179,15 +179,15 @@
                   </div>
                   <div class="acuOpear" style=" width: 150%;margin-top: 0; */">
                       <div class="btnStart startauction" v-if="items.feeding_num > 0">
-                        <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>    
+                        <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>
                       </div>
                       <div  class="btnStart endauction" v-else>
                             <a  style="color:white">下单</a>
-                          
+
                       </div>
-                  
+
                   </div>
-                  
+
 
 
               </div>
