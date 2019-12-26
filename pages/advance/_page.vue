@@ -17,8 +17,9 @@
           <tbody>
           <tr class="table_title" style="">
             <th style="width: 12%">合约编号</th>
-            <th style="width: 12%">提货仓库</th>
             <th style="width: 10%">商品名称</th>
+            <th style="width: 12%">提货仓库</th>
+         
             <th style="width: 8%">包装方式</th>
             <th style="width: 8%">单价</th>
             <th style="width: 8%">合约数量</th>
@@ -35,8 +36,9 @@
             <td>
                 <a :href="`/users/plan/advance/${items.id}`" ><span >{{items.plan_no}}</span></a>
             </td>
-            <td class="blue">{{items.warehouse_name}}</td>
-            <td>{{items.sku_name}}</td>
+            <td  class="blue">{{items.sku_name}}</td>
+            <td>{{items.warehouse_name}}</td>
+        
             <td>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</td>
             <td>{{$utils.amountFormat(items.final_price)}}</td>
             <td> {{items.total_num}}{{items.uom_name}}</td>
