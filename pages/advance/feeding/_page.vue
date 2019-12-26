@@ -186,8 +186,12 @@
                       </div>
                   </div>
                   <div class="mt10 fs14 ">
-                      <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.maxOrderNum}}{{items.uom_name}}</span>
+                      <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{$utils.numFormat(items.maxOrderNum)}}</span>
                       </div>
+                  </div>
+                  <div class="mt10 fs14 ">
+                        <div><a :href="`/users/spotContract?type=3&id=${items.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
+                      
                   </div>
                   <div class="acuOpear" style=" width: 150%;    margin-top: -55px; */">
                       <div class="btnStart startauction" v-if="items.feeding_num > 0">

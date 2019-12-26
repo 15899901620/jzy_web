@@ -119,7 +119,7 @@
                     <span class="iv_title">预售总数</span> ：
                     <span class="pr">
                     <span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
-                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;    left: 50px;   background:url('/img/Xian_icon.png')no-repeat;"></i>
+                    <!-- <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;    left: 50px;   background:url('/img/Xian_icon.png')no-repeat;"></i> -->
                    </span>
                   </div>
                 </div>
@@ -310,6 +310,7 @@
           { title: '操作', slot: 'action'}
 				],
 				DepositData: {
+          limit_num:0,
 					advance_id: '',
           bill_no: '',
 					sku_name: '',
@@ -323,13 +324,17 @@
 		},
 		methods: {
 			toPlan(row) {
-				if (this.$store.state.memberToken) {
-					this.DepositShow = true
+				if (this.$store.state.memberToken) {       
+          this.DepositShow = true
 					this.DepositData.advance_id = row.id
 					this.DepositData.bill_no = row.bill_no
 					this.DepositData.sku_name = row.sku_name
-					this.DepositData.min_num = row.min_order
-					this.DepositData.max_num = row.available_num
+          this.DepositData.min_num = row.min_order
+          if(row.available_num > 0 && row.limit_num > 0){
+              this.DepositData.max_num = row.limit_num
+          }else{
+              this.DepositData.max_num = row.available_num
+          }	
 					this.DepositData.basePrice = row.final_price
 					this.DepositData.Bond = row.margin_ratio
 				} else {
