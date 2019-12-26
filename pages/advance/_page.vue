@@ -21,7 +21,7 @@
             <th style="width: 10%">商品名称</th>
             <th style="width: 8%">包装方式</th>
             <th style="width: 8%">单价</th>
-            <th style="width: 8%">全部数量</th>
+            <th style="width: 8%">合约数量</th>
             <th style="width: 8%">待转数量</th>
             <th style="width: 6%">资源池</th>
             <th style="width: 6%">执行进度</th>
