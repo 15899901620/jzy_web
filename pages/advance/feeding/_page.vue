@@ -107,19 +107,31 @@
 
           <ul class="acuList" v-if="this.total > 0">
             <li v-for="(items, index) in feedingList" :key="index">
-
-              <div class="acuProduct " style="width: 50%;    margin: 0px 0 37px;    margin-left: 45px;">
+              <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
+                 <div class="statusicon startauction"> 
+                        <template v-if="items.status == 1">待转单</template>
+                        <template v-else-if="items.status == 2">已转单</template>
+                        <template v-else-if="items.status == 3">已违约</template>
+                        </div>
+                     </div>
+              <div class="acuProduct " style="width:40%;    margin: 0px 0 10px;    margin-left: 100px;">
+                
                   <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
                       v-if="items.is_jry"
                       style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+              <div class="mt10 fs14">
+                  <div class="btmunv" style="width: 380px;"><span class="iv_title">商品名称</span> ：
+                      <span class="orangeFont fwb">
+                        <span >{{items.sku_name}}</span>
+                     </span>
+                  </div>
+                </div>
                 <div class="mt10 fs14">
-                  <div class="btmunv"><span class="iv_title">合约编号</span> ：
+                  <div class="btmunv" style="width: 380px;"><span class="iv_title">合约编号</span> ：
                       <span class="orangeFont fwb">
                         <a :href="`/users/plan/advance/${items.id}`" ><span >{{items.plan_no}}</span>
                         </a>
-                        <template v-if="items.status == 1">(待转单)</template>
-                        <template v-else-if="items.status == 2">(已转单)</template>
-                        <template v-else-if="items.status == 3">(已违约)</template>
+                       
                      </span>
                   </div>
                 </div>
@@ -148,7 +160,7 @@
                     </div>
                 </div>
               </div>
-              <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px; border:none;   margin-left: 45px;">
+              <div  class="acuProduct " style="width: 40%;    margin: 0px 0 37px; border:none;   margin-left: 45px;">
                  <span class="fs20" style="position: relative;margin-top: 12px" data-v-572906ad=""> <!----></span>
                   <div class="mt10 fs14 dflexAlem">
                          <div class="btmunv" style="width: 90px; */"><span class="iv_title ">执行进度</span> ：</div>
@@ -177,7 +189,7 @@
                       <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.maxOrderNum}}{{items.uom_name}}</span>
                       </div>
                   </div>
-                  <div class="acuOpear" style=" width: 150%;margin-top: 0; */">
+                  <div class="acuOpear" style=" width: 150%;    margin-top: -55px; */">
                       <div class="btnStart startauction" v-if="items.feeding_num > 0">
                         <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>
                       </div>
