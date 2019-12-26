@@ -177,11 +177,11 @@
                       <div class="btmunv"><span class="iv_title" style="width:100px;">本次最大可购量</span> ：<span class="">{{items.available_num}}{{items.uom_name}}</span>
                       </div>
                   </div>
-                  <div class="acuOpear" style=" width: 150%;margin-top: 0; */">
-                      <div class="btnStart startauction" v-if="items.feeding_num > 0">
+                  <div class="acuOpear" style="position: absolute; bottom: 0; right: 26px;margin-top: 0; z-index: 10;">
+                      <div class="btnStart startauction" v-if="items.feeding_num > 0" style="margin-top: 0">
                         <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>
                       </div>
-                      <div  class="btnStart endauction" v-else>
+                      <div  class="btnStart endauction" style="margin-top: 0" v-else>
                             <a  style="color:white">下单</a>
 
                       </div>

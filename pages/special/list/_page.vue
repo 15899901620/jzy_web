@@ -88,12 +88,11 @@
                 </span>
                  <span style="width: 18%;" :title="`合约量：${item.plan_total_num}，待转单：${item.plan_available_num}`">
                     <template v-if="item.plan_total_num==0 && item.plan_available_num==0 " >
-                             <Progress :percent="0" :stroke-width="20"/>
+                        <Progress :percent="0" :stroke-width="20"/>
                     </template>
                      <template v-else>
-                            <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
+                         <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
                     </template>
-
                 </span>
                 <span style="width: 9%;">
                   <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
@@ -105,20 +104,20 @@
                        @click="toCreateOrder(item.id,item.planned_id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
-                            </li>
-                        </template>
-                        <template v-else>
-                            <li style="overflow:hidden; height: 235px;">
-                                <p style="width:100%; text-align:center">
-                                    <img src="../../../static/img/Nothing.png"/>
-                                </p>
-                            </li>
-                        </template>
-                    </ul>
-                    <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
-                        <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
-                               :otherParams="`id=${this.$route.query.id}`" ></pages>
-                    </div>
+                </li>
+                </template>
+                <template v-else>
+                    <li style="overflow:hidden; height: 235px;">
+                        <p style="width:100%; text-align:center">
+                            <img src="../../../static/img/Nothing.png"/>
+                        </p>
+                    </li>
+                </template>
+                </ul>
+                <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
+                    <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
+                           :otherParams="`id=${this.$route.query.id}`" ></pages>
+                </div>
                 </div>
             </div>
         </div>
