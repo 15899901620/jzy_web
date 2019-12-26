@@ -104,7 +104,7 @@
             <div style="width: 12%;"> {{$utils.amountFormat(this.totalPrice)}}</div>
 			
             <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==0"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
-			<div style="width: 12%;" v-else> {{orderinfo.limitNum}}</div>
+			<div style="width: 12%;" v-else> {{planInfo.limitNum}}</div>
             <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==1  && this.planInfo.member_ids=='' ">
 				  <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
