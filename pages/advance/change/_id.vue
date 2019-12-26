@@ -91,7 +91,7 @@
             <span class="title" style="width: 10%;">运费</span>
             <span class="title" style="width: 10%;">巨融易</span>
             <span class="title" style="width: 12%;">合计单价（元/吨）</span>
-            <span class="title" style="width: 12%;">可转数量（吨）</span>
+            <span class="title" style="width: 12%;">最大可转数量（吨）</span>
             <span class="title" style="width: 12%;">数量（吨）</span>
             <span class="title" style="width: 9%;">小计</span>
           </li>
@@ -102,7 +102,9 @@
             <div style="width: 10%;">+ {{orderinfo.freightFee}}元/吨</div>
             <div style="width: 10%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> {{$utils.amountFormat(this.totalPrice)}}</div>
-            <div style="width: 12%;"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
+			
+            <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==0"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
+			<div style="width: 12%;" v-else> {{orderinfo.limitNum}}</div>
             <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==1  && this.planInfo.member_ids=='' ">
 				  <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
