@@ -139,7 +139,7 @@
                   <div class="follow" v-else-if="items.statusType != '3' && (items.isFollow ? 0 : 1) && $store.state.memberToken" @click="BidersAdd(items,index)">关注</div>
                  </div>
 
-                <div class="acuProduct ">
+                <div class="acuProduct " style="margin-top: 53px; margin-bottom: 30px;">
                   <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}}
                     <i v-if="items.is_jry" style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
                   <div class="mt10 fs14 dflex">
