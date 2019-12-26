@@ -108,7 +108,7 @@
                 </template>
               </div>
 
-              <div class="acuProduct ">
+              <div class="acuProduct " style="margin-top: 53px; margin-bottom: 30px;">
                   <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
                       v-if="items.is_jry"
                       style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
@@ -238,7 +238,7 @@
     </Modal>
     <advancePay :isShow="DepositShow" :dataList='DepositData' @unChange="unDepositShow"></advancePay>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
-    
+
   </div>
 </template>
 
@@ -324,7 +324,7 @@
 		},
 		methods: {
 			toPlan(row) {
-				if (this.$store.state.memberToken) {       
+				if (this.$store.state.memberToken) {
           this.DepositShow = true
 					this.DepositData.advance_id = row.id
 					this.DepositData.bill_no = row.bill_no
@@ -334,7 +334,7 @@
               this.DepositData.max_num = row.limit_num
           }else{
               this.DepositData.max_num = row.available_num
-          }	
+          }
 					this.DepositData.basePrice = row.final_price
 					this.DepositData.Bond = row.margin_ratio
 				} else {
