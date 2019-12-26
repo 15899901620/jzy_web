@@ -116,6 +116,7 @@ let api = {
    */
   advance: {
     getSaleList: {'url':'/bill/booking/list/page/onSale', 'method':'get'},
+    bookingPlanclose: {'url':'/bill/bookingPlan/close/apply/member/save', 'method':'get'},
     planAdd: {'url':'/bill/booking/plan/add', 'method':'post'},
     getMemberPlanList: {'url':'/bill/bookingPlan/member/list', 'method':'get'},
     getContractInfo: {'url':'/bill/bookingPlan/getContractInfo', 'method':'get'},

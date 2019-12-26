@@ -113,7 +113,7 @@ export default {
                 },
                 {
                     title: '年计划编号',
-                    key: 'yearPlanNo'
+                    key: 'planNo'
                 },
                 {
                     title: '年计划量',
@@ -130,6 +130,7 @@ export default {
                 },
                 {
                     title: '操作',
+                    width: '180',
                     slot: 'action',
                     key: 'action'
                 },

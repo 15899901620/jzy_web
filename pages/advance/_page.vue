@@ -18,9 +18,10 @@
           <tr class="table_title" style="">
             <th style="width: 12%">合约编号</th>
             <th style="width: 12%">提货仓库</th>
+            <th style="width: 10%">商品名称</th>
             <th style="width: 8%">包装方式</th>
             <th style="width: 8%">单价</th>
-            <th style="width: 8%">全部数量</th>
+            <th style="width: 8%">合约数量</th>
             <th style="width: 8%">待转数量</th>
             <th style="width: 6%">资源池</th>
             <th style="width: 6%">执行进度</th>
@@ -35,6 +36,7 @@
                 <a :href="`/users/plan/advance/${items.id}`" ><span >{{items.plan_no}}</span></a>
             </td>
             <td class="blue">{{items.warehouse_name}}</td>
+            <td>{{items.sku_name}}</td>
             <td>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</td>
             <td>{{$utils.amountFormat(items.final_price)}}</td>
             <td> {{items.total_num}}{{items.uom_name}}</td>
@@ -54,7 +56,7 @@
                 </div>
             </td>
             <td>
-                <Button v-if="items.feeding_num > 0" type="dashed"  @click="getSaleFeedingList(items.id)">下单</Button>
+                <Button v-if="items.feeding_num > 0" type="primary"  @click="getSaleFeedingList(items.id)">下单</Button>
                 <Button type="primary"  v-else disabled>下单</Button>
             </td>
           </tr>
@@ -117,7 +119,7 @@
                     <span class="iv_title">预售总数</span> ：
                     <span class="pr">
                     <span class="orangeFont fs16">{{items.total_num}}</span>{{items.uom_name}}
-                    <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;   background:url('/img/Xian_icon.png')no-repeat;"></i>
+                    <!-- <i :title="`限购${items.limit_num}`" v-if="items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;    left: 50px;   background:url('/img/Xian_icon.png')no-repeat;"></i> -->
                    </span>
                   </div>
                 </div>
@@ -126,7 +128,7 @@
                     <span class="iv_title">可售数量</span> ：
                     <span class="pr">
                       <span class="orangeFont fwb fs16">{{items.available_num}}</span>{{items.uom_name}}
-                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
+                      <i :title="`限购${items.limit_num}`" v-if="items.available_num > 0 && items.limit_num > 0" style="width: 15px; height: 18px;    left: 50px; position: absolute; top: -7px;  background:url('/img/Xian_icon.png')no-repeat;"></i>
                     </span>
                   </div>
                   <div class="fs14 dflexAlem">
@@ -210,8 +212,33 @@
         </div>
       </div>
     </div>
+     <Modal
+            title="选择放料"
+            v-model="selectPlanModalShow"
+            @on-cancel="selectPlanModalCancel"
+            :width='700'
+            class-name="vertical-center-modal">
+          <div class="">
+            <Table size="small" border stripe highlight-row :columns="selectPlanColumns" :data="selectPlanData" :content="self" >
+              <template slot-scope="{ row, index }" slot="available_num">
+                <template v-if="row.member_available_num > 0">
+                  <tag color="error">定</tag>{{row.member_available_num}}
+                </template>
+                <template v-else>
+                  {{row.available_num}}
+                </template>
+              </template>
+              <template slot-scope="{ row, index }" slot="action">
+                <Button type="primary" size="small" @click="toCreateOrder( row.id,curr_plan_id)">下单</Button>
+              </template>
+            </Table>
+          </div>
+          <div slot="footer">
+          </div>
+    </Modal>
     <advancePay :isShow="DepositShow" :dataList='DepositData' @unChange="unDepositShow"></advancePay>
     <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    
   </div>
 </template>
 
@@ -224,7 +251,7 @@
 	import breadcrumb from '../../components/breadcrumb'
 	import TimeDown from '../../components/timeDown'
 	import advancePay from '../../components/paydeposit/advancePay'
-
+	import server from '../../config/api'
 	export default {
 		name: "advance",
 		fetch({store, params, query}) {
@@ -274,10 +301,18 @@
 			return {
 				current_page: parseInt(this.$route.query.page) || 1,
 				pageSize: 10,
-
+        selectPlanModalShow:false,
+        selectPlanData:[],
+        selectPlanColumns: [
+					{ title: '放料有效期', key: 'valid_time' },
+          { title: '放料编号', key: 'feeding_no'},
+          { title: '可用数量', key: 'available_num',slot: 'available_num'},
+          { title: '操作', slot: 'action'}
+				],
 				DepositData: {
+          limit_num:0,
 					advance_id: '',
-					bill_no: '',
+          bill_no: '',
 					sku_name: '',
           min_num: 0,
 					max_num: 0,
@@ -289,13 +324,17 @@
 		},
 		methods: {
 			toPlan(row) {
-				if (this.$store.state.memberToken) {
-					this.DepositShow = true
+				if (this.$store.state.memberToken) {       
+          this.DepositShow = true
 					this.DepositData.advance_id = row.id
 					this.DepositData.bill_no = row.bill_no
 					this.DepositData.sku_name = row.sku_name
-					this.DepositData.min_num = row.min_order
-					this.DepositData.max_num = row.available_num
+          this.DepositData.min_num = row.min_order
+          if(row.available_num > 0 && row.limit_num > 0){
+              this.DepositData.max_num = row.limit_num
+          }else{
+              this.DepositData.max_num = row.available_num
+          }	
 					this.DepositData.basePrice = row.final_price
 					this.DepositData.Bond = row.margin_ratio
 				} else {
@@ -308,6 +347,35 @@
 						}
 					});
 				}
+      },
+      async getSaleFeedingList(planned_id) {
+        this.curr_plan_id = planned_id
+        let params = {
+          planned_id: planned_id
+        }
+        let res = await this.$utils.sendCurl(this, server.api.advance.getFeedingByPlan, params)
+        console.log(res);
+        if(res.status === 200 && res.data){
+          if(res.data.length == 0){
+            this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+              location.reload(true)
+            })
+            return
+          }
+				if(res.data.length > 1){
+					//显示放料选择窗口
+					this.selectPlanData = res.data
+					this.selectPlanModalShow = true
+              return
+				}
+			}
+			this.toCreateOrder(res.data[0].id, planned_id)
+      },
+      toCreateOrder(feeding_id, planned_id){
+		  	location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+		  },
+      selectPlanModalCancel(row){
+				this.selectPlanModalShow = row
 			},
 			unDepositShow(row) {
 				this.DepositShow = row

@@ -1,7 +1,6 @@
 <template>
   <div class="hotspot">
     <div class="XhlistTitle">
-      <span style="width: 7%;">品种</span>
       <span style="width: 13%;">牌号</span>
       <span style="width: 13%;">厂商</span>
       <span style="width: 10%;">交货仓</span>
@@ -9,14 +8,13 @@
       <span style="width: 10%;">剩余数量（吨）</span>
       <span style="width: 11%;">单价（元/吨）</span>
       <span style="width: 10%;">距下架时间</span>
-      <span style="width: 7%;">提货日期</span>
+      <span style="width: 10%;">提货起始日期</span>
       <span style="width: 12%;">操作</span>
     </div>
     <ul class="Xhlist">
       <template v-if="$store.state.spot.spotList.length>0">
         <li v-for="(item, index) in $store.state.spot.spotList" :key="index" 
         :style="{backgroundColor:($store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1?'rgba(36,153,249,0.3)':' ')}">
-          <span style="width: 7%;">{{item.category_name}}</span>
           <span style="width: 13%;">{{item.sku_name}}</span>
           <span
               style="width: 13%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
