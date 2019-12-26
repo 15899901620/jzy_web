@@ -114,11 +114,11 @@
                         <template v-else-if="items.status == 3">已违约</template>
                         </div>
                      </div>
-              <div class="acuProduct " style="width:40%;    margin: 0px 0 10px;    margin-left: 100px;">
+              <div class="acuProduct " style="width:40%; margin: 20px 0 40px 100px;">
 
-                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}} <i
-                      v-if="items.is_jry"
-                      style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i></span>
+<!--                  <span class="fs20" style="position: relative;margin-top: 15px">{{items.skuName}}-->
+<!--                      <i  v-if="items.is_jry"   style="width: 15px; height: 18px; position: absolute; top: -6px;   background:url('/img/Yi_icon.png')no-repeat;"></i>-->
+<!--                  </span>-->
               <div class="mt10 fs14">
                   <div class="btmunv" style="width: 380px;"><span class="iv_title">商品名称</span> ：
                       <span class="orangeFont fwb">
@@ -160,11 +160,10 @@
                     </div>
                 </div>
               </div>
-              <div  class="acuProduct " style="width: 50%;    margin: 0px 0 37px; border:none;   margin-left: 45px;">
-                 <span class="fs20" style="position: relative;margin-top: 12px" data-v-572906ad=""> <!----></span>
+              <div  class="acuProduct " style="border:none; margin: 20px 0 40px 45px;">
                   <div class="mt10 fs14 dflexAlem">
-                         <div class="btmunv" style="width: 90px; */"><span class="iv_title ">执行进度</span> ：</div>
-                        <div   style="width: 300px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
+                         <div class="btmunv" style="width: 90px;"><span class="iv_title ">执行进度</span> ：</div>
+                        <div   style="width: 270px;" :title="`合约量：${items.total_num}，待转单：${items.available_num}`">
                             <template v-if="items.total_num==0 && items.available_num==0 " >
                                     <Progress :percent="0" :stroke-width="10"/>
                             </template>
@@ -193,7 +192,7 @@
                   <div class="mt10 fs14 ">
                         <div><a :href="`/users/spotContract?type=3&id=${items.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
                   </div>
-                  <div class="acuOpear" style="position: absolute; bottom: 0; right: 26px; margin-top: 0; z-index: 10">
+                  <div class="acuOpear" style="position: absolute; bottom: 0; right: 30px; margin-top: 0; z-index: 10">
                       <div class="btnStart startauction" v-if="items.feeding_num > 0"  style="margin-top: 0">
                         <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>
                       </div>
