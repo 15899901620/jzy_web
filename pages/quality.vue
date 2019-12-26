@@ -123,7 +123,7 @@ export default {
             showmodal: false,
             datalist:[],
             page_size:5,
-            current_page:1,
+            current_page:this.$route.query.page?this.$route.query.page:1,
             total: 0,
             rowData: {},
             formSearch: {
