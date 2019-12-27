@@ -763,11 +763,22 @@
       let reloadActionInfo = () =>{
         //获取竞拍信息
         this.$store.dispatch('bidders/getAuctionInfo', {id: this.auctionId})
-        console.log(this.auctionInfo)
         if(this.auctionInfo.status != 'CL'){
           setTimeout(function () {
             reloadActionInfo()
           }, 15000)
+        }
+         if(this.auctionInfo.isShelf == 0){
+                this.$Modal.warning({
+                title: '提示',
+                content: '该竞拍活动已下架',
+                duration: 5,
+                styles: 'top:300px',
+                onOk: () => {
+                   location.href = '/bidders'
+                }
+                })
+        
         }
       }
       setTimeout(function () {
