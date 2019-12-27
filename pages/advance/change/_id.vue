@@ -104,15 +104,11 @@
             <div style="width: 12%;"> {{$utils.amountFormat(this.totalPrice)}}</div>
 			
             <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==0"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
-			<div style="width: 12%;" v-else> {{planInfo.limitNum}}</div>
-            <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==1  && this.planInfo.member_ids=='' ">
+			<div style="width: 12%;" v-else> {{planInfo.limitNum.toFixed(0)}}</div>
+            <div style="width: 12%;">
 				  <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
              
-            </div>
-			<div style="width: 12%;" v-else>
-				 <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
-                             @change="changeNum"></input-special>
             </div>
             <div class="fwb orangeFont" style="width: 9%;">{{$utils.amountFormat(this.totalAmount)}}</div>
           </li>
@@ -443,11 +439,7 @@
 
 			this.orderinfo.plan_id = this.planInfo.id
 			this.orderinfo.feeding_id = this.planInfo.feedingInfo.id
-			if(this.planInfo.feedingInfo.is_limit==1 && this.planInfo.member_ids==''){
-				 this.currMax =Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num) 		
-			}else{
-				 this.currMax = Math.min(this.planInfo.available_num, this.planInfo.feedingInfo.available_num)
-			}
+			this.currMax = this.planInfo.limitNum	
            
 			this.chooseDelieryType(0)
 			this.getMyAddress()
