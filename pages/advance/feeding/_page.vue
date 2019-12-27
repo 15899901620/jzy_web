@@ -99,8 +99,8 @@
                         <div><a :href="`/users/spotContract?type=3&id=${items.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
                   </div>
                   <div class="acuOpear" style="position: absolute; bottom: 0; right: 30px; margin-top: 0; z-index: 10">
-                      <div class="btnStart startauction" v-if="items.feeding_num > 0"  style="margin-top: 0">
-                        <a   style="color:white" @click="getSaleFeedingList(items.id)">下单</a>
+                      <div class="btnStart startauction" v-if="items.feeding_num > 0" @click="getSaleFeedingList(items.id)"  style="margin-top: 0">
+                        <a   style="color:white" >下单</a>
                       </div>
                       <div  class="btnStart endauction" style="margin-top: 0" v-else>
                             <a  style="color:white">下单</a>
