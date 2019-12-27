@@ -168,15 +168,25 @@
                   <span class="mt10 ">库区：{{items.warehouse_name}}</span>
                   <span class="mt5">城市：{{items.warehouse_city}}</span>
                 </div>
-                <template v-if="items.statusType == '1'">
-                  <div class="btnStart startauction" @click="toPlan(items)">
+                <template v-if="items.statusType == '1' && items.limit_num > 0 && (items.limit_num-items.planned_total_num<=0) ">
                     <template v-if="items.planned_total_num > 0">
-                      追加预定
+                        <div class="btnStart endauction">追加预定</div>         
                     </template>
                     <template v-else>
-                      参加预定
+                      <div class="btnStart endauction">参加预定</div>   
                     </template>
-                  </div>
+                </template>
+                <template v-else-if="items.statusType == '1'">
+                     <template>
+                      <div class="btnStart startauction" @click="toPlan(items)">
+                        <template v-if="items.planned_total_num > 0">
+                          追加预定
+                        </template>
+                        <template v-else>
+                          参加预定
+                        </template>
+                      </div>
+                    </template>
                 </template>
                 <template v-else>
                   <div class="btnStart endauction">预售结束</div>
@@ -332,8 +342,10 @@
 					this.DepositData.bill_no = row.bill_no
 					this.DepositData.sku_name = row.sku_name
           this.DepositData.min_num = row.min_order
+          this.DepositData.limit_num = row.limit_num
+          this.DepositData.planned_total_num = row.planned_total_num
           if(row.available_num > 0 && row.limit_num > 0){
-              this.DepositData.max_num = row.limit_num
+              this.DepositData.max_num = row.limit_num-row.planned_total_num
           }else{
               this.DepositData.max_num = row.available_num
           }

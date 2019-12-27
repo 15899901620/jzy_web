@@ -20,6 +20,18 @@
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">预售商品：</span>
           <span class="ml10">{{dataList.sku_name}}</span>
+        </div>		
+		<div style="line-height:32px;" >
+          <span class="Bond_Popup_title">起订量</span>
+          <span class="ml10">{{$utils.numFormat(dataList.min_num)}}</span>
+        </div>
+		<div style="line-height:32px;" v-if="dataList.limit_num>0">
+          <span class="Bond_Popup_title">限购数量：</span>
+          <span class="ml10">{{$utils.numFormat(dataList.limit_num)}}</span>
+        </div>
+		<div style="line-height:32px;">
+          <span class="Bond_Popup_title">已购数量:</span>
+          <span class="ml10">{{$utils.numFormat(dataList.planned_total_num)}}</span>
         </div>
         <div class="mt15 dflex" style="align-items: center;">
           <span class="Bond_Popup_title">需求数量：</span>
@@ -27,6 +39,10 @@
             <input-special :min="dataList.min_num" :max="dataList.max_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
             <span class="ml15">吨</span>
           </div>
+		<span class="Bond_Popup_title">可售数量：</span>
+		  <div style="pr ml10">
+          <span class="ml10">{{$utils.numFormat(dataList.max_num)}}</span>
+        </div>
         </div>
         <div style="line-height:32px;">
           <span class="Bond_Popup_title">总金额：</span>
