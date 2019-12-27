@@ -147,7 +147,7 @@
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
 				//获取友情链接
-                store.dispatch('common/getFriendlyList'),
+        store.dispatch('common/getFriendlyList'),
                 //获取底部帮助分类
 				store.dispatch('helper/getHelpCate', {
 					catId: 0,
@@ -201,7 +201,6 @@
 				location.href = '/spot/order/' + id
 			},
 			categoryClick(id,index) {
-              console.log('111111',id)
                 if(id == undefined){
                   this.categoryId=''
                   this.IndexCurr=''

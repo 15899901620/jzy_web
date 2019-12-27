@@ -72,7 +72,7 @@
                     <template v-if="item.close_apply_status == 1">
                       <a class="Paybtn CarCurr" v-if="item.feeding_num > 0" style="padding: 3px 6px" @click="getSaleFeedingList(item.id)">转单</a>
                       <a class="Paybtn CarCurr" v-else style="padding: 3px 6px;background-color: #dbdcde;cursor: default;">转单</a>
-                      <a class="Paybtn CarCurr" v-if="item.feeding_num > 0"  style="margin-top: 6px;" @click='applycance(item.id)'>申请取消</a>
+                      <!-- <a class="Paybtn CarCurr" v-if="item.feeding_num > 0"  style="margin-top: 6px;" @click='applycance(item.id)'>申请取消</a> -->
                     </template>
                     <template v-else-if="item.close_apply_status == 2">
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
