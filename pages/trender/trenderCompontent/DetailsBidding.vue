@@ -10,7 +10,7 @@
             <div style="display: inline-flex;margin-right: 20x;"> 
               <Upload
                       ref="upload"
-                      :action="uploadUrl"
+                      action="/api/upload/file"
                       :on-success="handleFile"
                       :max-size="2048">
                <Button type="primary" size="large">上传技术文件</Button>             
@@ -19,7 +19,7 @@
               <div style="display: inline-flex;margin-left: 120px;"> 
               <Upload
                       ref="upload"
-                      :action="uploadUrl"
+                      action="/api/upload/file"
                       :on-success="handleOtherFile"
                       :max-size="2048">
                <Button type="primary" size="large">上传商务文件</Button>             
