@@ -439,7 +439,7 @@
 
 			this.orderinfo.plan_id = this.planInfo.id
 			this.orderinfo.feeding_id = this.planInfo.feedingInfo.id
-			this.currMax = this.planInfo.limitNum	
+			this.currMax = this.planInfo.limitNum.toFixed(0)
            
 			this.chooseDelieryType(0)
 			this.getMyAddress()
