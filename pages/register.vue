@@ -12,7 +12,7 @@
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
         <Tabs  v-model="nowIndex" >
           <TabPane label="会员注册" name="users" :disabled="userdisable"><user-register @currData="currData" @userTab="userTab"></user-register></TabPane>
-          <!-- <TabPane label="供应/承运商注册" name="supply" :disabled="supplydisable"><supplier-register @currData="currData"  @supplyTab="supplyTab"></supplier-register></TabPane> -->
+          <TabPane label="供应/承运商注册" name="supply" :disabled="supplydisable"><supplierRegister @currData="currData"  @supplyTab="supplyTab"></supplierRegister></TabPane>
         </Tabs>
       </div>
     </div>
@@ -33,7 +33,8 @@
 <script>
 	import Header from '../components/header'
 	import Footer from '../components/footer'
- 	import UserRegister from '../components/register-form'
+	import UserRegister from '../components/register-form'
+	import supplierRegister from '../components/register-form/supplier-register'
 
 	export default {
 		name: "register",
@@ -42,7 +43,7 @@
 			HeaderSmall: Header.small,
 			Footer,
 			UserRegister,
-			SupplierRegister: UserRegister.supplier
+			supplierRegister,
 		},
 		fetch({store, params}) {
 			return Promise.all([

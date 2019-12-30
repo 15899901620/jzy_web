@@ -466,14 +466,14 @@
 					callback();
 				}
 			};
-          const validateSlide = (rule, value, callback) => {
-             if (value === 0) {
-               console.log("value",value)
-              callback(new Error('请滑动完成验证'));
-            } else {
-              callback();
-            }
-          };
+      const validateSlide = (rule, value, callback) => {
+          if (value === 0) {
+            console.log("value",value)
+          callback(new Error('请滑动完成验证'));
+        } else {
+          callback();
+        }
+      };
 			return {
 				protocolModalShow: false,
 
@@ -496,16 +496,15 @@
 				phoneValid: false,//号码有效
 				passwordValid: '',//密码有效
 				repasswordValid: '',//号码有效
-                usersubmitModal:false,         //确认提交框
-				current: 0    ,
-                uploadUrl: '',
+        usersubmitModal:false,         //确认提交框
+				current: 0 ,
+        uploadUrl: '',
 				companyValid: false,
-                license_filextension:'',   // 营业执照图片格式
-                filextension_elc:'',       // 授权书格式
-                danger_filextension:'',       // 危险品
-                other_filextension:'',        // 其它文件
-                invoice_filextension:'',      // 开票资料
-
+        license_filextension:'',   // 营业执照图片格式
+        filextension_elc:'',       // 授权书格式
+        danger_filextension:'',       // 危险品
+        other_filextension:'',        // 其它文件
+        invoice_filextension:'',      // 开票资料
         formCustom: {
                     label_ids: '',
                     phone: '',
@@ -686,13 +685,13 @@
 				// 	})
 				// 	return
 				// }
-              if(!this.isopenSms){
-                this.$Message.info({
-                    content: '请滑动验证码',
-                    duration: 5,
-                    closable: true
-                })
-              }
+        if(!this.isopenSms){
+              this.$Message.info({
+                  content: '请滑动验证码',
+                  duration: 5,
+                  closable: true
+              })
+        }
 				if (phone === "") {
 					this.$Message.info("手机号不能为空")
 					return
