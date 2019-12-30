@@ -1,6 +1,6 @@
 <template>
   <div :class="classes">
-    <div class="dflexAlem stepsItem">
+    <!--<div class="dflexAlem stepsItem">
       <steps :current="current">
         <step title="第一步" description="填写注册基础信息"></step>
         <step title="第二步" description="完善公司信息"></step>
@@ -288,7 +288,7 @@
           </Row>
         </div>
         <div v-show="current == 2">
-          <!--审核成功-->
+          &lt;!&ndash;审核成功&ndash;&gt;
           <div class="dflexAlemJust" style="margin-top: 60px;">
             <img src="../../static/img/exam_icon.png"/>
           </div>
@@ -329,7 +329,7 @@
         <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
       </ul>
       <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
-    </Modal>
+    </Modal>-->
   </div>
 </template>
 
