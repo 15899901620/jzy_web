@@ -301,7 +301,7 @@
         </div>
       </Form>
     </div>
-    <Modal
+    <!--<Modal
         title="用户注册协议"
         v-model="protocolModalShow"
         @on-cancel="protocolModalCancel"
@@ -313,7 +313,7 @@
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
     </Modal>
-    <!--<Modal
+    <Modal
         title="请认真再次核对开票资料"
         v-model="usersubmitModal"
         @on-ok="ok"
