@@ -27,7 +27,7 @@
             <th style="width: 6%">资源池</th>
             <th style="width: 6%">执行进度</th>
             <th style="width: 10%;"><span>操作</span>
-              <span class="ml20" style="border-bottom: 1px solid #FFFFFF; cursor: pointer;"><nuxt-link class="whiteFont"  target="_target" :to="{name: 'advance-feeding-page'}">更多</nuxt-link></span>
+              <span class="ml20" style="border-bottom: 1px solid #FFFFFF; cursor: pointer;"><nuxt-link class="whiteFont"  target="_target" :to="{name: 'advance-feeding-page'}">更多...</nuxt-link></span>
             </th>
           </tr>
 
@@ -158,10 +158,17 @@
 
                   <div class="fs14 dflexAlem"><span class="iv_title">提货日期</span> ：<span class="orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
 
-                   <div class="btmunv" >
-                        <a v-if="items.desc_url" class="fs16"  :href="items.desc_url" style="color:#ff7300;margin-left: 30px;">预售说明</a>
-                    </div>
+                  
                 </div>
+                 <div class="fs14 dflexAlem">
+
+                    <div class="btmunv" >
+                     <!-- v-if="items.desc_url" -->
+                        <a  class="fs17"  :href="items.desc_url" style="color:#ff7300; margin-top: 10px;  ">预售说明</a>
+                    </div>
+                  
+                </div>
+               
               </div>
               <div class="acuOpear">
                 <div style="display: flex; flex-direction: column; justify-content: center">
@@ -322,6 +329,7 @@
           { title: '操作', slot: 'action'}
 				],
 				DepositData: {
+          final_price:0,
           limit_num:0,
 					advance_id: '',
           bill_no: '',
@@ -340,7 +348,8 @@
           this.DepositShow = true
 					this.DepositData.advance_id = row.id
 					this.DepositData.bill_no = row.bill_no
-					this.DepositData.sku_name = row.sku_name
+          this.DepositData.sku_name = row.sku_name
+          this.DepositData.final_price = row.final_price
           this.DepositData.min_num = row.min_order
           this.DepositData.limit_num = row.limit_num
           this.DepositData.planned_total_num = row.planned_total_num

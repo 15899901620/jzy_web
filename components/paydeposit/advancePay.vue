@@ -22,7 +22,7 @@
           <span class="ml10">{{dataList.sku_name}}</span>
         </div>		
 		<div style="line-height:32px;" >
-          <span class="Bond_Popup_title">起订量</span>
+          <span class="Bond_Popup_title">起订量: </span>
           <span class="ml10">{{$utils.numFormat(dataList.min_num)}}</span>
         </div>
 		<div style="line-height:32px;" v-if="dataList.limit_num>0">
@@ -30,8 +30,12 @@
           <span class="ml10">{{$utils.numFormat(dataList.limit_num)}}</span>
         </div>
 		<div style="line-height:32px;">
-          <span class="Bond_Popup_title">已购数量:</span>
+          <span class="Bond_Popup_title">已购数量: </span>
           <span class="ml10">{{$utils.numFormat(dataList.planned_total_num)}}</span>
+        </div>
+			<div style="line-height:32px;">
+          <span class="Bond_Popup_title">单价: </span>
+          <span class="ml10">{{$utils.amountFormat(dataList.final_price)}}</span>
         </div>
         <div class="mt15 dflex" style="align-items: center;">
           <span class="Bond_Popup_title">需求数量：</span>
