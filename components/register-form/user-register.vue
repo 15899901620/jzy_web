@@ -300,7 +300,7 @@
           </div>
         </div>
       </Form>
-    </div>
+    </div>-->
     <Modal
         title="用户注册协议"
         v-model="protocolModalShow"
@@ -329,7 +329,7 @@
         <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
       </ul>
       <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
-    </Modal>-->
+    </Modal>
   </div>
 </template>
 
