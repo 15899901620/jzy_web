@@ -17,8 +17,8 @@
                   </FormItem>
                 </Col>
 				<Col span="8">
-                  <FormItem label="公司名称">
-                    <Input type="text" v-model="formSearch.companyName" placeholder="公司名称" name="" value="" style="width:200px "/>
+                  <FormItem label="合约编号">
+                    <Input type="text" v-model="formSearch.billNo" placeholder="竞拍编号" name="" value="" style="width:200px "/>
                   </FormItem>
                 </Col>
 				<Col span="8">
@@ -33,7 +33,7 @@
           </div>
           <div class="TableTitle graybg">
             <!-- <span style="width: 10%;">单据类型</span> -->
-			<span style="width: 15%;">竞拍编号</span>
+			<span style="width: 15%;">合约编号</span>
 			<span style="width: 17%;">公司名称</span>
 			<span style="width: 17%;">创建时间</span>
             <span style="width: 16%;">保证金金额</span>
@@ -135,7 +135,7 @@
 				currTabs: 0,
 				formSearch: {
 					status: '',
-					companyName: ''
+					billNo: ''
 				},
 			}
 		},
