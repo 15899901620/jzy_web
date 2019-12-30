@@ -12,7 +12,7 @@
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
         <Tabs v-model="nowIndex" >
           <TabPane label="会员注册" name="users" :disabled="userdisable">
-            <supplierRegister @currData="currData" @userTab="userTab"></supplierRegister>
+            <UserRegister @currData="currData" @userTab="userTab"></UserRegister>
           </TabPane>
           <TabPane label="供应/承运商注册" name="supply" :disabled="supplydisable">
             <supplierRegister @currData="currData" @supplyTab="supplyTab"></supplierRegister>
