@@ -1017,7 +1017,7 @@
     height: 75px;
     overflow: hidden;
     margin-left: 130px;
-    margin-bottom: 10px;5
+    margin-bottom: 10px;
     img{
       width: 100%;
       height: 100%;
