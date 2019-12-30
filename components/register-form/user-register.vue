@@ -1,6 +1,6 @@
 <template>
   <div :class="classes">
-    <!--<div class="dflexAlem stepsItem">
+    <div class="dflexAlem stepsItem">
       <steps :current="current">
         <step title="第一步" description="填写注册基础信息"></step>
         <step title="第二步" description="完善公司信息"></step>
@@ -300,7 +300,7 @@
           </div>
         </div>
       </Form>
-    </div>-->
+    </div>
     <Modal
         title="用户注册协议"
         v-model="protocolModalShow"
@@ -312,22 +312,23 @@
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
-
     </Modal>
     <Modal
-            v-model="usersubmitModal"
-            title="请认真再次核对开票资料"
-            @on-ok="ok"
-            @on-cancel="cancel">
-      <ul class="ivulist">
-        <li><span>公司名称</span>:{{formCustom.companyName}}</li>
-        <li><span style="width: 65px; text-align-last: justify">联系人</span>: {{formCustom.contacter}}</li>
-        <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
-        <li><span>开户银行</span>: {{formCustom.invBankName}}</li>
-        <li><span>银行账号</span>: {{formCustom.invBankAccount}}</li>
-        <li><span>公司地址</span>: {{formCustom.invAddress}}</li>
-        <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
-      </ul>
+        title="请认真再次核对开票资料"
+        v-model="usersubmitModal"
+        @on-ok="ok"
+        @on-cancel="cancel">
+      <div>
+        <ul class="ivulist">
+          <li><span>公司名称</span>:{{formCustom.companyName}}</li>
+          <li><span style="width: 65px; text-align-last: justify">联系人</span>: {{formCustom.contacter}}</li>
+          <li><span>纳税人识别号</span>: {{formCustom.taxId}}</li>
+          <li><span>开户银行</span>: {{formCustom.invBankName}}</li>
+          <li><span>银行账号</span>: {{formCustom.invBankAccount}}</li>
+          <li><span>公司地址</span>: {{formCustom.invAddress}}</li>
+          <li><span>公司电话</span>: {{formCustom.invTelephone}}</li>
+        </ul>
+      </div>
       <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
     </Modal>
   </div>
