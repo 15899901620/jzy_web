@@ -301,18 +301,18 @@
         </div>
       </Form>
     </div>
-    <!--<Modal
-        title="用户注册协议"
-        v-model="protocolModalShow"
-        @on-cancel="protocolModalCancel"
-        :width='700'
-        class-name="vertical-center-modal">
-      <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL">
-      </div>
+    <Modal
+      title="用户注册协议"
+      v-model="protocolModalShow"
+      @on-cancel="protocolModalCancel"
+      :width='700'
+      class-name="vertical-center-modal">
+      <!--<div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL"></div>-->
+      <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" ></div>
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
-    </Modal>-->
+    </Modal>
     <Modal
         title="请认真再次核对开票资料"
         v-model="usersubmitModal"
