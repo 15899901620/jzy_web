@@ -11,7 +11,7 @@
     <div class="container" title="">
       <div class="w1200 whitebg ovh" style="margin-top: 20px; margin-bottom: 10px;">
         <Tabs  v-model="nowIndex" >
-          <TabPane label="会员注册" name="users" :disabled="userdisable"><user-register @currData="currData" @userTab="userTab"></user-register></TabPane>
+          <!-- <TabPane label="会员注册" name="users" :disabled="userdisable"><user-register @currData="currData" @userTab="userTab"></user-register></TabPane> -->
           <TabPane label="供应/承运商注册" name="supply" :disabled="supplydisable"><supplier-register @currData="currData"  @supplyTab="supplyTab"></supplier-register></TabPane>
         </Tabs>
       </div>
