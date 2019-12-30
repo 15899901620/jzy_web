@@ -307,7 +307,6 @@
       @on-cancel="protocolModalCancel"
       :width='700'
       class-name="vertical-center-modal">
-      <!--<div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL"></div>-->
       <div style="overflow: hidden; overflow-y: auto; height: 360px; padding: 0 20px" class="" v-html="$store.state.common.sysConfig.MEMBER_REGISTRATION_PROTOCOL"></div>
       <div slot="footer" style="text-align: center">
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
