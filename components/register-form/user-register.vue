@@ -126,9 +126,7 @@
           </Row>
           <Row :gutter="24" index="0">
             <Col span="9">
-
               <FormItem label="营业执照：" prop="contacterEmail">
-
                 <Upload
                     ref="upload"
                     :action="uploadUrl"
@@ -181,7 +179,6 @@
                 <template v-else>
                   <img :src="this.formCustom.authorization_elc" style="width: 100%; height: 100%" />
                 </template>
-
               </div>
             </Col>
           </Row>
@@ -506,27 +503,27 @@
         other_filextension:'',        // 其它文件
         invoice_filextension:'',      // 开票资料
         formCustom: {
-                    label_ids: '',
-                    phone: '',
-                    password: '',
-                    mobilecode: '',
-                    single: '',
-                    repassword: '',
-                    Imgcode: '',
-                    companyName: '',
-                    taxId: '',
-                    invBankName: '',
-                    invBankAccount: '',
-                    invAddress: '',
-                    invTelephone: '',
-                    contacter: '',
-                    business_license: '',
-                    authorization_elc: '',
-                    code: '',
-                    invoice_pic:'',              // 开票资料
-                    dangerous_license:'',       // 危化品上传许可证
-                    other_pic:'',               // 其它资料
-                    slidecode: 0
+          label_ids: '',
+          phone: '',
+          password: '',
+          mobilecode: '',
+          single: '',
+          repassword: '',
+          Imgcode: '',
+          companyName: '',
+          taxId: '',
+          invBankName: '',
+          invBankAccount: '',
+          invAddress: '',
+          invTelephone: '',
+          contacter: '',
+          business_license: '',
+          authorization_elc: '',
+          code: '',
+          invoice_pic:'',              // 开票资料
+          dangerous_license:'',       // 危化品上传许可证
+          other_pic:'',               // 其它资料
+          slidecode: 0
 				},
 				ruleCustom: {
 					phone: [
@@ -574,49 +571,48 @@
 					contacter: [
 						{  required:true, validator: validateContacter, trigger: 'blur'}
 					],
-                    slidecode: [
-                      {  validator: validateSlide, trigger: 'blur'}
-                    ]
+          slidecode: [
+            {  validator: validateSlide, trigger: 'blur'}
+          ]
 				}
 			}
 		},
 		components: {
-            steps,
-            step,
-            captcha,
-            MemberLabelSelect,
-            SlideVerify
+      steps,
+      step,
+      captcha,
+      MemberLabelSelect,
+      SlideVerify
 		},
 		computed: {
 			classes() {
-
 				return [
 					`${prefixCls}`,
 					{[`${prefixCls}-shortcut`]: this.vertical},
 				];
 			},
-          ...mapState([
-            'slidecode'
-          ])
+      ...mapState([
+        'slidecode'
+      ])
 		},
 		methods: {
-          // 滑动验证
-          onTime(res) {
-            console.log("res",res)
-            if (res) {
-              this.formCustom.slidecode = res
-              this.isopenSms = true
-              this.btnBoolen= false
+      // 滑动验证
+      onTime(res) {
+        console.log("res",res)
+        if (res) {
+          this.formCustom.slidecode = res
+          this.isopenSms = true
+          this.btnBoolen= false
 
-            } else {
-              this.$Modal.warning({
-                title: '提示',
-                content: '验证失败！',
-                duration: 5,
-                styles: 'top:300px'
-              });
-            }
-          },
+        } else {
+          this.$Modal.warning({
+            title: '提示',
+            content: '验证失败！',
+            duration: 5,
+            styles: 'top:300px'
+          });
+        }
+      },
 
 			getUploadURL() {
               if (process.env.NODE_ENV === 'development') {
@@ -686,11 +682,11 @@
 				// 	return
 				// }
         if(!this.isopenSms){
-              this.$Message.info({
-                  content: '请滑动验证码',
-                  duration: 5,
-                  closable: true
-              })
+          this.$Message.info({
+              content: '请滑动验证码',
+              duration: 5,
+              closable: true
+          })
         }
 				if (phone === "") {
 					this.$Message.info("手机号不能为空")
@@ -844,141 +840,141 @@
 
 			},
 
-          handleFormatError(file) {
-            this.$Notice.warning({
-              title: '文件格式不正确',
-              desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg,png,pdf,png 格式的文件。'
-            });
-          },
-          // 危化品经营许可证
-          HazchemiFile(res) {
-            this.formCustom.dangerous_license= res.url
-            this.danger_filextension = this.formCustom.dangerous_license.substring(this.formCustom.dangerous_license.lastIndexOf("."), this.formCustom.dangerous_license.length);
+      handleFormatError(file) {
+        this.$Notice.warning({
+          title: '文件格式不正确',
+          desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg,png,pdf,png 格式的文件。'
+        });
+      },
+      // 危化品经营许可证
+      HazchemiFile(res) {
+        this.formCustom.dangerous_license= res.url
+        this.danger_filextension = this.formCustom.dangerous_license.substring(this.formCustom.dangerous_license.lastIndexOf("."), this.formCustom.dangerous_license.length);
 
-          },
+      },
 
-          // 其它文件
-          handleOtherFile(res) {
-            this.formCustom.other_pic = res.url
-            this.other_filextension = this.formCustom.other_pic.substring(this.formCustom.other_pic.lastIndexOf("."), this.formCustom.other_pic.length);
+      // 其它文件
+      handleOtherFile(res) {
+        this.formCustom.other_pic = res.url
+        this.other_filextension = this.formCustom.other_pic.substring(this.formCustom.other_pic.lastIndexOf("."), this.formCustom.other_pic.length);
 
-          },
-          // 开票资料
-          handleInvoiceFile(res) {
-            this.formCustom.invoice_pic = res.url
-            this.invoice_filextension = this.formCustom.invoice_pic.substring(this.formCustom.invoice_pic.lastIndexOf("."), this.formCustom.invoice_pic.length);
+      },
+      // 开票资料
+      handleInvoiceFile(res) {
+        this.formCustom.invoice_pic = res.url
+        this.invoice_filextension = this.formCustom.invoice_pic.substring(this.formCustom.invoice_pic.lastIndexOf("."), this.formCustom.invoice_pic.length);
 
-          },
+      },
 
-          //第二部提交
-          async memberReset(data) {
-              this.formCustom.code = this.formCustom.mobilecode
-              if (!this.formCustom.phone) {
-                  this.$Message.info({
-                      content: '手机号不能为空，请返回重新填写',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.password) {
-                  this.$Message.info({
-                      content: '密码不能为空，请返回重新填写',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.mobilecode) {
-                  this.$Message.info({
-                      content: '验证码有误，请返回重新获取',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.companyName) {
-                  this.$Message.info({
-                      content: '公司名称不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.companyValid) {
-                  this.$Message.info({
-                      content: '公司不存在',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.taxId) {
-                  this.$Message.info({
-                      content: '税号不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.invBankName) {
-                  this.$Message.info({
-                      content: '开户行不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.invBankAccount) {
-                  this.$Message.info({
-                      content: '银行账号不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.invAddress) {
-                  this.$Message.info({
-                      content: '开票不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.invTelephone) {
-                  this.$Message.info({
-                      content: '开票电话不能为空',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.business_license) {
-                  this.$Message.info({
-                      content: '请上传营业执照',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else if (!this.formCustom.authorization_elc) {
-                  this.$Message.info({
-                      content: '请上传授权书',
-                      duration: 5,
-                      closable: true
-                  })
-                  return
-              } else {
-                this.usersubmitModal=true
-              }
-          },
-          cancel(){},
-          ok(){
-            this.userSubmit(this.formCustom)
-          },
-          async userSubmit(formCustom){
-            const res = await manageReg(this, formCustom)
-            console.log("res",res)
-            if (res.data === true && res.status === 200) {
-              this.current = 2
-             // this.$router.push({name:'RegisterSuccess'})
-            } else {
+      //第二部提交
+      async memberReset(data) {
+          this.formCustom.code = this.formCustom.mobilecode
+          if (!this.formCustom.phone) {
               this.$Message.info({
-                content: res.data.message,
-                duration: 5,
-                closable: true
+                  content: '手机号不能为空，请返回重新填写',
+                  duration: 5,
+                  closable: true
               })
-            }
-          },
+              return
+          } else if (!this.formCustom.password) {
+              this.$Message.info({
+                  content: '密码不能为空，请返回重新填写',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.mobilecode) {
+              this.$Message.info({
+                  content: '验证码有误，请返回重新获取',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.companyName) {
+              this.$Message.info({
+                  content: '公司名称不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.companyValid) {
+              this.$Message.info({
+                  content: '公司不存在',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.taxId) {
+              this.$Message.info({
+                  content: '税号不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.invBankName) {
+              this.$Message.info({
+                  content: '开户行不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.invBankAccount) {
+              this.$Message.info({
+                  content: '银行账号不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.invAddress) {
+              this.$Message.info({
+                  content: '开票不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.invTelephone) {
+              this.$Message.info({
+                  content: '开票电话不能为空',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.business_license) {
+              this.$Message.info({
+                  content: '请上传营业执照',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else if (!this.formCustom.authorization_elc) {
+              this.$Message.info({
+                  content: '请上传授权书',
+                  duration: 5,
+                  closable: true
+              })
+              return
+          } else {
+            this.usersubmitModal=true
+          }
+      },
+      cancel(){},
+      ok(){
+        this.userSubmit(this.formCustom)
+      },
+      async userSubmit(formCustom){
+        const res = await manageReg(this, formCustom)
+        console.log("res",res)
+        if (res.data === true && res.status === 200) {
+          this.current = 2
+         // this.$router.push({name:'RegisterSuccess'})
+        } else {
+          this.$Message.info({
+            content: res.data.message,
+            duration: 5,
+            closable: true
+          })
+        }
+      },
 			protocolModalToShow() {
 				this.protocolModalShow = true
 			},
@@ -995,12 +991,10 @@
 				this.protocolModalShow = false
 
 			},
-
 		},
+    create(){
 
-      create(){
-
-      },
+    },
 		mounted() {
 			// 图形验证码
 			this.identifyCode = '';
@@ -1021,6 +1015,16 @@
     img{
       width: 100%;
       height: 100%;
+    }
+  }
+  .ivulist{
+    font-size: 16px;
+    li{
+      display: flex;
+      line-height: 30px;
+      .idsa{
+        width: 68px; text-align-last:justify;
+      }
     }
   }
  </style>

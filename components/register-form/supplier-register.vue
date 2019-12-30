@@ -891,7 +891,7 @@
 				} else {
 					this.current = 1
 					this.$emit('currData', true)
-                    this.$emit('supplyTab',true)
+          this.$emit('supplyTab',true)
 					//this.$router.push({name:'userPerInfor', params:{params:userFormData}})
 				}
 			},
