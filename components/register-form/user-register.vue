@@ -313,7 +313,7 @@
         <Button type="primary" style=" padding: 5px 50px 6px; background: #f73500; border:none;" @click='protocol()'>同意协议</Button>
       </div>
     </Modal>
-    <Modal
+    <!--<Modal
         title="请认真再次核对开票资料"
         v-model="usersubmitModal"
         @on-ok="ok"
@@ -330,7 +330,7 @@
         </ul>
       </div>
       <div slot="header" style="font-size: 16px; font-weight: bold;">请认真再次核对开票资料 </div>
-    </Modal>
+    </Modal>-->
   </div>
 </template>
 
