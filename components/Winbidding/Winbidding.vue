@@ -76,7 +76,7 @@
          },
         methods:{
             async SourceData() {
-                
+
                 if(this.SupplierInfor){
                     const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
                     this.dataList = res.data.items
@@ -108,7 +108,7 @@
             },
             mLeave () {
                 let that=this
-                if(that.WinbidList.length>5){
+                if(that.WinbidList.length>3){
                     that.timer1= setInterval(this.scroll,1000)
                 }
              },
@@ -126,7 +126,7 @@
 
             that.SourceData()
 
-            if(that.WinbidList.length>5){
+            if(that.WinbidList.length>3){
                 this.timer1= setInterval(this.scroll,1000)
             }
         },
@@ -147,10 +147,8 @@
 }
 .trendlist {
     font-size: 14px;
-
 }
 .trendlist li {
-
     padding: 24px 0;
     display: flex;
     margin-bottom: 1px;
@@ -163,12 +161,11 @@ scroll-content {
     transition: top 0.5s;
 }
 
-
 #box{
     width: 100%;
     transition: all 0.5s;
     overflow: hidden;
-    height: 355px;
+    height: 215px;
     background-color: #fff;
 }
 .anim{
