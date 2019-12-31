@@ -11,7 +11,15 @@
         </hotrecommend>
         </div>
       </div>
-        <div class="transaction_data"><h2>交易数据</h2><span>今日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.todayNum)}}</i>昨日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.yesterdayNum)}}</i>月成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.monthNum)}}</i>累计成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.allNum)}}</i></span><b><img src="/img/new_time.gif">更新时间：{{$store.state.common.TurnoverList.ctime}}</b></div>
+        <div class="transaction_data"><h2>交易数据</h2>
+          <div style="display: flex; justify-content: space-between; width: 90%">
+          <span>今日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.todayNum)}}</i>昨日成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.yesterdayNum)}}</i>月成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.monthNum)}}</i>累计成交量：<i>{{$utils.numFormat($store.state.common.TurnoverList.allNum)}}</i></span><b style="display: flex; align-items: center"><img src="/img/new_time.gif">更新时间：{{$store.state.common.TurnoverList.ctime}}</b>
+          </div>
+        </div>
+      <div class="transaction_data"><h2>网站公告</h2>
+        <marqueeText  :sendVal="newItems" ></marqueeText>
+      </div>
+
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
@@ -68,6 +76,7 @@ import SpotList from '../components/spot-list'
 import LogisticsList from '../components/logistics-list'
 import indexnewstabs from '../components/indexnewstabs'
 import newsinfo from '../components/indexnews'
+import marqueeText from '../components/marquee'
 
 export default {
   fetch({store}) {
@@ -128,7 +137,8 @@ export default {
     LogisticsList,
     SpotList,
     indexnewstabs,
-    newsinfo
+    newsinfo,
+    marqueeText
   },
   data() {
     return {
@@ -150,12 +160,30 @@ export default {
       },
       heightNum: 320,
       articleCates:{},
+      newItems:[]
     }
+
   },
   computed: {
     ...mapState({
-      bannerinfo: state => state.system.bannerinfo
+      bannerinfo: state => state.system.bannerinfo,
+      newItemList: state => state.article.noticeList
      })
+
+  },
+  beforeCreate(){
+
+  },
+  create(){
+
+  },
+  methods:{
+
+  },
+  mounted(){
+    console.log("noticeList:", this.$store.state.article.noticeList)
+    this.newItems= this.$store.state.article.noticeList
+    console.log("newItems:", this.newItems)
   },
 	head: {
 		script: [

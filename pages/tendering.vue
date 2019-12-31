@@ -38,8 +38,8 @@
           </div>
         </outpacking>
       </div>
-  
-  
+      <!--  中标公告-->
+      <win-bidding></win-bidding>
       <!--  公告信息-->
       <div class="graybg ovh" >
         <div class="w1200" style="margin-bottom: 50px">
@@ -67,7 +67,7 @@
                     {{item.statusName}}
               </span>
               <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
-              
+
             </li>
 
           </ul>
@@ -89,7 +89,8 @@
 <script>
 import Header from "../components/header";
 import Footer from "../components/footer";
-import hotbidding from '../components/hotbidding'
+import hotbidding from '../components/hotbidding';
+import WinBidding from '../components/Winbidding';
 import { sendHttp } from "../api/common";
 import server from "../config/api";
 import outpacking from '../components/outpacking'
@@ -99,10 +100,11 @@ import { supplierLogin, supplierValid } from "../api/users";
 import Cookies from "js-cookie";
 import TimeDown from '../components/timeDown'
 
+
 export default {
   name: "tendering",
   data() {
-  
+
     return {
       bidderData: {
         title: '更多',
@@ -118,6 +120,7 @@ export default {
         username: "",
         password: ""
       },
+      WinbidList:{},
       dataList:{}
     };
   },
@@ -128,6 +131,7 @@ export default {
     HeaderSmall: Header.small,
     loginSupply: login.supply,
     Footer,
+    WinBidding,
     TimeDown
   },
   fetch({ store, params }) {
@@ -200,12 +204,15 @@ export default {
     async SourceData() {
          if(this.SupplierInfor){
             const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
-
             this.dataList = res.data.items
         }else{
            const res = await sendHttp(this, false, server.api.biddding.bidddingList)
             this.dataList = res.data.items
         }
+       // this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
+     },
+    //中标
+    WinningData(){
 
     },
 
