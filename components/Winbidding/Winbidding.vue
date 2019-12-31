@@ -112,6 +112,14 @@
                     that.timer1= setInterval(this.scroll,1000)
                 }
              },
+            WineDetail(row){
+                this.$router.push({
+                        name: 'trender-WineBidDetail',
+                        query: {
+                            id: row.id
+                        }
+                    })
+            },
         },
         mounted(){
             let that=this
