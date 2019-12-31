@@ -39,7 +39,7 @@
         </outpacking>
       </div>
       <!--  中标公告-->
-      <win-bidding></win-bidding>
+<!--      <win-bidding></win-bidding>-->
       <!--  公告信息-->
       <div class="graybg ovh" >
         <div class="w1200" style="margin-bottom: 50px">
@@ -242,7 +242,6 @@ export default {
      })
   },
   mounted() {
-
     this.SourceData()
   }
 };
