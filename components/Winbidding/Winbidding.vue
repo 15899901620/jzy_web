@@ -3,7 +3,7 @@
         <div class="w1200" style="margin-bottom: 50px">
             <div class="ListTitle whitebg mt20">
                 <div class="TitleName">中标公告</div>
-                <a class="mr20 mt15 mb15 gray fs14" @click="WineBid">更多</a>
+                <!-- <a class="mr20 mt15 mb15 gray fs14" @click="WineBid">更多</a> -->
             </div>
             <div class="graybg trendlistTitle">
                 <span style="width:15%; padding-left: 65px">招标编号</span>
@@ -51,6 +51,7 @@
     import { sendHttp } from "../../api/common";
     import server from "../../config/api";
     import TimeDown from '@/components/timeDown'
+    import Cookies from "js-cookie";
      export default {
         name: "Winbidding",
         components:{
@@ -65,6 +66,7 @@
                 activeIndex: 0,
                 intnum: null,
                 WinbidList:{},
+                SupplierInfor: Cookies.get("supplierInfor"),
             };
         },
          computed: {
@@ -74,6 +76,7 @@
          },
         methods:{
             async SourceData() {
+                
                 if(this.SupplierInfor){
                     const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
                     this.dataList = res.data.items
@@ -81,6 +84,7 @@
                     const res = await sendHttp(this, false, server.api.biddding.bidddingList)
                     this.dataList = res.data.items
                 }
+                console.log( this.dataList)
                  this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
                 console.log("WinbidList:", this.WinbidList)
             },
