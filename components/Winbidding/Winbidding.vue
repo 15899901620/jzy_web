@@ -17,14 +17,14 @@
                 <vue-seamless-scroll :data="WinbidList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
                     <ul class="trendlist" >
                       <template v-if='WinbidList.length>0'>
-                          <li  @click="WineDetail(item)" v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
+                          <li   v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
                             <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
                             <span class="tac" style="width:25%;">{{item.title}}</span>
 
                             <span class="tac" style="width: 10%">{{item.statusName}}</span>
                             <span class="tar" style="width:20%">{{item.beginTime}}</span>
                             <span class="tac" style="width: 20%">
-                               <span><Button type="error" label="small">中标公告</Button></span> 
+                               <span><Button type="error" label="small" @click="WineDetail(item)">中标公告</Button></span>
                             </span>
                           </li>
                       </template>
@@ -124,8 +124,9 @@
                 }
              },
             WineDetail(row){
+                console.log("row",row)
                 this.$router.push({
-                        name: 'trender-WineBidDetail',
+                        name: 'WinAnnoun-id',
                         query: {
                             id: row.id
                         }

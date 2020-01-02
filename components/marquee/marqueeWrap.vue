@@ -4,8 +4,8 @@
             <ul class="item" style="display: flex; color: #666">
                 <li v-for="item in sendValList"    >
                     <span class="mr5 time" v-text="item.time"> </span>
-                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content" >
-                      <span  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title"> </span>
+                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content"  v-text="item.title" >
+<!--                      <span  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title"> </span>-->
                     </nuxt-link>
                 </li>
             </ul>
@@ -216,7 +216,7 @@ export default {
             display: flex;
             li {
                 display: flex;
-                margin-right: 10px;
+                margin-right: 35px;
                 .time{  }
                 .content{white-space:nowrap;}
             }
