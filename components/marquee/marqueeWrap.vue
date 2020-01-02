@@ -2,10 +2,10 @@
     <div class="my-outbox" style="display: flex">
         <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  >
             <ul class="item" style="display: flex; color: #666">
-                <li v-for="item in sendValList"  >
-                    <span class="mr5 time">{{item.time}}</span>
-                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
-                      <span class="content"  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
+                <li v-for="item in sendValList"    >
+                    <span class="mr5 time" v-text="item.time"> </span>
+                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content" >
+                      <span  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title"> </span>
                     </nuxt-link>
                 </li>
             </ul>
@@ -55,34 +55,56 @@ export default {
             disArr: [],
             sendValList:[],
             newDate: this.$utils.dateFormat(new Date(), 'MM-dd'),
-            listData4: [{
-                'title': '无缝滚动第一行无缝滚动第一行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第二行无缝滚动第二行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第三行无缝滚动第三行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第四行无缝滚动第四行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第五行无缝滚动第五行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第六行无缝滚动第六行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第七行无缝滚动第七行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第八行无缝滚动第八行',
-                'date': '2017-12-16'
-            }, {
-                'title': '无缝滚动第九行无缝滚动第九行',
-                'date': '2017-12-16'
-            }],
+            newsList: [
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },{
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },{
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+                {
+                    time:'12-10',
+                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
+                },
+
+
+            ]
         }
     },
     mounted(){
@@ -176,7 +198,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
     .my-outbox{
         /*color: #D7BC8D;*/
         overflow: hidden;
@@ -186,17 +208,17 @@ export default {
     }
     .table-content{
         overflow: hidden;
-        width: 100%;
         height:30px;
         line-height: 30px;
         ul.item {
             width: 100%;
             list-style: none;
-            padding: 0;
-            margin: 0 auto;
+            display: flex;
             li {
                 display: flex;
-                margin-right: 10px; 
+                margin-right: 10px;
+                .time{  }
+                .content{white-space:nowrap;}
             }
         }
     }
