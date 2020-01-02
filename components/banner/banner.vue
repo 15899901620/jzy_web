@@ -4,8 +4,8 @@
             :autoplay="true"
             :height= heightNum
             :autoplay-speed="10000">
-            <Carousel-item v-for="(item, index) in bannerData" :key="index">
-                <div class="demo-carousel"   :style="{background: 'url(' + item.adImg + ')no-repeat center' }" >
+            <Carousel-item v-for="(item, index) in bannerData" :key="index" >
+                <div class="demo-carousel" @click='ablink(item)'  :style="{background: 'url(' + item.adImg + ')no-repeat center' } "  style=" cursor: pointer;">
                 </div>
             </Carousel-item>
         </Carousel>
@@ -31,6 +31,11 @@ export default {
     components: {
        carousel,
        carouselItem:carousel.item
+    },
+    methods:{
+        ablink(item){
+            window.location.href=item.adLink
+        }
     },
     computed:{
         classes() {
