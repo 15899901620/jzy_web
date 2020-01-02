@@ -67,7 +67,7 @@ export const actions = {
 			let res = await sendCurl(this, server.api.advance.getMemberFeedingList, params)
 			if (res.status === 200) {
  				commit('updateFeedingList', res.data.items)
-				commit('updateTotal', res.data.total)
+				// commit('updateTotal', res.data.total)
 			}
 		}catch(err){
 			console.log('获取预售放料列表异常：', err)
