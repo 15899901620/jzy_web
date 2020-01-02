@@ -1,11 +1,11 @@
 <template>
     <div class="my-outbox" style="display: flex">
-        <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
+        <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  >
             <ul class="item" style="display: flex; color: #666">
-                <li v-for="item in sendValList" style="display: flex; ">
-                    <span class="mr5">{{item.time}}</span>
+                <li v-for="item in sendValList"  >
+                    <span class="mr5 time">{{item.time}}</span>
                     <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
-                      <span  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
+                      <span class="content"  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
                     </nuxt-link>
                 </li>
             </ul>
@@ -176,42 +176,27 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     .my-outbox{
         /*color: #D7BC8D;*/
         overflow: hidden;
         color: #FFFFFF;
         /*background: #422b02;*/
         width: 90%;
-        .my-inbox{
-            width: 1500px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            white-space: nowrap;
-            .my-list{
-                width: 20%;
-                margin-right: 25px;
-                display: flex;
-                justify-content: center;
-                font-size: 0.3rem;
-                transition: left 0.5s;
-                overflow: hidden;
-                .my-uname{
-                    /*color: #FF8900;*/
-                    color: #666666;
-                }
-            }
-        }
     }
     .table-content{
         overflow: hidden;
         width: 100%;
+        height:30px;
+        line-height: 30px;
         ul.item {
             width: 100%;
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
             li {
-                float: left;
-                margin-right: 10px;
+                display: flex;
+                margin-right: 10px; 
             }
         }
     }
