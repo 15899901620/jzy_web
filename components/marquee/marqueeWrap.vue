@@ -1,16 +1,15 @@
 <template>
     <div class="my-outbox">
-        <div class="my-inbox" ref='box'>
-            <div class="my-list"   v-for="(item,index) in sendValList " :key='index' ref='list' @mouseenter="slideStop" @mouseleave="slideRun">
-                <!--{{item.name}}刚刚购买了产品-->
-                <span class="my-uname">
-                    <span>{{item.time}}</span>
+        <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
+            <ul class="item" style="display: flex; color: #666">
+                <li v-for="item in sendValList" style="display: flex; margin-left: 20px">
+                    <span class="mr5">{{item.time}}</span>
                     <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
                       <span  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
                     </nuxt-link>
-                </span>
-            </div>
-        </div>
+                </li>
+            </ul>
+        </vue-seamless-scroll>
     </div>
 </template>
 
@@ -20,6 +19,33 @@
 export default {
     name: "marqueeWrap",
      props: ['sendVal'],
+    components:{
+     },
+    computed:{
+        optionSetting () {
+
+            return {
+
+                step: 0.5, // 数值越大速度滚动越快
+
+                limitMoveNum: 2, // 开始无缝滚动的数据量 this.dataList.length
+
+                hoverStop: true, // 是否开启鼠标悬停stop
+
+                direction: 2, // 0向下 1向上 2向左 3向右
+
+                openWatch: true, // 开启数据实时监控刷新dom
+
+                singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+
+                singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+
+                waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+
+            }
+
+        }
+    },
     data(){
         return{
             // 定时器标识
@@ -28,13 +54,41 @@ export default {
             // 每一个内容的宽度
             disArr: [],
             sendValList:[],
-            newDate: this.$utils.dateFormat(new Date(), 'MM-dd')
+            newDate: this.$utils.dateFormat(new Date(), 'MM-dd'),
+            listData4: [{
+                'title': '无缝滚动第一行无缝滚动第一行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第二行无缝滚动第二行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第三行无缝滚动第三行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第四行无缝滚动第四行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第五行无缝滚动第五行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第六行无缝滚动第六行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第七行无缝滚动第七行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第八行无缝滚动第八行',
+                'date': '2017-12-16'
+            }, {
+                'title': '无缝滚动第九行无缝滚动第九行',
+                'date': '2017-12-16'
+            }],
         }
     },
     mounted(){
         let that = this
         that.getNoticeList()
-        that.startMove()
+      //  that.startMove()
 
      },
     beforeCreate(){
@@ -99,7 +153,9 @@ export default {
             this.nowTime = setInterval(function () {
                 startDis -= 0.5
                 // console.log('初始化移动：', startDis)
-                if (Math.abs(startDis) > Math.abs(that.disArr[0])) {
+                console.log("startDis:",Math.abs(startDis))
+                console.log("disArr:", Math.abs(that.disArr[0]))
+                if (Math.abs(startDis) > 500) {
                     // 每次移动完一个元素的距离，就把这个元素的宽度
                     that.disArr.push(that.disArr.shift())
                     // 每次移动完一个元素的距离，就把列表数据的第一项放到最后一项
@@ -140,6 +196,7 @@ export default {
                 justify-content: center;
                 font-size: 0.3rem;
                 transition: left 0.5s;
+                overflow: hidden;
                 .my-uname{
                     /*color: #FF8900;*/
                     color: #666666;

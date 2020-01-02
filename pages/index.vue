@@ -19,7 +19,6 @@
       <div class="transaction_data"><h2>网站公告</h2>
         <marqueeText  :sendVal="newItems" ></marqueeText>
       </div>
-
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">

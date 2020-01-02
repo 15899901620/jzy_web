@@ -74,7 +74,8 @@ export default {
 		'@/plugins/storage',
 		{src: "~/plugins/swiper.js", ssr: false},
 		{src: '~/plugins/iview.js', ssr: true},
-		{src: '~/plugins/polyfill.js', ssr: true}
+		{src: '~/plugins/polyfill.js', ssr: true},
+		{src: '~/plugins/vue-seamless-scroll.js', ssr: false}
 	],
 	/*
 	 ** Nuxt.js modules
