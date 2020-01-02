@@ -12,36 +12,29 @@
                 <span class="tac" style="width: 10%">招标状态</span>
                 <span class="tar" style="width: 17%">招标时间</span>
             </div>
-            <div  id="box"   >
-                <div  id="con1">
-                    <ul class="trendlist"  ref="con1"   @mouseenter="mEnter" @mouseleave="mLeave">
-                        <template v-if='WinbidList.length>0'>
-                        <li  @click="WineDetail(item)" v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
-                             <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
+            <div id="box">
+                <vue-seamless-scroll :data="WinbidList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
+                    <ul class="trendlist" >
+                      <template v-if='WinbidList.length>0'>
+                          <li  @click="WineDetail(item)" v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
+                            <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
                             <span class="tac" style="width:25%;">{{item.title}}</span>
                             <span class="tac" style="width: 20%">
-                          <template >
-                            <TimeDown  :endTime="item.endTime" formatStr='{D}天{H}小时{M}分{S}秒' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
-                          </template>
-                      </span>
-                            <span class="tac" style="width: 10%">
-                            {{item.statusName}}
-                      </span>
+                              <template >
+                                <TimeDown  :endTime="item.endTime" formatStr='{D}天{H}小时{M}分{S}秒' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                              </template>
+                            </span>
+                            <span class="tac" style="width: 10%">{{item.statusName}}</span>
                             <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
-
-                      </li>
-                        </template>
-                        <template v-else>
-                            <li style="justify-content: center;">
-                            <sapn  >暂无中标数据</sapn>
-                            </li>
-                        </template>
+                          </li>
+                      </template>
+                      <template v-else>
+                          <li style="justify-content: center; color: #999"><span>暂无中标数据</span></li>
+                      </template>
                     </ul>
-                </div>
+                </vue-seamless-scroll>
             </div>
-<!--            <div style="text-align: center;" v-else>-->
-<!--                <sapn  >暂无中标数据</sapn>-->
-<!--            </div>-->
+
 
         </div>
     </div>
@@ -52,31 +45,49 @@
     import server from "../../config/api";
     import TimeDown from '@/components/timeDown'
     import Cookies from "js-cookie";
-     export default {
+      export default {
         name: "Winbidding",
         components:{
             TimeDown,
-        },
-        props:{
-
-        },
+         },
         data() {
             return {
                 animate:false,
                 activeIndex: 0,
                 intnum: null,
                 WinbidList:{},
+                dataList:{},
                 SupplierInfor: Cookies.get("supplierInfor"),
             };
         },
          computed: {
              top () {
                  return -this.activeIndex * 50 + 'px'
-             }
+             },
+              optionSetting () {
+                 return {
+
+                     step: 0.5, // 数值越大速度滚动越快
+
+                     limitMoveNum: 2, // 开始无缝滚动的数据量 this.dataList.length
+
+                     hoverStop: true, // 是否开启鼠标悬停stop
+
+                     direction: 1, // 0向下 1向上 2向左 3向右
+
+                     openWatch: true, // 开启数据实时监控刷新dom
+
+                     singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+
+                     singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+
+                     waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+
+                 }
+              },
          },
         methods:{
             async SourceData() {
-
                 if(this.SupplierInfor){
                     const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
                     this.dataList = res.data.items
@@ -84,9 +95,9 @@
                     const res = await sendHttp(this, false, server.api.biddding.bidddingList)
                     this.dataList = res.data.items
                 }
-                console.log( this.dataList)
-                 this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
-                console.log("WinbidList:", this.WinbidList)
+
+                this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
+
             },
             WineBid(){},
             reloadPage(){},
@@ -123,16 +134,9 @@
         },
         mounted(){
             let that=this
-
             that.SourceData()
-
-            if(that.WinbidList.length>3){
-                this.timer1= setInterval(this.scroll,1000)
-            }
         },
          create(){
-             let that=this
-             that.SourceData()
          }
     }
 </script>
@@ -163,10 +167,9 @@ scroll-content {
 
 #box{
     width: 100%;
-    transition: all 0.5s;
     overflow: hidden;
-    height: 215px;
     background-color: #fff;
+    height:230px;
 }
 .anim{
     transition: all 0.5s;
