@@ -6,11 +6,12 @@
                 <!-- <a class="mr20 mt15 mb15 gray fs14" @click="WineBid">更多</a> -->
             </div>
             <div class="graybg trendlistTitle">
-                <span style="width:15%; padding-left: 65px">招标编号</span>
-                <span class="tac" style="width:25%;">招标名称</span>
-                <span class="tac" style="width:20%;">距招标结束</span>
+                <span style="width:15%; padding-left: 65px">中标编号</span>
+                <span class="tac" style="width:25%;">中标名称</span>
+
                 <span class="tac" style="width: 10%">招标状态</span>
                 <span class="tar" style="width: 17%">招标时间</span>
+                <span class="tac" style="width:25%;">中标信息</span>
             </div>
             <div id="box">
                 <vue-seamless-scroll :data="WinbidList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
@@ -19,13 +20,12 @@
                           <li  @click="WineDetail(item)" v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
                             <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
                             <span class="tac" style="width:25%;">{{item.title}}</span>
-                            <span class="tac" style="width: 20%">
-                              <template >
-                                <TimeDown  :endTime="item.endTime" formatStr='{D}天{H}小时{M}分{S}秒' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
-                              </template>
-                            </span>
+
                             <span class="tac" style="width: 10%">{{item.statusName}}</span>
-                            <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
+                            <span class="tar" style="width:20%">{{item.beginTime}}</span>
+                            <span class="tac" style="width: 20%">
+                               <span><Button type="error" label="small">中标公告</Button></span> 
+                            </span>
                           </li>
                       </template>
                       <template v-else>
