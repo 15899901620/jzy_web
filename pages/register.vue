@@ -20,7 +20,7 @@
         </Tabs>
       </div>
     </div>
-	<!-- <Modal
+	<Modal
       v-model="isusershow"
       @on-cancel="cancelModal"
       title="选择注册页面">
@@ -29,7 +29,7 @@
 			<Button  title="提交"  style="font-size:18px"  type="primary" size="default"  @click="tabClicks('users')" >会员注册</Button>
 				<Button  type="primary" style="font-size:18px;margin-left: 30px"  size="default"   @click="tabClicks('supply')" >供应/承运商注册</Button>
 		</div>
-    </Modal> -->
+    </Modal>
     <Footer size="small" title="" style="margin-top:18px;"></Footer>
   </div>
 </template>
@@ -99,14 +99,14 @@
 		},
 		mounted() {
 			var that = this
-			// let type = this.$route.query.type;
-			// if (type === 'users') {
-			// 	this.nowIndex = "users"
-			// } else if (type === 'supply') {
-			// 	this.nowIndex = 'supply'
-			// } else {
-			// 	this.nowIndex = 'users'
-			// }
+			let type = this.$route.query.type;
+			if (type === 'users') {
+				this.nowIndex = "users"
+			} else if (type === 'supply') {
+				this.nowIndex = 'supply'
+			} else {
+				this.nowIndex = 'users'
+			}
 
 
 		},
