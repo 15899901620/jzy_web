@@ -1,8 +1,8 @@
 <template>
-    <div class="my-outbox">
+    <div class="my-outbox" style="display: flex">
         <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
             <ul class="item" style="display: flex; color: #666">
-                <li v-for="item in sendValList" style="display: flex; margin-left: 20px">
+                <li v-for="item in sendValList" style="display: flex; ">
                     <span class="mr5">{{item.time}}</span>
                     <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title">
                       <span  :style="item.time==newDate?'color: #e50618;':''">{{item.title}}</span>
@@ -201,6 +201,17 @@ export default {
                     /*color: #FF8900;*/
                     color: #666666;
                 }
+            }
+        }
+    }
+    .table-content{
+        overflow: hidden;
+        width: 100%;
+        ul.item {
+            width: 100%;
+            li {
+                float: left;
+                margin-right: 10px;
             }
         }
     }
