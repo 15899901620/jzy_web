@@ -37,8 +37,8 @@
           </ul>
           <div class="whitebg ovh">
              <!-- <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages> -->
-            <pages :total="total" :show-total="showTotal" @change="changePage" :value="this.$route.params.page ? this.$route.params.page:1">
-            </pages>
+           <pages :total="total" :show-total="showTotal" :value="current_page"
+                   :pageSize="page_size"></pages>
           </div>
         </div>
 
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
   import Header from "../../components/header";
 	import Pagination from '../../components/pagination'
 	import pageRoute from './trenderCompontent/pageRoute'
@@ -77,7 +78,7 @@
 			Notice,
 			pages: Pagination.pages
     },
-    fetch({ store, params }) {
+    fetch({ store, params,query }) {
         return Promise.all([
             //获取顶部、中部、底部导航信息
             store.dispatch('common/getNavList'),
@@ -90,16 +91,25 @@
             catId: 0,
             indexShow: 1
           }),
+          store.dispatch('helper/getHelpCate', {
+            catId: 0,
+            indexShow: 1
+          }),
+          store.dispatch('advance/getWineBidInfo', { page_size: 10, current_page: query.page || 1,}),
         ]);
     },
+    computed: {
+			...mapState({
+        dataList: state => state.advance.BidInfo,
+        total: state => state.advance.Total1,
+        
+			}),
+		},
 		data() {
 			return {
 				webName: '',
-				dataList: {},
-				current_page:  this.$route.params.page ? this.$route.params.page:1,
+				current_page:  parseInt(this.$route.query.page) || 1,
         page_size: 10,
-        SupplierInfor: Cookies.get("supplierInfor"),
-				total: 0
 			};
 		},
 		methods: {
@@ -125,29 +135,18 @@
          this.SourceData()
 			},
 			async SourceData() {
-       if(this.SupplierInfor){
-            let params = {
-              page_size: this.page_size,
-              current_page: this.current_page
-            };
-            const res = await sendHttp(this, false, server.api.biddding.bidddingList, params,2)
-            this.dataList = res.data.items
-            this.total = res.data.total
-       }else{
-            let params = {
-              page_size: this.page_size,
-              current_page: this.current_page
-            };
-            const res = await sendHttp(this, false, server.api.biddding.bidddingList, params)
-            this.dataList = res.data.items
-            this.total = res.data.total
-       }
-
+          let params = {
+            page_size: this.page_size,
+            current_page: this.current_page
+          };
+          const res = c
+          this.dataList = res.data.items
+          this.total = res.data.total
 			},
 		},
 		mounted() {
 			this.webName = 'supplier'
-			this.SourceData();
+			// this.SourceData();
 		}
 	}
 </script>

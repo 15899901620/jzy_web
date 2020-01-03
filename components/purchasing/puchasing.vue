@@ -38,6 +38,13 @@
       </Row>
       <Row :gutter="24" index="1">
         <Col span="24">
+          <FormItem label="意向价格" >
+             <Input v-model="formItem.intentionPrice"  class="CarrierIput"   placeholder="请输入意向价格" style="width:90%"/>
+          </FormItem>
+        </Col>
+      </Row>
+      <Row :gutter="24" index="1">
+        <Col span="24">
           <FormItem label="产品等级" prop="productGrade">
             <Select v-model="formItem.productGrade" style="width:90%">
               <Option v-for="(item, index) in gradeData" :value="item.value" :key="index">{{item.labal}}</Option>
@@ -94,7 +101,8 @@ export default {
         warehouseName: '',
         intentionNum: '',
         productGrade: '',
-        intentionDate: ''
+        intentionDate: '',
+        intentionPrice:'',
       },
       warehouseData:[],
       gradeData: [
