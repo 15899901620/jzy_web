@@ -53,7 +53,7 @@
         data() {
             return {
                 animate:false,
-                activeIndex: 0, 
+                activeIndex: 0,
                 dataList:{},
                 SupplierInfor: Cookies.get("supplierInfor"),
             };
@@ -90,8 +90,6 @@
                 let params={
                     type:2
                 }
-                console.log("params:", params)
-                console.log("SupplierInfor:", this.SupplierInfor)
                 if(this.SupplierInfor){
                     const res = await sendHttp(this, true, server.api.biddding.bidList,params,2)
                     this.dataList = res.data.items
@@ -101,13 +99,12 @@
                 }
             },
             WineDetail(row){
-                console.log("row",row)
                 this.$router.push({
-                        name: 'WinAnnoun-id',
-                        query: {
-                            id: row.id
-                        }
-                    })
+                    name: 'WinAnnoun-id',
+                    query: {
+                        id: row.id
+                    }
+                })
             },
         },
         mounted(){
