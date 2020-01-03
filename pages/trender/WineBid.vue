@@ -36,7 +36,8 @@
             </li>
           </ul>
           <div class="whitebg ovh">
-            <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page">
+             <!-- <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages> -->
+            <pages :total="total" :show-total="showTotal" @change="changePage" :value="this.$route.params.page ? this.$route.params.page:1">
             </pages>
           </div>
         </div>
@@ -95,7 +96,7 @@
 			return {
 				webName: '',
 				dataList: {},
-				current_page: 1,
+				current_page:  this.$route.params.page ? this.$route.params.page:1,
         page_size: 10,
         SupplierInfor: Cookies.get("supplierInfor"),
 				total: 0
@@ -114,12 +115,14 @@
 				return `全部 ${total} 条`;
 			},
 			changePage(row) {
-				this.$router.push({
-					name: 'special',
-					query: {
-						page: row
-					}
-				})
+				// this.$router.push({
+				// 	name: 'trender-WineBid',
+				// 	query: {
+				// 		page: row
+				// 	}
+        // })
+         this.current_page=row
+         this.SourceData()
 			},
 			async SourceData() {
        if(this.SupplierInfor){
