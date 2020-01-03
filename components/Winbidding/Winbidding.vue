@@ -53,8 +53,7 @@
         data() {
             return {
                 animate:false,
-                activeIndex: 0,
-                intnum: null, 
+                activeIndex: 0, 
                 dataList:{},
                 SupplierInfor: Cookies.get("supplierInfor"),
             };

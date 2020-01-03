@@ -202,7 +202,7 @@ let api = {
     /**
      * @description 专料
      */
-    special: {  
+    special: {
         saleListByPlan: {'url':'/bill/yearlyFeeding/saleListByPlan', 'method':'post'},
         getContractInfo: {'url':'/bill/yearPlanned/getContractInfo', 'method':'GET'},
         monthContractInfo: {'url':'/bill/monthPlanned/getContractInfo', 'method':'GET'},
@@ -221,6 +221,7 @@ let api = {
        save:{'url': '/bill/bid/save', 'method': 'post'},
        bidDetail:{'url': '/bill/bid/detail', 'method': 'get'},
        bidddingDetail:{'url': '/bill/bidding/detail', 'method': 'get'},
+       bidWinDetail:{'url': '/bill/bidding/webDetail', 'method': 'get'},
        bidList:{'url': '/bill/bidding/getMyBiddingList/page', 'method': 'get'},
        BySupplier:{'url': '/bill/bid/getInfoBySupplierId', 'method': 'get'},
        bidddingCount:{'url': '/bill/bidding/getMyBiddingListCount', 'method': 'get'},
