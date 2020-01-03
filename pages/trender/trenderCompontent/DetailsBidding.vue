@@ -56,6 +56,7 @@
                  appendix:'',
                  technicalDoc:'',
             },
+            SupplierInfor: Cookies.get("supplierInfor"),
 
 
         };
@@ -125,12 +126,20 @@
 
           },
           async SourceData() {
-            
-              let params = {
-                id: this.id,
-              };
-              const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
-              this.dataList = res.data
+              if(this.SupplierInfor){
+                let params = {
+                  id: this.id,
+                };
+                const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params,2)
+                this.dataList = res.data
+              }else{
+                let params = {
+                  id: this.id,
+                };
+                const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params)
+                this.dataList = res.data
+              }
+              
           },
           // async BySupplier() {
           //     let params = {
