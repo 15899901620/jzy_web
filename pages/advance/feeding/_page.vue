@@ -192,7 +192,7 @@
 		},
 		computed: {
 			...mapState({
-				total: state => state.advance.total,
+				total: state => state.advance.Feedingtotal,
 				feedingList: state => state.advance.feedingList,
 			})
 		},

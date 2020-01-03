@@ -721,7 +721,7 @@
             styles: 'top:300px'
           })
         }
-
+        this.$Loading.start();
         let params = {
           auctionId: this.auctionId,
           bidNum: this.auctionNum,
@@ -729,18 +729,21 @@
         }
         let res = await AddauctionPrice(this, params)
         if (res.data.data === null && res.status === 200) {
+         this.$Loading.error()
           this.$Modal.warning({
             title: '提示',
             content: res.data.message + '!!! ',
             duration: 5,
             styles: 'top:300px'
           });
+          
         } else {
           this.$Modal.success({
             title: '提示',
             content: '出价成功！',
             duration: 5
           })
+          this.$Loading.error();
           location.reload()
         }
       },

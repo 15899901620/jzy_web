@@ -5,6 +5,7 @@ export const state = () => {
 	return {
 		advanceList: [],
 		total: 0,
+		Feedingtotal:0,
 		planList: [],
 		planDetail: {},
 		feedingList: [],
@@ -17,6 +18,9 @@ export const mutations = {
 	},
 	updateTotal(state, data) {
 		state.total = data
+	},
+	updateFeedingtotal(state, data){
+		state.Feedingtotal = data
 	},
 	updatePlanList(state, data) {
 		state.planList = data
@@ -67,7 +71,7 @@ export const actions = {
 			let res = await sendCurl(this, server.api.advance.getMemberFeedingList, params)
 			if (res.status === 200) {
  				commit('updateFeedingList', res.data.items)
-				// commit('updateTotal', res.data.total)
+				commit('updateFeedingtotal', res.data.total)
 			}
 		}catch(err){
 			console.log('获取预售放料列表异常：', err)
