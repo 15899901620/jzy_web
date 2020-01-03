@@ -139,7 +139,7 @@
             this.dataList = res.data.items
             this.total = res.data.total
        }
-		
+
 			},
 		},
 		mounted() {
@@ -197,7 +197,7 @@
   .notTitle {
     font-size: 16px;
     border-bottom: 1px solid #DEDEDE;
-    padding: 20px 0;
+    padding: 10px 0;
     padding-left: 20px;
   }
 

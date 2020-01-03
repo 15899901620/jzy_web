@@ -14,10 +14,10 @@
                 <span class="tac" style="width:25%;">中标信息</span>
             </div>
             <div id="box">
-                <vue-seamless-scroll :data="WinbidList"  :class-option="optionSetting" class="table-content"  @copy-data="listData4 = listData4.concat(listData4)">
+                <vue-seamless-scroll :data="dataList"  :class-option="optionSetting" class="table-content"  >
                     <ul class="trendlist" >
-                      <template v-if='WinbidList.length>0'>
-                          <li   v-for="(item, index) in WinbidList" :key="index"  ref="con3" >
+                      <template v-if='dataList.length>0'>
+                          <li   v-for="(item, index) in dataList" :key="index"  ref="con3" >
                             <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
                             <span class="tac" style="width:25%;">{{item.title}}</span>
 
@@ -54,8 +54,7 @@
             return {
                 animate:false,
                 activeIndex: 0,
-                intnum: null,
-                WinbidList:{},
+                intnum: null, 
                 dataList:{},
                 SupplierInfor: Cookies.get("supplierInfor"),
             };
@@ -88,41 +87,20 @@
          },
         methods:{
             async SourceData() {
+
+                let params={
+                    type:2
+                }
+                console.log("params:", params)
+                console.log("SupplierInfor:", this.SupplierInfor)
                 if(this.SupplierInfor){
-                    const res = await sendHttp(this, true, server.api.biddding.bidddingList,'',2)
+                    const res = await sendHttp(this, true, server.api.biddding.bidList,params,2)
                     this.dataList = res.data.items
                 }else{
-                    const res = await sendHttp(this, false, server.api.biddding.bidddingList)
+                    const res = await sendHttp(this, false, server.api.biddding.bidList,params)
                     this.dataList = res.data.items
                 }
-
-                this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
-
             },
-            WineBid(){},
-            reloadPage(){},
-            scroll(){
-                var that = this; // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
-                let con1 = this.$refs.con1;
-                let con3 = this.$refs.con3;
-                setTimeout(function(){
-                        // // 每次移动完一个元素的距离，就把这个元素的宽度
-                        // that.disArr.push(that.disArr.shift())
-                        // // 每次移动完一个元素的距离，就把列表数据的第一项放到最后一项
-                        that.WinbidList.push(that.WinbidList[0]);
-                        that.WinbidList.shift();
-                        that.animate=!that.animate; // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
-                },500)
-            },
-            mEnter () {
-                clearInterval(this.timer1)
-            },
-            mLeave () {
-                let that=this
-                if(that.WinbidList.length>3){
-                    that.timer1= setInterval(this.scroll,1000)
-                }
-             },
             WineDetail(row){
                 console.log("row",row)
                 this.$router.push({

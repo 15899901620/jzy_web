@@ -22,7 +22,7 @@
 
 <style scoped>
 
-  .notTitle{font-size: 16px;border-bottom: 1px solid #DEDEDE; padding: 20px 0; padding-left: 20px;}
+  .notTitle{font-size: 16px;border-bottom: 1px solid #DEDEDE; padding: 12px 0; padding-left: 20px;}
 
   .Commonproblem{ margin: 10px 20px 20px;display: flex;flex-direction: column;}
   .Commonproblem li{  margin: 10px 0;font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
