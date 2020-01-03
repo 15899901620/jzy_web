@@ -34,7 +34,7 @@
             <div class="mt10 fs14">
                 <breadcrumb>
                     <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源首页</nuxt-link></breadcrumb-item>
-                    <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>中标详情</breadcrumb-item>
+                    <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>中标公告</breadcrumb-item>
                 </breadcrumb>
             </div>
         </div>
