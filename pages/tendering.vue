@@ -31,13 +31,13 @@
           </div>
         </div>
       </div>
-      <div class="hotbidding" style="    margin-bottom: 20px;">
+      <!-- <div class="hotbidding" style="    margin-bottom: 20px;">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
           <div slot="content">
             <hotbidding></hotbidding>
           </div>
         </outpacking>
-      </div>
+      </div> -->
       <!--  中标公告-->
       <win-bidding></win-bidding>
       <!--  公告信息-->
