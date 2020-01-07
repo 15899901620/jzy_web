@@ -64,7 +64,8 @@
                   </template>
               </span>
               <span class="tac" style="width: 10%">
-                    {{item.statusName}}
+                 <span>{{item.statusName}}</span>
+                <span class="winann" style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看详情</span>
               </span>
               <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
 
@@ -155,6 +156,15 @@ export default {
     ]);
   },
   methods: {
+    AnnDetail(row){
+
+      this.$router.push({
+        name: 'WinAnnoun-id',
+        query: {
+          id: row.id
+        }
+      })
+    },
     async LoginsupplyerForm() {
       var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
       if (!myreg.test(this.loginsupplierform.username)) {
@@ -209,6 +219,7 @@ export default {
            const res = await sendHttp(this, false, server.api.biddding.bidddingList)
             this.dataList = res.data.items
         }
+         console.log("dataList:",this.dataList)
        // this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
      },
     //中标
@@ -407,4 +418,5 @@ export default {
   .Tenderbanner{
      height: 400px;
   }
+  .winann{margin-left: 10px; cursor: pointer}.winann:hover{ color: #2d92ea; }
 </style>
