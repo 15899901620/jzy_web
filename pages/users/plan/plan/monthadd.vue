@@ -221,22 +221,12 @@ export default {
       async getwarehouse() {
           var res= await sendHttp(this, true, server.api.month.yeardetail, {id: this.formItem.yearId})
 
-           this.dataList=res.data
-<<<<<<< HEAD
+           this.dataList=res.data 
 
            this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
            this.min=Math.round(this.formItem.monthNum/2)
            this.max=this.formItem.monthNum*2
            console.log(this.max)
-=======
-           
-          //  this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
-           
-        
-          //  this.min=Math.round(this.formItem.monthNum/2)
-          //  this.max=this.formItem.monthNum*2
-   
->>>>>>> 6b838ef4bc336f9cda06fc4ef24c2fbb6f0bb899
            if(this.dataList.packingModes == 1){
                 this.dataList.packingModes ='标准包装'
            } else{
@@ -266,10 +256,10 @@ export default {
     rowData: {
 
       handler (newValue, oldValue) {
-        
+
         this.formItem.monthNum= Math.round(newValue.defaultNum)
-        this.max= Math.round(newValue.defaultUpNum) 
-        this.min=Math.round(newValue.defaultDownNum) 
+        this.max= Math.round(newValue.defaultUpNum)
+        this.min=Math.round(newValue.defaultDownNum)
         this.formItem.yearId = newValue.id
         this.canMonth = newValue.canMonth
         this.formItem.month = newValue.canMonth
