@@ -42,10 +42,10 @@
 								path: '/users/userSpecmat',
 								name: '年计划'
 							},
-							// {
-							// 	path: '/users/userSpecmat',
-							// 	name: '月度合约'
-							// },
+							{
+								path: '/users/monthadd',
+								name: '可添加月计划'
+							},
 						]
 					},
 					{

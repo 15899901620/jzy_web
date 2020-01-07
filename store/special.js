@@ -5,7 +5,7 @@
  */
 import api from '../config/api'
 import { getCookies } from '../config/storage'
-import { specialList ,monthspecialDetail} from '../api/special'
+import { specialList ,monthspecialDetail,monthaddPlan} from '../api/special'
 import { sendCurl } from '../api/common'
 import server from '../config/api'
 export const state = () => {
@@ -15,6 +15,8 @@ export const state = () => {
         specialDetail: {},
         feedingInfo:{},
         spotList:[],
+        monthinfo:[],
+        monthTotal:0,
         total:0
     }
 }
@@ -32,15 +34,30 @@ export const mutations = {
     feedingInfo (state, data) {
         state.feedingInfo = data
     },
+    monthaddList(state, data){
+        state.monthinfo = data
+    },
     updateSpotList(state, data) {
 		state.spotList = data
-	},
+    },
+    monthTotal(state, data){
+        state.monthTotal = data
+    },
 	updateTotal(state, data) {
 		state.total = data
 	},
 }
 
 export const actions = {
+    async monthaddPlan({ commit }, params) {
+        const res = await monthaddPlan(this, params).then(response => {
+            commit('specialDetail', response.data)
+            commit('feedingInfo', response.data.feedingInfo)
+        })
+        .catch(error => {
+            console.log('err', error)
+        })
+    },
     async getSpecialList({ commit }, params) {
         commit('updateCurrPage', parseInt(params.current_page))
         
@@ -60,6 +77,20 @@ export const actions = {
             console.log('err', error)
         })
     },
+    async monthaddPlan({commit}, params) {
+		try{
+            let res = await sendCurl(this, server.api.special.monthaddPlan, params)
+            console.log(res)
+			if (res.status === 200 && (res.data.errorcode||0) == 0) {
+                commit('monthaddList', res.data.items)
+                commit('monthTotal', res.data.total)
+                
+			}
+		}catch(err){
+			console.log('获取月计划列表异常：', err)
+		}
+
+	},
     async getSpotList({commit}, params) {
 		try{
             let res = await sendCurl(this, server.api.special.initSpotList, params)
