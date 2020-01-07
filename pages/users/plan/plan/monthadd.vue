@@ -13,8 +13,8 @@
            
              <Row :gutter="24" index="3">
                <Col span="12">
-                 <FormItem label="年计划id" prop="yearPlanId" >
-                   <Input v-model="formItem.yearId"  disabled placeholder="请输入年计划id" style="width:80%" />
+                 <FormItem label="年份" prop="yearPlanId" >
+                   <Input v-model="rowData.year"  disabled placeholder="请输入年计划id" style="width:80%" />
                  </FormItem>
                </Col>
                <Col span="12">
@@ -161,8 +161,8 @@ export default {
   data () {   
     return {
       self: this,
-      max:'',
-      min:'',
+      max:0,
+      min:0,
       addmodal: false,
       loading: true,
       loading1:false,
@@ -186,6 +186,7 @@ export default {
       formItem: {
         yearId: 0,
         monthNum:0,
+        month:0,
       },
       ruleValidate: {
         month: [
@@ -223,10 +224,12 @@ export default {
          
            this.dataList=res.data
            
-           this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
-           this.min=Math.round(this.formItem.monthNum/2)
-           this.max=this.formItem.monthNum*2
-           console.log(this.max)
+          //  this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
+           
+        
+          //  this.min=Math.round(this.formItem.monthNum/2)
+          //  this.max=this.formItem.monthNum*2
+   
            if(this.dataList.packingModes == 1){
                 this.dataList.packingModes ='标准包装'
            } else{
@@ -256,8 +259,13 @@ export default {
     rowData: {
         
       handler (newValue, oldValue) {
+        
+        this.formItem.monthNum= Math.round(newValue.defaultNum)
+        this.max= Math.round(newValue.defaultUpNum) 
+        this.min=Math.round(newValue.defaultDownNum) 
         this.formItem.yearId = newValue.id
         this.canMonth = newValue.canMonth
+        this.formItem.month = newValue.canMonth
       }
     },
     isshow: function (e) {
