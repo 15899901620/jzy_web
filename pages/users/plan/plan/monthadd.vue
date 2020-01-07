@@ -221,7 +221,7 @@ export default {
       async getwarehouse() {
           var res= await sendHttp(this, true, server.api.month.yeardetail, {id: this.formItem.yearId})
 
-           this.dataList=res.data 
+           this.dataList=res.data
 
            this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
            this.min=Math.round(this.formItem.monthNum/2)

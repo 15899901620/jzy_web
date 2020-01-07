@@ -20,7 +20,7 @@
         <div class="mt10 fs14">
           <breadcrumb>
             <breadcrumb-item><i type="home"></i><nuxt-link to="/">巨正源首页</nuxt-link></breadcrumb-item>
-            <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>招标公告详情</breadcrumb-item>
+            <breadcrumb-item><nuxt-link to="/tendering">招标中心</nuxt-link></breadcrumb-item><breadcrumb-item>{{dataList.title}}</breadcrumb-item>
           </breadcrumb>
         </div>
       </div>
@@ -55,11 +55,13 @@
       </div>
 
     </div>
+  <Footer size="default" title="底部" ></Footer>
 </div>
 </template>
 
 <script>
   import Header from "../../components/header";
+  import Footer from "../../components/footer";
   import DetailsBidding from './trenderCompontent/DetailsBidding'
   import membercenter from  './trenderCompontent/membercenter'
   import Commonproblem from  './trenderCompontent/Commonproblem'
@@ -76,6 +78,7 @@
         Commonproblem,
         membercenter,
         Notice,
+        Footer
 
       },
        fetch({ store, params }) {
@@ -100,7 +103,14 @@
         };
       },
       methods:{
-
+        async SourceData() {
+          let params = {
+            id: this.id,
+          };
+          const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params,2)
+          this.dataList = res.data
+          console.log("dataList", this.dataList)
+        },
           // async BySupplier() {
           //     let params = {
           //       biddingId: this.id,
@@ -111,6 +121,7 @@
 
       },
       mounted() {
+          this.SourceData()
           // this.BySupplier()
       }
 
