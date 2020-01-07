@@ -3,8 +3,8 @@
         <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  >
             <ul class="item" style="display: flex; color: #666">
                 <li v-for="item in sendValList"    >
-                    <span class="mr5 time" v-text="item.time"> </span>
-                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content"  v-text="item.title" >
+                    <span class="mr5 time fwb" v-text="item.time"> </span>
+                    <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content"  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title" >
 <!--                      <span  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title"> </span>-->
                     </nuxt-link>
                 </li>
@@ -55,56 +55,6 @@ export default {
             disArr: [],
             sendValList:[],
             newDate: this.$utils.dateFormat(new Date(), 'MM-dd'),
-            newsList: [
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },{
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },{
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-                {
-                    time:'12-10',
-                    content:'A simple, seamless scrolling for Vue.js, seamless scrolling for Vue.js'
-                },
-
-
-            ]
         }
     },
     mounted(){

@@ -172,7 +172,7 @@ export default {
             this.sourceData()
         },
         unAdddmonth (res) {
-            this.datalist.map((item, index) => {         
+            this.datalist.map((item, index) => {
                     item._expanded = false
             })
             this.addmodalmonth = res
@@ -191,7 +191,7 @@ export default {
             this.page_size = 20
             this.sourceData()
         },
-        
+
         changePage (row) {
             this.current_page = row
             this.sourceData()

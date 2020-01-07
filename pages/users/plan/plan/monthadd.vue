@@ -10,7 +10,7 @@
     <Form ref="formItem" :model="formItem" :label-width="110"  :rules="ruleValidate">
         <Tabs size="small">
           <TabPane label="商品信息" >
-           
+
              <Row :gutter="24" index="3">
                <Col span="12">
                  <FormItem label="年计划id" prop="yearPlanId" >
@@ -19,8 +19,7 @@
                </Col>
                <Col span="12">
                  <FormItem label="月计划量" prop="monthNum" >
-                      <input-special :min="min" :max="max" :step="1" v-model="formItem.monthNum" style="width:270px"
-                             @change="changeNum"></input-special>
+                      <input-special :min="min" :max="max" :step="1" v-model="formItem.monthNum" style="width:270px"  @change="changeNum"></input-special>
                     <!-- <InputNumber :max="50" :min="160" :step="1" v-model="formItem.monthNum" prop="monthNum"></InputNumber> -->
                  </FormItem>
                </Col>
@@ -158,7 +157,7 @@ export default {
   components: {
       InputSpecial
   },
-  data () {   
+  data () {
     return {
       self: this,
       max:'',
@@ -178,11 +177,11 @@ export default {
         { value:2, labal: '一等品' },
         { value:3, labal: '合格品' }
       ],
-      
+
       checkprod: [],
       warehouseData: [],
       isClear: false,
-     
+
       formItem: {
         yearId: 0,
         monthNum:0,
@@ -199,7 +198,7 @@ export default {
 				this.formItem.monthNum = value
 			},
         async  define () {
-        
+
                let params = {
                     ...this.formItem
                }
@@ -220,9 +219,9 @@ export default {
         },
       async getwarehouse() {
           var res= await sendHttp(this, true, server.api.month.yeardetail, {id: this.formItem.yearId})
-         
+
            this.dataList=res.data
-           
+
            this.formItem.monthNum=Math.round(this.dataList.yearNum/(12-this.dataList.createMonth+1 ))
            this.min=Math.round(this.formItem.monthNum/2)
            this.max=this.formItem.monthNum*2
@@ -231,15 +230,15 @@ export default {
                 this.dataList.packingModes ='标准包装'
            } else{
                 this.dataList.packingModes ='非标准包装'
-           }  
+           }
             if(this.dataList.productGrade == 1){
                 this.dataList.productGrade ='优等品'
            } else if(this.dataList.productGrade == 2){
                 this.dataList.productGrade ='一等品'
            }else{
                 this.dataList.productGrade ='合格品'
-           }   
-           
+           }
+
       },
        cancel (formItem) {
         this.$emit('unChange', false)
@@ -247,14 +246,14 @@ export default {
         // this.$refs.month.handleClear()
       },
     },
-   
-   
+
+
   mounted () {
-          
+
    },
   watch: {
     rowData: {
-        
+
       handler (newValue, oldValue) {
         this.formItem.yearId = newValue.id
         this.canMonth = newValue.canMonth
