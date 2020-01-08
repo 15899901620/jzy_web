@@ -80,7 +80,6 @@ export const actions = {
     async monthaddPlan({commit}, params) {
 		try{
             let res = await sendCurl(this, server.api.special.monthaddPlan, params)
-            console.log(res)
 			if (res.status === 200 && (res.data.errorcode||0) == 0) {
                 commit('monthaddList', res.data.items)
                 commit('monthTotal', res.data.total)
@@ -93,11 +92,11 @@ export const actions = {
 	},
     async getSpotList({commit}, params) {
 		try{
-            let res = await sendCurl(this, server.api.special.initSpotList, params)
+            let res = await sendCurl(this, server.api.special.initsaleList, params)
             console.log(res)
 			if (res.status === 200) {
-				commit('updateSpotList', res.data.items)
-				commit('updateTotal', res.data.total)
+				commit('updateSpotList', res.data)
+				// commit('updateTotal', res.data.total)
 			}
 		}catch (e) {
 			console.log('获取现货列表异常：', e)

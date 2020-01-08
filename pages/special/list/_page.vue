@@ -63,7 +63,7 @@
                         <span style="width:  9%;">资源量（吨）</span>
                         <span style="width:  11%;">单价（元/吨）</span>
                         <span style="width:  18%;">合约完成量</span>
-                        <span style="width:  9%;">距下架时间</span>
+                        <span style="width:  15%;">创建日期</span>
                         <span style="width:  8%;">操作</span>
                     </div>
                     <ul class="Xhlist">
@@ -73,7 +73,7 @@
 
                     <span style="width: 16%;">{{item.skuName}}</span>
                     <span style="width: 12%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
-                    <span :title="item.warehouseName" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouseName}}</span>
+                    <span :title="item.manufacturer" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.manufacturer}}</span>
 
                     <span style="width: 7%;" v-if='item.packing_modes=="1"'>标准包装</span>
                     <span style="width: 7%;" v-else>非标准包装</span>
@@ -86,22 +86,24 @@
                          <i v-if="item.isJry"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
                      </span>
                 </span>
-                 <span style="width: 18%;" :title="`合约量：${item.plan_total_num}，待转单：${item.plan_available_num}`">
-                    <template v-if="item.plan_total_num==0 && item.plan_available_num==0 " >
+                 <span style="width: 18%;" :title="`合约量：${item.monthNum}，待转单：${item.availableNum}`">
+                    <template v-if="item.monthNum==0 && item.availableNum==0 " >
                         <Progress :percent="0" :stroke-width="20"/>
                     </template>
                      <template v-else>
-                         <Progress :percent="((item.plan_total_num - item.plan_available_num)*100/item.plan_total_num).toFixed(2)" :stroke-width="20"/>
+                         <Progress :percent="((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2)" :stroke-width="20"/>
                     </template>
                 </span>
-                <span style="width: 9%;">
-                  <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                <span style="width:15%;">
+                    {{item.createTime}}
+                  <!-- <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown> -->
                 </span>
                 <span style="width: 8%;">
-                   <div v-if="$store.state.memberToken &&  item.onSale != 1"
-                      style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
-                  <div v-else-if="$store.state.memberToken && item.availableNum > 0" class="ListBtn"
-                       @click="toCreateOrder(item.id,item.planned_id)">下单</div>
+     
+                  <div v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum>0" class="ListBtn"
+                       @click="getSaleFeedingList(item.id)">下单</div>
+                  <div v-else-if="$store.state.memberToken"
+                style="color:#c3c3c3;background:#e7e7e7;cursor:default;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
                 </li>
@@ -130,7 +132,7 @@
           <div class="">
             <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" :content="self" >
               <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,row.planned_id)">下单</Button>
+                <Button type="primary" size="small" v-if="row.availableNum>0" @click="getSaleFeedingList(row.id)">下单</Button>
                 <Button type="primary" size="small" v-else  disabled>下单</Button>
               </template>
             </Table>
@@ -168,9 +170,7 @@
                 store.dispatch('spot/getFilterConditonData'),
                 //获取报价
                 store.dispatch('special/getSpotList', {
-                        current_page: query.page || 1,
-                        page_size: 6,
-                        catId: query.id || 0,
+                        cat_id: query.id || 0,
 
                     }
                 ),
@@ -222,33 +222,37 @@
         computed: {
         },
         methods: {
-        // async addOrder(id,planned_id){
-        //     this.curr_plan_id = planned_id
-		// 	let params = {
-		// 		planned_id: planned_id
-		// 	}
-        //     let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
-        //     console.log(res)
-        //         if(res.status === 200 && res.data){
-        //             if(res.data.length == 0){
-        //                         this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
-        //                             location.reload(true)
-        //             })
-        //             return
-        //         }
-		// 		if(res.data.length >= 1){
-		// 			//显示放料选择窗口
-		// 			this.selectFeedingData = res.data
-        //             this.selectFeedingModalShow = true
-        //             console.log(this.selectFeedingModalShow)
-        //             return
-		// 		}
-		// 	}
-        // },
+        selectFeedingModalCancel(){
+            this.selectFeedingModalShow=false
+        },
+        async getSaleFeedingList(planned_id){
+            this.curr_plan_id = planned_id
+			let params = {
+				planned_id: planned_id
+			}
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
+            console.log(res)
+ 
+                if(res.status === 200 && res.data){
+                    if(res.data.length == 0){
+                                this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
+                                    location.reload(true)
+                    })
+                    return
+                }
+				if(res.data.length > 1){
+					//显示放料选择窗口
+					this.selectFeedingData = res.data
+                    this.selectFeedingModalShow = true
+                    return
+                }
+                this.toCreateOrder(res.data[0].id, planned_id)
+			}
+        },
         toCreateOrder(feeding_id, planned_id){
             let url='/special/order/'+feeding_id+'?planned_id='+planned_id
             location.href =url
-        },
+		},
             categoryClick(id,index) {
                 this.categoryId=id
                 this.IndexCurr=id

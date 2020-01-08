@@ -161,7 +161,7 @@ export default {
             this.sourceData()
         },
         selectFeedingModalCancel(){
-
+                this.selectFeedingModalShow=false
         },
         editdischargeData (res) {
             this.editdata = res

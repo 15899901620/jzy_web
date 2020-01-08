@@ -398,7 +398,9 @@ export default {
             if(res.status==200){
                     this.specialDetail = res.data
                      this.feedingInfo= this.specialDetail.feedingInfo
-                    this.currMax = Math.min(this.specialDetail.availableNum,this.feedingInfo.availableNum)
+                    // this.currMax = Math.min(this.specialDetail.availableNum,this.feedingInfo.availableNum)
+                    this.currMax =this.limitNum
+                    
                     this.takeTheirTrans=this.feedingInfo.takeTheirTransportations.split(","); //字符分割
                     this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割
             }
