@@ -23,8 +23,6 @@
           </breadcrumb>
         </div>
       </div>
-
-
       <div class="mt10">
         <div class="w1200 dflex">
           <!--详情-->
@@ -44,7 +42,7 @@
             <Contact></Contact>
           </div>
         </div>
-      </div> 
+      </div>
       <div class="mt40">
         <Footer size="default" title="底部" ></Footer>
       </div>
