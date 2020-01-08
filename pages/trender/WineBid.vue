@@ -32,10 +32,19 @@
               <span class="tac" style="width:30%;">{{item.title}}</span>
               <span class="tac" style="width: 15%">{{item.statusName}}</span>
               <span class="tar gray  pr10" style="width: 17%">{{item.beginTime}}</span>
-              <span class="tar gray  pr10" style="width: 13%"  ><Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button></span>
+              <span class="tar gray  pr10" style="width: 13%"  >
+                <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">
+                  <template v-if="item.statusName === '未投标'">
+                    投标
+                  </template>
+                  <template v-if="item.statusName === '已中标'">
+                    中标详情
+                  </template>
+                </Button>
+              </span>
             </li>
           </ul>
-          <div class="whitebg ovh">
+          <div class="whitebg ovh pt20 pb20">
              <!-- <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages> -->
            <pages :total="total" :show-total="showTotal" :value="current_page"
                    :pageSize="page_size"></pages>
@@ -52,6 +61,9 @@
           <Contact></Contact>
         </div>
     </div>
+    <div class="mt40">
+      <Footer size="default" title="底部" ></Footer>
+    </div>
   </div>
 
 
@@ -59,7 +71,8 @@
 
 <script>
 	import {mapState} from 'vuex'
-  import Header from "../../components/header";
+    import Header from "../../components/header";
+    import Footer from "../../components/footer";
 	import Pagination from '../../components/pagination'
 	import pageRoute from './trenderCompontent/pageRoute'
 	import membercenter from './trenderCompontent/membercenter'
@@ -67,16 +80,17 @@
 	import Notice from './trenderCompontent/Notice'
 	import {sendHttp} from "../../api/common";
 	import server from "../../config/api";
-  import Cookies from "js-cookie";
+    import Cookies from "js-cookie";
 	export default {
-		name: "WineBid",
-		components: {
-      HeaderSmall: Header.small,
-			pageRoute,
-			Contact,
-			membercenter,
-			Notice,
-			pages: Pagination.pages
+	name: "WineBid",
+    components: {
+          HeaderSmall: Header.small,
+          Footer,
+          pageRoute,
+          Contact,
+          membercenter,
+          Notice,
+          pages: Pagination.pages
     },
     fetch({ store, params,query }) {
         return Promise.all([
@@ -99,13 +113,12 @@
         ]);
     },
     computed: {
-			...mapState({
+		...mapState({
         dataList: state => state.advance.BidInfo,
         total: state => state.advance.Total1,
-        
-			}),
-		},
-		data() {
+         }),
+	},
+	data() {
 			return {
 				webName: '',
 				current_page:  parseInt(this.$route.query.page) || 1,
@@ -114,12 +127,22 @@
 		},
 		methods: {
       WineDetail(row){
-        this.$router.push({
-              name: 'trender-WineBidDetail',
-              query: {
-                  id: row.id
-              }
+        if(row.statusName === '未投标'){
+          this.$router.push({
+            name: 'trender-WineBidDetail',
+            query: {
+              id: row.id
+            }
           })
+        }
+        if(row.statusName === '已中标'){
+          this.$router.push({
+            name: 'WinAnnoun-id',
+            query: {
+              id: row.id
+            }
+          })
+        }
       },
 			showTotal(total) {
 				return `全部 ${total} 条`;
