@@ -13,7 +13,6 @@
       </div>
     </Header-small>
 
-    <div class="mb40">
 
     <!--页面路径-->
       <div class="w1200">
@@ -26,7 +25,7 @@
       </div>
 
 
-      <div class="graybg mt10">
+      <div class="mt10">
         <div class="w1200 dflex">
           <!--详情-->
           <div class="Notice">
@@ -43,19 +42,12 @@
             <!-- <Commonproblem></Commonproblem> -->
             <!--联系我们-->
             <Contact></Contact>
-
-
-
           </div>
-
-
-
         </div>
-
+      </div> 
+      <div class="mt40">
+        <Footer size="default" title="底部" ></Footer>
       </div>
-
-    </div>
-  <Footer size="default" title="底部" ></Footer>
 </div>
 </template>
 
