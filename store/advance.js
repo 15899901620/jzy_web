@@ -40,9 +40,6 @@ export const mutations = {
 	updateFeedingList(state, data) {
 		state.feedingList = data
 	},
-	updateAdvanceList(state, data) {
-		state.advanceList = data
-   },
 }
 
 export const actions = {
