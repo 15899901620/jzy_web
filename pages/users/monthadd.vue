@@ -33,28 +33,13 @@
           <template v-if="monthinfo.length > 0">
             <table v-for="(item, index) in monthinfo" :key="index" class="listT mt10" border="" cellspacing="" cellpadding="">
               <tbody>
-              <!-- <tr class="Ttitle graybg" >
-                <td colspan="8">
-                    <span class="ml10">合约编号：
-                      <a :href="`/users/plan/advance/${item.id}`" class="mt5 blackFont"><span class="blue">{{item.plan_no}}</span></a>
-                      <template v-if="item.status == 1">(待转单)</template>
-                      <template v-else-if="item.status == 2">(已转单)</template>
-                      <template v-else-if="item.status == 3">(已违约)</template>
-                    </span>
-                  <span class="ml15">下单时间：<span class="gray">{{item.create_time}}</span></span>
-                  <span class="fr mr15" v-if="item.status != 3 && item.available_num > 0 && (item.close_apply_status == 1 || item.close_apply_status == 4)">
-                      <span class="red">转单倒计时：</span>
-                      <span class="red"><TimeDown :endTime="item.last_ordered_date" formatStr="{D}天{H}时{M}分{S}秒" endMsg="已失效" :onTimeOver="$utils.reload"></TimeDown></span>
-                  </span>
-                </td>
-              </tr> -->
               <tr class="detailTable">
                 <td style="width: 5%;">{{item.year}}</td>
                 <td style="width: 5%;">  {{item.canMonth}}</td>
                 <td style="width: 15%;">{{item.skuName}}</td>
                 <td style="width: 15%;">{{item.skuNo}}</td>
                 <td style="width: 10%;">
-                  {{item.estimateNum}}吨
+                  {{item.defaultNum}}吨
                 </td>
                 <td style="width: 10%;">  {{item.monthAvgNum}}</td>
           
