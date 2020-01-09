@@ -29,7 +29,8 @@ import pagination from '../../components/pagination'
 import { specialList } from '../../api/special'
 
 export default {
-    name: "special",
+	name: "special",
+	middleware: 'memberAuth',
     fetch({
         store,
         params,
