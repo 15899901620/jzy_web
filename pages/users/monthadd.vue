@@ -25,7 +25,7 @@
             <span style="width: 15%;">商品编号</span>
             <span style="width: 10%;">月生成量</span>
             <span style="width: 10%;">月计划平均值</span>
-            
+
             <span style="width: 10%;">产品等级</span>
             <span style="width: 15%;">包装方式</span>
             <span style="width: 15%;">操作</span>
@@ -57,7 +57,7 @@
                   {{item.estimateNum}}吨
                 </td>
                 <td style="width: 10%;">  {{item.monthAvgNum}}</td>
-          
+
                 <td style="width: 10%;">
                     <span class="" v-if="item.productGrade == 1">优等品</span>
                     <span class="" v-if="item.productGrade == 2">一等品</span>
@@ -66,8 +66,6 @@
                 <td style="width: 15%;">
                       <span class="" v-if="item.packingModes == 1">标准包装</span>
                        <span class="" v-else>非标准包装</span>
-                      </span>
-                    
                 </td>
 
                 <td style="width: 15%;" class="operate">
@@ -119,7 +117,6 @@ export default {
 		...mapState({
       monthinfo: state => state.special.monthinfo,
       monthTotal: state => state.special.monthTotal,
-      
 		}),
 	},
 	data () {
@@ -182,7 +179,7 @@ export default {
               }
             },
             onCancel: () => {
-              
+
             }
 				})
     },
