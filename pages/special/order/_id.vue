@@ -20,7 +20,12 @@
                 <div class="mt30 fs16 ml15 fwb">交货方式</div>
                 <div class="" style="display: flex; justify-content: space-between;align-items: center; margin-left: 35px;">
                     <ul class="DeliveryMethod mb20">
-                        <li v-for="(item, index) in methodList" @click="chooseDelieryType(index)" :class="{'curr':index === currentIndex}" :key="index"><div style="background-color: #fff;">{{item.name}}</div></li>
+                         <li @click="chooseDelieryType(0)" :class="{'curr':0 === currentIndex}" :key="0">
+                            <div style="background-color: #fff;">自提</div>
+                            </li>
+                            <li @click="chooseDelieryType(1)" v-if="$store.state.common.sysConfig.IS_CAN_DELIVERY == 1" :class="{'curr':1 === currentIndex}" :key="1">
+                            <div style="background-color: #fff;">配送</div>
+                     </li>
                         <div class="gray">（您选择交货方式为配送，提交下单必须满足<span class="orangeFont">25</span>吨的倍数）</div>
                     </ul>
                     <div class="blueFont mr30 cp fs14" v-show="currentIndex" id="newAdd"  @click="addNewAddress">新增收货地址</div>
@@ -405,7 +410,7 @@ export default {
                     this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割
             }
 
-            console.log('jryDays',this.jryDays)
+            console.log('jryDays',this.takeTheirTrans)
             this.setCosting()
             // this.getWeekDetail()
         },
