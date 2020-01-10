@@ -2,11 +2,12 @@
     <div class="my-outbox" style="display: flex">
         <vue-seamless-scroll :data="sendValList"  :class-option="optionSetting" class="table-content"  >
             <ul class="item" style="display: flex; color: #666">
-                <li v-for="item in sendValList"    >
+                <li v-for="(item, index) in sendValList" :key="index"   >
                     <span class="mr5 time fwb" v-text="item.time"> </span>
                     <nuxt-link :to="{name:'notice-detail-id', params:{id:item.id}}" :title="item.title" class="content"  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title" >
 <!--                      <span  :style="item.time==newDate?'color: #e50618;':''" v-text="item.title"> </span>-->
                     </nuxt-link>
+                    <span class='new' :style="item.time==newDate?'display: block':'display: none'"><img src="../../static/img/new_icon.gif"/></span>
                 </li>
             </ul>
         </vue-seamless-scroll>
@@ -169,6 +170,10 @@ export default {
                 margin-right: 35px;
                 .time{  }
                 .content{white-space:nowrap;}
+                .new{
+                    width: 18px;position:relative; top: -5px;
+                    img{width: 100%;}
+                }
             }
         }
     }
