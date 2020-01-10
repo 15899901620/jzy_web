@@ -1894,6 +1894,8 @@ gAccount {
 .transaction_data i{ color: #ff6600;padding-right: 30px;}
 .transaction_data b{float:right;color:#999999; font-weight:normal;padding-right:10px;}
 .transaction_data b img{margin-right:5px;}
+.transaction_data .more{padding: 0 20px; color: #666; cursor: pointer;} 
+.transaction_data .more:hover{ color: #108ee9; }
 /*商品信息*/
 .orderPorList{width: 98%;margin: 0 auto;margin-top: 10px;}
 .orderPorList li{display: flex; background-color: #fbfcff; border-bottom: 1px solid #fff; font-size: 14px;}
@@ -1994,8 +1996,8 @@ gAccount {
 .j_n_info_l li span{ float:right;padding-right:20px;}
 .j_n_info .fwb{line-height:28px;height:28px;padding-top:10px;}
 
-.j_t_in{ background:#fff;padding-top:10px;}
-.j_t_in li{ overflow:hidden;height:31px;line-height:31px;}
+.j_t_in{ background:#fff;padding:10px;}
+.j_t_in li{ overflow:hidden;height:35px;line-height:35px;}
 .j_t_in li:hover{color:#007de4;}
 .j_t_in li a{float:left;width:220px;padding-left:20px;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all; overflow:hidden;background:url(../../static/img/p_h1.jpg) no-repeat 10px 13px;}
 .j_t_in li a:hover{color:#007de4;background:url(../../static/img/p_h2.jpg) no-repeat 10px 13px;}

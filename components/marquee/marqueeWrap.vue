@@ -154,7 +154,7 @@ export default {
         overflow: hidden;
         color: #FFFFFF;
         /*background: #422b02;*/
-        width: 90%;
+        width: 86%;
     }
     .table-content{
         overflow: hidden;

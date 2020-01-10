@@ -18,6 +18,7 @@
         </div>
       <div class="transaction_data"><h2>网站公告</h2>
         <marqueeText  :sendVal="newItems" ></marqueeText>
+        <span class='more' @click="announe">更多</span>
       </div>
       <div class="hotbidding">
         <outpacking title="限时竞拍" cpadding="0px" :more="bidderData">
@@ -177,7 +178,11 @@ export default {
 
   },
   methods:{
-
+  announe(){
+    this.$router.push({
+       name: "article"
+    }) 
+  }
   },
   mounted(){
     console.log("noticeList:", this.$store.state.article.noticeList)
