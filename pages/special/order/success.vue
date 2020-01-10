@@ -81,7 +81,7 @@ export default {
 
     data() {
         return {
-            orderNo:'',
+            orderNo:this.$route.query.orderNo,
             id:''
         }
     },

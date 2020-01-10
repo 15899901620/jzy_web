@@ -33,14 +33,18 @@
           <span class="Bond_Popup_title">已购数量: </span>
           <span class="ml10">{{$utils.numFormat(dataList.planned_total_num)}}</span>
         </div>
-			<div style="line-height:32px;">
+		<div style="line-height:32px;">
           <span class="Bond_Popup_title">单价: </span>
           <span class="ml10">{{$utils.amountFormat(dataList.final_price)}}</span>
+        </div>
+		<div style="line-height:32px;">
+          <span class="Bond_Popup_title">加量幅度: </span>
+          <span class="ml10">{{dataList.increment_num}}</span>
         </div>
         <div class="mt15 dflex" style="align-items: center;">
           <span class="Bond_Popup_title">需求数量：</span>
           <div class="pr ml10">
-            <input-special :min="dataList.min_num" :max="dataList.max_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
+            <input-special :min="dataList.min_num" :max="dataList.max_num" :step="dataList.increment_num" v-model="Bonddeposit.bidNum" @change="changeNum"></input-special>
             <span class="ml15">吨</span>
           </div>
 		<span class="Bond_Popup_title">可售数量：</span>
@@ -126,6 +130,7 @@
 					advance_id: 0,
 					bidNum: 12,
 					BondCode: '',
+					increment_num:'',
 				},
 			}
 		},
@@ -195,7 +200,9 @@
 				let params = {
 					id: this.Bonddeposit.advance_id,
 					num: this.Bonddeposit.bidNum,
-					sms_code: this.Bonddeposit.BondCode
+					sms_code: this.Bonddeposit.BondCode,
+					increment_num: this.Bonddeposit.increment_num
+					
 				}
 
 				this.proShow = true
@@ -239,6 +246,8 @@
 					this.$store.dispatch('member/getCapitalInfo')
 					this.Bonddeposit.bidNum = this.dataList.min_num
 					this.Bonddeposit.advance_id = this.dataList.advance_id
+					this.Bonddeposit.increment_num = this.dataList.increment_num
+					
 					this.loading = true
 				} else {
 					this.loading = false

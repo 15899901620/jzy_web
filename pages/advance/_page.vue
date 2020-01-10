@@ -352,6 +352,8 @@
           this.DepositData.final_price = row.final_price
           this.DepositData.min_num = row.min_order
           this.DepositData.limit_num = row.limit_num
+          this.DepositData.increment_num = row.increment_num
+          
           this.DepositData.planned_total_num = row.planned_total_num
           if(row.available_num > 0 && row.limit_num > 0){
               this.DepositData.max_num = row.limit_num-row.planned_total_num
