@@ -75,6 +75,7 @@
             <li @click='payment()' style="cursor: pointer">
               <div class="listIcon01 mt20"></div>
               <div class="mt10">待付款</div>
+              <div class="mt10" v-if="nopay">待付金额：{{$utils.amountFormat(nopay)}}</div>
             </li>
             <li @click='auction()' style="cursor: pointer">
               <div class="listIcon04 mt20"></div>
@@ -82,11 +83,11 @@
             </li>
             <li @click='logistics()' style="cursor: pointer">
               <div class="listIcon05 mt20"></div>
-              <div class="mt10">物流管理</div>
+              <div class="mt10">预售管理</div>
             </li>
             <li @click='account()' style="cursor: pointer">
               <div class="listIcon06 mt20"></div>
-              <div class="mt10">账号完善</div>
+              <div class="mt10">计划管理</div>
             </li>
           </ul>
         </div>
@@ -166,7 +167,7 @@
 	import Navigation from '../../components/navigation'
   import Cookies from 'js-cookie'
   import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
-  import {orderpage} from '../../api/order'
+  import {orderpage,Nopay} from '../../api/order'
 	import OrderPay from '../../components/paydeposit/orderPay'
   import {parse, stringify} from 'qs'
   import { getCookies } from '../../config/storage'
@@ -203,7 +204,8 @@
         payLoading: false,
         addList:{},
 				total_amount_format: '',
-				freeze_amount_format: '',
+        freeze_amount_format: '',
+        nopay:'',
 				available_amount_format: '',
 				hotorderinfo: [],
 				total_fund: '',
@@ -246,10 +248,10 @@
 				this.$router.push({name: 'users-userauction'})
 			},
 			logistics() {
-				this.$router.push({name: 'users-userlog'})
+				this.$router.push({name: 'users-advancePlan'})
 			},
 			account() {
-				this.$router.push({name: 'users-useraccountinfor'})
+				this.$router.push({name: 'users-userSpecmat'})
       },
       bidders(){
 	        this.$router.push({name: 'bidders-page'})
@@ -295,11 +297,15 @@
 				}
 				const res = await orderpage(this, params)
 				this.hotorderinfo = res.data.items
+      },
+      async getNopay() {
+        const res = await Nopay(this)
+        console.log(res)
+				this.nopay = res.data
 			},
 
       handleSuccess (res) {
         this.Headavatar= res.url
-        console.log('222',res)
         this.editAvatar();
       },
       async editAvatar(){
@@ -307,7 +313,6 @@
          let data = {
           avatar:this.Headavatar
         }
-        console.log(data)
          const res=await editAvatar(this, data)
           let expires = new Date((new Date()).getTime() + 5 * 60 * 60000);
 
@@ -356,6 +361,7 @@
 		mounted() {
       this.getUploadURL()
       this.showtime()
+      this.getNopay()
       this.getOrderList()
     }
 	}

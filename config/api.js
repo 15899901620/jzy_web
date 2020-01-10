@@ -64,6 +64,7 @@ let api = {
     monthorder:{'url':'/bill/orderInfo/page', 'method':'get'} ,
     orderlist: '/bill/orderInfo/list',
     orderpage: '/bill/orderInfo/getOrderInfoByCurrMemberId',
+    Nopay: '/bill/orderInfo/getUnPayAmountByCurrMemberId',
     orderCount: '/bill/orderInfo/getMemberOrderCount',
     orderDetail: '/bill/orderInfo/detail',
     checkIsRelease: '/bill/bookingPlan/checkIsRelease',
