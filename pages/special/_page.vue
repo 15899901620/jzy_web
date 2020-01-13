@@ -10,7 +10,7 @@
 							</div>
 							<div class="operatebtn">
 								<div class="btn" style="font-size: 23px;font-weight: 600;" v-if="items.is_can_click==1" @click="planOrder(items.id)">{{items.name}}</div>
-								<div class="btn" style="font-size: 23px;font-weight: 600;" v-else >{{items.name}}</div>
+								<div class="btn" style="font-size: 23px;font-weight: 600;background-color: gainsboro;" v-else >{{items.name}}</div>
 							</div>
 						</li>
 					</ul>
