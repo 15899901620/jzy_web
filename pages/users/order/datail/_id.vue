@@ -326,7 +326,7 @@ export default {
 
 	mounted() {
 		this.sourceDeta()
-		this.orderlist();
+		// this.orderlist();
 
 
 	},
