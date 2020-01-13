@@ -519,7 +519,7 @@
   }
   .iv_Date{
     background-color: #ed1e2d; color: #fff; font-weight: bold;padding: 0 3px;
-    font-size: 12px;
+    font-size: 12px; border-radius:5px
   }
   .ixebm {
     width: 235px;
