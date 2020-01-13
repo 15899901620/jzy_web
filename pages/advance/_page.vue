@@ -156,7 +156,7 @@
                 </div>
                   <div class="mt10 fs14 dflexAlem">
 
-                  <div class="fs14 dflexAlem"><span class="iv_title">提货日期</span> ：<span class="orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
+                  <div class="fs14 dflexAlem"><span class="iv_title iv_Date">提货日期</span> ：<span class="orangeFont">{{items.delivery_start}} ~ {{items.delivery_deadline}}</span></div>
 
                   
                 </div>
@@ -517,7 +517,10 @@
     width: 60px;
     text-align-last: justify;
   }
-
+  .iv_Date{
+    background-color: #ed1e2d; color: #fff; font-weight: bold;padding: 0 3px;
+    font-size: 12px; border-radius:5px
+  }
   .ixebm {
     width: 235px;
     overflow: hidden;
