@@ -138,7 +138,6 @@
 					num:this.datalist.orderNum
 				}
 				const res = await checkIsRelease(this, params)
-				console.log(res)
 				if (res.data && res.status === 200) {
 					this.IsReleaseData=res.data
 					
