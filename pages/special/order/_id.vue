@@ -452,10 +452,9 @@ export default {
 
 
             const res = await submitOrder(this, params)
-
             if (typeof res.data.errorcode == "undefined"){
 
-                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.orderNo}})
+                this.$router.push({name:'special-order-success', query:{id:res.data.id,orderNo:res.data.order_no}})
 
             }else{
 

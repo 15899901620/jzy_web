@@ -130,7 +130,7 @@
 					advance_id: 0,
 					bidNum: 12,
 					BondCode: '',
-					increment_num:'',
+					increment_num:1,
 				},
 			}
 		},
@@ -247,7 +247,6 @@
 					this.Bonddeposit.bidNum = this.dataList.min_num
 					this.Bonddeposit.advance_id = this.dataList.advance_id
 					this.Bonddeposit.increment_num = this.dataList.increment_num
-					
 					this.loading = true
 				} else {
 					this.loading = false
