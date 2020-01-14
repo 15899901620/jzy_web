@@ -164,7 +164,7 @@
                 <div class="acuOpear">
                   <div style="display: flex; flex-direction: column; justify-content: center">
                     <span class="mt10 ">库区：{{items.warehouseName}}</span>
-                    <span class="mt5">城市：{{items.warehouseProvince}}</span>
+                    <span class="mt5">城市：{{items.cityName}}</span>
                   </div>
                   <template v-if="items.statusType == '1'">
                     <div class="btnStart startauction" @click="BidersDetail(items.id)">
