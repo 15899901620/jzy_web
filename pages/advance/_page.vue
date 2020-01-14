@@ -53,7 +53,7 @@
                             <Progress :percent="0" :stroke-width="10"/>
                     </template>
                     <template v-else >
-                          <Progress :percent="((items.total_num - items.available_num)*100/items.total_num).toFixed(2)" :stroke-width="10"/>
+                          <Progress :percent="Number(((items.total_num - items.available_num)*100/items.total_num).toFixed(2))" :stroke-width="10"/>
                    </template>
                 </div>
             </td>
@@ -322,6 +322,7 @@
 				pageSize: 10,
         selectPlanModalShow:false,
         selectPlanData:[],
+        self: this,
         selectPlanColumns: [
 					{ title: '放料有效期', key: 'valid_time' },
           { title: '放料编号', key: 'feeding_no'},

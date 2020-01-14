@@ -120,6 +120,7 @@
 		},
 		data() {
 			return {
+				title:'预售支付',
 				loading: false,
 				btnValue: "获取短信验证码",
 				btnBoolen: false,
@@ -208,31 +209,57 @@
 				this.proShow = true
 				this.closeShow = false
 
-				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params)
-				this.proShow = false
-				this.closeShow = true
-				if (res.status === 200) {
+				let res = await this.$utils.sendCurl(this, server.api.advance.planAdd, params).then(res => {
+
 					if (res.data && !res.data.errorcode) {
 						this.Bonddeposit.BondCode = ''
-						this.$Message.info("支付成功")
-						this.$emit('unChange', false)
+						this.$Modal.confirm({
+							title: '成功提示',
+							content: '支付成功',
+							okText: '确定',
+							styles: 'top:30px;',
+							onOk: () => {
+								this.$emit('unChange', false)
+								// this.$router.push({name:'login'});
+							},
+							onCancel: () => {
+
+							}
+						})
+					
 					} else {
-						this.$Message.info(res.data.message)
+						this.$Modal.confirm({
+							title: '失败提示',
+							content: res.data.message,
+							okText: '确定',
+							styles: 'top:30px;',
+							onOk: () => {
+								this.proShow = false
+								this.closeShow = true
+								// this.$router.push({name:'login'});
+							},
+							onCancel: () => {
+
+							}
+						})
+						
 					}
-				} else {
-					this.$Modal.confirm({
+				}).catch(err => {
+						this.$Modal.confirm({
 						title: '失败提示',
 						content: '<p style="font-size: 16px; margin-top: 10px">支付失败，请联系客服</p>',
 						okText: '确定',
 						styles: 'top:30px;',
 						onOk: () => {
+							this.proShow = false
+							this.closeShow = true
 							// this.$router.push({name:'login'});
 						},
 						onCancel: () => {
 
 						}
 					})
-				}
+				})
 			}
 		},
 		watch: {
