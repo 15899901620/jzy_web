@@ -122,8 +122,8 @@
 
                  <div class="w1200 dflex" style="margin-top: 10px;">
  
-                    <ul class="acuList" v-if="FeedDataList.length>0 &&  this.$route.query.id !=''">
-                        <li v-for="(item, index) in FeedDataList"  :key="index" style="flex-direction: column;">
+                    <ul class="acuList" v-if="$store.state.special.spotList.length>0 &&  this.$route.query.id !=''">
+                        <li v-for="(item, index) in $store.state.special.spotList"  :key="index" style="flex-direction: column;">
                             <div class="dflex">
                          <div class="acuProduct " style="margin-top: 20px; margin-bottom: 30px; border-right:none;">
                          <span class="fs20 orangeFont" style="position: relative">{{item.skuName}}</span>
@@ -174,11 +174,7 @@
 
                          </div>
                         
-                        <div class="acuOpear" style="justify-content: flex-end; margin-bottom: 30px;">
-                            <!-- <div style="display: flex; flex-direction: column; justify-content: center">
-                            <span class="mt10 ">库区：{{item.manufacturer}}</span>
-                            <span class="mt5">交货仓：{{item.manufacturer}}</span>
-                            </div> -->
+                        <!-- <div class="acuOpear" style="justify-content: flex-end; margin-bottom: 30px;"> 
                             <template v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum > 0"  >
                                  <div class="ListBtn" @click="getSaleFeedingList(item.id)">下单</div>        
                            </template>  
@@ -188,14 +184,14 @@
                             <template v-else-if="$store.state.memberToken">
                             <div class="ListBtn" @click="toLogin">登录</div>
                             </template> 
-                        </div>
+                        </div> -->
                         
                         </div>
                             <!-- 放料列表 -->
-                            <div class="w1200" v-if="item.child">
-                                <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="item.child" :content="self" >
+                            <div class="w1200" v-if="$store.state.memberToken && item.feedingList.length > 0">
+                                <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="item.feedingList">
                                 <template slot-scope="{ row, index }" slot="action">
-                                    <Button type="primary" size="small" v-if="row.availableNum>0" @click="getSaleFeedingList(row.id)">下单</Button>
+                                    <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,item.id)">下单</Button>
                                     <Button type="primary" size="small" v-else  disabled>下单</Button>
                                 </template>
                                 </Table>
@@ -222,14 +218,14 @@
                  
             </div>
         </div>
-        <Modal
+        <!-- <Modal
             title="选择放料"
             v-model="selectFeedingModalShow"
             @on-cancel="selectFeedingModalCancel"
             :width='700'
             class-name="vertical-center-modal">
           <div class="">
-            <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" :content="self" >
+            <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" >
               <template slot-scope="{ row, index }" slot="action">
                 <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,curr_plan_id)">下单</Button>
                 <Button type="primary" size="small" v-else  disabled>下单</Button>
@@ -238,7 +234,7 @@
           </div>
           <div slot="footer">
           </div>
-        </Modal>
+        </Modal> -->
         <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
     </div>
 </template>
@@ -331,14 +327,20 @@
                 cat_id: Number(this.$route.query.id) || 0,
             } 
            let res = await this.$utils.sendCurl(this, server.api.special.initsaleList, params) 
-           let dataArray=res.data 
+          let dataArray=res.data 
+          console.log("dataArray:",dataArray)
             dataArray.forEach((item,index) => { 
+                console.log("id",item.id)
                 this.getFeedingListData(item.id).then(res=>{ 
-                    dataArray[index]['child']=res.data
-               }) 
-              
-            });
-            this.FeedDataList=dataArray
+                    dataArray[index]["child"]=res
+                    console.log("FeedingList", dataArray)
+               })  
+            }); 
+            setTimeout(() => {
+                 this.FeedDataList=dataArray
+            }, 100);
+           
+ 
         },
         async getFeedingListData(planned_id){
             this.curr_plan_id = planned_id
@@ -347,13 +349,24 @@
 			}
             let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
             return res.data
-        },
-        async getSaleFeedingList(planned_id){ 
+         },
+        // async getFeedingListData(planned_id){
+        //     this.curr_plan_id = planned_id
+		// 	let params = {
+		// 		planned_id: planned_id
+		// 	}
+        //     let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)   
+        //     console.log("getFeedingListData", res)
+        //     return res.data
+        // },
+        async getSaleFeedingList(planned_id,id){
+            console.log("planned_id:",planned_id) 
+            console.log("id:",id) 
             this.curr_plan_id = planned_id
 			let params = {
 				planned_id: planned_id
 			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params) 
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
@@ -361,12 +374,7 @@
                     })
                     return
                 }
-				if(res.data.length > 1){
-					//显示放料选择窗口
-					this.selectFeedingData = res.data
-                    this.selectFeedingModalShow = true
-                    return
-                }
+
                 this.toCreateOrder(res.data[0].id, planned_id)
 			}
         },
