@@ -38,6 +38,7 @@ export const mutations = {
         state.monthinfo = data
     },
     updateSpotList(state, data) {
+        console.log("speciallist:",data)
 		state.spotList = data
     },
     monthTotal(state, data){

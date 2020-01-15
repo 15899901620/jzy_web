@@ -179,9 +179,7 @@ export default {
   },
   methods:{
   announe(){
-    this.$router.push({
-       name: "article"
-    }) 
+    this.$router.push({  name: "article" }) 
   }
   },
   mounted(){

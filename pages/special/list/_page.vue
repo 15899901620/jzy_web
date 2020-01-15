@@ -55,7 +55,7 @@
 <!--                </div>-->
                 <!--现货列表-->
                 <div class="mt20">
-                    <div class="XhlistTitle">
+                    <!-- <div class="XhlistTitle">
                         <span style="width:  16%;">牌号</span>
                         <span style="width:  12%;">厂商</span>
                         <span style="width:  10%;">交货仓</span>
@@ -65,8 +65,8 @@
                         <span style="width:  18%;">合约完成量</span>
                         <span style="width:  15%;">创建日期</span>
                         <span style="width:  8%;">操作</span>
-                    </div>
-                    <ul class="Xhlist">
+                    </div> -->
+                    <!-- <ul class="Xhlist">
                         <template v-if="$store.state.special.spotList.length>0 &&  this.$route.query.id !=''">
 
                             <li v-for="(item, index) in $store.state.special.spotList"  :key="index"  >
@@ -96,8 +96,8 @@
                 </span>
                 <span style="width:15%;">
                     {{item.createTime}}
-                  <!-- <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown> -->
-                </span>
+                  <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown> -->
+                <!-- </span>
                 <span style="width: 8%;">
      
                   <div v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum>0" class="ListBtn"
@@ -114,13 +114,112 @@
                             <img src="../../../static/img/Nothing.png"/>
                         </p>
                     </li>
-                </template>
-                </ul>
-                <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0">
+                </template> -->
+                <!-- </ul> -->  
+               
+
+
+
+                 <div class="w1200 dflex" style="margin-top: 10px;">
+ 
+                    <ul class="acuList" v-if="FeedDataList.length>0 &&  this.$route.query.id !=''">
+                        <li v-for="(item, index) in FeedDataList"  :key="index" style="flex-direction: column;">
+                            <div class="dflex">
+                         <div class="acuProduct " style="margin-top: 20px; margin-bottom: 30px; border-right:none;">
+                         <span class="fs20 orangeFont" style="position: relative">{{item.skuName}}</span>
+                         <div class="mt10 fs14 dflexAlem">
+                            <div class="btmunv"><span class="iv_title">年计划编号</span> ：<span class=" ">{{item.yearPlanNo}}</span></div>
+                            <div class="btmunv"><span class="iv_title">年份</span> ：<span class="">{{item.year}}</span></div>
+                             <div class="btmunv"><span class="iv_title">月份</span> ：<span>{{item.month}}</span></div>
+                         </div>
+                         <div class="mt10 fs14 dflexAlem">
+                            <div class="btmunv"><span class="iv_title">厂商</span> ：<span class=" ">{{item.manufacturer}}</span></div>
+                            <div class="btmunv">
+                                <span class="iv_title">包装方式</span> ：<span class="">{{item.packing_modes == 1?'标准包装':'非标准包装'}}</span> 
+                            </div>
+                             <div class="btmunv"><span class="">资源量（吨）</span> ：<span>{{item.availableNum}}</span></div>
+                         </div>
+                         <div class="mt10 fs14 dflexAlem"> 
+                            <div class="btmunv dflexAlem">
+                                <span class="">单价（元/吨）</span> :<span class='orangeFont fs16' style="position: relative">{{$utils.amountFormat(item.finalPrice)}}
+                                <i v-if="item.jryAdd"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
+                             </span> 
+                            </div>
+                            <div class="btmunv"> 
+                                <span class="iv_title">产品等级</span>：
+                                <span v-if='item.productGrade === 1'>优等品</span> 
+                                <span v-if='item.productGrade === 2'>一等品</span> 
+                                <span v-if='item.productGrade === 3'>合格品</span> 
+                            </div>
+                            <div class="btmunv"> <span class="" style="width:100px">最大可放料数量</span>：<span class='orangeFont fs16'>{{item.maxOrderNum}}</span> </div>
+                         </div> 
+                         <div class="mt10 fs14 dflexAlem">
+                            <div class="btmunv"><span class="iv_title">合约总量</span>：<span class=" ">{{item.availableNum}}</span></div> 
+                            <div class="btmunv"><span class="iv_title">余量</span>：<span>{{item.takenNum}}</span></div>
+                            <div class="btmunv"><span class="iv_title">月计划量</span>：<span>{{item.monthNum}}</span></div>
+                         </div>
+                         <div class="mt10 fs14 dflexAlem"> 
+                            <div class="btmunv dflexAlem" style="width:495px">
+                                <span class="" style="width:80px">合约完成量</span> :
+                                <span class="fs16 ml15" style="width: 280px; " :title="`合约量：${item.monthNum}，待转单：${item.availableNum}`">
+                                    <template v-if="item.monthNum==0 && item.availableNum==0 " >
+                                        <Progress :percent="0" :stroke-width="20"/>
+                                    </template>
+                                    <template v-else>
+                                        <Progress :percent="((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2)" :stroke-width="20"/>
+                                    </template>
+                                </span> 
+                            </div>
+                          </div>
+
+                         </div>
+                        
+                        <div class="acuOpear" style="justify-content: flex-end; margin-bottom: 30px;">
+                            <!-- <div style="display: flex; flex-direction: column; justify-content: center">
+                            <span class="mt10 ">库区：{{item.manufacturer}}</span>
+                            <span class="mt5">交货仓：{{item.manufacturer}}</span>
+                            </div> -->
+                            <template v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum > 0"  >
+                                 <div class="ListBtn" @click="getSaleFeedingList(item.id)">下单</div>        
+                           </template>  
+                           <template v-else-if="$store.state.memberToken && item.availableNum > 0  "  >
+                                 <div class="ListBtn" style="background-color:#e9e5e5; border:1px solid #e9e5e5;color: #666;">下单</div>        
+                           </template> 
+                            <template v-else-if="$store.state.memberToken">
+                            <div class="ListBtn" @click="toLogin">登录</div>
+                            </template> 
+                        </div>
+                        
+                        </div>
+                            <!-- 放料列表 -->
+                            <div class="w1200" v-if="item.child">
+                                <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="item.child" :content="self" >
+                                <template slot-scope="{ row, index }" slot="action">
+                                    <Button type="primary" size="small" v-if="row.availableNum>0" @click="getSaleFeedingList(row.id)">下单</Button>
+                                    <Button type="primary" size="small" v-else  disabled>下单</Button>
+                                </template>
+                                </Table>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <ul class="acuList" v-else>
+                     <li style="overflow:hidden; height: 235px;">
+                        <p style="width:100%; text-align:center">
+                            <img src="../../../static/img/Nothing.png"/>
+                        </p>
+                    </li>
+                    </ul>
+                 </div>
+ 
+                <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0" >
                     <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
                            :otherParams="`id=${this.$route.query.id}`" ></pages>
                 </div>
+
                 </div>
+
+                 
             </div>
         </div>
         <Modal
@@ -171,7 +270,6 @@
                 //获取报价
                 store.dispatch('special/getSpotList', {
                         cat_id: query.id || 0,
-
                     }
                 ),
             ])
@@ -196,6 +294,7 @@
                 maxPrice: '',
                 categoryMore: true,
                 selectFeedingModalShow:false,
+                selectFeedingData:[],
                 processMore: true,
                 categoryMoreVal: '更多',
                 processMoreVal: '更多',
@@ -217,6 +316,7 @@
                     }
 			    ],
                 sopdata:[],
+                FeedDataList:[]
             }
         },
         computed: {
@@ -225,14 +325,36 @@
         selectFeedingModalCancel(){
             this.selectFeedingModalShow=false
         },
-        async getSaleFeedingList(planned_id){
+        async getDataSuroce(){
+            let params={
+                cat_id: Number(this.$route.query.id) || 0,
+            } 
+           let res = await this.$utils.sendCurl(this, server.api.special.initsaleList, params) 
+           let dataArray=res.data 
+            dataArray.forEach((item,index) => { 
+                this.getFeedingListData(item.id).then(res=>{ 
+                    dataArray[index]['child']=res.data
+               }) 
+              
+            });
+            this.FeedDataList=dataArray
+        },
+        async getFeedingListData(planned_id){
+                 console.log("planned_id", planned_id)
+                 this.curr_plan_id = planned_id
+			let params = {
+				planned_id: planned_id
+			}
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
+            return res.data
+        },
+        async getSaleFeedingList(planned_id){ 
             this.curr_plan_id = planned_id
 			let params = {
 				planned_id: planned_id
 			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
-            console.log(res)
- 
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params) 
+          
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
@@ -252,66 +374,19 @@
         toCreateOrder(feeding_id, planned_id){
             let url='/special/order/'+feeding_id+'?planned_id='+planned_id
             location.href =url
-		},
-            categoryClick(id,index) {
-                this.categoryId=id
-                this.IndexCurr=id
-                if(id === undefined){
-                    this.CateCurr = 'select'
-                }else{
-                    this.CateCurr = id
-                }
-                this.spotData()
-            },
-            processClick(id,index) {
-                this.processId = id
-                this.processCurr = id
-                if(id === undefined){
-                    this.TotalCurr = 'select'
-                }else{
-                    this.TotalCurr = id
-                }
-                this.spotData()
-            },
-            categoryOpen() {
-                this.categoryMore = !this.categoryMore;
-                if (this.categoryMore) {
-                    this.categoryMoreVal = "更多"
-                } else {
-                    this.categoryMoreVal = "收回"
-                }
-            },
-            processOpen() {
-                this.processMore = !this.processMore
-                if (this.processMore) {
-                    this.processMoreVal = "更多"
-                } else {
-                    this.processMoreVal = "收回"
-                }
-            },
+		},   
+             
             showTotal(total) {
                 return `全部 ${total} 条`;
-            },
-            reloadPage() {
-                location.reload()
-            },
-            async spotData() {
-                let params = {
-                    catId: this.id,
-                    current_page: this.current_page,
-                    page_size: this.page_size
-                };
-                this.$store.dispatch('spot/getSpotList', params)
-            },
-            checkTypeCancel(){
-                this.checkTypeShow = false
-            },
+            },   
 
             toLogin(){
                 location.href = '/login'
             }
         },
         created() {
+            this.getDataSuroce()
+           
         },
         mounted() {
 
@@ -358,4 +433,28 @@
         width:19px; height:15px;
         position: absolute; top: -7px;  left: 84px;background: url(/img/new_icon.gif)no-repeat;background-size: cover;
     }
+
+
+   .btmunv {
+    display: flex;
+    width: 250px;
+    align-items: center;
+  }
+
+  .iv_title {
+    width: 70px;
+    text-align-last: justify;
+  }
+  .iv_Date{
+    background-color: #ed1e2d; color: #fff; font-weight: bold;padding: 4px 6px;
+    font-size: 12px; border-radius:5px
+  }
+  .ixebm {
+    width: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+  }
+  .ListBtn{width: 150px;  text-align: center; padding: 10px 0;   display: inline-table;}
 </style>
