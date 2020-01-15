@@ -183,9 +183,7 @@ export default {
   }
   },
   mounted(){
-    console.log("noticeList:", this.$store.state.article.noticeList)
     this.newItems= this.$store.state.article.noticeList
-    console.log("newItems:", this.newItems)
   },
 	head: {
 		script: [

@@ -251,7 +251,6 @@
 					page_size: this.page_size,
 					...this.formSearch
 				}
-				console.log("params:", params)
 				this.$store.dispatch('member/getOrderList', params)
 				this.$store.dispatch('member/getOrderCount')
 			},

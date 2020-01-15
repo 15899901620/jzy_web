@@ -214,7 +214,6 @@ export default {
                 yearId: this.monthData.id
             }
             var res = await sendHttp(this, true, server.api.month.MonthPlannedByYearPlanId, params)
-            console.log(res)
                 if (res.status === 200) {
                     this.datalist = res.data.map(ite =>{
                         ite._expanded = false

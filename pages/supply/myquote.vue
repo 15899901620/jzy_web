@@ -210,7 +210,6 @@
 				params.current_page = this.current_page
 				params.page_size = this.page_size
         const res = await sendHttp(this, true, server.api.freightOffer.offerMyList, params, 2)
-        console.log(res)
 				this.dataList = res.data.items;
 				this.total = res.data.total
 			},

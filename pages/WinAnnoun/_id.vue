@@ -136,7 +136,6 @@
                     id: this.id,
                 };
                 const res = await sendHttp(this, false, server.api.biddding.bidWinDetail,params,2)
-                console.log("res", res)
                 this.dataList = res.data
             },
             down(res){

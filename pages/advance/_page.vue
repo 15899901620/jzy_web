@@ -380,7 +380,6 @@
           planned_id: planned_id
         }
         let res = await this.$utils.sendCurl(this, server.api.advance.getFeedingByPlan, params)
-        console.log(res);
         if(res.status === 200 && res.data){
           if(res.data.length == 0){
             this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){

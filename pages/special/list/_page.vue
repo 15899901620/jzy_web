@@ -340,8 +340,7 @@
             this.FeedDataList=dataArray
         },
         async getFeedingListData(planned_id){
-                 console.log("planned_id", planned_id)
-                 this.curr_plan_id = planned_id
+            this.curr_plan_id = planned_id
 			let params = {
 				planned_id: planned_id
 			}
@@ -354,7 +353,6 @@
 				planned_id: planned_id
 			}
             let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params) 
-          
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){

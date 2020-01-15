@@ -203,7 +203,6 @@
 		},
 		mounted() {
 			let status = this.$route.query.status
-			console.log(status)
 			if (status == 1) {
 				this.formSearch.isUnfreeze = 1
 				this.currTabs = 0

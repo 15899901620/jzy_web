@@ -219,7 +219,6 @@ export default {
            const res = await sendHttp(this, false, server.api.biddding.bidddingList)
             this.dataList = res.data.items
         }
-         console.log("dataList:",this.dataList)
        // this.WinbidList= this.dataList.filter(function (item) { return item.statusName === '已中标'; });
      },
     //中标

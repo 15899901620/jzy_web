@@ -300,7 +300,6 @@
       },
       async getNopay() {
         const res = await Nopay(this)
-        console.log(res)
 				this.nopay = res.data
 			},
 
