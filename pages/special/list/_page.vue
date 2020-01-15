@@ -166,7 +166,7 @@
                                         <Progress :percent="0" :stroke-width="20"/>
                                     </template>
                                     <template v-else>
-                                        <Progress :percent="((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2)" :stroke-width="20"/>
+                                        <Progress :percent="Number(((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2))" :stroke-width="20"/>
                                     </template>
                                 </span> 
                             </div>
@@ -227,7 +227,7 @@
           <div class="">
             <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" >
               <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" v-if="row.availableNum>0" @click="getSaleFeedingList(row.id)">下单</Button>
+                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,curr_plan_id)">下单</Button>
                 <Button type="primary" size="small" v-else  disabled>下单</Button>
               </template>
             </Table>
@@ -278,6 +278,7 @@
         },
         data() {
             return {
+                self: this,
                 selectRecordID: 0,
                 checkTypeShow: false,
                 current_page: parseInt(this.$route.query.page) || 1,
@@ -333,14 +334,22 @@
                 this.getFeedingListData(item.id).then(res=>{ 
                     dataArray[index]["child"]=res
                     console.log("FeedingList", dataArray)
-               }) 
-              
+               })  
             }); 
             setTimeout(() => {
                  this.FeedDataList=dataArray
             }, 100);
            
+ 
         },
+        async getFeedingListData(planned_id){
+            this.curr_plan_id = planned_id
+			let params = {
+				planned_id: planned_id
+			}
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
+            return res.data
+         },
         // async getFeedingListData(planned_id){
         //     this.curr_plan_id = planned_id
 		// 	let params = {
@@ -357,8 +366,7 @@
 			let params = {
 				planned_id: planned_id
 			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params) 
-                console.log("res",res)
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){

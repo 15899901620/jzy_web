@@ -202,7 +202,6 @@ export default {
                 sourceId: this.orderData.id
             }
              let res = await this.$utils.sendCurl(this, server.api.order.monthorder, params)
-                   console.log(res)
                 if (res.status === 200) {
                     this.datalist = res.data.items.map(ite =>{
                         ite._expanded = false

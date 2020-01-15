@@ -271,7 +271,6 @@
 				}
 				let to_region_id= this.searchForm.to_region_id.join(",")
 				// to_region_id=encodeURIComponent(to_region_id)
-					console.log(to_region_id)
 				let params = {
                     warehouse_id: this.searchForm.warehouse_id,
                     sku_no: this.searchForm.sku_no,

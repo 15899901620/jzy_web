@@ -410,7 +410,6 @@ export default {
                     this.jryDays=this.feedingInfo.jryDays.split(","); //字符分割
             }
 
-            console.log('jryDays',this.takeTheirTrans)
             this.setCosting()
             // this.getWeekDetail()
         },
@@ -478,7 +477,6 @@ export default {
             }
         },
         setJry() {
-                console.log(this.orderinfo.jryDays)
 				if (this.orderinfo.jryDays > 0) {
 					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
 				} else {

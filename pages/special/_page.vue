@@ -12,7 +12,7 @@
 								<div class="btn" style="font-size: 23px;font-weight: 600;" v-if="items.is_can_click==1" @click="planOrder(items.id)">{{items.name}}</div>
 								<div class="btn" style="font-size: 23px;font-weight: 600;background-color: gainsboro;" v-else >{{items.name}}</div>
 							</div>
-						</li>
+						</li>	
 					</ul>
 				</div>
 		</div>
@@ -38,7 +38,6 @@ export default {
         query
     }) {
         return Promise.all([
-
 				//获取顶部、中部、底部导航信息
 				store.dispatch('common/getNavList'),
 				//获取系统配置
@@ -51,7 +50,6 @@ export default {
 					indexShow: 1
 				}),
                 store.dispatch('system/getBannerInfo', { positionId: 3 }),
-
          ])
     },
     components: {
@@ -61,7 +59,6 @@ export default {
         pages: pagination.pages
     },
 	mounted(){
-    	console.log("bannerinfo:",this.bannerinfo)
 	},
     computed: {
         ...mapState({
@@ -194,8 +191,6 @@ export default {
     },
     watch: {
 		$route(to, from) {
-			console.log('to:',to);
-			console.log('from',from);
 		}
     }
 }

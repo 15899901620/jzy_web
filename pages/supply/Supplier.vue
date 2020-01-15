@@ -214,7 +214,6 @@
 				this.getOrderList()
 			},
 			reloadPage(data) {
-				console.log(data)
 			},
 			async getOrderList() {
 				let params = {

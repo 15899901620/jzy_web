@@ -404,14 +404,11 @@
 			},
 			//选择巨融易
 			setJry() {
-			  console.log("JRY_COST:", this.$store.state.common.sysConfig.JRY_COST)
-              console.log("jryDays:", this.orderinfo.jryDays)
 				if (this.orderinfo.jryDays > 0) {
 					this.orderinfo.jryCost = this.$store.state.common.sysConfig.JRY_COST * this.orderinfo.jryDays
 				} else {
 					this.orderinfo.jryCost = 0
 				}
-              console.log("jryCost:", this.orderinfo.jryCost)
 			},
 			//选择订单数量
 			changeNum(value) {

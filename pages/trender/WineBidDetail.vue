@@ -99,7 +99,6 @@
           };
           const res = await sendHttp(this, false, server.api.biddding.bidddingDetail,params,2)
           this.dataList = res.data
-          console.log("dataList", this.dataList)
         },
           // async BySupplier() {
           //     let params = {
