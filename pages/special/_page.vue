@@ -70,7 +70,7 @@ export default {
     },
     data() {
         return {
-            userinfo: {},
+			userinfo: {}, 
             heightNum: 390,
             current_page: 1,
             page_size: 10,
