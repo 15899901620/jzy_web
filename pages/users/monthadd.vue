@@ -23,7 +23,7 @@
             <span style="width: 5%;">月份</span>
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">商品编号</span>
-            <span style="width: 10%;">月生成量</span>
+            <span style="width: 10%;">月排产量</span>
             <span style="width: 10%;">月计划平均值</span>
 
             <span style="width: 10%;">产品等级</span>
@@ -39,7 +39,7 @@
                 <td style="width: 15%;">{{item.skuName}}</td>
                 <td style="width: 15%;">{{item.skuNo}}</td>
                 <td style="width: 10%;">
-                  {{item.defaultNum}}吨
+                  {{item.estimateNum}}吨
                 </td>
                 <td style="width: 10%;">  {{item.monthAvgNum}}</td>
 
