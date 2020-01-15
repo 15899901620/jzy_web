@@ -231,7 +231,7 @@
           <div class="">
             <Table size="small" border stripe highlight-row :columns="selectFeedingColumns" :data="selectFeedingData" :content="self" >
               <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" v-if="row.availableNum>0" @click="getSaleFeedingList(row.id)">下单</Button>
+                <Button type="primary" size="small" v-if="row.availableNum>0" @click="toCreateOrder(row.id,curr_plan_id)">下单</Button>
                 <Button type="primary" size="small" v-else  disabled>下单</Button>
               </template>
             </Table>
