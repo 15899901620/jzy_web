@@ -166,7 +166,7 @@
                                         <Progress :percent="0" :stroke-width="20"/>
                                     </template>
                                     <template v-else>
-                                        <Progress :percent="((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2)" :stroke-width="20"/>
+                                        <Progress :percent="Number(((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2))" :stroke-width="20"/>
                                     </template>
                                 </span> 
                             </div>
@@ -282,6 +282,7 @@
         },
         data() {
             return {
+                self: this,
                 selectRecordID: 0,
                 checkTypeShow: false,
                 current_page: parseInt(this.$route.query.page) || 1,
