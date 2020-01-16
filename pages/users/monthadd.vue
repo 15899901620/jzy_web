@@ -24,7 +24,7 @@
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">商品编号</span>
             <span style="width: 10%;">月排产量</span>
-            <span style="width: 10%;">月计划平均值</span>
+            <span style="width: 10%;">月均计划量</span>
 
             <span style="width: 10%;">产品等级</span>
             <span style="width: 15%;">包装方式</span>
@@ -41,7 +41,7 @@
                 <td style="width: 10%;">
                   {{item.estimateNum}}吨
                 </td>
-                <td style="width: 10%;">  {{item.monthAvgNum}}</td>
+                <td style="width: 10%;">  {{item.defaultNum}}</td>
 
                 <td style="width: 10%;">
                     <span class="" v-if="item.productGrade == 1">优等品</span>
