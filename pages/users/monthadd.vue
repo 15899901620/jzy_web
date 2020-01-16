@@ -41,7 +41,7 @@
                 <td style="width: 10%;">
                   {{item.estimateNum}}吨
                 </td>
-                <td style="width: 10%;">  {{item.defaultNum}}</td>
+                <td style="width: 10%;">     {{Math.round(item.defaultNum)}}</td>
 
                 <td style="width: 10%;">
                     <span class="" v-if="item.productGrade == 1">优等品</span>
