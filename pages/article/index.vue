@@ -39,7 +39,7 @@
 
                 <h2 class="j_t mt20"><i>信息公告</i></h2>
                 <div class="j_n_pt">
-                  <div class="j_n_info" style="margin-left: 40px;" v-if="$store.state.article.noticeInfo1.length>0">
+                  <div class="j_n_info" style="margin-left: 22px;" v-if="$store.state.article.noticeInfo1.length>0">
                      <h3 class="fwb">招标公告</h3>
                     <ul class="j_n_info_l" style="margin-top: 15px;">
                       <li v-for="(items, index) in $store.state.article.noticeInfo1" :key="index"><nuxt-link :to="{name:'notice-detail-id', params:{id:items.id}}">{{items.title}}</nuxt-link><span>{{items.time}}</span></li>

@@ -137,30 +137,36 @@
                             <div class="btmunv">
                                 <span class="iv_title">包装方式</span> ：<span class="">{{item.packing_modes == 1?'标准包装':'非标准包装'}}</span> 
                             </div>
-                             <div class="btmunv"><span class="">资源量（吨）</span> ：<span>{{item.availableNum}}</span></div>
-                         </div>
-                         <div class="mt10 fs14 dflexAlem"> 
-                            <div class="btmunv dflexAlem">
-                                <span class="">单价（元/吨）</span> :<span class='orangeFont fs16' style="position: relative">{{$utils.amountFormat(item.finalPrice)}}
-                                <i v-if="item.jryAdd"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
-                             </span> 
-                            </div>
                             <div class="btmunv"> 
                                 <span class="iv_title">产品等级</span>：
                                 <span v-if='item.productGrade === 1'>优等品</span> 
                                 <span v-if='item.productGrade === 2'>一等品</span> 
                                 <span v-if='item.productGrade === 3'>合格品</span> 
                             </div>
-                            <div class="btmunv"> <span class="" style="width:100px">最大可放料数量</span>：<span class='orangeFont fs16'>{{item.maxOrderNum}}</span> </div>
-                         </div> 
+                             <!-- <div class="btmunv"><span class="">资源量（吨）</span> ：<span>{{item.availableNum}}</span></div> -->
+                         </div>
+                        <!-- <div class="mt10 fs14 dflexAlem"> 
+                             <div class="btmunv dflexAlem">
+                                <span class="">单价（元/吨）</span> :<span class='orangeFont fs16' style="position: relative">{{$utils.amountFormat(item.finalPrice)}}
+                                <i v-if="item.jryAdd"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
+                             </span> 
+                            </div> 
+                           <div class="btmunv"> 
+                                <span class="iv_title">产品等级</span>：
+                                <span v-if='item.productGrade === 1'>优等品</span> 
+                                <span v-if='item.productGrade === 2'>一等品</span> 
+                                <span v-if='item.productGrade === 3'>合格品</span> 
+                            </div> 
+                           <div class="btmunv"> <span class="" style="width:100px">最大可放料数量</span>：<span class='orangeFont fs16'>{{item.maxOrderNum}}</span> </div> 
+                         </div> -->
                          <div class="mt10 fs14 dflexAlem">
-                            <div class="btmunv"><span class="iv_title">合约总量</span>：<span class=" ">{{item.availableNum}}</span></div> 
-                            <div class="btmunv"><span class="iv_title">余量</span>：<span>{{item.takenNum}}</span></div>
+                            <!-- <div class="btmunv"><span class="iv_title">合约总量</span>：<span class=" ">{{item.availableNum}}</span></div>  -->
+                            <div class="btmunv"><span class="iv_title">余量</span>：<span>{{item.availableNum}}</span></div>
                             <div class="btmunv"><span class="iv_title">月计划量</span>：<span>{{item.monthNum}}</span></div>
                          </div>
                          <div class="mt10 fs14 dflexAlem"> 
                             <div class="btmunv dflexAlem" style="width:495px">
-                                <span class="" style="width:80px">合约完成量</span> :
+                                <span class="" style="width:100px">月计划执行进度</span> :
                                 <span class="fs16 ml15" style="width: 280px; " :title="`合约量：${item.monthNum}，待转单：${item.availableNum}`">
                                     <template v-if="item.monthNum==0 && item.availableNum==0 " >
                                         <Progress :percent="0" :stroke-width="20"/>
@@ -303,9 +309,10 @@
                 specialList:[
                 ],
                  selectFeedingColumns: [
-                    { title: '商品名称', key: 'skuName' },
-                    { title: '放料编号', key: 'feedingNo'},
+                    { title: '提货日期', key: 'deliveryStart' },
+                    { title: '提货地点', key: 'pointName'},
                     {title: '仓库', key: 'warehouseName'},
+                    {title: '单价（元/吨）', key: 'finalPrice'},
                     { title: '放料单剩余数量', key: 'availableNum'},
                     { title: '会员可下单数量', key: 'member_available_num'},
                     {title: '操作',slot: 'action',
