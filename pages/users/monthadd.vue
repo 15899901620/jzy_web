@@ -24,7 +24,7 @@
             <span style="width: 15%;">商品信息</span>
             <span style="width: 15%;">商品编号</span>
             <span style="width: 10%;">月排产量</span>
-            <span style="width: 10%;">月均计划量</span>
+            <span style="width: 10%;">参考量</span>
 
             <span style="width: 10%;">产品等级</span>
             <span style="width: 15%;">包装方式</span>
