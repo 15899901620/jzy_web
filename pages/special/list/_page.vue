@@ -360,8 +360,6 @@
         //     return res.data
         // },
         async getSaleFeedingList(planned_id,id){
-            console.log("planned_id:",planned_id) 
-            console.log("id:",id) 
             this.curr_plan_id = planned_id
 			let params = {
 				planned_id: planned_id

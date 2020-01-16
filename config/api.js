@@ -210,6 +210,7 @@ let api = {
         monthaddPlan:{'url':'/bill/yearPlanned/getCanAddMonthPlanListByMemberId/page', 'method':'get'}, 
         initSpotList: {'url':'/bill/yearlyFeeding/saleList', 'method':'get'},
         // specialList: '/bill/yearlyFeeding/saleList',
+        yeardetail:{ 'url': '/bill/yearPlanned/detail', 'method': 'get'},
         initsaleList: {'url':'/bill/monthPlanned/getWebMonthPlanListByMemberId', 'method':'get'},
         specialList: '/bill/monthPlanned/getMonthPlanCatListByMemberId',
         myYearList: '/bill/myYearPlanned/page',

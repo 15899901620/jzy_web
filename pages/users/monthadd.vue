@@ -21,27 +21,29 @@
           <div class="TableTitle graybg">
             <span style="width: 5%;">年份</span>
             <span style="width: 5%;">月份</span>
-            <span style="width: 15%;">商品信息</span>
-            <span style="width: 15%;">商品编号</span>
+            <span style="width: 15%;">年计划编号</span>
+            <span style="width: 10%;">商品信息</span>
+            <span style="width: 10%;">商品编号</span>
             <span style="width: 10%;">月排产量</span>
             <span style="width: 10%;">参考量</span>
 
             <span style="width: 10%;">产品等级</span>
             <span style="width: 15%;">包装方式</span>
-            <span style="width: 15%;">操作</span>
+            <span style="width: 10%;">操作</span>
           </div>
           <template v-if="monthinfo.length > 0">
             <table v-for="(item, index) in monthinfo" :key="index" class="listT mt10" border="" cellspacing="" cellpadding="">
               <tbody>
               <tr class="detailTable">
                 <td style="width: 5%;">{{item.year}}</td>
-                <td style="width: 5%;">  {{item.canMonth}}</td>
-                <td style="width: 15%;">{{item.skuName}}</td>
-                <td style="width: 15%;">{{item.skuNo}}</td>
+                <td style="width: 5%;">{{item.canMonth}}</td>
+                <td style="width: 15%;" ><span @click='planNo(item)' style="cursor: pointer; color: #007de4">{{item.planNo}}</span></td>
+                <td style="width: 10%;">{{item.skuName}}</td>
+                <td style="width: 10%;">{{item.skuNo}}</td>
                 <td style="width: 10%;">
                   {{item.estimateNum}}吨
                 </td>
-                <td style="width: 10%;">     {{Math.round(item.defaultNum)}}</td>
+                <td style="width: 10%;"> {{Math.round(item.defaultNum)}}</td>
 
                 <td style="width: 10%;">
                     <span class="" v-if="item.productGrade == 1">优等品</span>
@@ -53,7 +55,7 @@
                        <span class="" v-else>非标准包装</span>
                 </td>
 
-                <td style="width: 15%;" class="operate">
+                <td style="width: 10%;" class="operate">
                       <Tooltip content="添加月计划" placement="left" ><Button   title="添加月计划" icon="md-add" @click='addmonth(item)' size="small"></Button></Tooltip>
                 </td>
               </tr>
@@ -64,6 +66,7 @@
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
           <pages :total="monthTotal" :show-total="showTotal" :value="current_page" style="margin:20px 0;"></pages>
+           <yeardetail :isshow="detailmodal" :datalist="rowPlanData" @unChange="undetail" @onChange="editOnSuccess"></yeardetail>
           <monthplanadd :isshow="addmodalmonth" @unChange="unAdddmonth" :rowData='rowPlanData' @onChange="addOnmonthSuccess"></monthplanadd>
         </div>
       </div>
@@ -78,12 +81,14 @@ import Navigation from '../../components/navigation'
 import TimeDown from '../../components/timeDown'
 import pagination from '../../components/pagination'
 import monthplanadd from './plan/plan/monthadd.vue'
+import yeardetail from './plan/plan/yeardetail.vue'
 export default {
 	name: "userauction",
 	middleware: 'memberAuth',
 	layout:'membercenter',
 	components:{
-		usernav: Navigation.user,
+    usernav: Navigation.user,
+    yeardetail,
     pages: pagination.pages,
     monthplanadd,
 		TimeDown
@@ -116,7 +121,8 @@ export default {
       rowPlanData:{},
 			formSearch: {
 				keyword: '',
-			},
+      },
+      detailmodal:false,
         addmodalmonth:false,
 			selectFeedingModalShow: false,
 			selectFeedingData: [],
@@ -141,6 +147,15 @@ export default {
     addmonth (res) {
       this.rowPlanData = res
       this.addmodalmonth = true
+    },
+    async planNo(res){
+           let rs = await this.$utils.sendCurl(this, server.api.special.yeardetail, {id: res.id,}).then(response => {
+                this.rowPlanData=response.data
+                    this.detailmodal = true
+
+          })
+
+          this.detailmodal = true
     },
     applycance(id){
           let params = {
@@ -167,6 +182,14 @@ export default {
 
             }
 				})
+    },
+    undetail(res){
+       this.detailmodal = res
+    },
+    editOnSuccess(){
+       if (res === 'success') {
+              this.sourceData()
+          }
     },
     unAdddmonth(res){
         this.addmodalmonth = res

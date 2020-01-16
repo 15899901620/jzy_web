@@ -148,7 +148,7 @@
                   <div class="btmunv"><span class="iv_title">包装方式</span> ：<span>{{items.packing_modes == 1?'标准包装':'非标准包装'}}</span>
                   </div>
                    <div class="btmunv dflexAlem">
-                     <span class="iv_title">产品等级</span> :
+                     <span class="iv_title">产品等级</span> ：
                       <span class="" v-if="items.product_grade == 1">优等品</span>
                     <span class="" v-if="items.product_grade == 2">一等品</span>
                     <span class="" v-if="items.product_grade == 3">合格品</span>
@@ -162,7 +162,7 @@
                 </div>
                  <div class="fs14 dflexAlem">
 
-                    <div class="btmunv" >
+                    <div class="btmunv" v-if="items.desc_url">
                      <!-- v-if="items.desc_url" -->
                         <a  class="fs17"  :href="items.desc_url" style="color:#ff7300; margin-top: 10px;  ">预售说明</a>
                     </div>
