@@ -287,7 +287,7 @@ export default {
             return parseFloat(this.totalPrice).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
         },
         totalAmountes: function () {
-            return parseFloat(this.feedingInfo.finalPrice) * parseInt(this.feedingInfo.availableNum)
+            return parseFloat(this.feedingInfo.finalPrice) * parseInt(this.feedingInfo.availableNum) + parseFloat(this.orderinfo.jryCost)
         },
         totalAmountFormat: function () {
             return parseFloat(this.totalAmountes).toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
