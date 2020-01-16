@@ -164,6 +164,7 @@
 
                     <div class="btmunv" v-if="items.desc_url">
                      <!-- v-if="items.desc_url" -->
+                     
                         <a  class="fs17"  :href="items.desc_url" style="color:#ff7300; margin-top: 10px;  ">预售说明</a>
                     </div>
                   
