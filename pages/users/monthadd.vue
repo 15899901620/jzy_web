@@ -11,7 +11,7 @@
         <div class="" style="width: 95%; margin: 0 auto;">
           <div class="order_operate">
             <div class="dflex">
-              <input type="text" placeholder="合约编号、商品名称搜索" ref="searchval" class="orderInput" v-model="formSearch.keyword"  />
+              <input type="text" placeholder="合约编号、商品名称搜索" ref="searchval" class="orderInput" v-model="formSearch.sku_name"  />
               <div class="check" @click='checked()' style="cursor: pointer">查看</div>
             </div>
             <!-- <div class="dflex" style="align-items: center;">
@@ -100,7 +100,7 @@ export default {
 			//获取系统配置
 			store.dispatch('common/getSysConfig'),
 			//获取会员合约列表
-			store.dispatch('special/monthaddPlan', {current_page:query.page||1, page_size: 6})
+			store.dispatch('special/monthaddPlan', {current_page:query.page||1, page_size: 6,sku_name:query.sku_name||''})
 		])
 	},
 	computed: {
@@ -120,7 +120,7 @@ export default {
       curr_plan_id: 0,
       rowPlanData:{},
 			formSearch: {
-				keyword: '',
+				sku_name: '',
       },
       detailmodal:false,
         addmodalmonth:false,
@@ -142,7 +142,7 @@ export default {
 			return `全部 ${total} 条`;
 		},
 		checked(){
-			location.href = '/users/advancePlan?keyword='+this.formSearch.keyword
+			location.href = '/users/monthadd?keyword='+this.formSearch.sku_name
     },
     addmonth (res) {
       this.rowPlanData = res
