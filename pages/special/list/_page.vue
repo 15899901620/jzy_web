@@ -128,15 +128,14 @@
                          <div class="acuProduct " style="margin-top: 20px; margin-bottom: 30px; border-right:none;">
                          <span class="fs20 orangeFont" style="position: relative">{{item.skuName}}</span>
                          <div class="mt10 fs14 dflexAlem">
-                            <div class="btmunv"><span class="iv_title">年计划编号</span> ：<span class=" ">{{item.yearPlanNo}}</span></div>
-                            <div class="btmunv"><span class="iv_title">年份</span> ：<span class="">{{item.year}}</span></div>
-                             <div class="btmunv"><span class="iv_title">月份</span> ：<span>{{item.month}}</span></div>
+                           <div class="btmunv"><span class="iv_title">年份</span> ：<span class="">{{item.year}}</span></div>
+                            <div class="btmunv"><span class="iv_title">参考年计划编号</span> ：<span class=" ">{{item.yearPlanNo}}</span></div>
+                           <div class="btmunv"><span class="iv_title">厂商</span> ：<span class=" ">{{item.manufacturer}}</span></div>
+
                          </div>
                          <div class="mt10 fs14 dflexAlem">
-                            <div class="btmunv"><span class="iv_title">厂商</span> ：<span class=" ">{{item.manufacturer}}</span></div>
-                            <div class="btmunv">
-                                <span class="iv_title">包装方式</span> ：<span class="">{{item.packing_modes == 1?'标准包装':'非标准包装'}}</span> 
-                            </div>
+                           <div class="btmunv"><span class="iv_title">月份</span> ：<span>{{item.month}}</span></div>
+                           <div class="btmunv"><span class="iv_title">月计划编号</span> ：<span>{{item.planNo}}</span></div>
                             <div class="btmunv"> 
                                 <span class="iv_title">产品等级</span>：
                                 <span v-if='item.productGrade === 1'>优等品</span> 
@@ -163,6 +162,9 @@
                             <!-- <div class="btmunv"><span class="iv_title">合约总量</span>：<span class=" ">{{item.availableNum}}</span></div>  -->
                             <div class="btmunv"><span class="iv_title">余量</span>：<span>{{item.availableNum}}</span></div>
                             <div class="btmunv"><span class="iv_title">月计划量</span>：<span>{{item.monthNum}}</span></div>
+                           <div class="btmunv">
+                             <span class="iv_title">包装方式</span> ：<span class="">{{item.packing_modes == 1?'标准包装':'非标准包装'}}</span>
+                           </div>
                          </div>
                          <div class="mt10 fs14 dflexAlem"> 
                             <div class="btmunv dflexAlem" style="width:495px">
@@ -214,10 +216,10 @@
                     </ul>
                  </div>
  
-                <div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.spot.spotList.length > 0" >
+                <!--<div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.special.spotList.length > 0" >
                     <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
                            :otherParams="`id=${this.$route.query.id}`" ></pages>
-                </div>
+                </div>-->
 
                 </div>
 
