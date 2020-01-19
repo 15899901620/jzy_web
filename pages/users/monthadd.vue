@@ -65,7 +65,7 @@
           <template v-else>
             <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
           </template>
-          <pages :total="monthTotal" :show-total="showTotal" :value="current_page" style="margin:20px 0;"></pages>
+          <pages :total="monthTotal" :show-total="showTotal" :value="current_page" :pageSize="6" style="margin:20px 0;"></pages>
            <yeardetail :isshow="detailmodal" :datalist="rowPlanData" @unChange="undetail" @onChange="editOnSuccess"></yeardetail>
           <monthplanadd :isshow="addmodalmonth" @unChange="unAdddmonth" :rowData='rowPlanData' @onChange="addOnmonthSuccess"></monthplanadd>
         </div>
