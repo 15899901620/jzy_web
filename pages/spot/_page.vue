@@ -70,8 +70,7 @@
           <ul class="Xhlist">
             <template v-if="$store.state.spot.spotList.length>0">
 
-              <li v-for="(item, index) in $store.state.spot.spotList" :key="index"
-                  :style="{backgroundColor:($store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1?'rgba(36,153,249,0.3)':' ')}">
+              <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
                 <span style="width: 10%;">
                   <div class="pr">
                   <i v-if="$store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1" class="newClass"  ></i>{{item.category_name}}</div></span>
