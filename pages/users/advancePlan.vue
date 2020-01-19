@@ -159,7 +159,7 @@ export default {
 	data () {
 		return {
 			self: this,
-			current_page: 1,
+			current_page: this.$route.query.page || 1,
 			page_size: 5,
 			total: 0,
 			datalist: [],
