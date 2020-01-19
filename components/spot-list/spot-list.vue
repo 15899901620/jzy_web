@@ -46,7 +46,7 @@
           <span style="width: 18%;">
             <div v-if="$store.state.memberToken && (item.available_num < item.min_order || item.on_sale != 1)"
                 style="color:#c3c3c3;background:#e7e7e7;cursor:pointer;width:50px;line-height:26px;margin:0 auto;border-radius:3px;">下单</div>
-            <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn"
+            <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn" style="background-color:#007de4;color:#fff;"
                  @click="addOrder(item.id)">下单</div>
             <div v-else class="ListBtn" @click="goLogin">登录</div>
           </span>
