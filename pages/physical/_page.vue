@@ -49,7 +49,7 @@
                             </li>
                         </ul>
                         <div class="whitebg ovh text-xs-center" style="padding: 18px 0; text-align: center;">
-                            <pages :total="physicallist.total" :show-total="showTotal" @change="changePage" :value="currPage"></pages>
+                            <pages :total="physicallist.total" :pageSize="8" :show-total="showTotal" @change="changePage" :value="currPage"></pages>
                         </div>
                     </div>
                 </div>
@@ -179,9 +179,10 @@ export default {
                 cid1:  this.condition.cate_id,
                 title: this.condition.name,
                 level_id:  this.condition.attr,
+							  page_size: 8
             }
             const res = await sendHttp(this, false, server.api.product.goodslist, params)
-       
+
             this.physicallist=res.data
             //this.specList = res.data
         },
@@ -194,7 +195,7 @@ export default {
             this.$router.push({name:'physical-page',params:{id:id},query:{page:row}})
         },
         submitSearch() {
-            
+
             this.goodslist()
         }
     },
