@@ -179,6 +179,7 @@ export default {
                 cid1:  this.condition.cate_id,
                 title: this.condition.name,
                 level_id:  this.condition.attr,
+							  current_page: this.$route.query.page || 1,
 							  page_size: 8
             }
             const res = await sendHttp(this, false, server.api.product.goodslist, params)
