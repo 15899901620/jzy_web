@@ -270,7 +270,7 @@
           </template>
           <Row :gutter="24" index="0">
             <Col span="9">
-              <FormItem label="危化品经营许可证：">
+              <FormItem v-if="formCustom.isLogisticsCompany == 0" label="危化品经营许可证：">
                 <Upload
                         ref="upload"
                         :action="uploadUrl"
@@ -283,9 +283,22 @@
                   <Button icon="ios-cloud-upload-outline">上 传</Button>
                 </Upload>
               </FormItem>
+              <FormItem v-else-if="formCustom.isLogisticsCompany == 1" label="企业资质：">
+                <Upload
+                    ref="upload"
+                    :action="uploadUrl"
+                    :on-success="HazchemiFile"
+                    :max-size="10240"
+                    :show-upload-list="false"
+                    :format="['jpg','jpeg','png', 'pdf']"
+                    :on-format-error="handleFormatError"
+                    :on-exceeded-size="handleMaxSize">
+                  <Button icon="ios-cloud-upload-outline">上 传</Button>
+                </Upload>
+              </FormItem>
             </Col>
             <Col span="12">
-              <div class="uploadimg mt5">如有请点击其它文件图片（png、jpeg、jpg和pdf）</div>
+              <div class="uploadimg mt5">如有请点击上传文件图片（png、jpeg、jpg和pdf）</div>
             </Col>
             <Col span="21">
               <div class="Image" v-if="this.formCustom.dangerouslicense">
@@ -731,7 +744,7 @@
           },
 			getUploadURL() {
         if (process.env.NODE_ENV === 'development') {
-          this.uploadUrl = appConfig.system.UPLOAD_URL.dev 
+          this.uploadUrl = appConfig.system.UPLOAD_URL.dev
         } else if (process.env.NODE_ENV === 'testprod') {
           this.uploadUrl = appConfig.system.UPLOAD_URL.test
         } else {
