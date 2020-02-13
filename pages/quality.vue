@@ -19,6 +19,11 @@
                                   @on-change="selectTime"></DatePicker>
                     </FormItem>
                   </Col>
+                  <Col span="4">
+                    <FormItem prop='skuTitle'>
+                      <Input placeholder="商品名称" clearable v-model="formSearch.skuTitle"/>
+                    </FormItem>
+                  </Col>
                   <Col span="4" style="padding:0px;">
                     <span @click="changePage(1)" style="margin: 0 10px;"><Button type="primary" icon="search">搜索</Button></span>
                     <Button @click="closeSearch">重置</Button>
@@ -120,7 +125,7 @@ export default {
 			rowData: {},
 			formSearch: {
 				// skuNo: '',
-				// skuTitle: '',
+				skuTitle: '',
 				batchNo: !this.$route.query.batchNo ? '' : this.$route.query.batchNo,
 				productionDate: !this.$route.query.productionDate ? '' : this.$route.query.productionDate,
 			}
@@ -128,7 +133,7 @@ export default {
 	},
 	methods: {
 		async SourceData() {
-			if (!this.formSearch.batchNo && !this.formSearch.productionDate) {
+			if (!this.formSearch.batchNo && !this.formSearch.productionDate && !this.formSearch.skuTitle) {
 				return;
 			}
 			let params = {
@@ -141,7 +146,7 @@ export default {
 			this.total = res.data.total
 		},
 		handleSearch() {
-			if (!this.formSearch.batchNo && !this.formSearch.productionDate) {
+			if (!this.formSearch.batchNo && !this.formSearch.productionDate && !this.formSearch.skuTitle) {
 				this.$Modal.warning({
 					title: '提示',
 					content: '请输入查询条件！'
