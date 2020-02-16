@@ -61,7 +61,7 @@ export const actions = {
     },
     async getSpecialList({ commit }, params) {
         commit('updateCurrPage', parseInt(params.current_page))
-        
+
         const res = await specialList(this, params).then(response => {
             commit('updatespeciallist', response)
         })
@@ -78,13 +78,13 @@ export const actions = {
             console.log('err', error)
         })
     },
-    async monthaddPlan({commit}, params) {
+    async monthaddPlanList({commit}, params) {
 		try{
             let res = await sendCurl(this, server.api.special.monthaddPlan, params)
 			if (res.status === 200 && (res.data.errorcode||0) == 0) {
                 commit('monthaddList', res.data.items)
                 commit('monthTotal', res.data.total)
-                
+
 			}
 		}catch(err){
 			console.log('获取月计划列表异常：', err)
@@ -103,5 +103,5 @@ export const actions = {
 			console.log('获取现货列表异常：', e)
 		}
 	},
-    
+
 }

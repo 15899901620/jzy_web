@@ -99,7 +99,7 @@
                   <TimeDown :endTime="item.validTime" endMsg="已结束" :onTimeOver="reloadPage"></TimeDown> -->
                 <!-- </span>
                 <span style="width: 8%;">
-     
+
                   <div v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum>0" class="ListBtn"
                        @click="getSaleFeedingList(item.id)">下单</div>
                   <div v-else-if="$store.state.memberToken"
@@ -115,13 +115,13 @@
                         </p>
                     </li>
                 </template> -->
-                <!-- </ul> -->  
-               
+                <!-- </ul> -->
+
 
 
 
                  <div class="w1200 dflex" style="margin-top: 10px;">
- 
+
                     <ul class="acuList" v-if="$store.state.special.spotList.length>0 &&  this.$route.query.id !=''">
                         <li v-for="(item, index) in $store.state.special.spotList"  :key="index" style="flex-direction: column;">
                             <div class="dflex">
@@ -136,37 +136,37 @@
                          <div class="mt10 fs14 dflexAlem">
                            <div class="btmunv"><span class="iv_title">月份</span> ：<span>{{item.month}}</span></div>
                            <div class="btmunv"><span class="iv_title">月计划编号</span> ：<span>{{item.planNo}}</span></div>
-                            <div class="btmunv"> 
+                            <div class="btmunv">
                                 <span class="iv_title">产品等级</span>：
-                                <span v-if='item.productGrade === 1'>优等品</span> 
-                                <span v-if='item.productGrade === 2'>一等品</span> 
-                                <span v-if='item.productGrade === 3'>合格品</span> 
+                                <span v-if='item.productGrade === 1'>优等品</span>
+                                <span v-if='item.productGrade === 2'>一等品</span>
+                                <span v-if='item.productGrade === 3'>合格品</span>
                             </div>
                              <!-- <div class="btmunv"><span class="">资源量（吨）</span> ：<span>{{item.availableNum}}</span></div> -->
                          </div>
-                        <!-- <div class="mt10 fs14 dflexAlem"> 
+                        <!-- <div class="mt10 fs14 dflexAlem">
                              <div class="btmunv dflexAlem">
                                 <span class="">单价（元/吨）</span> :<span class='orangeFont fs16' style="position: relative">{{$utils.amountFormat(item.finalPrice)}}
                                 <i v-if="item.jryAdd"  style="width: 15px; height: 18px; position: absolute; top: -10px; right: -15px; background:url('/img/Yi_icon.png')no-repeat;"></i>
-                             </span> 
-                            </div> 
-                           <div class="btmunv"> 
+                             </span>
+                            </div>
+                           <div class="btmunv">
                                 <span class="iv_title">产品等级</span>：
-                                <span v-if='item.productGrade === 1'>优等品</span> 
-                                <span v-if='item.productGrade === 2'>一等品</span> 
-                                <span v-if='item.productGrade === 3'>合格品</span> 
-                            </div> 
-                           <div class="btmunv"> <span class="" style="width:100px">最大可放料数量</span>：<span class='orangeFont fs16'>{{item.maxOrderNum}}</span> </div> 
+                                <span v-if='item.productGrade === 1'>优等品</span>
+                                <span v-if='item.productGrade === 2'>一等品</span>
+                                <span v-if='item.productGrade === 3'>合格品</span>
+                            </div>
+                           <div class="btmunv"> <span class="" style="width:100px">最大可放料数量</span>：<span class='orangeFont fs16'>{{item.maxOrderNum}}</span> </div>
                          </div> -->
                          <div class="mt10 fs14 dflexAlem">
                             <!-- <div class="btmunv"><span class="iv_title">合约总量</span>：<span class=" ">{{item.availableNum}}</span></div>  -->
                             <div class="btmunv"><span class="iv_title">余量</span>：<span>{{item.availableNum}}</span></div>
                             <div class="btmunv"><span class="iv_title">月计划量</span>：<span>{{item.monthNum}}</span></div>
                            <div class="btmunv">
-                             <span class="iv_title">包装方式</span> ：<span class="">{{item.packing_modes == 1?'标准包装':'非标准包装'}}</span>
+                             <span class="iv_title">包装方式</span> ：<span class="">{{item.packingModes == 1?'标准包装':'非标准包装'}}</span>
                            </div>
                          </div>
-                         <div class="mt10 fs14 dflexAlem"> 
+                         <div class="mt10 fs14 dflexAlem">
                             <div class="btmunv dflexAlem" style="width:495px">
                                 <span class="" style="width:100px">月计划执行进度</span> :
                                 <span class="fs16 ml15" style="width: 280px; " :title="`合约量：${item.monthNum}，待转单：${item.availableNum}`">
@@ -176,24 +176,24 @@
                                     <template v-else>
                                         <Progress :percent="Number(((item.monthNum - item.availableNum)*100/item.monthNum).toFixed(2))" :stroke-width="20"/>
                                     </template>
-                                </span> 
+                                </span>
                             </div>
                           </div>
 
                          </div>
-                        
-                        <!-- <div class="acuOpear" style="justify-content: flex-end; margin-bottom: 30px;"> 
+
+                        <!-- <div class="acuOpear" style="justify-content: flex-end; margin-bottom: 30px;">
                             <template v-if="$store.state.memberToken && item.availableNum > 0 && item.feedingNum > 0"  >
-                                 <div class="ListBtn" @click="getSaleFeedingList(item.id)">下单</div>        
-                           </template>  
+                                 <div class="ListBtn" @click="getSaleFeedingList(item.id)">下单</div>
+                           </template>
                            <template v-else-if="$store.state.memberToken && item.availableNum > 0  "  >
-                                 <div class="ListBtn" style="background-color:#e9e5e5; border:1px solid #e9e5e5;color: #666;">下单</div>        
-                           </template> 
+                                 <div class="ListBtn" style="background-color:#e9e5e5; border:1px solid #e9e5e5;color: #666;">下单</div>
+                           </template>
                             <template v-else-if="$store.state.memberToken">
                             <div class="ListBtn" @click="toLogin">登录</div>
-                            </template> 
+                            </template>
                         </div> -->
-                        
+
                         </div>
                             <!-- 放料列表 -->
                             <div class="w1200" v-if="$store.state.memberToken && item.feedingList.length > 0">
@@ -215,7 +215,7 @@
                     </li>
                     </ul>
                  </div>
- 
+
                 <!--<div class="whitebg ovh text-xs-center" style="padding: 30px 0" v-if="$store.state.special.spotList.length > 0" >
                     <pages :total="$store.state.spot.total" :pageSize="page_size" :show-total="showTotal" :value="current_page"
                            :otherParams="`id=${this.$route.query.id}`" ></pages>
@@ -223,7 +223,7 @@
 
                 </div>
 
-                 
+
             </div>
         </div>
         <!-- <Modal
@@ -334,29 +334,29 @@
         async getDataSuroce(){
             let params={
                 cat_id: Number(this.$route.query.id) || 0,
-            } 
-           let res = await this.$utils.sendCurl(this, server.api.special.initsaleList, params) 
-          let dataArray=res.data 
+            }
+           let res = await this.$utils.sendCurl(this, server.api.special.initsaleList, params)
+          let dataArray=res.data
           console.log("dataArray:",dataArray)
-            dataArray.forEach((item,index) => { 
+            dataArray.forEach((item,index) => {
                 console.log("id",item.id)
-                this.getFeedingListData(item.id).then(res=>{ 
+                this.getFeedingListData(item.id).then(res=>{
                     dataArray[index]["child"]=res
                     console.log("FeedingList", dataArray)
-               })  
-            }); 
+               })
+            });
             setTimeout(() => {
                  this.FeedDataList=dataArray
             }, 100);
-           
- 
+
+
         },
         async getFeedingListData(planned_id){
             this.curr_plan_id = planned_id
 			let params = {
 				planned_id: planned_id
 			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
             return res.data
          },
         // async getFeedingListData(planned_id){
@@ -364,7 +364,7 @@
 		// 	let params = {
 		// 		planned_id: planned_id
 		// 	}
-        //     let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)   
+        //     let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
         //     console.log("getFeedingListData", res)
         //     return res.data
         // },
@@ -373,7 +373,7 @@
 			let params = {
 				planned_id: planned_id
 			}
-            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)  
+            let res = await this.$utils.sendCurl(this, server.api.special.saleListByPlan, params)
                 if(res.status === 200 && res.data){
                     if(res.data.length == 0){
                                 this.$utils.showWarning(this, '放料信息已改变，请刷新再操作！', function(){
@@ -388,11 +388,11 @@
         toCreateOrder(feeding_id, planned_id){
             let url='/special/order/'+feeding_id+'?planned_id='+planned_id
             location.href =url
-		},   
-             
+		},
+
             showTotal(total) {
                 return `全部 ${total} 条`;
-            },   
+            },
 
             toLogin(){
                 location.href = '/login'
@@ -400,7 +400,7 @@
         },
         created() {
             this.getDataSuroce()
-           
+
         },
         mounted() {
 

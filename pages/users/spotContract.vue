@@ -115,7 +115,7 @@
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
-									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th style="    width: 205px;">电汇或银行承兑自贴息</th><th style="    width: 140px;">付款方式：</th><th>款到发货</th></tr>
+									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th style="    width: 205px;">{{OrderList.payMethod || '电汇或银行承兑自贴息'}}</th><th style="    width: 140px;">付款方式：</th><th>{{OrderList.payType || '款到发货'}}</th></tr>
 									<tr>
 										<th style="padding:5px 0;">计价方式：</th>
 										<th v-if='this.type==3'>含税合约价</th>
@@ -284,11 +284,11 @@
 				}else if(this.type == 4){
 					const res = await sendHttp(this, true, server.api.special.getContractInfo, params, 1)
 					this.OrderList = res.data
-					
+
 				}else if(this.type == 5){
 					const res = await sendHttp(this, true, server.api.special.monthContractInfo, params, 1)
 					this.OrderList = res.data
-					
+
 				}
 			},
 			print_page() {
