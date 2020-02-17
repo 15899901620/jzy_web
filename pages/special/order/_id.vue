@@ -124,7 +124,7 @@
             <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
             <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;">￥{{this.totalPriceFormat}}</div>
-            <div style="width: 12%;">{{specialDetail.availableNum}}</div>
+            <div style="width: 12%;">{{specialDetail.limitNum}}</div>
             <div style="width: 14%;">
               <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="feedingInfo.availableNum"
                              @change="changeNum"></input-special>
@@ -410,7 +410,8 @@ export default {
 				this.specialDetail = res.data
 				this.feedingInfo = this.specialDetail.feedingInfo
 				// this.currMax = Math.min(this.specialDetail.availableNum,this.feedingInfo.availableNum)
-				this.currMax = this.limitNum
+				this.currMax = this.specialDetail.limitNum
+				this.feedingInfo.availableNum = this.currMax
 
 				this.takeTheirTrans = this.feedingInfo.takeTheirTransportations.split(","); //字符分割
 				this.jryDays = this.feedingInfo.jryDays.split(","); //字符分割
