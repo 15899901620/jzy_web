@@ -102,13 +102,13 @@
             <div style="width: 10%;">+ {{orderinfo.freightFee}}元/吨</div>
             <div style="width: 10%;">+ {{orderinfo.jryCost}}元/吨</div>
             <div style="width: 12%;"> {{$utils.amountFormat(this.totalPrice)}}</div>
-			
+
             <div style="width: 12%;" v-if="planInfo.feedingInfo.is_limit==0"> {{Math.min(planInfo.available_num,planInfo.feedingInfo.available_num)}}</div>
 			<div style="width: 12%;" v-else> {{planInfo.limitNum.toFixed(0)}}</div>
             <div style="width: 12%;">
 				  <input-special :min="currMin" :max="currMax" :step="currsetp" v-model="orderinfo.orderNum"
                              @change="changeNum"></input-special>
-             
+
             </div>
             <div class="fwb orangeFont" style="width: 9%;">{{$utils.amountFormat(this.totalAmount)}}</div>
           </li>
@@ -195,7 +195,7 @@
 				store.dispatch('common/getNavList'),
 				//获取系统配置
 				store.dispatch('common/getSysConfig'),
-                //获取资金情况
+        //获取资金情况
 				store.dispatch('member/getCapitalInfo'),
 				//获取放料信息
 				store.dispatch('advance/getPlanDetail', {feeding_id: query.id, planned_id: query.planned_id}),
@@ -375,7 +375,7 @@
 			},
 			//开始订单
 			beginCreateOrder(data) {
-		
+
 				let self = this
 				let params = {
 					plan_id: this.orderinfo.plan_id,
@@ -398,7 +398,7 @@
 					this.$utils.showWarning(this, '下单数量不能为0！');
 					return
 				}
-			
+
 				this.payData = {
 					skuNo: this.planInfo.sku_no,
 					plan_id: this.orderinfo.plan_id,
@@ -426,7 +426,7 @@
 
 				// 	}
 				// })
-				
+
 			},
 		},
 		mounted() {
@@ -440,8 +440,8 @@
 			this.orderinfo.plan_id = this.planInfo.id
 			this.orderinfo.feeding_id = this.planInfo.feedingInfo.id
 			this.currMax = parseInt(this.planInfo.limitNum.toFixed(0))
-			
-           
+
+
 			this.chooseDelieryType(0)
 			this.getMyAddress()
 		},
