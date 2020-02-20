@@ -3,14 +3,10 @@
     <Header-small title="专料下单">
       <div slot="headerother">
         <ul class="sp_cat_title_list">
-          <li class="curr"><i>1</i>
-            <p>编辑详细信息</p></li>
-          <li><i>2</i>
-            <p>提交订单成功</p></li>
-          <li><i>3</i>
-            <p>支付货款</p></li>
-          <li><i>4</i>
-            <p>下单完成</p></li>
+          <li class="curr"><i>1</i><p>编辑详细信息</p></li>
+          <li><i>2</i><p>生成订单</p></li>
+          <li><i>3</i><p>支付货款</p></li>
+          <li><i>4</i><p>下单完成</p></li>
         </ul>
       </div>
     </Header-small>
@@ -31,19 +27,20 @@
                 :class="{'curr':1 === currentIndex}" :key="1">
               <div style="background-color: #fff;">配送</div>
             </li>
-            <div class="gray">（您选择交货方式为配送，提交下单必须满足<span class="orangeFont">25</span>吨的倍数）</div>
           </ul>
           <div class="blueFont mr30 cp fs14" v-show="currentIndex" id="newAdd" @click="addNewAddress">新增收货地址</div>
         </div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
-          选择运输方式
-          <div class="ml5">
-            <Select v-model="orderinfo.transportationModeTake" style="width:200px">
-              <i-option v-for="(item, index) in takeTheirTrans" :value="item" :key="index">{{ item }}</i-option>
-            </Select>
-          </div>
+        <div class="gray" style="margin-left: 35px;">
+          <template v-if="orderinfo.isDelivery == 0">
+            （您选择交货方式为自提，自提起订量为<span class="orangeFont">{{feedingInfo.takeTheirMin}}吨</span>，数量加量幅度为<span
+              class="orangeFont">{{feedingInfo.takeBidIncrement}}吨</span>）
+          </template>
+          <template v-else-if="orderinfo.isDelivery == 1">
+            （您选择交货方式为配送，配送起订量为<span class="orangeFont">{{feedingInfo.deliveryMin}}吨</span>，数量加量幅度为<span
+              class="orangeFont">{{feedingInfo.deliveryBidIncrement}}吨</span>）
+          </template>
         </div>
-        <div class="AddList" v-if="this.orderinfo.isDelivery == 1">
+        <div class="AddList" v-if="orderinfo.isDelivery == 1">
           <template v-if="addressList.length > 0">
             <ul class="addListSelect ovh">
               <li v-for="(item,i) in addressList" :key="i" :class="item.id === orderinfo.addressId ? 'curr' : ''"
@@ -66,40 +63,31 @@
           </template>
           <template v-else><p>暂无任何收货地址，请您添加！</p></template>
         </div>
-        <div v-if="this.orderinfo.isDelivery == 1" class="lineborder"></div>
-        <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
-        <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
-          <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
-            选择运输方式
-            <ul class="DeliveryMethod ml35 mb20">
-              <template v-if="logisticsfreight.length > 0">
-                <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)"
-                    :class="{'curr':index === currfreight}" :key="index">
-                  {{item.transportation}}({{item.freight_fee}}元/吨)
-                </li>
-              </template>
-              <template v-else>
-                <p>此线路暂无任何运输方式数据，请变更配送地址 或 货物选择自提！</p>
-              </template>
-            </ul>
-          </div>
-        </div>
-
-        <!--优选服务-->
-        <div class="mt30 fs16 ml15 fwb" id="test2">优选服务</div>
-        <div class="ml35 fs14 mt10 dflexAlem">
-          巨融易
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="orderinfo.isDelivery == 0">
+          选择运输方式
           <div class="ml5">
-            <Select v-model="orderinfo.jryDays" clearable @on-change="setJry" size="small" style="width:100px">
-              <i-option v-for="(item, index) in jryDays" :value="item" :key="index">{{ item }}</i-option>
+            <Select v-model="orderinfo.transportationModeTake" style="width:200px">
+              <i-option v-for="(item, index) in takeTheirTrans" :value="item" :key="index">{{ item }}</i-option>
             </Select>
           </div>
-          <div class="ml20 orangeFont">* 费率=天数*吨数*5元</div>
         </div>
-        <div class="orderCzTip">
-          * 选择巨融易服务，提交订单后在有效期内付款完成，逾期将扣除保证金（例：距融易5天，2019-05-08 11:00:00提交订单，须在2019-05-13 17:00:00前完成付款）
+        <div class="mt30 fs16 ml15 fwb" v-if="this.orderinfo.isDelivery == 1">运费</div>
+        <div class="ml35 fs14 mt10 dflexAlem" v-if="this.orderinfo.isDelivery == 1">
+          选择运输方式
+          <ul class="DeliveryMethod ml35 mb20">
+            <template v-if="logisticsfreight.length > 0">
+              <li v-for="(item, index) in logisticsfreight" @click="setFreight(index,item)"
+                  :class="{'curr':index === currfreight}" :key="index">
+                {{item.transportation}}({{item.freight_fee}}元/吨)
+              </li>
+            </template>
+            <template v-else>
+              <p>此线路暂无任何运输方式数据，请变更配送地址 或 货物选择自提！</p>
+            </template>
+          </ul>
         </div>
-        <div class="lineborder"></div>
+
+
         <!-- 商品信息 -->
         <div class="mt30 fs16 ml15" id="test1">
           <span class="fwb">商品信息</span>
@@ -110,19 +98,18 @@
           <li>
             <span class="title" style="width: 13%;">货物信息</span>
             <span class="title" style="width: 12%;">交货地</span>
+            <span class="title" style="width: 12%;">单价（元/吨）</span>
             <span class="title" style="width: 12%;">运费</span>
-            <span class="title" style="width: 12%;">巨融易</span>
             <span class="title" style="width: 12%;">合计单价（元/吨）</span>
             <span class="title" style="width: 12%;">放料单可提吨数</span>
             <span class="title" style="width: 14%;">本次提货吨数</span>
-
             <span class="title" style="width: 9%;">小计</span>
           </li>
           <li>
             <div style="width: 13%;">{{specialDetail.skuName}}</div>
             <div style="width: 12%;">{{feedingInfo.warehouseName}}</div>
-            <div style="width: 12%;">+ {{orderinfo.freightFee}}元/吨</div>
-            <div style="width: 12%;">+ {{orderinfo.jryCost}}元/吨</div>
+            <div style="width: 12%;">{{$utils.amountFormat(feedingInfo.finalPrice)}}</div>
+            <div style="width: 12%;">+ {{orderinfo.freightFee}}</div>
             <div style="width: 12%;">￥{{this.totalPriceFormat}}</div>
             <div style="width: 12%;">{{specialDetail.limitNum}}</div>
             <div style="width: 14%;">
@@ -132,6 +119,16 @@
 
             <div class="fwb orangeFont" style="width: 9%;">{{ this.totalAmountFormat }}</div>
           </li>
+        </ul>
+
+        <div class="lineborder"></div>
+        <div class="mt30 fs16 ml15 fwb">支付选择</div>
+        <ul class="DeliveryMethod ml35">
+          <li @click="choosePayType(0)" :class="'curr'" :key="0">
+            支付全款
+          </li>
+          <div class="ml10 fs14">可用余额：<span class="orangeFont">{{$store.state.member.capitalInfo.available_amount_format}}</span></div>
+          <a class="licz" href="/users/investCapital" style="cursor: pointer" target="_blank">查看充值方式</a>
         </ul>
 
         <div class="proInfor">
@@ -171,48 +168,23 @@ import {addressList, gainuserInfor} from '../../../api/users'
 
 export default {
 	name: "special-order-id",
+	middleware: 'memberAuth',
 	components: {
 		HeaderSmall: Header.small,
 		Footer,
 		InputSpecial
 	},
 	computed: {
-		...mapState({
-			specialDetail: state => state.special.specialDetail,
-			feedingInfo: state => state.special.feedingInfo,
-		}),
-		//   minPrice: function () {
-		//     if(this.auctionInfo.myBidList.length > 0){
-		//       return this.auctionInfo.myBidList[0].bidPrice
-		//     }else{
-		//       return this.auctionInfo.finalPrice
-		//     }
-		//   },
-		//   minNum: function () {
-		//     if(this.auctionInfo.myBidList.length > 0){
-		//       return this.auctionInfo.myBidList[0].bidNum
-		//     }else{
-		//       return this.auctionInfo.minOrder
-		//     }
-		//   }
-	},
 
-	fetch({
-					store,
-					params
-				}) {
+	},
+	fetch({store, params}) {
 		return Promise.all([
 			//获取顶部、中部、底部导航信息
 			store.dispatch('common/getNavList'),
 			//获取系统配置
 			store.dispatch('common/getSysConfig'),
-			//获取友情链接
-			store.dispatch('common/getFriendlyList'),
-			//获取底部帮助分类
-			store.dispatch('helper/getHelpCate', {
-				catId: 0,
-				indexShow: 1
-			}),
+			//获取资金情况
+			store.dispatch('member/getCapitalInfo'),
 		])
 	},
 
@@ -333,8 +305,6 @@ export default {
 				this.orderinfo.freightFee = row.freight_fee
 				this.currfreight = i
 			}
-
-
 		},
 		//选择运费
 		setFreights(i, row) {
@@ -390,12 +360,8 @@ export default {
 				})
 			}
 		},
-		//资金
-		async getMyCapital() {
-			const res3 = await capitalinfo(this, {})
-			if (res3) {
-				this.capitalinfo = res3.data
-			}
+		choosePayType(){
+
 		},
 		//基础数据
 		async getSourceData() {
@@ -589,9 +555,7 @@ export default {
 
 		// this.$store.dispatch('special/monthspecialDetail', {feeding_id: this.specialId, planned_id:this.planned_id,})
 		// console.log(this.$store.special.mapState.specialDetail)
-		this.inLogin()
 		this.getSourceData()
-		this.getMyCapital()
 		this.getMyAddress()
 
 

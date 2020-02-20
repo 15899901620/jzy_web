@@ -33,14 +33,12 @@
               <span class="tac" style="width: 15%">{{item.statusName}}</span>
               <span class="tar gray  pr10" style="width: 17%">{{item.beginTime}}</span>
               <span class="tar gray  pr10" style="width: 13%"  >
-                <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">
-                  <template v-if="item.statusName === '未投标'">
-                    投标
-                  </template>
-                  <template v-if="item.statusName === '已中标'">
-                    中标详情
-                  </template>
-                </Button>
+                <template v-if="item.statusName === '未投标'">
+                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
+                </template>
+                <template v-if="item.statusName === '已中标'">
+                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">中标详情</Button>
+                </template>
               </span>
             </li>
           </ul>

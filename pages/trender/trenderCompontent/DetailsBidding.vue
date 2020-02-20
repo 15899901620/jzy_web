@@ -26,21 +26,31 @@
           <Row>
             <Col span="24">
               <FormItem label="数量" prop="num" >
-                <Input v-model="formCustom.num" placeholder="请输入投标数量"></Input>
+                <Input v-model="formCustom.num" placeholder="请输入投标数量">
+                </Input>
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col span="24">
               <FormItem label="投标总价" prop="totalAmount" >
-                <Input v-model="formCustom.totalAmount" placeholder="请输入投标总价"></Input>
+                <Input v-model="formCustom.totalAmount" placeholder="请输入投标总价">
+                  <Select v-model="currency" slot="append" style="width: 70px">
+                    <Option value="人民币">人民币</Option>
+                    <Option value="美元">美元</Option>
+                    <Option value="欧元">欧元</Option>
+                    <Option value="日元">日元</Option>
+                    <Option value="英镑">英镑</Option>
+                  </Select>
+                </Input>
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col span="24">
               <FormItem label="交货期" prop="deliveryDate" >
-                <Input v-model="formCustom.deliveryDate" placeholder="请输入交货期"></Input>
+                <DatePicker type="date" transfer :value="formCustom.deliveryDate" :options="pickerOptionsDisabled"
+                            format="yyyy-MM-dd" @on-change="formCustom.deliveryDate = $event"></DatePicker>
               </FormItem>
             </Col>
           </Row>
@@ -77,6 +87,19 @@
               </FormItem>
             </Col>
           </Row>
+          <Row>
+            <Col span="24" >
+              <FormItem label="上传报价文件" prop="bidFile">
+                <Upload
+                    ref="upload"
+                    action="/api/upload/file"
+                    :on-success="handleBidFile"
+                    :max-size="2048">
+                  <Button type="primary" size="large">上传报价文件</Button>
+                </Upload>
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
       </div>
     </Modal>
@@ -100,6 +123,12 @@ export default {
 			uploadUrl: '',
 			loading: true,
 			bidersloading: false,
+			pickerOptionsDisabled: {
+				disabledDate(time) {
+					return time.getTime() < new Date(new Date().toLocaleDateString()).getTime()
+				}
+			},
+			currency: '人民币',
 			formCustom: {
 				num: '',
 				totalAmount: '',
@@ -107,6 +136,7 @@ export default {
 				deliveryPoint: '',
 				appendix: '',
 				technicalDoc: '',
+        bidFile: ''
 			},
 			ruleValidate: {
 				num: [
@@ -126,6 +156,9 @@ export default {
 				],
 				technicalDoc: [
 					{ required: true, message: '商务文件不能为空', trigger: 'blur' }
+				],
+				bidFile: [
+					{ required: true, message: '报价文件不能为空', trigger: 'blur' }
 				]
 			},
 			SupplierInfor: Cookies.get("supplierInfor"),
@@ -147,7 +180,9 @@ export default {
 		handleOtherFile(res) {
 			this.formCustom.appendix = res.url
 		},
-
+		handleBidFile(res) {
+			this.formCustom.bidFile = res.url
+		},
 		showBidDialog() {
 			this.bidersloading = true
 		},
@@ -166,29 +201,33 @@ export default {
 						supplierId: this.$store.state.supplierInfo.id,
 						biddingId: this.id,
 						num: this.formCustom.num,
-						totalAmount: this.formCustom.totalAmount,
+						totalAmount: this.formCustom.totalAmount + this.currency,
 						deliveryDate: this.formCustom.deliveryDate,
 						deliveryPoint: this.formCustom.deliveryPoint,
 						technicalDoc: this.formCustom.technicalDoc,
 						appendix: this.formCustom.appendix,
+            bidFile: this.formCustom.bidFile,
 						supplierName: this.$store.state.supplierInfo.username
 					};
 
 					const res = sendHttp(this, true, server.api.biddding.save, params, 2)
 					this.loading = false
-					if (res.data.errorcode == '501002') {
-						this.$Notice.warning({
-							title: res.data.message,
-							duration: 5
-						});
-						return
-					} else {
+					if (res.status === 200 && res.data.errorcode||0 == 0) {
 						this.$Message.info({
 							content: '投标成功',
 							duration: 5,
 							closable: true
 						})
-					}
+            this.bidersloading = false
+					}else{
+						if (res.data.errorcode) {
+							this.$Notice.warning({
+								title: res.data.message,
+								duration: 5
+							});
+							return
+						}
+          }
 					this.SourceData();
 				}else{
 					setTimeout(() => {

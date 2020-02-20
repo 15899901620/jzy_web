@@ -64,8 +64,10 @@
                   </template>
               </span>
               <span class="tac" style="width: 10%">
-                 <span>{{item.statusName}}</span>
-                <span class="winann" style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看详情</span>
+                <Tag v-if="item.statusName==='已中标' || item.statusName==='未中标'" color="error">{{item.statusName}}</Tag>
+                <span v-else>{{item.statusName}}</span>
+                <br>
+                <span style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看详情</span>
               </span>
               <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
 

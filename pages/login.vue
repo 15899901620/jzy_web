@@ -16,7 +16,7 @@
               <div class="LoginCenter">
                 <Tabs  v-model="nowIndex" >
                   <TabPane label="会员登录" name="users"  > <login></login></TabPane>
-                  <TabPane label="供应/承运商登录" name="supply"> <login-supply></login-supply> </TabPane>
+                  <TabPane label="供应商/承运商登录" name="supply"> <login-supply></login-supply> </TabPane>
                 </Tabs>
              </div>
           </div>

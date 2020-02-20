@@ -70,7 +70,7 @@
           <Row :gutter="24" index="5" style="margin: 0">
             <Col span="21">
               <div style="width: 53%; margin: -7px auto 0; cursor: pointer">
-                <a class="orangeFont fs14" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">授权书下载模板</a>
+                <a class="orangeFont fs18" :href="$store.state.common.sysConfig.AUTHORIZATION_TEMPLATE">授权书模板下载</a>
               </div>
             </Col>
           </Row>

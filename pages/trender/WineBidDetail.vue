@@ -67,7 +67,7 @@ import server from "../../config/api";
 
 export default {
 	name: "WineBidDetail",
-	middleware: 'supplierAuth',
+	//middleware: 'supplierAuth',
 	components: {
 		HeaderSmall: Header.small,
 		DetailsBidding,
