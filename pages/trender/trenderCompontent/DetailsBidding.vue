@@ -6,7 +6,7 @@
     <div style="display: inline-flex;    margin-left: 10px;position: absolute;" v-if="this.dataList.appendix">
       <Button type="warning" size="large" @click='download()'>下载模板</Button>
     </div>
-    <div style="text-align: center;" v-if="dataList.statusName=='未投标'">
+    <div style="text-align: center;" v-if="dataList.statusName=='未投标' && (new Date() < new Date(dataList.endTime.replace(/-/g,'\/')))">
       <Button type="primary" @click="showBidDialog" size="large">投标</Button>
     </div>
     <!--招标出价-->
@@ -34,7 +34,7 @@
           <Row>
             <Col span="24">
               <FormItem label="投标总价" prop="totalAmount" >
-                <Input v-model="formCustom.totalAmount" placeholder="请输入投标总价">
+                <Input v-model="formCustom.totalAmount" placeholder="请输入投标总价(万)">
                   <Select v-model="currency" slot="append" style="width: 70px">
                     <Option value="人民币">人民币</Option>
                     <Option value="美元">美元</Option>

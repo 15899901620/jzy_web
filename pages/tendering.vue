@@ -59,14 +59,15 @@
               <span  style="width: 15%;padding-left: 45px">{{item.biddingNo}}</span>
               <span class="tac" style="width:25%;">{{item.title}}</span>
               <span class="tac" style="width: 20%">
-                  <template >
-                    <TimeDown  :endTime="item.endTime" formatStr='{D}天{H}小时{M}分{S}秒' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
-                  </template>
+                <template>
+                  <TimeDown  :endTime="item.lastEndTime" formatStr='{D}天{H}小时{M}分' endMsg="已结束" :onTimeOver="reloadPage"></TimeDown>
+                </template>
               </span>
               <span class="tac" style="width: 10%">
                 <Tag v-if="item.statusName==='已中标' || item.statusName==='未中标'" color="error">{{item.statusName}}</Tag>
                 <span v-else>{{item.statusName}}</span>
                 <br>
+                <Button v-if="item.statusName==='未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))" class="inquiryFree" style="padding:3px 5px;" type="primary" @click="WineDetail(item)">投标</Button>
                 <span style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看详情</span>
               </span>
               <span class="tar gray pr10" style="width: 20%">{{item.beginTime}}</span>
