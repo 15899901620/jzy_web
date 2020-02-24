@@ -28,13 +28,16 @@
           </div>
           <ul class="trendlist" v-for="(item, index) in dataList" :key="index">
             <li @click="WineDetail(item)">
-              <span class="pl10" style="width: 25%;">{{item.biddingNo}}</span>
+              <span class="pl10" style="width: 25%;">{{item.selfBiddingNo}}</span>
               <span class="tac" style="width:30%;">{{item.title}}</span>
               <span class="tac" style="width: 15%">{{item.statusName}}</span>
               <span class="tar gray  pr10" style="width: 17%">{{item.endTime}}</span>
               <span class="tar gray  pr10" style="width: 13%"  >
-                <template v-if="item.statusName === '未投标' && item.status != 'CL' && (new Date() < new Date(item.endTime.replace(/-/g,'\/')))">
+                <template v-if="item.statusName === '未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
+                </template>
+                <template v-if="item.statusName === '已投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
+                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">修改投标</Button>
                 </template>
                 <template v-if="item.statusName === '已中标'">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">中标详情</Button>
@@ -133,6 +136,14 @@
             }
           })
         }
+				if(row.statusName === '已投标'){
+					this.$router.push({
+						name: 'trender-WineBidDetail',
+						query: {
+							id: row.id
+						}
+					})
+				}
         if(row.statusName === '已中标'){
           this.$router.push({
             name: 'WinAnnoun-id',

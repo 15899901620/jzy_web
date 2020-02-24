@@ -67,7 +67,7 @@ import server from "../../config/api";
 
 export default {
 	name: "WineBidDetail",
-	//middleware: 'supplierAuth',
+	middleware: 'supplierAuth',
 	components: {
 		HeaderSmall: Header.small,
 		DetailsBidding,
@@ -99,25 +99,8 @@ export default {
 		};
 	},
 	methods: {
-		async SourceData() {
-			let params = {
-				id: this.id,
-			};
-			const res = await sendHttp(this, false, server.api.biddding.bidddingDetail, params, 2)
-			this.dataList = res.data
-		},
-		// async BySupplier() {
-		//     let params = {
-		//       biddingId: this.id,
-		//     };
-		//     const res = await sendHttp(this, false, server.api.biddding.BySupplier,params)
-		//     this.dataList = res.data
-		// },
-
 	},
 	mounted() {
-		this.SourceData()
-		// this.BySupplier()
 	}
 
 }
