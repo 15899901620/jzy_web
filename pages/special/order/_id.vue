@@ -146,13 +146,13 @@
         <div class="w1200 whitebg dflexAlem"
              style="font-size: 14px; margin: 30px; justify-content:flex-end; width:96.8%;">
           <!-- <div class="submitOrder" style="background-color: #e0dede" v-if="Order==0">提交订单</div> -->
-          <div class="submitOrder" @click='createOrder'>提交订单</div>
+          <div class="submitOrder" @click='beginCreateOrder'>提交订单</div>
         </div>
       </div>
     </div>
     <Footer size="small" title="底部" style="margin-top:18px;"></Footer>
-
-
+    <spotPay :isshow='payModalShow' :datalist='payData' :isPay="isCanPay" :title="payModalTitle" :ProgressShow="progressShow" @unChange="unPayOrder"
+             @payedChange="PayedOrder"></spotPay>
   </div>
 </template>
 
@@ -165,6 +165,7 @@ import {capitalinfo} from '../../../api/capital'
 import InputSpecial from '../../../components/input-special'
 import {getCookies} from '../../../config/storage'
 import {addressList, gainuserInfor} from '../../../api/users'
+import spotPay from '../../../components/paydeposit/spotPay'
 
 export default {
 	name: "special-order-id",
@@ -172,7 +173,8 @@ export default {
 	components: {
 		HeaderSmall: Header.small,
 		Footer,
-		InputSpecial
+		InputSpecial,
+		spotPay
 	},
 	computed: {
 
@@ -190,6 +192,12 @@ export default {
 
 	data() {
 		return {
+			addAddressLoading: false,
+			payModalShow: false,
+			payModalTitle: '支付',
+			isCanPay: true,
+			progressShow:false,     //进度条显示
+			payData: {},
 			orderinfo: {
 				isDelivery: 0,
 				isPerDeposit: 0,
@@ -289,10 +297,6 @@ export default {
 			if (!userinfo) {
 				this.$router.push('/login')
 			}
-		},
-		//添加新的地址
-		addNewAddress() {
-
 		},
 		//选择运费
 		setFreight(i, row) {
@@ -399,9 +403,46 @@ export default {
 		//     }
 
 		// },
-		//创建订单
-		async createOrder() {
 
+		showPayment() {
+			this.payModalShow = true
+		},
+		unPayOrder(row) {
+			this.payModalShow = row
+		},
+		//开始订单
+		beginCreateOrder() {
+			if (this.orderinfo.isDelivery == 1 && this.orderinfo.addressId == 0) {
+				this.showWarning('配送请维护选择收货地址！');
+				return
+			}
+			if (this.orderinfo.isDelivery == 1 && this.orderinfo.transportationMode == 0) {
+				this.showWarning('配送运输方式不能为空！');
+				return;
+			}
+			if (this.orderinfo.orderNum <= 0) {
+				this.showWarning('下单数量不能为0！');
+				return;
+			}
+			this.payData = {
+				skuNo: this.specialDetail.skuNo,
+				skuName: this.specialDetail.skuName,
+				orderNum: this.orderinfo.orderNum,
+				totalAmount: this.payAmount,
+				totalAmountFormat: this.payAmountFormat
+			}
+
+			this.payModalTitle = '支付'
+			this.showPayment()
+		},
+		PayedOrder(smsCode) {
+			this.isCanPay = false
+			this.progressShow=true
+			this.createOrder(smsCode)
+			this.isCanPay = true
+		},
+		//创建订单
+		async createOrder(smsCode) {
 			if (this.orderinfo.transportationModeTake == '') {
 				this.$Modal.warning({
 					title: '提示',
@@ -416,12 +457,12 @@ export default {
 				address_id: this.orderinfo.addressId,
 				transportation_mode: this.orderinfo.transportationMode,
 				jry_days: this.orderinfo.jryDays,
-				order_num: this.feedingInfo.availableNum
+				order_num: this.feedingInfo.availableNum,
+				sms_code: smsCode
 			}
 			if (params.is_delivery == 0) {
 				params.transportation_mode = this.orderinfo.transportationModeTake
 			}
-
 
 			const res = await submitOrder(this, params)
 			if (typeof res.data.errorcode == "undefined") {
@@ -429,11 +470,12 @@ export default {
 				this.$router.push({name: 'special-order-success', query: {id: res.data.id, orderNo: res.data.order_no}})
 
 			} else {
-
+				this.progressShow = false
 				this.$Modal.warning({
 					title: '提示',
 					content: res.data.message
 				});
+
 			}
 		},
 		//获取地址
@@ -448,6 +490,14 @@ export default {
 					}
 				});
 			}
+		},
+		//添加新的地址
+		addNewAddress() {
+			this.addAddressLoading = true
+		},
+		unaddAddressChange(res) {
+			this.addAddressLoading = res
+			this.getMyAddress()
 		},
 		setJry() {
 			if (this.orderinfo.jryDays > 0) {

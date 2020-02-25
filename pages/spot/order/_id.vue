@@ -258,7 +258,7 @@
 				addAddressLoading: false,
 				payModalShow: false,
 				payModalTitle: '支付',
-                isCanPay: true,
+        isCanPay: true,
 				payData: {},
 				orderinfo: {
 					spot_id: 0,
@@ -299,7 +299,7 @@
 				nowIndex: 0,
 				index: 0,
 				spotId: this.$route.params.id || 0,
-                progressShow:false     //进度条显示
+        progressShow:false     //进度条显示
 			}
 		},
 		methods: {
@@ -384,7 +384,7 @@
 			},
 			//选择运费
 			setFreight(i, row) {
-			
+
 				if(i == -1){
 					this.orderinfo.transportationMode = ''
 					this.orderinfo.freightFee = 0
@@ -451,7 +451,7 @@
 
 				}
 
-        		this.payModalTitle = '支付'
+        this.payModalTitle = '支付'
 
 				this.showPayment()
 			},
@@ -464,7 +464,7 @@
 			},
 			PayedOrder(smsCode) {
 				this.isCanPay = false
-                this.progressShow=true
+        this.progressShow=true
  				this.createOrder(smsCode)
 				this.isCanPay = true
 			},
@@ -492,6 +492,7 @@
 						location.href = '/spot/order/success?plan_no=' + res.data.plan_no + '&last_ordered_date='+ (res.data.last_ordered_date||'') + '&order_no=' + (res.data.order_no||'') + '&order_status=' + (res.data.order_status||'') + '&order_pay_last_time=' + (res.data.order_pay_last_time||'')
 
  					} else {
+						this.progressShow = false
 						this.$Modal.warning({
 							title: '提示',
 							content: res.data.message,

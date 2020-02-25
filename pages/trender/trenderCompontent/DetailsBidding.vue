@@ -268,13 +268,14 @@ export default {
 
 					const res = sendHttp(this, true, server.api.biddding.save, params, 2)
 					this.loading = false
-					if (res.status === 200 && res.data.errorcode||0 == 0) {
+					if (res.status === 200 && (res.data.errorcode||0) == 0) {
 						this.$Message.info({
 							content: '投标成功',
 							duration: 5,
 							closable: true
 						})
             this.bidersloading = false
+						window.location.reload()
 					}else{
 						if (res.data.errorcode) {
 							this.$Notice.warning({
@@ -284,7 +285,6 @@ export default {
 							return
 						}
           }
-					window.location.reload()
 				}else{
 					setTimeout(() => {
 						this.loading = false
