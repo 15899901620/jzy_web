@@ -56,7 +56,7 @@
             <span class="tac" style="width: 13%">操作</span>
           </div>
           <ul class="trendlist" v-for="(item, index) in dataList" :key="index">
-            <li  @click="WineDetail(item)">
+            <li>
               <span  style="width: 15%;padding-left: 45px">{{item.selfBiddingNo}}</span>
               <span class="tac" style="width:25%;">{{item.title}}</span>
               <span class="tac" style="width: 20%">
@@ -67,13 +67,15 @@
               <span class="tac" style="width: 10%">
                 <Tag v-if="item.statusName==='已中标' || item.statusName==='未中标'" color="error">{{item.statusName}}</Tag>
                 <span v-else>{{item.statusName}}</span>
+                <template v-if="item.statusName==='已中标'">
+                  <br><span style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看结果</span>
+                </template>
               </span>
               <span class="tac gray pr10" style="width: 17%">{{item.beginTime}}</span>
               <span class="tac gray pr10" style="width: 13%">
                 <Button v-if="item.statusName==='未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))" class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
-                <span style="cursor: pointer" @click.stop="AnnDetail(item)"  v-if="item.statusName==='已中标'">查看详情</span>
+                <Button class="inquiryFree" @click="WineDetail(item)" type="success" v-if="item.statusName==='已中标' || item.statusName==='已投标'">查看</Button>
               </span>
-
             </li>
 
           </ul>

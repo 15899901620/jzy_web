@@ -27,17 +27,17 @@
               <span class="tar mr10" style="width: 13%;padding-right: 10px">操作</span>
           </div>
           <ul class="trendlist" v-for="(item, index) in dataList" :key="index">
-            <li @click="WineDetail(item)">
+            <li>
               <span class="pl10" style="width: 25%;">{{item.selfBiddingNo}}</span>
               <span class="tac" style="width:30%;">{{item.title}}</span>
               <span class="tac" style="width: 15%">{{item.statusName}}</span>
-              <span class="tar gray  pr10" style="width: 17%">{{item.endTime}}</span>
+              <span class="tar gray  pr10" style="width: 17%">{{item.lastEndTime}}</span>
               <span class="tar gray  pr10" style="width: 13%"  >
                 <template v-if="item.statusName === '未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
                 </template>
                 <template v-if="item.statusName === '已投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
-                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">修改投标</Button>
+                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">查看</Button>
                 </template>
                 <template v-if="item.statusName === '已中标'">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">中标详情</Button>
@@ -46,7 +46,6 @@
             </li>
           </ul>
           <div class="whitebg ovh pt20 pb20">
-             <!-- <pages :total="total" :pageSize="page_size" :show-total="showTotal" :value="current_page"></pages> -->
            <pages :total="total" :show-total="showTotal" :value="current_page"
                    :pageSize="page_size"></pages>
           </div>
