@@ -74,7 +74,7 @@
               <span class="tac gray pr10" style="width: 17%">{{item.beginTime}}</span>
               <span class="tac gray pr10" style="width: 13%">
                 <Button v-if="item.statusName==='未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))" class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
-                <Button class="inquiryFree" @click="WineDetail(item)" type="success" v-if="item.statusName==='已中标' || item.statusName==='已投标'">查看</Button>
+                <Button class="inquiryFree" @click="WineDetail(item)" type="success" v-else>查看</Button>
               </span>
             </li>
 
