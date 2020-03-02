@@ -79,7 +79,7 @@
           <Row>
             <Col span="24">
               <FormItem label="技术偏离" prop="technicalDeviate" >
-                <Select :disabled="canView" v-model ="this.formCustom.technicalDeviate">
+                <Select :disabled="canView" v-model ="formCustom.technicalDeviate">
                   <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
                 </Select>
               </FormItem>
@@ -88,7 +88,7 @@
           <Row>
             <Col span="24">
               <FormItem label="商务偏离" prop="appendixDeviate">
-                <Select :disabled="canView" v-model="this.formCustom.appendixDeviate">
+                <Select :disabled="canView" v-model="formCustom.appendixDeviate">
                   <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
                 </Select>
               </FormItem>
