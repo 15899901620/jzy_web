@@ -55,7 +55,7 @@
               <FormItem label="交货期" prop="deliveryDate" >
                 <Input :disabled="canView" v-model="formCustom.deliveryDate" placeholder="请输入交货期">
                   <Select v-model="deliveryCurrency" slot="append" style="width: 50px">
-                    <Option value="日">日</Option>
+                    <Option value="天">天</Option>
                     <Option value="月">月</Option>
                   </Select>
                 </Input>
@@ -192,7 +192,7 @@ export default {
 			loading: true,
 			bidersloading: false,
 			confirmLoading: false,
-			deliveryCurrency: '日',
+			deliveryCurrency: '天',
 
 			trueFalseOption : [
 				{value: 0, name:'否'},
