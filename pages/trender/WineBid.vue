@@ -36,12 +36,13 @@
                 <template v-if="item.statusName === '未投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">投标</Button>
                 </template>
-                <template v-if="item.statusName === '已投标' && item.status != 'CL' && (new Date() < new Date(item.lastEndTime.replace(/-/g,'\/')))">
-                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">查看</Button>
-                </template>
-                <template v-if="item.statusName === '已中标'">
+                <template v-else-if="item.statusName === '已中标'">
                   <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">中标详情</Button>
                 </template>
+                <template v-else>
+                  <Button  class="inquiryFree" type="primary" @click="WineDetail(item)">查看</Button>
+                </template>
+
               </span>
             </li>
           </ul>
