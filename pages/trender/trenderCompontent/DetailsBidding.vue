@@ -77,6 +77,24 @@
             </Col>
           </Row>
           <Row>
+            <Col span="24">
+              <FormItem label="技术偏离" prop="technicalDeviate" >
+                <Select :disabled="canView" v-model ="this.formCustom.technicalDeviate">
+                  <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="24">
+              <FormItem label="商务偏离" prop="appendixDeviate">
+                <Select :disabled="canView" v-model="this.formCustom.appendixDeviate">
+                  <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
             <Col span="14" >
               <FormItem label="上传技术文件" prop="technicalDoc">
                 <Upload
@@ -95,15 +113,6 @@
             </Col>
           </Row>
           <Row>
-            <Col span="24">
-              <FormItem label="技术偏离" prop="technicalDeviate" >
-                <Select :disabled="canView" v-model ="this.formCustom.technicalDeviate">
-                  <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
             <Col span="14" >
               <FormItem label="上传商务文件" prop="appendix">
                 <Upload
@@ -117,15 +126,6 @@
             </Col>
             <Col span="10" >
               <span v-if="this.formCustom.appendix"><a target="_blank" :href="this.formCustom.appendix">{{this.formCustom.appendixName}}</a></span>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="24">
-              <FormItem label="商务偏离" prop="appendixDeviate">
-                <Select :disabled="canView" v-model="this.formCustom.appendixDeviate">
-                  <Option v-for="(item, index) in trueFalseOption" :value="item.value" :key="index">{{item.name}}</Option>
-                </Select>
-              </FormItem>
             </Col>
           </Row>
           <Row>
