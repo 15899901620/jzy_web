@@ -214,6 +214,7 @@ export default {
     margin-bottom: 60px;
 
     li {
+      width: 280px;
       margin-top: 20px;
       margin-left: 20px;
       border-radius: 10px;
@@ -222,6 +223,7 @@ export default {
       .Img {
         font-size: 0;
         height: 312px;
+        img{width: 100%}
       }
 
       .operatebtn {
