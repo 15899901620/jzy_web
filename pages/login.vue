@@ -14,33 +14,29 @@
 
           <div class="LoginInput">
               <div class="LoginCenter">
-                <Tabs  v-model="nowIndex" >
+                <!-- <Tabs  v-model="nowIndex" >
                   <TabPane label="会员登录" name="users"  > <login></login></TabPane>
                   <TabPane label="供应商/承运商登录" name="supply"> <login-supply></login-supply> </TabPane>
-                </Tabs>
-             </div>
-          </div>
-<!--          <div class="LoginInput">-->
-<!--            <div class="LoginCenter">-->
-<!--              <ul class="dflexAlem loginMethod">-->
-<!--                <li v-for="(item,index) in loginList" :class="{'curr':nowIndex === index}"-->
-<!--                    @click="tabClick(index,item.registerName)" v-bind:key="index">-->
-<!--                  {{item.name}}-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--              <div class="swiper-container swiper_con">-->
-<!--                <div class="swiper-wrapper dflex">-->
-<!--                  <div class="swiper-slide swiper-no-swiping" ref="viewBox">-->
-<!--                    <login></login>-->
-<!--                  </div>-->
-<!--                  &lt;!&ndash; 第二个swiper &ndash;&gt;-->
-<!--                  <div class="swiper-slide swiper-no-swiping">-->
-<!--                    <login-supply></login-supply>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+                </Tabs>  -->
+				<ul class='TabTitle'>
+					<li @click="tabClick(0)" class="TabMember " :class="{'TabMemberbg':nowIndex === 0}" >会员登录</li>
+				    <li @click="tabClick(1)" class="TabSupply " :class="{'TabSupplybg':nowIndex === 1}">供应商/承运商登录</li>
+				</ul>
+             </div> 
+
+			 <div class="swiper-container swiper_con">
+                <div class="swiper-wrapper dflex">
+                  <div class="swiper-slide swiper-no-swiping swipingleft" ref="viewBox" style="width:262px; margin-right:1px">
+                    <login></login> 
+                  </div> 
+                 <!-- 第二个swiper  -->
+                  <div class="swiper-slide swiper-no-swiping"  style="width:263px;">
+                    <login-supply></login-supply>
+                  </div>
+                </div>             
+			  </div>
+        </div>
+         
 
         </div>
       </div>
@@ -103,8 +99,12 @@
 		},
 		methods: {
 			// 点击切换
-			tabClick(index, registerName) {
-				this.registerName = registerName
+			// tabClick(index, registerName) {
+			// 	this.registerName = registerName
+			// 	this.nowIndex = index
+			// 	this.mySwiper.slideTo(index, 500, false)
+			// },
+			tabClick(index) { 
 				this.nowIndex = index
 				this.mySwiper.slideTo(index, 500, false)
 			},
@@ -118,7 +118,8 @@
 		}
 	}
 </script>
-<style lang="less" >
+<style lang="less" scope>
+
   .ivu-tabs .ivu-tabs-bar{
     display: flex;
     justify-content: center;
@@ -138,4 +139,48 @@
       color: #ff7300;
       overflow: hidden;
   }
+  .LoginCenter{
+	width: 85%;
+    margin: 10px auto;
+  }
+  .TabTitle{
+	display: flex;
+	border-bottom: 1px solid #57a3f3;
+	li{
+		color:#2b85e4;
+		cursor: default;
+	}
+	.whiteColor{color: #ffffff;}
+	.TabMember{
+		width: 60%; 	
+		height: 35px;
+		line-height: 35px;
+		padding-left: 10px;
+		position: relative;   
+	}
+	.TabMemberbg{  
+		width: 56%;
+		height: 35px;
+		color: #ffffff;
+		background: url(../static/img/LoginTabbg.png) no-repeat 0px 2px;
+		background-size: 100%;
+	} 
+	.TabSupply{
+		width: 57%;  
+		height: 35px;
+		line-height: 35px;
+		text-align: right;
+		padding-right: 10px;
+		position: relative; 
+	}  
+	.TabSupplybg{ 
+		width: 95%;
+		text-align: right;
+		color: #ffffff;
+		height: 35px;
+		background: url(../static/img/LoginTabbg.png) no-repeat 0px -46px;
+		background-size: 100%;
+	}
+  }
+ 
 </style>

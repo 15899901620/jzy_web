@@ -294,7 +294,7 @@
             <td style="width: 7%">操作</td>
           </tr>
 
-          <tr v-for="(item,index) in auctionInfo.partakeList">
+          <tr v-for="(item,index) in auctionInfo.partakeList" :key="index">
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.skuName}}</td>
             <td>{{item.manufacturer}}</td>
@@ -375,9 +375,7 @@
         <!-- <div style="display: flex; justify-content: center">
           <div class="addbiders" @click="addFollow">添加其他竞拍</div>
         </div> -->
-      </div>
-
-
+      </div> 
       <div class="biddersRecord">
         <!--竞拍流程-->
         <div class=" mt30">

@@ -27,7 +27,7 @@
         <Col span="24">
           <FormItem prop="password">
             <Input v-model="loginsupplierform.password" autocomplete="off" type="password" @keyup.native="loginKeyDown"   @keyup.enter.native="LoginsupplyerForm" placeholder="登录密码"/>
-            <div style="height:13px; position: relative"><div v-show="bigChar" style="margin-top: -5px; color: #666;">大写锁定已打开</div></div>
+            <div style="height:13px; position: relative" v-show="bigChar"><div  style="margin-top: -5px; color: #666;">大写锁定已打开</div></div>
           </FormItem>
 
         </Col>
@@ -89,7 +89,7 @@ export default {
       btnBoolen: false,
       firstTochar:false,
       bigChar:false,
-      validWidth: this.$router.history.current.name === 'tendering'?247:263,
+      validWidth: this.$router.history.current.name === 'tendering'?247:268,
       loginsupplierform:{
         username: '',
         mobilecode: '',

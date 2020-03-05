@@ -18,9 +18,7 @@ export const state = () => {
 		planTotal: 0,
 		partakeList:[],
 		planList:[],
-		planDetail: {},
-
-
+		planDetail: {}, 
 		hotbidderList: []
 	}
 }

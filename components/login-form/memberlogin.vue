@@ -90,7 +90,7 @@
 				auth_time: 0,
 				bigChar:false,
 				firstTochar:false,
-                validWidth:263,
+                validWidth:268,
 				loginform: {
 					username: '',
 					mobilecode: '',
