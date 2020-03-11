@@ -69,7 +69,19 @@
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
                 <td style="width: 15%;">
-                  <div>待签合同</div>
+                  <template v-if="item.contract_apply_status == 1">
+                    <div>待签合同</div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 2">
+                    <div>合同盖章中</div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 3">
+                    <div><a :href="item.contract_final_pic" target="_blank" class="greenFont">查看合同</a></div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 4">
+                    <div>待签合同</div>
+                  </template>
+
                   <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
                 </td>
                 <td style="width: 15%;" class="operate">
@@ -93,6 +105,11 @@
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
                     </template>
                   </div>
+                  <div v-if="item.status != 3 && item.total_num > 0">
+                    <template v-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请合同盖章</a>
+                    </template>
+                  </div>
                 </td>
               </tr>
               </tbody>
@@ -106,6 +123,7 @@
         </div>
       </div>
     </div>
+    <paperApply :isShow="paperApplyShow" :planId="record_id" :planType="1"></paperApply>
   </div>
 </template>
 
@@ -114,7 +132,8 @@
 	import pagination from '../../components/pagination'
 	import TimeDown from '../../components/timeDown'
 	import server from '../../config/api'
-	import {sendHttp} from "../../api/common";
+	import {sendHttp} from "../../api/common"
+	import paperApply from "../../components/contract/paperApply"
 
 	export default {
 		name: "spotPlan",
@@ -123,7 +142,8 @@
 		components: {
 			usernav: Navigation.user,
 			pages: pagination.pages,
-			TimeDown
+			TimeDown,
+			paperApply
 		},
 		fetch({store, query}) {
 			return Promise.all([
@@ -134,7 +154,7 @@
 				//获取会员合约列表
 				store.dispatch('spot/getSpotPlanList', {
 					current_page: query.page || 1,
-                    page_size: 6,
+          page_size: 6,
 					plan_no: query.plan_no ? query.plan_no : ''
 				})
 			])
@@ -143,12 +163,16 @@
 			return {
 				current_page: this.$route.query.page ? parseInt(this.$route.query.page) : 1,
 				page_size: 10,
+        sealType: 2,
+				paperApplyShow: false,
+        record_id: 0,
+
 				formSearch: {
 					planNo: '',
 					skuNo: '',
 					auctionId: '',
 					status: ''
-				}
+				},
 			}
 		},
 		methods: {
@@ -191,9 +215,26 @@
 
 					}
 				})
-			}
+			},
+			getSealType() {
+        sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
+          if (response.status === 200) {
+            if ((response.data.errorcode || 0) == 0) {
+							this.sealType = response.data.type
+            }
+          }
+        })
+			},
+			toShowApplyContract(id){
+				if(this.sealType == 2){
+					this.record_id = id
+					this.paperApplyShow = true
+        }
+			},
+
 		},
 		mounted() {
+			this.getSealType()
 		},
 		created() {
 		},

@@ -11,8 +11,17 @@
         </Button>
         <Button title="转单" type="primary" disabled size="small" v-if="row.status === 'CO' && row.availableNum > 0 && row.feedingNum==0" style="margin-right: 5px;">转单</Button>
         <Button type="success" size="small" v-if="row.status === 'CO'" target="_blank" @click="spotContract(row)">
-          查看合同模板
+          合同模板
         </Button>
+        <template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
+          <Button type="success" size="small" target="_blank" @click="toShowApplyContract(row.id)">申请盖章</Button>
+        </template>
+        <template v-else-if="row.contract_apply_status == 2">
+          <span>合同盖章中</span>
+        </template>
+        <template v-else-if="row.contract_apply_status == 3">
+          <a :href="row.contract_final_pic" target="_blank" class="greenFont">查看合同</a>
+        </template>
       </template>
       <template slot-scope="{ row, index }" slot="status">
         <Tag color="default" v-if="row.status === 'VO'">已取消</Tag>
@@ -55,6 +64,7 @@
     </Modal>
     <monthplanedit :isshow="editmodal" :datalist="editdata" @unChange="unEditdischarges"
                    @onChange="editOnSuccess"></monthplanedit>
+    <paperApply :isShow="paperApplyShow" :planId="record_id" :planType="5"></paperApply>
   </div>
 </template>
 <script>
@@ -63,6 +73,8 @@ import {sendHttp} from "../../../../api/common";
 import monthplanedit from "./monthedit";
 import monthorder from './monthorder.vue'
 
+import paperApply from "../../../../components/contract/paperApply"
+
 export default {
 	props: {
 		monthData: {
@@ -70,8 +82,8 @@ export default {
 		},
 	},
 	components: {
-		monthplanedit
-
+		monthplanedit,
+		paperApply
 	},
 	data() {
 		return {
@@ -100,7 +112,7 @@ export default {
 			sourcecolumns: [
 				{
 					type: 'expand',
-					width: 50,
+					width: 40,
 					render: (h, params) => {
 						return h(monthorder, {
 							props: {
@@ -115,16 +127,17 @@ export default {
 				{title: '待转数量', width: '90', align: 'center', key: 'availableNum'},
 				{title: '计划完成率', width: '140', align: 'center', slot: 'availableNum', key: 'availableNum'},
 				{title: '状态', width: '110', slot: 'status', key: 'status'},
-				{title: '操作', width: 200, slot: 'action', key: 'action'}
-			]
+				{title: '操作', width: 230, slot: 'action', key: 'action'}
+			],
+
+			sealType: 2,
+			paperApplyShow: false,
+			record_id: 0,
 		}
 	},
 	methods: {
-		addmonthplan() {
-
-		},
 		spotContract(row) {
-			window.location.href = "/users/spotContract?type=5&id=" + row.id
+			window.open("/users/spotContract?type=5&id=" + row.id)
 		},
 		closeApply() {
 			this.applyShow = false
@@ -213,7 +226,23 @@ export default {
 					}
 				})
 			}
-		}
+		},
+
+		getSealType() {
+			sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
+				if (response.status === 200) {
+					if ((response.data.errorcode || 0) == 0) {
+						this.sealType = response.data.type
+					}
+				}
+			})
+		},
+		toShowApplyContract(id){
+			if(this.sealType == 2){
+				this.record_id = id
+				this.paperApplyShow = true
+			}
+		},
 	},
 	created() {
 	},
