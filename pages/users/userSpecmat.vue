@@ -30,7 +30,7 @@
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
                   <div style="padding: 10px 0px;">
-                    <template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
+                    <!--<template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
                       <Button type="success" size="small" target="_blank" style="margin-bottom: 5px;" @click="toShowApplyContract(row.id)">申请盖章</Button>
                     </template>
                     <template v-else-if="row.contract_apply_status == 2">
@@ -38,7 +38,7 @@
                     </template>
                     <template v-else-if="row.contract_apply_status == 3">
                       <a style="margin-bottom: 5px;" :href="row.contract_final_pic" target="_blank" class="greenFont">查看合同</a>
-                    </template>
+                    </template>-->
 
                     <Button type="success" size="small" target="_blank" @click="spotContract(row)">合同模板</Button>
                   </div>

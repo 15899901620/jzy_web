@@ -13,7 +13,7 @@
         <Button type="success" size="small" v-if="row.status === 'CO'" target="_blank" @click="spotContract(row)">
           合同模板
         </Button>
-        <template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
+        <!--<template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
           <Button type="success" size="small" target="_blank" @click="toShowApplyContract(row.id)">申请盖章</Button>
         </template>
         <template v-else-if="row.contract_apply_status == 2">
@@ -21,7 +21,7 @@
         </template>
         <template v-else-if="row.contract_apply_status == 3">
           <a :href="row.contract_final_pic" target="_blank" class="greenFont">查看合同</a>
-        </template>
+        </template>-->
       </template>
       <template slot-scope="{ row, index }" slot="status">
         <Tag color="default" v-if="row.status === 'VO'">已取消</Tag>

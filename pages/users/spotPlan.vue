@@ -69,7 +69,7 @@
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
                 <td style="width: 15%;">
-                  <template v-if="item.contract_apply_status == 1">
+                  <!--<template v-if="item.contract_apply_status == 1">
                     <div>待签合同</div>
                   </template>
                   <template v-else-if="item.contract_apply_status == 2">
@@ -80,7 +80,8 @@
                   </template>
                   <template v-else-if="item.contract_apply_status == 4">
                     <div>待签合同</div>
-                  </template>
+                  </template>-->
+                  <div>待签合同</div>
 
                   <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
                 </td>
@@ -105,11 +106,11 @@
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
                     </template>
                   </div>
-                  <div v-if="item.status != 3 && item.total_num > 0">
+                  <!--<div v-if="item.status != 3 && item.total_num > 0">
                     <template v-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
                       <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请合同盖章</a>
                     </template>
-                  </div>
+                  </div>-->
                 </td>
               </tr>
               </tbody>
