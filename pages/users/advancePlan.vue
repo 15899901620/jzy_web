@@ -60,7 +60,20 @@
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
                 <td style="width: 15%;">
+                  <!--<template v-if="item.contract_apply_status == 1">
+                    <div>待签合同</div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 2">
+                    <div>合同盖章中</div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 3">
+                    <div><a :href="item.contract_final_pic" target="_blank" class="greenFont">查看合同</a></div>
+                  </template>
+                  <template v-else-if="item.contract_apply_status == 4">
+                    <div>待签合同</div>
+                  </template>-->
                   <div>待签合同</div>
+
                   <div><a :href="`/users/spotContract?type=3&id=${item.id}`" target="_blank" class="greenFont">查看合同模板</a></div>
                 </td>
 
@@ -85,6 +98,11 @@
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
                     </template>
                   </div>
+                  <!--<div v-if="item.status != 3 && item.total_num > 0">
+                    <template v-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请合同盖章</a>
+                    </template>
+                  </div>-->
                 </td>
               </tr>
               </tbody>
@@ -121,6 +139,7 @@
         </Modal>
       </div>
     </div>
+    <paperApply :isShow="paperApplyShow" :planId="record_id" :planType="2"></paperApply>
   </div>
 </template>
 
@@ -130,6 +149,8 @@ import server from '../../config/api'
 import Navigation from '../../components/navigation'
 import TimeDown from '../../components/timeDown'
 import pagination from '../../components/pagination'
+import {sendHttp} from "../../api/common"
+import paperApply from "../../components/contract/paperApply"
 
 export default {
 	name: "userauction",
@@ -138,7 +159,8 @@ export default {
 	components:{
 		usernav: Navigation.user,
 		pages: pagination.pages,
-		TimeDown
+		TimeDown,
+		paperApply
 	},
 	fetch({ store, query }) {
 		return Promise.all([
@@ -177,6 +199,10 @@ export default {
 				{ title: '可用数量', key: 'available_num',slot: 'available_num'},
 				{ title: '操作', slot: 'action'}
 			],
+
+			sealType: 2,
+			paperApplyShow: false,
+			record_id: 0,
 		}
 	},
 	methods: {
@@ -212,33 +238,49 @@ export default {
 			this.toCreateOrder(res.data[0].id, planned_id)
     },
     applycance(id){
-          let params = {
-            id: id
+      let params = {
+        id: id
+      }
+      this.$Modal.confirm({
+        title: '取消提示',
+        content: '<p>您是否要取消当前订单?</p>',
+        onOk:async () => {
+          let rs = await this.$utils.sendCurl(this, server.api.advance.bookingPlanclose, params)
+          if(!rs.data.message){
+              this.$Notice.success({
+                title: '提醒',
+                desc: '申请成功'
+              })
+          }else{
+                this.$Notice.warning({
+                title: '提醒',
+                desc: rs.data.message
+              })
           }
-          this.$Modal.confirm({
-            title: '取消提示',
-            content: '<p>您是否要取消当前订单?</p>',
-            onOk:async () => {
-              let rs = await this.$utils.sendCurl(this, server.api.advance.bookingPlanclose, params)
-              if(!rs.data.message){
-                  this.$Notice.success({
-                    title: '提醒',
-                    desc: '申请成功'
-                  })
-              }else{
-                    this.$Notice.warning({
-                    title: '提醒',
-                    desc: rs.data.message
-                  })
-              }
-            },
-            onCancel: () => {
-              
-            }
-				})
+        },
+        onCancel: () => {
+
+        }
+      })
     },
 		toCreateOrder(feeding_id, planned_id){
 			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
+		},
+
+		getSealType() {
+			sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
+				if (response.status === 200) {
+					if ((response.data.errorcode || 0) == 0) {
+						this.sealType = response.data.type
+					}
+				}
+			})
+		},
+		toShowApplyContract(id){
+			if(this.sealType == 2){
+				this.record_id = id
+				this.paperApplyShow = true
+			}
 		},
 	},
 	mounted(){

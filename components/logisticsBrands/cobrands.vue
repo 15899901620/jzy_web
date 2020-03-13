@@ -12,7 +12,7 @@
                             <!-- 正面-->
                             <div class="side front"><img :src="items.image"/></div>
                             <!-- 反面 -->
-                            <div class="side back"><div class="text">{{ items.name }}</div></div>
+                            <div class="side back"><div class="text">{{ items.brief }}</div></div>
                         </div>
                     </div>
                 </li>

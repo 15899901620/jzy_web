@@ -118,8 +118,7 @@
 									<tr><th style="padding:5px 0;  width: 140px;">支付方式：</th><th style="    width: 205px;">{{OrderList.payMethod || '电汇或银行承兑自贴息'}}</th><th style="    width: 140px;">付款方式：</th><th>{{OrderList.payType || '款到发货'}}</th></tr>
 									<tr>
 										<th style="padding:5px 0;">计价方式：</th>
-										<th v-if='this.type==3'>含税合约价</th>
-										<th v-else>现货价</th>
+                    <th >{{OrderList.pricingType}}</th>
 										<th>其他约定：</th>
 										<th>/</th></tr>
 									<tr>

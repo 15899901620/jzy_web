@@ -29,18 +29,27 @@
                   <Tag v-else color="warning">{{row.feedingType}}</Tag>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
-                  <Tooltip content="添加月计划" placement="left" v-if='row.isCan==1 && row.isExist==0'>
-                    <Button title="添加月计划" icon="md-add" @click='addmonth(row)' size="small"></Button>
-                  </Tooltip>
-                  <Button type="success" size="small" target="_blank" @click="spotContract(row)">查看合同模板</Button>
+                  <div style="padding: 10px 0px;">
+                    <!--<template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
+                      <Button type="success" size="small" target="_blank" style="margin-bottom: 5px;" @click="toShowApplyContract(row.id)">申请盖章</Button>
+                    </template>
+                    <template v-else-if="row.contract_apply_status == 2">
+                      <span style="margin-bottom: 5px;">合同盖章中</span>
+                    </template>
+                    <template v-else-if="row.contract_apply_status == 3">
+                      <a style="margin-bottom: 5px;" :href="row.contract_final_pic" target="_blank" class="greenFont">查看合同</a>
+                    </template>-->
+
+                    <Button type="success" size="small" target="_blank" @click="spotContract(row)">合同模板</Button>
+                  </div>
                 </template>
                 <template slot-scope="{ row, index }" slot="yearNum">
                   <span class="ml15" :title="`年计划量：${row.yearNum}，月计划总量：${row.monthAllNum}`">
                     <template v-if="row.yearNum==0 && row.monthAllNum==0 ">
-                        <Progress :percent="0" :stroke-width="20" style="background-color: beige;"/>
+                      <Progress :percent="0" :stroke-width="20" style="background-color: beige;"/>
                     </template>
                     <template v-else>
-                         <Progress :percent="(row.monthAllNum*100/row.yearNum).toFixed(2)"
+                      <Progress :percent="(row.monthAllNum*100/row.yearNum).toFixed(2)"
                                    :stroke-width="20"/>
                     </template>
                   </span>
@@ -55,17 +64,18 @@
         </div>
       </div>
     </div>
-    <monthplanadd :isshow="addmodalmonth" @unChange="unAdddmonth" :rowData='rowPlanData'
-                  @onChange="addOnmonthSuccess"></monthplanadd>
+    <paperApply :isShow="paperApplyShow" :planId="record_id" :planType="4"></paperApply>
   </div>
 </template>
 
 <script>
 import Navigation from '../../components/navigation'
 import {specialList, myYearList} from '../../api/special'
-import {getCookies} from '../../config/storage'
 import monthplan from './plan/plan/monthplan.vue'
-import monthplanadd from './plan/plan/monthadd.vue'
+
+import server from '../../config/api'
+import {sendHttp} from "../../api/common"
+import paperApply from "../../components/contract/paperApply"
 
 export default {
 	name: "userSpecmat",
@@ -73,7 +83,7 @@ export default {
 	layout: 'membercenter',
 	components: {
 		usernav: Navigation.user,
-		monthplanadd
+		paperApply
 	},
 	fetch({store}) {
 		return Promise.all([
@@ -101,7 +111,7 @@ export default {
 			sourcecolumns: [
 				{
 					type: 'expand',
-					width: 50,
+					width: 40,
 					render: (h, params) => {
 						return h(monthplan, {
 							props: {
@@ -110,13 +120,17 @@ export default {
 						})
 					}
 				},
-				{title: '年份', width: '80', key: 'year',},
+				{title: '年份', width: '70', key: 'year',},
 				{title: '年计划编号', key: 'planNo', width: '140',},
 				{title: '年计划量', key: 'yearNum', width: '90'},
 				{title: '年计划执行进度条', slot: 'yearNum', key: 'yearNum'},
 				{title: '商品名称', key: 'skuName'},
-				{title: '操作', width: '130', slot: 'action', key: 'action'},
-			]
+				{title: '操作', width: '110', slot: 'action', key: 'action'},
+			],
+
+			sealType: 2,
+			paperApplyShow: false,
+			record_id: 0,
 		}
 	},
 	methods: {
@@ -138,11 +152,10 @@ export default {
 			this.loading = false
 		},
 		spotContract(row) {
-			window.location.href = "/users/spotContract?type=4&id=" + row.id
+			window.open("/users/spotContract?type=4&id=" + row.id);
 		},
 		onSearch() {
 			this.current_page = 1
-			this.page_size = 20
 			this.sourceData()
 		},
 		unAdddmonth(res) {
@@ -162,7 +175,6 @@ export default {
 		},
 		closeSearch() {
 			this.current_page = 1
-			this.page_size = 20
 			this.sourceData()
 		},
 
@@ -186,7 +198,23 @@ export default {
 					}
 				})
 			}
-		}
+		},
+
+		getSealType() {
+			sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
+				if (response.status === 200) {
+					if ((response.data.errorcode || 0) == 0) {
+						this.sealType = response.data.type
+					}
+				}
+			})
+		},
+		toShowApplyContract(id){
+			if(this.sealType == 2){
+				this.record_id = id
+				this.paperApplyShow = true
+			}
+		},
 	},
 	created() {
 	},
