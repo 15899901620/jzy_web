@@ -15,6 +15,9 @@ export default {
 	 */
 	head: {
 		title: appConfig.meta.title,
+		script: [
+			{src:'/js/hm.js', type:'text/javascript'}	   
+		],
 		meta: [{
 			charset: 'utf-8'
 		    },
