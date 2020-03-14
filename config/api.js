@@ -74,6 +74,12 @@ let api = {
     paycode: '/bill/orderInfo/payment/code',
     cancel: {'url':'/bill/orderInfo/cancel', 'method':'get'}
   },
+
+	seal:{
+		getMemberSealInfo : {'url':'/user/seal/getSealInfo', 'method':'get'},
+		register : {'url':'/user/seal/addRegister', 'method':'get'},
+		getVerifyUrl : {'url':'/user/seal/getVerifyUrl', 'method':'get'},
+	},
   /**
    * @description 会员地址
    */

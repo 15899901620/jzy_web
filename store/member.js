@@ -12,6 +12,7 @@ export const state = () => {
 		memberCurr:{},
 		DefaultsTotal:{},
 		DefaultsCurr:{},
+		sealInfo: {},
 	}
 }
 
@@ -43,14 +44,16 @@ export const mutations = {
 	updateAuctionCurr(state, data){
 		state.auctionCurr = data
 	},
-	
+
 	updateDefaultsCurr(state, data){
 		state.DefaultsCurr = data
 	},
 	updateDefaultsTotal(state, data){
 		state.DefaultsTotal = data
 	},
-	
+	updateSealInfo(state, data){
+		state.sealInfo = data
+	},
 }
 
 export const actions = {
@@ -94,12 +97,16 @@ export const actions = {
 			commit('updateDefaultsCurr', res.data.items)
 		}
 	},
-	
 	async getOrderPayInfo({commit}, params) {
 		let res = await sendCurl(this, server.api.order.getOrderPayInfo, params)
 		if (res.status === 200) {
 			commit('updateOrderPayInfo', res.data)
 		}
 	},
-
+	async getSealInfo({commit}) {
+		let res = await sendCurl(this, server.api.seal.getMemberSealInfo, {})
+		if (res.status === 200) {
+			commit('updateSealInfo', res.data)
+		}
+	},
 }
