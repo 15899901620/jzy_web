@@ -100,8 +100,7 @@
                 <Upload
                     ref="upload"
                     action="/api/upload/file"
-                    :on-success="handleFile"
-                    :max-size="2048">
+                    :on-success="handleFile">
                   <Button type="primary" size="large">上传技术文件</Button>
                 </Upload>
               </FormItem>
@@ -118,8 +117,7 @@
                 <Upload
                     ref="upload"
                     action="/api/upload/file"
-                    :on-success="handleOtherFile"
-                    :max-size="2048">
+                    :on-success="handleOtherFile">
                   <Button type="primary" size="large">上传商务文件</Button>
                 </Upload>
               </FormItem>
@@ -134,8 +132,7 @@
                 <Upload
                     ref="upload"
                     action="/api/upload/file"
-                    :on-success="handleBidFile"
-                    :max-size="2048">
+                    :on-success="handleBidFile">
                   <Button type="primary" size="large">上传报价文件</Button>
                 </Upload>
               </FormItem>

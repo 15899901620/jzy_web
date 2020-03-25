@@ -81,7 +81,7 @@ export default {
         }),
         store.dispatch('physical/getphysicalDetail', {id: !params.id ? 0 : params.id}),
         store.dispatch('physical/getphysicalHotList'),
-        store.dispatch('system/getBannerInfo', { positionId: 5 }),
+        store.dispatch('system/getBannerInfo', { positionId: 10 }),
     ])
   },
   components: {
