@@ -154,8 +154,8 @@
 	import Header from '../components/header'
 	import Footer from '../components/footer'
 	import cobrands from '../components/logisticsBrands'
-	import { sendHttp } from "../api/common";
-	import server from "../config/api";
+	import { sendHttp } from "../api/common"
+	import server from "../config/api"
 	let Base64 = require('js-base64').Base64
 	export default {
 		name: "logistics",

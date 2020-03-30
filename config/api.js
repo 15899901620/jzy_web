@@ -78,7 +78,9 @@ let api = {
 	seal:{
 		getMemberSealInfo : {'url':'/user/seal/getSealInfo', 'method':'get'},
 		register : {'url':'/user/seal/addRegister', 'method':'get'},
-		getVerifyUrl : {'url':'/user/seal/getVerifyUrl', 'method':'get'},
+    getVerifyUrl : {'url':'/user/seal/getVerifyUrl', 'method':'get'},
+    addSignature : {'url':'/user/seal/addSignature', 'method':'post'},
+    makeSignature : {'url':'/user/seal/makeSignature', 'method':'post'},
 	},
   /**
    * @description 会员地址

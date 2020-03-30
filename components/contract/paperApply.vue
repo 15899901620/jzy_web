@@ -76,10 +76,10 @@ export default {
 					{ required: true, message: '初始盖章合同不能为空', trigger: 'blur' }
 				]
 			}
-    }
+    	}
 	},
   methods : {
-		handleFormatErrorhandleFormatError (file) {
+		handleFormatError (file) {
 			this.$Notice.warning({
 				title: '文件格式错误',
 				desc: '选择文件（' + file.name + '） 不正确,请选择图片或PDF文件上传'
