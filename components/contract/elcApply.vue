@@ -1,7 +1,7 @@
 <template>
-  <!--纸质合同-->
+  <!--电子合同-->
   <Modal
-      title="纸质合同盖章"
+      title="电子合同盖章申请"
       :loading="paperLoading"
       v-model="paperContractLoading"
       :mask-closable="false"
