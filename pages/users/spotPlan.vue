@@ -231,6 +231,15 @@
 					this.record_id = id
 					this.paperApplyShow = true
         }
+      },
+      toCreateElcContract(id){
+				if(this.sealType == 1){
+          sendHttp(this, true, server.api.contract.applyElcSave, {'plan_id': id, 'plan_type': 1}).then(response => {
+            if (response.status === 200) {
+              
+            }
+          })
+        }
 			},
 
 		},
