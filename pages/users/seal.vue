@@ -90,7 +90,7 @@ export default {
       if(!this.sealInfo || this.sealInfo.fddMemberId == ''){
         return 0
       }
-      if(this.sealInfo.status == 0){
+      if(this.sealInfo.status == 0 || this.sealInfo.status == 1 || this.sealInfo.status == 2 || this.sealInfo.status == 3 || this.sealInfo.status == 5 || this.sealInfo.status == 6){
         return 1
       }
       if(this.sealInfo.status == 4 && (this.sealInfo.signatureImg||'') == ''){
