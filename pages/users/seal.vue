@@ -1,22 +1,58 @@
 <template>
-  <div class="clearfix  graybg">
-    <div class="w1200 dflex " style="margin-bottom: 40px;">
+  <div class="clearfix graybg">
+    <div class="w1200 dflex" style="margin-bottom: 40px;">
       <usernav></usernav>
       <div class="memberInfor ml20 whitebg bdccc mt20">
-        <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;" >电子签章
+        <h1 class="fs16 ml25 mt25 pb10 pr" style="border-bottom: 2px solid #DEDEDE;width: 95%;">
+          电子签章
           <div class="bodbottom" style="width: 8%; height: 2px;"></div>
         </h1>
 
-        <div class="" style="width: 95%; margin: 0 auto;">
-          <template v-if="!sealInfo || sealInfo.fddMemberId == ''">
-            <Button title="开通电子签章" @click='addRegister()' size="small">开通电子签章</Button>
+        <div class style="width: 95%; margin: 20px auto;">
+          <template>
+            <Steps :current="step">
+                <Step title="开通电子签章" content=""></Step>
+                <Step title="实名认证" content=""></Step>
+                <Step title="上传印章" content=""></Step>
+                <Step title="成功开通" content=""></Step>
+            </Steps>
           </template>
-          <template v-else-if="sealInfo.status == 0">
-            <Button title="实名认证" @click='verify(sealInfo.verifyUrl)' size="small">进行实名认证</Button>
-          </template>
-          <template v-else>
-            <span>{{sealInfo.status}}</span>
-          </template>
+
+          <div style="margin-top: 20px;">
+            <template v-if="step == 0">
+              <Button type="warning" title="开通电子签章" @click="addRegister()" size="large">开通电子签章</Button>
+            </template>
+            <template v-else-if="step == 1">
+              <Button type="warning" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
+            </template>
+            <template v-else-if="step == 2">
+              <span>上传印章二选一</span>
+              <div class="demo-split">
+                <Split>
+                  <div slot="left" class="demo-split-pane">
+                    <Upload
+                      ref="upload"
+                      action="/api/upload/image"
+                      :on-success="handleUpdateSourceFile"
+                      accept=".png,.gif"
+                      :format="['png','gif']"
+                      :on-format-error="handleFormatError"
+                      :max-size="2048">
+                      <Button type="primary" size="large">上传印章</Button>
+                    </Upload>
+                    <Button type="warning" title="上传印章" @click="updateSignature(1)" size="large">上传印章</Button>
+                  </div>
+                  <div slot="right" class="demo-split-pane">
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable/>
+                    <Button type="warning" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                  </div>
+                </Split>
+              </div>
+            </template>
+            <template v-else>
+              您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -24,62 +60,124 @@
 </template>
 
 <script>
-	import Navigation from '../../components/navigation'
-  import {mapState} from 'vuex';
-	import server from '../../config/api'
+import Navigation from "../../components/navigation"
+import { mapState } from "vuex"
+import server from "../../config/api"
+let Base64 = require('js-base64').Base64
 
-	export default {
-		name: 'seal',
-		layout: 'membercenter',
-		middleware: 'memberAuth',
-		components: {
-      usernav: Navigation.user
-		},
-		fetch({store}) {
-			return Promise.all([
-				//获取顶部、中部、底部导航信息
-				store.dispatch('common/getNavList'),
-				//获取系统配置
-				store.dispatch('common/getSysConfig'),
-				//获取电子签章情况
-				store.dispatch('member/getSealInfo'),
-			])
-		},
-		computed:{
-			...mapState({
-				sealInfo: state => state.member.sealInfo,
-			})
-		},
-		data() {
-			return {
-			}
-		},
-		methods: {
-			async addRegister() {
-				await this.$utils.sendCurl(this, server.api.seal.register, {}).then(response => {
-          location.reload()
-				})
-			},
-			async verify(url){
-				if(url){
-					window.open(url)
-        }else{
-					let res = await this.$utils.sendCurl(this, server.api.seal.getVerifyUrl, {})
-					if(res.status === 200 && (res.data.errorcode || 0) == 0){
-						window.open(res.data)
-					}
-        }
-			}
-		},
-		mounted() {
+export default {
+  name: "seal",
+  layout: "membercenter",
+  middleware: "memberAuth",
+  components: {
+    usernav: Navigation.user
+  },
+  fetch({ store }) {
+    return Promise.all([
+      //获取顶部、中部、底部导航信息
+      store.dispatch("common/getNavList"),
+      //获取系统配置
+      store.dispatch("common/getSysConfig"),
+      //获取电子签章情况
+      store.dispatch("member/getSealInfo")
+    ]);
+  },
+  computed: {
+    ...mapState({
+      sealInfo: state => state.member.sealInfo
+    }),
+    step: function () {
+      if(!this.sealInfo || this.sealInfo.fddMemberId == ''){
+        return 0
+      }
+      if(this.sealInfo.status == 0){
+        return 1
+      }
+      if(this.sealInfo.status == 4 && (this.sealInfo.signatureImg||'') == ''){
+        return 2
+      }
+      if(this.sealInfo.status == 4 && this.sealInfo.signatureImg.length > 0){
+        return 3
+      }
+      return 0
     }
-	}
+  },
+  data() {
+    return {
+      signatureImg: '',
+      signatureValue: '',
+    }
+  },
+  methods: {
+    async addRegister() {
+      await this.$utils
+        .sendCurl(this, server.api.seal.register, {})
+        .then(response => {
+          location.reload()
+        });
+    },
+    async verify(url) {
+      if (url) {
+        window.open(url);
+      } else {
+        let res = await this.$utils.sendCurl(this,server.api.seal.getVerifyUrl,{});
+        if (res.status === 200 && (res.data.errorcode || 0) == 0) {
+          window.open(res.data);
+        }
+      }
+    },
+    handleFormatError (file) {
+			this.$Notice.warning({
+				title: '文件格式错误',
+				desc: '选择文件（' + file.name + '） 不正确,请选择png或gif格式图片上传'
+			});
+    },
+    handleUpdateSourceFile(res) {
+			if ((res.errorcode || 0) == 0) {
+				this.signatureImg = res.url
+			}else{
+				alert(res.message)
+			}
+		},
+    async updateSignature(type){
+      if(type === 1){
+        //上传印章
+        if((this.signatureImg||'') == ''){
+          alter('请上传印章图片')
+          return
+        }
+        let res = await this.$utils.sendCurl(this,server.api.seal.addSignature,{'img_url': this.signatureImg})
+        if (res.status === 200 && (res.data.errorcode || 0) == 0) {
+          location.reload()
+        }
+      } else {
+        //生成印章
+        if((this.signatureValue||'') == ''){
+          alter('请填写印章内容')
+          return
+        }
+        let res = await this.$utils.sendCurl(this,server.api.seal.makeSignature,{'content': this.signatureValue})
+        if (res.status === 200 && (res.data.errorcode || 0) == 0) {
+          location.reload()
+        }
+      }
+		}
+  },
+  mounted() {}
+};
 </script>
 <style lang="less" scoped>
-  .head{
-    img{
-      width: 100%;height: 100%;
-    }
+.head {
+  img {
+    width: 100%;
+    height: 100%;
   }
-
+}
+.demo-split{
+    height: 200px;
+    border: 1px solid #dcdee2;
+}
+.demo-split-pane{
+    padding: 10px;
+}
 </style>

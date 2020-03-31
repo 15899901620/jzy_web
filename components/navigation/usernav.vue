@@ -102,10 +102,10 @@
 								path: '/users/usermodifyinfor',
 								name: '完善信息'
 							},
-							/*{
+							{
 								path: '/users/seal',
 								name: '电子签章'
-							},*/
+							},
 							{
 								path: '/users/userCodeManage',
 								name: '密码管理'
