@@ -239,6 +239,7 @@
           sendHttp(this, true, server.api.contract.applyElcSave, {'plan_id': id, 'plan_type': 1}).then(response => {
             if (response.status === 200) {
               this.signHtml = response.data
+              this.signElc = true
             }
           })
         }
