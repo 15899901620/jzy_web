@@ -125,6 +125,9 @@
       </div>
     </div>
     <paperApply :isShow="paperApplyShow" :planId="record_id" :planType="1"></paperApply>
+    <Modal v-model="signElc" fullscreen title="Fullscreen Modal">
+        <iframe width="100%" height="100%" :srcdoc="signHtml"></iframe>
+    </Modal>
   </div>
 </template>
 
@@ -167,7 +170,8 @@
         sealType: 2,
 				paperApplyShow: false,
         record_id: 0,
-
+        signElc: false,
+        signHtml: '',
 				formSearch: {
 					planNo: '',
 					skuNo: '',
@@ -231,9 +235,10 @@
 					this.record_id = id
 					this.paperApplyShow = true
         } else {
+          this.signHtml = ''
           sendHttp(this, true, server.api.contract.applyElcSave, {'plan_id': id, 'plan_type': 1}).then(response => {
             if (response.status === 200) {
-              
+              this.signHtml = response.data
             }
           })
         }
