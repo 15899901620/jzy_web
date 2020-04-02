@@ -92,8 +92,8 @@
                   <div v-else-if="item.available_num > 0">
                     <template v-if="item.close_apply_status == 1">
                       <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toCreateOrder(item.id)">转单</a>
-                      <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px"
-                         @click="cancelPlan(item)">申请取消</a>
+                      <!-- <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px"
+                         @click="cancelPlan(item)">申请取消</a> -->
                     </template>
                     <template v-else-if="item.close_apply_status == 2">
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消审核中</a>
