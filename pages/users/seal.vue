@@ -53,6 +53,7 @@
               您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署
               <br />
               <br />
+              <img :src="this.signatureImg" />
               <span>印章维护二选一</span>
               <div class="demo-split">
                 <Split>
@@ -153,7 +154,7 @@ export default {
     handleFormatError (file) {
 			this.$Notice.warning({
 				title: '文件格式错误',
-				desc: '选择文件（' + file.name + '） 不正确,请选择png或gif格式图片上传'
+				desc: '选择文件（' + file.name + '） 不正确,请选择png格式图片上传'
 			});
     },
     handleUpdateSourceFile(res) {
@@ -167,7 +168,7 @@ export default {
       if(type === 1){
         //上传印章
         if((this.signatureImg||'') == ''){
-          alter('请上传印章图片')
+          alert('请上传印章图片')
           return
         }
         let res = await this.$utils.sendCurl(this,server.api.seal.addSignature,{'img_url': this.signatureImg})
@@ -177,7 +178,7 @@ export default {
       } else {
         //生成印章
         if((this.signatureValue||'') == ''){
-          alter('请填写印章内容')
+          alert('请填写印章内容')
           return
         }
         let res = await this.$utils.sendCurl(this,server.api.seal.makeSignature,{'content': this.signatureValue})
