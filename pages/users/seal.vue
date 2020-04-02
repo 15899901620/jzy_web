@@ -34,8 +34,8 @@
                       ref="upload"
                       action="/api/upload/image"
                       :on-success="handleUpdateSourceFile"
-                      accept=".png,.gif"
-                      :format="['png','gif']"
+                      accept=".png"
+                      :format="['png']"
                       :on-format-error="handleFormatError"
                       :max-size="2048">
                       <Button type="primary" size="large">上传印章</Button>
@@ -62,7 +62,7 @@
                       ref="upload"
                       action="/api/upload/image"
                       :on-success="handleUpdateSourceFile"
-                      accept=".png,.gif"
+                      accept=".png"
                       :format="['png']"
                       :on-format-error="handleFormatError"
                       :max-size="2048">
