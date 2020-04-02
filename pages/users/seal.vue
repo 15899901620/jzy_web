@@ -53,7 +53,7 @@
               您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署
               <br />
               <br />
-              <img :src="this.signatureImg" />
+              <img :src="this.sealInfo.signatureImg" />
               <span>印章维护二选一</span>
               <div class="demo-split">
                 <Split>
