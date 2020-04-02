@@ -51,6 +51,30 @@
             </template>
             <template v-else>
               您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署
+              <br />
+              <br />
+              <span>印章维护二选一</span>
+              <div class="demo-split">
+                <Split>
+                  <div slot="left" class="demo-split-pane">
+                    <Upload
+                      ref="upload"
+                      action="/api/upload/image"
+                      :on-success="handleUpdateSourceFile"
+                      accept=".png,.gif"
+                      :format="['png']"
+                      :on-format-error="handleFormatError"
+                      :max-size="2048">
+                      <Button type="primary" size="large">上传印章</Button>
+                    </Upload>
+                    <Button type="warning" title="上传印章" @click="updateSignature(1)" size="large">提交</Button>
+                  </div>
+                  <div slot="right" class="demo-split-pane">
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable/>
+                    <Button type="warning" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                  </div>
+                </Split>
+              </div>
             </template>
           </div>
         </div>
