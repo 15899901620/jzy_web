@@ -206,7 +206,7 @@
 								if ((response.data.errorcode || 0) == 0) {
 									window.location.reload()
 								} else {
-                   alert(response.data.message)
+                  alert(response.data.message)
 								}
 							}
 						})
@@ -230,10 +230,13 @@
 					this.record_id = id
 					this.paperApplyShow = true
         } else {
-          this.signUrl = ''
           sendHttp(this, true, server.api.contract.getElcSignUrl, {'plan_id': id, 'plan_type': 1}).then(response => {
             if (response.status === 200) {
-              window.open(response.data)
+              if((response.data.errorcode || 0) == 0){
+                window.open(response.data)
+              }else{
+                alert(response.data.message)
+              }
             }
           })
         }
