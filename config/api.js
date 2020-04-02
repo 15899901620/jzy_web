@@ -102,7 +102,7 @@ let api = {
 	contract: {
 		getSealType: {'url':'/bill/contract/sealType', 'method':'get'},
 		applySave: {'url':'/bill/contract/save', 'method':'post'},
-		applyElcSave: {'url':'/bill/contract/saveElc', 'method':'post'},
+		getElcSignUrl: {'url':'/bill/contract/getElcSignUrl', 'method':'post'},
 	},
   /**
    * @description 现货超市
