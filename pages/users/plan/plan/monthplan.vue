@@ -13,7 +13,9 @@
         <Button type="success" size="small" v-if="row.status === 'CO'" target="_blank" @click="spotContract(row)">
           合同模板
         </Button>
-        <!--<template v-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
+
+				<Button v-if="sealType == 2" size="small" style="margin-bottom: 5px;" @click="toShowApplyContract(row.id)">开通电子印章</Button>
+        <template v-else-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
           <Button type="success" size="small" target="_blank" @click="toShowApplyContract(row.id)">申请盖章</Button>
         </template>
         <template v-else-if="row.contract_apply_status == 2">
@@ -21,7 +23,7 @@
         </template>
         <template v-else-if="row.contract_apply_status == 3">
           <a :href="row.contract_final_pic" target="_blank" class="greenFont">查看合同</a>
-        </template>-->
+        </template>
       </template>
       <template slot-scope="{ row, index }" slot="status">
         <Tag color="default" v-if="row.status === 'VO'">已取消</Tag>
@@ -239,8 +241,20 @@ export default {
 		},
 		toShowApplyContract(id){
 			if(this.sealType == 2){
-				this.record_id = id
-				this.paperApplyShow = true
+				location.href = '/users/seal'
+				//注释掉，暂不让客户在线申请纸质盖章
+				/*this.record_id = id
+				this.paperApplyShow = true*/
+			} else {
+				sendHttp(this, true, server.api.contract.getElcSignUrl, {'plan_id': id, 'plan_type': 4}).then(response => {
+					if (response.status === 200) {
+						if((response.data.errorcode || 0) == 0){
+							window.open(response.data)
+						}else{
+							alert(response.data.message)
+						}
+					}
+				})
 			}
 		},
 	},
@@ -248,6 +262,7 @@ export default {
 	},
 	mounted() {
 		this.sourceData()
+		this.getSealType()
 	},
 	watch: {
 		monthData: {

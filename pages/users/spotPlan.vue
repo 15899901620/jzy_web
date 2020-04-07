@@ -244,7 +244,6 @@
       },
 		},
 		mounted() {
-      this.sealType = 2
 			this.getSealType()
 		},
 		created() {
