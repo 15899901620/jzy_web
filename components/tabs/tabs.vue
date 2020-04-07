@@ -2,7 +2,7 @@
     <div :class="classes">
         <div class="tabs-bar">
               <!--标题页的标题 v-for遍历, :class 动态绑定class-->
-            <div :class="tabCls(item)" v-for="(item,index) in navList" @click="handleChange(index)">
+            <div :class="tabCls(item)" v-for="(item,index) in navList" @click="handleChange(index)" :key="index">
                 {{item.label}}
             </div>
         </div>
