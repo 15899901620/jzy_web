@@ -8,22 +8,27 @@
           <div class="bodbottom" style="width: 8%; height: 2px;"></div>
         </h1>
 
-        <div class style="width: 95%; margin: 20px auto;">
-          <template>
-            <Steps :current="step">
-                <Step title="开通电子签章" content=""></Step>
-                <Step title="实名认证" content=""></Step>
-                <Step title="上传印章" content=""></Step>
-                <Step title="成功开通" content=""></Step>
-            </Steps>
-          </template>
-
-          <div style="margin-top: 20px;">
+        <div class style="width: 95%; margin: 20px auto;"> 
+            <div class="Steps">
+              <template>
+                <Steps :current="step" >
+                    <Step title="开通电子签章" content=''></Step>
+                    <Step title="实名认证"  content=''></Step>
+                    <Step title="上传印章"  content=''></Step>
+                    <Step title="成功开通"  content=''></Step>
+                </Steps>   
+              </template> 
+            </div>   
+          <div style="margin-top: 20px;">  
             <template v-if="step == 0">
-              <Button type="warning" title="开通电子签章" @click="addRegister()" size="large">开通电子签章</Button>
+              <div style=" display:flex;justify-content:center">
+                  <Button type="primary" title="开通电子签章" @click="addRegister()" size="large">开通电子签章</Button>
+              </div> 
             </template>
             <template v-else-if="step == 1">
-              <Button type="warning" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
+              <div style=" display:flex;justify-content:center">
+                <Button type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
+              </div> 
             </template>
             <template v-else-if="step == 2">
               <span>上传印章二选一</span>
@@ -38,23 +43,21 @@
                       :format="['png']"
                       :on-format-error="handleFormatError"
                       :max-size="2048">
-                      <Button type="primary" size="large">上传印章</Button>
+                      <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div>
                     </Upload>
-                    <Button type="warning" title="上传印章" @click="updateSignature(1)" size="large">上传印章</Button>
+                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable/>
-                    <Button type="warning" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
+                    <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
                   </div>
                 </Split>
               </div>
             </template>
             <template v-else>
-              您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署
-              <br />
-              <br />
-              <img :src="this.sealInfo.signatureImg" />
-              <span>印章维护二选一</span>
+              <p class='tac pt20'>您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署</p> 
+              <div class='tac bb1' style="padding-top:40px;padding-bottom:40px;color:#666"><img :src="this.sealInfo.signatureImg" /></div>
+              <p class='pt20 pb20' style="color:#666">印章维护二选一</p>
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-pane">
@@ -66,13 +69,13 @@
                       :format="['png']"
                       :on-format-error="handleFormatError"
                       :max-size="2048">
-                      <Button type="primary" size="large">上传印章</Button>
-                    </Upload>
-                    <Button type="warning" title="上传印章" @click="updateSignature(1)" size="large">提交</Button>
+                      <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
+                    </Upload> 
+                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable/>
-                    <Button type="warning" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
+                    <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
                   </div>
                 </Split>
               </div>
@@ -128,7 +131,7 @@ export default {
     }
   },
   data() {
-    return {
+    return { 
       signatureImg: '',
       signatureValue: '',
     }
@@ -204,5 +207,28 @@ export default {
 }
 .demo-split-pane{
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+} 
+.Steps{
+display: flex;
+    justify-content: center;
+    background-color: #fbfbfb;
+    padding: 30px 10px;
 }
+.uploadImg{
+  border: 1px solid #cccccc;
+  padding: 10px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #666;
+}
+
+</style>
+<style>
+.demo-split-pane .ivu-input-wrapper .ivu-input{height: 40px;}
 </style>
