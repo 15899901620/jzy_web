@@ -107,12 +107,8 @@
                     </template>
                   </div>
                   <div v-if="item.status != 3 && item.total_num > 0">
-                    <!-- <template v-if="this.sealType == 2">
-                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
-                    </template>
-                    <template v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
-                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请电子签章</a>
-                    </template> -->
+                    <a v-if="sealType == 2" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
+                    <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请电子签章</a>
                   </div>
                 </td>
               </tr>
@@ -223,7 +219,7 @@
         sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
           if (response.status === 200) {
             if ((response.data.errorcode || 0) == 0) {
-							this.sealType = response.data.type
+              this.sealType = response.data.type
             }
           }
         })
@@ -248,6 +244,7 @@
       },
 		},
 		mounted() {
+      this.sealType = 2
 			this.getSealType()
 		},
 		created() {

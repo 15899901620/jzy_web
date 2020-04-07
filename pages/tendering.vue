@@ -95,17 +95,16 @@
 </template>
 
 <script>
-import Header from "../components/header";
-import Footer from "../components/footer";
-import hotbidding from '../components/hotbidding';
-import WinBidding from '../components/Winbidding';
-import { sendHttp } from "../api/common";
-import server from "../config/api";
+import Header from "../components/header"
+import Footer from "../components/footer"
+import hotbidding from '../components/hotbidding'
+import { sendHttp } from "../api/common"
+import server from "../config/api"
 import outpacking from '../components/outpacking'
-import { mapState } from "vuex";
-import login from "../components/login-form";
-import { supplierLogin, supplierValid } from "../api/users";
-import Cookies from "js-cookie";
+import { mapState } from "vuex"
+import login from "../components/login-form"
+import { supplierLogin, supplierValid } from "../api/users"
+import Cookies from "js-cookie"
 import TimeDown from '../components/timeDown'
 
 
@@ -134,12 +133,11 @@ export default {
   },
   components: {
     Header,
-    hotbidding,
-    outpacking,
+    //hotbidding,
+    //outpacking,
     HeaderSmall: Header.small,
     loginSupply: login.supply,
     Footer,
-    WinBidding,
     TimeDown
   },
   fetch({ store, params }) {
