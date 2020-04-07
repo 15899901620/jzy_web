@@ -107,8 +107,11 @@
                     </template>
                   </div>
                   <div v-if="item.status != 3 && item.total_num > 0">
-                    <template v-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
-                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请合同盖章</a>
+                    <template v-if="this.sealType == 2">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
+                    </template>
+                    <template v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4">
+                      <a class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">申请电子签章</a>
                     </template>
                   </div>
                 </td>
@@ -227,8 +230,10 @@
 			},
 			toShowApplyContract(id){
 				if(this.sealType == 2){
-					this.record_id = id
-					this.paperApplyShow = true
+          location.href = '/users/seal'
+          //注释掉，暂不让客户在线申请纸质盖章
+					/*this.record_id = id
+					this.paperApplyShow = true*/
         } else {
           sendHttp(this, true, server.api.contract.getElcSignUrl, {'plan_id': id, 'plan_type': 1}).then(response => {
             if (response.status === 200) {
