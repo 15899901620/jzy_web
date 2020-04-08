@@ -1,5 +1,5 @@
 <template>
-  <div class="clearfix graybg">
+  <div class="clearfix graybg"  >
     <div class="w1200 dflex" style="margin-bottom: 40px;">
       <usernav></usernav>
       <div class="memberInfor ml20 whitebg bdccc mt20">
@@ -43,8 +43,13 @@
                       :format="['png']"
                       :on-format-error="handleFormatError"
                       :max-size="2048">
-                      <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div>
-                    </Upload>
+                      <template v-if="signatureImg">
+                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="86" height="67"/>
+                      </template>
+                      <template v-else>
+                          <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
+                      </template>
+                     </Upload>
                     <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
@@ -60,7 +65,7 @@
               <p class='pt20 pb20' style="color:#666">印章维护二选一</p>
               <div class="demo-split">
                 <Split>
-                  <div slot="left" class="demo-split-pane">
+                  <div slot="left" class="demo-split-pane"> 
                     <Upload
                       ref="upload"
                       action="/api/upload/image"
@@ -68,10 +73,16 @@
                       accept=".png"
                       :format="['png']"
                       :on-format-error="handleFormatError"
+                      :show-upload-list="false" 
                       :max-size="2048">
-                      <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
-                    </Upload> 
-                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%">提交</Button>
+                      <template v-if="signatureImg">
+                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="86" height="67"/>
+                      </template>
+                      <template v-else>
+                          <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
+                      </template>
+                    </Upload>  
+                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%; margin-top:20px">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
                     <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
@@ -161,12 +172,13 @@ export default {
 			});
     },
     handleUpdateSourceFile(res) {
+      console.log('res', res)
 			if ((res.errorcode || 0) == 0) {
 				this.signatureImg = res.url
 			}else{
 				alert(res.message)
 			}
-		},
+    }, 
     async updateSignature(type){
       if(type === 1){
         //上传印章
@@ -195,7 +207,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.head {
+ .head {
   img {
     width: 100%;
     height: 100%;
@@ -214,7 +226,7 @@ export default {
     height: 100%;
 } 
 .Steps{
-display: flex;
+     display: flex;
     justify-content: center;
     background-color: #fbfbfb;
     padding: 30px 10px;
@@ -228,7 +240,6 @@ display: flex;
   color: #666;
 }
 
-</style>
-<style>
 .demo-split-pane .ivu-input-wrapper .ivu-input{height: 40px;}
+.demo-split .demo-split-pane .ivu-upload-select{display: flex; justify-content: center;  }
 </style>
