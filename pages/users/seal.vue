@@ -34,7 +34,7 @@
               <span>上传印章二选一</span>
               <div class="demo-split">
                 <Split>
-                  <div slot="left" class="demo-split-pane">
+                  <div slot="left" class="demo-split-seal">
                     <Upload
                       ref="upload"
                       action="/api/upload/image"
@@ -44,13 +44,13 @@
                       :on-format-error="handleFormatError"
                       :max-size="2048">
                       <template v-if="signatureImg">
-                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="86" height="67"/>
+                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
                       </template>
                       <template v-else>
-                          <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
+                          <div class='uploadImg'><Icon type="ios-add" color='#ccc'  size='60'/>上传</div> 
                       </template>
                      </Upload>
-                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%">提交</Button>
+                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
                     <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
@@ -65,7 +65,7 @@
               <p class='pt20 pb20' style="color:#666">印章维护二选一</p>
               <div class="demo-split">
                 <Split>
-                  <div slot="left" class="demo-split-pane"> 
+                  <div slot="left" class="demo-split-seal"> 
                     <Upload
                       ref="upload"
                       action="/api/upload/image"
@@ -76,13 +76,13 @@
                       :show-upload-list="false" 
                       :max-size="2048">
                       <template v-if="signatureImg">
-                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="86" height="67"/>
+                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
                       </template>
                       <template v-else>
-                          <div class='uploadImg'><Icon type="ios-add"  size='24'/>上传</div> 
+                          <div class='uploadImg'><Icon type="ios-add"  color='#ccc' size='60'/>上传</div> 
                       </template>
                     </Upload>  
-                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:20%; margin-top:20px">提交</Button>
+                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
                     <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
@@ -172,8 +172,7 @@ export default {
 			});
     },
     handleUpdateSourceFile(res) {
-      console.log('res', res)
-			if ((res.errorcode || 0) == 0) {
+ 			if ((res.errorcode || 0) == 0) {
 				this.signatureImg = res.url
 			}else{
 				alert(res.message)
@@ -217,6 +216,10 @@ export default {
     height: 200px;
     border: 1px solid #dcdee2;
 }
+.demo-split-seal{
+  display: flex; 
+  align-items: flex-end;
+}
 .demo-split-pane{
     padding: 10px;
     display: flex;
@@ -226,20 +229,24 @@ export default {
     height: 100%;
 } 
 .Steps{
-     display: flex;
+    display: flex;
     justify-content: center;
     background-color: #fbfbfb;
     padding: 30px 10px;
 }
 .uploadImg{
-  border: 1px solid #cccccc;
+  width: 166px;
+  height: 166px;
+  border: 1px dashed #ccc;
   padding: 10px 28px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   color: #666;
 }
-
+.demo-split .demo-split-seal .ivu-upload{margin-left: 65px;margin-top: 16px;width: 166px;  height: 166px;}
+.demo-split .demo-split-seal .ivu-split-pane{display: flex; align-items: center;}
 .demo-split-pane .ivu-input-wrapper .ivu-input{height: 40px;}
 .demo-split .demo-split-pane .ivu-upload-select{display: flex; justify-content: center;  }
 </style>
