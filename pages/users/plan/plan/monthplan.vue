@@ -16,7 +16,7 @@
 
 				<Button v-if="sealType == 2" size="small" style="margin-bottom: 5px;" @click="toShowApplyContract(row.id)">开通电子印章</Button>
         <template v-else-if="row.contract_apply_status == 1 || row.contract_apply_status == 4">
-          <Button type="success" size="small" target="_blank" @click="toShowApplyContract(row.id)">申请盖章</Button>
+          <Button type="success" size="small" target="_blank" @click="toShowApplyContract(row.id)">电子盖章</Button>
         </template>
         <template v-else-if="row.contract_apply_status == 2">
           <span>合同盖章中</span>
@@ -246,7 +246,7 @@ export default {
 				/*this.record_id = id
 				this.paperApplyShow = true*/
 			} else {
-				sendHttp(this, true, server.api.contract.getElcSignUrl, {'plan_id': id, 'plan_type': 4}).then(response => {
+				sendHttp(this, true, server.api.contract.getElcSignUrl, {'plan_id': id, 'plan_type': 5}).then(response => {
 					if (response.status === 200) {
 						if((response.data.errorcode || 0) == 0){
 							window.open(response.data)
