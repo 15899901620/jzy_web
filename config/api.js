@@ -81,6 +81,9 @@ let api = {
     getVerifyUrl : {'url':'/user/seal/getVerifyUrl', 'method':'get'},
     addSignature : {'url':'/user/seal/addSignature', 'method':'post'},
     makeSignature : {'url':'/user/seal/makeSignature', 'method':'post'},
+    verifyReturnUrl : {'url':'/user/seal/verifyReturn', 'method':'get'},
+    signReturnUrl : {'url':'/bill/contract/signReturn', 'method':'get'},
+    selfSignReturnUrl : {'url':'/bill/contract/selfSignReturn', 'method':'get'}
 	},
   /**
    * @description 会员地址
