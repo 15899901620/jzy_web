@@ -91,7 +91,7 @@
             <span class="quality_title">日期</span>
             <row>
               <i-col span="12">
-                      <DatePicker type="month" placement="bottom-end" placeholder="生产日期至"  @on-change="QDate" style="width: 217px"></DatePicker>
+                <DatePicker type="month" :value='qualityForm.qualityDate' placement="bottom-end" placeholder="生产日期至"  @on-change="QDate" style="width: 217px"></DatePicker>
               </i-col>
             </row>
           </li>
@@ -127,12 +127,12 @@
 				current_page: 1,
 				page_size: 10,
 				seen: false,
-				seentwo: false,
+        seentwo: false,
 				attrlist: {},
-				seenthree: false,
+        seenthree: false,
 				datePif: false,
 				qualityForm: {
-					qualityDate: '',
+					qualityDate: this.$utils.dateFormat(new Date(), 'yyyy-MM'),
 					qualityNo: '',
 				},
 
@@ -191,7 +191,7 @@
 		mounted() {
 			this.$store.dispatch('common/getHotCategory')
 			this.$store.dispatch('common/getHotProduct')
-			this.$store.dispatch('common/getProductLevelValues')
+      this.$store.dispatch('common/getProductLevelValues')
 		},
 	}
 </script>

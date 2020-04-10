@@ -15,7 +15,7 @@
                   </Col>
                   <Col span="4">
                     <FormItem prop='productionDate'>
-                      <DatePicker type="month" placement="bottom-end" placeholder="生产年月"
+                      <DatePicker type="month" :value="formSearch.productionDate" placement="bottom-end" placeholder="生产年月"
                                   @on-change="selectTime"></DatePicker>
                     </FormItem>
                   </Col>
@@ -127,7 +127,7 @@ export default {
 				// skuNo: '',
 				skuTitle: '',
 				batchNo: !this.$route.query.batchNo ? '' : this.$route.query.batchNo,
-				productionDate: !this.$route.query.productionDate ? '' : this.$route.query.productionDate,
+				productionDate: !this.$route.query.productionDate ? this.$utils.dateFormat(new Date(), 'yyyy-MM') : this.$route.query.productionDate,
 			}
 		}
 	},

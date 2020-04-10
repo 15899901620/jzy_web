@@ -131,10 +131,7 @@ export default {
 
         ])
     },
-    computed: {
-
-
-    },
+    computed: {},
     data(){
         const validatePhone=(rule, value, callback) => {
             if (value === '') {
@@ -295,17 +292,33 @@ export default {
       },
       //验证手机是否存在
       async getuserPhoneCheck(value, callback){
-          let params = {
+          if(this.formCustom.type === '会员'){
+            let params = {
               phone:value
-          }
-          const res = await userPhoneCheck(this, params)
-          if(res.data && res.status === 200){
-              this.phoneValid=true;
-              callback()
+            }
+            const res = await userPhoneCheck(this, params)
+            if(res.data && res.status === 200){
+                this.phoneValid=true;
+                callback()
+            }else{
+                this.phoneValid=false;
+                callback(new Error('该手机号码未注册'));
+            }
           }else{
-              this.phoneValid=false;
-              callback(new Error('该手机号码未注册'));
+            let params = {
+              data: value,
+              type: 2
+            }
+            const res = await supplierdataCheck(this, params)
+            if(res.status === 200 && res.data.is_registered === 'true'){
+                this.phoneValid=true;
+                callback()
+            }else{
+                this.phoneValid=false;
+                callback(new Error('该手机号码未注册'));
+            }
           }
+          
       },
       currData (res) {
           this.current = res
