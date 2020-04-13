@@ -101,6 +101,8 @@
                   <div v-if="item.status != 3 && item.total_num > 0">
                     <a v-if="sealType == 2" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
                     <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" @click="toShowApplyContract(item.id)">电子盖章</a>
+                    <a v-else-if="item.contract_apply_status == 2" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" href="javascript:void(0);">盖章中</a>
+                    <a v-else-if="item.contract_apply_status == 3" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" :href="item.contract_final_pic" target="_blank">查看合同</a>
                   </div>
                 </td>
               </tr>

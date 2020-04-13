@@ -53,7 +53,7 @@
           <Row>
             <Col span="24">
               <FormItem label="交货期" prop="deliveryDate" >
-                <Input :disabled="canView" v-model="formCustom.deliveryDate" placeholder="请输入交货期">
+                <Input :disabled="canView" maxlength="99" v-model="formCustom.deliveryDate" placeholder="请输入交货期">
                   <Select v-model="deliveryCurrency" slot="append" style="width: 50px">
                     <Option value="天">天</Option>
                     <Option value="月">月</Option>
@@ -65,14 +65,14 @@
           <Row>
             <Col span="24">
               <FormItem label="交货地点" prop="deliveryPoint" >
-                <Input :disabled="canView" v-model="formCustom.deliveryPoint" placeholder="请输入交货地点"></Input>
+                <Input :disabled="canView" maxlength="100" v-model="formCustom.deliveryPoint" placeholder="请输入交货地点"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col span="24">
               <FormItem label="付款方式" prop="paymentType" >
-                <Input :disabled="canView" v-model="formCustom.paymentType" placeholder="请输入付款方式"></Input>
+                <Input :disabled="canView" maxlength="50" v-model="formCustom.paymentType" placeholder="请输入付款方式"></Input>
               </FormItem>
             </Col>
           </Row>

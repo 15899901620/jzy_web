@@ -22,7 +22,7 @@
           <div style="margin-top: 20px;">  
             <template v-if="step == 0">
               <div style=" display:flex;justify-content:center">
-                  <Button type="primary" title="开通电子签章" @click="addRegister()" size="large">开通电子签章</Button>
+                <Button type="primary" title="开通电子签章" @click="addRegister()" size="large">开通电子签章</Button>
               </div> 
             </template>
             <template v-else-if="step == 1">
@@ -31,7 +31,8 @@
               </div> 
             </template>
             <template v-else-if="step == 2">
-              <span>上传印章二选一</span>
+              <div style="text-align: center;"><span style="font-size: 20px;">上传印章二选一</span></div>
+              
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-seal">
@@ -53,7 +54,7 @@
                     <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
                     <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
                   </div>
                 </Split>
@@ -62,7 +63,7 @@
             <template v-else>
               <p class='tac pt20'>您已成功开通电子签章，可以在各合约列表中，对未签合同的合约，提交合同的签署</p> 
               <div class='tac bb1' style="padding-top:40px;padding-bottom:40px;color:#666"><img :src="this.sealInfo.signatureImg" /></div>
-              <p class='pt20 pb20' style="color:#666">印章维护二选一</p>
+              <p class='pt20 pb20' style="color:#666;font-size: 20px;">印章维护二选一</p>
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-seal"> 
@@ -85,7 +86,7 @@
                     <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                   </div>
                   <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" clearable style="width:60%;"/>
+                    <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
                     <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
                   </div>
                 </Split>
@@ -144,7 +145,7 @@ export default {
   data() {
     return { 
       signatureImg: '',
-      signatureValue: '',
+      signatureValue: this.$store.state.memberInfo.username,
     }
   },
   methods: {
