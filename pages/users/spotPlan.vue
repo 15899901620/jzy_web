@@ -69,7 +69,13 @@
                   <span class="gray" v-else-if="item.taken_num == item.total_num">已支付</span>
                 </td>
                 <td style="width: 15%;">
-                  <template v-if="item.contract_apply_status == 1">
+                  <div v-if="item.status != 3 && item.total_num > 0">
+                    <a v-if="sealType == 2" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
+                    <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">电子盖章</a>
+                    <a v-else-if="item.contract_apply_status == 2" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" href="javascript:void(0);">盖章中</a>
+                    <a v-else-if="item.contract_apply_status == 3" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" :href="item.contract_final_pic" target="_blank">查看合同</a>
+                  </div>
+                  <!-- <template v-if="item.contract_apply_status == 1">
                     <div>待签合同</div>
                   </template>
                   <template v-else-if="item.contract_apply_status == 2">
@@ -81,7 +87,7 @@
                   <template v-else-if="item.contract_apply_status == 4">
                     <div>待签合同</div>
                   </template>
-                  <!-- <div>待签合同</div> -->
+                   <div>待签合同</div> -->
 
                   <div><a @click='Spot(item.id)' class="greenFont">查看合同模板</a></div>
                 </td>
@@ -106,12 +112,7 @@
                       <a class="Paybtn CarCurr" style="margin-top: 5px; padding: 3px 6px">取消拒绝</a>
                     </template>
                   </div>
-                  <div v-if="item.status != 3 && item.total_num > 0">
-                    <a v-if="sealType == 2" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">开通电子印章</a>
-                    <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" class="Paybtn CarCurr" style="padding: 3px 6px" @click="toShowApplyContract(item.id)">电子盖章</a>
-                    <a v-else-if="item.contract_apply_status == 2" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" href="javascript:void(0);">盖章中</a>
-                    <a v-else-if="item.contract_apply_status == 3" class="Paybtn CarCurr" style="margin-top: 5px;padding: 3px 6px" :href="item.contract_final_pic" target="_blank">查看合同</a>
-                  </div>
+                  
                 </td>
               </tr>
               </tbody>
