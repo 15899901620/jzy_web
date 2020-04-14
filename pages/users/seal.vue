@@ -36,7 +36,7 @@
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-seal">
-                    <div style="padding-left: 40px;">请制作上传实际印章大小的、背景透明的png格式图片</div>
+                    <div style="padding-left: 40px;font-weight: bold;color: red;">请制作上传实际印章大小的、背景透明的png格式图片</div>
                     <div style="display: flex;align-items: flex-end;">
                       <Upload
                         ref="upload"
@@ -70,7 +70,7 @@
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-seal">
-                    <div style="padding-left: 40px;">请制作上传实际印章大小的、背景透明的png格式图片</div>
+                    <div style="padding-left: 40px;font-weight: bold;color: red;">请制作上传实际印章大小的、背景透明的png格式图片</div>
                     <div style="display: flex;align-items: flex-end;"> 
                       <Upload
                         ref="upload"
