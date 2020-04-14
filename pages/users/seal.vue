@@ -225,7 +225,7 @@ export default {
 }
 .demo-split-seal{
   display: flex; 
-  align-items: flex-end;
+  flex-direction: column;
 }
 .demo-split-pane{
     padding: 10px;
