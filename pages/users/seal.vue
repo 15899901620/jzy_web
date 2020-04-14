@@ -36,22 +36,25 @@
               <div class="demo-split">
                 <Split>
                   <div slot="left" class="demo-split-seal">
-                    <Upload
-                      ref="upload"
-                      action="/api/upload/image"
-                      :on-success="handleUpdateSourceFile"
-                      accept=".png"
-                      :format="['png']"
-                      :on-format-error="handleFormatError"
-                      :max-size="2048">
-                      <template v-if="signatureImg">
-                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
-                      </template>
-                      <template v-else>
+                    <div style="padding-left: 40px;">请制作上传实际印章大小的、背景透明的png格式图片</div>
+                    <div style="display: flex;align-items: flex-end;">
+                      <Upload
+                        ref="upload"
+                        action="/api/upload/image"
+                        :on-success="handleUpdateSourceFile"
+                        accept=".png"
+                        :format="['png']"
+                        :on-format-error="handleFormatError"
+                        :max-size="2048">
+                        <template v-if="signatureImg">
+                          <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
+                        </template>
+                        <template v-else>
                           <div class='uploadImg'><Icon type="ios-add" color='#ccc'  size='60'/>上传</div> 
-                      </template>
-                     </Upload>
-                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
+                        </template>
+                      </Upload>
+                      <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
+                    </div>
                   </div>
                   <div slot="right" class="demo-split-pane">
                     <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
@@ -66,24 +69,27 @@
               <p class='pt20 pb20' style="color:#666;font-size: 20px;">印章维护二选一</p>
               <div class="demo-split">
                 <Split>
-                  <div slot="left" class="demo-split-seal"> 
-                    <Upload
-                      ref="upload"
-                      action="/api/upload/image"
-                      :on-success="handleUpdateSourceFile"
-                      accept=".png"
-                      :format="['png']"
-                      :on-format-error="handleFormatError"
-                      :show-upload-list="false" 
-                      :max-size="2048">
-                      <template v-if="signatureImg">
-                        <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
-                      </template>
-                      <template v-else>
-                          <div class='uploadImg'><Icon type="ios-add"  color='#ccc' size='60'/>上传</div> 
-                      </template>
-                    </Upload>  
-                    <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
+                  <div slot="left" class="demo-split-seal">
+                    <div style="padding-left: 40px;">请制作上传实际印章大小的、背景透明的png格式图片</div>
+                    <div style="display: flex;align-items: flex-end;"> 
+                      <Upload
+                        ref="upload"
+                        action="/api/upload/image"
+                        :on-success="handleUpdateSourceFile"
+                        accept=".png"
+                        :format="['png']"
+                        :on-format-error="handleFormatError"
+                        :show-upload-list="false" 
+                        :max-size="2048">
+                        <template v-if="signatureImg">
+                          <img class='uploadImg' style="padding:0" :src="signatureImg"  width="166" height="166"/>
+                        </template>
+                        <template v-else>
+                            <div class='uploadImg'><Icon type="ios-add"  color='#ccc' size='60'/>上传</div> 
+                        </template>
+                      </Upload>  
+                      <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
+                    </div>
                   </div>
                   <div slot="right" class="demo-split-pane">
                     <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
@@ -236,8 +242,8 @@ export default {
     padding: 30px 10px;
 }
 .uploadImg{
-  width: 166px;
-  height: 166px;
+  width: 145px;
+  height: 145px;
   border: 1px dashed #ccc;
   padding: 10px 28px;
   display: flex;
@@ -246,7 +252,7 @@ export default {
   align-items: center;
   color: #666;
 }
-.demo-split .demo-split-seal .ivu-upload{margin-left: 65px;margin-top: 16px;width: 166px;  height: 166px;}
+.demo-split .demo-split-seal .ivu-upload{margin-left: 65px;margin-top: 20px;width: 145px;  height: 145px;}
 .demo-split .demo-split-seal .ivu-split-pane{display: flex; align-items: center;}
 .demo-split-pane .ivu-input-wrapper .ivu-input{height: 40px;}
 .demo-split .demo-split-pane .ivu-upload-select{display: flex; justify-content: center;  }
