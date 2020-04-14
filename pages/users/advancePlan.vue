@@ -63,8 +63,8 @@
                   <div v-if="item.status != 3 && item.total_num > 0">
                     <a v-if="sealType == 2" style="padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" @click="toShowApplyContract(item.id)">开通电子印章</a>
                     <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" style="padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" @click="toShowApplyContract(item.id)">电子盖章</a>
-                    <a v-else-if="item.contract_apply_status == 2" style="margin-top: 5px;padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" href="javascript:void(0);">盖章中</a>
-                    <span v-else-if="item.contract_apply_status == 3" class="gray">已盖章</span>
+                    <a v-else-if="item.contract_apply_status == 2" style="margin-top: 5px;padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" :href="item.contract_source_pic">盖章中</a>
+                    <span v-else-if="item.contract_apply_status == 3" style="padding: 3px;background-color: #aaa;border-radius: 3px;color: #FFF;">已盖章</span>
                   </div>
                   <!--<template v-if="item.contract_apply_status == 1">
                     <div>待签合同</div>
