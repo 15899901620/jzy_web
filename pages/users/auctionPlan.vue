@@ -207,6 +207,13 @@ export default {
           if (response.status === 200) {
             if((response.data.errorcode || 0) == 0){
               window.open(response.data)
+              this.$Modal.info({
+                title: '电子签章提醒',
+                content: '<p>在线电子签章已在新页面打开，签章后注意刷新页面查看状态是否改变！</p>',
+                onOk: () => {
+                  location.reload(true)
+                }
+              })
             }else{
               alert(response.data.message)
             }

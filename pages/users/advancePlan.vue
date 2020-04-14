@@ -236,7 +236,7 @@ export default {
 					//显示放料选择窗口
 					this.selectFeedingData = res.data
 					this.selectFeedingModalShow = true
-                    return
+          return
 				}
 			}
 			this.toCreateOrder(res.data[0].id, planned_id)
@@ -291,6 +291,13 @@ export default {
           if (response.status === 200) {
             if((response.data.errorcode || 0) == 0){
               window.open(response.data)
+              this.$Modal.info({
+                title: '电子签章提醒',
+                content: '<p>在线电子签章已在新页面打开，签章后注意刷新页面查看状态是否改变！</p>',
+                onOk: () => {
+                  location.reload(true)
+                }
+              })
             }else{
               alert(response.data.message)
             }
