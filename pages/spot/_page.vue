@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header title=""></Header>
+    <Header title="" :topNavProp="publicData.nav.top" :middleNavProp="publicData.nav.middle" :configProp="publicData.config" :hotCategoryProp="publicData.hotCate" :hotProductProp="publicData.hotGoods" :levelSpecsProp="publicData.levelSpecs"></Header>
     <div class="container">
       <div class="w1200">
         <div class="breadcrumb">
@@ -127,11 +127,12 @@
         </div>
       </div>
     </div>
-    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    <Footer size="default" title="底部" :configProp="publicData.config" :bottomNavProp="publicData.nav.bottom" :helpCatListProp="publicData.helpCateList" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 	import Header from '../../components/header'
 	import Footer from '../../components/footer'
 	import pagination from '../../components/pagination'
@@ -141,17 +142,7 @@
 		name: "spot",
 		fetch({store, params, query}) {
 			return Promise.all([
-				//获取顶部、中部、底部导航信息
-				store.dispatch('common/getNavList'),
-				//获取系统配置
-				store.dispatch('common/getSysConfig'),
-				//获取友情链接
-        store.dispatch('common/getFriendlyList'),
-                //获取底部帮助分类
-				store.dispatch('helper/getHelpCate', {
-					catId: 0,
-					indexShow: 1
-				}),
+        store.dispatch('page/getPublicData'),
 				//获取筛选条件
 				store.dispatch('spot/getFilterConditonData'),
 				//获取报价
@@ -164,7 +155,12 @@
 					}
 				),
 			])
-		},
+    },
+    computed: {
+      ...mapState({
+        publicData: state => state.page.publicData
+      })
+    },
 		components: {
 			Header,
 			Footer,
@@ -265,18 +261,6 @@
 			toLogin(){
 				location.href = '/login'
 			}
-		},
-		created() {
-
-		},
-		mounted() {
-         // this.CateCurr = this.IndexCurr
-          // console.log("IndexCurr_category_id",typeof this.$route.query.category_id)
-         // this.IndexCurr= Number(this.$route.query.category_id)
-          // console.log("categoryId:",this.categoryId)
-          // console.log("category:",this.$store.state.spot.condition.category)
-          // console.log("process:",this.$store.state.spot.condition.process)
-          // console.log("spotList:",this.$store.state.spot.spotList)
 		},
 		watch: {
 			'$route'(to, from) {

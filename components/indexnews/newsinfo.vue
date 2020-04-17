@@ -36,27 +36,19 @@ export default {
     indextabs,
     indextabsPane: indextabs.pane
   },
-
-  mounted(){},
-  created(){},
   computed: {
     ...mapState({
       hotarticleInfo: state => state.article.hotarticleInfo,
       articleCat: state => state.article.articleCat,
       indexarticelist: state => state.article.indexarticelist
     }),
-
     classes() {
-
       return [
         `${prefixCls}`,
         { [`${prefixCls}-newsinfo`]: this.vertical },
       ];
     },
-  },
-  methods:{
-
-  },
+  }
 }
 </script>
 

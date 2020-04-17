@@ -1,13 +1,12 @@
 <template>
   <div class="body">
-    <Header name="头部"></Header>
+    <Header name="头部" :topNavProp="publicData.nav.top" :middleNavProp="publicData.nav.middle" :configProp="publicData.config" :hotCategoryProp="publicData.hotCate" :hotProductProp="publicData.hotGoods" :levelSpecsProp="publicData.levelSpecs"></Header>
     <div class="container" title="">
-      <template v-for="(item,index) in $store.state.common.adList.ad4">
+      <!--<template v-for="(item,index) in $store.state.common.adList.ad4">
         <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
-          <!-- <img :src="item.adImg"/>-->
         </div>
-      </template>
-      <!--      我的竞拍列表-->
+      </template>-->
+      <!--我的竞拍列表-->
       <div class="w1200" style="margin-top: 20px">
         <div class="titlelist" v-if="partakeList.length > 0">
           我的竞拍
@@ -27,9 +26,7 @@
             <th style="width: 6%">我的状态</th>
             <th style="width: 7%">操作</th>
           </tr>
-
-
-          <tr v-for="(item,index) in partakeList">
+          <tr v-for="(item,index) in partakeList" :key="index">
             <td>{{item.billNo}}</td>
             <td class="blue">{{item.skuName}}</td>
             <td>{{item.manufacturer}}</td>
@@ -235,7 +232,7 @@
         </div>
       </div>
     </div>
-    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    <Footer size="default" title="底部" :configProp="publicData.config" :bottomNavProp="publicData.nav.bottom" :helpCatListProp="publicData.helpCateList" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
@@ -248,7 +245,6 @@ import TimeDown from '../../components/timeDown'
 import server from "../../config/api";
 import {sendCurl} from '../../api/common'
 
-
 export default {
 	name: 'bidders',
 	components: {
@@ -256,40 +252,10 @@ export default {
 		Footer,
 		pages: pagination.pages,
 		TimeDown
-	},
-
-	data() {
-		return {
-			CurrSelect: 0,
-			current_page: parseInt(this.$route.query.page) || 1,
-			page_size: 10,
-			page: 1,
-			NowTime: '',
-			Auctionlist: '',
-			AuctionTip: '暂无竞拍活动',
-			tabMain: ['1', '2', '3'],
-			status: 2,
-			index: 0,
-			isFollow: 0,
-			aclist: '',
-
-			statusType: this.$route.query.statusType || 0,
-			planType: this.$route.query.planType || 0
-		}
-	},
-	fetch({store, params, query}) {
+  },
+  fetch({store, params, query}) {
 		return Promise.all([
-			// 获取顶部、中部、底部导航信息
-			store.dispatch('common/getNavList'),
-			// 获取系统配置
-			store.dispatch('common/getSysConfig'),
-			// 获取友情链接
-			store.dispatch('common/getFriendlyList'),
-			// 获取轮播图
-			store.dispatch('common/getBannerList', 4),
-			// 获取底部帮助分类
-			store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
-			store.dispatch('article/getindexArticleList', {catId: 8}),
+      store.dispatch('page/getPublicData'),
 			// 获取竞拍列表
 			store.dispatch('bidders/getAuctionList', {
 				current_page: query.page || 1,
@@ -314,13 +280,27 @@ export default {
 			}),
 		])
 	},
-	created() {
-		this.SourceData()
-	},
-	mounted() {
+	data() {
+		return {
+			CurrSelect: 0,
+			current_page: parseInt(this.$route.query.page) || 1,
+			page_size: 10,
+			page: 1,
+			NowTime: '',
+			Auctionlist: '',
+			AuctionTip: '暂无竞拍活动',
+			tabMain: ['1', '2', '3'],
+			status: 2,
+			index: 0,
+			isFollow: 0,
+
+			statusType: this.$route.query.statusType || 0,
+			planType: this.$route.query.planType || 0
+		}
 	},
 	computed: {
 		...mapState({
+      publicData: state => state.page.publicData,
 			auctionTotal: state => state.bidders.auctionTotal,
 			auctionList: state => state.bidders.auctionList,
 
@@ -422,16 +402,8 @@ export default {
 			}
 
 		},
-		async SourceData() {
-			let params = {
-				catId: 8
-			}
-			const res = await sendCurl(this, server.api.information.getArticleList, params, false)
-			this.aclist = res.data.items
-		},
 		//跳转详情页
 		BidersDetail(id) {
-
 			if (this.$store.state.memberToken) {
 				location.href = '/bidders/detail/' + id
 			} else {

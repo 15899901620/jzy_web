@@ -9,9 +9,9 @@
       <!--      <div class="Time-limited_back position prve" id='prev' :style="{'display':display}">-->
       <!--        <img src="../../static/img/back.png"/>-->
       <!--      </div>-->
-      <template v-if="$store.state.bidders.auctionList.length > 0">
+      <template v-if="auctionListProp.length > 0">
         <ul class="Time-limited_list" :style="{backgroundColor:bgColor,width:TLlength+'px'}" id='TimeL-ul'>
-          <li ref="elememt" v-for="(items, index) in $store.state.bidders.auctionList" :key="index">
+          <li ref="elememt" v-for="(items, index) in auctionListProp" :key="index">
             <div class="endTime endTimebg dflexAlemJust" v-if="items.statusType == '1'">
               <div class="imgLogo"><img src="/img/cutDown_icon_orange.png"/></div>
               <!--距开始时间 :-->
@@ -49,9 +49,6 @@
           <li style="text-align: center;padding-top: 100px;font-size: 14px;color: #ccc;">暂无任何信息！</li>
         </ul>
       </template>
-      <!--      <div class="Time-limited_next position prve" id='next' :style="{'display':display}">-->
-      <!--        <img src="../../static/img/next.png"/>-->
-      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -62,7 +59,12 @@
 	const prefixCls = 'ant-hotbidding'
 
 	export default {
-		name: 'hotbidding',
+    name: 'hotbidding',
+    props: {
+      auctionListProp: {
+				type: Array
+      }
+    },
 		components: {
 			TimeDown
 		},

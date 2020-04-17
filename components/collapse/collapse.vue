@@ -9,15 +9,15 @@
           <li>
             <div class="ass-ty2-p 1">
               <p class="fs16"><i></i>热门分类:</p>
-              <p style="word-wrap:break-word" v-for="(items,index) in $store.state.common.hotCategory" :key="index">
-                <a style="float:left" :href="`/spot?category_id=${items.id}`">{{items.name}}</a>
-              </p>
+                <p style="word-wrap:break-word" class="232" v-for="(items,index) in (hotCategory || $store.state.common.hotCategory)" :key="index">
+                  <a style="float:left" :href="`/spot?category_id=${items.id}`">{{items.name}}</a>
+                </p>
             </div>
           </li>
           <li>
             <div class="ass-ty2-p 1">
               <p class="fs16 mt10"><i></i>热门牌号:</p>
-              <p style="word-wrap:break-word" v-for="(items,index) in $store.state.common.hotProduct" :key="index">
+              <p style="word-wrap:break-word" v-for="(items,index) in (hotProduct || $store.state.common.hotProduct)" :key="index">
                 <a style="float:left" :href="`/spot?keyword=${items.title}`">{{items.title}}</a>
               </p>
             </div>
@@ -26,12 +26,11 @@
             <div class="ass-ty2-p level 1">
               <p class="fs16 mt10"><i></i>加工级别:</p>
               <div style="margin-left: -10px;">
-                <p style="word-wrap:break-word" v-for="(items,index) in $store.state.common.productLevelValues"
+                <p style="word-wrap:break-word" v-for="(items,index) in (levelSpecs || $store.state.common.productLevelValues)"
                    :key="index">
                   <a style="float:left" :href="`/spot?level_id=${items.id}`">{{items.value}}</a>
                 </p>
               </div>
-
             </div>
           </li>
         </ul>
@@ -119,29 +118,36 @@
 
 <script>
 	const prefixCls = 'ant-collapse'
-
 	export default {
-		name: 'collapse',
-		data() {
-			return {
-				current_page: 1,
-				page_size: 10,
-				seen: false,
-        seentwo: false,
-				attrlist: {},
-        seenthree: false,
-				datePif: false,
-				qualityForm: {
-					qualityDate: this.$utils.dateFormat(new Date(), 'yyyy-MM'),
-					qualityNo: '',
-				},
-
-			};
-		},
-		props: {
-			openCol: {
+    name: 'collapse',
+    props: {
+			hotCategoryProp: {
+				type: Array
+			},
+			hotProductProp: {
+				type: Array
+			},
+			levelSpecsProp: {
+				type: Array
+      },
+      openCol: {
 				type: String,
 				default: 'none'
+			}
+		},
+		data() {
+			return {
+        hotCategory: this.hotCategoryProp,
+        hotProduct: this.hotProductProp,
+        levelSpecs: this.levelSpecsProp,
+
+				seen: false,
+        seentwo: false,
+        seenthree: false,
+				qualityForm: {
+					qualityDate: this.$utils.dateFormat(new Date(), 'yyyy-MM'),
+					qualityNo: ''
+				}
 			}
 		},
 		computed: {
@@ -154,22 +160,22 @@
 		},
 		methods: {
 			oneMouseout: function () {
-				this.seen = false;
+				this.seen = false
 			},
 			oneMouseOver: function () {
-				this.seen = true;
+				this.seen = true
 			},
 			twoMouseout: function () {
-				this.seentwo = false;
+				this.seentwo = false
 			},
 			twoMouseOver: function () {
-				this.seentwo = true;
+				this.seentwo = true
 			},
 			threeMouseout: function () {
-				this.seenthree = false;
+				this.seenthree = false
 			},
 			threeMouseOver: function () {
-				this.seenthree = true;
+				this.seenthree = true
 			},
 			QDate(date) {
 				this.qualityForm.qualityDate = date
@@ -186,12 +192,13 @@
 			toLogistics() {
 				window.location.href = '/logistics'
 			}
-
 		},
 		mounted() {
-			this.$store.dispatch('common/getHotCategory')
-			this.$store.dispatch('common/getHotProduct')
-      this.$store.dispatch('common/getProductLevelValues')
+      if(!this.hotCategoryProp){
+        this.$store.dispatch('common/getHotCategory')
+        this.$store.dispatch('common/getHotProduct')
+        this.$store.dispatch('common/getProductLevelValues')
+      }
 		},
 	}
 </script>

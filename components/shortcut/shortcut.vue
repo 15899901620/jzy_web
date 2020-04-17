@@ -17,11 +17,10 @@
             <a href="/register">注册</a>
           </li>
         </template>
-		<li>
+			<li>
 		  <a href="/users/user">会员中心</a>
-		</li>
-        <li v-for="(item, index) in $store.state.common.nav.topNav" :key="index">
-		
+			</li>
+        <li v-for="(item, index) in this.topNav" :key="index">
           <a :href="item.url">{{ item.name }}</a>
         </li>
       </ul>
@@ -38,6 +37,9 @@
 			showNav: {
 				type: Boolean,
 				default: true
+			},
+			topNavProp: {
+				type: Array
 			}
 		},
 		computed: {
@@ -50,6 +52,7 @@
 		},
 		data() {
 			return {
+				topNav : this.topNavProp || this.$store.state.common.nav.topNav
 			}
 		},
 		methods: {

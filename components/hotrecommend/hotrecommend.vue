@@ -41,7 +41,6 @@
 	const prefixCls = 'ant-hotrecommend'
 
 	import utils from '~/utils/utils'
-
 	export default {
 		name: 'hotrecommend',
 		data() {
@@ -64,7 +63,6 @@
 					location.href = '/login'
 				}
 			},
-
 			logout() {
 				utils.memberLogout()
 			}

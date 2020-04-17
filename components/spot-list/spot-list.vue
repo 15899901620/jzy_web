@@ -12,8 +12,8 @@
       <span style="width: 12%;">操作</span>
     </div>
     <ul class="Xhlist">
-      <template v-if="$store.state.spot.spotList.length>0">
-        <li v-for="(item, index) in $store.state.spot.spotList" :key="index">
+      <template v-if="spotListProp.length>0">
+        <li v-for="(item, index) in spotListProp" :key="index">
           <span style="width: 13%;">{{item.sku_name}}</span>
           <span
               style="width: 13%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
@@ -67,7 +67,12 @@
 	import TimeDown from '../../components/timeDown'
 
 	export default {
-		name: 'SpotList',
+    name: 'SpotList',
+    props: {
+      spotListProp: {
+				type: Array
+      }
+    },
 		components: {
 			TimeDown,
 		},
@@ -82,7 +87,6 @@
 				location.href='/spot/order/' + id
 			},
 			reloadPage() {
-				console.log('reloadPage')
 				this.$router.go(0)
 			},
 			goLogin(){

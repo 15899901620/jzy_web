@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header name="头部"></Header>
+    <Header name="头部" :topNavProp="publicData.nav.top" :middleNavProp="publicData.nav.middle" :configProp="publicData.config" :hotCategoryProp="publicData.hotCate" :hotProductProp="publicData.hotGoods" :levelSpecsProp="publicData.levelSpecs"></Header>
     <div class="container" title="">
       <div class="breadcrumb">
         <breadcrumb>
@@ -372,9 +372,6 @@
           </tr>
           </tbody>
         </table>
-        <!-- <div style="display: flex; justify-content: center">
-          <div class="addbiders" @click="addFollow">添加其他竞拍</div>
-        </div> -->
       </div> 
       <div class="biddersRecord">
         <!--竞拍流程-->
@@ -500,25 +497,9 @@
         <p style="font-size:14px; line-height:28px;"><span style="color:#666;">出价价格为：</span>{{$utils.amountFormat(this.auctionOffer)}}</p>
       </div>
     </Modal>
-
-    <!-- 添加其他竞拍关注-->
-    <!-- <Modal
-            v-model="addfollow"
-            title="Title"
-            width="80"
-    >
-
-
-      <div slot="header">添加其他竞拍关注</div>
-      <Table border ref="selection" :columns="columns4" :data="unfollowList"></Table>
-      <div slot="footer">
-        <div class="addbtn" >添加竞拍关注</div>
-      </div>
-    </Modal> -->
-
     <paydeposit :isshow="DepositShow" :datalist='DepositData' @unChange="unDepositShow"></paydeposit>
 
-    <Footer size="default" title="底部" style="margin-top:18px;"></Footer>
+    <Footer size="default" title="底部" :configProp="publicData.config" :bottomNavProp="publicData.nav.bottom" :helpCatListProp="publicData.helpCateList" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
@@ -545,14 +526,7 @@
     middleware: 'memberAuth',
     fetch({store, params, query}) {
       return Promise.all([
-        //获取顶部、中部、底部导航信息
-        store.dispatch('common/getNavList'),
-        //获取系统配置
-        store.dispatch('common/getSysConfig'),
-        //获取友情链接
-        store.dispatch('common/getFriendlyList'),
-        //获取底部帮助分类
-        store.dispatch('helper/getHelpCate', {catId: 0, indexShow: 1}),
+        store.dispatch('page/getPublicData'),
         //获取竞拍信息
         store.dispatch('bidders/getAuctionInfo', {id: params.id || 0}),
       ])
@@ -566,8 +540,9 @@
     },
     computed: {
       ...mapState({
+        publicData: state => state.page.publicData,
         auctionInfo: state => state.bidders.auctionInfo,
-        systeminfo: state => state.common.sysConfig,
+        systeminfo: state => state.page.publicData.config,
       }),
       minPrice: function () {
         if(this.auctionInfo.myBidList.length > 0){

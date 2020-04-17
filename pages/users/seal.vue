@@ -56,9 +56,12 @@
                       <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                     </div>
                   </div>
-                  <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
-                    <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                  <div slot="right" style="height: 100%;">
+                    <div style="padding-left: 40px;font-weight: bold;color: red;">在线生成的电子印章有同等法律效应</div>
+                    <div class="demo-split-pane">
+                      <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
+                      <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                    </div>
                   </div>
                 </Split>
               </div>
@@ -91,9 +94,12 @@
                       <Button type="primary" title="上传印章" @click="updateSignature(1)" size="large" style="width:30%; height:40px; margin-left:27px">提交</Button>
                     </div>
                   </div>
-                  <div slot="right" class="demo-split-pane">
-                    <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
-                    <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                  <div slot="right" style="height: 100%;">
+                    <div style="padding-left: 40px;font-weight: bold;color: red;">在线生成的电子印章有同等法律效应</div>
+                    <div class="demo-split-pane">
+                      <Input v-model="signatureValue" placeholder="请输入印章内容" disabled style="width:60%;"/>
+                      <Button class='mt20' type="primary" title="在线生成印章" @click="updateSignature(2)" size="large">在线生成印章</Button>
+                    </div>
                   </div>
                 </Split>
               </div>

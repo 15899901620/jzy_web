@@ -144,6 +144,10 @@ let api = {
 		getMemberFeedingList: {'url':'/bill/bookingPlan/getMyPlanList/page', 'method':'get'},
 		getPlanByFeeding: {'url':'/bill/bookingPlan/saleListByFeeding', 'method':'post'},
   },
+  pageData: {
+    publicData: {'url':'/web/publicData', 'method':'get'},
+    indexData: {'url':'/web/indexData', 'method':'get'}
+  },
   /**
    * @description 竞拍管理
    */
@@ -201,9 +205,7 @@ let api = {
     noticeclick: '/web/announcement/click',
     articleCatDetail:'/web/article_cat/detail',
     getArticleCatList:{'url': '/web/article_cat/page', 'method': 'get'},
-    getNoticeCatList:{'url': '/web/announcement/page', 'method': 'get'},
-
-
+    getNoticeCatList:{'url': '/web/announcement/page', 'method': 'get'}
   },
   /**
    * @description 帮助中心
