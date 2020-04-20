@@ -98,7 +98,7 @@
 								</table>
 							</td>
 						</tr>
-						<tr><td class="pt5p pb5p">3·履约条数·</td></tr>
+						<tr><td class="pt5p pb5p">3·履约条款·</td></tr>
 						<tr>
 							<td>
 								<table width="100%" border="1" cellspacing="0" cellpadding="0" >
