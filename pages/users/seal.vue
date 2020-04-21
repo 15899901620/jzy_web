@@ -27,7 +27,8 @@
             </template>
             <template v-else-if="step == 1">
               <div style=" display:flex;justify-content:center">
-                <Button type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
+                <Button v-if="this.sealInfo.status == 5" type="primary" :title="this.sealInfo.auditFaile" @click="verify(sealInfo.verifyUrl)" size="large">实名不通过,重新实名</Button>
+                <Button v-else type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
               </div> 
             </template>
             <template v-else-if="step == 2">
@@ -216,7 +217,7 @@ export default {
 		}
   },
   mounted() {}
-};
+}
 </script>
 <style lang="less" scoped>
  .head {
