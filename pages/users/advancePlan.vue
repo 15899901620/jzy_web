@@ -270,7 +270,9 @@ export default {
 		toCreateOrder(feeding_id, planned_id){
 			location.href = '/advance/change/feeding_id?id='+feeding_id+'&planned_id='+planned_id
 		},
-
+    Spot(id){
+    	window.open('/users/spotContract?type=3&id=' + id)
+    },
 		getSealType() {
 			sendHttp(this, true, server.api.contract.getSealType, {}).then(response => {
 				if (response.status === 200) {

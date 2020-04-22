@@ -27,7 +27,9 @@
             </template>
             <template v-else-if="step == 1">
               <div style=" display:flex;justify-content:center">
-                <Button v-if="this.sealInfo.status == 5" type="primary" :title="this.sealInfo.auditFaile" @click="verify(sealInfo.verifyUrl)" size="large">实名不通过,重新实名</Button>
+                <Button v-if="this.sealInfo.status == 3" type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">资料已提交,待审核</Button>
+                <Button v-else-if="this.sealInfo.status == 5" type="primary" :title="this.sealInfo.auditFaile" @click="verify(sealInfo.verifyUrl)" size="large">实名不通过,重新实名</Button>
+                <Button v-else-if="this.sealInfo.status == 6" type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">审核已通过,填写收款金额</Button>
                 <Button v-else type="primary" title="实名认证" @click="verify(sealInfo.verifyUrl)" size="large">进行实名认证</Button>
               </div> 
             </template>
