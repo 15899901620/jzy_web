@@ -64,7 +64,7 @@
                     <span class="gray" v-else-if="item.takenNum == item.totalNum">已支付</span>
                   </td>
                   <td style="width: 15%;">
-                    <div v-if="item.status != 3 && item.total_num > 0">
+                    <div v-if="item.status != 3 && item.totalNum > 0">
                       <a v-if="sealType == 2" style="padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" @click="toShowApplyContract(item.id)">开通电子印章</a>
                       <a v-else-if="item.contract_apply_status == 1 || item.contract_apply_status == 4" style="padding: 3px 6px;background-color: ##f90;border-radius: 3px;color: #FFF;" @click="toShowApplyContract(item.id)">电子盖章</a>
                       <a v-else-if="item.contract_apply_status == 2" style="margin-top: 5px;padding: 3px 6px;background-color: #007de4;border-radius: 3px;color: #FFF;" :href="item.contract_final_pic" target="_blank">盖章中</a>
