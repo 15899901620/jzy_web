@@ -146,6 +146,7 @@ let api = {
   },
   pageData: {
     publicData: {'url':'/web/publicData', 'method':'get'},
+    auctionData: {'url':'/web/auctionData', 'method':'get'},
     indexData: {'url':'/web/indexData', 'method':'get'}
   },
   /**

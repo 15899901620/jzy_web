@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Header name="头部" :topNavProp="publicData.nav.top" :middleNavProp="publicData.nav.middle" :configProp="publicData.config" :hotCategoryProp="publicData.hotCate" :hotProductProp="publicData.hotGoods" :levelSpecsProp="publicData.levelSpecs"></Header>
+    <Header name="头部" :topNavProp="auctionData.nav.top" :middleNavProp="auctionData.nav.middle" :configProp="auctionData.config" :hotCategoryProp="auctionData.hotCate" :hotProductProp="auctionData.hotGoods" :levelSpecsProp="auctionData.levelSpecs"></Header>
     <div class="container" title="">
       <!--<template v-for="(item,index) in $store.state.common.adList.ad4">
         <div class="materials_banner" :style="{background:'url(' + item.adImg + ')no-repeat center;'}">
@@ -103,7 +103,7 @@
             </div>
 
             <ul class="acuList" v-if="this.auctionTotal > 0">
-              <li v-for="(items,index) in this.auctionList" :class="getIcon(items)" :key="index">
+              <li v-for="(items,index) in auctionList" :class="getIcon(items)" :key="index">
                 <div style="display: flex; position: absolute; align-items: center; margin-top: 20px;z-index: 1;">
                   <template v-if="items.statusType == '1'">
                     <div class="statusicon startauction">正在竞拍</div>
@@ -205,14 +205,27 @@
           </div>
 
           <div class="" style="width: 24%; margin-left: 1.5%; display: flex; flex-direction: column">
+            <!-- 登录 -->
+            <div class="Discharge" v-if="!$store.state.memberToken">
+              <div class="title">巨正源竞拍平台</div>
+              <div class="text">塑厂直销</div>
+              <a href="/login" class="dischargeBtn">用户登录</a>
+            </div>
+            <!--广告位-->
+            <template v-if="this.auctionData.adAuctionList.length>0">
+              <div class="NoticeTitleAdv" v-for="(item, index) in auctionData.adAuctionList" :key="index"
+                   @click="Tospot(item.adLink)">
+                <img :src="item.adImg" width="288" height="100">
+              </div>
+            </template>
             <!--  竞拍公告-->
-            <div class="Notice whitebg mt15">
+            <div class="Notice whitebg mt10">
               <div class="NoticeTitle">
                 <span class="fs16">竞拍公告</span>
                 <span class="gray"><a href="/notice/list">更多...</a></span>
               </div>
               <ul class="NoticeList">
-                <li v-for="(item,index) in noticeList" :key="index">
+                <li v-for="(item,index) in auctionData.noticeList" :key="index">
                   <span
                       style="width: 82%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                       :title="item.title"><a :href="`/notice/detail/${item.id}`">{{item.title}}</a></span>
@@ -221,18 +234,11 @@
               </ul>
             </div>
 
-            <template v-if="this.sideadvImg.length>0">
-              <div class="NoticeTitleAdv" v-for="(item, index) in this.sideadvImg" :key="index"
-                   @click="Tospot(item.adLink)">
-                <img :src="item.adImg">
-              </div>
-            </template>
-
           </div>
         </div>
       </div>
     </div>
-    <Footer size="default" title="底部" :configProp="publicData.config" :bottomNavProp="publicData.nav.bottom" :helpCatListProp="publicData.helpCateList" style="margin-top:18px;"></Footer>
+    <Footer size="default" title="底部" :configProp="auctionData.config" :bottomNavProp="auctionData.nav.bottom" :helpCatListProp="auctionData.helpCateList" style="margin-top:18px;"></Footer>
   </div>
 </template>
 
@@ -255,7 +261,7 @@ export default {
   },
   fetch({store, params, query}) {
 		return Promise.all([
-      store.dispatch('page/getPublicData'),
+      store.dispatch('page/getAuctionData'),
 			// 获取竞拍列表
 			store.dispatch('bidders/getAuctionList', {
 				current_page: query.page || 1,
@@ -264,20 +270,20 @@ export default {
 				plan_type: query.planType,
 				product_type: 1
 			}),
-			// 网站公告
-			store.dispatch('article/getNoticeList', {
-				typeId: 4,
-				current_page: 1,
-				page_size: 15,
-				sortBy: 'add_time',
-				desc: '1'
-			}),
-			// 获取用户参与列表
-			store.dispatch('bidders/getPartakeList'),
-			// 侧边广告栏
-			store.dispatch('system/getBannerInfo', {
-				positionId: 6
-			}),
+//			// 网站公告
+//			store.dispatch('article/getNoticeList', {
+//				typeId: 4,
+//				current_page: 1,
+//				page_size: 6,
+//				sortBy: 'add_time',
+//				desc: '1'
+//			}),
+//			// 获取用户参与列表
+//			store.dispatch('bidders/getPartakeList'),
+//			// 侧边广告栏
+//			store.dispatch('system/getBannerInfo', {
+//				positionId: 6
+//			}),
 		])
 	},
 	data() {
@@ -300,18 +306,18 @@ export default {
 	},
 	computed: {
 		...mapState({
-      publicData: state => state.page.publicData,
+            auctionData: state => state.page.auctionData,
 			auctionTotal: state => state.bidders.auctionTotal,
 			auctionList: state => state.bidders.auctionList,
 
-			biddersbeingData: state => state.bidders.biddersbeingData,
-			bidderssoonData: state => state.bidders.bidderssoonData,
-			biddersendData: state => state.bidders.biddersendData,
-			bannerinfo: state => state.system.bannerinfo,      // 页面banner
-			noticeList: state => state.article.noticeList,     // 侧边竞拍广告
+//			biddersbeingData: state => state.bidders.biddersbeingData,
+//			bidderssoonData: state => state.bidders.bidderssoonData,
+//			biddersendData: state => state.bidders.biddersendData,
+//			bannerinfo: state => state.system.bannerinfo,      // 页面banner
+//			noticeList: state => state.article.noticeList,     // 侧边竞拍广告
 
 			partakeList: state => state.bidders.partakeList,  // 我的竞拍
-			sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
+//			sideadvImg: state => state.system.bannerinfo,    // 侧边广告栏
 		}),
 		statusTypeName: function () {
 			let type = this.statusType
@@ -544,8 +550,9 @@ export default {
   }
 
   .NoticeTitleAdv {
-    height: 135px;
-    margin-top: 15px;
+    width: 288px;
+    height: 100px;
+    margin-top: 10px;
   }
 
   .follow {
@@ -566,5 +573,43 @@ export default {
     font-size: 12px;
     background: url("/img/cancel_follow.png") no-repeat 6px 5px;
     padding-left: 22px;
+  }
+  .Discharge{
+    width: 288px;
+    height: 148px;
+    margin-top: 15px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    /*background: url("/img/Discharge.png")no-repeat;*/
+    background-color: #fff;
+    color: #FFFFFF;
+  .title{
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    color:#000;
+  }
+  .text{
+    font-size: 14px;
+    color: #007de4;
+  }
+  .dischargeBtn{
+    font-size: 14px;
+    color: #fff;
+    background-color: #258ef9;
+    border:none;
+    width: 70%;
+    font-weight: bold;
+    margin: 10px auto 0px;
+    padding: 7px 0;
+    border-radius: 3px;
+    box-shadow: 0px 1px 1px #333;
+  }
+  .dischargeBtn:hover{
+    cursor: pointer;
+  }
+
   }
 </style>
