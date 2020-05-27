@@ -25,22 +25,23 @@
 							</li>
 							<li>
 								<FormItem label="商品">
-								<Select  placeholder="请输入关键字"    prefix="ios-search"
+								<Select  placeholder="请输入关键字"  v-model="searchForm.title"  prefix="ios-search"
 									  		filterable
 											clearable
 											remote
 											@on-change="onChange"
 											:remote-method="searchData1"
 											:loading="loading">
-										<Option v-for="(item, index) in productData" :value="item.id" :key="index">{{ item.title }}</Option>
+										<Option v-for="(item, index) in productData" :value="item.title" :key="index">{{ item.title }}</Option>
 
 									</Select>
 								</FormItem>
 							</li>
 
 							<FormItem :label-width="18" style="height: 25px;" >
-								<Button  class="inquiryFree" type="primary" @click="searchFreight()">查询运费</Button><br>
-								<a href="https://www.ejzy.cn/notice/detail/174" target="_blank" style="margin-left: 55px">各路线运费详情</a>
+								<Button  class="inquiryFree" type="primary" @click="searchFreight()" style="padding: 7px 20px">查询运费</Button>
+								<Button  class="inquiryFree" type="primary" @click="searchFreightDetail()" style="padding: 7px 20px">路线运费详情</Button>
+								<!--<a href="https://www.ejzy.cn/notice/detail/174" target="_blank" style="margin-left: 55px">各路线运费详情</a>-->
 							</FormItem>
 						</Form>
 					</ul>
@@ -175,8 +176,9 @@
 			productData:[],
 			loading:false,
             searchForm: {
-                warehouse_id: 0,
-                sku_no: '',
+                title:'聚丙烯PPH-T03',
+                warehouse_id: 17,
+                sku_no: '360102000011',//聚丙烯PPH-T03
                 country_id: 1,
                 to_region_id: []
     },
@@ -190,6 +192,7 @@
         }
     },
     methods: {
+
  			async offerList(){
 				  let params={
 					  current_page:1,
@@ -289,9 +292,13 @@
 				}
 
 			},
+        	searchFreightDetail(){
+				window.open('https://www.ejzy.cn/notice/detail/174')
+			},
 			onChange (id) {
 				 this.productData.forEach((item) => {
 					if(item.id === id){
+                        this.searchForm.title=item.title
 						this.searchForm.sku_no=item.skuNo
 					}
 				})
@@ -309,6 +316,7 @@
         created() {
 			this.initData()
 			this.offerList();
+			this.searchData1("360102000011")
         },
 
 		fetch({
