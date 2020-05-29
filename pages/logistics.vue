@@ -40,7 +40,7 @@
 
 							<FormItem :label-width="18" style="height: 25px;" >
 								<Button  class="inquiryFree" type="primary" @click="searchFreight()" style="padding: 7px 20px">查询运费</Button>
-								<Button  class="inquiryFree" type="primary" @click="searchFreightDetail()" style="padding: 7px 20px">路线运费详情</Button>
+								<Button  class="inquiryFree" type="primary" @click="searchFreightDetail()" style="padding: 7px 20px">线路参考报价</Button>
 								<!--<a href="https://www.ejzy.cn/notice/detail/174" target="_blank" style="margin-left: 55px">各路线运费详情</a>-->
 							</FormItem>
 						</Form>
