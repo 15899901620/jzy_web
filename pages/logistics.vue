@@ -81,7 +81,9 @@
 					</div>
 
 				</div>
-
+				<div class="co-brands">
+					<cobrands :isDelivery='1'></cobrands>
+				</div>
 				<div class="">
 					<div class="ListTitle  whitebg mt20">
 						<div class="TitleName">产品与服务</div>
@@ -123,9 +125,7 @@
 				</div>
 
 			</div>
-		    <div class="co-brands">
-				<cobrands :isDelivery='1'></cobrands>
-			</div>
+
 		</div>
 		<Footer size="default" title="底部" style="margin-top:18px;"></Footer>
         <Modal
