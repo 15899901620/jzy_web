@@ -353,7 +353,7 @@
 					if (this.formCustom.phone.length != 11) {
 						callback(new Error('请输入有效的手机号码，需是11位！'));
 					} else {
-						var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+						var myreg = /^0?(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[0-9])[0-9]{8}$/;
 						if (!myreg.test(this.formCustom.phone)) {
 							callback(new Error('手机号码格式不正确'));
 						} else {
