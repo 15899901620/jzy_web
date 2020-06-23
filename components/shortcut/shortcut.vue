@@ -1,6 +1,6 @@
 <template>
   <div :class="classes">
-    <div class="TopPos" style="display: flex;">
+    <div class="TopPos" style="display: flex; position: relative;">
       <div class="slogens">您好，欢迎来到巨正源科技官方电商平台！ <span>|</span>
         <a href="/">首页</a>
       </div>
@@ -24,6 +24,7 @@
           <a :href="item.url">{{ item.name }}</a>
         </li>
       </ul>
+      <div style="position: absolute; right: -107px; "><a style="display: flex; align-items: center;" href="https://gws.ejzy.cn/" target="_blank"><img src="../../static/img/english.png" height="15"/><span class="ml5">English</span> </a></div>
     </div>
   </div>
 </template>
