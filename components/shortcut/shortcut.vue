@@ -24,7 +24,7 @@
           <a :href="item.url">{{ item.name }}</a>
         </li>
       </ul>
-      <div style="position: absolute; right: -107px; "><a style="display: flex; align-items: center;" href="https://gws.ejzy.cn/" target="_blank"><img src="../../static/img/english.png" height="15"/><span class="ml5">English</span> </a></div>
+      <div style="position: absolute; right: -107px; "><a style="display: flex; align-items: center;" href="https://gws.ejzy.cn/"><img src="../../static/img/english.png" height="15"/><span class="ml5">English</span> </a></div>
     </div>
   </div>
 </template>
