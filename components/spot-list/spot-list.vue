@@ -14,7 +14,7 @@
     <ul class="Xhlist">
       <template v-if="spotListProp.length>0">
         <li v-for="(item, index) in spotListProp" :key="index">
-          <span style="width: 13%;">{{item.sku_name}}</span>
+          <span style="width: 13%;"><a :href="`/physical/detail/${item.sku_id}`" target="_blank" style="color:#ff7300">{{item.sku_name}}</a></span>
           <span
               style="width: 13%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
           <span style="width: 10%;">{{item.warehouse_name}}</span>
