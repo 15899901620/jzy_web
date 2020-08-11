@@ -123,9 +123,46 @@
             v-model="bankCodeIsBool"
             :mask-closable="false"
             title="查找联行号"
-            :loading='loading'>
+            width="1000px">
 
-            <i-table border :content="self" :columns="columnsBankCode" :data="dataBankCode"></i-table>
+            <!-- <i-table border :content="self" :columns="columnsBankCode" :data="dataBankCode"></i-table> -->
+            <div class="" style="width: 95%; margin: 0 auto;">
+
+                <div class="order_operate">
+                    <div class="dflex">
+                    <input type="text" placeholder="输入联行号查询" name="" id="" value="" class="orderInput" v-model="formSearch.bankname"/>
+                    <div class="check" @click='onSearch' style="cursor: pointer;">搜索</div>
+                    </div>
+                </div>
+
+                <!--求购表格-->
+                <div class="TableTitle graybg">
+                    <span style="width: 50%;">银行名称</span>
+                    <span style="width: 30%;">联行号</span>
+                    <span style="width: 20%;">操作</span>
+                </div>
+
+                <template v-if="dataBankCode.length > 0">
+                    <table v-for="(item, index) in dataBankCode" :key="index" class="listT mt10" border="" cellspacing="" cellpadding="">
+                    <tbody>
+                        <tr class="detailTable" style="height:40px">
+                        <td style="width: 50%;">{{item.bankname}}</td>
+                        <td style="width: 30%;">{{item.bankno}}</td>
+                        <td style="width: 20%;">
+                            <Button type="primary" @click="onSelect(item.bankno)">选择</Button>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </template>
+                <template v-else>
+                    <p style="font-size:14px; text-align:center; width:100%;">暂无任何信息！</p>
+                </template>
+                <!--页码-->
+                <Page :total="total" show-total @on-change="changePage" :value="current_page" style="margin-top:20px; text-align: center;"></Page>
+                <!-- <pages :total="total" :show-total="showTotal" @change="changePage" :value="current_page" style="margin-top:20px;"></pages> -->
+
+            </div>
             <div slot="footer" style="text-align:center">
                 <!-- <Button type="primary" @click="saveCode">确定</Button> -->
             </div>
@@ -136,16 +173,18 @@
 
 <script>
 import Navigation from '../../components/navigation'
-import { alreadyBindList, addBindBank, unsetBindBank, codeBindBank } from '../../api/users'
+import { alreadyBindList, addBindBank, unsetBindBank, codeBindBank, getBankCodeList } from '../../api/users'
 import { getCookies } from '../../config/storage'
 import { mapState } from 'vuex'
+import pagination from '../../components/pagination'
 
 export default {
     name: "bin",
 	middleware: 'memberAuth',
     layout:'membercenter',
     components:{
-    usernav: Navigation.user
+        usernav: Navigation.user,
+        pages: pagination.pages
     },
     fetch({ store, params }) {
         return Promise.all([
@@ -162,10 +201,16 @@ export default {
         return{
             self: this,
             loading:false,
+            total:0,
+            current_page: 1,
+            page_size:10,
             addIsBool:false,
             codeIsBool:false,
             bankCodeIsBool: false,
             alreadyBindList:[],
+            formSearch: {
+                bankname: ''
+            },
             addForm:{
                 MemberGlobalType: '73',
                 MemberGlobalId: '',
@@ -230,25 +275,6 @@ export default {
                 { value: '73', label: '统一社会信用代码' },
                 { value: '80', label: '金融机构' },
             ],
-            columnsBankCode:[
-                {
-                    title: '银行名称',
-                    key: 'bankname'
-                },
-                {
-                    title: '联行号',
-                    key: 'bankno'
-                },
-                {
-                    title: '操作',
-                    key: 'action',
-                    width: 150,
-                    align: 'center',
-                    render (row, column, index) {
-                        return `<i-button type="primary" size="small" @click="show(${index})">查看</i-button> <i-button type="error" size="small" @click="remove(${index})">删除</i-button>`;
-                    }
-                }
-            ],
             dataBankCode:[
                 {
                     bankname: '中国银行',
@@ -262,6 +288,15 @@ export default {
         }
     },
     methods:{
+        showTotal(total) {
+            return `全部 ${total} 条`;
+        },
+        changePage (row) {
+            console.log(row)
+            this.current_page = row
+            this.getBankCodeList ()
+            
+        },
         async getAlreadyBindList(){
             const res=await alreadyBindList(this, {
                 "QueryFlag":2,
@@ -287,24 +322,24 @@ export default {
             }
         },
         addBindBank(){
-            this.addForm = {
-                MemberGlobalType: '73',
-                MemberGlobalId: '9144898823XG',
-                AcctOpenBranchName: '广发银行股份有限公司',
-                MemberAcctNo: '62146218665951005',
-                BankType: "2",
-                CnapsBranchId: '306581000003',
-                EiconBankBranchId: '306581000003'
-            }
             // this.addForm = {
-            //     MemberGlobalType: '',
-            //     MemberGlobalId: '',
-            //     AcctOpenBranchName: '',
-            //     MemberAcctNo: '',
-            //     BankType: '',
-            //     CnapsBranchId: '',
-            //     EiconBankBranchId: ''
+            //     MemberGlobalType: '73',
+            //     MemberGlobalId: '9144898823XG',
+            //     AcctOpenBranchName: '广发银行股份有限公司',
+            //     MemberAcctNo: '62146218665951005',
+            //     BankType: "2",
+            //     CnapsBranchId: '306581000003',
+            //     EiconBankBranchId: '306581000003'
             // }
+            this.addForm = {
+                MemberGlobalType: '',
+                MemberGlobalId: '',
+                AcctOpenBranchName: '',
+                MemberAcctNo: '',
+                BankType: '',
+                CnapsBranchId: '',
+                EiconBankBranchId: ''
+            }
             this.addIsBool = true
         },
         async save () {
@@ -447,13 +482,32 @@ export default {
             }
         },
         cancel () {
-            this.$Message.info('Clicked cancel');
+            // this.$Message.info('Clicked cancel');
         },
         selectBankCode(){
             this.bankCodeIsBool = true
+            this.formSearch.bankname = ''
+            this.getBankCodeList()
         },
         onSelect(res){
+            this.bankCodeIsBool = false
+            this.addForm.CnapsBranchId = res
             console.log(res)
+        },
+        onSearch(){
+            this.current_page = 1
+            this.getBankCodeList()
+        },
+        async getBankCodeList () {
+            let params = {
+                current_page: this.current_page,
+                page_size: this.page_size,
+                ...this.formSearch
+            }
+            const res=await getBankCodeList(this, params)
+            console.log('aaa:',res)
+            this.dataBankCode = res.data.items
+            this.total = res.data.total
         },
         async unsetBind (MemberAcctNo) {
             const res=await unsetBindBank(this, {

@@ -55,6 +55,7 @@ let api = {
     addBindBank: '/user/m/CurrBindRelateAcctUnionPay',    //添加绑定银行卡信息
     codeBindBank: '/user/m/CurrBindRelateAccReUnionPay',    //回填验证码
     unsetBindBank: '/user/m/CurrUnbindRelateAcct',    //查询绑定银行卡信息
+    getBankCodeList: '/user/bankCode/list/page',    //
   },
   /**
    * @description 订单管理

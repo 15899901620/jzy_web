@@ -759,6 +759,25 @@ export const unsetBindBank = (vm, data) => {
 }
 
 /**
+ * @description 获取银行联行号列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const getBankCodeList = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.getBankCodeList,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('getBankCodeList', errorInfo)
+  })
+}
+
+/**
  * @description 国家、省、市、县/区
  * @param vm
  * @param data
