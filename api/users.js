@@ -682,8 +682,81 @@ export const addressDefault = (vm, data) => {
   })
 }
 
+/**
+ * @description 绑定银行卡列表
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const alreadyBindList = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.alreadyBindList,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('alreadyBindList', errorInfo)
+  })
+}
 
+/**
+ * @description 添加绑定银行卡
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const addBindBank = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.addBindBank,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('addBindBank', errorInfo)
+  })
+}
 
+/**
+ * @description 回填验证码
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const codeBindBank = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.codeBindBank,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('codeBindBank', errorInfo)
+  })
+}
+
+/**
+ * @description 解绑银行卡
+ * @param vm
+ * @param data
+ * @returns {*}
+ */
+export const unsetBindBank = (vm, data) => {
+  vm.$axios.defaults.headers = {
+    'Authorization': getCookie('webtoken') === false ? '' : getCookie('webtoken')
+  }
+  return vm.$axios.get(server.prefix + server.api.user.unsetBindBank,
+    {
+      params: {...data}
+    }).catch((e) => {
+    let errorInfo = e.response
+    console.log('unsetBindBank', errorInfo)
+  })
+}
 
 /**
  * @description 国家、省、市、县/区

@@ -117,6 +117,10 @@
 							{
 								path: '/users/usereditphone',
 								name: '换绑手机号'
+							},
+							{
+								path: '/users/bindBank',
+								name: '绑定银行卡'
 							}
 						]
 					}

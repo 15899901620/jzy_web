@@ -51,6 +51,10 @@ let api = {
     supplierRepssWd: '/user/supplier/updatePwd',
     supplierRECodeSend:'/user/supplier/updatePwd/code',
     manageEdit: '/user/m/edit',    //会员自己修改会员信息
+    alreadyBindList: '/user/memberBindBank/list',    //查询绑定银行卡信息
+    addBindBank: '/user/m/CurrBindRelateAcctUnionPay',    //添加绑定银行卡信息
+    codeBindBank: '/user/m/CurrBindRelateAccReUnionPay',    //回填验证码
+    unsetBindBank: '/user/m/CurrUnbindRelateAcct',    //查询绑定银行卡信息
   },
   /**
    * @description 订单管理
