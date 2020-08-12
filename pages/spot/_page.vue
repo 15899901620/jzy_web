@@ -66,6 +66,7 @@
             <span style="width: 9%;">距下架时间</span>
             <span style="width: 8%;">提货日期</span>
             <span style="width: 12%;">操作</span>
+			<span style="width: 8%;">详情</span>
           </div>
           <ul class="Xhlist">
             <template v-if="$store.state.spot.spotList.length>0">
@@ -74,8 +75,7 @@
                 <span style="width: 10%;">
                   <div class="pr">
                   <i v-if="$store.state.memberToken && item.available_num >= item.min_order && item.on_sale === 1" class="newClass"  ></i>{{item.category_name}}</div></span>
-                <!-- <span style="width: 16%;">{{item.sku_name}}</span> -->
-                <span style="width: 16%;"><a :href="`/physical/detail/${item.sku_id}`" target="_blank" style="color:#ff7300">{{item.sku_name}}</a></span>
+                <span style="width: 16%;">{{item.sku_name}}</span>
                 <span
                     style="width: 14%;white-space:nowrap;text-overflow:ellipsis;word-break:keep-all;overflow: hidden;">{{item.manufacturer}}</span>
                 <span :title="item.warehouse_name" style="width: 10%; overflow: hidden;text-overflow: ellipsis; white-space: nowrap; cursor: default;">{{item.warehouse_name}}</span>
@@ -111,6 +111,7 @@
                   <div v-else-if="$store.state.memberToken && item.available_num > 0" class="ListBtn" style="background-color:#007de4;color:#fff;" @click="addOrder(item.id)">下单</div>
                   <div v-else class="ListBtn" @click="toLogin">登录</div>
                 </span>
+				<span style="width: 8%;"><a :href="`/physical/detail/${item.sku_id}`" target="_blank" style="color:#ff7300">物性表</a></span>
               </li>
             </template>
             <template v-else>
